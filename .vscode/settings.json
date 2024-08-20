@@ -1,0 +1,7 @@
+{
+    "cSpell.words": ["get", "props", "static"],
+    "sonarlint.connectedMode.project": {
+        "connectionId": "l1-game-guides",
+        "projectKey": "l1-game-guides"
+    }
+}

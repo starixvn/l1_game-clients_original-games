@@ -1,0 +1,266 @@
+{
+    "1": {
+        "id": 1,
+        "gameName": "taixiu"
+    },
+    "2": {
+        "id": 2,
+        "gameName": "XocXoc"
+    },
+    "3": {
+        "id": 3,
+        "gameName": "BauCua"
+    },
+    "4": {
+        "id": 4,
+        "gameName": "TXTurbo"
+    },
+    "6": {
+        "id": 6,
+        "gameName": "OETurbo"
+    },
+    "7": {
+        "id": 7,
+        "gameName": "DragonTiger"
+    },
+    "8": {
+        "id": 8,
+        "gameName": "KenoProMax"
+    },
+    "9": {
+        "id": 9,
+        "gameName": "MiniSeDie"
+    },
+    "10": {
+        "id": 10,
+        "gameName": "Baccarat"
+    },
+    "12": {
+        "id": 12,
+        "gameName": "KenoMax"
+    },
+    "13": {
+        "id": 13,
+        "gameName": "KenoMax2"
+    },
+    "14": {
+        "id": 14,
+        "gameName": "KenoMini"
+    },
+    "15": {
+        "id": 15,
+        "gameName": "KenoMini2"
+    },
+    "16": {
+        "id": 16,
+        "gameName": "KenoEast"
+    },
+    "17": {
+        "id": 17,
+        "gameName": "KenoWest"
+    },
+    "18": {
+        "id": 18,
+        "gameName": "KenoSouth"
+    },
+    "19": {
+        "id": 19,
+        "gameName": "KenoNorth"
+    },
+    "21": {
+        "id": 21,
+        "gameName": "Roulette"
+    },
+    "22": {
+        "id": 22,
+        "gameName": "VipSeDie"
+    },
+    "23": {
+        "id": 23,
+        "gameName": "Blackjack"
+    },
+    "24": {
+        "id": 24,
+        "gameName": "SpecialSeDie"
+    },
+    "25": {
+        "id": 25,
+        "gameName": "SicBo"
+    },
+    "26": {
+        "id": 26,
+        "gameName": "VipFishPrawnCrab"
+    },
+    "27": {
+        "id": 27,
+        "gameName": "VipBaccarat"
+    },
+    "28": {
+        "id": 28,
+        "gameName": "VipSeDieWar"
+    },
+    "29": {
+        "id": 29,
+        "gameName": "FourGuardians"
+    },
+    "31": {
+        "id": 31,
+        "gameName": "Lottery"
+    },
+    "35": {
+        "id": 35,
+        "gameName": "ThreeCards"
+    },
+    "36": {
+        "id": 36,
+        "gameName": "KenoMatch1"
+    },
+    "37": {
+        "id": 37,
+        "gameName": "KenoMatch2"
+    },
+    "38": {
+        "id": 38,
+        "gameName": "HeroesSlot"
+    },
+    "39": {
+        "id": 39,
+        "gameName": "CasinoHold"
+    },
+    "40": {
+        "id": 40,
+        "gameName": "KenoPower1"
+    },
+    "41": {
+        "id": 41,
+        "gameName": "KenoPower2"
+    },
+    "42": {
+        "id": 42,
+        "gameName": "TexasHold"
+    },
+    "43": {
+        "id": 43,
+        "gameName": "BitcoinMaster"
+    },
+    "45": {
+        "id": 45,
+        "gameName": "HiLo"
+    },
+    "46": {
+        "id": 46,
+        "gameName": "NightClub"
+    },
+    "47": {
+        "id": 47,
+        "gameName": "TreasureIsland"
+    },
+    "48": {
+        "id": 48,
+        "gameName": "BlockchainBaccarat"
+    },
+    "50": {
+        "id": 50,
+        "gameName": "UnbalancedBigSmall1"
+    },
+    "51": {
+        "id": 51,
+        "gameName": "UnbalancedBigSmall2"
+    },
+    "52": {
+        "id": 52,
+        "gameName": "MegaKeno"
+    },
+    "53": {
+        "id": 53,
+        "gameName": "MegaKeno2"
+    },
+    "54": {
+        "id": 54,
+        "gameName": "UnbalancedBigSmall3"
+    },
+    "55": {
+        "id": 55,
+        "gameName": "UnbalancedBigSmall4"
+    },
+    "49": {
+        "id": 49,
+        "gameName": "WayToGoal"
+    },
+    "56": {
+        "id": 56,
+        "gameName": "MiniSedie2"
+    },
+    "57": {
+        "id": 57,
+        "gameName": "MiniSedie3"
+    },
+    "58": {
+        "id": 58,
+        "gameName": "MiniSedie4"
+    },
+    "59": {
+        "id": 59,
+        "gameName": "FruitSlot"
+    },
+    "60": {
+        "id": 60,
+        "gameName": "Fantan"
+    },
+    "61": {
+        "id": 61,
+        "gameName": "WinThreeCards"
+    },
+    "62": {
+        "id": 62,
+        "gameName": "FortuneCat"
+    },
+    "63": {
+        "id": 63,
+        "gameName": "ClassicSlotTemplate"
+    },
+    "71": {
+        "id": 71,
+        "gameName": "Color Game"
+    },
+    "77": {
+        "id": 77,
+        "gameName": "chineseblackjack"
+    },
+    "1001": {
+        "id": 1001,
+        "gameName": "Bac Ball 1"
+    },
+    "1002": {
+        "id": 1002,
+        "gameName": "Bac Ball 2"
+    },
+    "1003": {
+        "id": 1003,
+        "gameName": "Lucky Next 1"
+    },
+    "1004": {
+        "id": 1004,
+        "gameName": "Lucky Next 2"
+    },
+    "1005": {
+        "id": 1005,
+        "gameName": "Se Ball"
+    },
+    "1006": {
+        "id": 1006,
+        "gameName": "Lucky Three"
+    },
+    "80": {
+        "id": 80,
+        "gameName": "Coin Toss"
+    },
+    "93": {
+        "id": 93,
+        "gameName": "Football Coin Toss"
+    },
+    "81": {
+        "id": 81,
+        "gameName": "Bac 81"
+    }
+}

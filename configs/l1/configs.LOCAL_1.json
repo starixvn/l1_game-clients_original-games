@@ -1,0 +1,10 @@
+{
+    "sentry": {
+        "dsn": "https://c8f93631be824a14b9f114f53e3a2bfc@sentry.lumigame.com/3",
+        "environment": "LOCAL_1"
+    },
+    "system": "L1",
+    "enableSourceMap": true,
+    "resourceUrl": "https://l1-proxy1.lumigame.com/game/static/",
+    "gameSettingUrl": "http://l1_admin_api_local_1:5000/api/public/game_configs/"
+}
