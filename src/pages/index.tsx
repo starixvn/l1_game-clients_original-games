@@ -1,6 +1,6 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import appSettings from "../common/app-settings";
-import axios from "axios";
 
 const randomIntFromInterval = (min: number, max: number) => {
     // min and max included
@@ -20,7 +20,7 @@ const doSSO = async () => {
         siteId: "4100300",
         siteName: "lumi",
         ip: "",
-        browserUserAgent: global.window.navigator.userAgent,
+        browserUserAgent: global?.window?.navigator?.userAgent || "",
         auth: {
             operatorId: "ONEworks1",
             operatorSecret: "ONEworks1@20luminet&",

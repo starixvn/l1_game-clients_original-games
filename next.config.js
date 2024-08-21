@@ -19,7 +19,6 @@ const nextConfig = {
     generateBuildId: async () => {
         return uuidv4();
     },
-    excludeFile: (str) => /\*.{spec,test}.js/.test(str),
     eslint: {
         ignoreDuringBuilds: true,
     },
