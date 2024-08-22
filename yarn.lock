@@ -1520,8 +1520,10 @@
   resolved "https://npm.lumigame.com/@rushstack/eslint-patch/-/eslint-patch-1.10.4.tgz#427d5549943a9c6fce808e39ea64dbe60d4047f1"
   integrity sha512-WJgX9nzTqknM393q1QJDJmoW28kUfEnybeTfVNcNAPnIx210RXm2DiXiHzfNPJNIUUb1tJnz/l4QGtJ30PgWmA==
 
-"@sg/game-client-core@file:../sg-game-client":
-  version "0.1.0"
+"@sg/game-client-core@0.1.1-beta.0":
+  version "0.1.1-beta.0"
+  resolved "https://npm.lumigame.com/@sg/game-client-core/-/game-client-core-0.1.1-beta.0.tgz#288784b410d01e1ad9e602f6bc6983131646ab05"
+  integrity sha512-CLQp+POtZVlv/Wvqlmmfem2ZZn7TWlOXfpa1c0KKlFgUdB/SDLTSmVqqp46VhEmMssR/NT7HdTD/4cOo/phh9A==
   dependencies:
     base64-string "^1.1.2"
     eventemitter2 "6.4.9"

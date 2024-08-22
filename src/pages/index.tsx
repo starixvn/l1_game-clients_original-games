@@ -15,7 +15,7 @@ const Demo = () => {
             setToken(result?.token);
             router.push({
                 pathname: router.pathname,
-                query: { token: token },
+                query: { token: result?.token },
             });
         };
         call();

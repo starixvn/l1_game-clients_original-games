@@ -1,26 +1,45 @@
-import { GameSettings } from "../../components/game-base/type";
-
-interface ProxySetting {
-    ssl: string;
-    subDomain: string;
-    path: string;
-}
-
 interface SentryOptions {
     dsn: string;
     environment: string;
 }
 
+interface IGameSettings {
+    id: number;
+    gameName: string;
+    name: string;
+    namespaces: string[];
+    durations: {
+        wholeRound: number;
+        lockingBet: number;
+        placingBet: number;
+        generatingResult: number;
+        showingResult: number;
+        startRound: number;
+    };
+    numberOfRoundHistory: number;
+    websocket: {
+        proxyPath: string;
+        route: string;
+    };
+    mainObserverNamespace: string;
+    storagePrefixKey: string;
+}
+
 export default interface AppSettings {
-    serverDomainMapper: Array<string>;
+    serverDomainMapper: Record<string>;
     socketGatewayPath: string;
-    proxy: ProxySetting;
     sentry: SentryOptions;
-    gameSettings: { [id: string]: GameSettings };
+    gameSettings: { [id: string]: IGameSettings };
     enableMsgpackParser: boolean;
+    enableMsgpackParserOnNotification: boolean;
     system: string;
     gamePath: string;
     resourceUrl: string;
     gameSettingUrl: string;
     gameLobbySimulatorUrl: string;
+    ssl: boolean;
+    subDomain: string;
+    env: string;
+    enableMsgpackParserAllGames: boolean;
+    subGuideDomain: string;
 }

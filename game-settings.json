@@ -18,9 +18,7 @@
             "route": "bigsmall"
         },
         "mainObserverNamespace": "BigSmall",
-        "tolgeeUrl": "",
-        "storagePrefixKey": "BigSmall",
-        "backgroundNoTranslate": true
+        "storagePrefixKey": "BigSmall"
     },
     "2": {
         "id": 2,
@@ -41,8 +39,6 @@
             "route": "sedie"
         },
         "mainObserverNamespace": "SeDie",
-        "tolgeeUrl": "",
-        "storagePrefixKey": "Sedie",
-        "backgroundNoTranslate": true
+        "storagePrefixKey": "Sedie"
     }
 }
