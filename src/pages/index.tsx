@@ -39,7 +39,6 @@ const doSSO = async () => {
 };
 
 const Demo = () => {
-    console.log(appSettings);
     doSSO();
 
     const [token, setToken] = useState("");
