@@ -1,12 +1,17 @@
 {
     "sentry": {
         "dsn": "https://c8f93631be824a14b9f114f53e3a2bfc@sentry.lumigame.com/3",
-        "environment": "LOCAL"
+        "environment": "LOCAL1"
     },
     "system": "L1",
     "resourceUrl": "https://l1-proxy1.lumigame.com/game/static/",
     "gameSettingUrl": "https://l1-admin-api3.lumigame.com/api/public/game_configs/",
     "gameLobbySimulatorUrl": "https://l1-glbs1.lumigame.com",
-    "socketGatewayPath": "",
-    "proxy": ""
+    "serverDomainMapper": {
+        "localhost": "lumigame.com"
+    },
+    "ssl": true,
+    "subDomain": "l1-proxy1",
+    "env": "LOCAL1",
+    "enableMsgpackParserAllGames": false
 }
