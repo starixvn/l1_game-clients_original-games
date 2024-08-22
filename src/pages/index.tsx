@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import appSettings from "../common/app-settings";
+import Lobby from "../lobby/lobby";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Container from "react-bootstrap/Container";
 
 const randomIntFromInterval = (min: number, max: number) => {
     // min and max included
@@ -50,7 +53,12 @@ const Demo = () => {
         };
         call();
     }, []);
-    return <div>token: {token}</div>;
+
+    return (
+        <Container className="mt-3">
+            <Lobby token={token} />
+        </Container>
+    );
 };
 
 export default Demo;
