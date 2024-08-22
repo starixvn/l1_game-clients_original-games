@@ -11,11 +11,11 @@ const Lobby = (props: LobbyProps) => {
     return (
         <Tabs defaultActiveKey="sedie" id="uncontrolled-tab-example" className="mb-3">
             <Tab eventKey="sedie" title="Sedie">
-                <LiveGame />
+                <LiveGame gameId={2} />
                 Sedie Game
             </Tab>
             <Tab eventKey="bigsmall" title="Big Small">
-                <LiveGame />
+                <LiveGame gameId={1} />
                 Big Small Game
             </Tab>
         </Tabs>
