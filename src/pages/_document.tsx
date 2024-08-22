@@ -1,5 +1,4 @@
 import Document, { DocumentContext, Head, Html, Main, NextScript } from "next/document";
-import React from "react";
 
 export default class CustomDocument extends Document {
     static async getInitialProps(ctx: DocumentContext) {
@@ -19,7 +18,10 @@ export default class CustomDocument extends Document {
                     <meta name="theme-color" content="transparent" />
                 </Head>
                 <body>
-                    <Main />
+                    <div data-react="true">
+                        <Main />
+                    </div>
+
                     <NextScript />
                 </body>
             </Html>

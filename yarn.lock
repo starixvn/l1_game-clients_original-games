@@ -6101,8 +6101,13 @@ mkdirp@^0.5.1:
 
 mobx-logger@^0.7.1:
   version "0.7.1"
-  resolved "http://npm.lumigame.com/mobx-logger/-/mobx-logger-0.7.1.tgz#6be44c726e14433463f5fa566f24f1768e2a9355"
+  resolved "https://npm.lumigame.com/mobx-logger/-/mobx-logger-0.7.1.tgz#6be44c726e14433463f5fa566f24f1768e2a9355"
   integrity sha512-kAcNjzDGjILjvNiVrQZfVY6Bxs5YKt35rtwNuU/uneLq+E9zF5grnGmr95EMqqYSVpE6RjJLID3y3j0yQ/cvRA==
+
+mobx@^6.13.1:
+  version "6.13.1"
+  resolved "https://npm.lumigame.com/mobx/-/mobx-6.13.1.tgz#76c41aa675199f75b84a257e4bec8ff839e33259"
+  integrity sha512-ekLRxgjWJr8hVxj9ZKuClPwM/iHckx3euIJ3Np7zLVNtqJvfbbq7l370W/98C8EabdQ1pB5Jd3BbDWxJPNnaOg==
 
 moment@^2.29.4:
   version "2.30.1"
@@ -6433,6 +6438,11 @@ object.values@^1.1.6, object.values@^1.1.7, object.values@^1.2.0:
     call-bind "^1.0.7"
     define-properties "^1.2.1"
     es-object-atoms "^1.0.0"
+
+observer@^1.3.1:
+  version "1.3.1"
+  resolved "https://npm.lumigame.com/observer/-/observer-1.3.1.tgz#414f1d7fa552cc77ccee3faf8d25ac1fbc363d05"
+  integrity sha512-u4H/2ADwAZrHEdMmgGTI+AFA5mfrXHvw2Mb0fRwntvON7nzZl51eakAbodVHIJR79QtNjIkQrL9pP7J8jR5EJg==
 
 once@^1.3.0:
   version "1.4.0"
