@@ -1,4 +1,4 @@
-import gc from "@sg/game-client-core";
+import gc from "@sg/sg-game-client";
 import mobx from "mobx";
 import Observer from "observer";
 

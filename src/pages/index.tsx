@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";

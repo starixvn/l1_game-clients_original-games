@@ -1520,10 +1520,8 @@
   resolved "https://npm.lumigame.com/@rushstack/eslint-patch/-/eslint-patch-1.10.4.tgz#427d5549943a9c6fce808e39ea64dbe60d4047f1"
   integrity sha512-WJgX9nzTqknM393q1QJDJmoW28kUfEnybeTfVNcNAPnIx210RXm2DiXiHzfNPJNIUUb1tJnz/l4QGtJ30PgWmA==
 
-"@sg/game-client-core@0.1.1-beta.0":
+"@sg/sg-game-client@file:../sg-game-client":
   version "0.1.1-beta.0"
-  resolved "https://npm.lumigame.com/@sg/game-client-core/-/game-client-core-0.1.1-beta.0.tgz#288784b410d01e1ad9e602f6bc6983131646ab05"
-  integrity sha512-CLQp+POtZVlv/Wvqlmmfem2ZZn7TWlOXfpa1c0KKlFgUdB/SDLTSmVqqp46VhEmMssR/NT7HdTD/4cOo/phh9A==
   dependencies:
     base64-string "^1.1.2"
     eventemitter2 "6.4.9"
@@ -1532,8 +1530,9 @@
     mobx-logger "^0.7.1"
     moment "^2.29.4"
     node-polyglot "^2.5.0"
-    sc-user-service-client "1.6.1-beta.7"
+    sc-user-service-client "1.8.1-beta.1"
     socket.io-client "4.6.1"
+    socket.io-msgpack-parser "^3.0.2"
     unique-names-generator "^4.7.1"
 
 "@sinonjs/commons@^1.7.0":
@@ -2254,15 +2253,6 @@ axe-core@^4.9.1:
   resolved "https://npm.lumigame.com/axe-core/-/axe-core-4.10.0.tgz#d9e56ab0147278272739a000880196cdfe113b59"
   integrity sha512-Mr2ZakwQ7XUAjp7pAwQWRhhK8mQQ6JAaNWSjmjxil0R8BPioMtQsTLOolGYkji1rcL++3dCqZA3zWqpT+9Ew6g==
 
-axios@^0.28.1:
-  version "0.28.1"
-  resolved "http://npm.lumigame.com/axios/-/axios-0.28.1.tgz#2a7bcd34a3837b71ee1a5ca3762214b86b703e70"
-  integrity sha512-iUcGA5a7p0mVb4Gm/sy+FSECNkPFT4y7wt6OM/CDpO/OnNCvSs3PoMG8ibrC9jRoGYU0gUK5pXVC4NPXq6lHRQ==
-  dependencies:
-    follow-redirects "^1.15.0"
-    form-data "^4.0.0"
-    proxy-from-env "^1.1.0"
-
 axios@^1.7.4:
   version "1.7.4"
   resolved "http://npm.lumigame.com/axios/-/axios-1.7.4.tgz#4c8ded1b43683c8dd362973c393f3ede24052aa2"
@@ -2874,6 +2864,11 @@ component-emitter@^1.2.1:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/component-emitter/-/component-emitter-1.3.0.tgz#16e4070fba8ae29b679f2215853ee181ab2eabc0"
   integrity sha512-Rd3se6QB+sO1TwqZjscQrurpEPIfO0/yYnSin6Q/rD3mOutHvUrCAhJub3r90uNb+SESBuE0QYoB90YdfatsRg==
+
+component-emitter@~1.3.0:
+  version "1.3.1"
+  resolved "http://npm.lumigame.com/component-emitter/-/component-emitter-1.3.1.tgz#ef1d5796f7d93f135ee6fb684340b26403c97d17"
+  integrity sha512-T0+barUSQRTUQASh8bx02dl+DhF54GtIDY13Y3m9oWTklKbb3Wv974meRpeZ3lp1JpLVECWWNHC4vaG2XHXouQ==
 
 concat-map@0.0.1:
   version "0.0.1"
@@ -4088,7 +4083,7 @@ flatted@^3.1.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.1.tgz#bbef080d95fca6709362c73044a1634f7c6e7d05"
   integrity sha512-OMQjaErSFHmHqZe+PSidH5n8j3O0F2DdnVh8JB4j4eUQ2k6KvB0qGfrKIhapvez5JerBbmWkaLYUYWISaESoXg==
 
-follow-redirects@^1.15.0, follow-redirects@^1.15.6:
+follow-redirects@^1.15.6:
   version "1.15.6"
   resolved "http://npm.lumigame.com/follow-redirects/-/follow-redirects-1.15.6.tgz#7f815c0cda4249c74ff09e95ef97c23b5fd0399b"
   integrity sha512-wWN62YITEaOpSK584EZXJafH1AGpO8RVgElfkuXbTOrPX4fIfOyEpW/CsiNd8JdYrAoOvafRTOEnvsO++qCqFA==
@@ -6266,6 +6261,11 @@ normalize-path@^3.0.0, normalize-path@~3.0.0:
   resolved "https://registry.yarnpkg.com/normalize-path/-/normalize-path-3.0.0.tgz#0dcd69ff23a1c9b11fd0978316644a0388216a65"
   integrity sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==
 
+notepack.io@~2.2.0:
+  version "2.2.0"
+  resolved "http://npm.lumigame.com/notepack.io/-/notepack.io-2.2.0.tgz#d7ea71d1cb90094f88c6f3c8d84277c2d0cd101c"
+  integrity sha512-9b5w3t5VSH6ZPosoYnyDONnUTF8o0UkBw7JLA6eBlYJWyGT1Q3vQa8Hmuj1/X6RYvHjjygBDgw6fJhe0JEojfw==
+
 npm-run-path@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/npm-run-path/-/npm-run-path-4.0.1.tgz#b7ecd1e5ed53da8e37a55e1c2269e0b97ed748ea"
@@ -6951,6 +6951,11 @@ redent@^3.0.0:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
 
+reflect-metadata@^0.2.2:
+  version "0.2.2"
+  resolved "http://npm.lumigame.com/reflect-metadata/-/reflect-metadata-0.2.2.tgz#400c845b6cba87a21f2c65c4aeb158f4fa4d9c5b"
+  integrity sha512-urBwgfrvVP/eAyXx4hluJivBKzuEbSQs9rKWCrCkbSxNv8mxPcUZKeuoF3Uy4mJl3Lwprp6yy5/39VWigZ4K6Q==
+
 reflect.getprototypeof@^1.0.4:
   version "1.0.6"
   resolved "https://npm.lumigame.com/reflect.getprototypeof/-/reflect.getprototypeof-1.0.6.tgz#3ab04c32a8390b770712b7a8633972702d278859"
@@ -7214,12 +7219,12 @@ saxes@^5.0.1:
   dependencies:
     xmlchars "^2.2.0"
 
-sc-user-service-client@1.6.1-beta.7:
-  version "1.6.1-beta.7"
-  resolved "http://npm.lumigame.com/sc-user-service-client/-/sc-user-service-client-1.6.1-beta.7.tgz#a8692a6df5b09add8528e4c63bb1d63e6764a0c9"
-  integrity sha512-IU9TWfT+ouWYlqYzOJ/BNbwL8zs56vjJ1xIWdj6V+OZaGGagSbIM0msL/sN6RqqORj6IBl1ZuUo+5J9x2oRZsg==
+sc-user-service-client@1.8.1-beta.1:
+  version "1.8.1-beta.1"
+  resolved "http://npm.lumigame.com/sc-user-service-client/-/sc-user-service-client-1.8.1-beta.1.tgz#81de1b3c929a8137c9e724daabca3cba53e3f281"
+  integrity sha512-hj9UX72U0wT2WBOQ9HTIKfY4ri9301d5GRj7GiaCN9r6A8VhES7cz+/BnNDLNGnIk8dRRDJS9Acr8oesFyRPWg==
   dependencies:
-    axios "^0.28.1"
+    axios "^1.7.4"
 
 scheduler@^0.19.1:
   version "0.19.1"
@@ -7408,6 +7413,14 @@ socket.io-client@4.6.1:
     debug "~4.3.2"
     engine.io-client "~6.4.0"
     socket.io-parser "~4.2.1"
+
+socket.io-msgpack-parser@^3.0.2:
+  version "3.0.2"
+  resolved "http://npm.lumigame.com/socket.io-msgpack-parser/-/socket.io-msgpack-parser-3.0.2.tgz#34c4d69acd0fa2a0eede98c14e29fa9f6a5b880a"
+  integrity sha512-1e76bJ1PCKi9H+JiYk+S29PBJvknHjQWM7Mtj0hjF2KxDA6b6rQxv3rTsnwBoz/haZOhlCDIMQvPATbqYeuMxg==
+  dependencies:
+    component-emitter "~1.3.0"
+    notepack.io "~2.2.0"
 
 socket.io-parser@~4.2.1:
   version "4.2.4"
@@ -7676,7 +7689,7 @@ string_decoder@^1.1.1:
   dependencies:
     safe-buffer "~5.2.0"
 
-"strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.1:
+"strip-ansi-cjs@npm:strip-ansi@^6.0.1":
   version "6.0.1"
   resolved "https://npm.lumigame.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
@@ -7696,6 +7709,13 @@ strip-ansi@^6.0.0:
   integrity sha512-AuvKTrTfQNYNIctbR1K/YGTR1756GycPsg7b9bdV9Duqur4gv6aKqHXah67Z8ImS7WEz5QVcOtlfW2rZEugt6w==
   dependencies:
     ansi-regex "^5.0.0"
+
+strip-ansi@^6.0.1:
+  version "6.0.1"
+  resolved "https://npm.lumigame.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
+  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
+  dependencies:
+    ansi-regex "^5.0.1"
 
 strip-ansi@^7.0.1:
   version "7.1.0"

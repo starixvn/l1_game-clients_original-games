@@ -1,6 +1,6 @@
-import gc from "@sg/game-client-core";
+import gc from "@sg/sg-game-client";
 import mobx from "mobx";
-import Observer from "observer";
+import * as Observer from "observer";
 import { useEffect } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
@@ -13,6 +13,8 @@ export interface LobbyProps {
 }
 
 export const DefaultTabGameId = 2;
+
+console.log("Observer", Observer);
 
 const Lobby = (props: LobbyProps) => {
     useEffect(() => {

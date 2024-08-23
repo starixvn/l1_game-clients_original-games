@@ -1,4 +1,4 @@
-import gc from "@sg/game-client-core";
+import gc from "@sg/sg-game-client";
 import getConfig from "next/config";
 
 import AppSettings from "./type";
