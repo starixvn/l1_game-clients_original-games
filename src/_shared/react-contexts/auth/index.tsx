@@ -1,10 +1,9 @@
 import React from "react";
-import { AuthorizeResponse, SSOResponse } from "sc-user-service-client/dist/auth";
 import { locales } from "../../constants";
 
 export type PlayerContextModel = {
-    authorizeInfo?: AuthorizeResponse;
-    session?: SSOResponse;
+    authorizeInfo?: any;
+    session?: any;
     locale?: string;
     setBalance?: (balance: number) => void;
     signOut?: () => void;

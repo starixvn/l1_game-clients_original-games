@@ -14,7 +14,7 @@ export const getSiteConfig = (gameId: number) => {
         ssl: getAppSettings.ssl,
         subDomain: getAppSettings.subDomain,
         env: getAppSettings.env,
-        enableMsgpackParserAllGames: getAppSettings.enableMsgpackParser,
+        enableMsgpackParserAllGames: getAppSettings.enableMsgpackParserAllGames,
         enableMsgpackParserOnNotification: getAppSettings.enableMsgpackParserOnNotification,
         websocket: gameSetting.websocket,
         mainObserverNamespace: gameSetting.mainObserverNamespace,

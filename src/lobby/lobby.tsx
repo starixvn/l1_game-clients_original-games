@@ -1,12 +1,12 @@
 import * as gc from "@sg/sg-game-client";
-import * as Observer from "observer";
+import { observer, render ,handle} from "observer";
 import { Component } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import LiveGame from "../live-game/live-game";
 import { ILobbyProps, ILobbyStates } from "./type";
 
-@Observer.observer("default")
+@observer
 class Lobby extends Component<ILobbyProps, ILobbyStates> {
     constructor(props: any) {
         super(props);
@@ -21,28 +21,28 @@ class Lobby extends Component<ILobbyProps, ILobbyStates> {
         this.sso();
     }
 
-    @Observer.handle(gc.Auth.AuthHandlers.SSO)
+    @handle(gc.Auth.AuthHandlers.SSO)
     sso() {
         return new URLSearchParams(window.location.search);
     }
 
-    // @render(gc.Auth.AuthStore, (store) => ({
-    //     isAuthorized: store.isAuthorized,
-    //     system: store.system,
-    // }))
-    // openGame({ isAuthorized, system }: gc.Auth.AuthStore) {
-    //     if (isAuthorized) {
-    //         this.setState({ isAuthorized: true, system });
-    //         this.loadChipSetting();
-    //         this.triggerRecheckIn();
-    //     }
-    // }
+    @render(gc.Auth.AuthStore, (store) => ({
+        isAuthorized: store.isAuthorized,
+        system: store.system,
+    }))
+    openGame({ isAuthorized, system }: gc.Auth.AuthStore) {
+        if (isAuthorized) {
+            this.setState({ isAuthorized: true, system });
+            this.loadChipSetting();
+            this.triggerRecheckIn();
+        }
+    }
 
-    // @handle(gc.ChipSetting.ChipSettingHandler)
-    // loadChipSetting() {}
+    @handle(gc.ChipSetting.ChipSettingHandler)
+    loadChipSetting() {}
 
-    // @handle(gc.Auth.AuthHandlers.TriggerRecheckIn)
-    // triggerRecheckIn() {}
+    @handle(gc.Auth.AuthHandlers.TriggerRecheckIn)
+    triggerRecheckIn() {}
 
     render() {
         const { isAuthorized } = this.state;
