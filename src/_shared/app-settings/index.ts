@@ -28,4 +28,8 @@ export const getSiteConfig = (gameId: number) => {
     return config;
 };
 
+export const getGameSetting = (gameId: number) => {
+    return getAppSettings.gameSettings[gameId];
+};
+
 export default getAppSettings;

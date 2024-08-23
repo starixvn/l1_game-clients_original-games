@@ -3,6 +3,41 @@ import * as mobx from "mobx";
 import * as Observer from "observer";
 import "reflect-metadata";
 
+interface Languages {
+    [key: string]: any;
+}
+
+declare global {
+    interface Window {
+        languages: Languages;
+    }
+}
+
+const loadI18n = (siteConfigs: gc.Configs.SiteConfigs, namespaces: string[]) => {
+    try {
+        const isUseTolgeeRealTime = !!siteConfigs.tolgeeUrl;
+        const languageId = gc.Translator.getLanguageId();
+        const languageCodes = ["en", "id", "th", "vi", "zh_cn", "zh_tw"];
+        const translationOptions: gc.Shared.utils.TranslationOptions = {
+            languageId: languageId,
+            tolgeeUrl: siteConfigs.tolgeeUrl,
+            isUseTolgeeRealTime: isUseTolgeeRealTime,
+            getStaticData: (languageId) => {
+                return window["languages"][languageId];
+            },
+            availableLanguages: languageCodes,
+            onLoaded: () => {
+                console.log("started tolgee");
+            },
+            gameNamespaces: namespaces,
+        };
+
+        gc.Translator.init(translationOptions);
+    } catch (e) {
+        console.log(e);
+    }
+};
+
 export function startGame(
     gameName: string,
     containerOptions: gc.IContainerOptions,
@@ -10,6 +45,7 @@ export function startGame(
     namespaces?: string[]
 ) {
     gc.StorageManager.setPrefixKey(siteConfigs.storagePrefixKey || "");
+    loadI18n(siteConfigs, namespaces ? namespaces : [gameName]);
 
     const container = gc.getContainer(containerOptions);
     console.log("container", container);

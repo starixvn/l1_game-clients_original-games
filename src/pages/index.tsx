@@ -1,8 +1,8 @@
-import "reflect-metadata";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
+import "reflect-metadata";
 import { requestSSO } from "../_shared/utils/sso-helper";
 import Lobby from "../lobby/lobby";
 
@@ -16,7 +16,7 @@ const Demo = () => {
             setToken(result?.token);
             router.push({
                 pathname: router.pathname,
-                query: { token: result?.token },
+                query: { token: result?.token, ref: "d_direct" },
             });
         };
         call();

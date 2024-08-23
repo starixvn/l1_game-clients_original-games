@@ -1,3 +1,5 @@
+import * as gc from "@sg/sg-game-client";
+import { handle, render } from "observer";
 import React from "react";
 import { PlayerContext } from "../../_shared/react-contexts/auth";
 import { GameContextProvider } from "../../_shared/react-contexts/game-context/game-context";
@@ -7,6 +9,10 @@ import { GameBaseProps } from "./type";
 abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> {
     constructor(props: P) {
         super(props);
+        this.state = {
+            isReceiveFinishBeforeRoundHistory: true,
+            enableFixHandleFinish: false,
+        };
     }
 
     componentDidMount() {
@@ -23,40 +29,51 @@ abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> 
         this.clearGameTimeoutAndInterval();
     }
 
-    clearGameTimeoutAndInterval = () => {};
-
-    onStart() {
-        this.connectToGameService();
-    }
-
-    protected async connectToGameService() {
-        // const { session } = this.context as PlayerContextModel;
-        // const { socketInfo, gameName } = this.props;
-        // const { socket } = InitSocketIO(socketInfo, session, gameName, this.gameMessageHandler);
-        // this.socket = socket;
-    }
-
     onVisibilityChange = () => {
         document.visibilityState === "hidden" ? this.onDestroy() : this.onStart();
     };
 
-    onConnectFailed() {}
+    clearGameTimeoutAndInterval = () => {};
 
-    onSocketDisconnect() {}
+    onStart() {
+        this.connectToService();
+        this.initUserSettings();
+        this.initPlayerSelections();
+    }
 
-    onGameServiceConnected() {}
+    @handle(gc.Connection.ConnectionHandlers.ConnectHandler)
+    connectToService() {}
 
-    handleUM() {
+    @render(gc.JoinGame.JoinGameStore, (store) => store.toGame, { fireImmediately: false })
+    requestOpenGame() {
+        console.log("toGame-----------");
+        this.openGameCallback();
+    }
+    openGameCallback() {
         // handle
     }
 
-    handleRoundHistory() {
-        // handle
+    @handle(gc.UserSettings.UserSettingHandlers, (handle) => handle.loadStorages())
+    initUserSettings() {}
+
+    @handle(gc.PlayerSelections.PlayerSelectionHandlers.InitHandlers)
+    initPlayerSelections() {}
+
+    @render(gc.Connection.ConnectionStore, (store) => store.signedIn)
+    onSignedIn(signedIn: boolean) {
+        signedIn && this.inGame();
     }
 
-    handleGamePlay(remainingTime: number) {}
+    @handle(gc.Connection.ConnectionHandlers.InGameHandler)
+    inGame() {}
 
-    async updateUserBalance() {}
+    @render(gc.Rounds.RoundStore, (store) => store.roundId)
+    renderRoundId(roundId: any) {
+        console.log("render roundId: ", roundId);
+    }
+
+    @render(gc.Rounds.RoundStore, (store) => ({ minBet: store.minBet, maxBet: store.maxBet }))
+    renderMinMaxBet({ minBet, maxBet }: { minBet: number; maxBet: number }) {}
 
     placeBet(betChoice: string, amount: number) {}
 
@@ -125,10 +142,6 @@ abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> 
     }
 
     renderGame() {
-        const gameActionsContext = {
-            placeBet: this.placeBet,
-        };
-
         return <GameContextProvider value={{ ...this.props }}>{this.getRenderTemplate()}</GameContextProvider>;
     }
 

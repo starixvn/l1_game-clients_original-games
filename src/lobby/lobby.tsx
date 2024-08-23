@@ -1,10 +1,13 @@
 import * as gc from "@sg/sg-game-client";
-import { observer, render ,handle} from "observer";
+import dynamic from "next/dynamic";
+import { handle, observer, render } from "observer";
 import { Component } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import LiveGame from "../live-game/live-game";
 import { ILobbyProps, ILobbyStates } from "./type";
+
+const SeDie = dynamic(() => import("../games/sedie/page"));
 
 @observer
 class Lobby extends Component<ILobbyProps, ILobbyStates> {
@@ -23,7 +26,8 @@ class Lobby extends Component<ILobbyProps, ILobbyStates> {
 
     @handle(gc.Auth.AuthHandlers.SSO)
     sso() {
-        return new URLSearchParams(window.location.search);
+        console.log("new URLSearchParams(window.location.search)", new URLSearchParams(globalThis.location.search));
+        return new URLSearchParams(globalThis.location.search);
     }
 
     @render(gc.Auth.AuthStore, (store) => ({
@@ -46,13 +50,12 @@ class Lobby extends Component<ILobbyProps, ILobbyStates> {
 
     render() {
         const { isAuthorized } = this.state;
-        console.log("lobby props", this.props);
         return (
             <div>
                 <Tabs defaultActiveKey="sedie" id="uncontrolled-tab-example" className="mb-3">
                     <Tab eventKey="sedie" title="Sedie" unmountOnExit={true}>
                         <LiveGame gameId={2} /> <br />
-                        {isAuthorized && "Sedie Game"}
+                        {isAuthorized && <SeDie />}
                     </Tab>
                     <Tab eventKey="bigsmall" title="Big Small" unmountOnExit={true}>
                         <LiveGame gameId={1} /> <br />

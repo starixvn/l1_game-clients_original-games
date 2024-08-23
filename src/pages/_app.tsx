@@ -18,6 +18,6 @@ const App = (appProps: AppProps) => {
     return <Component {...pageProps} />;
 };
 
-enableLogging();
+// enableLogging();
 
 export default appWithTranslation(App);
