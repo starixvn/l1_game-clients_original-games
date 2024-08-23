@@ -4,7 +4,7 @@ import { startGame } from "../../components/game-base/startup";
 import { containerOptions, settings, siteConfigs } from "./game-settings";
 
 startGame(settings.name, containerOptions, siteConfigs, settings.namespaces);
-@observer("SeDie")
+@observer(settings.name)
 export default class SeDie extends GameBase<any> {
     constructor(props: any) {
         super(props);

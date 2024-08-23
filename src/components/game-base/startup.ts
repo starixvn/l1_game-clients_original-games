@@ -12,6 +12,7 @@ declare global {
         languages: Languages;
     }
 }
+let isInitI18n = false;
 
 const loadI18n = (siteConfigs: gc.Configs.SiteConfigs, namespaces: string[]) => {
     try {
@@ -33,6 +34,7 @@ const loadI18n = (siteConfigs: gc.Configs.SiteConfigs, namespaces: string[]) => 
         };
 
         gc.Translator.init(translationOptions);
+        isInitI18n = true;
     } catch (e) {
         console.log(e);
     }
@@ -45,10 +47,10 @@ export function startGame(
     namespaces?: string[]
 ) {
     gc.StorageManager.setPrefixKey(siteConfigs.storagePrefixKey || "");
-    loadI18n(siteConfigs, namespaces ? namespaces : [gameName]);
+    !isInitI18n && loadI18n(siteConfigs, namespaces ? namespaces : [gameName]);
 
     const container = gc.getContainer(containerOptions);
-    console.log("container", container);
+    console.log("container------------------- namespaces: ", container);
     const observerContainer = gc.buildObserverContainer(container);
     // gc.sentryLogger.start(siteConfigs.sentryUrl, siteConfigs.env, gameName);
 

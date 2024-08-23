@@ -36,9 +36,17 @@ class Lobby extends Component<ILobbyProps, ILobbyStates> {
     }))
     openGame({ isAuthorized, system }: gc.Auth.AuthStore) {
         if (isAuthorized) {
+            this.clearQueryStringOnUrl();
             this.setState({ isAuthorized: true, system });
             this.loadChipSetting();
             this.triggerRecheckIn();
+        }
+    }
+    clearQueryStringOnUrl() {
+        try {
+            history.pushState(null, "", location.href.split("?")[0]);
+        } catch (ex) {
+            console.log(ex);
         }
     }
 
