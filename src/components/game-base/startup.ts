@@ -1,6 +1,7 @@
-import gc from "@sg/sg-game-client";
-import mobx from "mobx";
-import Observer from "observer";
+import * as gc from "@sg/sg-game-client";
+import * as mobx from "mobx";
+import * as Observer from "observer";
+import "reflect-metadata";
 
 export function startGame(
     gameName: string,

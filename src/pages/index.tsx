@@ -23,9 +23,11 @@ const Demo = () => {
     }, []);
 
     return (
-        <Container className="mt-3">
-            <Lobby token={token} />
-        </Container>
+        <div data-react="true">
+            <Container className="mt-3">
+                <Lobby token={token} />
+            </Container>
+        </div>
     );
 };
 

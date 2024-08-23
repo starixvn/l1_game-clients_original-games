@@ -1,18 +1,20 @@
 import { useObserver } from "observer";
 import React from "react";
 
-export class ObserverComponent extends React.Component<any, any> {
-    constructor(props: any) {
-        super(props);
+export interface IPropsObserver {
+    namespace: string;
+}
 
+export class ObserverComponent extends React.Component<IPropsObserver, { dispose: (() => void) | null }> {
+    constructor(props: IPropsObserver) {
+        super(props);
         this.state = {
-            namespace: "",
             dispose: null,
         };
     }
 
     componentDidMount(): void {
-        const { namespace } = this.state;
+        const { namespace } = this.props;
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const dispose = useObserver(this, namespace);
         this.setState({ dispose });
