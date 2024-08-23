@@ -16,7 +16,6 @@
         "reg": "npm set registry http://npm.lumigame.com"
     },
     "dependencies": {
-        "@sg/sg-game-client": "file:../sg-game-client",
         "axios": "^1.7.4",
         "bootstrap": "^5.3.3",
         "i18next": "^23.14.0",
