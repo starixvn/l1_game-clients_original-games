@@ -6,7 +6,7 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { getSiteConfig } from "../_shared/app-settings";
 import { getSharedContainer } from "../components/game-base/startup";
-import LiveGame from "../live-game/LiveGame";
+import LiveGame from "../live-game/live-game";
 
 export interface LobbyProps {
     token: string;
@@ -27,11 +27,11 @@ const Lobby = (props: LobbyProps) => {
     return (
         <Tabs defaultActiveKey="sedie" id="uncontrolled-tab-example" className="mb-3">
             <Tab eventKey="sedie" title="Sedie" unmountOnExit={true}>
-                <LiveGame gameId={2} />
+                <LiveGame gameId={2} /> <br />
                 Sedie Game
             </Tab>
             <Tab eventKey="bigsmall" title="Big Small" unmountOnExit={true}>
-                <LiveGame gameId={1} />
+                <LiveGame gameId={1} /> <br />
                 Big Small Game
             </Tab>
         </Tabs>

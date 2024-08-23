@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { requestSSO } from "../_shared/utils/sso-helper";
+import styles from "./live-game.module.scss";
 
 export interface LiveGameProps {
     gameId: number;
@@ -13,12 +14,14 @@ const LiveGame = (props: LiveGameProps) => {
             const result = await requestSSO(props.gameId);
             setUrl(result?.redirectUrl);
         };
-        call();
+        //call();
     }, []);
 
+    const showIframe = url !== "";
     return (
-        <div>
-            <iframe src={url} width={800} height={500} />
+        <div className={styles["live-game-container"]}>
+            {showIframe && <iframe src={url} width={800} height={500} />}
+            {!showIframe && <div className={styles["live-game"]}>Live Game</div>}
         </div>
     );
 };
