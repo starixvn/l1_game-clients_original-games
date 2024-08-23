@@ -6364,10 +6364,10 @@ object.values@^1.1.6, object.values@^1.1.7, object.values@^1.2.0:
     define-properties "^1.2.1"
     es-object-atoms "^1.0.0"
 
-observer@^1.3.1:
-  version "1.3.1"
-  resolved "https://npm.lumigame.com/observer/-/observer-1.3.1.tgz#414f1d7fa552cc77ccee3faf8d25ac1fbc363d05"
-  integrity sha512-u4H/2ADwAZrHEdMmgGTI+AFA5mfrXHvw2Mb0fRwntvON7nzZl51eakAbodVHIJR79QtNjIkQrL9pP7J8jR5EJg==
+observer@1.3.2-beta.1:
+  version "1.3.2-beta.1"
+  resolved "http://npm.lumigame.com/observer/-/observer-1.3.2-beta.1.tgz#aa8f8319f8172fdd7dcc0146411da0450836af9d"
+  integrity sha512-yIYVfA1jX6Bw4ZKIp2qY1DHyt680Q+fwOA3BdBLp+R8vi9Jzhf/13cURuuDhYdW2u9RYFRv2vgOCeOmsniGcww==
 
 once@^1.3.0:
   version "1.4.0"
