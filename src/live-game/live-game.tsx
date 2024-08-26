@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { requestSSO } from "../_shared/utils/sso-helper";
 import styles from "./live-game.module.scss";
 import { useTranslation } from "react-i18next";
+import BetPanel from "../components/bet-panel/bet-panel";
 
 export interface LiveGameProps {
     gameId: number;

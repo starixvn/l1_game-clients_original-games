@@ -1,0 +1,40 @@
+.bet-panel {
+    max-width: 700px;
+    border: solid 1px #bfbaba;
+    border-radius: 10px;
+    padding: 10px;
+
+    .bet-game-name {
+        font-weight: bold;
+    }
+
+    .bet-choice-area {
+        display: flex;
+        justify-content: space-between;
+
+        .bet-choice {
+            color: blue;
+        }
+
+        .bet-odds {
+            font-weight: bold;
+        }
+    }
+
+    .bet-input {
+        margin: 10px 0px;
+    }
+
+    .bet-payout {
+        width: 100%;
+        text-align: right;
+
+        .bet-payout-value {
+            color: blue;
+        }
+    }
+
+    .bet-button {
+        width: 100%;
+    }
+}
