@@ -1,16 +1,19 @@
 import { observer } from "observer";
+import React from "react";
 import GameBase from "../../components/game-base";
-import { startGame } from "../../components/game-base/startup";
-import { containerOptions, settings, siteConfigs } from "./game-settings";
 
-startGame(settings.name, containerOptions, siteConfigs, settings.namespaces);
-@observer(settings.name)
+@observer("SeDie")
 export default class SeDie extends GameBase<any> {
     constructor(props: any) {
         super(props);
     }
 
     getRenderTemplate() {
-        return <>SeDie Game....</>;
+        return (
+            <React.Fragment>
+                SeDie Game.....
+                <span>ok</span>
+            </React.Fragment>
+        );
     }
 }

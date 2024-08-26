@@ -1,5 +1,5 @@
 import * as gc from "@sg/sg-game-client";
-import * as mobx from "mobx";
+import { makeAutoObservable, reaction } from "mobx";
 import * as Observer from "observer";
 import "reflect-metadata";
 
@@ -22,11 +22,10 @@ export function startGame(
     gc.StorageManager.setPrefixKey(siteConfigs.storagePrefixKey || "");
 
     const container = gc.getContainer(containerOptions);
-    console.log("container------------------- namespaces: ", container);
     const observerContainer = gc.buildObserverContainer(container);
-    // gc.sentryLogger.start(siteConfigs.sentryUrl, siteConfigs.env, gameName);
 
-    Observer.configure({ [gameName]: { mobx, container: observerContainer } });
+    Observer.configure({ [gameName]: { mobx: { reaction }, container: observerContainer } });
+    console.log("container - gameName", container, gameName);
 
     return container;
 }
@@ -35,6 +34,7 @@ export function getSharedContainer(siteConfigs: gc.Configs.SiteConfigs) {
     const containerOptions: gc.IContainerOptions = {
         onContainerCreated: (container) => {
             container.bind(gc.Configs.SiteConfigs).toConstantValue(siteConfigs);
+            container.bind("makeAutoObservable").toFunction(makeAutoObservable);
         },
         enabledFeatures: [
             gc.Player.FEATURE_NAME,

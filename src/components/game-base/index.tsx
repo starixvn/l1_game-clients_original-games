@@ -6,12 +6,13 @@ import { GameContextProvider } from "../../_shared/react-contexts/game-context/g
 import GameContainer from "../game-components";
 import { GameBaseProps } from "./type";
 
+//
 abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> {
     constructor(props: P) {
         super(props);
         this.state = {
             isReceiveFinishBeforeRoundHistory: true,
-            enableFixHandleFinish: false,
+            isConnected: false,
         };
     }
 
@@ -30,7 +31,7 @@ abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> 
     }
 
     onVisibilityChange = () => {
-        document.visibilityState === "hidden" ? this.onDestroy() : this.onStart();
+        // document.visibilityState === "hidden" ? this.onDestroy() : this.onStart();
     };
 
     clearGameTimeoutAndInterval = () => {};
@@ -62,6 +63,11 @@ abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> 
     @render(gc.Connection.ConnectionStore, (store) => store.signedIn)
     onSignedIn(signedIn: boolean) {
         signedIn && this.inGame();
+    }
+
+    @render(gc.Connection.ConnectionStore, (store) => store.isConnected)
+    onConnected(isConnected: boolean) {
+        console.log("isConnected: ", isConnected);
     }
 
     @handle(gc.Connection.ConnectionHandlers.InGameHandler)
@@ -137,18 +143,16 @@ abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> 
         return <></>;
     }
 
-    getRenderTemplate() {
-        return <></>;
-    }
-
-    renderGame() {
-        return <GameContextProvider value={{ ...this.props }}>{this.getRenderTemplate()}</GameContextProvider>;
-    }
+    abstract getRenderTemplate(): JSX.Element;
 
     protected retryConnect() {}
 
     render() {
-        return <GameContainer>{this.renderGame()}</GameContainer>;
+        return (
+            <GameContainer>
+                <GameContextProvider value={{ ...this.props }}>{this.getRenderTemplate()}</GameContextProvider>
+            </GameContainer>
+        );
     }
 }
 

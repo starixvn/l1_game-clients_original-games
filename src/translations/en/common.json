@@ -1,3 +1,5 @@
 {
-    "live_game": "Live Game"
+    "live_game": "Live Game",
+    "sessionTimeout-1": "Your session has timed out or you have not logged in yet.",
+    "sessionTimeout-2": "Please close the current windows and try to login again."
 }

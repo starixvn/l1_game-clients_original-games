@@ -1,10 +1,10 @@
 import * as gc from "@sg/sg-game-client";
 import { getGameSetting, getSiteConfig } from "../../_shared/app-settings";
+import { GameIds } from "../../_shared/constants";
 import { getSharedContainer } from "../../components/game-base/startup";
 
-export const BigSmallId = 1;
-export const settings = getGameSetting(BigSmallId);
-export const siteConfigs = getSiteConfig(BigSmallId);
+export const settings = getGameSetting(GameIds.BigSmall);
+export const siteConfigs = getSiteConfig(GameIds.BigSmall);
 const sharedContainer = getSharedContainer(siteConfigs);
 
 export const containerOptions: gc.IContainerOptions = {

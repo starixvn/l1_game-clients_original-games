@@ -1,14 +1,15 @@
 import * as gc from "@sg/sg-game-client";
-import dynamic from "next/dynamic";
+import { withRouter } from "next/router";
 import { handle, observer, render } from "observer";
 import { Component } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
+import TimeOutContainer from "../components/game-components/timeout";
+import SeDie from "../games/sedie/page";
 import LiveGame from "../live-game/live-game";
 import { ILobbyProps, ILobbyStates } from "./type";
 
-const SeDie = dynamic(() => import("../games/sedie/page"));
-
+///
 @observer
 class Lobby extends Component<ILobbyProps, ILobbyStates> {
     constructor(props: any) {
@@ -21,30 +22,30 @@ class Lobby extends Component<ILobbyProps, ILobbyStates> {
     }
 
     componentDidMount() {
+        const { isAuthorized } = this.state;
+        console.log("sso--------");
         this.sso();
     }
 
     @handle(gc.Auth.AuthHandlers.SSO)
     sso() {
-        console.log("new URLSearchParams(window.location.search)", new URLSearchParams(globalThis.location.search));
-        return new URLSearchParams(globalThis.location.search);
+        return new URLSearchParams(globalThis?.location?.search);
     }
 
-    @render(gc.Auth.AuthStore, (store) => ({
-        isAuthorized: store.isAuthorized,
-        system: store.system,
-    }))
-    openGame({ isAuthorized, system }: gc.Auth.AuthStore) {
+    @render(gc.Auth.AuthStore, (store) => store.isAuthorized)
+    openGame(isAuthorized: boolean) {
+        console.log("openGame----------------", isAuthorized);
         if (isAuthorized) {
-            this.clearQueryStringOnUrl();
-            this.setState({ isAuthorized: true, system });
+            this.setState({ isAuthorized: true });
             this.loadChipSetting();
             this.triggerRecheckIn();
         }
     }
+
     clearQueryStringOnUrl() {
+        const { router } = this.props;
         try {
-            history.pushState(null, "", location.href.split("?")[0]);
+            router.push("/");
         } catch (ex) {
             console.log(ex);
         }
@@ -71,9 +72,10 @@ class Lobby extends Component<ILobbyProps, ILobbyStates> {
                         {isAuthorized && " Big Small Game"}
                     </Tab>
                 </Tabs>
+                <TimeOutContainer />
             </div>
         );
     }
 }
 
-export default Lobby;
+export default withRouter(Lobby);

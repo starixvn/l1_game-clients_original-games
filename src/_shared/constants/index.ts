@@ -94,22 +94,12 @@ export const Themes = {
     numberGame: "number-game",
 };
 
-export const sabaNumberName = "Saba.numbers";
-export const sabaClubName = "Saba.games";
-
 export const buildVersion = process?.env?.buildVersion || 111;
 export const AppTypes = {
     mobile: 1,
 };
 
-export const confirmBet = "confirmBet";
-
 export const GameIds = {
-    BacBall1: 1001,
-    BacBall2: 1002,
-    NextBall1: 1003,
-    NextBall2: 1004,
-    SeBall1: 1005,
-    LuckyThree: 1006,
-    SicBall: 1007,
+    BigSmall: 1,
+    SeDie: 2,
 };
