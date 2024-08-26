@@ -58,6 +58,7 @@ class Lobby extends Component<ILobbyProps, ILobbyStates> {
 
     render() {
         const { isAuthorized } = this.state;
+        console.log("isAuthorized", isAuthorized);
         return (
             <div>
                 <Tabs defaultActiveKey="sedie" id="uncontrolled-tab-example" className="mb-3">

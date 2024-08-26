@@ -4528,7 +4528,7 @@ i18next-fs-backend@^2.3.2:
 
 i18next@^23.14.0:
   version "23.14.0"
-  resolved "https://npm.lumigame.com/i18next/-/i18next-23.14.0.tgz#d415a858390cc849f3db0df539cb2bbfe24a3cdb"
+  resolved "http://npm.lumigame.com/i18next/-/i18next-23.14.0.tgz#d415a858390cc849f3db0df539cb2bbfe24a3cdb"
   integrity sha512-Y5GL4OdA8IU2geRrt2+Uc1iIhsjICdHZzT9tNwQ3TVqdNzgxHToGCKf/TPRP80vTCAP6svg2WbbJL+Gx5MFQVA==
   dependencies:
     "@babel/runtime" "^7.23.2"
@@ -6765,7 +6765,7 @@ react-dom@^18.3.1:
 
 react-i18next@^15.0.1:
   version "15.0.1"
-  resolved "https://npm.lumigame.com/react-i18next/-/react-i18next-15.0.1.tgz#fc662d93829ecb39683fe2757a47ebfbc5c912a0"
+  resolved "http://npm.lumigame.com/react-i18next/-/react-i18next-15.0.1.tgz#fc662d93829ecb39683fe2757a47ebfbc5c912a0"
   integrity sha512-NwxLqNM6CLbeGA9xPsjits0EnXdKgCRSS6cgkgOdNcPXqL+1fYNl8fBg1wmnnHvFy812Bt4IWTPE9zjoPmFj3w==
   dependencies:
     "@babel/runtime" "^7.24.8"

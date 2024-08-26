@@ -12,33 +12,6 @@ declare global {
         languages: Languages;
     }
 }
-let isInitI18n = false;
-
-const loadI18n = (siteConfigs: gc.Configs.SiteConfigs, namespaces: string[]) => {
-    try {
-        const isUseTolgeeRealTime = !!siteConfigs.tolgeeUrl;
-        const languageId = gc.Translator.getLanguageId();
-        const languageCodes = ["en", "id", "th", "vi", "zh_cn", "zh_tw"];
-        const translationOptions: gc.Shared.utils.TranslationOptions = {
-            languageId: languageId,
-            tolgeeUrl: siteConfigs.tolgeeUrl,
-            isUseTolgeeRealTime: isUseTolgeeRealTime,
-            getStaticData: (languageId) => {
-                return window["languages"][languageId];
-            },
-            availableLanguages: languageCodes,
-            onLoaded: () => {
-                console.log("started tolgee");
-            },
-            gameNamespaces: namespaces,
-        };
-
-        gc.Translator.init(translationOptions);
-        isInitI18n = true;
-    } catch (e) {
-        console.log(e);
-    }
-};
 
 export function startGame(
     gameName: string,
@@ -47,7 +20,6 @@ export function startGame(
     namespaces?: string[]
 ) {
     gc.StorageManager.setPrefixKey(siteConfigs.storagePrefixKey || "");
-    !isInitI18n && loadI18n(siteConfigs, namespaces ? namespaces : [gameName]);
 
     const container = gc.getContainer(containerOptions);
     console.log("container------------------- namespaces: ", container);
