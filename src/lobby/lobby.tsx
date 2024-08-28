@@ -9,7 +9,7 @@ import SeDie from "../games/sedie/page";
 import LiveGame from "../live-game/live-game";
 import { ILobbyProps, ILobbyStates } from "./type";
 
-///
+////
 @observer
 class Lobby extends Component<ILobbyProps, ILobbyStates> {
     constructor(props: any) {
@@ -29,7 +29,7 @@ class Lobby extends Component<ILobbyProps, ILobbyStates> {
 
     @handle(gc.Auth.AuthHandlers.SSO)
     sso() {
-        return new URLSearchParams(globalThis?.location?.search);
+        return new URLSearchParams(window?.location?.search);
     }
 
     @render(gc.Auth.AuthStore, (store) => store.isAuthorized)

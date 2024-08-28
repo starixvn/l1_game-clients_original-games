@@ -6,7 +6,7 @@ const { handle, render } = Observer;
 
 const { Auth, AppTypes } = gc;
 
-export default class GameConnection extends ObserverComponent {
+export default class GameConnection extends ObserverComponent<any, any> {
     protected system: number = AppTypes.Club;
 
     openGameCallback = () => {};

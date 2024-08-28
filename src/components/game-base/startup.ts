@@ -2,6 +2,7 @@ import * as gc from "@sg/sg-game-client";
 import { makeAutoObservable, reaction } from "mobx";
 import * as Observer from "observer";
 import "reflect-metadata";
+import { getSiteConfig } from "../../_shared/app-settings";
 
 interface Languages {
     [key: string]: any;
@@ -48,3 +49,5 @@ export function getSharedContainer(siteConfigs: gc.Configs.SiteConfigs) {
 
     return gc.getContainer(containerOptions);
 }
+
+export const sharedContainer = getSharedContainer(getSiteConfig(2));

@@ -21,7 +21,7 @@ i18next.init({
 });
 
 const TimeOut = () => {
-    const { t } = useTranslation();
+    const { t } = useTranslation("common");
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(true);
 

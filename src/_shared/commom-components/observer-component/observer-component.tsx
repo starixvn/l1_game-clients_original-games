@@ -4,19 +4,25 @@ import React from "react";
 export interface IPropsObserver {
     namespace: string;
 }
+export interface IStatesObserver {
+    dispose: (() => void) | null;
+}
 
-export class ObserverComponent extends React.Component<IPropsObserver, { dispose: (() => void) | null }> {
+export class ObserverComponent<P extends IPropsObserver, S extends IStatesObserver> extends React.Component<
+    IPropsObserver,
+    IStatesObserver
+> {
     constructor(props: IPropsObserver) {
         super(props);
         this.state = {
             dispose: null,
-        };
+        } as S;
     }
 
     componentDidMount(): void {
         const { namespace } = this.props;
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const dispose = useObserver(this, namespace);
+        const dispose = useObserver(this, "SeDie");
         this.setState({ dispose });
     }
 
@@ -26,6 +32,6 @@ export class ObserverComponent extends React.Component<IPropsObserver, { dispose
     }
 
     render() {
-        return null;
+        return <></>;
     }
 }

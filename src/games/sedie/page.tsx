@@ -1,6 +1,7 @@
 import { observer } from "observer";
 import React from "react";
 import GameBase from "../../components/game-base";
+import SeDieBetOptions from "./bet-options";
 
 @observer("SeDie")
 export default class SeDie extends GameBase<any> {
@@ -13,6 +14,7 @@ export default class SeDie extends GameBase<any> {
             <React.Fragment>
                 SeDie Game.....
                 <span>ok</span>
+                <SeDieBetOptions namespace="SeDie" />
             </React.Fragment>
         );
     }
