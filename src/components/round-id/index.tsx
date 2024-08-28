@@ -1,0 +1,28 @@
+import { RoundStore } from "@sg/sg-game-client/dist/game/rounds";
+import { render } from "observer";
+import { IPropsObserver, IStateObserver, ObserverComponent } from "../../_shared/commom-components/observer-component/observer-component";
+
+export interface IRoundIdState extends IStateObserver {
+    clientRoundId: number;
+}
+
+export default class RoundId extends ObserverComponent<IPropsObserver, IRoundIdState> {
+    constructor(props: IPropsObserver) {
+        super(props);
+        this.state = {
+            clientRoundId: 0,
+        } as IRoundIdState;
+    }
+
+    @render(RoundStore, (store) => store.clientRoundId, { fireImmediately: false })
+    renderRoundId(clientRoundId: number) {
+        this.setState({ clientRoundId } as IRoundIdState);
+        // console.log("clientRoundId: ", clientRoundId);
+    }
+
+    render() {
+        const { clientRoundId } = this.state as IRoundIdState;
+        // console.log("clientRoundId", clientRoundId);
+        return <div className="round-id">Round: No. {clientRoundId}</div>;
+    }
+}

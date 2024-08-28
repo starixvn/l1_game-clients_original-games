@@ -4,13 +4,13 @@ import React from "react";
 export interface IPropsObserver {
     namespace: string;
 }
-export interface IStatesObserver {
+export interface IStateObserver {
     dispose: (() => void) | null;
 }
 
-export class ObserverComponent<P extends IPropsObserver, S extends IStatesObserver> extends React.PureComponent<
+export class ObserverComponent<P extends IPropsObserver, S extends IStateObserver> extends React.PureComponent<
     IPropsObserver,
-    IStatesObserver
+    IStateObserver
 > {
     constructor(props: IPropsObserver) {
         super(props);
