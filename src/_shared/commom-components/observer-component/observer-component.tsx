@@ -8,7 +8,7 @@ export interface IStatesObserver {
     dispose: (() => void) | null;
 }
 
-export class ObserverComponent<P extends IPropsObserver, S extends IStatesObserver> extends React.Component<
+export class ObserverComponent<P extends IPropsObserver, S extends IStatesObserver> extends React.PureComponent<
     IPropsObserver,
     IStatesObserver
 > {
@@ -22,7 +22,7 @@ export class ObserverComponent<P extends IPropsObserver, S extends IStatesObserv
     componentDidMount(): void {
         const { namespace } = this.props;
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const dispose = useObserver(this, "SeDie");
+        const dispose = useObserver(this, namespace);
         this.setState({ dispose });
     }
 
