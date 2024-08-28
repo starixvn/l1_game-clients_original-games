@@ -1,11 +1,11 @@
 import * as gc from "@sg/sg-game-client";
 import { handle, render } from "observer";
 import React from "react";
+import { Row } from "react-bootstrap";
 import { PlayerContext } from "../../_shared/react-contexts/auth";
 import { GameContextProvider } from "../../_shared/react-contexts/game-context/game-context";
 import GameContainer from "../game-components";
 import { GameBaseProps } from "./type";
-import { Row } from "react-bootstrap";
 
 abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> {
     constructor(props: P) {
@@ -66,17 +66,10 @@ abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> 
     }
 
     @render(gc.Connection.ConnectionStore, (store) => store.isConnected)
-    onConnected(isConnected: boolean) {
-        console.log("isConnected: ", isConnected);
-    }
+    onConnected(isConnected: boolean) {}
 
     @handle(gc.Connection.ConnectionHandlers.InGameHandler)
     inGame() {}
-
-    @render(gc.Rounds.RoundStore, (store) => store.roundId)
-    renderRoundId(roundId: any) {
-        console.log("render roundId: ", roundId);
-    }
 
     @render(gc.Rounds.RoundStore, (store) => ({ minBet: store.minBet, maxBet: store.maxBet }))
     renderMinMaxBet({ minBet, maxBet }: { minBet: number; maxBet: number }) {}

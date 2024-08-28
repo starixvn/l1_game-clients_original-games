@@ -63,7 +63,7 @@ export default class SeDieBetOptions extends ObserverComponent<IPropsObserver, I
     };
 
     render() {
-        const { roundOdds } = this.state as ISeDieBetOptionsStates;
+        const { roundOdds } = this.state as ISeDieBetOptionsState;
         const odds = roundOdds?.odds;
         return (
             <div className="grid-example">

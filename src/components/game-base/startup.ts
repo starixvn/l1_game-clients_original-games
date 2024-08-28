@@ -26,7 +26,6 @@ export function startGame(
     const observerContainer = gc.buildObserverContainer(container);
 
     Observer.configure({ [gameName]: { mobx: { reaction }, container: observerContainer } });
-    console.log("container - gameName", container, gameName);
 
     return container;
 }
