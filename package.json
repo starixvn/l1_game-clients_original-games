@@ -13,7 +13,8 @@
         "test": "jest",
         "test:watch": "jest --watch",
         "test-coverage": "jest --coverage",
-        "reg": "npm set registry http://npm.lumigame.com"
+        "reg": "npm set registry http://npm.lumigame.com",
+        "linkToSGGameClient": "yarn link @sg/sg-game-client"
     },
     "dependencies": {
         "axios": "^1.7.4",
