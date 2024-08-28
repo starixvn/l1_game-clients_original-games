@@ -1,7 +1,7 @@
 import * as gc from "@sg/sg-game-client";
 import { withRouter } from "next/router";
 import { handle, observer, render } from "observer";
-import { Component } from "react";
+import React from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import TimeOutContainer from "../components/game-components/timeout";
@@ -9,9 +9,8 @@ import SeDie from "../games/sedie/page";
 import LiveGame from "../live-game/live-game";
 import { ILobbyProps, ILobbyStates } from "./type";
 
-////
 @observer
-class Lobby extends Component<ILobbyProps, ILobbyStates> {
+class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
     constructor(props: any) {
         super(props);
         this.state = {
@@ -39,15 +38,6 @@ class Lobby extends Component<ILobbyProps, ILobbyStates> {
             this.setState({ isAuthorized: true });
             this.loadChipSetting();
             this.triggerRecheckIn();
-        }
-    }
-
-    clearQueryStringOnUrl() {
-        const { router } = this.props;
-        try {
-            router.push("/");
-        } catch (ex) {
-            console.log(ex);
         }
     }
 

@@ -44,7 +44,7 @@ export default class SeDieBetOptions extends ObserverComponent<IPropsObserver, I
     render() {
         const { roundOdds } = this.state as ISeDieBetOptionsStates;
         const odds = roundOdds?.odds as any;
-        console.log("odds", odds);
+        console.log("odds--", odds);
         return (
             <div className="grid-example">
                 <Container>
@@ -59,12 +59,15 @@ export default class SeDieBetOptions extends ObserverComponent<IPropsObserver, I
 
                     <Row>
                         {Object.keys(SeDieChoices).map((choiceKey) => {
+                            if(choiceKey === "odd" || choiceKey == "even"){
+                                return <></>
+                            }
                             const choiceName = SeDieChoices[choiceKey as keyof typeof SeDieChoices];
                             const oddsValue = odds?.[choiceName] || 0;
 
                             return (
                                 <Col key={choiceKey} className={Style["bet"]} sm>
-                                    {`${choiceKey.replace("Red", " Red").replace("White", " White")} - ${oddsValue}`}
+                                    {`${choiceKey} - ${oddsValue}`}
                                 </Col>
                             );
                         })}

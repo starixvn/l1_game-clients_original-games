@@ -5,12 +5,9 @@ import * as mobx from "mobx";
 import { appWithTranslation } from "next-i18next";
 import { AppProps } from "next/app";
 import * as Observer from "observer";
-import { sharedContainer, startGame } from "../components/game-base/startup";
-import { containerOptions, settings, siteConfigs } from "../games/sedie/game-settings";
+import { sharedContainer } from "../components/game-base/startup";
 
 Observer.configure({ default: { mobx, container: gc.buildObserverContainer(sharedContainer) } });
-
-startGame(settings.name, containerOptions, siteConfigs, settings.namespaces);
 
 const App = (appProps: AppProps) => {
     const { Component, pageProps } = appProps;

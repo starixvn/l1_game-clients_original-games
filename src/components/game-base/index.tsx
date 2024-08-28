@@ -6,7 +6,6 @@ import { GameContextProvider } from "../../_shared/react-contexts/game-context/g
 import GameContainer from "../game-components";
 import { GameBaseProps } from "./type";
 
-//
 abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> {
     constructor(props: P) {
         super(props);
@@ -31,7 +30,7 @@ abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> 
     }
 
     onVisibilityChange = () => {
-        // document.visibilityState === "hidden" ? this.onDestroy() : this.onStart();
+        document.visibilityState === "hidden" ? this.onDestroy() : this.onStart();
     };
 
     clearGameTimeoutAndInterval = () => {};
