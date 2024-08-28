@@ -4,6 +4,18 @@ export const SeDieChoices = {
     red4: "red4",
     red3: "red3",
     red2: "red2",
-    white3: "white3",
     white4: "white4",
+    white3: "white3",
+};
+
+export const mainChoices = [SeDieChoices.odd, SeDieChoices.even];
+export const topChoices = [SeDieChoices.red4, SeDieChoices.red3, SeDieChoices.red2];
+export const bottomChoices = [SeDieChoices.white4, SeDieChoices.white3];
+
+export const ChoiceSeDieIconMapper: Record<string, boolean[]> = {
+    red4: [true, true, true, true],
+    red2: [true, true, false, false],
+    white4: [false, false, false, false],
+    red3: [true, true, true, false],
+    white3: [true, false, false, false],
 };

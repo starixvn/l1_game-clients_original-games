@@ -1,0 +1,12 @@
+html {
+    // dots
+    --dot-even-background: linear-gradient(180deg, #ffffff 0%, #e7e7e7 100%);
+    --dot-even-border: linear-gradient(180deg, #ececec 0%, #c5c5c5 100%);
+    --dot-even-text-color: #323232;
+    --dot-even-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
+
+    --dot-odd-background: linear-gradient(180deg, #ff6e79 6.04%, #e73542 50.31%, #cc1a27 100%);
+    --dot-odd-border: linear-gradient(180deg, #ff8e95 6.04%, #a80915 100%);
+    --dot-odd-text-color: #fff;
+    --dot-odd-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
+}

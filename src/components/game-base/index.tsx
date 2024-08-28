@@ -5,6 +5,7 @@ import { PlayerContext } from "../../_shared/react-contexts/auth";
 import { GameContextProvider } from "../../_shared/react-contexts/game-context/game-context";
 import GameContainer from "../game-components";
 import { GameBaseProps } from "./type";
+import { Row } from "react-bootstrap";
 
 abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> {
     constructor(props: P) {
@@ -80,8 +81,6 @@ abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> 
     @render(gc.Rounds.RoundStore, (store) => ({ minBet: store.minBet, maxBet: store.maxBet }))
     renderMinMaxBet({ minBet, maxBet }: { minBet: number; maxBet: number }) {}
 
-    placeBet(betChoice: string, amount: number) {}
-
     renderNotice() {
         return <></>;
     }
@@ -90,7 +89,7 @@ abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> 
         return <></>;
     }
 
-    renderHeaderBlock() {
+    renderCountDownTimer() {
         return <></>;
     }
 
@@ -99,10 +98,6 @@ abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> 
     }
 
     renderGameGuideModal() {
-        return <></>;
-    }
-
-    renderMenuButtons() {
         return <></>;
     }
 
@@ -138,11 +133,18 @@ abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> 
         return <></>;
     }
 
-    renderNewRoundTransition() {
-        return <></>;
-    }
+    getRenderTemplate() {
+        return (
+            <>
+                <Row>
+                    {this.renderRoundIdSection()}
+                    {this.renderCountDownTimer()}
+                </Row>
 
-    abstract getRenderTemplate(): JSX.Element;
+                {this.renderBettingBlock()}
+            </>
+        );
+    }
 
     protected retryConnect() {}
 

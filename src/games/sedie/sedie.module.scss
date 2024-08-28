@@ -3,4 +3,24 @@
     border: 1px solid #712cf94d;
     padding-bottom: .75rem;
     padding-top: .75rem;
+    text-transform: capitalize;
+}
+
+.container-bets{
+    display: flex;
+    justify-content: space-between;
+}
+
+.wrapper-dots {
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(4, 2.2rem);
+    grid-gap: 0;
+}
+
+.odd{
+    font-weight: 700;
+}
+.main-option{
+    font-weight: 500;
 }

@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import * as gc from "@sg/sg-game-client";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../assets/main.scss";
 import * as mobx from "mobx";
 import { appWithTranslation } from "next-i18next";
 import { AppProps } from "next/app";

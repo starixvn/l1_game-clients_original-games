@@ -1,6 +1,5 @@
 import { observer } from "observer";
-import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import { CountDownTimer, RoundId } from "../../components";
 import GameBase from "../../components/game-base";
 import { startGame } from "../../components/game-base/startup";
@@ -14,24 +13,23 @@ export default class SeDie extends GameBase<any> {
         super(props);
     }
 
-    getRenderTemplate() {
+    renderRoundIdSection() {
         return (
-            <React.Fragment>
-                SeDie Game.....
-                <Container>
-                    <Row>
-                        <Col>
-                            <RoundId namespace={settings.name} />
-                        </Col>
-                        <Col>
-                            <CountDownTimer namespace={settings.name} />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <SeDieBetOptions namespace={settings.name} />
-                    </Row>
-                </Container>
-            </React.Fragment>
+            <Col>
+                <RoundId namespace={settings.name} />
+            </Col>
         );
+    }
+
+    renderCountDownTimer() {
+        return (
+            <Col>
+                <CountDownTimer namespace={settings.name} />
+            </Col>
+        );
+    }
+
+    renderBettingBlock() {
+        return <SeDieBetOptions namespace={settings.mainObserverNamespace} />;
     }
 }

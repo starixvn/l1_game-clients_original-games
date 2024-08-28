@@ -6,8 +6,9 @@ import {
     IStateObserver,
     ObserverComponent,
 } from "../../../_shared/commom-components/observer-component/observer-component";
-import Style from "../sedie.module.scss";
-import { SeDieChoices } from "../type";
+import { RoundDot } from "../../../components/dot";
+import Styles from "../sedie.module.scss";
+import { bottomChoices, ChoiceSeDieIconMapper, SeDieChoices, topChoices } from "../type";
 
 export interface ISeDieBetOptionsState extends IStateObserver {
     roundOdds: gc.Rounds.RoundOdds;
@@ -40,43 +41,79 @@ export default class SeDieBetOptions extends ObserverComponent<IPropsObserver, I
         this.setState({ roundOdds } as ISeDieBetOptionsState);
     }
 
+    renderDots = (dots: boolean[]) =>
+        dots.map((isRed, index) => <RoundDot key={index} choice={isRed ? SeDieChoices.odd : SeDieChoices.even} size="large" />);
+
+    renderIcons = (choice: string, oddsValue: number) => {
+        return (
+            <div className={Styles["container-bets"]}>
+                <div className={Styles["wrapper-dots"]}>{this.renderDots(ChoiceSeDieIconMapper[choice])}</div>
+                <div className={Styles["odd"]}>{oddsValue}</div>
+            </div>
+        );
+    };
+
+    renderMainOption = (name: string, odd: number) => {
+        return (
+            <div className={Styles["container-bets"]}>
+                <div className={Styles["main-option"]}>{name}</div>
+                <div className={Styles["odd"]}>{odd || 0}</div>
+            </div>
+        );
+    };
+
     render() {
-        const { roundOdds } = this.state as ISeDieBetOptionsState;
-        const odds = roundOdds?.odds as any;
-        console.log("odds--", odds);
+        const { roundOdds } = this.state as ISeDieBetOptionsStates;
+        const odds = roundOdds?.odds;
         return (
             <div className="grid-example">
                 <Container>
                     <Row>
-                        <Col className={Style["bet"]} sm={6}>
-                            {`Even - ${odds?.even || 0}`}
+                        <Col className={Styles["bet"]} sm={3}>
+                            {this.renderMainOption("O", odds?.odd)}
                         </Col>
-                        <Col className={Style["bet"]} sm={6}>
-                            {`Odd - ${odds?.odd || 0}`}
+                        <Col className={Styles["bet"]} sm={9}>
+                            <Row>
+                                {Object.keys(SeDieChoices).map((choiceKey) => {
+                                    if (topChoices.includes(choiceKey)) {
+                                        const choiceName = SeDieChoices[choiceKey as keyof typeof SeDieChoices];
+                                        const oddsValue = odds?.[choiceName] || 0;
+
+                                        return (
+                                            <Col key={choiceKey} sm={4}>
+                                                {this.renderIcons(choiceKey, oddsValue)}
+                                            </Col>
+                                        );
+                                    }
+                                })}
+                            </Row>
                         </Col>
                     </Row>
 
                     <Row>
-                        {Object.keys(SeDieChoices).map((choiceKey) => {
-                            if (choiceKey === "odd" || choiceKey == "even") {
-                                return <></>;
-                            }
-                            const choiceName = SeDieChoices[choiceKey as keyof typeof SeDieChoices];
-                            const oddsValue = odds?.[choiceName] || 0;
+                        <Col className={Styles["bet"]} sm={3}>
+                            {this.renderMainOption("E", odds?.even)}
+                        </Col>
+                        <Col className={Styles["bet"]} sm={9}>
+                            <Row>
+                                {Object.keys(SeDieChoices).map((choiceKey) => {
+                                    if (bottomChoices.includes(choiceKey)) {
+                                        const choiceName = SeDieChoices[choiceKey as keyof typeof SeDieChoices];
+                                        const oddsValue = odds?.[choiceName] || 0;
 
-                            return (
-                                <Col key={choiceKey} className={Style["bet"]} sm>
-                                    {`${choiceKey} - ${oddsValue}`}
-                                </Col>
-                            );
-                        })}
+                                        return (
+                                            <Col key={choiceKey} sm={4}>
+                                                {this.renderIcons(choiceKey, oddsValue)}
+                                            </Col>
+                                        );
+                                    }
+                                })}
+                            </Row>
+                        </Col>
                     </Row>
-                    {odds &&
-                        Object.keys(odds)?.forEach((choice) => {
-                            console.log("choice: ", choice);
-                            console.log("odds[choice]", odds[choice]);
-                        })}
                 </Container>
+
+                {/* <BetPanel /> */}
             </div>
         );
     }
