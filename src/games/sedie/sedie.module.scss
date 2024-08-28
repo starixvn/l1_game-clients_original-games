@@ -1,8 +1,6 @@
 .bet{
     background-color: #712cf926;
     border: 1px solid #712cf94d;
-    padding-bottom: .75rem;
-    padding-top: .75rem;
     text-transform: capitalize;
 }
 
@@ -21,6 +19,16 @@
 .odd{
     font-weight: 700;
 }
+
 .main-option{
     font-weight: 500;
+}
+
+.border-right{
+    border-right:1px solid  #712cf94d;
+}
+
+.padding-bet{
+        padding-bottom: .75rem;
+    padding-top: .75rem;
 }

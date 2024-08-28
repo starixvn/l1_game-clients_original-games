@@ -55,7 +55,7 @@ export default class SeDieBetOptions extends ObserverComponent<IPropsObserver, I
 
     renderMainOption = (name: string, odd: number) => {
         return (
-            <div className={Styles["container-bets"]}>
+            <div className={`${Styles["container-bets"]} ${Styles["padding-bet"]}`}>
                 <div className={Styles["main-option"]}>{name}</div>
                 <div className={Styles["odd"]}>{odd || 0}</div>
             </div>
@@ -80,7 +80,7 @@ export default class SeDieBetOptions extends ObserverComponent<IPropsObserver, I
                                         const oddsValue = odds?.[choiceName] || 0;
 
                                         return (
-                                            <Col key={choiceKey} sm={4}>
+                                            <Col className={`${Styles["border-right"]} ${Styles["padding-bet"]}`} key={choiceKey} sm={4}>
                                                 {this.renderIcons(choiceKey, oddsValue)}
                                             </Col>
                                         );
@@ -102,7 +102,7 @@ export default class SeDieBetOptions extends ObserverComponent<IPropsObserver, I
                                         const oddsValue = odds?.[choiceName] || 0;
 
                                         return (
-                                            <Col key={choiceKey} sm={4}>
+                                            <Col className={`${Styles["border-right"]} ${Styles["padding-bet"]}`} key={choiceKey} sm={4}>
                                                 {this.renderIcons(choiceKey, oddsValue)}
                                             </Col>
                                         );

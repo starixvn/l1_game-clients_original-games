@@ -1,4 +1,3 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import i18next from "i18next";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -6,9 +5,7 @@ import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import { I18nextProvider } from "react-i18next";
-import "reflect-metadata";
 import { requestSSO } from "../_shared/utils/sso-helper";
-import "../lobby/lobby";
 import common_en from "../translations/en/common.json";
 import common_vi from "../translations/vi/common.json";
 

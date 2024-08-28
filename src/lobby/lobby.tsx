@@ -21,7 +21,6 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
     }
 
     componentDidMount() {
-        const { isAuthorized } = this.state;
         console.log("sso--------");
         this.sso();
     }
@@ -33,8 +32,8 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
 
     @render(gc.Auth.AuthStore, (store) => store.isAuthorized)
     openGame(isAuthorized: boolean) {
-        console.log("openGame----------------", isAuthorized);
         if (isAuthorized) {
+            console.log("isAuthorized----------------", isAuthorized);
             this.setState({ isAuthorized: true });
             this.loadChipSetting();
             this.triggerRecheckIn();

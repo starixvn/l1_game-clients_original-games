@@ -2,7 +2,6 @@ import i18next from "i18next";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import "reflect-metadata";
 
 import common_en from "../translations/en/common.json";
 import common_vi from "../translations/vi/common.json";
