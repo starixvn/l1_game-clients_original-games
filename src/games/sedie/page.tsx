@@ -6,10 +6,11 @@ import { configGameContainer } from "../../components/game-base/startup";
 import { containerOptions, settings, siteConfigs } from "./game-settings";
 import SeDieRoundHistory from "./round-history";
 import SeDieBetOptions from "./sedie-bet-options";
+import SeDieSettlementResult from "./settlement-result";
 
 configGameContainer(settings.name, containerOptions, siteConfigs);
-
-@observer(settings.name)
+const observerNamespace = settings.mainObserverNamespace;
+@observer(observerNamespace)
 export default class SeDie extends GameBase<any> {
     constructor(props: any) {
         super(props);
@@ -18,7 +19,7 @@ export default class SeDie extends GameBase<any> {
     renderStatistic() {
         return (
             <Col>
-                <SeDieRoundHistory namespace={settings.name} />
+                <SeDieRoundHistory namespace={observerNamespace} />
             </Col>
         );
     }
@@ -26,20 +27,20 @@ export default class SeDie extends GameBase<any> {
     renderRoundIdSection() {
         return (
             <Col>
-                <RoundId namespace={settings.name} />
+                <RoundId namespace={observerNamespace} />
             </Col>
         );
     }
 
     renderCountDownTimer() {
-        return (
-            <Col>
-                <CountDownTimer namespace={settings.name} />
-            </Col>
-        );
+        return <CountDownTimer namespace={observerNamespace} />;
     }
 
     renderBettingBlock() {
-        return <SeDieBetOptions namespace={settings.mainObserverNamespace} />;
+        return <SeDieBetOptions namespace={observerNamespace} />;
+    }
+
+    renderResultBlock() {
+        return <SeDieSettlementResult namespace={observerNamespace} />;
     }
 }

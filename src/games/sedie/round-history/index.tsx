@@ -32,8 +32,6 @@ export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver,
         }
         const roundHistories = rounds as gc.RoundHistories.RoundHistory[];
         console.log("roundHistories", roundHistories);
-        console.log("length", roundHistories.length);
-        console.log("roundHistories", rounds);
 
         return (
             <Row>
@@ -49,7 +47,7 @@ export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver,
     }
 
     private RoundHistoryItem(roundHistory: gc.RoundHistories.RoundHistory): JSX.Element {
-        const { value } = this.getResult(roundHistory.settlementResult);
+        const value = this.getResult(roundHistory.settlementResult);
         const isRed = value === "O";
         console.log(roundHistory.roundId);
         return (
@@ -59,18 +57,15 @@ export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver,
         );
     }
 
-    private getResult(settlementResult: gc.GameServiceMessage.TSettlementResult): { value: string; color: string } {
-        let color = "",
-            value = "";
-        settlementResult &&
-            Object.keys(settlementResult).map((choice) => {
-                if (settlementResult[choice]) {
-                    if (choice === SeDieChoices.odd || choice === SeDieChoices.even) {
-                        value = choice.charAt(0).toUpperCase();
-                    }
-                    color = choice;
+    private getResult(settlementResult: gc.GameServiceMessage.TSettlementResult): string {
+        let value = "";
+        Object.keys(settlementResult).map((choice) => {
+            if (settlementResult[choice]) {
+                if (choice === SeDieChoices.odd || choice === SeDieChoices.even) {
+                    value = choice.charAt(0).toUpperCase();
                 }
-            });
-        return { color, value };
+            }
+        });
+        return value;
     }
 }

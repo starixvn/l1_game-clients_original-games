@@ -3,11 +3,16 @@ import { Rounds, Settlements } from "@sg/sg-game-client";
 import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds/round-time-store";
 import { handle, render } from "observer";
 import React from "react";
-import { Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { PlayerContext } from "../../_shared/react-contexts/auth";
 import { GameContextProvider } from "../../_shared/react-contexts/game-context/game-context";
 import GameContainer from "../game-components";
 import { GameBaseProps } from "./type";
+export interface IGameBaseState {
+    isReceiveFinishBeforeRoundHistory: boolean;
+    isConnected: boolean;
+    isRenderResultBlock: boolean;
+}
 
 abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> {
     constructor(props: P) {
@@ -15,7 +20,8 @@ abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> 
         this.state = {
             isReceiveFinishBeforeRoundHistory: true,
             isConnected: false,
-        };
+            isRenderResultBlock: false,
+        } as IGameBaseState;
     }
 
     componentDidMount() {
@@ -129,29 +135,39 @@ abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> 
     }
 
     @render(Settlements.SettlementStore, (store) => ({ result: store.result, settlementResult: store.settlementResult }))
-    updateSettlementResult(data: { result: gc.GameServiceMessage.TResult; settlementResult: gc.GameServiceMessage.TSettlementResult }) {
+    handleResult(data: { result: gc.GameServiceMessage.TResult; settlementResult: gc.GameServiceMessage.TSettlementResult }) {
         console.log("receive result from ws");
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.roundState)
-    showSettlementResult(roundState: string) {
+    handleRoundState(roundState: string) {
         if (roundState === ROUND_STATE.SHOW_RESULT) {
             this.finishShowResult();
+        }
+        if (roundState !== ROUND_STATE.SHOW_RESULT) {
+            this.setState({ isRenderResultBlock: false });
         }
     }
 
     @handle(Settlements.SettlementUIHandlers.FinishedShowResult)
     finishShowResult() {
-        //anim show result
+        //show result
+        this.setState({ isRenderResultBlock: true });
     }
 
     getRenderTemplate() {
+        const { isRenderResultBlock } = this.state as IGameBaseState;
+
         return (
             <>
                 <Row>
                     {this.renderRoundIdSection()}
-                    {this.renderCountDownTimer()}
-                    {this.renderResultBlock()}
+                    <Col>
+                        <Row>
+                            <Col>{this.renderCountDownTimer()}</Col>
+                            <Col>{isRenderResultBlock && this.renderResultBlock()}</Col>
+                        </Row>
+                    </Col>
                 </Row>
 
                 {this.renderBettingBlock()}
