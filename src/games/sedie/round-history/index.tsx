@@ -59,13 +59,14 @@ export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver,
 
     private getResult(settlementResult: gc.GameServiceMessage.TSettlementResult): string {
         let value = "";
-        Object.keys(settlementResult).map((choice) => {
-            if (settlementResult[choice]) {
-                if (choice === SeDieChoices.odd || choice === SeDieChoices.even) {
-                    value = choice.charAt(0).toUpperCase();
+        settlementResult &&
+            Object.keys(settlementResult).map((choice) => {
+                if (settlementResult[choice]) {
+                    if (choice === SeDieChoices.odd || choice === SeDieChoices.even) {
+                        value = choice.charAt(0).toUpperCase();
+                    }
                 }
-            }
-        });
+            });
         return value;
     }
 }
