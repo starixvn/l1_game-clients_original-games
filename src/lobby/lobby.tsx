@@ -50,13 +50,14 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
         return (
             <div>
                 <Tabs defaultActiveKey="sedie" id="uncontrolled-tab-example" className="mb-3">
-                    <Tab eventKey="sedie" title="Sedie" unmountOnExit={true}>
+                    <Tab eventKey="sedie" title={gc.Translator.t("SeDie.game_name")} unmountOnExit={true}>
                         {isAuthorized && <SeDie />}
                     </Tab>
-                    <Tab eventKey="bigsmall" title="Big Small" unmountOnExit={true}>
+                    <Tab eventKey="bigsmall" title={gc.Translator.t("BigSmall.game_name")} unmountOnExit={true}>
                         {isAuthorized && " Big Small Game"}
                     </Tab>
                 </Tabs>
+                <div>{gc.Translator.t("Common.one_choice_allowed")}</div>
                 <TimeOutContainer />
             </div>
         );

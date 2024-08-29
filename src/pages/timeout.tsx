@@ -1,23 +1,6 @@
-import i18next from "i18next";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-
-import common_en from "../translations/en/common.json";
-import common_vi from "../translations/vi/common.json";
-
-i18next.init({
-    interpolation: { escapeValue: false }, // React already does escaping
-    lng: "en", // language to use
-    resources: {
-        en: {
-            common: common_en,
-        },
-        vi: {
-            common: common_vi,
-        },
-    },
-});
 
 const TimeOut = () => {
     const { t } = useTranslation("common");

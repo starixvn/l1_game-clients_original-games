@@ -1,26 +1,9 @@
-import i18next from "i18next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
-import { I18nextProvider } from "react-i18next";
 import { requestSSO } from "../_shared/utils/sso-helper";
-import common_en from "../translations/en/common.json";
-import common_vi from "../translations/vi/common.json";
-
-i18next.init({
-    interpolation: { escapeValue: false }, // React already does escaping
-    lng: "en", // language to use
-    resources: {
-        en: {
-            common: common_en,
-        },
-        vi: {
-            common: common_vi,
-        },
-    },
-});
 
 const Index = () => {
     const router = useRouter();
@@ -52,18 +35,16 @@ const Index = () => {
     }
 
     return (
-        <I18nextProvider i18n={i18next}>
-            <div data-react="true">
-                <Container className="mt-3">
-                    <Button variant="primary" onClick={handleGetToken}>
-                        Get Token
-                    </Button>
-                    <div>
-                        <Link href={`/?token=${token}&ref=d_direct`}>Demo page: {`/?token=${token}&ref=d_direct`} </Link>
-                    </div>
-                </Container>
-            </div>
-        </I18nextProvider>
+        <div data-react="true">
+            <Container className="mt-3">
+                <Button variant="primary" onClick={handleGetToken}>
+                    Get Token
+                </Button>
+                <div>
+                    <Link href={`/?token=${token}&ref=d_direct`}>Demo page: {`/?token=${token}&ref=d_direct`} </Link>
+                </div>
+            </Container>
+        </div>
     );
 };
 

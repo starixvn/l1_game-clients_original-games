@@ -4,6 +4,21 @@ import "../assets/main.scss";
 import { appWithTranslation } from "next-i18next";
 import { AppProps } from "next/app";
 import { configSharedContainer } from "../components/game-base/startup";
+import { loadI18n } from "../i18n";
+import * as gc from "@sg/sg-game-client";
+
+/*
+const languageMapping = {
+    "vi-VN": "vi",
+    "en-US": "en",
+    "en-UK": "en",
+    "th-TH": "th",
+    "id-ID": "id",
+    "zh-CN": "zh_cn",
+    "zh-TW": "zh_tw",
+};
+*/
+loadI18n(gc.Translator.toLanguageId("vi-VN"));
 
 configSharedContainer();
 
