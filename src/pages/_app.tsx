@@ -6,7 +6,7 @@ import { AppProps } from "next/app";
 import { configSharedContainer } from "../components/game-base/startup";
 import { loadI18n } from "../i18n";
 import * as gc from "@sg/sg-game-client";
-import appSettings from "../common/app-settings";
+import appSettings from "../_shared/app-settings";
 
 /*
 const languageMapping = {

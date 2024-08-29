@@ -1,4 +1,4 @@
-import getAppSettings from "../app-settings";
+import appSettings from "../app-settings";
 
 export interface BetOptionData {
     betChoice: string;
@@ -20,7 +20,7 @@ export interface Round {
     settlementResult: any;
 }
 
-export const systemName = getAppSettings.system.toLocaleLowerCase();
+export const systemName = appSettings.system.toLocaleLowerCase();
 
 export const ChipMapper = {
     gn: {

@@ -42,4 +42,5 @@ export default interface AppSettings {
     env: string;
     enableMsgpackParserAllGames: boolean;
     subGuideDomain: string;
+    owApiSimulatorUrl: string;
 }

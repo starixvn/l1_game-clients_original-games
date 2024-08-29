@@ -1,5 +1,5 @@
 import axios from "axios";
-import appSettings from "../../common/app-settings";
+import appSettings from "../app-settings";
 
 export const requestSSO = async (gameId = 0) => {
     const randomIntFromInterval = (min: number, max: number) => {
