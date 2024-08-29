@@ -1,4 +1,5 @@
 import * as gc from "@sg/sg-game-client";
+import { RoundHistoryStore } from "@sg/sg-game-client/dist/game/round-histories";
 import { render } from "observer";
 import { Col, Row } from "react-bootstrap";
 import {
@@ -10,24 +11,22 @@ import { RoundDot } from "../../../components/dot";
 import { SeDieChoices } from "../type";
 
 export interface ISeDieRoundHistoryState extends IStateObserver {
-    rounds: [];
+    rounds: gc.RoundHistories.RoundHistory[];
 }
 export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver, ISeDieRoundHistoryState> {
     constructor(props: IPropsObserver) {
         super(props);
-        this.state = {
-            rounds: [],
-        } as ISeDieRoundHistoryState;
+        this.state = {} as ISeDieRoundHistoryState;
     }
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
-    renderOdds(rounds: gc.RoundHistories.RoundHistory[]) {
+    renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
         this.setState({ rounds: rounds.slice(0, 6) } as ISeDieRoundHistoryState);
     }
 
     render() {
         const { rounds } = this.state as ISeDieRoundHistoryState;
-        if (rounds.length == 0) {
+        if (!rounds || rounds.length === 0) {
             return <></>;
         }
         const roundHistories = rounds as gc.RoundHistories.RoundHistory[];
@@ -36,7 +35,7 @@ export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver,
         return (
             <Row>
                 <Col sm={2}>Previous round:</Col>
-                {roundHistories.reverse().map((roundHistory) => {
+                {roundHistories.toReversed().map((roundHistory) => {
                     return this.RoundHistoryItem(roundHistory);
                 })}
                 <Col key={roundHistories[roundHistories.length - 1].roundId} sm={2}>
@@ -44,6 +43,39 @@ export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver,
                 </Col>
             </Row>
         );
+    }
+
+    @render(RoundHistoryStore, (store) => store.firstJoinGameHistory)
+    renderStaticResult(firstJoinGameHistory: gc.RoundHistories.IFirstJoinGameHistory) {
+        if (!firstJoinGameHistory) {
+            return;
+        }
+        const { roundHistory } = firstJoinGameHistory;
+        // this.setHighlightStatic(staticHighlight, animationHighlight, roundHistory);
+        const { rounds } = this.state as ISeDieRoundHistoryState;
+        if (!rounds || rounds.length === 0) {
+            return;
+        }
+        console.log("renderStaticResult");
+        debugger;
+        rounds[5] = roundHistory;
+        this.setState({ rounds } as ISeDieRoundHistoryState);
+    }
+
+    @render(RoundHistoryStore, (store) => store.joinGameHistory)
+    handleJoinGameAndShowResult(joinGameHistory: gc.RoundHistories.IJoinGameHistory) {
+        const { roundHistory } = joinGameHistory ?? {};
+        if (roundHistory) {
+            console.log("handleJoinGameAndShowResult bf");
+            const { rounds } = this.state as ISeDieRoundHistoryState;
+            if (!rounds || rounds.length === 0) {
+                return;
+            }
+            console.log("handleJoinGameAndShowResult af");
+
+            rounds[0] = roundHistory;
+            this.setState({ rounds } as ISeDieRoundHistoryState);
+        }
     }
 
     private RoundHistoryItem(roundHistory: gc.RoundHistories.RoundHistory): JSX.Element {

@@ -1,4 +1,5 @@
 import * as gc from "@sg/sg-game-client";
+import { RoundHistoryStore } from "@sg/sg-game-client/dist/game/round-histories";
 import { SettlementStore } from "@sg/sg-game-client/dist/game/settlements";
 import { render } from "observer";
 import { Col, Row } from "react-bootstrap";
@@ -23,6 +24,22 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
     constructor(props: IPropsObserver) {
         super(props);
         this.state = {} as ISeDieSettlementResultState;
+    }
+    @render(SettlementStore, (store) => store.currentFinish, {
+        fireImmediately: false,
+    })
+    renderCurrentFinish(currentFinish: gc.GameServiceMessage.Finish) {
+        if (!currentFinish) {
+            return;
+        }
+        const { result } = currentFinish;
+
+        if (!result) {
+            return;
+        }
+
+        console.log("renderCurrentFinish");
+        this.setState({ result } as ISeDieSettlementResultState);
     }
 
     @render(RoundHistoryStore, (store) => store.joinGameHistory)
