@@ -161,9 +161,6 @@ const BetPanel: React.FC<{
                     </Form>
                 </div>
             </Modal.Body>
-            <Modal.Footer>
-                <Button onClick={onHide}>Cancel</Button>
-            </Modal.Footer>
         </Modal>
     );
 };

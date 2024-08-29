@@ -64,7 +64,7 @@ export default class SeDieBetOptions extends BetOptions<IPropsObserver, IBetOpti
             <div className="grid-example">
                 <Container>
                     <Row>
-                        <Col className={Styles["bet"]} sm={3}>
+                        <Col className={`${Styles["bet"]} ${Styles["bets-bg"]}`} sm={3}>
                             {this.renderMainOption("O", odds?.odd, "odd", fractional)}
                         </Col>
                         <Col className={Styles["bet"]} sm={9}>
@@ -75,7 +75,7 @@ export default class SeDieBetOptions extends BetOptions<IPropsObserver, IBetOpti
                                         const odd = odds?.[choiceName] || 0;
 
                                         return (
-                                            <Col className={`${Styles["border-right"]} ${Styles["padding-bet"]}`} key={choiceKey} sm={4}>
+                                            <Col className={`${Styles["bets-bg"]} ${Styles["padding-bet"]}`} key={choiceKey} sm={4}>
                                                 {this.renderSubOptions(choiceKey, odd, fractional)}
                                             </Col>
                                         );
@@ -86,7 +86,7 @@ export default class SeDieBetOptions extends BetOptions<IPropsObserver, IBetOpti
                     </Row>
 
                     <Row>
-                        <Col className={Styles["bet"]} sm={3}>
+                        <Col className={`${Styles["bet"]} ${Styles["bets-bg"]}`} sm={3}>
                             {this.renderMainOption("E", odds?.even, "even", fractional)}
                         </Col>
                         <Col className={Styles["bet"]} sm={9}>
@@ -97,7 +97,7 @@ export default class SeDieBetOptions extends BetOptions<IPropsObserver, IBetOpti
                                         const odd = odds?.[choiceName] || 0;
 
                                         return (
-                                            <Col className={`${Styles["border-right"]} ${Styles["padding-bet"]}`} key={choiceKey} sm={4}>
+                                            <Col className={`${Styles["bets-bg"]} ${Styles["padding-bet"]}`} key={choiceKey} sm={4}>
                                                 {this.renderSubOptions(choiceKey, odd, fractional)}
                                             </Col>
                                         );
