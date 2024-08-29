@@ -40,7 +40,6 @@ export default class BetOptions<P extends IPropsObserver, S extends IBetOptionsS
     @render(gc.Rounds.RoundStore, (store) => store.ownBets, { fireImmediately: false })
     setOwnBets(ownBets: gc.GameServiceMessage.OwnBets) {
         this.setState({ ownBets } as S);
-        console.log("ownBets: ", ownBets);
     }
 
     @render(gc.Rounds.RoundStore, (store) => store.roundOdds)
@@ -51,7 +50,6 @@ export default class BetOptions<P extends IPropsObserver, S extends IBetOptionsS
     @render(gc.Rounds.RoundStore, (store) => store.totalBets)
     renderTotalBets(totalBets: gc.GameServiceMessage.TotalBets) {
         this.setState({ totalBets } as S);
-        console.log("totalBets: ", totalBets);
     }
 
     @render(gc.Rounds.RoundStore, (store) => store.userBetPercentage)
@@ -111,11 +109,11 @@ export default class BetOptions<P extends IPropsObserver, S extends IBetOptionsS
     protected clearHighlightStatic() {}
     protected clearHighlightAnim() {}
 
-    renderSubOptions(choice: string, odd: number) {
+    renderSubOptions(choice: string, odd: number, fractional: boolean) {
         return <></>;
     }
 
-    renderMainOption = (name: string, odd: number, choice: string) => {
+    renderMainOption = (name: string, odd: number, choice: string, fractional: boolean) => {
         return <></>;
     };
 

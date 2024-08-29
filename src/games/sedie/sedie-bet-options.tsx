@@ -15,12 +15,12 @@ export default class SeDieBetOptions extends BetOptions<IPropsObserver, IBetOpti
     renderDots = (dots: boolean[]) =>
         dots.map((isRed, index) => <RoundDot key={index} choice={isRed ? SeDieChoices.odd : SeDieChoices.even} size="large" />);
 
-    renderSubOptions = (choice: string, odd: number) => {
+    renderSubOptions = (choice: string, odd: number, fractional: boolean) => {
         return (
             <BettingBlock odd={odd} choice={choice} namespace={settings.mainObserverNamespace}>
                 <div className={Styles["container-bets"]}>
                     <div className={Styles["wrapper-dots"]}>{this.renderDots(ChoiceSeDieIconMapper[choice])}</div>
-                    <Odds value={odd} />
+                    <Odds value={odd} fractional={fractional} />
                 </div>
 
                 <div className={Styles["container-bets"]}>
@@ -31,7 +31,7 @@ export default class SeDieBetOptions extends BetOptions<IPropsObserver, IBetOpti
         );
     };
 
-    renderMainOption = (name: string, odd: number, choice: string) => {
+    renderMainOption = (name: string, odd: number, choice: string, fractional: boolean) => {
         return (
             <BettingBlock odd={odd} choice={choice} namespace={settings.mainObserverNamespace}>
                 <div className={`${Styles["container-bets"]} ${Styles["padding-bet"]}`}>
@@ -40,7 +40,7 @@ export default class SeDieBetOptions extends BetOptions<IPropsObserver, IBetOpti
                         {this.renderTotalBet(choice)}
                     </div>
                     <div>
-                        <Odds value={odd} />
+                        <Odds value={odd} fractional={fractional} />
                         {this.renderOwnBet(choice)}
                     </div>
                 </div>
@@ -59,12 +59,13 @@ export default class SeDieBetOptions extends BetOptions<IPropsObserver, IBetOpti
     render() {
         const { roundOdds } = this.state as IBetOptionsState;
         const odds = roundOdds?.odds;
+        const fractional = roundOdds?.fractional;
         return (
             <div className="grid-example">
                 <Container>
                     <Row>
                         <Col className={Styles["bet"]} sm={3}>
-                            {this.renderMainOption("O", odds?.odd, "odd")}
+                            {this.renderMainOption("O", odds?.odd, "odd", fractional)}
                         </Col>
                         <Col className={Styles["bet"]} sm={9}>
                             <Row className={Styles["margin-x-0"]}>
@@ -75,7 +76,7 @@ export default class SeDieBetOptions extends BetOptions<IPropsObserver, IBetOpti
 
                                         return (
                                             <Col className={`${Styles["border-right"]} ${Styles["padding-bet"]}`} key={choiceKey} sm={4}>
-                                                {this.renderSubOptions(choiceKey, odd)}
+                                                {this.renderSubOptions(choiceKey, odd, fractional)}
                                             </Col>
                                         );
                                     }
@@ -86,7 +87,7 @@ export default class SeDieBetOptions extends BetOptions<IPropsObserver, IBetOpti
 
                     <Row>
                         <Col className={Styles["bet"]} sm={3}>
-                            {this.renderMainOption("E", odds?.even, "even")}
+                            {this.renderMainOption("E", odds?.even, "even", fractional)}
                         </Col>
                         <Col className={Styles["bet"]} sm={9}>
                             <Row className={Styles["margin-x-0"]}>
@@ -97,7 +98,7 @@ export default class SeDieBetOptions extends BetOptions<IPropsObserver, IBetOpti
 
                                         return (
                                             <Col className={`${Styles["border-right"]} ${Styles["padding-bet"]}`} key={choiceKey} sm={4}>
-                                                {this.renderSubOptions(choiceKey, odd)}
+                                                {this.renderSubOptions(choiceKey, odd, fractional)}
                                             </Col>
                                         );
                                     }

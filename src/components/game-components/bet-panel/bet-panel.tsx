@@ -14,7 +14,7 @@ import styles from "./bet-panel.module.scss";
 import { BetPanelHandler } from "./scripts/handlers/bet-panel-handlers";
 
 export interface IBetPanel extends IStateObserver {
-    stakeLevel: any;
+    stakeLevel: gc.Player.IStakeLevel;
     minBet: number;
     maxBet: number;
     maxBetPerChoices: gc.GameServiceMessage.MaxBetPerChoices;
@@ -34,22 +34,26 @@ class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends O
 
     @render(gc.Player.MainPlayerStore, (store) => store.stakeLevel, { fireImmediately: false })
     setUserStakeLevel(stakeLevel: gc.Player.IStakeLevel) {
-        this.setState({ stakeLevel } as IBetPanel);
+        if (stakeLevel) {
+            this.setState({ stakeLevel } as IBetPanel);
+        }
     }
 
-    @render(gc.Rounds.RoundStore, (store) => store.minBet, { fireImmediately: false })
-    setMinBet(minBet: number) {
-        this.setState({ minBet } as IBetPanel);
-    }
-
-    @render(gc.Rounds.RoundStore, (store) => store.maxBet, { fireImmediately: false })
-    setMaxBet(maxBet: number) {
-        this.setState({ maxBet } as IBetPanel);
-    }
-
-    @render(gc.GameConfigs.GameConfigStore, (store) => store.maxBetPerChoices, { fireImmediately: false })
-    setMaxBetPerChoices(maxBetPerChoices: gc.GameServiceMessage.MaxBetPerChoices) {
-        this.setState({ maxBetPerChoices } as IBetPanel);
+    @render(
+        gc.GameConfigs.GameConfigStore,
+        (store) => ({ minBet: store.minBet, maxBet: store.maxBet, maxBetPerChoices: store.maxBetPerChoices }),
+        { fireImmediately: false }
+    )
+    setMaxBetPerChoices({
+        minBet,
+        maxBet,
+        maxBetPerChoices,
+    }: {
+        minBet: number;
+        maxBet: number;
+        maxBetPerChoices: gc.GameServiceMessage.MaxBetPerChoices;
+    }) {
+        this.setState({ maxBetPerChoices, minBet, maxBet } as IBetPanel);
     }
 
     @handle(gc.Bet.BetHandler)
@@ -64,9 +68,15 @@ class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends O
     }
 
     render() {
-        const { minBet, maxBet, maxBetPerChoices } = this.state as S;
+        const { minBet, maxBet, maxBetPerChoices, stakeLevel } = this.state as S;
         return (
-            <BetPanel minBet={minBet} maxBet={maxBet} maxBetPerChoices={maxBetPerChoices} handleBet={this.handleBet.bind(this)}></BetPanel>
+            <BetPanel
+                minBet={minBet}
+                maxBet={maxBet}
+                maxBetPerChoices={maxBetPerChoices}
+                stakeLevel={stakeLevel}
+                handleBet={this.handleBet.bind(this)}
+            ></BetPanel>
         );
     }
 }
@@ -75,8 +85,9 @@ const BetPanel: React.FC<{
     minBet: number;
     maxBet: number;
     maxBetPerChoices: gc.GameServiceMessage.MaxBetPerChoices;
+    stakeLevel: gc.Player.IStakeLevel;
     handleBet: (amount: number, choice: string) => void;
-}> = ({ minBet = 1, maxBet = 300, maxBetPerChoices, handleBet }) => {
+}> = ({ minBet = 1, maxBet = 300, maxBetPerChoices, stakeLevel, handleBet }) => {
     const { choice, odd = 0, onHide, show } = useGameBettingZoneContext();
     const { t } = useTranslation("common");
     const [amount, setAmount] = useState(0);
@@ -84,16 +95,19 @@ const BetPanel: React.FC<{
     const [max, setMax] = useState(0);
 
     useEffect(() => {
-        setMin(minBet);
-        choice && setMax(Math.min(maxBetPerChoices?.[choice] || 0, maxBet));
-    }, [maxBetPerChoices, minBet, maxBet, choice]);
+        setMin(Math.max(minBet, stakeLevel.minBet));
+        choice && setMax(Math.min(maxBetPerChoices?.[choice] || 0, Math.min(maxBet, stakeLevel.maxBet)));
+    }, [maxBetPerChoices, minBet, maxBet, stakeLevel, choice]);
 
     const handleAmount = (event: any) => {
         setAmount(+event?.target.value || 0);
     };
 
     const onClickBet = () => {
-        choice && handleBet?.(amount, choice);
+        if (amount > min && amount < max) {
+            choice && handleBet?.(amount, choice);
+            onHide?.();
+        }
     };
 
     if (!show) {
@@ -136,7 +150,8 @@ const BetPanel: React.FC<{
                             </InputGroup>
 
                             <Form.Label className={`${styles["bet-payout"]} mt-1 mb-1`}>
-                                Payout: <span className={`${styles["bet-payout-value"]}`}>{amount * odd}</span>
+                                Payout:
+                                <span className={`${styles["bet-payout-value"]}`}>{gc.FormatUtils.numberWithCommas(amount * odd, 2)}</span>
                             </Form.Label>
                         </Form.Group>
                         <Button type="button" variant="primary" className={`${styles["bet-button"]} mt-1 mb-1`} onClick={onClickBet}>
