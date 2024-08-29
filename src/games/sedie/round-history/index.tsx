@@ -22,28 +22,38 @@ export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver,
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     renderOdds(rounds: gc.RoundHistories.RoundHistory[]) {
-        this.setState({ rounds: rounds.slice(0, 10) } as ISeDieRoundHistoryState);
+        this.setState({ rounds: rounds.slice(0, 6) } as ISeDieRoundHistoryState);
     }
 
     render() {
         const { rounds } = this.state as ISeDieRoundHistoryState;
+        if (rounds.length == 0) {
+            return <></>;
+        }
         const roundHistories = rounds as gc.RoundHistories.RoundHistory[];
         console.log("roundHistories", roundHistories);
+        console.log("length", roundHistories.length);
+        console.log("roundHistories", rounds);
+
         return (
             <Row>
-                {roundHistories.map((roundHistory) => {
-                    return this.RoundHistoryResult(roundHistory);
+                <Col sm={2}>Previous round:</Col>
+                {roundHistories.reverse().map((roundHistory) => {
+                    return this.RoundHistoryItem(roundHistory);
                 })}
+                <Col key={roundHistories[roundHistories.length - 1].roundId} sm={2}>
+                    <RoundDot highlight={true} size="large" value={"?"} />
+                </Col>
             </Row>
         );
     }
 
-    private RoundHistoryResult(roundHistory: gc.RoundHistories.RoundHistory): JSX.Element {
-        const { value, color } = this.getResult(roundHistory.settlementResult);
-        const isRed = color.includes("red");
+    private RoundHistoryItem(roundHistory: gc.RoundHistories.RoundHistory): JSX.Element {
+        const { value } = this.getResult(roundHistory.settlementResult);
+        const isRed = value === "O";
         console.log(roundHistory.roundId);
         return (
-            <Col key={roundHistory.roundId}>
+            <Col key={roundHistory.roundId} sm={1}>
                 <RoundDot choice={isRed ? SeDieChoices.odd : SeDieChoices.even} size="large" value={value} />
             </Col>
         );

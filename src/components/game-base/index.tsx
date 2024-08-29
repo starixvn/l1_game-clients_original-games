@@ -1,4 +1,6 @@
 import * as gc from "@sg/sg-game-client";
+import { Rounds, Settlements } from "@sg/sg-game-client";
+import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds/round-time-store";
 import { handle, render } from "observer";
 import React from "react";
 import { Row } from "react-bootstrap";
@@ -126,12 +128,30 @@ abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> 
         return <></>;
     }
 
+    @render(Settlements.SettlementStore, (store) => ({ result: store.result, settlementResult: store.settlementResult }))
+    updateSettlementResult(data: { result: gc.GameServiceMessage.TResult; settlementResult: gc.GameServiceMessage.TSettlementResult }) {
+        console.log("receive result from ws");
+    }
+
+    @render(Rounds.RoundTimeStore, (store) => store.roundState)
+    showSettlementResult(roundState: string) {
+        if (roundState === ROUND_STATE.SHOW_RESULT) {
+            this.finishShowResult();
+        }
+    }
+
+    @handle(Settlements.SettlementUIHandlers.FinishedShowResult)
+    finishShowResult() {
+        //anim show result
+    }
+
     getRenderTemplate() {
         return (
             <>
                 <Row>
                     {this.renderRoundIdSection()}
                     {this.renderCountDownTimer()}
+                    {this.renderResultBlock()}
                 </Row>
 
                 {this.renderBettingBlock()}
