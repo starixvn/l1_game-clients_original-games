@@ -8,11 +8,8 @@ export interface IStateObserver {
     dispose: (() => void) | null;
 }
 
-export class ObserverComponent<P extends IPropsObserver, S extends IStateObserver> extends React.PureComponent<
-    IPropsObserver,
-    IStateObserver
-> {
-    constructor(props: IPropsObserver) {
+export class ObserverComponent<P extends IPropsObserver, S extends IStateObserver> extends React.PureComponent<P, S> {
+    constructor(props: P) {
         super(props);
         this.state = {
             dispose: null,

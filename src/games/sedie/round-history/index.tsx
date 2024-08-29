@@ -16,16 +16,15 @@ export interface ISeDieRoundHistoryState extends IStateObserver {
 export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver, ISeDieRoundHistoryState> {
     constructor(props: IPropsObserver) {
         super(props);
-        this.state = {} as ISeDieRoundHistoryState;
     }
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
-        this.setState({ rounds: rounds.slice(0, 6) } as ISeDieRoundHistoryState);
+        this.setState({ rounds: rounds.slice(0, 6) });
     }
 
     render() {
-        const { rounds } = this.state as ISeDieRoundHistoryState;
+        const { rounds } = this.state;
         if (!rounds || rounds.length === 0) {
             return <></>;
         }
@@ -52,14 +51,14 @@ export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver,
         }
         const { roundHistory } = firstJoinGameHistory;
         // this.setHighlightStatic(staticHighlight, animationHighlight, roundHistory);
-        const { rounds } = this.state as ISeDieRoundHistoryState;
+        const { rounds } = this.state;
         if (!rounds || rounds.length === 0) {
             return;
         }
         console.log("renderStaticResult");
         debugger;
         rounds[5] = roundHistory;
-        this.setState({ rounds } as ISeDieRoundHistoryState);
+        this.setState({ rounds });
     }
 
     @render(RoundHistoryStore, (store) => store.joinGameHistory)
@@ -67,14 +66,14 @@ export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver,
         const { roundHistory } = joinGameHistory ?? {};
         if (roundHistory) {
             console.log("handleJoinGameAndShowResult bf");
-            const { rounds } = this.state as ISeDieRoundHistoryState;
+            const { rounds } = this.state;
             if (!rounds || rounds.length === 0) {
                 return;
             }
             console.log("handleJoinGameAndShowResult af");
 
             rounds[0] = roundHistory;
-            this.setState({ rounds } as ISeDieRoundHistoryState);
+            this.setState({ rounds });
         }
     }
 

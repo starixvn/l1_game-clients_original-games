@@ -16,11 +16,8 @@ export interface IBetOptionsState extends IStateObserver {
     isShowBetPanel: boolean;
 }
 
-export default class BetOptions<P extends IPropsObserver, S extends IBetOptionsState> extends ObserverComponent<
-    IPropsObserver,
-    IStateObserver
-> {
-    constructor(props: P) {
+export default class BetOptions extends ObserverComponent<IPropsObserver, IBetOptionsState> {
+    constructor(props: IPropsObserver) {
         super(props);
         this.state = {
             dispose: null,
@@ -30,36 +27,32 @@ export default class BetOptions<P extends IPropsObserver, S extends IBetOptionsS
             userBetPercentage: {},
             betPercentage: {},
             isShowBetPanel: false,
-        } as S;
-    }
-
-    getState() {
-        return this.state as IBetOptionsState;
+        } as IBetOptionsState;
     }
 
     @render(gc.Rounds.RoundStore, (store) => store.ownBets, { fireImmediately: false })
     setOwnBets(ownBets: gc.GameServiceMessage.OwnBets) {
-        this.setState({ ownBets } as S);
+        this.setState({ ownBets });
     }
 
     @render(gc.Rounds.RoundStore, (store) => store.roundOdds)
     setOdds(roundOdds: gc.Rounds.RoundOdds) {
-        this.setState({ roundOdds } as S);
+        this.setState({ roundOdds });
     }
 
     @render(gc.Rounds.RoundStore, (store) => store.totalBets)
     renderTotalBets(totalBets: gc.GameServiceMessage.TotalBets) {
-        this.setState({ totalBets } as S);
+        this.setState({ totalBets });
     }
 
     @render(gc.Rounds.RoundStore, (store) => store.userBetPercentage)
     handleUserBetPercentage(userBetPercentage: gc.GameServiceMessage.UserBetPercentage) {
-        this.setState({ userBetPercentage } as S);
+        this.setState({ userBetPercentage });
     }
 
     @render(gc.Rounds.RoundStore, (store) => store.betPercentage)
     handleBetPercentage(betPercentage: gc.GameServiceMessage.BetPercentage) {
-        this.setState({ betPercentage } as S);
+        this.setState({ betPercentage });
     }
 
     @render(gc.Settlements.SettlementStore, (store) => store.currentFinish, {

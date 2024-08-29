@@ -18,12 +18,11 @@ type SeDieResult = {
     red4: boolean;
 };
 export interface ISeDieSettlementResultState extends IStateObserver {
-    result: SeDieResult;
+    result: gc.GameServiceMessage.TResult;
 }
 export default class SeDieSettlementResult extends ObserverComponent<IPropsObserver, ISeDieSettlementResultState> {
     constructor(props: IPropsObserver) {
         super(props);
-        this.state = {} as ISeDieSettlementResultState;
     }
     @render(SettlementStore, (store) => store.currentFinish, {
         fireImmediately: false,
@@ -39,14 +38,14 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
         }
 
         console.log("renderCurrentFinish");
-        this.setState({ result } as ISeDieSettlementResultState);
+        this.setState({ result });
     }
 
     @render(RoundHistoryStore, (store) => store.joinGameHistory)
     handleJoinGameAndShowResult(joinGameHistory: gc.RoundHistories.IJoinGameHistory) {
         const { roundHistory } = joinGameHistory ?? {};
         if (roundHistory) {
-            this.setState({ result: roundHistory?.result } as ISeDieSettlementResultState);
+            this.setState({ result: roundHistory?.result });
         }
     }
 
@@ -58,7 +57,7 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
             return;
         }
 
-        this.setState({ result } as ISeDieSettlementResultState);
+        this.setState({ result });
     }
 
     renderDots = (dots: boolean[]) =>
@@ -79,7 +78,7 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
     };
 
     render() {
-        const { result } = this.state as ISeDieSettlementResultState;
+        const { result } = this.state;
         if (!result) {
             return <></>;
         }

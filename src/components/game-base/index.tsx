@@ -14,14 +14,14 @@ export interface IGameBaseState {
     isRenderResultBlock: boolean;
 }
 
-abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> {
+abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> extends React.PureComponent<P, S> {
     constructor(props: P) {
         super(props);
         this.state = {
             isReceiveFinishBeforeRoundHistory: true,
             isConnected: false,
             isRenderResultBlock: false,
-        } as IGameBaseState;
+        } as S;
     }
 
     componentDidMount() {
@@ -156,7 +156,7 @@ abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> 
     }
 
     getRenderTemplate() {
-        const { isRenderResultBlock } = this.state as IGameBaseState;
+        const { isRenderResultBlock } = this.state;
 
         return (
             <>

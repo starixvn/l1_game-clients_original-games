@@ -1,5 +1,4 @@
 import { Col, Container, Row } from "react-bootstrap";
-import { IPropsObserver } from "../../_shared/commom-components/observer-component/observer-component";
 import { RoundDot } from "../../components/dot";
 import BetOptions, { IBetOptionsState } from "../../components/game-components/bet-option";
 import Odds from "../../components/game-components/bet-option/odd";
@@ -11,7 +10,7 @@ import { settings } from "./game-settings";
 import Styles from "./sedie.module.scss";
 import { bottomChoices, ChoiceSeDieIconMapper, SeDieChoices, topChoices } from "./type";
 
-export default class SeDieBetOptions extends BetOptions<IPropsObserver, IBetOptionsState> {
+export default class SeDieBetOptions extends BetOptions {
     renderDots = (dots: boolean[]) =>
         dots.map((isRed, index) => <RoundDot key={index} choice={isRed ? SeDieChoices.odd : SeDieChoices.even} size="large" />);
 
@@ -49,11 +48,11 @@ export default class SeDieBetOptions extends BetOptions<IPropsObserver, IBetOpti
     };
 
     renderTotalBet(choice: string) {
-        return <TotalBet value={this.getState().totalBets?.[choice]} choice={choice} />;
+        return <TotalBet value={this.state?.totalBets?.[choice]} choice={choice} />;
     }
 
     renderOwnBet(choice: string) {
-        return <OwnBet value={this.getState().ownBets?.[choice]} choice={choice} />;
+        return <OwnBet value={this.state?.ownBets?.[choice]} choice={choice} />;
     }
 
     render() {
