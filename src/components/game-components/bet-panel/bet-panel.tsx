@@ -90,7 +90,7 @@ const BetPanel: React.FC<{
 }> = ({ minBet = 1, maxBet = 300, maxBetPerChoices, stakeLevel, handleBet }) => {
     const { choice, odd = 0, onHide, show } = useGameBettingZoneContext();
     const { t } = useTranslation("common");
-    const [amount, setAmount] = useState(0);
+    const [amount, setAmount] = useState(1);
     const [min, setMin] = useState(0);
     const [max, setMax] = useState(0);
 
@@ -104,7 +104,7 @@ const BetPanel: React.FC<{
     };
 
     const onClickBet = () => {
-        if (amount > min && amount < max) {
+        if (amount >= min && amount <= max) {
             choice && handleBet?.(amount, choice);
             onHide?.();
         }
@@ -143,6 +143,7 @@ const BetPanel: React.FC<{
                                     placeholder={`Enter a number between ${min} and ${max}`}
                                     onChange={handleAmount}
                                     isInvalid={amount > max || amount < min}
+                                    defaultValue={amount}
                                 ></Form.Control>
                                 <Form.Control.Feedback type="invalid">
                                     Range: {min} - {max}
@@ -161,7 +162,7 @@ const BetPanel: React.FC<{
                 </div>
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={onHide}>Close</Button>
+                <Button onClick={onHide}>Cancel</Button>
             </Modal.Footer>
         </Modal>
     );
