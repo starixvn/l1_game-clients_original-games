@@ -25,6 +25,14 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
         this.state = {} as ISeDieSettlementResultState;
     }
 
+    @render(RoundHistoryStore, (store) => store.joinGameHistory)
+    handleJoinGameAndShowResult(joinGameHistory: gc.RoundHistories.IJoinGameHistory) {
+        const { roundHistory } = joinGameHistory ?? {};
+        if (roundHistory) {
+            this.setState({ result: roundHistory?.result } as ISeDieSettlementResultState);
+        }
+    }
+
     @render(SettlementStore, (store) => ({ result: store.result, settlementResult: store.settlementResult }))
     handleResult(data: { result: gc.GameServiceMessage.TResult; settlementResult: gc.GameServiceMessage.TSettlementResult }) {
         const { result } = data;
