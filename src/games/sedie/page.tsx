@@ -3,9 +3,9 @@ import { Col } from "react-bootstrap";
 import { CountDownTimer, RoundId } from "../../components";
 import GameBase from "../../components/game-base";
 import { configGameContainer } from "../../components/game-base/startup";
-import SeDieBetOptions from "./bet-options";
 import { containerOptions, settings, siteConfigs } from "./game-settings";
 import SeDieRoundHistory from "./round-history";
+import SeDieBetOptions from "./sedie-bet-options";
 
 configGameContainer(settings.name, containerOptions, siteConfigs);
 
