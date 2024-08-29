@@ -34,5 +34,17 @@ export const requestSSO = async (gameId = 0) => {
 
     const gameLobbySimulatorUrl = appSettings.gameLobbySimulatorUrl;
     const ssoResult = (await axios.post(`${gameLobbySimulatorUrl}/signin/sso`, request)).data;
+    await assignBalance(playerId, playerBalance, request.currency, request.siteId);
+
     return ssoResult;
+};
+
+const assignBalance = async (playerId: number, balance: number, currency: string, siteId: string) => {
+    await axios.post(
+        `${appSettings.owApiSimulatorUrl}?playerId=${encodeURIComponent(
+            playerId
+        )}&operator=pff&balance=${balance}&systemType=SC1&username=username_${encodeURIComponent(
+            playerId
+        )}&currency=${currency}&siteId=${siteId}`
+    );
 };

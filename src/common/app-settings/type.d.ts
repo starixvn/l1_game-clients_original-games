@@ -23,6 +23,7 @@ export default interface AppSettings {
     resourceUrl: string;
     gameSettingUrl: string;
     gameLobbySimulatorUrl: string;
+    owApiSimulatorUrl: string;
 
     useTolgeeStatic: boolean;
 }

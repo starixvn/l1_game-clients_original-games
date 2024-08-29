@@ -7,6 +7,7 @@
     "resourceUrl": "https://l1-proxy1.lumigame.com/game/static/",
     "gameSettingUrl": "https://l1-admin-api3.lumigame.com/api/public/game_configs/",
     "gameLobbySimulatorUrl": "https://l1-glbs1.lumigame.com",
+    "owApiSimulatorUrl": "https://l1sitows.sgamesuat.com/SabaClub/SetDefaultBalance",
     "serverDomainMapper": {
         "localhost": "lumigame.com"
     },
