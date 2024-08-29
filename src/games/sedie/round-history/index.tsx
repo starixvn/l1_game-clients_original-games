@@ -47,6 +47,9 @@ export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver,
     }
 
     private RoundHistoryItem(roundHistory: gc.RoundHistories.RoundHistory): JSX.Element {
+        if (!roundHistory.settlementResult) {
+            return <></>;
+        }
         const value = this.getResult(roundHistory.settlementResult);
         const isRed = value === "O";
         console.log(roundHistory.roundId);
