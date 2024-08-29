@@ -2,6 +2,7 @@
     background-color: #712cf926;
     border: 1px solid #712cf94d;
     text-transform: capitalize;
+    padding: 0;
 }
 
 .container-bets{
@@ -25,6 +26,10 @@
 }
 
 .padding-bet{
-    padding-bottom: .75rem;
-    padding-top: .75rem;
+    padding:  .75rem;
+}
+
+.margin-x-0{
+    margin-right: 0;
+    margin-left: 0;
 }

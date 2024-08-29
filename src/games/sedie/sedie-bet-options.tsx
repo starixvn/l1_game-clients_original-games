@@ -6,33 +6,34 @@ import Odds from "../../components/game-components/bet-option/odd";
 import OwnBet from "../../components/game-components/bet-option/own-bet";
 import TotalBet from "../../components/game-components/bet-option/total-bet";
 
+import BettingBlock from "../../components/game-components/bet-option/betting-block";
+import { settings } from "./game-settings";
 import Styles from "./sedie.module.scss";
 import { bottomChoices, ChoiceSeDieIconMapper, SeDieChoices, topChoices } from "./type";
 
 export default class SeDieBetOptions extends BetOptions<IPropsObserver, IBetOptionsState> {
-    getState() {
-        return this.state as IBetOptionsState;
-    }
-
     renderDots = (dots: boolean[]) =>
         dots.map((isRed, index) => <RoundDot key={index} choice={isRed ? SeDieChoices.odd : SeDieChoices.even} size="large" />);
 
     renderSubOptions = (choice: string, odd: number) => {
         return (
-            <div>
+            <BettingBlock odd={odd} choice={choice} namespace={settings.mainObserverNamespace}>
                 <div className={Styles["container-bets"]}>
                     <div className={Styles["wrapper-dots"]}>{this.renderDots(ChoiceSeDieIconMapper[choice])}</div>
                     <Odds value={odd} />
+                </div>
+
+                <div className={Styles["container-bets"]}>
                     {this.renderTotalBet(choice)}
                     {this.renderOwnBet(choice)}
                 </div>
-            </div>
+            </BettingBlock>
         );
     };
 
     renderMainOption = (name: string, odd: number, choice: string) => {
         return (
-            <div>
+            <BettingBlock odd={odd} choice={choice} namespace={settings.mainObserverNamespace}>
                 <div className={`${Styles["container-bets"]} ${Styles["padding-bet"]}`}>
                     <div>
                         <div className={Styles["main-option"]}>{name}</div>
@@ -43,7 +44,7 @@ export default class SeDieBetOptions extends BetOptions<IPropsObserver, IBetOpti
                         {this.renderOwnBet(choice)}
                     </div>
                 </div>
-            </div>
+            </BettingBlock>
         );
     };
 
@@ -66,7 +67,7 @@ export default class SeDieBetOptions extends BetOptions<IPropsObserver, IBetOpti
                             {this.renderMainOption("O", odds?.odd, "odd")}
                         </Col>
                         <Col className={Styles["bet"]} sm={9}>
-                            <Row>
+                            <Row className={Styles["margin-x-0"]}>
                                 {Object.keys(SeDieChoices).map((choiceKey) => {
                                     if (topChoices.includes(choiceKey)) {
                                         const choiceName = SeDieChoices[choiceKey as keyof typeof SeDieChoices];
@@ -88,7 +89,7 @@ export default class SeDieBetOptions extends BetOptions<IPropsObserver, IBetOpti
                             {this.renderMainOption("E", odds?.even, "even")}
                         </Col>
                         <Col className={Styles["bet"]} sm={9}>
-                            <Row>
+                            <Row className={Styles["margin-x-0"]}>
                                 {Object.keys(SeDieChoices).map((choiceKey) => {
                                     if (bottomChoices.includes(choiceKey)) {
                                         const choiceName = SeDieChoices[choiceKey as keyof typeof SeDieChoices];
@@ -105,8 +106,6 @@ export default class SeDieBetOptions extends BetOptions<IPropsObserver, IBetOpti
                         </Col>
                     </Row>
                 </Container>
-
-                {/* <BetPanel /> */}
             </div>
         );
     }

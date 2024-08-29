@@ -13,6 +13,7 @@ export interface IBetOptionsState extends IStateObserver {
     totalBets: gc.GameServiceMessage.TotalBets;
     userBetPercentage: gc.GameServiceMessage.UserBetPercentage;
     betPercentage: gc.GameServiceMessage.BetPercentage;
+    isShowBetPanel: boolean;
 }
 
 export default class BetOptions<P extends IPropsObserver, S extends IBetOptionsState> extends ObserverComponent<
@@ -28,7 +29,12 @@ export default class BetOptions<P extends IPropsObserver, S extends IBetOptionsS
             totalBets: {},
             userBetPercentage: {},
             betPercentage: {},
+            isShowBetPanel: false,
         } as S;
+    }
+
+    getState() {
+        return this.state as IBetOptionsState;
     }
 
     @render(gc.Rounds.RoundStore, (store) => store.ownBets, { fireImmediately: false })
