@@ -2,11 +2,12 @@ import { observer } from "observer";
 import { Col } from "react-bootstrap";
 import { CountDownTimer, RoundId } from "../../components";
 import GameBase from "../../components/game-base";
-import { startGame } from "../../components/game-base/startup";
+import { configGameContainer } from "../../components/game-base/startup";
 import SeDieBetOptions from "./bet-options";
 import { containerOptions, settings, siteConfigs } from "./game-settings";
 
-startGame(settings.name, containerOptions, siteConfigs, settings.namespaces);
+configGameContainer(settings.name, containerOptions, siteConfigs);
+
 @observer(settings.name)
 export default class SeDie extends GameBase<any> {
     constructor(props: any) {

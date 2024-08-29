@@ -3,6 +3,7 @@ import { makeAutoObservable, reaction } from "mobx";
 import * as Observer from "observer";
 import "reflect-metadata";
 import { getSiteConfig } from "../../_shared/app-settings";
+import * as mobx from "mobx";
 
 interface Languages {
     [key: string]: any;
@@ -12,22 +13,6 @@ declare global {
     interface Window {
         languages: Languages;
     }
-}
-
-export function startGame(
-    gameName: string,
-    containerOptions: gc.IContainerOptions,
-    siteConfigs: gc.Configs.SiteConfigs,
-    namespaces?: string[]
-) {
-    gc.StorageManager.setPrefixKey(siteConfigs.storagePrefixKey || "");
-
-    const container = gc.getContainer(containerOptions);
-    const observerContainer = gc.buildObserverContainer(container);
-
-    Observer.configure({ [gameName]: { mobx: { reaction }, container: observerContainer } });
-
-    return container;
 }
 
 export function getSharedContainer(siteConfigs: gc.Configs.SiteConfigs) {
@@ -49,4 +34,20 @@ export function getSharedContainer(siteConfigs: gc.Configs.SiteConfigs) {
     return gc.getContainer(containerOptions);
 }
 
-export const sharedContainer = getSharedContainer(getSiteConfig(2));
+const sharedContainer = getSharedContainer(getSiteConfig(2));
+
+export function configSharedContainer() {
+    Observer.configure({ default: { mobx, container: gc.buildObserverContainer(sharedContainer) } });
+}
+
+export function configGameContainer(gameName: string, containerOptions: gc.IContainerOptions, siteConfigs: gc.Configs.SiteConfigs) {
+    gc.StorageManager.setPrefixKey(siteConfigs.storagePrefixKey || "");
+
+    containerOptions.globalContainer = sharedContainer;
+    const container = gc.getContainer(containerOptions);
+    const observerContainer = gc.buildObserverContainer(container);
+
+    Observer.configure({ [gameName]: { mobx: { reaction }, container: observerContainer } });
+
+    return container;
+}
