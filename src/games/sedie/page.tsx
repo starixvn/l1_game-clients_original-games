@@ -5,6 +5,7 @@ import GameBase from "../../components/game-base";
 import { configGameContainer } from "../../components/game-base/startup";
 import SeDieBetOptions from "./bet-options";
 import { containerOptions, settings, siteConfigs } from "./game-settings";
+import SeDieRoundHistory from "./round-history";
 
 configGameContainer(settings.name, containerOptions, siteConfigs);
 
@@ -12,6 +13,14 @@ configGameContainer(settings.name, containerOptions, siteConfigs);
 export default class SeDie extends GameBase<any> {
     constructor(props: any) {
         super(props);
+    }
+
+    renderStatistic() {
+        return (
+            <Col>
+                <SeDieRoundHistory namespace={settings.name} />
+            </Col>
+        );
     }
 
     renderRoundIdSection() {

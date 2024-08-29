@@ -135,6 +135,7 @@ abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> 
                 </Row>
 
                 {this.renderBettingBlock()}
+                {this.renderStatistic()}
             </>
         );
     }
