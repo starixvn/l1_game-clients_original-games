@@ -7,7 +7,6 @@ import Tabs from "react-bootstrap/Tabs";
 import TimeOutContainer from "../components/game-components/timeout";
 import SeDie from "../games/sedie/page";
 import { ILobbyProps, ILobbyStates } from "./type";
-import UnAuthorized from "../components/unauthorized/unauthorized";
 
 @observer
 class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
@@ -53,11 +52,9 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
                 <Tabs defaultActiveKey="sedie" id="uncontrolled-tab-example" className="mb-3">
                     <Tab eventKey="sedie" title="Sedie" unmountOnExit={true}>
                         {isAuthorized && <SeDie />}
-                        {!isAuthorized && <UnAuthorized />}
                     </Tab>
                     <Tab eventKey="bigsmall" title="Big Small" unmountOnExit={true}>
                         {isAuthorized && " Big Small Game"}
-                        {!isAuthorized && <UnAuthorized />}
                     </Tab>
                 </Tabs>
                 <TimeOutContainer />
