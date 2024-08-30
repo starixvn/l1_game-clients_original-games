@@ -42,5 +42,32 @@
         "mainObserverNamespace": "SeDie",
         "storagePrefixKey": "Sedie",
         "order": 1
+    },
+    "1003": {
+        "id": 1003,
+        "gameName": "LuckyNext1",
+        "name": "LuckyNext1",
+        "namespaces": ["LuckyNext1"],
+        "durations": {
+            "wholeRound": 164,
+            "wholeTurn": 20,
+            "lockingBet": 3,
+            "placingBet": 15,
+            "generatingResult": 1,
+            "showingResult": 5,
+            "startRound": 0,
+            "resultAnimation": 42,
+            "switchRoundAnimation": 4,
+            "startNewRoundAnim": 156
+        },
+        "totalTurns": 8,
+        "numberOfRoundHistory": 100,
+        "websocket": {
+            "proxyPath": "luckynext1",
+            "route": "luckynext1"
+        },
+        "mainObserverNamespace": "LuckyNext1",
+        "storagePrefixKey": "LuckyNext1",
+        "order": 1
     }
 }

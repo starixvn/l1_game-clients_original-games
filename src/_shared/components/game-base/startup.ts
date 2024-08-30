@@ -5,6 +5,7 @@ import { reaction } from "mobx";
 import "reflect-metadata";
 import { getSiteConfig } from "../../app-settings";
 import { Lobby } from "../../states";
+
 interface Languages {
     [key: string]: any;
 }
@@ -19,7 +20,9 @@ function getSharedContainer(siteConfigs: gc.Configs.SiteConfigs) {
     const containerOptions: gc.IContainerOptions = {
         onContainerCreated: (container) => {
             container.bind(gc.Configs.SiteConfigs).toConstantValue(siteConfigs);
+            gc.GameTurnBase.onContainerCreated(container)
         },
+
         enabledFeatures: [
             gc.Player.FEATURE_NAME,
             gc.Auth.FEATURE_NAME,
@@ -30,12 +33,16 @@ function getSharedContainer(siteConfigs: gc.Configs.SiteConfigs) {
             Lobby.FEATURE_NAME,
         ],
         features: [...gc.defaultFeatures, Lobby],
+        disabledFeatures: [
+            // gc.Rounds.FEATURE_NAME
+        ]
     };
 
     return gc.getContainer(containerOptions);
 }
 
-export const sharedContainer = getSharedContainer(getSiteConfig(2));
+export const sharedContainer = getSharedContainer(getSiteConfig(1003));
+
 
 export function configSharedContainer() {
     Observer.configure({ default: { mobx, container: gc.buildObserverContainer(sharedContainer) } });
