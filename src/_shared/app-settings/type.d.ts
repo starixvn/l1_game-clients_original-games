@@ -34,7 +34,6 @@ export default interface AppSettings {
     enableMsgpackParserOnNotification: boolean;
     system: string;
     gamePath: string;
-    resourceUrl: string;
     gameSettingUrl: string;
     gameLobbySimulatorUrl: string;
     ssl: boolean;
