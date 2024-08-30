@@ -17,6 +17,7 @@ export interface IWarningState extends IStateObserver {
 const AUTO_HIDE_DURATION = 3000;
 
 export default class Warning extends ObserverComponent<IPropsObserver, IWarningState> {
+    private timeoutIds: Map<gc.Notices.Warning, NodeJS.Timeout> = new Map();
     constructor(props: IPropsObserver) {
         super(props);
         this.state = {
@@ -25,6 +26,10 @@ export default class Warning extends ObserverComponent<IPropsObserver, IWarningS
             processingWarnings: [],
             isProcessingBet: false,
         } as IWarningState;
+    }
+
+    componentWillUnmount() {
+        this.clearAllTimeouts();
     }
 
     @render(gc.Notices.NoticeStore, (store) => store.warning, { fireImmediately: false })
@@ -39,7 +44,9 @@ export default class Warning extends ObserverComponent<IPropsObserver, IWarningS
 
     @render(gc.Bet.BetStore, (store) => store.isProcessingBet, { fireImmediately: false })
     hideProcessingWarning(isProcessingBet: boolean) {
-        this.setState({ isProcessingBet });
+        if (!isProcessingBet) {
+            this.setState({ processingWarnings: [] });
+        }
     }
 
     addWarning(warning: gc.Notices.Warning) {
@@ -61,7 +68,7 @@ export default class Warning extends ObserverComponent<IPropsObserver, IWarningS
     }
 
     scheduleRemoval(arrayName: "warnings" | "processingWarnings", item: gc.Notices.Warning) {
-        setTimeout(() => {
+        const timeoutId = setTimeout(() => {
             this.setState((prevState) => {
                 const newState = {
                     ...prevState,
@@ -72,6 +79,13 @@ export default class Warning extends ObserverComponent<IPropsObserver, IWarningS
                 return newState;
             });
         }, AUTO_HIDE_DURATION);
+
+        this.timeoutIds.set(item, timeoutId);
+    }
+
+    clearAllTimeouts() {
+        this.timeoutIds.forEach((id) => clearTimeout(id));
+        this.timeoutIds.clear();
     }
 
     render() {
