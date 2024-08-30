@@ -1,10 +1,11 @@
 import * as gc from "@sg/sg-game-client";
-import BaseDialog from "../base-dialog";
+import BaseToasts from "../toasts";
+import Styles from "./notice.module.scss";
 
 export const WarningDialog: React.FC<gc.Notices.Warning> = (props) => {
     return (
-        <BaseDialog {...props}>
-            <div className={`red-color`}>{props?.message}</div>
-        </BaseDialog>
+        <BaseToasts {...props}>
+            <div className={Styles["title-white"]}>{props?.message}</div>
+        </BaseToasts>
     );
 };

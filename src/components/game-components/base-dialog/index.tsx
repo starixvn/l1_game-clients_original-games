@@ -33,16 +33,14 @@ const BaseDialog: React.FC<Props> = ({ title, children, onClose, isOpen, type, s
                 centered
             >
                 <div className={bgInfoClass}>
-                    {isError && (
-                        <Modal.Header className={`${Styles["d-border"]}`} closeButton>
-                            <Modal.Title className={Styles["d-title"]} id="contained-modal-title-vcenter">
-                                {title}
-                            </Modal.Title>
-                        </Modal.Header>
-                    )}
+                    <Modal.Header className={`${Styles["d-border"]}`} closeButton>
+                        <Modal.Title className={Styles["d-title"]} id="contained-modal-title-vcenter">
+                            {title}
+                        </Modal.Title>
+                    </Modal.Header>
 
                     <Modal.Body>{children}</Modal.Body>
-                    {isError && showBtnConfirmButton && (
+                    {showBtnConfirmButton && (
                         <Modal.Footer className="justify-content-center">
                             <Button className="btn-warning" onClick={onClose?.()}>
                                 OK
