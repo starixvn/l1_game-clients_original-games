@@ -90,28 +90,4 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
             </Row>
         );
     }
-
-    private RoundHistoryItem(roundHistory: gc.RoundHistories.RoundHistory): JSX.Element {
-        const value = this.getResult(roundHistory.settlementResult);
-        const isRed = value === "O";
-        console.log(roundHistory.roundId);
-        return (
-            <Col key={roundHistory.roundId} sm={1}>
-                <RoundDot choice={isRed ? SeDieChoices.odd : SeDieChoices.even} size="large" value={value} />
-            </Col>
-        );
-    }
-
-    private getResult(settlementResult: gc.GameServiceMessage.TSettlementResult): string {
-        let value = "";
-        settlementResult &&
-            Object.keys(settlementResult).map((choice) => {
-                if (settlementResult[choice]) {
-                    if (choice === SeDieChoices.odd || choice === SeDieChoices.even) {
-                        value = choice.charAt(0).toUpperCase();
-                    }
-                }
-            });
-        return value;
-    }
 }

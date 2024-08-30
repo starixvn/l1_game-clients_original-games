@@ -6,8 +6,10 @@ import React from "react";
 import { Col, Row } from "react-bootstrap";
 import { PlayerContext } from "../../_shared/react-contexts/auth";
 import { GameContextProvider } from "../../_shared/react-contexts/game-context/game-context";
+import { FunctionUtils } from "../../_shared/utils/funtion-utils";
 import GameContainer from "../game-components";
 import { GameBaseProps } from "./type";
+
 export interface IGameBaseState {
     isReceiveFinishBeforeRoundHistory: boolean;
     isConnected: boolean;
@@ -120,16 +122,39 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         return <></>;
     }
 
-    @render(Settlements.SettlementStore, (store) => ({ result: store.result, settlementResult: store.settlementResult }))
-    handleResult(data: { result: gc.GameServiceMessage.TResult; settlementResult: gc.GameServiceMessage.TSettlementResult }) {
-        console.log("receive result from ws");
+    @render(Settlements.SettlementStore, (store) => store.currentFinish, {
+        fireImmediately: false,
+    })
+    renderCurrentFinish(currentFinish: gc.GameServiceMessage.Finish) {
+        if (!currentFinish) {
+            return;
+        }
+        const { result, settlementResult } = currentFinish;
+
+        if (!this.isValidResult(result, settlementResult)) {
+            return;
+        }
+
+        this.showResult(true, result, settlementResult).then(() => {
+            this.finishShowResult();
+        });
+    }
+
+    async showResult(
+        hasAnimation: boolean,
+        result?: gc.GameServiceMessage.TResult,
+        settlementResult?: gc.GameServiceMessage.TSettlementResult
+    ) {
+        //implement animation
+        await FunctionUtils.delay(1000);
+    }
+
+    isValidResult(result?: gc.GameServiceMessage.TResult, settlementResult?: gc.GameServiceMessage.TSettlementResult) {
+        return !!result && !!settlementResult;
     }
 
     @render(Rounds.RoundTimeStore, (store) => store.roundState)
     handleRoundState(roundState: string) {
-        if (roundState === ROUND_STATE.SHOW_RESULT) {
-            this.finishShowResult();
-        }
         if (roundState !== ROUND_STATE.SHOW_RESULT) {
             this.setState({ isRenderResultBlock: false });
         }

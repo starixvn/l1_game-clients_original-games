@@ -1,5 +1,4 @@
 import * as gc from "@sg/sg-game-client";
-import { RoundHistoryStore } from "@sg/sg-game-client/dist/game/round-histories";
 import { render } from "observer";
 import { Col, Row } from "react-bootstrap";
 import {
@@ -20,6 +19,7 @@ export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver,
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
+        console.log("update roundHistories", rounds.slice(0, 6));
         this.setState({ rounds: rounds.slice(0, 6) });
     }
 
@@ -29,7 +29,7 @@ export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver,
             return <></>;
         }
         const roundHistories = rounds as gc.RoundHistories.RoundHistory[];
-        console.log("roundHistories", roundHistories);
+        console.log("render roundHistories", roundHistories);
 
         return (
             <Row>
@@ -42,39 +42,6 @@ export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver,
                 </Col>
             </Row>
         );
-    }
-
-    @render(RoundHistoryStore, (store) => store.firstJoinGameHistory)
-    renderStaticResult(firstJoinGameHistory: gc.RoundHistories.IFirstJoinGameHistory) {
-        if (!firstJoinGameHistory) {
-            return;
-        }
-        const { roundHistory } = firstJoinGameHistory;
-        // this.setHighlightStatic(staticHighlight, animationHighlight, roundHistory);
-        const { rounds } = this.state;
-        if (!rounds || rounds.length === 0) {
-            return;
-        }
-        console.log("renderStaticResult");
-        debugger;
-        rounds[5] = roundHistory;
-        this.setState({ rounds });
-    }
-
-    @render(RoundHistoryStore, (store) => store.joinGameHistory)
-    handleJoinGameAndShowResult(joinGameHistory: gc.RoundHistories.IJoinGameHistory) {
-        const { roundHistory } = joinGameHistory ?? {};
-        if (roundHistory) {
-            console.log("handleJoinGameAndShowResult bf");
-            const { rounds } = this.state;
-            if (!rounds || rounds.length === 0) {
-                return;
-            }
-            console.log("handleJoinGameAndShowResult af");
-
-            rounds[0] = roundHistory;
-            this.setState({ rounds });
-        }
     }
 
     private RoundHistoryItem(roundHistory: gc.RoundHistories.RoundHistory): JSX.Element {
