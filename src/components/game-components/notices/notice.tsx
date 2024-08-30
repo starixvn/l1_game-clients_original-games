@@ -5,7 +5,7 @@ import {
     IStateObserver,
     ObserverComponent,
 } from "../../../_shared/commom-components/observer-component/observer-component";
-import { NoticeDialog } from "./notice-dialog";
+import NoticeDialog from "./notice-dialog";
 
 export interface INoticeState extends IStateObserver {
     notice: gc.Notices.Notice;
@@ -35,6 +35,12 @@ export default class Notice extends ObserverComponent<IPropsObserver, INoticeSta
     }
 
     render() {
-        return this.state.isShow ? <NoticeDialog {...this.state.notice}></NoticeDialog> : <></>;
+        return this.state.isShow ? (
+            <NoticeDialog {...this.state.notice}>
+                <div>{this.state.notice?.message}</div>
+            </NoticeDialog>
+        ) : (
+            <></>
+        );
     }
 }

@@ -2,7 +2,7 @@ import * as gc from "@sg/sg-game-client";
 import React, { useRef } from "react";
 
 import { Button, Modal } from "react-bootstrap";
-import Styles from "./base-dialog.module.scss";
+import Styles from "./notice-dialog.module.scss";
 
 export type Props = {
     title?: string;
@@ -14,7 +14,7 @@ export type Props = {
     noticeInfo?: gc.Notices.NoticeInfo;
 };
 
-const BaseDialog: React.FC<Props> = ({ title, children, onClose, isOpen, type, showBtnConfirmButton }: Props) => {
+const NoticeDialog: React.FC<Props> = ({ title, children, onClose, isOpen, type, showBtnConfirmButton }: Props) => {
     const wrapperRef = useRef<HTMLDivElement>(null);
     const isError = type === gc.Notices.NoticeType.Error;
     const isInfo = type === gc.Notices.NoticeType.Info;
@@ -53,4 +53,4 @@ const BaseDialog: React.FC<Props> = ({ title, children, onClose, isOpen, type, s
     );
 };
 
-export default BaseDialog;
+export default NoticeDialog;
