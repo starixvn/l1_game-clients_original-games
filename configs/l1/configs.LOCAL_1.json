@@ -1,10 +1,18 @@
 {
     "sentry": {
-        "dsn": "https://c8f93631be824a14b9f114f53e3a2bfc@sentry.lumigame.com/3",
-        "environment": "LOCAL_1"
+        "dsn": "https://2af29bdacdbf4d9ba2db6600b450541f@sentry.lumigame.com/28",
+        "environment": "LOCAL1"
     },
     "system": "L1",
-    "enableSourceMap": true,
-    "resourceUrl": "https://l1-proxy1.lumigame.com/game/static/",
-    "gameSettingUrl": "http://l1_admin_api_local_1:5000/api/public/game_configs/"
+    "gameLobbySimulatorUrl": "https://l1-glbs1.lumigame.com",
+    "owApiSimulatorUrl": "https://l1-ows1.lumigame.com/SabaClub",
+    "serverDomainMapper": {
+        "localhost": "lumigame.com"
+    },
+    "ssl": true,
+    "subDomain": "l1-proxy1",
+    "env": "LOCAL1",
+    "enableMsgpackParserAllGames": false,
+    "enableMsgpackParserOnNotification": false,
+    "subGuideDomain": ""
 }
