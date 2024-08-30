@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../assets/main.scss";
+import '../_shared/helpers/string-helper';
 import { appWithTranslation } from "next-i18next";
 import { AppProps } from "next/app";
 import { configSharedContainer } from "../components/game-base/startup";

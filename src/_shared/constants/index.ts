@@ -89,11 +89,6 @@ export const LanguageLocaleMapper = {
 
 export const languageNameMapper = { en: "English", vi: "Tiếng Việt" };
 
-export const Themes = {
-    light: "light",
-    numberGame: "number-game",
-};
-
 export const buildVersion = process?.env?.buildVersion || 111;
 export const AppTypes = {
     mobile: 1,
