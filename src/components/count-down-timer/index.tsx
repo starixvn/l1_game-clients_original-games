@@ -1,5 +1,6 @@
 import { ROUND_STATE, RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds";
 import { render } from "observer";
+import { Badge } from "react-bootstrap";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../_shared/commom-components/observer-component/observer-component";
 
 export interface ICountDownTimerState extends IStateObserver {
@@ -25,12 +26,25 @@ export default class CountDownTimer extends ObserverComponent<IPropsObserver, IC
         // console.log("render state: ", roundState);
     }
 
+    getColor(roundState: string) {
+        const color: any = {
+            placingBet: "success",
+            lockingBet: "danger",
+        };
+        return color[roundState] ? color[roundState] : "primary";
+    }
+
     render() {
         const { countdownTimer, roundState, isInRoundTime } = this.state;
         // console.log("countdownTimer", countdownTimer);
         return (
             <div className="count-down">
-                <p>Countdown: {countdownTimer}</p>
+                <p>
+                    Countdown: &nbsp;
+                    <Badge pill bg={this.getColor(roundState)}>
+                        {countdownTimer}
+                    </Badge>
+                </p>
 
                 <p>state: {roundState}</p>
             </div>

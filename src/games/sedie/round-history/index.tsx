@@ -1,6 +1,6 @@
 import * as gc from "@sg/sg-game-client";
 import { render } from "observer";
-import { Col, Row } from "react-bootstrap";
+import { Col, Container, Row, Stack } from "react-bootstrap";
 import {
     IPropsObserver,
     IStateObserver,
@@ -19,8 +19,8 @@ export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver,
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
-        console.log("update roundHistories", rounds.slice(0, 6));
-        this.setState({ rounds: rounds.slice(0, 6) });
+        console.log("update roundHistories", rounds.slice(0, 10));
+        this.setState({ rounds: rounds.slice(0, 10) });
     }
 
     render() {
@@ -32,15 +32,19 @@ export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver,
         console.log("render roundHistories", roundHistories);
 
         return (
-            <Row>
-                <Col sm={2}>Previous round:</Col>
-                {roundHistories.toReversed().map((roundHistory) => {
-                    return this.RoundHistoryItem(roundHistory);
-                })}
-                <Col key={roundHistories[roundHistories.length - 1].roundId} sm={2}>
-                    <RoundDot highlight={true} size="large" value={"?"} />
-                </Col>
-            </Row>
+            <Container className="mt-2">
+                <Row>
+                    <Col>
+                        <Stack direction="horizontal" gap={1} className="mt-2">
+                            Previous round:
+                            {roundHistories.toReversed().map((roundHistory) => {
+                                return this.RoundHistoryItem(roundHistory);
+                            })}
+                            <RoundDot highlight={true} size="large" value={"?"} />
+                        </Stack>
+                    </Col>
+                </Row>
+            </Container>
         );
     }
 
@@ -52,9 +56,10 @@ export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver,
         const isRed = value === "O";
         console.log(roundHistory.roundId);
         return (
-            <Col key={roundHistory.roundId} sm={1}>
+            <Stack key={roundHistory.roundId} direction="horizontal" gap={1}>
                 <RoundDot choice={isRed ? SeDieChoices.odd : SeDieChoices.even} size="large" value={value} />
-            </Col>
+                &#8680;
+            </Stack>
         );
     }
 

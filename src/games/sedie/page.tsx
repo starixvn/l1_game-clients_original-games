@@ -20,11 +20,7 @@ export default class SeDie extends GameBase<GameBaseProps, IGameBaseState> {
     }
 
     renderStatistic() {
-        return (
-            <Col>
-                <SeDieRoundHistory namespace={observerNamespace} />
-            </Col>
-        );
+        return <SeDieRoundHistory namespace={observerNamespace} />;
     }
 
     renderRoundIdSection() {

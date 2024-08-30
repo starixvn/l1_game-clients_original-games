@@ -172,16 +172,18 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         return (
             <>
                 <Row>
-                    {this.renderRoundIdSection()}
                     <Col>
                         <Row>
-                            <Col>{this.renderCountDownTimer()}</Col>
-                            <Col>{isRenderResultBlock && this.renderResultBlock()}</Col>
+                            <Col sm={2}>
+                                {this.renderRoundIdSection()}
+                                {this.renderCountDownTimer()}
+                            </Col>
+                            <Col sm={2}>{this.renderResultBlock()}</Col>
+                            <Col sm={8}>{this.renderBettingBlock()}</Col>
                         </Row>
                     </Col>
                 </Row>
 
-                {this.renderBettingBlock()}
                 {this.renderStatistic()}
                 {this.renderNotice()}
                 {this.renderWarning()}
