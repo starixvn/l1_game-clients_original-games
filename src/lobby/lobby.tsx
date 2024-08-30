@@ -52,11 +52,11 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
             <div className={styles["lobby"]}>
                 {isAuthorized && (
                     <div>
-                        <div>
+                        <div className={styles["game-block"]}>
                             <div className={styles["game-title"]}>{gc.Translator.t("SeDie.game_name")}</div>
                             <SeDie {...this.props} />
                         </div>
-                        <div>
+                        <div className={styles["game-block"]}>
                             <div className={styles["game-title"]}>{gc.Translator.t("BigSmall.game_name")}</div>
                         </div>
                     </div>
