@@ -168,5 +168,13 @@
         "win": "ชนะ",
         "win_loss": "ชนะ แพ้",
         "you_reach_max_win": "คุณถึงยอดชนะสูงสุด"
+    },
+    "SeDie": {
+        "game_name": "SeDie",
+        "glossary_even": "คู่",
+        "glossary_odd": "คี่"
+    },
+    "BigSmall": {
+        "game_name": "Big Small"
     }
 }

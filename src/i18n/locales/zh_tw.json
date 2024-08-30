@@ -168,5 +168,13 @@
         "win": "贏",
         "win_loss": "贏 輸",
         "you_reach_max_win": "您達到了最大勝利"
+    },
+    "SeDie": {
+        "game_name": "SeDie",
+        "glossary_even": "雙",
+        "glossary_odd": "單"
+    },
+    "BigSmall": {
+        "game_name": "Big Small"
     }
 }

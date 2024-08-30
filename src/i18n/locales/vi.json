@@ -170,7 +170,9 @@
         "you_reach_max_win": "Bạn Đã Đạt Mức Tiền Thắng Tối Đa"
     },
     "SeDie": {
-        "game_name": "Xóc Dĩa"
+        "game_name": "Xóc Dĩa",
+        "glossary_even": "Chẵn",
+        "glossary_odd": "Lẻ"
     },
     "BigSmall": {
         "game_name": "Tài Xỉu"
