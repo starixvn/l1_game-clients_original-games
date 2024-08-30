@@ -1,0 +1,32 @@
+.overlay {
+    top: -0.8rem !important;
+    z-index: var(--popup-guide-history-index);
+}
+
+.popup {
+    cursor: auto;
+    position: absolute;
+    padding: 1.6rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+    color:white;
+    .d-title{
+        color: yellow;
+        text-transform: capitalize;
+    }
+    .d-border{
+        border-bottom: 1px solid black;
+    }
+
+}
+
+.ipad {
+    padding-bottom: 6.9rem;
+}
+
+.bg-info{  
+    background-color: #3a3939;
+}
+
+.bg-error{
+    background-color: #791926;
+}

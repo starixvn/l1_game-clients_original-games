@@ -4,6 +4,8 @@ import { CountDownTimer, RoundId } from "../../components";
 import GameBase, { IGameBaseState } from "../../components/game-base";
 import { configGameContainer } from "../../components/game-base/startup";
 import { GameBaseProps } from "../../components/game-base/type";
+import Notice from "../../components/game-components/notices/notice";
+import Warning from "../../components/game-components/notices/warning";
 import { containerOptions, settings, siteConfigs } from "./game-settings";
 import SeDieRoundHistory from "./round-history";
 import SeDieBetOptions from "./sedie-bet-options";
@@ -43,5 +45,13 @@ export default class SeDie extends GameBase<GameBaseProps, IGameBaseState> {
 
     renderResultBlock() {
         return <SeDieSettlementResult namespace={observerNamespace} />;
+    }
+
+    renderNotice(): JSX.Element {
+        return <Notice namespace={observerNamespace}></Notice>;
+    }
+
+    renderWarning(): JSX.Element {
+        return <Warning namespace={observerNamespace}></Warning>;
     }
 }

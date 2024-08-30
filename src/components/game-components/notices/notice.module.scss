@@ -1,0 +1,22 @@
+
+
+.notice-container {
+    top: 20%;
+    z-index: var(--popup-guide-history-index);
+    padding: 2rem;
+
+    .icon-close {
+        position: absolute;
+        top: 0.8rem;
+        right: 0.6rem;
+        background: none;
+
+        &:before {
+            color: #ea1d40;
+        }
+    }
+}
+
+.notice-content {
+    white-space: pre-wrap;
+}
