@@ -38,9 +38,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         this.clearGameTimeoutAndInterval();
     }
 
-    onVisibilityChange = () => {
-        document.visibilityState === "hidden" ? this.onDestroy() : this.onStart();
-    };
+    onVisibilityChange = () => {};
 
     clearGameTimeoutAndInterval = () => {};
 
@@ -86,6 +84,10 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         return <></>;
     }
 
+    renderWarning() {
+        return <></>;
+    }
+
     renderRoundIdSection() {
         return <></>;
     }
@@ -114,23 +116,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         return <></>;
     }
 
-    renderSlidingChips() {
-        return <></>;
-    }
-
-    renderConfirmBet() {
-        return <></>;
-    }
-
-    renderConfirmDialog() {
-        return <></>;
-    }
-
     renderStatistic() {
-        return <></>;
-    }
-
-    renderStatisticContent() {
         return <></>;
     }
 
@@ -172,11 +158,11 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
                 {this.renderBettingBlock()}
                 {this.renderStatistic()}
+                {this.renderNotice()}
+                {this.renderWarning()}
             </>
         );
     }
-
-    protected retryConnect() {}
 
     render() {
         return (
