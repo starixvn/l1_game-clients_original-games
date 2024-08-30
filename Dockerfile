@@ -1,4 +1,4 @@
-FROM hub.lumigame.com/base/node:17.9-alpine3.14 AS base
+FROM hub.lumigame.com/base/node:20.9.0-alpine-24h1.1 AS base
 FROM base AS deps
 WORKDIR /app
 
@@ -23,7 +23,7 @@ COPY src ./src
 
 RUN yarn build
 
-FROM hub.lumigame.com/base/node:17.9-alpine3.14 AS runner
+FROM hub.lumigame.com/base/node:20.9.0-alpine-24h1.1 AS runner
 WORKDIR /app
 ENV NODE_ENV production
 
