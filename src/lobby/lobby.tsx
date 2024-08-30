@@ -7,6 +7,7 @@ import Tabs from "react-bootstrap/Tabs";
 import TimeOutContainer from "../components/game-components/timeout";
 import SeDie from "../games/sedie/page";
 import { ILobbyProps, ILobbyStates } from "./type";
+import styles from "./lobby.module.scss";
 
 @observer
 class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
@@ -48,16 +49,18 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
     render() {
         const { isAuthorized } = this.state;
         return (
-            <div>
-                <Tabs defaultActiveKey="sedie" id="uncontrolled-tab-example" className="mb-3">
-                    <Tab eventKey="sedie" title={gc.Translator.t("SeDie.game_name")} unmountOnExit={true}>
-                        {isAuthorized && <SeDie {...this.props} />}
-                    </Tab>
-                    <Tab eventKey="bigsmall" title={gc.Translator.t("BigSmall.game_name")} unmountOnExit={true}>
-                        {isAuthorized && " Big Small Game"}
-                    </Tab>
-                </Tabs>
-                <div>{gc.Translator.t("Common.one_choice_allowed")}</div>
+            <div className={styles["lobby"]}>
+                {isAuthorized && (
+                    <div>
+                        <div>
+                            <div className={styles["game-title"]}>{gc.Translator.t("SeDie.game_name")}</div>
+                            <SeDie {...this.props} />
+                        </div>
+                        <div>
+                            <div className={styles["game-title"]}>{gc.Translator.t("BigSmall.game_name")}</div>
+                        </div>
+                    </div>
+                )}
                 <TimeOutContainer />
             </div>
         );
