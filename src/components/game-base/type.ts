@@ -11,9 +11,7 @@ export interface GameConfigs {
 }
 
 export type GamePropsContext = {
-    id?: number;
-    tolgeeNamespace?: string;
-    gameName?: string;
+    namespace: string;
 };
 
 export type GameBaseProps = GamePropsContext & WithRouterProps;

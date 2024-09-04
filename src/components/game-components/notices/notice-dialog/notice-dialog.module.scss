@@ -3,12 +3,14 @@
     z-index: var(--popup-guide-history-index);
 }
 
-.popup {
+.notice-container {
     cursor: auto;
     position: absolute;
-    padding: 1.6rem;
-    border-radius: 0.5rem 0.5rem 0 0;
     color:white;
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto;
     .d-title{
         color: yellow;
         text-transform: capitalize;
@@ -17,16 +19,18 @@
         border-bottom: 1px solid black;
     }
 
+    .bg-info{  
+        background-color: #3a3939;
+    }
+    
+    .bg-error{
+        background-color: #791926;
+    }
+    
+
 }
 
 .ipad {
     padding-bottom: 6.9rem;
 }
 
-.bg-info{  
-    background-color: #3a3939;
-}
-
-.bg-error{
-    background-color: #791926;
-}

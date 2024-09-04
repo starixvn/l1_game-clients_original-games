@@ -1,20 +1,18 @@
 import * as gc from "@sg/sg-game-client";
 import React, { useRef } from "react";
 
-import { Button, Modal } from "react-bootstrap";
+import { Button, Toast } from "react-bootstrap";
 import Styles from "./notice-dialog.module.scss";
 
 export type Props = {
     title?: string;
-    isOpen?: boolean;
     onClose?: any;
     children: React.ReactNode;
     type?: gc.Notices.NoticeType;
     showBtnConfirmButton?: boolean;
-    noticeInfo?: gc.Notices.NoticeInfo;
 };
 
-const NoticeDialog: React.FC<Props> = ({ title, children, onClose, isOpen, type, showBtnConfirmButton }: Props) => {
+const NoticeDialog: React.FC<Props> = ({ title, children, onClose, type, showBtnConfirmButton }: Props) => {
     const wrapperRef = useRef<HTMLDivElement>(null);
     const isError = type === gc.Notices.NoticeType.Error;
     const isInfo = type === gc.Notices.NoticeType.Info;
@@ -23,32 +21,24 @@ const NoticeDialog: React.FC<Props> = ({ title, children, onClose, isOpen, type,
 
     return (
         <div ref={wrapperRef}>
-            <Modal
-                className={`${Styles["popup"]} ${classType}`}
-                show={true}
-                onHide={onClose?.()}
-                animation={true}
-                size="sm"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-            >
+            <Toast className={`${Styles["notice-container"]} ${classType}`} show={true} onClose={onClose?.()}>
                 <div className={bgInfoClass}>
-                    <Modal.Header className={`${Styles["d-border"]}`} closeButton>
-                        <Modal.Title className={Styles["d-title"]} id="contained-modal-title-vcenter">
-                            {title}
-                        </Modal.Title>
-                    </Modal.Header>
+                    <Toast.Header className={`justify-content-between ${bgInfoClass}`}>
+                        <strong className={Styles["d-title"]}> {title}</strong>
+                    </Toast.Header>
 
-                    <Modal.Body>{children}</Modal.Body>
-                    {showBtnConfirmButton && (
-                        <Modal.Footer className="justify-content-center">
-                            <Button className="btn-warning" onClick={onClose?.()}>
-                                OK
-                            </Button>
-                        </Modal.Footer>
-                    )}
+                    <Toast.Body>
+                        {children}
+                        {showBtnConfirmButton && (
+                            <div className="text-center">
+                                <Button className="btn-warning" onClick={onClose?.()}>
+                                    OK
+                                </Button>
+                            </div>
+                        )}
+                    </Toast.Body>
                 </div>
-            </Modal>
+            </Toast>
         </div>
     );
 };

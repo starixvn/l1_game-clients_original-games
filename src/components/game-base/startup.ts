@@ -1,9 +1,9 @@
 import * as gc from "@sg/sg-game-client";
+import * as mobx from "mobx";
 import { makeAutoObservable, reaction } from "mobx";
 import * as Observer from "observer";
 import "reflect-metadata";
 import { getSiteConfig } from "../../_shared/app-settings";
-import * as mobx from "mobx";
 
 interface Languages {
     [key: string]: any;
@@ -43,7 +43,6 @@ export function configSharedContainer() {
 export function configGameContainer(gameName: string, containerOptions: gc.IContainerOptions, siteConfigs: gc.Configs.SiteConfigs) {
     gc.StorageManager.setPrefixKey(siteConfigs.storagePrefixKey || "");
 
-    containerOptions.globalContainer = sharedContainer;
     const container = gc.getContainer(containerOptions);
     const observerContainer = gc.buildObserverContainer(container);
 

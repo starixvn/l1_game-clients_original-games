@@ -8,6 +8,8 @@ import { PlayerContext } from "../../_shared/react-contexts/auth";
 import { GameContextProvider } from "../../_shared/react-contexts/game-context/game-context";
 import { FunctionUtils } from "../../_shared/utils/funtion-utils";
 import GameContainer from "../game-components";
+import Notice from "../game-components/notices/notice";
+import Warning from "../game-components/notices/warning";
 import { GameBaseProps } from "./type";
 
 export interface IGameBaseState {
@@ -55,7 +57,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     @render(gc.JoinGame.JoinGameStore, (store) => store.toGame, { fireImmediately: false })
     requestOpenGame() {
-        console.log("toGame-----------");
+        console.log("toGame: ", this.props.namespace);
         this.openGameCallback();
     }
     openGameCallback() {
@@ -77,19 +79,20 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     onConnected(isConnected: boolean) {}
 
     @handle(gc.Connection.ConnectionHandlers.InGameHandler)
-    inGame() {}
+    inGame() {
+        return this.props.namespace;
+    }
 
     @render(gc.Rounds.RoundStore, (store) => ({ minBet: store.minBet, maxBet: store.maxBet }))
     renderMinMaxBet({ minBet, maxBet }: { minBet: number; maxBet: number }) {}
 
-    renderNotice() {
-        return <></>;
+    renderNotice(): JSX.Element {
+        return <Notice namespace={this.props.namespace}></Notice>;
     }
 
-    renderWarning() {
-        return <></>;
+    renderWarning(): JSX.Element {
+        return <Warning namespace={this.props.namespace}></Warning>;
     }
-
     renderRoundIdSection() {
         return <></>;
     }

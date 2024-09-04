@@ -2,9 +2,11 @@ import * as gc from "@sg/sg-game-client";
 import { withRouter } from "next/router";
 import { handle, observer, render } from "observer";
 import React from "react";
-import Tab from "react-bootstrap/Tab";
-import Tabs from "react-bootstrap/Tabs";
+import { Tab, Tabs } from "react-bootstrap";
 import TimeOutContainer from "../components/game-components/timeout";
+import { settingsBigSmall } from "../games/big-small/game-settings";
+import BigSmall from "../games/big-small/page";
+import { settingsSeDie } from "../games/sedie/game-settings";
 import SeDie from "../games/sedie/page";
 import styles from "./lobby.module.scss";
 import { ILobbyProps, ILobbyStates } from "./type";
@@ -54,11 +56,11 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
                     <Tabs defaultActiveKey="sedie" className="mb-3">
                         <Tab eventKey="sedie" title={gc.Translator.t("SeDie.game_name")} unmountOnExit={true}>
                             <div className={styles["game-boby"]}>
-                                <SeDie {...this.props} />
+                                <SeDie {...this.props} namespace={settingsSeDie.mainObserverNamespace} />
                             </div>
                         </Tab>
                         <Tab eventKey="bigsmall" title={gc.Translator.t("BigSmall.game_name")} unmountOnExit={true}>
-                            Big Small Game
+                            <BigSmall {...this.props} namespace={settingsBigSmall.mainObserverNamespace} />
                         </Tab>
                     </Tabs>
                 )}

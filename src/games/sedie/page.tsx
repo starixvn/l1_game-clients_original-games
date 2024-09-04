@@ -3,51 +3,44 @@ import { Col } from "react-bootstrap";
 import { CountDownTimer, RoundId } from "../../components";
 import GameBase, { IGameBaseState } from "../../components/game-base";
 import { configGameContainer } from "../../components/game-base/startup";
-import { GameBaseProps } from "../../components/game-base/type";
-import Notice from "../../components/game-components/notices/notice";
-import Warning from "../../components/game-components/notices/warning";
-import { containerOptions, settings, siteConfigs } from "./game-settings";
+import type { GameBaseProps } from "../../components/game-base/type";
+import { containerOptions, settingsSeDie, siteConfigs } from "./game-settings";
 import SeDieRoundHistory from "./round-history";
 import SeDieBetOptions from "./sedie-bet-options";
 import SeDieSettlementResult from "./settlement-result";
 
-configGameContainer(settings.name, containerOptions, siteConfigs);
-const observerNamespace = settings.mainObserverNamespace;
-@observer(observerNamespace)
+configGameContainer(settingsSeDie.name, containerOptions, siteConfigs);
+@observer(settingsSeDie.mainObserverNamespace)
 export default class SeDie extends GameBase<GameBaseProps, IGameBaseState> {
-    constructor(props: any) {
-        super(props);
-    }
-
     renderStatistic() {
-        return <SeDieRoundHistory namespace={observerNamespace} />;
+        return <SeDieRoundHistory namespace={this.props.namespace} />;
     }
 
     renderRoundIdSection() {
         return (
             <Col>
-                <RoundId namespace={observerNamespace} />
+                <RoundId namespace={this.props.namespace} />
             </Col>
         );
     }
 
     renderCountDownTimer() {
-        return <CountDownTimer namespace={observerNamespace} />;
+        return <CountDownTimer namespace={this.props.namespace} />;
     }
 
     renderBettingBlock() {
-        return <SeDieBetOptions namespace={observerNamespace} />;
+        return <SeDieBetOptions namespace={this.props.namespace} />;
     }
 
     renderResultBlock() {
-        return <SeDieSettlementResult namespace={observerNamespace} />;
+        return <SeDieSettlementResult namespace={this.props.namespace} />;
     }
 
-    renderNotice(): JSX.Element {
-        return <Notice namespace={observerNamespace}></Notice>;
-    }
+    // renderNotice(): JSX.Element {
+    //     return <Notice namespace={this.props.namespace}></Notice>;
+    // }
 
-    renderWarning(): JSX.Element {
-        return <Warning namespace={observerNamespace}></Warning>;
-    }
+    // renderWarning(): JSX.Element {
+    //     return <Warning namespace={this.props.namespace}></Warning>;
+    // }
 }

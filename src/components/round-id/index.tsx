@@ -15,7 +15,7 @@ export default class RoundId extends ObserverComponent<IPropsObserver, IRoundIdS
         };
     }
 
-    @render(RoundStore, (store) => store.clientRoundId, { fireImmediately: false })
+    @render(RoundStore, (store) => store.clientRoundId)
     renderRoundId(clientRoundId: number) {
         this.setState({ clientRoundId });
         // console.log("clientRoundId: ", clientRoundId);

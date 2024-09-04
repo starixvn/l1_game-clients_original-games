@@ -5,8 +5,8 @@ import {
     IStateObserver,
     ObserverComponent,
 } from "../../../_shared/commom-components/observer-component/observer-component";
-import BaseToasts from "../toasts";
 import Styles from "./notices.module.scss";
+import WarningDialog from "./warning-dialog";
 
 export interface IWarningState extends IStateObserver {
     warnings: gc.Notices.Warning[];
@@ -94,15 +94,15 @@ export default class Warning extends ObserverComponent<IPropsObserver, IWarningS
         return (
             <>
                 {warnings.map((warning, index) => (
-                    <BaseToasts key={`warning-${index}`} {...warning}>
+                    <WarningDialog key={`warning-${index}`} {...warning}>
                         <div className={Styles["title-white"]}>{warning?.message}</div>
-                    </BaseToasts>
+                    </WarningDialog>
                 ))}
 
                 {processingWarnings.map((processingWarning, index) => (
-                    <BaseToasts key={`processingWarning-${index}`} {...processingWarning}>
+                    <WarningDialog key={`processingWarning-${index}`} {...processingWarning}>
                         <div className={Styles["title-white"]}>{processingWarning?.message}</div>
-                    </BaseToasts>
+                    </WarningDialog>
                 ))}
             </>
         );

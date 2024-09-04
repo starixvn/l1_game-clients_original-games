@@ -6,7 +6,7 @@ import OwnBet from "../../components/game-components/bet-option/own-bet";
 import TotalBet from "../../components/game-components/bet-option/total-bet";
 
 import BettingBlock from "../../components/game-components/bet-option/betting-block";
-import { settings } from "./game-settings";
+import { settingsSeDie } from "./game-settings";
 import Styles from "./sedie.module.scss";
 import { bottomChoices, ChoiceSeDieIconMapper, SeDieChoices, topChoices } from "./type";
 
@@ -16,7 +16,7 @@ export default class SeDieBetOptions extends BetOptions {
 
     renderSubOptions = (choice: string, odd: number, fractional: boolean) => {
         return (
-            <BettingBlock odd={odd} choice={choice} namespace={settings.mainObserverNamespace}>
+            <BettingBlock odd={odd} choice={choice} namespace={settingsSeDie.mainObserverNamespace}>
                 <div className={Styles["container-bets"]}>
                     <div className={Styles["wrapper-dots"]}>{this.renderDots(ChoiceSeDieIconMapper[choice])}</div>
                     <Odds value={odd} fractional={fractional} />
@@ -32,7 +32,7 @@ export default class SeDieBetOptions extends BetOptions {
 
     renderMainOption = (name: string, odd: number, choice: string, fractional: boolean) => {
         return (
-            <BettingBlock odd={odd} choice={choice} namespace={settings.mainObserverNamespace}>
+            <BettingBlock odd={odd} choice={choice} namespace={settingsSeDie.mainObserverNamespace}>
                 <div className={`${Styles["container-bets"]} ${Styles["padding-bet"]}`}>
                     <div>
                         <div className={Styles["main-option"]}>{name}</div>
