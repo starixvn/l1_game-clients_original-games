@@ -1537,10 +1537,10 @@
     socket.io-msgpack-parser "^3.0.2"
     unique-names-generator "^4.7.1"
 
-"@sg/sg-observer@^1.3.2":
-  version "1.3.2"
-  resolved "http://npm.lumigame.com/@sg/sg-observer/-/sg-observer-1.3.2.tgz#8633a0665d158371d2d41903e59f98a0190b0870"
-  integrity sha512-Y/rYdK/V18sMNut/kXzSh8LsapXtAurSPhmM60Zu8qQ0IkmRNjt52FptYIfEU0s9/cle4lUzVa3pb3WMe/74bQ==
+"@sg/sg-observer@^1.3.3":
+  version "1.3.3"
+  resolved "http://npm.lumigame.com/@sg/sg-observer/-/sg-observer-1.3.3.tgz#ef2938b6210c2740fd817db10d2264cd79943f77"
+  integrity sha512-YjZNkGO01/M7G6YQcWF3nscj/e2XTrHIy/HAblrx8nK5GBTEWJcxR9Z84TrkC/bV+siebGMWCwtEicTc+m2V1A==
 
 "@sg/sg-user-service-client@^1.8.1":
   version "1.8.1"

@@ -26,9 +26,7 @@ export const loadI18n = (languageId: string) => {
                 return languages[languageId];
             },
             availableLanguages: languageIds,
-            onLoaded: () => {
-                console.log("started tolgee");
-            },
+            onLoaded: () => {},
         };
 
         gc.Translator.init(translationOptions);

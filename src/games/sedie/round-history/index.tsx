@@ -19,7 +19,6 @@ export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver,
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
-        console.log("update roundHistories", rounds.slice(0, 10));
         this.setState({ rounds: rounds.slice(0, 10) });
     }
 
@@ -29,7 +28,6 @@ export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver,
             return <></>;
         }
         const roundHistories = rounds as gc.RoundHistories.RoundHistory[];
-        console.log("render roundHistories", roundHistories);
 
         return (
             <Container className="mt-2">
@@ -54,7 +52,7 @@ export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver,
         }
         const value = this.getResult(roundHistory.settlementResult);
         const isRed = value === "O";
-        console.log(roundHistory.roundId);
+
         return (
             <Stack key={roundHistory.roundId} direction="horizontal" gap={1}>
                 <RoundDot choice={isRed ? SeDieChoices.odd : SeDieChoices.even} size="large" value={value} />

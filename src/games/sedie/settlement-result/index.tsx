@@ -37,7 +37,6 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
             return;
         }
 
-        console.log("renderCurrentFinish");
         this.setState({ result });
     }
 

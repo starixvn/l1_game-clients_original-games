@@ -18,12 +18,10 @@ export default class CountDownTimer extends ObserverComponent<IPropsObserver, IC
     @render(RoundTimeStore, (store) => store.countdownTimer)
     renderCountDownTimer(countdownTimer: number) {
         this.setState({ countdownTimer });
-        // console.log("render countdownTimer: ", countdownTimer);
     }
     @render(RoundTimeStore, (store) => store.roundState)
     renderCountDownTimerState(roundState: string) {
         this.setState({ roundState });
-        // console.log("render state: ", roundState);
     }
 
     getColor(roundState: string) {
@@ -36,7 +34,7 @@ export default class CountDownTimer extends ObserverComponent<IPropsObserver, IC
 
     render() {
         const { countdownTimer, roundState, isInRoundTime } = this.state;
-        // console.log("countdownTimer", countdownTimer);
+
         return (
             <div className="count-down">
                 <p>

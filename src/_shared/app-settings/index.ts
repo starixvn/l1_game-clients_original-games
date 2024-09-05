@@ -23,7 +23,6 @@ export const getSiteConfig = (gameId: number) => {
     };
 
     gc.Shared.utils.StorageManager.setPrefixKey(gameSetting.storagePrefixKey);
-    console.log("config", config);
 
     return config;
 };

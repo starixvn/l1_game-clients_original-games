@@ -23,7 +23,6 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
     }
 
     componentDidMount() {
-        console.log("sso--------");
         this.sso();
     }
 
@@ -35,7 +34,6 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
     @render(gc.Auth.AuthStore, (store) => store.isAuthorized)
     openGame(isAuthorized: boolean) {
         if (isAuthorized) {
-            console.log("isAuthorized----------------", isAuthorized);
             this.setState({ isAuthorized: true });
             this.loadChipSetting();
             this.triggerRecheckIn();
@@ -50,16 +48,18 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
 
     render() {
         const { isAuthorized } = this.state;
+        const t = gc.Translator.t;
+
         return (
             <div className={styles["lobby"]}>
                 {isAuthorized && (
                     <Tabs defaultActiveKey="sedie" className="mb-3">
-                        <Tab eventKey="sedie" title={gc.Translator.t("SeDie.game_name")} unmountOnExit={true}>
-                            <div className={styles["game-boby"]}>
+                        <Tab eventKey="sedie" title={t("SeDie.game_name")} unmountOnExit={true}>
+                            <div className={styles["game-lobby"]}>
                                 <SeDie {...this.props} namespace={settingsSeDie.mainObserverNamespace} />
                             </div>
                         </Tab>
-                        <Tab eventKey="bigsmall" title={gc.Translator.t("BigSmall.game_name")} unmountOnExit={true}>
+                        <Tab eventKey="bigsmall" title={t("BigSmall.game_name")} unmountOnExit={true}>
                             <BigSmall {...this.props} namespace={settingsBigSmall.mainObserverNamespace} />
                         </Tab>
                     </Tabs>

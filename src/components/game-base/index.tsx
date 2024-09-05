@@ -57,7 +57,6 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     @render(gc.JoinGame.JoinGameStore, (store) => store.toGame, { fireImmediately: false })
     requestOpenGame() {
-        console.log("toGame: ", this.props.namespace);
         this.openGameCallback();
     }
     openGameCallback() {
