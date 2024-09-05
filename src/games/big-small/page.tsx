@@ -21,12 +21,4 @@ export default class BigSmall extends GameBase<GameBaseProps, IGameBaseState> {
     renderCountDownTimer() {
         return <CountDownTimer namespace={this.props.namespace} />;
     }
-
-    // renderNotice(): JSX.Element {
-    //     return <Notice namespace={this.props.namespace}></Notice>;
-    // }
-
-    // renderWarning(): JSX.Element {
-    //     return <Warning namespace={this.props.namespace}></Warning>;
-    // }
 }

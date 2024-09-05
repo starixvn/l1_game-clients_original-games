@@ -35,12 +35,4 @@ export default class SeDie extends GameBase<GameBaseProps, IGameBaseState> {
     renderResultBlock() {
         return <SeDieSettlementResult namespace={this.props.namespace} />;
     }
-
-    // renderNotice(): JSX.Element {
-    //     return <Notice namespace={this.props.namespace}></Notice>;
-    // }
-
-    // renderWarning(): JSX.Element {
-    //     return <Warning namespace={this.props.namespace}></Warning>;
-    // }
 }
