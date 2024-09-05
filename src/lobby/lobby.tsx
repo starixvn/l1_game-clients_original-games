@@ -48,18 +48,17 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
 
     render() {
         const { isAuthorized } = this.state;
-        const t = gc.Translator.t;
 
         return (
             <div className={styles["lobby"]}>
                 {isAuthorized && (
                     <Tabs defaultActiveKey="sedie" className="mb-3">
-                        <Tab eventKey="sedie" title={t("SeDie.game_name")} unmountOnExit={true}>
+                        <Tab eventKey="sedie" title={gc.Translator.t("SeDie.game_name")} unmountOnExit={true}>
                             <div className={styles["game-lobby"]}>
                                 <SeDie {...this.props} namespace={settingsSeDie.mainObserverNamespace} />
                             </div>
                         </Tab>
-                        <Tab eventKey="bigsmall" title={t("BigSmall.game_name")} unmountOnExit={true}>
+                        <Tab eventKey="bigsmall" title={gc.Translator.t("BigSmall.game_name")} unmountOnExit={true}>
                             <BigSmall {...this.props} namespace={settingsBigSmall.mainObserverNamespace} />
                         </Tab>
                     </Tabs>
