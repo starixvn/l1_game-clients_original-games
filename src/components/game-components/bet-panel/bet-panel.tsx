@@ -3,7 +3,6 @@ import { handle, render } from "@sg/sg-observer";
 import React, { useEffect, useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
-import { useTranslation } from "react-i18next";
 import {
     IPropsObserver,
     IStateObserver,
@@ -89,7 +88,6 @@ const BetPanel: React.FC<{
     handleBet: (amount: number, choice: string) => void;
 }> = ({ minBet = 1, maxBet = 300, maxBetPerChoices, stakeLevel, handleBet }) => {
     const { choice, odd = 0, onHide, show } = useGameBettingZoneContext();
-    const { t } = useTranslation("common");
     const [amount, setAmount] = useState(1);
     const [min, setMin] = useState(0);
     const [max, setMax] = useState(0);
@@ -121,7 +119,6 @@ const BetPanel: React.FC<{
             </Modal.Header>
             <Modal.Body>
                 <div className={`${styles["bet-panel"]} mt-3 mb-1`}>
-                    {/* <div className={`${styles["bet-game-name"]} mt-1 mb-1`}>Sedie</div> */}
                     <div className={`${styles["bet-choice-area"]} mt-1 mb-1`}>
                         <div className={styles["bet-choice"]}>
                             <div>{choice || ""}</div>

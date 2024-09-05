@@ -1,7 +1,6 @@
 const basePath = "";
 const gameSettings = require("./game-settings.json");
 const configs = require("./configs.json");
-const { i18n } = require("./next-i18next.config");
 const { v4: uuidv4 } = require("uuid");
 
 const appSettings = {
@@ -13,7 +12,6 @@ const appSettings = {
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-    i18n,
     publicRuntimeConfig: appSettings,
     productionBrowserSourceMaps: configs.enableSourceMap,
     generateBuildId: async () => {
