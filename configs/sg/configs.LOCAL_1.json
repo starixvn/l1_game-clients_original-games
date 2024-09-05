@@ -6,9 +6,7 @@
     "systemType": "SG",
     "gameLobbySimulatorUrl": "https://l1-glbs1.lumigame.com",
     "owApiSimulatorUrl": "https://l1-ows1.lumigame.com/SabaClub",
-    "serverDomainMapper": {
-        "localhost": "lumigame.com"
-    },
+    "serverDomain": "lumigame.com",
     "ssl": true,
     "subDomain": "l1-proxy1",
     "env": "LOCAL1",

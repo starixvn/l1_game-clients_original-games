@@ -26,7 +26,7 @@ interface IGameSettings {
 }
 
 export default interface AppSettings {
-    serverDomainMapper: string;
+    serverDomain: string;
     socketGatewayPath: string;
     sentry: SentryOptions;
     gameSettings: { [id: string]: IGameSettings };

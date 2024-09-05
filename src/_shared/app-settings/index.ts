@@ -10,7 +10,7 @@ export const getSiteConfig = (gameId: number) => {
     const config: gc.Configs.SiteConfigs = {
         isDev: false, // if this property is true, then you should add token=anything into the querytring to sso to the game http://localhost:7456/?token=anything
         systemType: "SG",
-        serverDomainMapper: appSettings.serverDomainMapper,
+        serverDomain: appSettings.serverDomain,
         ssl: appSettings.ssl,
         subDomain: appSettings.subDomain,
         env: appSettings.env,

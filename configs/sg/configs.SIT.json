@@ -4,9 +4,7 @@
         "environment": "SIT"
     },
     "systemType": "SG",
-    "serverDomainMapper": {
-        "localhost": "lumigame.com"
-    },
+    "serverDomain":"lumigame.com",
     "ssl": true,
     "subDomain": "l1uatproxy",
     "env": "SIT",
