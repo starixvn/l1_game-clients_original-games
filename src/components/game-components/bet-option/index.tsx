@@ -1,6 +1,6 @@
 import * as gc from "@sg/sg-game-client";
 import { isEmpty } from "lodash";
-import { render } from "observer";
+import { render } from "@sg/sg-observer";
 import {
     IPropsObserver,
     IStateObserver,

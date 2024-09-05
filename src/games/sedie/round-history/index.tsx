@@ -1,5 +1,5 @@
 import * as gc from "@sg/sg-game-client";
-import { render } from "observer";
+import { render } from "@sg/sg-observer";
 import { Col, Container, Row, Stack } from "react-bootstrap";
 import {
     IPropsObserver,

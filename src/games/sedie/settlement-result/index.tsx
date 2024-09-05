@@ -1,7 +1,7 @@
 import * as gc from "@sg/sg-game-client";
 import { RoundHistoryStore } from "@sg/sg-game-client/dist/game/round-histories";
 import { SettlementStore } from "@sg/sg-game-client/dist/game/settlements";
-import { render } from "observer";
+import { render } from "@sg/sg-observer";
 import { Col, Row } from "react-bootstrap";
 import {
     IPropsObserver,

@@ -1537,6 +1537,11 @@
     socket.io-msgpack-parser "^3.0.2"
     unique-names-generator "^4.7.1"
 
+"@sg/sg-observer@^1.3.2":
+  version "1.3.2"
+  resolved "http://npm.lumigame.com/@sg/sg-observer/-/sg-observer-1.3.2.tgz#8633a0665d158371d2d41903e59f98a0190b0870"
+  integrity sha512-Y/rYdK/V18sMNut/kXzSh8LsapXtAurSPhmM60Zu8qQ0IkmRNjt52FptYIfEU0s9/cle4lUzVa3pb3WMe/74bQ==
+
 "@sg/sg-user-service-client@^1.8.1":
   version "1.8.1"
   resolved "http://npm.lumigame.com/@sg/sg-user-service-client/-/sg-user-service-client-1.8.1.tgz#c05e68b146b7c9ecf93f39929c4c946037d315ef"
@@ -6454,11 +6459,6 @@ object.values@^1.1.6, object.values@^1.1.7, object.values@^1.2.0:
     call-bind "^1.0.7"
     define-properties "^1.2.1"
     es-object-atoms "^1.0.0"
-
-observer@1.3.2-beta.1:
-  version "1.3.2-beta.1"
-  resolved "http://npm.lumigame.com/observer/-/observer-1.3.2-beta.1.tgz#aa8f8319f8172fdd7dcc0146411da0450836af9d"
-  integrity sha512-yIYVfA1jX6Bw4ZKIp2qY1DHyt680Q+fwOA3BdBLp+R8vi9Jzhf/13cURuuDhYdW2u9RYFRv2vgOCeOmsniGcww==
 
 once@^1.3.0:
   version "1.4.0"

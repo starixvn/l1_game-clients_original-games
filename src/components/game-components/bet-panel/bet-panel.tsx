@@ -1,5 +1,5 @@
 import * as gc from "@sg/sg-game-client";
-import { handle, render } from "observer";
+import { handle, render } from "@sg/sg-observer";
 import React, { useEffect, useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";

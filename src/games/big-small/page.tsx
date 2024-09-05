@@ -1,4 +1,4 @@
-import { observer } from "observer";
+import { observer } from "@sg/sg-observer";
 import { Col } from "react-bootstrap";
 import { CountDownTimer, RoundId } from "../../components";
 import GameBase, { IGameBaseState } from "../../components/game-base";

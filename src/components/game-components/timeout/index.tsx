@@ -1,6 +1,6 @@
 import * as gc from "@sg/sg-game-client";
 import { withRouter } from "next/router";
-import { observer, render } from "observer";
+import { observer, render } from "@sg/sg-observer";
 import { Component } from "react";
 
 @observer

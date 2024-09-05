@@ -1,5 +1,5 @@
 import { ROUND_STATE, RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds";
-import { render } from "observer";
+import { render } from "@sg/sg-observer";
 import { Badge } from "react-bootstrap";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../_shared/commom-components/observer-component/observer-component";
 

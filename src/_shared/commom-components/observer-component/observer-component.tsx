@@ -1,4 +1,4 @@
-import { useObserver } from "observer";
+import { useObserver } from "@sg/sg-observer";
 import React from "react";
 
 export interface IPropsObserver {

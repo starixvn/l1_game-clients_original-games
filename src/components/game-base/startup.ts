@@ -1,7 +1,7 @@
 import * as gc from "@sg/sg-game-client";
 import * as mobx from "mobx";
 import { makeAutoObservable, reaction } from "mobx";
-import * as Observer from "observer";
+import * as Observer from "@sg/sg-observer";
 import "reflect-metadata";
 import { getSiteConfig } from "../../_shared/app-settings";
 

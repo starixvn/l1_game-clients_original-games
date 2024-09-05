@@ -1,7 +1,7 @@
 import * as gc from "@sg/sg-game-client";
 import { Rounds, Settlements } from "@sg/sg-game-client";
 import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds/round-time-store";
-import { handle, render } from "observer";
+import { handle, render } from "@sg/sg-observer";
 import React from "react";
 import { Col, Row } from "react-bootstrap";
 import { PlayerContext } from "../../_shared/react-contexts/auth";

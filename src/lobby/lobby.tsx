@@ -1,6 +1,6 @@
 import * as gc from "@sg/sg-game-client";
 import { withRouter } from "next/router";
-import { handle, observer, render } from "observer";
+import { handle, observer, render } from "@sg/sg-observer";
 import React from "react";
 import { Tab, Tabs } from "react-bootstrap";
 import TimeOutContainer from "../components/game-components/timeout";
