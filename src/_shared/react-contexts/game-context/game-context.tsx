@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { GamePropsContext } from "../../../components/game-base/type";
+import type { GamePropsContext } from "../../components/game-base/type";
 
 export const GameContext = React.createContext<GamePropsContext>({});
 GameContext.displayName = "GameContext";
