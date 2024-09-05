@@ -17,7 +17,7 @@
         "linkToSGGameClient": "yarn link @sg/sg-game-client"
     },
     "dependencies": {
-        "@sg/sg-game-client": "0.1.1-beta.3",
+        "@sg/sg-game-client": "0.1.1-beta.5",
         "@sg/sg-observer": "^1.3.3",
         "axios": "^1.7.4",
         "bootstrap": "^5.3.3",

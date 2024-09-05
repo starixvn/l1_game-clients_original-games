@@ -5,9 +5,9 @@
         "name": "BigSmall",
         "namespaces": ["BigSmall"],
         "durations": {
-            "wholeRound": 37,
+            "wholeRound": 61,
             "lockingBet": 5,
-            "placingBet": 30,
+            "placingBet": 50,
             "generatingResult": 1,
             "showingResult": 6,
             "startRound": 2
