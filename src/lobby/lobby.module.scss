@@ -14,4 +14,15 @@
             padding: 10px 0px;
         }
     }
+    .game-title {
+        background-color: #e6e6e6;
+        display: grid;
+        grid-template-columns: 1fr 10rem 30rem;
+        * {
+            padding: .2rem .4rem;
+        }
+        .text-center {
+            text-align: center;
+        }
+    }
 }

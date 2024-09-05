@@ -53,6 +53,11 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
                 {isAuthorized && (
                     <Tabs defaultActiveKey="sedie" className={styles["lobby-tabs"]}>
                         <Tab eventKey="sedie" title={gc.Translator.t("SeDie.game_name")} unmountOnExit={true}>
+                            <div className={styles["game-title"]}>
+                                <div>Sedie</div>
+                                <div className={styles["text-center"]}>Odd/Even</div>
+                                <div className={styles["text-center"]}>Red/White</div>
+                            </div>
                             <div className={styles["game-lobby"]}>
                                 <SeDie {...this.props} namespace={settingsSeDie.mainObserverNamespace} />
                             </div>
