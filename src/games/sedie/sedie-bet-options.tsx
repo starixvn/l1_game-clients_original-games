@@ -87,51 +87,7 @@ export default class SeDieBetOptions extends BetOptions {
                         );
                     }
                 })}
-                {/* <Container>
-                    <Row>
-                        <Col >
-                            
-                        </Col>
-                        <Col className={Styles["bet"]} sm={9}>
-                            <Row className={Styles["margin-x-0"]}>
-                                {Object.keys(SeDieChoices).map((choiceKey) => {
-                                    if (topChoices.includes(choiceKey)) {
-                                        const choiceName = SeDieChoices[choiceKey as keyof typeof SeDieChoices];
-                                        const odd = odds?.[choiceName] || 0;
-
-                                        return (
-                                            <Col className={`${Styles["bets-bg"]} ${Styles["padding-bet"]}`} key={choiceKey} sm={4}>
-                                                {this.renderSubOptions(choiceKey, odd, fractional)}
-                                            </Col>
-                                        );
-                                    }
-                                })}
-                            </Row>
-                        </Col>
-                    </Row>
-
-                    <Row>
-                        <Col className={`${Styles["bet"]} ${Styles["bets-bg"]}`}>
-                            {this.renderMainOption("E", odds?.even, "even", fractional)}
-                        </Col>
-                        <Col className={Styles["bet"]} >
-                            <Row className={Styles["margin-x-0"]}>
-                                {Object.keys(SeDieChoices).map((choiceKey) => {
-                                    if (bottomChoices.includes(choiceKey)) {
-                                        const choiceName = SeDieChoices[choiceKey as keyof typeof SeDieChoices];
-                                        const odd = odds?.[choiceName] || 0;
-
-                                        return (
-                                            <Col className={`${Styles["bets-bg"]} ${Styles["padding-bet"]}`} key={choiceKey} sm={4}>
-                                                {this.renderSubOptions(choiceKey, odd, fractional)}
-                                            </Col>
-                                        );
-                                    }
-                                })}
-                            </Row>
-                        </Col>
-                    </Row>
-                </Container> */}
+               
             </div>
         );
     }

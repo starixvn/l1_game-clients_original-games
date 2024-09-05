@@ -1,6 +1,6 @@
 import * as gc from "@sg/sg-game-client";
-import { withRouter } from "next/router";
 import { handle, observer, render } from "@sg/sg-observer";
+import { withRouter } from "next/router";
 import React from "react";
 import { Tab, Tabs } from "react-bootstrap";
 import { settingsBigSmall } from "../games/big-small/game-settings";
@@ -51,7 +51,7 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
         return (
             <div className={styles["lobby"]}>
                 {isAuthorized && (
-                    <Tabs defaultActiveKey="sedie" className="mb-3">
+                    <Tabs defaultActiveKey="sedie" className={styles["lobby-tabs"]}>
                         <Tab eventKey="sedie" title={gc.Translator.t("SeDie.game_name")} unmountOnExit={true}>
                             <div className={styles["game-lobby"]}>
                                 <SeDie {...this.props} namespace={settingsSeDie.mainObserverNamespace} />

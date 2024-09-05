@@ -37,14 +37,14 @@ export default class CountDownTimer extends ObserverComponent<IPropsObserver, IC
 
         return (
             <div className="count-down">
-                <p>
+                <div>
                     Countdown: &nbsp;
                     <Badge pill bg={this.getColor(roundState)}>
                         {countdownTimer}
                     </Badge>
-                </p>
+                </div>
 
-                <p>state: {roundState}</p>
+                <div>state: {roundState}</div>
             </div>
         );
     }

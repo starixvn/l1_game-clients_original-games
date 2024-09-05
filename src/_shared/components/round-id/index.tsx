@@ -1,5 +1,6 @@
 import { RoundStore } from "@sg/sg-game-client/dist/game/rounds";
 import { render } from "@sg/sg-observer";
+import Styles from "../game-base/game-base.module.scss";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../observer-component/observer-component";
 
 export interface IRoundIdState extends IStateObserver {
@@ -22,6 +23,6 @@ export default class RoundId extends ObserverComponent<IPropsObserver, IRoundIdS
 
     render() {
         const { clientRoundId } = this.state;
-        return <div className="round-id">Round: No. {clientRoundId}</div>;
+        return <div className={Styles["round-id"]}> No. {clientRoundId}</div>;
     }
 }
