@@ -28,15 +28,14 @@ export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver,
 
         return (
             <div className={Styles["round-history"]}>
-                 <Stack direction="horizontal" gap={1} className={Styles["hstack-round"]}>
-                            Previous round:
-                            {roundHistories.toReversed().map((roundHistory) => {
-                                return this.RoundHistoryItem(roundHistory);
-                            })}
-                            <RoundDot highlight={true} size="large" value={"?"} />
-                        </Stack>
+                <Stack direction="horizontal" gap={1} className={Styles["hstack-round"]}>
+                    Previous round:
+                    {roundHistories.toReversed().map((roundHistory) => {
+                        return this.RoundHistoryItem(roundHistory);
+                    })}
+                    <RoundDot highlight={true} size="large" value={"?"} />
+                </Stack>
             </div>
-            
         );
     }
 
@@ -45,11 +44,11 @@ export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver,
             return <></>;
         }
         const value = this.getResult(roundHistory.settlementResult);
-        const isRed = value === "O";
+        const isOdd = value === "O";
 
         return (
             <Stack key={roundHistory.roundId} direction="horizontal" gap={1}>
-                <RoundDot choice={isRed ? SeDieChoices.odd : SeDieChoices.even} size="large" value={value} />
+                <RoundDot choice={isOdd ? SeDieChoices.odd : SeDieChoices.even} size="large" value={value} />
                 <span className={Styles["arrow"]}></span>
             </Stack>
         );
