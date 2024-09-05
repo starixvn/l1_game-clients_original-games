@@ -1,0 +1,22 @@
+.block-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 14rem 40rem;
+    background-color: #fce0d7;
+    align-items: center;
+    .info, .result, .bet-options {
+        padding: 4px;
+    }
+    
+    .result {
+        border-right: 1px solid #ccc;
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+    .round-id {
+        font-weight: bold;
+    }
+
+    
+
+}

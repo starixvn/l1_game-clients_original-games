@@ -12,6 +12,9 @@
         align-items: center;
         grid-template-columns: repeat(4, 2.2rem);
         grid-gap: 0;
+        &-small {
+            grid-template-columns: repeat(4, 1.2rem);
+        }
     }
 }
 
@@ -21,15 +24,27 @@
 }
 
 .bets-bg{
-    background-color: #712cf926;
-    border: 1px solid #712cf94d;
+    background-color: #fff6f3;
+    border-radius: 4px;
 }
 
 .padding-bet{
-    padding: .75rem;
+    padding: 8px;
 }
 
 .margin-x-0{
     margin-right: 0;
     margin-left: 0;
+}
+
+.bet-options-wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: .2rem;
+    .bet {
+        width: 11rem;
+    }
+}
+.round-history {
+    background-color: #fce0d7;
 }

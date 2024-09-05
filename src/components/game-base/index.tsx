@@ -3,13 +3,13 @@ import { Rounds, Settlements } from "@sg/sg-game-client";
 import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds/round-time-store";
 import { handle, render } from "@sg/sg-observer";
 import React from "react";
-import { Col, Row } from "react-bootstrap";
 import { PlayerContext } from "../../_shared/react-contexts/auth";
 import { GameContextProvider } from "../../_shared/react-contexts/game-context/game-context";
 import { FunctionUtils } from "../../_shared/utils/funtion-utils";
 import GameContainer from "../game-components";
 import Notice from "../game-components/notices/notice";
 import Warning from "../game-components/notices/warning";
+import Styles from "./game-base.module.scss";
 import { GameBaseProps } from "./type";
 
 export interface IGameBaseState {
@@ -173,18 +173,18 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
         return (
             <>
-                <Row>
-                    <Col>
-                        <Row>
-                            <Col sm={2}>
-                                {this.renderRoundIdSection()}
-                                {this.renderCountDownTimer()}
-                            </Col>
-                            <Col sm={2}>{this.renderResultBlock()}</Col>
-                            <Col sm={8}>{this.renderBettingBlock()}</Col>
-                        </Row>
-                    </Col>
-                </Row>
+                <div className={Styles["block-wrapper"]}>
+                    <div className={Styles["info"]}>
+                        {this.renderRoundIdSection()}
+                        {this.renderCountDownTimer()}
+                    </div>
+                    <div className={Styles["result"]}>
+                        {this.renderResultBlock()}
+                    </div>
+                    <div className={Styles["bet-options"]}>
+                        {this.renderBettingBlock()}
+                    </div>
+                </div>
 
                 {this.renderStatistic()}
                 {this.renderNotice()}

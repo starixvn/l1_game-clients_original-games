@@ -1,12 +1,13 @@
 import * as gc from "@sg/sg-game-client";
 import { render } from "@sg/sg-observer";
-import { Col, Container, Row, Stack } from "react-bootstrap";
+import { Stack } from "react-bootstrap";
 import {
     IPropsObserver,
     IStateObserver,
     ObserverComponent,
 } from "../../../_shared/commom-components/observer-component/observer-component";
 import { RoundDot } from "../../../components/dot";
+import Styles from "../sedie.module.scss";
 import { SeDieChoices } from "../type";
 
 export interface ISeDieRoundHistoryState extends IStateObserver {
@@ -30,19 +31,28 @@ export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver,
         const roundHistories = rounds as gc.RoundHistories.RoundHistory[];
 
         return (
-            <Container className="mt-2">
-                <Row>
-                    <Col>
-                        <Stack direction="horizontal" gap={1} className="mt-2">
+            <div className={Styles["round-history"]}>
+                 <Stack direction="horizontal" gap={1} className="mt-2">
                             Previous round:
                             {roundHistories.toReversed().map((roundHistory) => {
                                 return this.RoundHistoryItem(roundHistory);
                             })}
                             <RoundDot highlight={true} size="large" value={"?"} />
                         </Stack>
-                    </Col>
-                </Row>
-            </Container>
+            </div>
+            // <Container >
+            //     <Row>
+            //         <Col>
+            //             <Stack direction="horizontal" gap={1} className="mt-2">
+            //                 Previous round:
+            //                 {roundHistories.toReversed().map((roundHistory) => {
+            //                     return this.RoundHistoryItem(roundHistory);
+            //                 })}
+            //                 <RoundDot highlight={true} size="large" value={"?"} />
+            //             </Stack>
+            //         </Col>
+            //     </Row>
+            // </Container>
         );
     }
 
