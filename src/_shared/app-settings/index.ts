@@ -19,7 +19,7 @@ export const getSiteConfig = (gameId: number) => {
         websocket: gameSetting.websocket,
         mainObserverNamespace: gameSetting.mainObserverNamespace,
         storagePrefixKey: gameSetting.storagePrefixKey,
-        subGuideDomain: gameSetting.storagePrefixKey,
+        subGuideDomain: "",
     };
 
     gc.Shared.utils.StorageManager.setPrefixKey(gameSetting.storagePrefixKey);

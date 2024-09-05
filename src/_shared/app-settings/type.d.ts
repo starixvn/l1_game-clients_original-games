@@ -32,7 +32,7 @@ export default interface AppSettings {
     gameSettings: { [id: string]: IGameSettings };
     enableMsgpackParser: boolean;
     enableMsgpackParserOnNotification: boolean;
-    system: string;
+    systemType: string;
     gamePath: string;
     gameSettingUrl: string;
     gameLobbySimulatorUrl: string;
@@ -40,6 +40,5 @@ export default interface AppSettings {
     subDomain: string;
     env: string;
     enableMsgpackParserAllGames: boolean;
-    subGuideDomain: string;
     owApiSimulatorUrl: string;
 }

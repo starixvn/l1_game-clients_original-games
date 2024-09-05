@@ -20,7 +20,7 @@ export interface Round {
     settlementResult: any;
 }
 
-export const systemName = appSettings.system.toLocaleLowerCase();
+export const systemType = appSettings.systemType.toLocaleLowerCase();
 
 export const ChipMapper = {
     gn: {
