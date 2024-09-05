@@ -1,10 +1,11 @@
 import * as gc from "@sg/sg-game-client";
 import { RoundHistoryStore } from "@sg/sg-game-client/dist/game/round-histories";
+import { ROUND_STATE, RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds";
 import { SettlementStore } from "@sg/sg-game-client/dist/game/settlements";
 import { render } from "@sg/sg-observer";
 import { Col, Row } from "react-bootstrap";
-import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../_shared/components/observer-component/observer-component";
 import { RoundDot } from "../../../_shared/components/dot";
+import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../_shared/components/observer-component/observer-component";
 import Styles from "../sedie.module.scss";
 import { SeDieChoices } from "../type";
 type SeDieResult = {
@@ -15,11 +16,18 @@ type SeDieResult = {
 };
 export interface ISeDieSettlementResultState extends IStateObserver {
     result: gc.GameServiceMessage.TResult;
+    roundState: string;
 }
 export default class SeDieSettlementResult extends ObserverComponent<IPropsObserver, ISeDieSettlementResultState> {
     constructor(props: IPropsObserver) {
         super(props);
     }
+
+    @render(RoundTimeStore, (store) => store.roundState)
+    handleRoundState(roundState: string) {
+        this.setState({ roundState });
+    }
+
     @render(SettlementStore, (store) => store.currentFinish, {
         fireImmediately: false,
     })
@@ -72,14 +80,23 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
         );
     };
 
-    render() {
-        const { result } = this.state;
-        if (!result) {
-            return <></>;
-        }
-
-        console.log("result", result);
+    renderNoResultIcons = (): JSX.Element => {
         return (
+            <>
+                <RoundDot highlight={true} size="large" value={"?"} />
+                <RoundDot highlight={true} size="large" value={"?"} />
+                <RoundDot highlight={true} size="large" value={"?"} />
+                <RoundDot highlight={true} size="large" value={"?"} />
+            </>
+        );
+    };
+
+    render() {
+        const { result, roundState } = this.state;
+
+        return !result || roundState !== ROUND_STATE.SHOW_RESULT ? (
+            this.renderNoResultIcons()
+        ) : (
             <Row>
                 <Col>{this.renderIcons(result)}</Col>
             </Row>
