@@ -15,11 +15,37 @@
     }
     .round-id {
         font-weight: bold;
+        font-size: 13px;
     }
     .info {
-        display: inline-block;
+        display: flex;
+        align-items: center;
+        gap: .4rem ;
         
     }
     
 
+}
+
+.count-down {
+    .clock {
+        width: 20px;
+        height: 20px;
+    }
+    .timer-wrapper {
+        display: flex;
+        align-items: flex-end;
+        padding: 0;
+        position: relative;
+        .timer-badge {
+            padding: 0.2rem;
+            z-index: 99;
+        }
+        .count-down-badge {
+            width: 3rem;
+            padding: .3rem 0;
+            position: absolute;
+            left: 0.6rem;
+        }
+    }
 }

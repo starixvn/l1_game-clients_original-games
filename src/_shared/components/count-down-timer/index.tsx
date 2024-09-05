@@ -1,6 +1,7 @@
 import { ROUND_STATE, RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds";
 import { render } from "@sg/sg-observer";
 import { Badge } from "react-bootstrap";
+import Styles from "../game-base/game-base.module.scss";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../observer-component/observer-component";
 
 export interface ICountDownTimerState extends IStateObserver {
@@ -32,19 +33,31 @@ export default class CountDownTimer extends ObserverComponent<IPropsObserver, IC
         return color[roundState] ? color[roundState] : "primary";
     }
 
+    getTimerColor(roundState: string) {
+        const color: any = {
+            placingBet: "timer-success",
+            lockingBet: "timer-danger",
+        };
+        return color[roundState] ? color[roundState] : "timer-primary";
+    }
+
     render() {
         const { countdownTimer, roundState, isInRoundTime } = this.state;
 
         return (
-            <div className="count-down">
-                <div>
-                    Countdown: &nbsp;
-                    <Badge pill bg={this.getColor(roundState)}>
-                        {countdownTimer}
+            <div className={Styles["count-down"]}>
+                <div className={Styles["timer-wrapper"]}>
+                    
+                    <Badge pill bg={this.getColor(roundState)} className={Styles["timer-badge"]}>
+                    <span className={Styles["timer"]}><img src="/static/images/timer.svg" alt="timer" className={Styles["clock"]}/></span>
+                        
+                    </Badge>
+                    <Badge pill bg={this.getColor(roundState)} className={Styles["count-down-badge"]}>
+                    <span>{countdownTimer}</span>
                     </Badge>
                 </div>
 
-                <div>state: {roundState}</div>
+                {/* <div>state: {roundState}</div> */}
             </div>
         );
     }
