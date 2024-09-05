@@ -9,6 +9,9 @@ import { settingsSeDie } from "../games/sedie/game-settings";
 import SeDie from "../games/sedie/page";
 import styles from "./lobby.module.scss";
 import { ILobbyProps, ILobbyStates } from "./type";
+import { configSharedContainer } from "../_shared/components/game-base/startup";
+
+configSharedContainer();
 
 @observer
 class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {

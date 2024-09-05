@@ -6,7 +6,6 @@ import { AppProps } from "next/app";
 import { loadI18n } from "../i18n";
 import * as gc from "@sg/sg-game-client";
 import appSettings from "../_shared/app-settings";
-import { configSharedContainer } from "../_shared/components/game-base/startup";
 
 /*
 const languageMapping = {
@@ -20,10 +19,7 @@ const languageMapping = {
 };
 */
 loadI18n(gc.Translator.toLanguageId("vi-VN"));
-
 gc.sentryLogger.start(appSettings.sentry.dsn, appSettings.sentry.environment, "game-client-direct");
-
-configSharedContainer();
 
 const App = (appProps: AppProps) => {
     const { Component, pageProps } = appProps;
