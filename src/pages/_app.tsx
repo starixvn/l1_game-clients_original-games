@@ -18,7 +18,7 @@ const languageMapping = {
     "zh-TW": "zh_tw",
 };
 */
-loadI18n(gc.Translator.toLanguageId("vi-VN"));
+loadI18n(gc.Translator.toLanguageId("en-US"));
 gc.sentryLogger.start(appSettings.sentry.dsn, appSettings.sentry.environment, "game-client-direct");
 
 const App = (appProps: AppProps) => {
