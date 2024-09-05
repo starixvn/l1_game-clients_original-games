@@ -167,7 +167,11 @@
         "under_maintenance_time": "从 %{startTime} 到 %{endTime} (GMT+8)",
         "win": "赢",
         "win_loss": "赢 输",
-        "you_reach_max_win": "您达到了最大胜利"
+        "you_reach_max_win": "您达到了最大胜利",
+        "bet_info": "INFORMATION",
+        "bet_accepted": "Your bet is accepted",
+        "total_bets": "Total Bets",
+        "total_stake": "Total Stake"
     },
     "SeDie": {
         "game_name": "SeDie",

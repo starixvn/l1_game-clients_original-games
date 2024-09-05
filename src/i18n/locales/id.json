@@ -167,7 +167,11 @@
         "under_maintenance_time": "Mulai dari %{startTime} hingga %{endTime} (GMT+8)",
         "win": "Menang",
         "win_loss": "Menang Kalah",
-        "you_reach_max_win": "Anda mencapai Maksimal Menang"
+        "you_reach_max_win": "Anda mencapai Maksimal Menang",
+        "bet_info": "INFORMATION",
+        "bet_accepted": "Your bet is accepted",
+        "total_bets": "Total Bets",
+        "total_stake": "Total Stake"
     },
     "SeDie": {
         "game_name": "SeDie",

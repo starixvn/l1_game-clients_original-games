@@ -167,7 +167,11 @@
         "under_maintenance_time": "Thời gian bảo trì từ %{startTime} đến %{endTime} (GMT+8).",
         "win": "Thắng",
         "win_loss": "Thắng Thua",
-        "you_reach_max_win": "Bạn Đã Đạt Mức Tiền Thắng Tối Đa"
+        "you_reach_max_win": "Bạn Đã Đạt Mức Tiền Thắng Tối Đa",
+        "bet_info": "INFORMATION",
+        "bet_accepted": "Your bet is accepted",
+        "total_bets": "Total Bets",
+        "total_stake": "Total Stake"
     },
     "SeDie": {
         "game_name": "Xóc Dĩa",

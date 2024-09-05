@@ -81,7 +81,7 @@ export default class SeDieBetOptions extends BetOptions {
                         const odd = odds?.[choiceName] || 0;
 
                         return (
-                            <div className={`${Styles["bets-bg"]} ${Styles["padding-bet"]}`} key={choiceKey} sm={4}>
+                            <div className={`${Styles["bets-bg"]} ${Styles["padding-bet"]}`} key={choiceKey}>
                                 {this.renderSubOptions(choiceKey, odd, fractional)}
                             </div>
                         );

@@ -6,6 +6,7 @@ import React from "react";
 import { PlayerContext } from "../../react-contexts/auth";
 import { GameContextProvider } from "../../react-contexts/game-context/game-context";
 import { FunctionUtils } from "../../utils/funtion-utils";
+import { ConfirmBet } from "../bet-option/confirm-bet";
 import GameContainer from "../game-container";
 import Notice from "../notices/notice";
 import Warning from "../notices/warning";
@@ -179,7 +180,10 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                         {this.renderCountDownTimer()}
                     </div>
                     <div className={Styles["result"]}>{this.renderResultBlock()}</div>
-                    <div className={Styles["bet-options"]}>{this.renderBettingBlock()}</div>
+                    <div className={Styles["bet-options"]}>
+                        {this.renderBettingBlock()}
+                        <ConfirmBet namespace={this.props.namespace} />
+                    </div>
                 </div>
 
                 {this.renderStatistic()}

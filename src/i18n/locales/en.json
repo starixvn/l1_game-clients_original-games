@@ -167,7 +167,11 @@
         "under_maintenance_time": "Starting from %{startTime} to %{endTime} (GMT+8)",
         "win": "Win",
         "win_loss": "Win Loss",
-        "you_reach_max_win": "You reached the max win"
+        "you_reach_max_win": "You reached the max win",
+        "bet_info": "INFORMATION",
+        "bet_accepted": "Your bet is accepted",
+        "total_bets": "Total Bets",
+        "total_stake": "Total Stake"
     },
     "SeDie": {
         "game_name": "SeDie",
