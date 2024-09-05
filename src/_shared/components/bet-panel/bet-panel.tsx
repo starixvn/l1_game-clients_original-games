@@ -7,7 +7,7 @@ import {
     IPropsObserver,
     IStateObserver,
     ObserverComponent,
-} from "../../../_shared/commom-components/observer-component/observer-component";
+} from "../../../_shared/components/observer-component/observer-component";
 import { useGameBettingZoneContext } from "../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context";
 import styles from "./bet-panel.module.scss";
 import { BetPanelHandler } from "./scripts/handlers/bet-panel-handlers";

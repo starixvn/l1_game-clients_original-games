@@ -1,9 +1,9 @@
 import { observer } from "@sg/sg-observer";
 import { Col } from "react-bootstrap";
-import { CountDownTimer, RoundId } from "../../components";
-import GameBase, { IGameBaseState } from "../../components/game-base";
-import { configGameContainer } from "../../components/game-base/startup";
-import type { GameBaseProps } from "../../components/game-base/type";
+import { CountDownTimer, RoundId } from "../../_shared/components";
+import GameBase, { IGameBaseState } from "../../_shared/components/game-base";
+import { configGameContainer } from "../../_shared/components/game-base/startup";
+import type { GameBaseProps } from "../../_shared/components/game-base/type";
 import { containerOptions, settingsSeDie, siteConfigs } from "./game-settings";
 import SeDieRoundHistory from "./round-history";
 import SeDieBetOptions from "./sedie-bet-options";

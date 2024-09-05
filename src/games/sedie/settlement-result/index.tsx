@@ -3,12 +3,8 @@ import { RoundHistoryStore } from "@sg/sg-game-client/dist/game/round-histories"
 import { SettlementStore } from "@sg/sg-game-client/dist/game/settlements";
 import { render } from "@sg/sg-observer";
 import { Col, Row } from "react-bootstrap";
-import {
-    IPropsObserver,
-    IStateObserver,
-    ObserverComponent,
-} from "../../../_shared/commom-components/observer-component/observer-component";
-import { RoundDot } from "../../../components/dot";
+import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../_shared/components/observer-component/observer-component";
+import { RoundDot } from "../../../_shared/components/dot";
 import Styles from "../sedie.module.scss";
 import { SeDieChoices } from "../type";
 type SeDieResult = {

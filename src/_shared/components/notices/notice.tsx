@@ -1,10 +1,6 @@
 import * as gc from "@sg/sg-game-client";
 import { render } from "@sg/sg-observer";
-import {
-    IPropsObserver,
-    IStateObserver,
-    ObserverComponent,
-} from "../../../_shared/commom-components/observer-component/observer-component";
+import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../_shared/components/observer-component/observer-component";
 import NoticeDialog from "./notice-dialog";
 
 export interface INoticeState extends IStateObserver {

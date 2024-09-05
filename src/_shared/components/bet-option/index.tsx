@@ -1,11 +1,7 @@
 import * as gc from "@sg/sg-game-client";
 import { isEmpty } from "lodash";
 import { render } from "@sg/sg-observer";
-import {
-    IPropsObserver,
-    IStateObserver,
-    ObserverComponent,
-} from "../../../_shared/commom-components/observer-component/observer-component";
+import { IPropsObserver, IStateObserver, ObserverComponent } from "../observer-component/observer-component";
 
 export interface IBetOptionsState extends IStateObserver {
     roundOdds: gc.Rounds.RoundOdds;

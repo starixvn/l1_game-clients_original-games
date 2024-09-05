@@ -1,12 +1,8 @@
 import * as gc from "@sg/sg-game-client";
 import { render } from "@sg/sg-observer";
 import { Stack } from "react-bootstrap";
-import {
-    IPropsObserver,
-    IStateObserver,
-    ObserverComponent,
-} from "../../../_shared/commom-components/observer-component/observer-component";
-import { RoundDot } from "../../../components/dot";
+import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../_shared/components/observer-component/observer-component";
+import { RoundDot } from "../../../_shared/components/dot";
 import Styles from "../sedie.module.scss";
 import { SeDieChoices } from "../type";
 
@@ -32,13 +28,13 @@ export default class SeDieRoundHistory extends ObserverComponent<IPropsObserver,
 
         return (
             <div className={Styles["round-history"]}>
-                 <Stack direction="horizontal" gap={1} className="mt-2">
-                            Previous round:
-                            {roundHistories.toReversed().map((roundHistory) => {
-                                return this.RoundHistoryItem(roundHistory);
-                            })}
-                            <RoundDot highlight={true} size="large" value={"?"} />
-                        </Stack>
+                <Stack direction="horizontal" gap={1} className="mt-2">
+                    Previous round:
+                    {roundHistories.toReversed().map((roundHistory) => {
+                        return this.RoundHistoryItem(roundHistory);
+                    })}
+                    <RoundDot highlight={true} size="large" value={"?"} />
+                </Stack>
             </div>
             // <Container >
             //     <Row>

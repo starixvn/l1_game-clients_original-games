@@ -1,6 +1,6 @@
 import { RoundStore } from "@sg/sg-game-client/dist/game/rounds";
 import { render } from "@sg/sg-observer";
-import { IPropsObserver, IStateObserver, ObserverComponent } from "../../_shared/commom-components/observer-component/observer-component";
+import { IPropsObserver, IStateObserver, ObserverComponent } from "../observer-component/observer-component";
 
 export interface IRoundIdState extends IStateObserver {
     clientRoundId: number;

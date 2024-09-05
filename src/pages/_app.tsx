@@ -1,12 +1,12 @@
 import "reflect-metadata";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/main.scss";
-import "../_shared/helpers/string-helper";
+import "../_shared/utils/string-helper";
 import { AppProps } from "next/app";
-import { configSharedContainer } from "../components/game-base/startup";
 import { loadI18n } from "../i18n";
 import * as gc from "@sg/sg-game-client";
 import appSettings from "../_shared/app-settings";
+import { configSharedContainer } from "../_shared/components/game-base/startup";
 
 /*
 const languageMapping = {

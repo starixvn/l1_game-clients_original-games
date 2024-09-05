@@ -3,7 +3,7 @@ import * as mobx from "mobx";
 import { makeAutoObservable, reaction } from "mobx";
 import * as Observer from "@sg/sg-observer";
 import "reflect-metadata";
-import { getSiteConfig } from "../../_shared/app-settings";
+import { getSiteConfig } from "../../app-settings";
 
 interface Languages {
     [key: string]: any;

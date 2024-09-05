@@ -3,12 +3,12 @@ import { Rounds, Settlements } from "@sg/sg-game-client";
 import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds/round-time-store";
 import { handle, render } from "@sg/sg-observer";
 import React from "react";
-import { PlayerContext } from "../../_shared/react-contexts/auth";
-import { GameContextProvider } from "../../_shared/react-contexts/game-context/game-context";
-import { FunctionUtils } from "../../_shared/utils/funtion-utils";
-import GameContainer from "../game-components";
-import Notice from "../game-components/notices/notice";
-import Warning from "../game-components/notices/warning";
+import { PlayerContext } from "../../react-contexts/auth";
+import { GameContextProvider } from "../../react-contexts/game-context/game-context";
+import { FunctionUtils } from "../../utils/funtion-utils";
+import GameContainer from "../game-container";
+import Notice from "../notices/notice";
+import Warning from "../notices/warning";
 import Styles from "./game-base.module.scss";
 import { GameBaseProps } from "./type";
 
@@ -178,12 +178,8 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                         {this.renderRoundIdSection()}
                         {this.renderCountDownTimer()}
                     </div>
-                    <div className={Styles["result"]}>
-                        {this.renderResultBlock()}
-                    </div>
-                    <div className={Styles["bet-options"]}>
-                        {this.renderBettingBlock()}
-                    </div>
+                    <div className={Styles["result"]}>{this.renderResultBlock()}</div>
+                    <div className={Styles["bet-options"]}>{this.renderBettingBlock()}</div>
                 </div>
 
                 {this.renderStatistic()}

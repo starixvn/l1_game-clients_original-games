@@ -3,7 +3,6 @@ import { withRouter } from "next/router";
 import { handle, observer, render } from "@sg/sg-observer";
 import React from "react";
 import { Tab, Tabs } from "react-bootstrap";
-import TimeOutContainer from "../components/game-components/timeout";
 import { settingsBigSmall } from "../games/big-small/game-settings";
 import BigSmall from "../games/big-small/page";
 import { settingsSeDie } from "../games/sedie/game-settings";
@@ -63,7 +62,6 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
                         </Tab>
                     </Tabs>
                 )}
-                <TimeOutContainer />
             </div>
         );
     }
