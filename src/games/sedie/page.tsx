@@ -6,7 +6,7 @@ import { configGameContainer } from "../../_shared/components/game-base/startup"
 import type { GameBaseProps } from "../../_shared/components/game-base/type";
 import { containerOptions, settingsSeDie, siteConfigs } from "./game-settings";
 import SeDieRoundHistory from "./round-history";
-import SeDieBetOptions from "./sedie-bet-options";
+import SeDieBetOptions from "./bet-option/sedie-bet-options";
 import SeDieSettlementResult from "./settlement-result";
 
 configGameContainer(settingsSeDie.name, containerOptions, siteConfigs);

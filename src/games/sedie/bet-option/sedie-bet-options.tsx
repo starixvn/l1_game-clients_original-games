@@ -1,12 +1,12 @@
-import BetOptions, { IBetOptionsState } from "../../_shared/components/bet-option";
-import BettingBlock from "../../_shared/components/bet-option/betting-block";
-import Odds from "../../_shared/components/bet-option/odd";
-import OwnBet from "../../_shared/components/bet-option/own-bet";
-import TotalBet from "../../_shared/components/bet-option/total-bet";
-import { RoundDot } from "../../_shared/components/dot";
-import { settingsSeDie } from "./game-settings";
-import Styles from "./sedie.module.scss";
-import { bottomChoices, ChoiceSeDieIconMapper, SeDieChoices, topChoices } from "./type";
+import BetOptions, { IBetOptionsState } from "../../../_shared/components/bet-option";
+import BettingBlock from "../../../_shared/components/bet-option/betting-block";
+import Odds from "../../../_shared/components/bet-option/odd";
+import OwnBet from "../../../_shared/components/bet-option/own-bet";
+import TotalBet from "../../../_shared/components/bet-option/total-bet";
+import { RoundDot } from "../../../_shared/components/dot";
+import { settingsSeDie } from "../game-settings";
+import Styles from "../sedie.module.scss";
+import { bottomChoices, ChoiceSeDieIconMapper, SeDieChoices, topChoices } from "../type";
 
 export default class SeDieBetOptions extends BetOptions {
     renderDots = (dots: boolean[]) =>
@@ -21,11 +21,6 @@ export default class SeDieBetOptions extends BetOptions {
                     </div>
                     <Odds value={odd} fractional={fractional} />
                 </div>
-
-                {/* <div className={Styles["container-bets"]}>
-                    {this.renderTotalBet(choice)}
-                    {this.renderOwnBet(choice)}
-                </div> */}
             </BettingBlock>
         );
     };
@@ -36,11 +31,9 @@ export default class SeDieBetOptions extends BetOptions {
                 <div className={`${Styles["container-bets"]} ${Styles["padding-bet"]}`}>
                     <div>
                         <div className={Styles["main-option"]}>{name}</div>
-                        {/* {this.renderTotalBet(choice)} */}
                     </div>
                     <div>
                         <Odds value={odd} fractional={fractional} />
-                        {/* {this.renderOwnBet(choice)} */}
                     </div>
                 </div>
             </BettingBlock>

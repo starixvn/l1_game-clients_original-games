@@ -7,12 +7,7 @@ import { Col, Row } from "react-bootstrap";
 import { RoundDot } from "../../../_shared/components/dot";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../_shared/components/observer-component/observer-component";
 import Styles from "./sedie-animations.module.scss";
-type SeDieResult = {
-    red1: boolean;
-    red2: boolean;
-    red3: boolean;
-    red4: boolean;
-};
+
 export interface ISeDieSettlementResultState extends IStateObserver {
     result: gc.GameServiceMessage.TResult;
     roundState: string;
@@ -55,7 +50,7 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
         if (!firstJoinGameHistory) {
             return;
         }
-        
+
         const lastRound = firstJoinGameHistory?.roundHistory;
         if (lastRound) {
             this.setState({ result: lastRound?.result });
