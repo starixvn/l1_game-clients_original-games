@@ -6,8 +6,7 @@ import { render } from "@sg/sg-observer";
 import { Col, Row } from "react-bootstrap";
 import { RoundDot } from "../../../_shared/components/dot";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../_shared/components/observer-component/observer-component";
-import Styles from "../sedie.module.scss";
-import { SeDieChoices } from "../type";
+import Styles from "./sedie-animations.module.scss";
 type SeDieResult = {
     red1: boolean;
     red2: boolean;
@@ -17,10 +16,17 @@ type SeDieResult = {
 export interface ISeDieSettlementResultState extends IStateObserver {
     result: gc.GameServiceMessage.TResult;
     roundState: string;
+    isAnimationResult: boolean;
 }
 export default class SeDieSettlementResult extends ObserverComponent<IPropsObserver, ISeDieSettlementResultState> {
     constructor(props: IPropsObserver) {
         super(props);
+        this.state = {
+            dispose: null,
+            result: {},
+            roundState: "",
+            isAnimationResult: false,
+        };
     }
 
     @render(RoundTimeStore, (store) => store.roundState)
@@ -41,7 +47,7 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
             return;
         }
 
-        this.setState({ result });
+        this.setState({ result, isAnimationResult: true });
     }
 
     @render(RoundHistoryStore, (store) => store.firstJoinGameHistory)
@@ -49,24 +55,33 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
         if (!firstJoinGameHistory) {
             return;
         }
-        const lastRound = firstJoinGameHistory.roundHistory as gc.RoundHistories.RoundHistory;
+        
+        const lastRound = firstJoinGameHistory?.roundHistory;
         if (lastRound) {
             this.setState({ result: lastRound?.result });
         }
     }
 
-    renderDots = (dots: boolean[]) =>
-        dots.map((isRed, index) => <RoundDot key={index} choice={isRed ? SeDieChoices.odd : SeDieChoices.even} size="large" />);
-
-    renderIcons = (result: any) => {
+    renderIcons = (result: gc.GameServiceMessage.TResult) => {
         return (
-            <div className={Styles["container-bets"]}>
-                <div className={Styles["wrapper-dots"]}>
-                    {this.renderDots(
-                        Object.keys(result).map((value) => {
-                            return result[value];
-                        })
-                    )}
+            <div className={`${Styles["container-bets"]} ${this.state.isAnimationResult ? Styles["has-animation"] : ""}`}>
+                <div className={Styles["result-container"]}>
+                    {Object.values(result).map((value, index) => {
+                        const resultClass = `dot-3d-${index + 1}`;
+                        return (
+                            <div className={Styles["result-item"]} key={resultClass}>
+                                <div className={`${Styles[resultClass]} ${index % 2 ? Styles["option1"] : Styles["option2"]}`}>
+                                    <span className={Styles["dot-3d-front-inside"]}></span>
+                                    <span className={Styles["dot-3d-front"]}></span>
+                                    <span className={Styles["dot-3d-back_inside"]}></span>
+                                    <span className={Styles["dot-3d-back"]}></span>
+                                </div>
+                                <div key={index} className={Styles[`result-sedie-dot${index + 1}`]}>
+                                    <div className={`${value ? Styles["result-dot-red"] : Styles["result-dot-white"]}`}></div>
+                                </div>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         );
