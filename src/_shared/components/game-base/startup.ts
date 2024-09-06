@@ -34,7 +34,7 @@ function getSharedContainer(siteConfigs: gc.Configs.SiteConfigs) {
     return gc.getContainer(containerOptions);
 }
 
-const sharedContainer = getSharedContainer(getSiteConfig(2));
+export const sharedContainer = getSharedContainer(getSiteConfig(2));
 
 export function configSharedContainer() {
     Observer.configure({ default: { mobx, container: gc.buildObserverContainer(sharedContainer) } });

@@ -3,19 +3,20 @@ import { handle, observer, render } from "@sg/sg-observer";
 import { withRouter } from "next/router";
 import React from "react";
 import { Tab, Tabs } from "react-bootstrap";
+import { configSharedContainer, sharedContainer } from "../_shared/components/game-base/startup";
+import { requestSSO } from "../_shared/utils/sso-helper";
 import { settingsBigSmall } from "../games/big-small/game-settings";
 import BigSmall from "../games/big-small/page";
 import { settingsSeDie } from "../games/sedie/game-settings";
 import SeDie from "../games/sedie/page";
 import styles from "./lobby.module.scss";
-import { ILobbyProps, ILobbyStates } from "./type";
-import { configSharedContainer } from "../_shared/components/game-base/startup";
+import type { ILobbyProps, ILobbyStates } from "./type";
 
 configSharedContainer();
 
 @observer
 class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
-    constructor(props: any) {
+    constructor(props: ILobbyProps) {
         super(props);
         this.state = {
             isAuthorized: false,
@@ -24,13 +25,39 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
         };
     }
 
-    componentDidMount() {
-        this.sso();
+    async componentDidMount() {
+        const sessionInfo = this.getSessionInfo();
+        const userService = this.getUserService();
+
+        const isSessionValid = await this.verifySession(sessionInfo, userService);
+        if (isSessionValid) {
+            this.sso({});
+        } else {
+            const token = await this.getToken();
+            token && this.sso({ token: token, ref: "d_direct" });
+        }
     }
 
+    protected getSessionInfo = (): gc.Auth.ISessionInfo => {
+        return gc.Shared.utils.StorageManager.get(gc.Shared.utils.localStorageKeys.session) as gc.Auth.ISessionInfo;
+    };
+
+    protected getUserService = (): gc.Auth.UserService => {
+        return sharedContainer?.get(gc.Auth.UserService);
+    };
+
+    protected verifySession = async (sessionInfo: gc.Auth.ISessionInfo, userService: gc.Auth.UserService): Promise<boolean> => {
+        return gc.AuthUtils.verifySessionFromStorage(sessionInfo, userService);
+    };
+
+    protected getToken = async (): Promise<string> => {
+        const result = await requestSSO();
+        return result?.token || "";
+    };
+
     @handle(gc.Auth.AuthHandlers.SSO)
-    sso() {
-        return new URLSearchParams(window?.location?.search);
+    sso(ssoInfo: gc.Auth.ISSOInfo) {
+        return ssoInfo;
     }
 
     @render(gc.Auth.AuthStore, (store) => store.isAuthorized)
