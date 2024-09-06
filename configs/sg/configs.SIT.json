@@ -4,10 +4,15 @@
         "environment": "SIT"
     },
     "systemType": "SG",
-    "serverDomain":"lumigame.com",
+    "gameLobbySimulatorUrl": "https://l1sitglbs.sgamesuat.com",
+    "owApiSimulatorUrl": "https://l1sitows.sgamesuat.com/SabaClub",
+    "serverDomain": "sgamesuat.com",
     "ssl": true,
     "subDomain": "l1uatproxy",
+    "subDirectory": "sit",
     "env": "SIT",
     "enableMsgpackParserAllGames": true,
-    "enableMsgpackParserOnNotification": true
+    "enableMsgpackParserOnNotification": true,
+    "operatorId": "ONEworks1",
+    "operatorSecret": "123licensee1%^&sit"
 }

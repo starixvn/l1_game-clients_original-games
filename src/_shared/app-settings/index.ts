@@ -20,6 +20,7 @@ export const getSiteConfig = (gameId: number) => {
         mainObserverNamespace: gameSetting.mainObserverNamespace,
         storagePrefixKey: gameSetting.storagePrefixKey,
         subGuideDomain: "",
+        subDirectory: appSettings.subDirectory,
     };
 
     gc.Shared.utils.StorageManager.setPrefixKey(gameSetting.storagePrefixKey);

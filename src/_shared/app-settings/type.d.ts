@@ -41,4 +41,7 @@ export default interface AppSettings {
     env: string;
     enableMsgpackParserAllGames: boolean;
     owApiSimulatorUrl: string;
+    subDirectory: string;
+    operatorId: string;
+    operatorSecret: string;
 }

@@ -11,5 +11,7 @@
     "subDomain": "l1-proxy1",
     "env": "LOCAL1",
     "enableMsgpackParserAllGames": false,
-    "enableMsgpackParserOnNotification": false
+    "enableMsgpackParserOnNotification": false,
+    "operatorId": "ONEworks1",
+    "operatorSecret": "ONEworks1@20luminet&"
 }

@@ -21,8 +21,8 @@ export const requestSSO = async (gameId = 0) => {
         ip: "",
         browserUserAgent: global?.window?.navigator?.userAgent || "",
         auth: {
-            operatorId: "ONEworks1",
-            operatorSecret: "ONEworks1@20luminet&",
+            operatorId: appSettings.operatorId,
+            operatorSecret: appSettings.operatorSecret,
         },
         gameId: gameId,
         domain: "example.com",
