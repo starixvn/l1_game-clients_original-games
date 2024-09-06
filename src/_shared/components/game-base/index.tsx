@@ -3,7 +3,6 @@ import { Rounds, Settlements } from "@sg/sg-game-client";
 import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds/round-time-store";
 import { handle, render } from "@sg/sg-observer";
 import React from "react";
-import { PlayerContext } from "../../react-contexts/auth";
 import { GameContextProvider } from "../../react-contexts/game-context/game-context";
 import { FunctionUtils } from "../../utils/funtion-utils";
 import { ConfirmBet } from "../bet-option/confirm-bet";
@@ -85,7 +84,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     renderWarning(): JSX.Element {
         return <Warning namespace={this.props.namespace}></Warning>;
     }
-    
+
     renderRoundIdSection() {
         return <></>;
     }
@@ -180,7 +179,5 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         );
     }
 }
-
-GameBase.contextType = PlayerContext;
 
 export default GameBase;
