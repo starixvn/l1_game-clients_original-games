@@ -1,4 +1,5 @@
-import { observer } from "@sg/sg-observer";
+import { Connection } from "@sg/sg-game-client";
+import { handle, observer } from "@sg/sg-observer";
 import { CountDownTimer, RoundId } from "../../_shared/components";
 import GameBase, { IGameBaseState } from "../../_shared/components/game-base";
 import { configGameContainer } from "../../_shared/components/game-base/startup";
@@ -11,6 +12,9 @@ import SeDieSettlementResult from "./settlement-result";
 configGameContainer(settingsSeDie.name, containerOptions, siteConfigs);
 @observer(settingsSeDie.mainObserverNamespace)
 export default class SeDie extends GameBase<GameBaseProps, IGameBaseState> {
+    @handle(Connection.ConnectionHandlers.CloseConnectHandler)
+    closeConnect() {}
+
     renderStatistic() {
         return <SeDieRoundHistory namespace={this.props.namespace} />;
     }

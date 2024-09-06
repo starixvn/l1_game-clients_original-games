@@ -1,10 +1,14 @@
 import * as gc from "@sg/sg-game-client";
-import { withRouter } from "next/router";
 import { observer, render } from "@sg/sg-observer";
-import { Component } from "react";
+import { Router, withRouter } from "next/router";
+import { PureComponent } from "react";
+
+interface TimeOutContainerProps {
+    router: Router;
+}
 
 @observer
-class TimeOutContainer extends Component<any, any> {
+class TimeOutContainer extends PureComponent<TimeOutContainerProps> {
     constructor(props: any) {
         super(props);
     }
@@ -18,7 +22,7 @@ class TimeOutContainer extends Component<any, any> {
     }
 
     render() {
-        return <div></div>;
+        return <></>;
     }
 }
 

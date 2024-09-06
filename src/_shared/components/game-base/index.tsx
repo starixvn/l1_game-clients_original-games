@@ -43,7 +43,6 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         this.closeConnect();
     }
 
-    @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler)
     closeConnect() {}
 
     onVisibilityChange = () => {};

@@ -1,4 +1,5 @@
-import { observer } from "@sg/sg-observer";
+import { Connection } from "@sg/sg-game-client";
+import { handle, observer } from "@sg/sg-observer";
 import { Col } from "react-bootstrap";
 import { CountDownTimer, RoundId } from "../../_shared/components";
 import GameBase, { IGameBaseState } from "../../_shared/components/game-base";
@@ -10,6 +11,9 @@ configGameContainer(settingsBigSmall.name, containerOptions, siteConfigs);
 
 @observer(settingsBigSmall.name)
 export default class BigSmall extends GameBase<GameBaseProps, IGameBaseState> {
+    @handle(Connection.ConnectionHandlers.CloseConnectHandler)
+    closeConnect() {}
+
     renderRoundIdSection() {
         return (
             <Col>
