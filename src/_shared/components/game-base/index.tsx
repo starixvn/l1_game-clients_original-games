@@ -43,7 +43,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         this.closeConnect();
     }
 
-    closeConnect() {}
+    abstract closeConnect(): void;
 
     onVisibilityChange = () => {};
 
@@ -55,14 +55,6 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     @handle(gc.Connection.ConnectionHandlers.ConnectHandler)
     connectToService() {}
-
-    @render(gc.JoinGame.JoinGameStore, (store) => store.toGame, { fireImmediately: false })
-    requestOpenGame() {
-        this.openGameCallback();
-    }
-    openGameCallback() {
-        // handle
-    }
 
     @handle(gc.UserSettings.UserSettingHandlers, (handle) => handle.loadStorages())
     initUserSettings() {}
@@ -93,6 +85,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     renderWarning(): JSX.Element {
         return <Warning namespace={this.props.namespace}></Warning>;
     }
+    
     renderRoundIdSection() {
         return <></>;
     }
@@ -101,23 +94,11 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         return <></>;
     }
 
-    renderBetHistoryModal() {
-        return <></>;
-    }
-
-    renderGameGuideModal() {
-        return <></>;
-    }
-
     renderResultBlock() {
         return <></>;
     }
 
     renderBettingBlock() {
-        return <></>;
-    }
-
-    renderScoreboards() {
         return <></>;
     }
 
@@ -170,8 +151,6 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     getRenderTemplate() {
-        const { isRenderResultBlock } = this.state;
-
         return (
             <>
                 <div className={Styles["block-wrapper"]}>
