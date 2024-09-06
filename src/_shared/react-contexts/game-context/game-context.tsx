@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import type { GamePropsContext } from "../../components/game-base/type";
 
-export const GameContext = React.createContext<GamePropsContext>({});
+export const GameContext = React.createContext<GamePropsContext>({ namespace: "default" });
 GameContext.displayName = "GameContext";
 
 export const GameContextProvider = GameContext.Provider;
