@@ -22,11 +22,11 @@ export class ConfirmBet extends ObserverComponent<IPropsObserver, IConfirmBet> {
 
     @render(gc.Bet.BetStore, (store) => store.lastReceivedBet)
     setTotalStake(lastReceivedBet: gc.Bet.ILastReceivedBet) {
-        this.setState({ totalStake: lastReceivedBet.value });
+        lastReceivedBet && this.setState({ totalStake: lastReceivedBet.value });
     }
     @render(gc.Bet.BetStore, (store) => store.betChoice)
     setBetChoice(betChoice: string) {
-        this.setState({ betChoice });
+        betChoice && this.setState({ betChoice });
     }
 
     @render(gc.Bet.BetStore, (store) => store.validBet)

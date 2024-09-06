@@ -16,9 +16,7 @@ export default class SeDie extends GameBase<GameBaseProps, IGameBaseState> {
     }
 
     renderRoundIdSection() {
-        return (
-                <RoundId namespace={this.props.namespace} />
-        );
+        return <RoundId namespace={this.props.namespace} />;
     }
 
     renderCountDownTimer() {

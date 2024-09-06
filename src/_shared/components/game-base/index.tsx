@@ -40,12 +40,13 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     onDestroy() {
-        this.clearGameTimeoutAndInterval();
+        this.closeConnect();
     }
 
-    onVisibilityChange = () => {};
+    @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler)
+    closeConnect() {}
 
-    clearGameTimeoutAndInterval = () => {};
+    onVisibilityChange = () => {};
 
     onStart() {
         this.connectToService();
