@@ -14,7 +14,7 @@ export const RoundDot: React.FunctionComponent<Props> = ({ choice = "even", valu
     const classDotName = `dot-${choice}`;
     return (
         <div
-            className={`${Styles[classDotName]} ${highlight ? "highlight-current-result" : ""} ${Styles[size]}  ${
+            className={`${Styles[classDotName]} ${highlight ? Styles["highlight-current-result"] : ""} ${Styles[size]}  ${
                 gameName ? Styles[gameName] : ""
             }`}
             data-testid="round-dot"

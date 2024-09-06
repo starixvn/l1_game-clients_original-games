@@ -54,9 +54,16 @@
     background: #828282 !important;
 }
 
+
+
 .highlight-current-result {
     position: relative;
+    &:before {
+        background: var(--dot-current-highlight) !important;
+    }
+}
 
+.highlight {
     &:after {
         content: "";
         position: absolute;
@@ -65,7 +72,7 @@
         top: -2px;
         bottom: -2px;
         border-radius: 50%;
-        border: 1px solid #ff5f06;
+        border: 1px solid #FFAE12;
     }
 }
 
