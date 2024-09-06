@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 
 export type GameBettingZoneContextProps = {
-    choice?: string;
+    betChoice?: string;
     odd?: any;
     onHide?: any;
     show?: boolean;

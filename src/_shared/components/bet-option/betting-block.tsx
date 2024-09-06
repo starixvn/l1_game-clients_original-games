@@ -8,25 +8,25 @@ import Styles from "./bet-option.module.scss";
 
 export interface IBettingBlockProps {
     children: ReactNode;
-    choice: string;
+    betChoice: string;
     odd: number;
     namespace: string;
 }
 
-const BettingBlock: FC<IBettingBlockProps> = ({ children, choice, odd, namespace }) => {
+const BettingBlock: FC<IBettingBlockProps> = ({ children, betChoice, odd, namespace }) => {
     const onHide = () => {
         setBettingZoneState((prevState) => ({ ...prevState, show: false }));
     };
 
     const [bettingZoneState, setBettingZoneState] = useState<GameBettingZoneContextProps>({
-        choice: "",
+        betChoice: "",
         odd: 0,
         onHide: onHide,
         show: false,
     });
 
     const handleOnClick = () => {
-        setBettingZoneState((prevState) => ({ ...prevState, choice, odd, show: !prevState.show }));
+        setBettingZoneState((prevState) => ({ ...prevState, betChoice, odd, show: !prevState.show }));
     };
 
     return (

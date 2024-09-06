@@ -3,14 +3,9 @@ import { handle, render } from "@sg/sg-observer";
 import React, { useEffect, useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
-import {
-    IPropsObserver,
-    IStateObserver,
-    ObserverComponent,
-} from "../../../_shared/components/observer-component/observer-component";
+import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../_shared/components/observer-component/observer-component";
 import { useGameBettingZoneContext } from "../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context";
 import styles from "./bet-panel.module.scss";
-import { BetPanelHandler } from "./scripts/handlers/bet-panel-handlers";
 
 export interface IBetPanel extends IStateObserver {
     stakeLevel: gc.Player.IStakeLevel;
@@ -56,14 +51,8 @@ class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends O
     }
 
     @handle(gc.Bet.BetHandler)
-    handleBet(amount: number, choice: string) {
-        this.updateAmount(amount);
-        return choice;
-    }
-
-    @handle(BetPanelHandler)
-    updateAmount(amount: number) {
-        return amount;
+    handleBet(amount: number, betChoice: string) {
+        return { amount, betChoice };
     }
 
     render() {
@@ -85,17 +74,17 @@ const BetPanel: React.FC<{
     maxBet: number;
     maxBetPerChoices: gc.GameServiceMessage.MaxBetPerChoices;
     stakeLevel: gc.Player.IStakeLevel;
-    handleBet: (amount: number, choice: string) => void;
+    handleBet: (amount: number, betChoice: string) => void;
 }> = ({ minBet = 1, maxBet = 300, maxBetPerChoices, stakeLevel, handleBet }) => {
-    const { choice, odd = 0, onHide, show } = useGameBettingZoneContext();
+    const { betChoice, odd = 0, onHide, show } = useGameBettingZoneContext();
     const [amount, setAmount] = useState(1);
     const [min, setMin] = useState(0);
     const [max, setMax] = useState(0);
 
     useEffect(() => {
         setMin(Math.max(minBet, stakeLevel.minBet));
-        choice && setMax(Math.min(maxBetPerChoices?.[choice] || 0, Math.min(maxBet, stakeLevel.maxBet)));
-    }, [maxBetPerChoices, minBet, maxBet, stakeLevel, choice]);
+        betChoice && setMax(Math.min(maxBetPerChoices?.[betChoice] || 0, Math.min(maxBet, stakeLevel.maxBet)));
+    }, [maxBetPerChoices, minBet, maxBet, stakeLevel, betChoice]);
 
     const handleAmount = (event: any) => {
         setAmount(+event?.target.value || 0);
@@ -103,7 +92,7 @@ const BetPanel: React.FC<{
 
     const onClickBet = () => {
         if (amount >= min && amount <= max) {
-            choice && handleBet?.(amount, choice);
+            betChoice && handleBet?.(amount, betChoice);
             onHide?.();
         }
     };
@@ -121,7 +110,7 @@ const BetPanel: React.FC<{
                 <div className={`${styles["bet-panel"]} mt-3 mb-1`}>
                     <div className={`${styles["bet-choice-area"]} mt-1 mb-1`}>
                         <div className={styles["bet-choice"]}>
-                            <div>{choice || ""}</div>
+                            <div>{betChoice || ""}</div>
                         </div>
                         <div className={`${styles["bet-odds"]} `}>{odd || 0}</div>
                     </div>

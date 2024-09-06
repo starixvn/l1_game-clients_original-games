@@ -12,12 +12,12 @@ export default class SeDieBetOptions extends BetOptions {
     renderDots = (dots: boolean[]) =>
         dots.map((isRed, index) => <RoundDot key={index} choice={isRed ? SeDieChoices.odd : SeDieChoices.even} size="small" />);
 
-    renderSubOptions = (choice: string, odd: number, fractional: boolean) => {
+    renderSubOptions = (betChoice: string, odd: number, fractional: boolean) => {
         return (
-            <BettingBlock odd={odd} choice={choice} namespace={settingsSeDie.mainObserverNamespace}>
+            <BettingBlock odd={odd} betChoice={betChoice} namespace={settingsSeDie.mainObserverNamespace}>
                 <div className={Styles["container-bets"]}>
                     <div className={`${Styles["wrapper-dots"]} ${Styles["wrapper-dots-small"]}`}>
-                        {this.renderDots(ChoiceSeDieIconMapper[choice])}
+                        {this.renderDots(ChoiceSeDieIconMapper[betChoice])}
                     </div>
                     <Odds value={odd} fractional={fractional} />
                 </div>
@@ -30,9 +30,9 @@ export default class SeDieBetOptions extends BetOptions {
         );
     };
 
-    renderMainOption = (name: string, odd: number, choice: string, fractional: boolean) => {
+    renderMainOption = (name: string, odd: number, betChoice: string, fractional: boolean) => {
         return (
-            <BettingBlock odd={odd} choice={choice} namespace={settingsSeDie.mainObserverNamespace}>
+            <BettingBlock odd={odd} betChoice={betChoice} namespace={settingsSeDie.mainObserverNamespace}>
                 <div className={`${Styles["container-bets"]} ${Styles["padding-bet"]}`}>
                     <div>
                         <div className={Styles["main-option"]}>{name}</div>
@@ -87,7 +87,6 @@ export default class SeDieBetOptions extends BetOptions {
                         );
                     }
                 })}
-               
             </div>
         );
     }
