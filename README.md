@@ -1,12 +1,10 @@
-# game-guides
-## Run dev info
-Run:  yarn run dev
+# Sedie Client Demo
 
-## Run build info
-Run: yarn run build
+## Run locally
 
+-   yarn install
+-   yarn run dev
 
 ## Demo page
-- yarn run dev or yarn run start
-- Go to: http://localhost:{port}/demo
 
+-   Go to: https://l1-sedie-client-demo1.lumigame.com
