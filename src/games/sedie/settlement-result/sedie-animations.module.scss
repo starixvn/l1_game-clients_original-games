@@ -20,20 +20,20 @@
     
 }
 
+.result-container {
+    display: grid;
+    grid-template-columns: repeat(4, 2.5rem);
+    grid-template-rows: 2.5rem;
+    grid-gap: 0.5rem;
+    transform: scale(1);
+}
+
 
 .container-bets {
     position: relative;
     width: 100%;
     display: flex;
     justify-content: space-between;
-
-    .result-container {
-        display: grid;
-        grid-template-columns: repeat(4, 2.5rem);
-        grid-template-rows: 2.5rem;
-        grid-gap: 0.5rem;
-        transform: scale(1);
-    }
 
     .result-item {
         display: grid;
@@ -43,8 +43,8 @@
 
     %dot {
         position: relative;
-        width: 2.5rem;
-        height: 2.5rem;
+        width: 2rem;
+        height: 2rem;
         top: 0;
         left: 0;
         transform: translateZ(0);
@@ -92,8 +92,8 @@
         display: none;
         grid-area: 1/1;
         position: relative;
-        width: 2.5rem;
-        height: 2.5rem;
+        width: 2rem;
+        height: 2rem;
         transform: rotateY(0);
         transition: visibility 1s;
         transform-origin: center center;

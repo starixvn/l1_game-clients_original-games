@@ -84,12 +84,12 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
 
     renderNoResultIcons = (): JSX.Element => {
         return (
-            <>
+            <div className={Styles["result-container"]}>
                 <RoundDot highlight={true} size="large" value={"?"} />
                 <RoundDot highlight={true} size="large" value={"?"} />
                 <RoundDot highlight={true} size="large" value={"?"} />
                 <RoundDot highlight={true} size="large" value={"?"} />
-            </>
+            </div>
         );
     };
 

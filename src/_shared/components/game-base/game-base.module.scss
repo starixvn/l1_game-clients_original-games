@@ -12,6 +12,12 @@
         height: 100%;
         display: flex;
         align-items: center;
+        .result-container{
+            display: grid;
+            grid-template-columns: repeat(4, 2.5rem);
+            grid-template-rows: 2.5rem;
+            grid-gap: 0.5rem;
+        }
     }
     .round-id {
         font-weight: bold;
