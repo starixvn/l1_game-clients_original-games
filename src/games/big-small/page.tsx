@@ -1,7 +1,8 @@
 import { Connection } from "@sg/sg-game-client";
 import { handle, observer } from "@sg/sg-observer";
 import { Col } from "react-bootstrap";
-import { CountDownTimer, RoundId } from "../../_shared/components";
+import CountDownTimer from "../../_shared/components/count-down-timer";
+import RoundId from "../../_shared/components/round-id";
 import GameBase, { IGameBaseState } from "../../_shared/components/game-base";
 import { configGameContainer } from "../../_shared/components/game-base/startup";
 import type { GameBaseProps } from "../../_shared/components/game-base/type";
