@@ -1,6 +1,6 @@
 # Sedie Client Demo
 
-## Run locally
+## Run locally (NodeJS version: v20.9.0)
 
 -   yarn install
 -   yarn run dev
