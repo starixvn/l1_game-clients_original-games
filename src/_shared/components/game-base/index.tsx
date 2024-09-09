@@ -1,6 +1,5 @@
 import * as gc from "@sg/sg-game-client";
-import { Rounds, Settlements } from "@sg/sg-game-client";
-import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds/round-time-store";
+import { Settlements } from "@sg/sg-game-client";
 import { handle, render } from "@sg/sg-observer";
 import React from "react";
 import { GameContextProvider } from "../../react-contexts/game-context/game-context";
@@ -12,20 +11,12 @@ import Warning from "../notices/warning";
 import Styles from "./game-base.module.scss";
 import { GameBaseProps } from "./type";
 
-export interface IGameBaseState {
-    isReceiveFinishBeforeRoundHistory: boolean;
-    isConnected: boolean;
-    isRenderResultBlock: boolean;
-}
+export interface IGameBaseState {}
 
 abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> extends React.PureComponent<P, S> {
     constructor(props: P) {
         super(props);
-        this.state = {
-            isReceiveFinishBeforeRoundHistory: true,
-            isConnected: false,
-            isRenderResultBlock: false,
-        } as S;
+        this.state = {} as S;
     }
 
     componentDidMount() {
@@ -118,17 +109,9 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         return !!result && !!settlementResult;
     }
 
-    @render(Rounds.RoundTimeStore, (store) => store.roundState)
-    handleRoundState(roundState: string) {
-        if (roundState !== ROUND_STATE.SHOW_RESULT) {
-            this.setState({ isRenderResultBlock: false });
-        }
-    }
-
     @handle(Settlements.SettlementUIHandlers.FinishedShowResult)
     finishShowResult() {
         //show result
-        this.setState({ isRenderResultBlock: true });
     }
 
     getRenderTemplate() {

@@ -5,6 +5,4 @@ export type ILobbyProps = {
 
 export interface ILobbyStates {
     isAuthorized: boolean;
-    namespace: string;
-    system: number;
 }

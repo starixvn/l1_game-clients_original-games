@@ -19,8 +19,6 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
         super(props);
         this.state = {
             isAuthorized: false,
-            namespace: "",
-            system: 0,
         };
     }
 
