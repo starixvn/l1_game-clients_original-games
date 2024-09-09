@@ -13,8 +13,8 @@ class TimeOutContainer extends PureComponent<TimeOutContainerProps> {
         super(props);
     }
 
-    @render(gc.App.AppStore, (store) => ({ isSessionTimeout: store.isSessionTimeout, isApp: store.isApp }))
-    redirectToSessionTimeoutPage({ isSessionTimeout, isApp }: { isSessionTimeout: boolean; isApp: boolean }) {
+    @render(gc.App.AppStore, (store) => store.isSessionTimeout)
+    redirectToSessionTimeoutPage(isSessionTimeout: boolean) {
         const { router } = this.props;
         if (isSessionTimeout) {
             router.push("timeout");

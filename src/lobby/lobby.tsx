@@ -64,13 +64,9 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
     handleAuthorized(isAuthorized: boolean) {
         if (isAuthorized) {
             this.setState({ isAuthorized: true });
-            this.loadChipSetting();
             this.triggerRecheckIn();
         }
     }
-
-    @handle(gc.ChipSetting.ChipSettingHandler)
-    loadChipSetting() {}
 
     @handle(gc.Auth.AuthHandlers.TriggerRecheckIn)
     triggerRecheckIn() {}
