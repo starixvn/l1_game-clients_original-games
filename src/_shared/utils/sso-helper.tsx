@@ -21,8 +21,8 @@ export const requestSSO = async (gameId = 0) => {
         ip: "",
         browserUserAgent: global?.window?.navigator?.userAgent || "",
         auth: {
-            operatorId: appSettings.operatorId,
-            operatorSecret: appSettings.operatorSecret,
+            operatorId: appSettings.simulatorConfigs.operatorId,
+            operatorSecret: appSettings.simulatorConfigs.operatorSecret,
         },
         gameId: gameId,
         domain: "example.com",
@@ -32,7 +32,7 @@ export const requestSSO = async (gameId = 0) => {
         operatorToken: "ONEworks1Token",
     };
 
-    const gameLobbySimulatorUrl = appSettings.gameLobbySimulatorUrl;
+    const gameLobbySimulatorUrl = appSettings.simulatorConfigs.gameLobbySimulatorUrl;
     const ssoResult = (await axios.post(`${gameLobbySimulatorUrl}/signin/sso`, request)).data;
     await createCustomer(playerId, "ow", request.siteId);
     await assignBalance(playerId, playerBalance, request.currency, request.siteId);
@@ -42,7 +42,7 @@ export const requestSSO = async (gameId = 0) => {
 
 const assignBalance = async (playerId: number, balance: number, currency: string, siteId: string) => {
     await axios.post(
-        `${appSettings.owApiSimulatorUrl}/SetDefaultBalance?playerId=${encodeURIComponent(
+        `${appSettings.simulatorConfigs.owApiSimulatorUrl}/SetDefaultBalance?playerId=${encodeURIComponent(
             playerId
         )}&operator=ow&balance=${balance}&systemType=SC1&username=username_${encodeURIComponent(
             playerId
@@ -52,7 +52,7 @@ const assignBalance = async (playerId: number, balance: number, currency: string
 
 const createCustomer = async (playerId: number, operator: string, siteId: string) => {
     await axios.post(
-        `${appSettings.owApiSimulatorUrl}/CreateCustomer?memId=${encodeURIComponent(
+        `${appSettings.simulatorConfigs.owApiSimulatorUrl}/CreateCustomer?memId=${encodeURIComponent(
             playerId
         )}&operator=${operator}&systemType=SC1&siteId=${siteId}`
     );

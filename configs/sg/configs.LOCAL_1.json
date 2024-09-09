@@ -4,14 +4,16 @@
         "environment": "LOCAL1"
     },
     "systemType": "SG",
-    "gameLobbySimulatorUrl": "https://l1-glbs1.lumigame.com",
-    "owApiSimulatorUrl": "https://l1-ows1.lumigame.com/SabaClub",
     "serverDomain": "lumigame.com",
     "ssl": true,
     "subDomain": "l1-proxy1",
     "env": "LOCAL1",
     "enableMsgpackParserAllGames": false,
     "enableMsgpackParserOnNotification": false,
-    "operatorId": "ONEworks1",
-    "operatorSecret": "ONEworks1@20luminet&"
+    "simulatorConfigs": {
+        "gameLobbySimulatorUrl": "https://l1-glbs1.lumigame.com",
+        "owApiSimulatorUrl": "https://l1-ows1.lumigame.com/SabaClub",
+        "operatorId": "ONEworks1",
+        "operatorSecret": "ONEworks1@20luminet&"
+    }
 }

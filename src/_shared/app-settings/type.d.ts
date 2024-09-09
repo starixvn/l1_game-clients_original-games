@@ -3,6 +3,13 @@ interface SentryOptions {
     environment: string;
 }
 
+interface SimulatorConfigs {
+    gameLobbySimulatorUrl: string;
+    owApiSimulatorUrl: string;
+    operatorId: string;
+    operatorSecret: string;
+}
+
 interface IGameSettings {
     id: number;
     gameName: string;
@@ -35,13 +42,10 @@ export default interface AppSettings {
     systemType: string;
     gamePath: string;
     gameSettingUrl: string;
-    gameLobbySimulatorUrl: string;
     ssl: boolean;
     subDomain: string;
     env: string;
     enableMsgpackParserAllGames: boolean;
-    owApiSimulatorUrl: string;
     subDirectory: string;
-    operatorId: string;
-    operatorSecret: string;
+    simulatorConfigs: SimulatorConfigs;
 }
