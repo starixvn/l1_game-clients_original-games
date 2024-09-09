@@ -3,7 +3,6 @@ import { Settlements } from "@sg/sg-game-client";
 import { handle, render } from "@sg/sg-observer";
 import React from "react";
 import { GameContextProvider } from "../../react-contexts/game-context/game-context";
-import { FunctionUtils } from "../../utils/funtion-utils";
 import { ConfirmBet } from "../bet-option/confirm-bet";
 import GameContainer from "../game-container";
 import Notice from "../notices/notice";
@@ -96,14 +95,11 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         });
     }
 
-    async showResult(
+    abstract showResult(
         hasAnimation: boolean,
         result?: gc.GameServiceMessage.TResult,
         settlementResult?: gc.GameServiceMessage.TSettlementResult
-    ) {
-        //implement animation
-        await FunctionUtils.delay(1000);
-    }
+    ): Promise<void>;
 
     isValidResult(result?: gc.GameServiceMessage.TResult, settlementResult?: gc.GameServiceMessage.TSettlementResult) {
         return !!result && !!settlementResult;
