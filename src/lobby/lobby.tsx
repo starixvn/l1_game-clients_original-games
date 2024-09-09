@@ -25,7 +25,7 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
     async componentDidMount() {
         const { router } = this.props;
         const token = (router.query?.token || "") as string;
-        this.sso({ token, ref: "d_direct", appType: gc.AppTypes.Club });
+        this.sso({ token });
     }
 
     @handle(gc.Auth.AuthHandlers.SSO)
