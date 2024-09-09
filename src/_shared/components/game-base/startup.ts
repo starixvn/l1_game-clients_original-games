@@ -1,7 +1,7 @@
 import * as gc from "@sg/sg-game-client";
+import * as Observer from "@sg/sg-observer";
 import * as mobx from "mobx";
 import { makeAutoObservable, reaction } from "mobx";
-import * as Observer from "@sg/sg-observer";
 import "reflect-metadata";
 import { getSiteConfig } from "../../app-settings";
 
@@ -34,7 +34,7 @@ function getSharedContainer(siteConfigs: gc.Configs.SiteConfigs) {
     return gc.getContainer(containerOptions);
 }
 
-export const sharedContainer = getSharedContainer(getSiteConfig(2));
+const sharedContainer = getSharedContainer(getSiteConfig(2));
 
 export function configSharedContainer() {
     Observer.configure({ default: { mobx, container: gc.buildObserverContainer(sharedContainer) } });

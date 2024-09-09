@@ -3,8 +3,7 @@ import { handle, observer, render } from "@sg/sg-observer";
 import { withRouter } from "next/router";
 import React from "react";
 import { Tab, Tabs } from "react-bootstrap";
-import { configSharedContainer, sharedContainer } from "../_shared/components/game-base/startup";
-import { requestSSO } from "../_shared/utils/sso-helper";
+import { configSharedContainer } from "../_shared/components/game-base/startup";
 import { settingsBigSmall } from "../games/big-small/game-settings";
 import BigSmall from "../games/big-small/page";
 import { settingsSeDie } from "../games/sedie/game-settings";
@@ -26,43 +25,32 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
     }
 
     async componentDidMount() {
-        const sessionInfo = this.getSessionInfo();
-        const userService = this.getUserService();
-
-        const isValidSession = await this.verifySession(sessionInfo, userService);
-        if (isValidSession) {
-            this.sso({});
-        } else {
-            const token = await this.getToken();
-            token && this.sso({ token, ref: "d_direct", appType: gc.AppTypes.Club });
-        }
+        const { router } = this.props;
+        const token = (router.query?.token || "") as string;
+        this.sso({ token, ref: "d_direct", appType: gc.AppTypes.Club });
     }
-
-    protected getSessionInfo = (): gc.Auth.ISessionInfo => {
-        return gc.Shared.utils.StorageManager.get(gc.Shared.utils.localStorageKeys.session) as gc.Auth.ISessionInfo;
-    };
-
-    protected getUserService = (): gc.Auth.UserService => {
-        return sharedContainer?.get(gc.Auth.UserService);
-    };
-
-    protected verifySession = async (sessionInfo: gc.Auth.ISessionInfo, userService: gc.Auth.UserService): Promise<boolean> => {
-        return gc.AuthUtils.verifySessionFromStorage(sessionInfo, userService);
-    };
-
-    protected getToken = async (): Promise<string> => {
-        const result = await requestSSO();
-        return result?.token || "";
-    };
 
     @handle(gc.Auth.AuthHandlers.SSO)
     sso(ssoInfo: gc.Auth.ISSOInfo) {
         return ssoInfo;
     }
 
+    protected clearQueryParams = () => {
+        const { router } = this.props;
+        router.replace(
+            {
+                pathname: router.pathname,
+                query: {},
+            },
+            undefined,
+            { shallow: true }
+        );
+    };
+
     @render(gc.Auth.AuthStore, (store) => store.isAuthorized)
     handleAuthorized(isAuthorized: boolean) {
         if (isAuthorized) {
+            this.clearQueryParams();
             this.setState({ isAuthorized: true });
             this.triggerRecheckIn();
         }
