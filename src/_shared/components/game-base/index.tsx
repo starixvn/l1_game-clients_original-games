@@ -30,7 +30,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     componentDidMount() {
         document.addEventListener("visibilitychange", this.onVisibilityChange);
-        this.onStart();
+        this.connectToService();
     }
 
     componentWillUnmount() {
@@ -46,20 +46,8 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     onVisibilityChange = () => {};
 
-    onStart() {
-        this.connectToService();
-        this.initUserSettings();
-        this.initPlayerSelections();
-    }
-
     @handle(gc.Connection.ConnectionHandlers.ConnectHandler)
     connectToService() {}
-
-    @handle(gc.UserSettings.UserSettingHandlers, (handle) => handle.loadStorages())
-    initUserSettings() {}
-
-    @handle(gc.PlayerSelections.PlayerSelectionHandlers.InitHandlers)
-    initPlayerSelections() {}
 
     @render(gc.Connection.ConnectionStore, (store) => store.signedIn)
     handleSignedIn(signedIn: boolean) {
