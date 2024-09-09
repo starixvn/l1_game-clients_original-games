@@ -34,7 +34,7 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
             this.sso({});
         } else {
             const token = await this.getToken();
-            token && this.sso({ token, ref: "d_direct" });
+            token && this.sso({ token, ref: "d_direct", appType: gc.AppTypes.Club });
         }
     }
 
