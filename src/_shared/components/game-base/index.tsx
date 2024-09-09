@@ -62,20 +62,14 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     initPlayerSelections() {}
 
     @render(gc.Connection.ConnectionStore, (store) => store.signedIn)
-    onSignedIn(signedIn: boolean) {
+    handleSignedIn(signedIn: boolean) {
         signedIn && this.inGame();
     }
-
-    @render(gc.Connection.ConnectionStore, (store) => store.isConnected)
-    onConnected(isConnected: boolean) {}
 
     @handle(gc.Connection.ConnectionHandlers.InGameHandler)
     inGame() {
         return this.props.namespace;
     }
-
-    @render(gc.Rounds.RoundStore, (store) => ({ minBet: store.minBet, maxBet: store.maxBet }))
-    renderMinMaxBet({ minBet, maxBet }: { minBet: number; maxBet: number }) {}
 
     renderNotice(): JSX.Element {
         return <Notice namespace={this.props.namespace}></Notice>;

@@ -29,12 +29,12 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
         const sessionInfo = this.getSessionInfo();
         const userService = this.getUserService();
 
-        const isSessionValid = await this.verifySession(sessionInfo, userService);
-        if (isSessionValid) {
+        const isValidSession = await this.verifySession(sessionInfo, userService);
+        if (isValidSession) {
             this.sso({});
         } else {
             const token = await this.getToken();
-            token && this.sso({ token: token, ref: "d_direct" });
+            token && this.sso({ token, ref: "d_direct" });
         }
     }
 
@@ -61,7 +61,7 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
     }
 
     @render(gc.Auth.AuthStore, (store) => store.isAuthorized)
-    openGame(isAuthorized: boolean) {
+    handleAuthorized(isAuthorized: boolean) {
         if (isAuthorized) {
             this.setState({ isAuthorized: true });
             this.loadChipSetting();
