@@ -1520,10 +1520,10 @@
   resolved "https://npm.lumigame.com/@rushstack/eslint-patch/-/eslint-patch-1.10.4.tgz#427d5549943a9c6fce808e39ea64dbe60d4047f1"
   integrity sha512-WJgX9nzTqknM393q1QJDJmoW28kUfEnybeTfVNcNAPnIx210RXm2DiXiHzfNPJNIUUb1tJnz/l4QGtJ30PgWmA==
 
-"@sg/sg-game-client@^1.0.1-beta.2":
-  version "1.0.1-beta.2"
-  resolved "https://npm.lumigame.com/@sg/sg-game-client/-/sg-game-client-1.0.1-beta.2.tgz#f7526435357e31f0e2fe45d08c8f47be83e194b5"
-  integrity sha512-XREpin7IMv1r//swwLPxs7LguDLKF+P6KjLux3JRD4PUU1me1ugBGVxJ4vGo1JJ1v6OCCNa2MBSzJGnazu3HQQ==
+"@sg/sg-game-client@^1.0.1":
+  version "1.0.1"
+  resolved "http://npm.lumigame.com/@sg/sg-game-client/-/sg-game-client-1.0.1.tgz#3bd051191806f34d3ac4f3f0c86b3edacacd88b7"
+  integrity sha512-8QjPRpSgGR055XQoBv69JZytURxIyzNL8RPteKX/KyKoRcXz6+YtyA3FsqS+PK3VoHVk2Rs82Y8fto52lCqGFw==
   dependencies:
     "@sg/sg-user-service-client" "^1.8.1"
     base64-string "^1.1.2"
@@ -1544,7 +1544,7 @@
 
 "@sg/sg-user-service-client@^1.8.1":
   version "1.8.1"
-  resolved "https://npm.lumigame.com/@sg/sg-user-service-client/-/sg-user-service-client-1.8.1.tgz#c05e68b146b7c9ecf93f39929c4c946037d315ef"
+  resolved "http://npm.lumigame.com/@sg/sg-user-service-client/-/sg-user-service-client-1.8.1.tgz#c05e68b146b7c9ecf93f39929c4c946037d315ef"
   integrity sha512-qWmEmTDi4y359MFNMj7a4gqoD5qZwfGE7DV85/JE5Ft3zbrjdUTlwM+AEm0XGUx0LXFsqxLtQWsjt3iUfVQMMQ==
   dependencies:
     axios "^1.7.4"
@@ -1565,7 +1565,7 @@
 
 "@socket.io/component-emitter@~3.1.0":
   version "3.1.2"
-  resolved "https://npm.lumigame.com/@socket.io/component-emitter/-/component-emitter-3.1.2.tgz#821f8442f4175d8f0467b9daf26e3a18e2d02af2"
+  resolved "http://npm.lumigame.com/@socket.io/component-emitter/-/component-emitter-3.1.2.tgz#821f8442f4175d8f0467b9daf26e3a18e2d02af2"
   integrity sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA==
 
 "@swc/counter@^0.1.3":
@@ -2504,7 +2504,7 @@ balanced-match@^1.0.0:
 
 base64-string@^1.1.2:
   version "1.1.3"
-  resolved "https://npm.lumigame.com/base64-string/-/base64-string-1.1.3.tgz#97bc37f082eb686ab0292d4f08942b7c2a990690"
+  resolved "http://npm.lumigame.com/base64-string/-/base64-string-1.1.3.tgz#97bc37f082eb686ab0292d4f08942b7c2a990690"
   integrity sha512-RfiU9itiUaNmbsZL8BTAtCcsNzWY9IG8tvpBeDWSKwGAJYaHZ497xVNcrJqL/0Bp1jngUXeIYAdDYJfQRITQmA==
   dependencies:
     mkdirp "^1.0.4"
@@ -2878,7 +2878,7 @@ component-emitter@^1.2.1:
 
 component-emitter@~1.3.0:
   version "1.3.1"
-  resolved "https://npm.lumigame.com/component-emitter/-/component-emitter-1.3.1.tgz#ef1d5796f7d93f135ee6fb684340b26403c97d17"
+  resolved "http://npm.lumigame.com/component-emitter/-/component-emitter-1.3.1.tgz#ef1d5796f7d93f135ee6fb684340b26403c97d17"
   integrity sha512-T0+barUSQRTUQASh8bx02dl+DhF54GtIDY13Y3m9oWTklKbb3Wv974meRpeZ3lp1JpLVECWWNHC4vaG2XHXouQ==
 
 concat-map@0.0.1:
@@ -3106,12 +3106,19 @@ debug@^4.3.1:
   dependencies:
     ms "2.1.2"
 
-debug@^4.3.2, debug@^4.3.4, debug@~4.3.1, debug@~4.3.2:
+debug@^4.3.2, debug@^4.3.4:
   version "4.3.6"
   resolved "https://npm.lumigame.com/debug/-/debug-4.3.6.tgz#2ab2c38fbaffebf8aa95fdfe6d88438c7a13c52b"
   integrity sha512-O/09Bd4Z1fBrU4VzkhFqVgpPzaGbw6Sm9FEkBT1A/YBXQFGuuSxa1dN2nxgxS34JmKXqYx8CZAwEVoJFImUXIg==
   dependencies:
     ms "2.1.2"
+
+debug@~4.3.1, debug@~4.3.2:
+  version "4.3.7"
+  resolved "http://npm.lumigame.com/debug/-/debug-4.3.7.tgz#87945b4151a011d76d95a198d7111c865c360a52"
+  integrity sha512-Er2nc/H7RrMXZBFCEim6TCmMk02Z8vLC2Rbi1KEBggpo0fS6l0S1nnapwmIi3yW/+GOJap1Krg4w0Hg80oCqgQ==
+  dependencies:
+    ms "^2.1.3"
 
 decamelize-keys@^1.1.0:
   version "1.1.0"
@@ -3385,7 +3392,7 @@ emoji-regex@^9.2.2:
 
 engine.io-client@~6.4.0:
   version "6.4.0"
-  resolved "https://npm.lumigame.com/engine.io-client/-/engine.io-client-6.4.0.tgz#88cd3082609ca86d7d3c12f0e746d12db4f47c91"
+  resolved "http://npm.lumigame.com/engine.io-client/-/engine.io-client-6.4.0.tgz#88cd3082609ca86d7d3c12f0e746d12db4f47c91"
   integrity sha512-GyKPDyoEha+XZ7iEqam49vz6auPnNJ9ZBfy89f+rMMas8AuiMWOZ9PVzu8xb9ZC6rafUqiGHSCfu22ih66E+1g==
   dependencies:
     "@socket.io/component-emitter" "~3.1.0"
@@ -3396,7 +3403,7 @@ engine.io-client@~6.4.0:
 
 engine.io-parser@~5.0.3:
   version "5.0.7"
-  resolved "https://npm.lumigame.com/engine.io-parser/-/engine.io-parser-5.0.7.tgz#ed5eae76c71f398284c578ab6deafd3ba7e4e4f6"
+  resolved "http://npm.lumigame.com/engine.io-parser/-/engine.io-parser-5.0.7.tgz#ed5eae76c71f398284c578ab6deafd3ba7e4e4f6"
   integrity sha512-P+jDFbvK6lE3n1OL+q9KuzdOFWkkZ/cMV9gol/SbVfpyqfvrfrFTOFJ6fQm2VC3PZHlU3QPhVwmbsCnauHF2MQ==
 
 enhanced-resolve@^5.12.0:
@@ -3907,7 +3914,7 @@ esutils@^2.0.2:
 
 eventemitter2@6.4.9:
   version "6.4.9"
-  resolved "https://npm.lumigame.com/eventemitter2/-/eventemitter2-6.4.9.tgz#41f2750781b4230ed58827bc119d293471ecb125"
+  resolved "http://npm.lumigame.com/eventemitter2/-/eventemitter2-6.4.9.tgz#41f2750781b4230ed58827bc119d293471ecb125"
   integrity sha512-JEPTiaOt9f04oa6NOkc4aH+nVp5I3wEjpHbIPqfgCdD5v5bUzy7xQqwcVO2aDQgOWhI28da57HksMrzK9HlRxg==
 
 execa@^5.0.0:
@@ -4654,7 +4661,7 @@ invariant@^2.2.2, invariant@^2.2.4:
 
 inversify@6.0.1:
   version "6.0.1"
-  resolved "https://npm.lumigame.com/inversify/-/inversify-6.0.1.tgz#b20d35425d5d8c5cd156120237aad0008d969f02"
+  resolved "http://npm.lumigame.com/inversify/-/inversify-6.0.1.tgz#b20d35425d5d8c5cd156120237aad0008d969f02"
   integrity sha512-B3ex30927698TJENHR++8FfEaJGqoWOgI6ZY5Ht/nLUsFCwHn6akbwtnUAPCgUepAnTpe2qHxhDNjoKLyz6rgQ==
 
 inversify@^6.0.2:
@@ -6071,7 +6078,7 @@ mixin-deep@^1.2.0:
 
 mkdirp@1.x, mkdirp@^1.0.4:
   version "1.0.4"
-  resolved "https://npm.lumigame.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
+  resolved "http://npm.lumigame.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
 mkdirp@^0.5.1:
@@ -6093,7 +6100,7 @@ mobx@6.9.0:
 
 moment@^2.29.4:
   version "2.30.1"
-  resolved "https://npm.lumigame.com/moment/-/moment-2.30.1.tgz#f8c91c07b7a786e30c59926df530b4eac96974ae"
+  resolved "http://npm.lumigame.com/moment/-/moment-2.30.1.tgz#f8c91c07b7a786e30c59926df530b4eac96974ae"
   integrity sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==
 
 moo@^0.5.0:
@@ -6111,9 +6118,9 @@ ms@2.1.2:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
-ms@^2.1.1:
+ms@^2.1.1, ms@^2.1.3:
   version "2.1.3"
-  resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
+  resolved "http://npm.lumigame.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
 
 nanoid@^3.3.4:
@@ -6193,7 +6200,7 @@ node-modules-regexp@^1.0.0:
 
 node-polyglot@^2.5.0:
   version "2.6.0"
-  resolved "https://npm.lumigame.com/node-polyglot/-/node-polyglot-2.6.0.tgz#3d5889664253d90babc0fcd3c12ae0ac7b98289f"
+  resolved "http://npm.lumigame.com/node-polyglot/-/node-polyglot-2.6.0.tgz#3d5889664253d90babc0fcd3c12ae0ac7b98289f"
   integrity sha512-ZZFkaYzIfGfBvSM6QhA9dM8EEaUJOVewzGSRcXWbJELXDj0lajAtKaENCYxvF5yE+TgHg6NQb0CmgYMsMdcNJQ==
   dependencies:
     hasown "^2.0.2"
@@ -6232,7 +6239,7 @@ normalize-path@^3.0.0, normalize-path@~3.0.0:
 
 notepack.io@~2.2.0:
   version "2.2.0"
-  resolved "https://npm.lumigame.com/notepack.io/-/notepack.io-2.2.0.tgz#d7ea71d1cb90094f88c6f3c8d84277c2d0cd101c"
+  resolved "http://npm.lumigame.com/notepack.io/-/notepack.io-2.2.0.tgz#d7ea71d1cb90094f88c6f3c8d84277c2d0cd101c"
   integrity sha512-9b5w3t5VSH6ZPosoYnyDONnUTF8o0UkBw7JLA6eBlYJWyGT1Q3vQa8Hmuj1/X6RYvHjjygBDgw6fJhe0JEojfw==
 
 npm-run-path@^4.0.1:
@@ -7355,7 +7362,7 @@ snapdragon@^0.8.1:
 
 socket.io-client@4.6.1:
   version "4.6.1"
-  resolved "https://npm.lumigame.com/socket.io-client/-/socket.io-client-4.6.1.tgz#80d97d5eb0feca448a0fb6d69a7b222d3d547eab"
+  resolved "http://npm.lumigame.com/socket.io-client/-/socket.io-client-4.6.1.tgz#80d97d5eb0feca448a0fb6d69a7b222d3d547eab"
   integrity sha512-5UswCV6hpaRsNg5kkEHVcbBIXEYoVbMQaHJBXJCyEQ+CiFPV1NIOY0XOFWG4XR4GZcB8Kn6AsRs/9cy9TbqVMQ==
   dependencies:
     "@socket.io/component-emitter" "~3.1.0"
@@ -7365,7 +7372,7 @@ socket.io-client@4.6.1:
 
 socket.io-msgpack-parser@^3.0.2:
   version "3.0.2"
-  resolved "https://npm.lumigame.com/socket.io-msgpack-parser/-/socket.io-msgpack-parser-3.0.2.tgz#34c4d69acd0fa2a0eede98c14e29fa9f6a5b880a"
+  resolved "http://npm.lumigame.com/socket.io-msgpack-parser/-/socket.io-msgpack-parser-3.0.2.tgz#34c4d69acd0fa2a0eede98c14e29fa9f6a5b880a"
   integrity sha512-1e76bJ1PCKi9H+JiYk+S29PBJvknHjQWM7Mtj0hjF2KxDA6b6rQxv3rTsnwBoz/haZOhlCDIMQvPATbqYeuMxg==
   dependencies:
     component-emitter "~1.3.0"
@@ -7373,7 +7380,7 @@ socket.io-msgpack-parser@^3.0.2:
 
 socket.io-parser@~4.2.1:
   version "4.2.4"
-  resolved "https://npm.lumigame.com/socket.io-parser/-/socket.io-parser-4.2.4.tgz#c806966cf7270601e47469ddeec30fbdfda44c83"
+  resolved "http://npm.lumigame.com/socket.io-parser/-/socket.io-parser-4.2.4.tgz#c806966cf7270601e47469ddeec30fbdfda44c83"
   integrity sha512-/GbIKmo8ioc+NIWIhwdecY0ge+qVBSMdgxGygevmdHj24bsfgtCmcUUcQ5ZzcylGFHsN3k4HB4Cgkl96KVnuew==
   dependencies:
     "@socket.io/component-emitter" "~3.1.0"
@@ -8105,7 +8112,7 @@ union-value@^1.0.0:
 
 unique-names-generator@^4.7.1:
   version "4.7.1"
-  resolved "https://npm.lumigame.com/unique-names-generator/-/unique-names-generator-4.7.1.tgz#966407b12ba97f618928f77322cfac8c80df5597"
+  resolved "http://npm.lumigame.com/unique-names-generator/-/unique-names-generator-4.7.1.tgz#966407b12ba97f618928f77322cfac8c80df5597"
   integrity sha512-lMx9dX+KRmG8sq6gulYYpKWZc9RlGsgBR6aoO8Qsm3qvkSJ+3rAymr+TnV8EDMrIrwuFJ4kruzMWM/OpYzPoow==
 
 universalify@^0.1.2:
@@ -8345,7 +8352,7 @@ ws@^7.4.5:
 
 ws@~8.11.0:
   version "8.11.0"
-  resolved "https://npm.lumigame.com/ws/-/ws-8.11.0.tgz#6a0d36b8edfd9f96d8b25683db2f8d7de6e8e143"
+  resolved "http://npm.lumigame.com/ws/-/ws-8.11.0.tgz#6a0d36b8edfd9f96d8b25683db2f8d7de6e8e143"
   integrity sha512-HPG3wQd9sNQoT9xHyNCXoDUa+Xw/VevmY9FoHyQ+g+rrMn4j6FB4np7Z0OhdTgjx6MgQLK7jwSy1YecU1+4Asg==
 
 xml-name-validator@^3.0.0:
@@ -8365,7 +8372,7 @@ xmlchars@^2.2.0:
 
 xmlhttprequest-ssl@~2.0.0:
   version "2.0.0"
-  resolved "https://npm.lumigame.com/xmlhttprequest-ssl/-/xmlhttprequest-ssl-2.0.0.tgz#91360c86b914e67f44dce769180027c0da618c67"
+  resolved "http://npm.lumigame.com/xmlhttprequest-ssl/-/xmlhttprequest-ssl-2.0.0.tgz#91360c86b914e67f44dce769180027c0da618c67"
   integrity sha512-QKxVRxiRACQcVuQEYFsI1hhkrMlrXHPegbbd1yn9UHOmRxY+si12nQYzri3vbzt8VdTTRviqcKxcyllFas5z2A==
 
 y18n@^5.0.5:
