@@ -7,4 +7,4 @@
 
 ## Demo page
 
--   Go to: https://l1-sedie-client-demo1.lumigame.com
+-   Go to: https://l1-sedie-client-demo1.lumigame.com/token
