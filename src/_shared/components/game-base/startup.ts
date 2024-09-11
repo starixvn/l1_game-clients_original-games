@@ -20,7 +20,6 @@ function getSharedContainer(siteConfigs: gc.Configs.SiteConfigs) {
     const containerOptions: gc.IContainerOptions = {
         onContainerCreated: (container) => {
             container.bind(gc.Configs.SiteConfigs).toConstantValue(siteConfigs);
-            gc.GameTurnBase.onContainerCreated(container)
         },
 
         enabledFeatures: [

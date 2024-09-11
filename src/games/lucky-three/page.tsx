@@ -1,46 +1,48 @@
-import { observer } from "observer";
-import { Col } from "react-bootstrap";
-import { CountDownTimer, RoundId } from "../../components";
-import GameBase from "../../components/game-base";
-import { configGameContainer } from "../../components/game-base/startup";
-import { containerOptions, settings, siteConfigs } from "./game-settings";
-import SeDieRoundHistory from "./round-history";
-import LuckyNextBetOptions from "./lucky-next-bet-options";
-import LuckyNextSettlementResult from "./settlement-result";
+import * as gc from "@sg/sg-game-client";
+import { Connection } from "@sg/sg-game-client";
+import { handle, observer } from "@sg/sg-observer";
+import CountDownTimer from "../../_shared/components/count-down-timer";
+import RoundId from "../../_shared/components/round-id";
+import GameBase, { IGameBaseState } from "../../_shared/components/game-base";
+import { configGameContainer } from "../../_shared/components/game-base/startup";
+import type { GameBaseProps } from "../../_shared/components/game-base/type";
+import { containerOptions, settingsLuckyNext, siteConfigs } from "./game-settings";
+import { FunctionUtils } from "../../_shared/utils/funtion-utils";
 
-configGameContainer(settings.name, containerOptions, siteConfigs);
-const observerNamespace = settings.mainObserverNamespace;
-@observer(observerNamespace)
-export default class LuckyNext extends GameBase<any> {
-    constructor(props: any) {
-        super(props);
+configGameContainer(settingsLuckyNext.name, containerOptions, siteConfigs);
+@observer(settingsLuckyNext.mainObserverNamespace)
+export default class LuckyNext extends GameBase<GameBaseProps, IGameBaseState> {
+    @handle(Connection.ConnectionHandlers.CloseConnectHandler)
+    closeConnect() { }
+
+    renderStatistic() {
+        return <>   </>;
     }
 
-    // renderStatistic() {
-    //     return (
-    //         <Col>
-    //             <SeDieRoundHistory namespace={observerNamespace} />
-    //         </Col>
-    //     );
-    // }
-
     renderRoundIdSection() {
-        return (
-            <Col>
-                <RoundId namespace={observerNamespace} />
-            </Col>
-        );
+        return <RoundId namespace={this.props.namespace} />;
     }
 
     renderCountDownTimer() {
-        return <CountDownTimer namespace={observerNamespace} />;
+        return <CountDownTimer namespace={this.props.namespace} />;
     }
 
     renderBettingBlock() {
-        return <LuckyNextBetOptions namespace={observerNamespace} />;
+        return <>   </>;
+        // return <SeDieBetOptions namespace={this.props.namespace} />;
     }
 
-    // renderResultBlock() {
-    //     return <LuckyNextSettlementResult namespace={observerNamespace} />;
-    // }
+    renderResultBlock() {
+        return <>   </>;
+        // return <SeDieSettlementResult namespace={this.props.namespace} />;
+    }
+
+    async showResult(
+        hasAnimation: boolean,
+        result?: gc.GameServiceMessage.TResult,
+        settlementResult?: gc.GameServiceMessage.TSettlementResult
+    ) {
+        //implement animation
+        await FunctionUtils.delay(1000);
+    }
 }
