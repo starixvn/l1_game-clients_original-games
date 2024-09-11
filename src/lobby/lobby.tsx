@@ -1,19 +1,13 @@
 import * as gc from "@sg/sg-game-client";
 import { handle, observer, render } from "@sg/sg-observer";
-import { withRouter, NextRouter } from "next/router";
+import { withRouter } from "next/router";
 import React from "react";
 import { Tab, Tabs } from "react-bootstrap";
 import { configSharedContainer } from "../_shared/components/game-base/startup";
-import { settingsBigSmall } from "../games/big-small/game-settings";
-import BigSmall from "../games/big-small/page";
 import { settingsSeDie } from "../games/sedie/game-settings";
-import SeDie from "../games/sedie/page";
 import styles from "./lobby.module.scss";
 import type { ILobbyProps, ILobbyState } from "./type";
-import { getGameSettingIds, getGameSetting } from "../_shared/app-settings";
-import SeDieHeader from "../games/sedie/header";
-import BigSmallHeader from "../games/big-small/header";
-import { utils } from "@sg/sg-game-client/dist/shared";
+import { getGameSetting } from "../_shared/app-settings";
 import * as lobbyUtils from "../lobby/utils";
 configSharedContainer();
 
