@@ -1,6 +1,6 @@
 import * as gc from "@sg/sg-game-client";
 import { handle, observer, render } from "@sg/sg-observer";
-import { withRouter } from "next/router";
+import { withRouter, NextRouter } from "next/router";
 import React from "react";
 import { Tab, Tabs } from "react-bootstrap";
 import { configSharedContainer } from "../_shared/components/game-base/startup";
@@ -9,17 +9,22 @@ import BigSmall from "../games/big-small/page";
 import { settingsSeDie } from "../games/sedie/game-settings";
 import SeDie from "../games/sedie/page";
 import styles from "./lobby.module.scss";
-import type { ILobbyProps, ILobbyStates } from "./type";
-
+import type { ILobbyProps, ILobbyState } from "./type";
+import { getGameSettingIds, getGameSetting } from "../_shared/app-settings";
+import SeDieHeader from "../games/sedie/header";
+import BigSmallHeader from "../games/big-small/header";
+import { utils } from "@sg/sg-game-client/dist/shared";
+import * as lobbyUtils from "../lobby/utils";
 configSharedContainer();
 
 @observer
-class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
+class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
     constructor(props: ILobbyProps) {
         super(props);
         this.state = {
             isAuthorized: false,
-        };
+            offerGames: [],
+        } as ILobbyState;
     }
 
     async componentDidMount() {
@@ -54,33 +59,58 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyStates> {
         }
     }
 
+    @render(gc.Player.MainPlayerStore, (store) => store.offerGames)
+    handleOfferGames(
+        offerGames: {
+            gameId: number;
+        }[]
+    ) {
+        if (offerGames?.length > 0) {
+            this.setState({ offerGames } as ILobbyState);
+        }
+    }
+
     @handle(gc.Auth.AuthHandlers.TriggerRecheckIn)
     triggerRecheckIn() {}
 
+    getGames() {
+        const { offerGames } = this.state;
+
+        const filteredGames = lobbyUtils.getFilteredGames(offerGames);
+
+        return filteredGames.map((gameId) => {
+            return this.getGameById(gameId);
+        });
+    }
+
+    getGameById(gameId: number) {
+        const gameSetting = getGameSetting(gameId);
+
+        const gameName = gc.Translator.t(`${gameSetting.gameName}.game_name`);
+        const key = gameSetting.mainObserverNamespace;
+        return (
+            <Tab key={key} eventKey={key} title={gameName} unmountOnExit={true}>
+                {lobbyUtils.getGameHeaderById(gameId)}
+                <div className={styles["game-lobby"]}>{lobbyUtils.getGameById(gameId, this.props.router)}</div>
+            </Tab>
+        );
+    }
+
+    renderGames() {
+        const { offerGames } = this.state;
+        if (offerGames.length === 0) {
+            return <>No games offer</>;
+        }
+        return (
+            <Tabs defaultActiveKey={settingsSeDie.mainObserverNamespace} className={styles["lobby-tabs"]}>
+                {this.getGames()}
+            </Tabs>
+        );
+    }
+
     render() {
         const { isAuthorized } = this.state;
-
-        return (
-            <div className={styles["lobby"]}>
-                {isAuthorized && (
-                    <Tabs defaultActiveKey="sedie" className={styles["lobby-tabs"]}>
-                        <Tab eventKey="sedie" title={gc.Translator.t("SeDie.game_name")} unmountOnExit={true}>
-                            <div className={styles["game-title"]}>
-                                <div>Sedie</div>
-                                <div className={styles["text-center"]}>Odd/Even</div>
-                                <div className={styles["text-center"]}>Red/White</div>
-                            </div>
-                            <div className={styles["game-lobby"]}>
-                                <SeDie {...this.props} namespace={settingsSeDie.mainObserverNamespace} />
-                            </div>
-                        </Tab>
-                        <Tab eventKey="bigsmall" title={gc.Translator.t("BigSmall.game_name")} unmountOnExit={true}>
-                            <BigSmall {...this.props} namespace={settingsBigSmall.mainObserverNamespace} />
-                        </Tab>
-                    </Tabs>
-                )}
-            </div>
-        );
+        return <div className={styles["lobby"]}>{isAuthorized && this.renderGames()}</div>;
     }
 }
 

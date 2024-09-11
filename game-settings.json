@@ -18,7 +18,8 @@
             "route": "bigsmall"
         },
         "mainObserverNamespace": "BigSmall",
-        "storagePrefixKey": "BigSmall"
+        "storagePrefixKey": "BigSmall",
+        "order": 2
     },
     "2": {
         "id": 2,
@@ -39,6 +40,7 @@
             "route": "sedie"
         },
         "mainObserverNamespace": "SeDie",
-        "storagePrefixKey": "Sedie"
+        "storagePrefixKey": "Sedie",
+        "order": 1
     }
 }

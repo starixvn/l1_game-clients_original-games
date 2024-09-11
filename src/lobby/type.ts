@@ -3,6 +3,7 @@ export type ILobbyProps = {
     token?: string;
 } & WithRouterProps;
 
-export interface ILobbyStates {
+export interface ILobbyState {
     isAuthorized: boolean;
+    offerGames: { gameId: number }[];
 }

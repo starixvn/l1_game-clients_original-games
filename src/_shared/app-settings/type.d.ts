@@ -30,6 +30,7 @@ interface IGameSettings {
     };
     mainObserverNamespace: string;
     storagePrefixKey: string;
+    order: number;
 }
 
 export default interface AppSettings {

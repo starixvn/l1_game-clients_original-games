@@ -31,4 +31,15 @@ export const getGameSetting = (gameId: number) => {
     return appSettings.gameSettings[gameId];
 };
 
+export const getGameSettingIds = () => {
+    const gameSettings = Object.keys(appSettings.gameSettings).map((value) => {
+        return appSettings.gameSettings[value];
+    });
+    const orderedGameSettings = gameSettings.sort((a, b) => a.order - b.order)
+
+    return orderedGameSettings.map((value) => {
+        return value.id;
+    });
+};
+
 export default appSettings;
