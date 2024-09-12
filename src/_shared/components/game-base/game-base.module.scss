@@ -3,33 +3,46 @@
     grid-template-columns: 1fr 14rem 40rem;
     background-color: #fce0d7;
     align-items: center;
-    .info, .result, .bet-options {
+
+    .info,
+    .result,
+    .bet-options {
         padding: 4px;
     }
-    
+
     .result {
         border-right: 1px solid #ccc;
         height: 100%;
         display: flex;
         align-items: center;
-        .result-container{
+
+        .result-container {
             display: grid;
             grid-template-columns: repeat(4, 2.5rem);
             grid-template-rows: 2.5rem;
             grid-gap: 0.5rem;
         }
     }
+
     .round-id {
         font-weight: bold;
         font-size: 13px;
     }
+
+    .turn-counter {
+        font-weight: bold;
+        font-size: 13px;
+        position: absolute;
+        left: 10rem;
+    }
+
     .info {
         display: flex;
         align-items: center;
-        gap: .4rem ;
-        
+        gap: .4rem;
+
     }
-    
+
 
 }
 
@@ -38,15 +51,18 @@
         width: 20px;
         height: 20px;
     }
+
     .timer-wrapper {
         display: flex;
         align-items: flex-end;
         padding: 0;
         position: relative;
+
         .timer-badge {
             padding: 0.2rem;
             z-index: 99;
         }
+
         .count-down-badge {
             width: 3rem;
             padding: .3rem 0;

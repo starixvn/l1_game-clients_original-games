@@ -53,10 +53,10 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     abstract closeConnect(): void;
 
-    onVisibilityChange = () => {};
+    onVisibilityChange = () => { };
 
     @handle(gc.Connection.ConnectionHandlers.ConnectHandler)
-    connectToService() {}
+    connectToService() { }
 
     @render(gc.Connection.ConnectionStore, (store) => store.signedIn)
     handleSignedIn(signedIn: boolean) {
@@ -77,6 +77,10 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     renderRoundIdSection() {
+        return <></>;
+    }
+
+    renderTurnCounterSection() {
         return <></>;
     }
 
@@ -181,6 +185,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                     <div className={Styles["info"]}>
                         {this.renderRoundIdSection()}
                         {this.renderCountDownTimer()}
+                        {this.renderTurnCounterSection()}
                     </div>
                     <div className={Styles["result"]}>{this.renderResultBlock()}</div>
                     <div className={Styles["bet-options"]}>
