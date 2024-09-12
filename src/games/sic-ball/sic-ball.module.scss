@@ -1,0 +1,35 @@
+.bet {
+    background-color: #712cf926;
+    border: 1px solid #712cf94d;
+    text-transform: capitalize;
+    padding: 0;
+}
+
+.container-bets {
+    display: flex;
+    justify-content: space-between;
+}
+
+.wrapper-dots {
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(4, 2.2rem);
+    grid-gap: 0;
+}
+
+.main-option {
+    font-weight: 500;
+}
+
+.border-right {
+    border-right: 1px solid #712cf94d;
+}
+
+.padding-bet {
+    padding: .75rem;
+}
+
+.margin-x-0 {
+    margin-right: 0;
+    margin-left: 0;
+}

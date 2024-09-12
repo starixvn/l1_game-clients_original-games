@@ -69,5 +69,34 @@
         "mainObserverNamespace": "LuckyNext1",
         "storagePrefixKey": "LuckyNext1",
         "order": 1
+    },
+    "1007": {
+        "id": 1007,
+        "gameName": "SicBall",
+        "name": "SicBall",
+        "namespaces": [
+            "SicBall"
+        ],
+        "durations": {
+            "wholeRound": 30,
+            "wholeTurn": 30,
+            "lockingBet": 3,
+            "placingBet": 20,
+            "generatingResult": 1,
+            "showingResult": 6,
+            "startRound": 0,
+            "resultAnimation": 3,
+            "switchRoundAnimation": 0,
+            "startNewRoundAnim": 21
+        },
+        "totalTurns": 1,
+        "numberOfRoundHistory": 100,
+        "websocket": {
+            "proxyPath": "sicball",
+            "route": "sicball"
+        },
+        "mainObserverNamespace": "SicBall",
+        "storagePrefixKey": "SicBall",
+        "order": 2
     }
 }

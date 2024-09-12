@@ -10,7 +10,10 @@ import { settingsSeDie } from "../games/sedie/game-settings";
 import * as lobbyUtils from "../lobby/utils";
 import styles from "./lobby.module.scss";
 import type { ILobbyProps, ILobbyState } from "./type";
-export const sharedContainer = configSharedContainer();
+import LuckyNext from "../games/lucky-three/page";
+import { settingsLuckyNext } from "../games/lucky-three/game-settings";
+import SicBall from "../games/sic-ball/page";
+import { settingsSicball } from "../games/sic-ball/game-settings";
 
 @observer
 class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
@@ -107,8 +110,11 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
         //         <BigSmall {...this.props} namespace={settingsBigSmall.mainObserverNamespace} />
         //     </Tab> */}
         //     <Tab eventKey="luckynext" title="Lucky Next" unmountOnExit={true}>
-        //         {isAuthorized && <LuckyNext {...this.props} namespace={settingsLuckyNext.mainObserverNamespace} />}
-        //     </Tab>
+        //     {isAuthorized && <LuckyNext {...this.props} namespace={settingsLuckyNext.mainObserverNamespace} />}
+        // </Tab>
+        // <Tab eventKey="sicball" title="Sic Ball" unmountOnExit={true}>
+        //     {isAuthorized && <SicBall {...this.props} namespace={settingsSicball.mainObserverNamespace} />}
+        // </Tab>
         // </Tabs>
     }
 
