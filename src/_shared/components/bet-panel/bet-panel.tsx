@@ -47,6 +47,7 @@ class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends O
         maxBet: number;
         maxBetPerChoices: gc.GameServiceMessage.MaxBetPerChoices;
     }) {
+
         this.setState({ maxBetPerChoices, minBet, maxBet } as IBetPanel);
     }
 
@@ -57,6 +58,7 @@ class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends O
 
     render() {
         const { minBet, maxBet, maxBetPerChoices, stakeLevel } = this.state as S;
+
         return (
             <BetPanel
                 minBet={minBet}
@@ -100,7 +102,7 @@ const BetPanel: React.FC<{
     if (!show) {
         return <></>;
     }
-
+    console.log({ minBet, maxBet, maxBetPerChoices, stakeLevel })
     return (
         <Modal show={true} onHide={onHide} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
             <Modal.Header closeButton>
