@@ -13,6 +13,7 @@ import Warning from "../notices/warning";
 import Styles from "./game-base.module.scss";
 import { sharedContainer } from "./startup";
 import { GameBaseProps } from "./type";
+
 export interface IGameBaseState {
     isReConnecting: boolean;
     isConnected: boolean;
