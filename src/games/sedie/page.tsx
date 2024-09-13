@@ -12,9 +12,13 @@ import SeDieBetOptions from "./bet-option/sedie-bet-options";
 import SeDieSettlementResult from "./settlement-result";
 import { FunctionUtils } from "../../_shared/utils/funtion-utils";
 
-configGameContainer(settingsSeDie.name, containerOptions, siteConfigs);
 @observer(settingsSeDie.mainObserverNamespace)
 export default class SeDie extends GameBase<GameBaseProps, IGameBaseState> {
+    constructor(props: GameBaseProps) {
+        super(props);
+        configGameContainer(settingsSeDie.name, containerOptions, siteConfigs);
+    }
+
     @handle(Connection.ConnectionHandlers.CloseConnectHandler)
     closeConnect() {}
 

@@ -3,21 +3,23 @@ import { handle, observer, render } from "@sg/sg-observer";
 import { withRouter } from "next/router";
 import React from "react";
 import { Tab, Tabs } from "react-bootstrap";
+import { getGameSetting } from "../_shared/app-settings";
 import { configSharedContainer } from "../_shared/components/game-base/startup";
+import { LobbyStore } from "../_shared/states/lobby";
 import { settingsSeDie } from "../games/sedie/game-settings";
+import * as lobbyUtils from "../lobby/utils";
 import styles from "./lobby.module.scss";
 import type { ILobbyProps, ILobbyState } from "./type";
-import { getGameSetting } from "../_shared/app-settings";
-import * as lobbyUtils from "../lobby/utils";
-configSharedContainer();
 
 @observer
 class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
     constructor(props: ILobbyProps) {
+        configSharedContainer();
         super(props);
         this.state = {
             isAuthorized: false,
             offerGames: [],
+            connectedCount: 0,
         } as ILobbyState;
     }
 
@@ -72,20 +74,33 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
 
         const filteredGames = lobbyUtils.getFilteredGames(offerGames);
 
-        return filteredGames.map((gameId) => {
-            return this.getGameById(gameId);
-        });
+        return filteredGames.map((gameId) => this.getGameTabById(gameId));
     }
 
-    getGameById(gameId: number) {
+    @render(LobbyStore, (store) => store.connectedCount)
+    updateConnectedCount(connectedCount: number) {
+        this.setState({ connectedCount });
+    }
+
+    renderGame(gameId: number) {
+        const { router } = this.props;
+
+        return (
+            <>
+                {lobbyUtils.getGameHeaderById(gameId)}
+                <div className={styles["game-lobby"]}>{lobbyUtils.getGameById(gameId, router)}</div>
+            </>
+        );
+    }
+
+    getGameTabById(gameId: number) {
         const gameSetting = getGameSetting(gameId);
 
         const gameName = gc.Translator.t(`${gameSetting.gameName}.game_name`);
         const key = gameSetting.mainObserverNamespace;
         return (
             <Tab key={key} eventKey={key} title={gameName} unmountOnExit={true}>
-                {lobbyUtils.getGameHeaderById(gameId)}
-                <div className={styles["game-lobby"]}>{lobbyUtils.getGameById(gameId, this.props.router)}</div>
+                {this.renderGame(gameId)}
             </Tab>
         );
     }

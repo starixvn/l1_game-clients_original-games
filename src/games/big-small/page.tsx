@@ -10,10 +10,13 @@ import type { GameBaseProps } from "../../_shared/components/game-base/type";
 import { containerOptions, settingsBigSmall, siteConfigs } from "./game-settings";
 import { FunctionUtils } from "../../_shared/utils/funtion-utils";
 
-configGameContainer(settingsBigSmall.name, containerOptions, siteConfigs);
-
 @observer(settingsBigSmall.name)
 export default class BigSmall extends GameBase<GameBaseProps, IGameBaseState> {
+    constructor(props: GameBaseProps) {
+        super(props);
+        configGameContainer(settingsBigSmall.name, containerOptions, siteConfigs);
+    }
+
     @handle(Connection.ConnectionHandlers.CloseConnectHandler)
     closeConnect() {}
 

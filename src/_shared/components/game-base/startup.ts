@@ -1,10 +1,10 @@
 import * as gc from "@sg/sg-game-client";
 import * as Observer from "@sg/sg-observer";
 import * as mobx from "mobx";
-import { makeAutoObservable, reaction } from "mobx";
+import { reaction } from "mobx";
 import "reflect-metadata";
 import { getSiteConfig } from "../../app-settings";
-
+import { Lobby } from "../../states";
 interface Languages {
     [key: string]: any;
 }
@@ -19,7 +19,6 @@ function getSharedContainer(siteConfigs: gc.Configs.SiteConfigs) {
     const containerOptions: gc.IContainerOptions = {
         onContainerCreated: (container) => {
             container.bind(gc.Configs.SiteConfigs).toConstantValue(siteConfigs);
-            container.bind("makeAutoObservable").toFunction(makeAutoObservable);
         },
         enabledFeatures: [
             gc.Player.FEATURE_NAME,
@@ -28,17 +27,22 @@ function getSharedContainer(siteConfigs: gc.Configs.SiteConfigs) {
             gc.Notification.FEATURE_NAME,
             gc.ConnectSite.FEATURE_NAME,
             gc.ChipSetting.FEATURE_NAME,
+            Lobby.FEATURE_NAME,
         ],
+        features: [...gc.defaultFeatures, Lobby],
     };
 
     return gc.getContainer(containerOptions);
 }
 
-const sharedContainer = getSharedContainer(getSiteConfig(2));
+export const sharedContainer = getSharedContainer(getSiteConfig(2));
 
 export function configSharedContainer() {
     Observer.configure({ default: { mobx, container: gc.buildObserverContainer(sharedContainer) } });
+    return sharedContainer;
 }
+
+export const authStore = sharedContainer.get<gc.Auth.AuthStore>(gc.Auth.AuthStore);
 
 export function configGameContainer(gameName: string, containerOptions: gc.IContainerOptions, siteConfigs: gc.Configs.SiteConfigs) {
     gc.StorageManager.setPrefixKey(siteConfigs.storagePrefixKey || "");
