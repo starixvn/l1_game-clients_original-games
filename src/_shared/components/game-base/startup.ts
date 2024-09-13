@@ -30,6 +30,7 @@ function getSharedContainer(siteConfigs: gc.Configs.SiteConfigs) {
             gc.ConnectSite.FEATURE_NAME,
             gc.ChipSetting.FEATURE_NAME,
             Lobby.FEATURE_NAME,
+            // gc.GameTurnBase.ProvablyFair.FEATURE_NAME
         ],
         features: [...gc.defaultFeatures, Lobby],
         disabledFeatures: [

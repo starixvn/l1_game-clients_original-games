@@ -17,5 +17,5 @@ export const containerOptions: gc.IContainerOptions = {
         // container.bind(gc.TurnBase.TurnBaseRunningHandlers).toConstantValue(gc.TurnBase.TurnBaseRunningHandlers as any);
         // container.bind(gc.TurnBase.TurnBaseStore).toConstantValue(gc.TurnBase.TurnBaseStore as any);
     },
-    features: [...gc.defaultFeatures, gc.BetDetailsNew],
+    features: [...gc.defaultFeatures, gc.BetDetailsNew, gc.GameTurnBase.ProvablyFair],
 };

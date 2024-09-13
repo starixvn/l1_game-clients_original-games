@@ -79,7 +79,7 @@ const BetPanel: React.FC<{
     handleBet: (amount: number, betChoice: string) => void;
 }> = ({ minBet = 1, maxBet = 300, maxBetPerChoices, stakeLevel, handleBet }) => {
     const { betChoice, odd = 0, onHide, show } = useGameBettingZoneContext();
-    const [amount, setAmount] = useState(1);
+    const [amount, setAmount] = useState(15);
     const [min, setMin] = useState(0);
     const [max, setMax] = useState(0);
 
