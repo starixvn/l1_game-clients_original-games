@@ -180,5 +180,11 @@
     },
     "BigSmall": {
         "game_name": "Big Small"
+    },
+    "SicBall": {
+        "game_name": "Sic Ball"
+    },
+    "LuckyNext1": {
+        "game_name": "Lucky Next"
     }
 }

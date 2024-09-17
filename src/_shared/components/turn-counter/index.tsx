@@ -1,4 +1,4 @@
-import { ROUND_STATE, RoundStore, RoundTimeStore } from "@sg/sg-game-client/dist/game-turn-base/rounds";
+import { TURN_ROUND_STATE, RoundStore, RoundTimeStore } from "@sg/sg-game-client/dist/game-turn-base/rounds";
 import { render } from "@sg/sg-observer";
 import Styles from "../game-base/game-base.module.scss";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../observer-component/observer-component";
@@ -14,7 +14,7 @@ export default class TurnCounter extends ObserverComponent<IPropsObserver, ITurn
         this.state = {
             dispose: null,
             turnCounter: 0,
-            roundState: ROUND_STATE.NONE
+            roundState: TURN_ROUND_STATE.NONE
         };
     }
 

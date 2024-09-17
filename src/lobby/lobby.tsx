@@ -136,7 +136,7 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
             return <>No games offer</>;
         }
         return (
-            <Tabs defaultActiveKey={settingsSeDie.mainObserverNamespace} className={styles["lobby-tabs"]}>
+            <Tabs defaultActiveKey={settingsLuckyNext.mainObserverNamespace} className={styles["lobby-tabs"]}>
                 {this.getGames()}
             </Tabs>
         );

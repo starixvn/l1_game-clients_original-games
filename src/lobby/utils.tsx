@@ -5,15 +5,22 @@ import { settingsSeDie } from "../games/sedie/game-settings";
 import SeDie from "../games/sedie/page";
 import SeDieHeader from "../games/sedie/header";
 import BigSmallHeader from "../games/big-small/header";
+import LuckyNextHeader from "../games/lucky-three/header";
+import SicBallHeader from "../games/sic-ball/header";
 import { NextRouter } from "next/router";
 import { getGameSettingIds, getGameSetting } from "../_shared/app-settings";
 import { Tab } from "react-bootstrap";
 import styles from "./lobby.module.scss";
-
+import { settingsLuckyNext } from "../games/lucky-three/game-settings";
+import { settingsSicball } from "../games/sic-ball/game-settings";
+import LuckyNext from "../games/lucky-three/page";
+import SicBall from "../games/sic-ball/page";
 const getGameById = (gameId: number, router: NextRouter) => {
     const games: { [x: number]: JSX.Element } = {
         [settingsSeDie.id]: <SeDie router={router} namespace={settingsSeDie.mainObserverNamespace} />,
         [settingsBigSmall.id]: <BigSmall router={router} namespace={settingsBigSmall.mainObserverNamespace} />,
+        [settingsLuckyNext.id]: <LuckyNext router={router} namespace={settingsLuckyNext.mainObserverNamespace} />,
+        [settingsSicball.id]: <SicBall router={router} namespace={settingsSicball.mainObserverNamespace} />,
     };
     return games[gameId];
 };
@@ -22,6 +29,8 @@ const getGameHeaderById = (gameId: number) => {
     const gameHeader = {
         [settingsSeDie.id]: <SeDieHeader />,
         [settingsBigSmall.id]: <BigSmallHeader />,
+        [settingsLuckyNext.id]: <LuckyNextHeader />,
+        [settingsSicball.id]: <SicBallHeader />,
     };
     return gameHeader[gameId];
 };
