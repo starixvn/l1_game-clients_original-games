@@ -1,9 +1,9 @@
-.bet{
+.bet {
     text-transform: capitalize;
     padding: 0;
 }
 
-.container-bets{
+.container-bets {
     display: flex;
     justify-content: space-between;
 
@@ -12,6 +12,7 @@
         align-items: center;
         grid-template-columns: repeat(4, 2.2rem);
         grid-gap: 0;
+
         &-small {
             grid-template-columns: repeat(4, 1.2rem);
         }
@@ -19,20 +20,20 @@
 }
 
 
-.main-option{
+.main-option {
     font-weight: 500;
 }
 
-.bets-bg{
+.bets-bg {
     background-color: #fff6f3;
     border-radius: 4px;
 }
 
-.padding-bet{
+.padding-bet {
     padding: 8px;
 }
 
-.margin-x-0{
+.margin-x-0 {
     margin-right: 0;
     margin-left: 0;
 }
@@ -41,15 +42,18 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: .2rem;
-    
+
 }
+
 .round-history {
     background-color: #fce0d7;
     padding: 8px 4px;
     border-top: 1px solid #ccc;
+
     .hstack-round {
         margin-top: 0 !important;
     }
+
     .arrow {
         background-image: url("/static/images/arrow.svg");
         height: 8px;

@@ -6,14 +6,10 @@ import { Tab, Tabs } from "react-bootstrap";
 import { getGameSetting } from "../_shared/app-settings";
 import { configSharedContainer } from "../_shared/components/game-base/startup";
 import { LobbyStore } from "../_shared/states/lobby";
-import { settingsSeDie } from "../games/sedie/game-settings";
 import * as lobbyUtils from "../lobby/utils";
 import styles from "./lobby.module.scss";
 import type { ILobbyProps, ILobbyState } from "./type";
-import LuckyNext from "../games/lucky-three/page";
 import { settingsLuckyNext } from "../games/lucky-three/game-settings";
-import SicBall from "../games/sic-ball/page";
-import { settingsSicball } from "../games/sic-ball/game-settings";
 
 @observer
 class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
@@ -95,27 +91,6 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
                 <div className={styles["game-lobby"]}>{lobbyUtils.getGameById(gameId, router)}</div>
             </>
         );
-        // <Tabs defaultActiveKey="luckynext" className={styles["lobby-tabs"]}>
-        //     {/* <Tab eventKey="sedie" title={gc.Translator.t("SeDie.game_name")} unmountOnExit={true}>
-        //         <div className={styles["game-title"]}>
-        //             <div>Sedie</div>
-        //             <div className={styles["text-center"]}>Odd/Even</div>
-        //             <div className={styles["text-center"]}>Red/White</div>
-        //         </div>
-        //         <div className={styles["game-lobby"]}>
-        //             <SeDie {...this.props} namespace={settingsSeDie.mainObserverNamespace} />
-        //         </div>
-        //     </Tab>
-        //     <Tab eventKey="bigsmall" title={gc.Translator.t("BigSmall.game_name")} unmountOnExit={true}>
-        //         <BigSmall {...this.props} namespace={settingsBigSmall.mainObserverNamespace} />
-        //     </Tab> */}
-        //     <Tab eventKey="luckynext" title="Lucky Next" unmountOnExit={true}>
-        //     {isAuthorized && <LuckyNext {...this.props} namespace={settingsLuckyNext.mainObserverNamespace} />}
-        // </Tab>
-        // <Tab eventKey="sicball" title="Sic Ball" unmountOnExit={true}>
-        //     {isAuthorized && <SicBall {...this.props} namespace={settingsSicball.mainObserverNamespace} />}
-        // </Tab>
-        // </Tabs>
     }
 
     getGameTabById(gameId: number) {

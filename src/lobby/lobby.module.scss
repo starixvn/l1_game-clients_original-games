@@ -29,8 +29,12 @@
             text-align: center;
         }
     }
-}
 
-.lucky-next-block-wrapper {
-    grid-template-columns: 1fr 32rem 18rem !important;
+    .lucky-next-header {
+        grid-template-columns: 1fr 9rem 9rem;
+    }
+
+    .lucky-next-block-wrapper {
+        grid-template-columns: 1fr 32rem 18rem;
+    }
 }

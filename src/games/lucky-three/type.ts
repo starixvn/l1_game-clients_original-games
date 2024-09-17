@@ -1,12 +1,11 @@
 export const LuckyNextChoices = {
     over: "over",
-    under: "under",
     odd: "odd",
+    under: "under",
     even: "even"
 };
 
 export const mainChoices = [LuckyNextChoices.odd, LuckyNextChoices.even, LuckyNextChoices.over, LuckyNextChoices.under];
-
 
 export type NextBallSettlementResult = {
     over: boolean;

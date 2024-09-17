@@ -10,10 +10,10 @@ const gameName = gc.Translator.t(`${gameSetting.gameName}.game_name`);
 
 const Header = () => {
     return (
-        <div className={styles["game-title"]}>
+        <div className={`${styles["game-title"]} ${styles["lucky-next-header"]}`}>
             <div>{gameName}</div>
-            <div className={styles["text-center"]}>Big/Small</div>
-            <div className={styles["text-center"]}>Odd/Even</div>
+            <div className={styles["text-center"]}>Next O/U</div>
+            <div className={styles["text-center"]}>Next O/E</div>
         </div>
     );
 };

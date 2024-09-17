@@ -42,7 +42,7 @@ export default class LuckyNextBetOptions extends BetOptions {
                     {Object.keys(LuckyNextChoices).map((choiceKey) => {
                         return (
                             <div className={`${Styles["bets-bg"]} ${Styles["padding-bet"]}`} key={choiceKey}>
-                                {this.renderMainOption(choiceKey, odds[choiceKey], choiceKey, fractional)}
+                                {this.renderMainOption(choiceKey[0], odds[choiceKey], choiceKey, fractional)}
                             </div>
                         );
                     })}
