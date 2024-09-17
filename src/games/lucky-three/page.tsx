@@ -39,6 +39,7 @@ export default class LuckyNext extends GameBase<GameBaseProps, IGameBaseState> {
     }
 
     renderTurnCounterSection(): JSX.Element {
+        return <></>;
         return <TurnCounter namespace={this.props.namespace} />;
     }
 
