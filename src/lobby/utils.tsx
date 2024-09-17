@@ -19,7 +19,7 @@ const getGameById = (gameId: number, router: NextRouter) => {
     const games: { [x: number]: JSX.Element } = {
         [settingsSeDie.id]: <SeDie router={router} namespace={settingsSeDie.mainObserverNamespace} />,
         [settingsBigSmall.id]: <BigSmall router={router} namespace={settingsBigSmall.mainObserverNamespace} />,
-        [settingsLuckyNext.id]: <LuckyNext router={router} namespace={settingsLuckyNext.mainObserverNamespace} />,
+        [settingsLuckyNext.id]: <LuckyNext router={router} namespace={settingsLuckyNext.mainObserverNamespace} overrideClasses={styles["lucky-next-block-wrapper"]} />,
         [settingsSicball.id]: <SicBall router={router} namespace={settingsSicball.mainObserverNamespace} />,
     };
     return games[gameId];
