@@ -9,5 +9,6 @@
     "subDomain": "proxy",
     "env": "PROD",
     "enableMsgpackParserAllGames": true,
-    "enableMsgpackParserOnNotification": true
+    "enableMsgpackParserOnNotification": true,
+    "enableSourceMap": false
 }
