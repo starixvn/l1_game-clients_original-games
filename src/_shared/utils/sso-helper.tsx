@@ -12,8 +12,8 @@ export const requestSSO = async (gameId = 0) => {
     const playerBalance = 10000;
 
     const request = {
-        playerId: "7133089",
-        playerName: "username_7133089",
+        playerId: `${playerId}`,
+        playerName: `username_${playerId}`,
         language: "vi-VN",
         currency: "INH",
         seq: "d,y,lumi",
@@ -46,8 +46,7 @@ export const requestSSO = async (gameId = 0) => {
         isApp: false,
         returnUrl: "",
         local: 0,
-        resource: null
-
+        resource: null,
     };
 
     const gameLobbySimulatorUrl = appSettings.simulatorConfigs.gameLobbySimulatorUrl;
