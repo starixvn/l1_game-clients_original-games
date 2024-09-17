@@ -12,6 +12,7 @@ export interface GameConfigs {
 
 export type GamePropsContext = {
     namespace: string;
+    overrideClasses?: string;
 };
 
 export type GameBaseProps = GamePropsContext & WithRouterProps;

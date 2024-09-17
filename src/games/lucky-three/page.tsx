@@ -10,6 +10,7 @@ import { containerOptions, settingsLuckyNext, siteConfigs } from "./game-setting
 import { FunctionUtils } from "../../_shared/utils/funtion-utils";
 import TurnCounter from "../../_shared/components/turn-counter";
 import LuckyNextBetOptions from "./bet-option/lucky-next-bet-options";
+import LuckyNextSettlementResult from "./lucky-next-settlement-result";
 
 configGameContainer(settingsLuckyNext.name, containerOptions, siteConfigs);
 @observer(settingsLuckyNext.mainObserverNamespace)
@@ -32,9 +33,9 @@ export default class LuckyNext extends GameBase<GameBaseProps, IGameBaseState> {
     renderBettingBlock() {
         return <LuckyNextBetOptions namespace={this.props.namespace} />;
     }
+
     renderResultBlock() {
-        return <>   </>;
-        // return <SeDieSettlementResult namespace={this.props.namespace} />;
+        return <LuckyNextSettlementResult namespace={this.props.namespace} />;
     }
 
     renderTurnCounterSection(): JSX.Element {

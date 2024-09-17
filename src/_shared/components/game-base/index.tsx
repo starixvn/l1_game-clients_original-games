@@ -181,7 +181,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
             this.renderDisconnect()
         ) : (
             <>
-                <div className={Styles["block-wrapper"]}>
+                <div className={`${Styles["block-wrapper"]} ${this.props.overrideClasses}`}>
                     <div className={Styles["info"]}>
                         {this.renderRoundIdSection()}
                         {this.renderCountDownTimer()}
