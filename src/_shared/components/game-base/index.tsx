@@ -128,14 +128,16 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         //show result
     }
 
+    @handle(Lobby.LobbyHandlers.IncreaseConnectedCountHandler)
+    handleIncreaseConnectedCount() {}
+
     @render(gc.Connection.ConnectionStore, (store) => store.isConnected)
     handleDisconnected(isConnected: boolean) {
         this.setState({ isConnected });
         if (!isConnected) {
             return;
         }
-        const updateCurrentGameConnectionHandler = sharedContainer.resolve(Lobby.LobbyHandlers.IncreaseConnectedCountHandler);
-        updateCurrentGameConnectionHandler.handle();
+        this.handleIncreaseConnectedCount();
 
         this.clearReconnecting();
     }
