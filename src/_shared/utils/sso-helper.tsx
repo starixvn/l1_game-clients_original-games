@@ -8,7 +8,7 @@ export const requestSSO = async (gameId = 0) => {
     };
 
     const playerId = randomIntFromInterval(1000, 99999);
-    const appType = 1;
+    const appType = 6;
     const playerBalance = 10000;
     const request = {
         playerId: playerId,
