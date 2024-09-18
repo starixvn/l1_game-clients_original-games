@@ -26,18 +26,18 @@ class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends O
         } as S;
     }
 
-    @render(gc.Player.MainPlayerStore, (store) => store.stakeLevel, { fireImmediately: false })
+    @render(gc.Player.MainPlayerStore, (store) => store.stakeLevel)
     setUserStakeLevel(stakeLevel: gc.Player.IStakeLevel) {
         if (stakeLevel) {
             this.setState({ stakeLevel } as IBetPanel);
         }
     }
 
-    @render(
-        gc.GameConfigs.GameConfigStore,
-        (store) => ({ minBet: store.minBet, maxBet: store.maxBet, maxBetPerChoices: store.maxBetPerChoices }),
-        { fireImmediately: false }
-    )
+    @render(gc.GameConfigs.GameConfigStore, (store) => ({
+        minBet: store.minBet,
+        maxBet: store.maxBet,
+        maxBetPerChoices: store.maxBetPerChoices,
+    }))
     setMaxBetPerChoices({
         minBet,
         maxBet,
