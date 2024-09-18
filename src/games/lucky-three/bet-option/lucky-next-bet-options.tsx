@@ -8,7 +8,6 @@ import Styles from "../lucky-next.module.scss";
 import { LuckyNextChoices } from "../type";
 
 export default class LuckyNextBetOptions extends BetOptions {
-
     renderMainOption = (name: string, odd: number, betChoice: string, fractional: boolean) => {
         return (
             <BettingBlock odd={odd} betChoice={betChoice} namespace={settingsLuckyNext.mainObserverNamespace}>

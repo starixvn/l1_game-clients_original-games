@@ -48,7 +48,7 @@ export default class LuckyNextSettlementResult extends ObserverComponent<IPropsO
     }
 
 
-    @render(RoundStore, (store) => store.RoundData)
+    @render(RoundStore, (store) => store.roundData)
     handleRoundData(roundData: any) {
         this.setState({ roundData });
     }
@@ -57,7 +57,6 @@ export default class LuckyNextSettlementResult extends ObserverComponent<IPropsO
         fireImmediately: false,
     })
     renderCurrentFinish(currentFinish: gc.GameServiceMessage.Finish) {
-        console.log({ currentFinish })
         if (!currentFinish) {
             return;
         }

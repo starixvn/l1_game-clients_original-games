@@ -54,10 +54,9 @@
     background: #828282 !important;
 }
 
-
-
 .highlight-current-result {
     position: relative;
+
     &:before {
         background: var(--dot-current-highlight) !important;
     }
@@ -90,7 +89,7 @@
     &:before {
         background: var(--dot-even-background);
     }
-          
+
     &.kenopromax,
     &.kenomatch1,
     &.kenomatch2,
@@ -117,14 +116,15 @@
 .dot-grid-even {
     @extend %dot;
     background: linear-gradient(180deg, #F7F7F7 0%, #B5B5B5 100%);
-    
-        
+
+
     color: var(--dot-even-text-color);
     font-weight: 500;
 
     &:before {
         background: linear-gradient(180deg, #EEEEEE 0%, #CCCCCC 100%);
     }
+
     &.kenopromax,
     &.kenomatch1,
     &.kenomatch2,
@@ -176,12 +176,12 @@
 
 .dot-grid-odd {
     @extend %dot;
-    background: linear-gradient(180deg, rgba(255,86,97,1) 0%, rgba(190,28,40,1) 100%);    
+    background: linear-gradient(180deg, rgba(255, 86, 97, 1) 0%, rgba(190, 28, 40, 1) 100%);
     color: var(--dot-odd-text-color);
 
     &:before {
-        background: linear-gradient(180deg, rgba(250,55,68,1) 6.04%, rgba(205,13,27,1) 100%);
-    }    
+        background: linear-gradient(180deg, rgba(250, 55, 68, 1) 6.04%, rgba(205, 13, 27, 1) 100%);
+    }
 }
 
 // big-small
@@ -224,21 +224,50 @@
 }
 
 
+// lucky next
+.dot-over {
+    @extend %dot;
+    background: var(--dot-even-border);
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
+    color: var(--dot-odd-text-color);
+
+    &:before {
+        background: #315dc5;
+    }
+
+
+}
+
+.dot-under {
+    @extend %dot;
+    background: var(--dot-odd-border);
+    box-shadow: var(--dot-odd-shadow);
+    color: var(--dot-odd-text-color);
+
+    &:before {
+        background: var(--dot-odd-background);
+    }
+}
+
 // animations
 
 @keyframes blinker {
     0% {
         transform: scale(0.85);
     }
+
     25% {
         transform: scale(1);
     }
+
     50% {
         transform: scale(0.85);
     }
+
     75% {
         transform: scale(1);
     }
+
     100% {
         transform: scale(0.85);
     }

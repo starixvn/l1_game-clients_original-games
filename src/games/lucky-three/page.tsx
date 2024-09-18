@@ -11,6 +11,7 @@ import { FunctionUtils } from "../../_shared/utils/funtion-utils";
 import TurnCounter from "../../_shared/components/turn-counter";
 import LuckyNextBetOptions from "./bet-option/lucky-next-bet-options";
 import LuckyNextSettlementResult from "./lucky-next-settlement-result";
+import LuckyNextRoundHistory from "./round-history";
 
 configGameContainer(settingsLuckyNext.name, containerOptions, siteConfigs);
 @observer(settingsLuckyNext.mainObserverNamespace)
@@ -19,7 +20,7 @@ export default class LuckyNext extends GameBase<GameBaseProps, IGameBaseState> {
     closeConnect() { }
 
     renderStatistic() {
-        return <>   </>;
+        return <LuckyNextRoundHistory namespace={this.props.namespace} />;
     }
 
     renderRoundIdSection() {

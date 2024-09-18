@@ -86,7 +86,6 @@ export const TurnBaseResultSlotContainer: React.FC<IResultSlotContainer> = (prop
     }, [roundState]);
 
 
-    console.log([ballsData]);
     if (betChoice === null) {
         return (
             <div className={`${Style["ball-container"]} ${className}`}>
