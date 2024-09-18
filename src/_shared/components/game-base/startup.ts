@@ -42,8 +42,6 @@ export function configSharedContainer() {
     return sharedContainer;
 }
 
-export const authStore = sharedContainer.get<gc.Auth.AuthStore>(gc.Auth.AuthStore);
-
 export function configGameContainer(gameName: string, containerOptions: gc.IContainerOptions, siteConfigs: gc.Configs.SiteConfigs) {
     gc.StorageManager.setPrefixKey(siteConfigs.storagePrefixKey || "");
 
