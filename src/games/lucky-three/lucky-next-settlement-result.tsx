@@ -49,8 +49,9 @@ export default class LuckyNextSettlementResult extends ObserverComponent<IPropsO
 
     @render(RoundStore, (store) => store.roundData)
     async handleRoundData(roundData: any) {
+        const { isAnimationResult } = this.state;
+        isAnimationResult && (await FunctionUtils.delay(1000));
 
-        await FunctionUtils.delay(1000);
         this.setState({ roundData });
     }
 
