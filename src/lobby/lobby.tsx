@@ -10,6 +10,11 @@ import * as lobbyUtils from "../lobby/utils";
 import styles from "./lobby.module.scss";
 import type { ILobbyProps, ILobbyState } from "./type";
 import { settingsLuckyNext } from "../games/lucky-three/game-settings";
+import { settingsSeDie } from "../games/sedie/game-settings";
+import getConfig from "next/config";
+
+const isSC: boolean = getConfig().publicRuntimeConfig.isSC;
+const setting = isSC ? settingsSeDie : settingsLuckyNext;
 
 @observer
 class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
@@ -67,7 +72,7 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
     }
 
     @handle(gc.Auth.AuthHandlers.TriggerRecheckIn)
-    triggerRecheckIn() { }
+    triggerRecheckIn() {}
 
     getGames() {
         const { offerGames } = this.state;
@@ -111,7 +116,7 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
             return <>No games offer</>;
         }
         return (
-            <Tabs defaultActiveKey={settingsLuckyNext.mainObserverNamespace} className={styles["lobby-tabs"]}>
+            <Tabs defaultActiveKey={setting.mainObserverNamespace} className={styles["lobby-tabs"]}>
                 {this.getGames()}
             </Tabs>
         );

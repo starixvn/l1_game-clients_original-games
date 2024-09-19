@@ -2,7 +2,7 @@ import * as gc from "@sg/sg-game-client";
 import getConfig from "next/config";
 import AppSettings from "./type";
 
-const appSettings: AppSettings = getConfig().publicRuntimeConfig;
+const appSettings: AppSettings = getConfig().publicRuntimeConfig.appSettings;
 
 export const getSiteConfig = (gameId: number) => {
     const gameSetting = appSettings.gameSettings[gameId];
@@ -35,7 +35,7 @@ export const getGameSettingIds = () => {
     const gameSettings = Object.keys(appSettings.gameSettings).map((value) => {
         return appSettings.gameSettings[value];
     });
-    const orderedGameSettings = gameSettings.sort((a, b) => a.order - b.order)
+    const orderedGameSettings = gameSettings.sort((a, b) => a.order - b.order);
 
     return orderedGameSettings.map((value) => {
         return value.id;

@@ -1,5 +1,10 @@
 import axios from "axios";
 import appSettings from "../app-settings";
+import getConfig from "next/config";
+
+const isSC: boolean = getConfig().publicRuntimeConfig.isSC;
+
+const systemType = isSC ? "SC" : "GN";
 
 export const requestSSO = async (gameId = 0) => {
     const randomIntFromInterval = (min: number, max: number) => {
@@ -15,7 +20,7 @@ export const requestSSO = async (gameId = 0) => {
         playerId: `${playerId}`,
         playerName: `username_${playerId}`,
         language: "vi-VN",
-        currency: "INH",
+        currency: isSC ? "$US" : "INH",
         seq: "d,y,lumi",
         siteId: "4100300",
         siteName: "lumi",
@@ -25,7 +30,7 @@ export const requestSSO = async (gameId = 0) => {
             operatorId: appSettings.simulatorConfigs.operatorId,
             operatorSecret: appSettings.simulatorConfigs.operatorSecret,
         },
-        operatorToken: "ONEworksVGCashToken",
+        operatorToken: isSC ? "ONEworks1Token" : "ONEworksVGCashToken",
         token: null,
         redirectUrl: "#",
         verifyResult: null,
@@ -61,7 +66,7 @@ const assignBalance = async (playerId: number, balance: number, currency: string
     await axios.post(
         `${appSettings.simulatorConfigs.owApiSimulatorUrl}/SetDefaultBalance?playerId=${encodeURIComponent(
             playerId
-        )}&operator=ow&balance=${balance}&systemType=GN&username=username_${encodeURIComponent(
+        )}&operator=ow&balance=${balance}&systemType=${systemType}&username=username_${encodeURIComponent(
             playerId
         )}&currency=${currency}&siteId=${siteId}`
     );
@@ -71,6 +76,6 @@ const createCustomer = async (playerId: number, operator: string, siteId: string
     await axios.post(
         `${appSettings.simulatorConfigs.owApiSimulatorUrl}/CreateCustomer?memId=${encodeURIComponent(
             playerId
-        )}&operator=${operator}&systemType=GN&siteId=${siteId}`
+        )}&operator=${operator}&systemType=${systemType}&siteId=${siteId}`
     );
 };
