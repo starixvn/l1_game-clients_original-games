@@ -7,16 +7,21 @@ import Styles from "../lucky-next.module.scss";
 import { LuckyNextChoices } from "../type";
 
 export interface ILuckyNextRoundHistoryState extends IStateObserver {
-    rounds: gc.GameTurnBase.RoundHistories.RoundHistory[];
+    rounds: gc.RoundHistories.RoundHistory[];
 }
 export default class LuckyNextRoundHistory extends ObserverComponent<IPropsObserver, ILuckyNextRoundHistoryState> {
     constructor(props: IPropsObserver) {
         super(props);
     }
 
-    @render(gc.GameTurnBase.RoundHistories.RoundHistoryStore, (store) => store.histories)
-    renderRoundHistory(histories: gc.GameTurnBase.RoundHistories.RoundHistory[]) {
+    @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
+    renderRoundHistory(histories: gc.RoundHistories.RoundHistory[]) {
         this.setState({ rounds: histories.slice(0, 10) });
+    }
+
+    @render(gc.RoundHistories.RoundHistoryStore, (store) => store.firstJoinGameHistory)
+    renderFirstRoundHistory(firstJoinGameHistory: any) {
+        console.log({ firstJoinGameHistory })
     }
 
     render() {
@@ -24,7 +29,7 @@ export default class LuckyNextRoundHistory extends ObserverComponent<IPropsObser
         if (!rounds || rounds.length === 0) {
             return <></>;
         }
-        const roundHistories = rounds as gc.GameTurnBase.RoundHistories.RoundHistory[];
+        const roundHistories = rounds as gc.RoundHistories.RoundHistory[];
 
         return (
             <div className={Styles["round-history"]}>
@@ -39,7 +44,7 @@ export default class LuckyNextRoundHistory extends ObserverComponent<IPropsObser
         );
     }
 
-    private RoundHistoryItem(roundHistory: gc.GameTurnBase.RoundHistories.RoundHistory): JSX.Element {
+    private RoundHistoryItem(roundHistory: gc.RoundHistories.RoundHistory): JSX.Element {
         if (!roundHistory.settlementResult) {
             return <></>;
         }
