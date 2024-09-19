@@ -17,7 +17,7 @@ configGameContainer(settingsLuckyNext.name, containerOptions, siteConfigs);
 @observer(settingsLuckyNext.mainObserverNamespace)
 export default class LuckyNext extends GameBase<GameBaseProps, IGameBaseState> {
     @handle(Connection.ConnectionHandlers.CloseConnectHandler)
-    closeConnect() { }
+    closeConnect() {}
 
     renderStatistic() {
         return <LuckyNextRoundHistory namespace={this.props.namespace} />;

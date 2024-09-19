@@ -8,6 +8,7 @@ import { TURN_ROUND_STATE, RoundTimeStore, RoundStore } from "@sg/sg-game-client
 import { BallStatus, IBall } from "../../_shared/components/ball";
 import { TurnBaseResultSlotContainer } from "../../_shared/components/turn-base-result-container/turn-base-result-container";
 import Style from "./lucky-next.module.scss";
+import { FunctionUtils } from "../../_shared/utils/funtion-utils";
 
 const defaultRoundData: IBall[] = [
     { number: 0, status: BallStatus.NONE, delayTime: 0 },
@@ -20,13 +21,12 @@ const defaultRoundData: IBall[] = [
     { number: 0, status: BallStatus.NONE, delayTime: 0 },
 ];
 
-
 export interface ILuckyNextSettlementResultState extends IStateObserver {
     result: gc.GameServiceMessage.TResult;
     roundState: string;
     isAnimationResult: boolean;
     turnCounter: number;
-    roundData: any
+    roundData: any;
 }
 
 export default class LuckyNextSettlementResult extends ObserverComponent<IPropsObserver, ILuckyNextSettlementResultState> {
@@ -38,7 +38,7 @@ export default class LuckyNextSettlementResult extends ObserverComponent<IPropsO
             roundState: "",
             isAnimationResult: false,
             turnCounter: 0,
-            roundData: null
+            roundData: null,
         };
     }
 
@@ -47,9 +47,10 @@ export default class LuckyNextSettlementResult extends ObserverComponent<IPropsO
         this.setState({ roundState });
     }
 
-
     @render(RoundStore, (store) => store.roundData)
-    handleRoundData(roundData: any) {
+    async handleRoundData(roundData: any) {
+
+        await FunctionUtils.delay(1000);
         this.setState({ roundData });
     }
 
@@ -90,8 +91,9 @@ export default class LuckyNextSettlementResult extends ObserverComponent<IPropsO
 
         return (
             <div
-                className={`${Style["result-container"]} ${roundState === TURN_ROUND_STATE.SWITCH_ROUND && isAnimationResult ? "showResultContainer" : ""
-                    }`}
+                className={`${Style["result-container"]} ${
+                    roundState === TURN_ROUND_STATE.SWITCH_ROUND && isAnimationResult ? "showResultContainer" : ""
+                }`}
             >
                 <div className={Style["result"]}>
                     <TurnBaseResultSlotContainer
