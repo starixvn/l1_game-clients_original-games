@@ -13,9 +13,13 @@ import LuckyNextBetOptions from "./bet-option/lucky-next-bet-options";
 import LuckyNextSettlementResult from "./lucky-next-settlement-result";
 import LuckyNextRoundHistory from "./round-history";
 
-configGameContainer(settingsLuckyNext.name, containerOptions, siteConfigs);
 @observer(settingsLuckyNext.mainObserverNamespace)
 export default class LuckyNext extends GameBase<GameBaseProps, IGameBaseState> {
+    constructor(props: GameBaseProps) {
+        super(props);
+        configGameContainer(settingsLuckyNext.name, containerOptions, siteConfigs);
+    }
+
     @handle(Connection.ConnectionHandlers.CloseConnectHandler)
     closeConnect() {}
 

@@ -9,14 +9,18 @@ import type { GameBaseProps } from "../../_shared/components/game-base/type";
 import { containerOptions, settingsSicball, siteConfigs } from "./game-settings";
 import { FunctionUtils } from "../../_shared/utils/funtion-utils";
 
-configGameContainer(settingsSicball.name, containerOptions, siteConfigs);
 @observer(settingsSicball.mainObserverNamespace)
 export default class SicBall extends GameBase<GameBaseProps, IGameBaseState> {
+    constructor(props: GameBaseProps) {
+        super(props);
+        configGameContainer(settingsSicball.name, containerOptions, siteConfigs);
+    }
+
     @handle(Connection.ConnectionHandlers.CloseConnectHandler)
-    closeConnect() { }
+    closeConnect() {}
 
     renderStatistic() {
-        return <>   </>;
+        return <> </>;
     }
 
     renderRoundIdSection() {
@@ -28,12 +32,12 @@ export default class SicBall extends GameBase<GameBaseProps, IGameBaseState> {
     }
 
     renderBettingBlock() {
-        return <>   </>;
+        return <> </>;
         // return <SeDieBetOptions namespace={this.props.namespace} />;
     }
 
     renderResultBlock() {
-        return <>   </>;
+        return <> </>;
         // return <SeDieSettlementResult namespace={this.props.namespace} />;
     }
 
