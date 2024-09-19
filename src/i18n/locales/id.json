@@ -182,9 +182,30 @@
         "game_name": "Big Small"
     },
     "SicBall": {
-        "game_name": "Sic Ball"
+        "game_name": "Sic Ball",
+        "beadboard_big": "B",
+        "beadboard_small": "K",
+        "betoption_1": "1",
+        "betoption_2": "2",
+        "betoption_3": "3",
+        "betoption_4": "4",
+        "betoption_5": "5",
+        "betoption_6": "6",
+        "glossary_big": "Besar",
+        "glossary_small": "Kecil",
+        "odds_double": "Ganda",
+        "odds_single": "Tunggal",
+        "odds_triple": "Tiga kali lipat"
     },
     "LuckyNext1": {
-        "game_name": "Lucky Next"
+        "game_name": "Lucky Next",
+        "beadboard_even": "GE",
+        "beadboard_odd": "GA",
+        "beadboard_over": "B",
+        "beadboard_under": "K",
+        "glossary_even": "Genap",
+        "glossary_odd": "Ganjil",
+        "glossary_over": "Besar",
+        "glossary_under": "Kecil"
     }
 }

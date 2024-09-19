@@ -182,9 +182,30 @@
         "game_name": "Tài Xỉu"
     },
     "SicBall": {
-        "game_name": "Sic Ball"
+        "game_name": "Sic Ball",
+        "beadboard_big": "T",
+        "beadboard_small": "X",
+        "betoption_1": "1",
+        "betoption_2": "2",
+        "betoption_3": "3",
+        "betoption_4": "4",
+        "betoption_5": "5",
+        "betoption_6": "6",
+        "glossary_big": "Tài",
+        "glossary_small": "Xỉu",
+        "odds_double": "Đôi",
+        "odds_single": "Đơn",
+        "odds_triple": "Bộ Ba"
     },
     "LuckyNext1": {
-        "game_name": "Lucky Next"
+        "game_name": "Lucky Next",
+        "beadboard_even": "C",
+        "beadboard_odd": "L",
+        "beadboard_over": "T",
+        "beadboard_under": "X",
+        "glossary_even": "Chẵn",
+        "glossary_odd": "Lẻ",
+        "glossary_over": "Tài",
+        "glossary_under": "Xỉu"
     }
 }
