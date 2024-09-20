@@ -49,8 +49,6 @@ export function configSharedContainer() {
 }
 
 export function configGameContainer(gameName: string, containerOptions: gc.IContainerOptions, siteConfigs: gc.Configs.SiteConfigs) {
-    gc.StorageManager.setPrefixKey(siteConfigs.storagePrefixKey || "");
-
     const container = gc.getContainer(containerOptions);
     const observerContainer = gc.buildObserverContainer(container);
 

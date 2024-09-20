@@ -17,12 +17,9 @@ export const getSiteConfig = (gameId: number) => {
         enableMsgpackParserOnNotification: appSettings.enableMsgpackParserOnNotification,
         websocket: gameSetting.websocket,
         mainObserverNamespace: gameSetting.mainObserverNamespace,
-        storagePrefixKey: gameSetting.storagePrefixKey,
         subGuideDomain: "",
         subDirectory: appSettings.subDirectory,
     };
-
-    gc.Shared.utils.StorageManager.setPrefixKey(gameSetting.storagePrefixKey);
 
     return config;
 };
