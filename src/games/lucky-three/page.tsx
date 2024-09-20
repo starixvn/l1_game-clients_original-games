@@ -8,7 +8,6 @@ import { configGameContainer } from "../../_shared/components/game-base/startup"
 import type { GameBaseProps } from "../../_shared/components/game-base/type";
 import { containerOptions, settingsLuckyNext, siteConfigs } from "./game-settings";
 import { FunctionUtils } from "../../_shared/utils/funtion-utils";
-import TurnCounter from "../../_shared/components/turn-counter";
 import LuckyNextBetOptions from "./bet-option/lucky-next-bet-options";
 import LuckyNextSettlementResult from "./lucky-next-settlement-result";
 import LuckyNextRoundHistory from "./round-history";
@@ -21,7 +20,7 @@ export default class LuckyNext extends GameBase<GameBaseProps, IGameBaseState> {
     }
 
     @handle(Connection.ConnectionHandlers.CloseConnectHandler)
-    closeConnect() {}
+    closeConnect() { }
 
     renderStatistic() {
         return <LuckyNextRoundHistory namespace={this.props.namespace} />;
@@ -41,11 +40,6 @@ export default class LuckyNext extends GameBase<GameBaseProps, IGameBaseState> {
 
     renderResultBlock() {
         return <LuckyNextSettlementResult namespace={this.props.namespace} />;
-    }
-
-    renderTurnCounterSection(): JSX.Element {
-        return <></>;
-        return <TurnCounter namespace={this.props.namespace} />;
     }
 
     async showResult(

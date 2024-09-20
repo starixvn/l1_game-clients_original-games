@@ -80,10 +80,6 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         return <></>;
     }
 
-    renderTurnCounterSection() {
-        return <></>;
-    }
-
     renderCountDownTimer() {
         return <></>;
     }
@@ -134,7 +130,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     @handle(Lobby.LobbyHandlers.IncreaseConnectedCountHandler)
-    handleIncreaseConnectedCount() {}
+    handleIncreaseConnectedCount() { }
 
     @render(gc.Connection.ConnectionStore, (store) => store.isConnected)
     handleDisconnected(isConnected: boolean) {
@@ -185,7 +181,6 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                     <div className={Styles["info"]}>
                         {this.renderRoundIdSection()}
                         {this.renderCountDownTimer()}
-                        {this.renderTurnCounterSection()}
                     </div>
                     <div className={Styles["result"]}>{this.renderResultBlock()}</div>
                     <div className={Styles["bet-options"]}>
