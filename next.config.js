@@ -2,7 +2,7 @@ const basePath = "";
 const gameSettings = require("./game-settings.json");
 const configsBySystem = require("./configs.json");
 const { v4: uuidv4 } = require("uuid");
-const isSC = false;
+const isSC = true;
 const configs = isSC ? configsBySystem.SC : configsBySystem.GN;
 const appSettings = {
     ...configs,
@@ -13,7 +13,6 @@ const appSettings = {
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-    isSC,
     publicRuntimeConfig: { appSettings, isSC },
     productionBrowserSourceMaps: configs.enableSourceMap,
     generateBuildId: async () => {
