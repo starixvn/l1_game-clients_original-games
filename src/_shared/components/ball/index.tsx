@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 
 import Styles from "./ball.module.scss";
 import { getBallColor } from "./ball-color-helper";
-import { TURN_ROUND_STATE, RoundTimeStore } from "@sg/sg-game-client/dist/game-turn-base/rounds";
+import { TURN_ROUND_STATE } from "@sg/sg-game-client/dist/game-turn-base/rounds";
 
 export enum BallStatus {
     NONE = 0,

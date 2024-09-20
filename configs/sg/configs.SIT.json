@@ -10,5 +10,6 @@
     "subDirectory": "sit",
     "env": "SIT",
     "enableMsgpackParserAllGames": true,
-    "enableMsgpackParserOnNotification": true
+    "enableMsgpackParserOnNotification": true,
+    "defaultGameId": 2
 }

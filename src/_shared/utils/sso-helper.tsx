@@ -1,10 +1,7 @@
 import axios from "axios";
 import appSettings from "../app-settings";
-import getConfig from "next/config";
 
-const isSC: boolean = getConfig().publicRuntimeConfig.isSC;
-
-const systemType = isSC ? "SC" : "GN";
+const systemType = appSettings.systemType;
 
 export const requestSSO = async (gameId = 0) => {
     const randomIntFromInterval = (min: number, max: number) => {
@@ -16,21 +13,27 @@ export const requestSSO = async (gameId = 0) => {
     const appType = 6;
     const playerBalance = 10000;
 
+    //temp hard code to get token
+    const currency = systemType === "SG" ? "$US" : "INH";
+    const operatorId = appSettings.simulatorConfigs.operatorId;
+    const operatorSecret = appSettings.simulatorConfigs.operatorSecret;
+    const operatorToken = appSettings.simulatorConfigs.operatorToken;
+
     const request = {
         playerId: `${playerId}`,
         playerName: `username_${playerId}`,
         language: "vi-VN",
-        currency: isSC ? "$US" : "INH",
+        currency,
         seq: "d,y,lumi",
         siteId: "4100300",
         siteName: "lumi",
         ip: "10.5.10.17, 10.233.120.0",
         browserUserAgent: global?.window?.navigator?.userAgent || "",
         auth: {
-            operatorId: appSettings.simulatorConfigs.operatorId,
-            operatorSecret: appSettings.simulatorConfigs.operatorSecret,
+            operatorId,
+            operatorSecret,
         },
-        operatorToken: isSC ? "ONEworks1Token" : "ONEworksVGCashToken",
+        operatorToken,
         token: null,
         redirectUrl: "#",
         verifyResult: null,

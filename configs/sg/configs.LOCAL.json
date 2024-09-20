@@ -15,5 +15,6 @@
         "owApiSimulatorUrl": "https://owapi-simulator.lumigame.com/SabaClub",
         "operatorId": "ONEworks1",
         "operatorSecret": "ONEworks1@20luminet&"
-    }
+    },
+    "defaultGameId": 2
 }

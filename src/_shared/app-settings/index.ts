@@ -2,7 +2,7 @@ import * as gc from "@sg/sg-game-client";
 import getConfig from "next/config";
 import AppSettings from "./type";
 
-const appSettings: AppSettings = getConfig().publicRuntimeConfig.appSettings;
+export const appSettings: AppSettings = getConfig().publicRuntimeConfig.appSettings;
 
 export const getSiteConfig = (gameId: number) => {
     const gameSetting = appSettings.gameSettings[gameId];

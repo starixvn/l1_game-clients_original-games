@@ -8,6 +8,7 @@ interface SimulatorConfigs {
     owApiSimulatorUrl: string;
     operatorId: string;
     operatorSecret: string;
+    operatorToken: string;
 }
 
 interface IGameSettings {
@@ -49,4 +50,5 @@ export default interface AppSettings {
     enableMsgpackParserAllGames: boolean;
     subDirectory: string;
     simulatorConfigs: SimulatorConfigs;
+    defaultGameId: number;
 }

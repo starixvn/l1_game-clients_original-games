@@ -13,7 +13,9 @@
     "simulatorConfigs": {
         "gameLobbySimulatorUrl": "https://l2-glbs.lumigame.com",
         "owApiSimulatorUrl": "https://l2-ows.lumigame.com/SabaClub",
-        "operatorId": "ONEworks1",
-        "operatorSecret": "ONEworks1@20luminet&"
-    }
+        "operatorId": "ONEworksVGCash",
+        "operatorSecret": "VG@SC123",
+        "operatorToken": "ONEworksVGCashToken"
+    },
+    "defaultGameId": 2
 }

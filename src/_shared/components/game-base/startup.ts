@@ -5,7 +5,7 @@ import { reaction } from "mobx";
 import "reflect-metadata";
 import { getSiteConfig } from "../../app-settings";
 import { Lobby } from "../../states";
-
+import appSettings from "../../app-settings";
 interface Languages {
     [key: string]: any;
 }
@@ -35,14 +35,13 @@ function getSharedContainer(siteConfigs: gc.Configs.SiteConfigs) {
         features: [...gc.defaultFeatures, Lobby],
         disabledFeatures: [
             // gc.Rounds.FEATURE_NAME
-        ]
+        ],
     };
 
     return gc.getContainer(containerOptions);
 }
 
-export const sharedContainer = getSharedContainer(getSiteConfig(1003));
-
+export const sharedContainer = getSharedContainer(getSiteConfig(appSettings.defaultGameId));
 
 export function configSharedContainer() {
     Observer.configure({ default: { mobx, container: gc.buildObserverContainer(sharedContainer) } });

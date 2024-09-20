@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { TURN_ROUND_STATE, RoundTimeStore } from "@sg/sg-game-client/dist/game-turn-base/rounds";
+import { TURN_ROUND_STATE } from "@sg/sg-game-client/dist/game-turn-base/rounds";
 import Ball, { BallStatus, IBall } from "../ball";
 import Style from "./turn-base-result-container.module.scss";
 

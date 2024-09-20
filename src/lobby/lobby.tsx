@@ -3,18 +3,14 @@ import { handle, observer, render } from "@sg/sg-observer";
 import { withRouter } from "next/router";
 import React from "react";
 import { Tab, Tabs } from "react-bootstrap";
-import { getGameSetting } from "../_shared/app-settings";
+import appSettings, { getGameSetting } from "../_shared/app-settings";
 import { configSharedContainer } from "../_shared/components/game-base/startup";
 import { LobbyStore } from "../_shared/states/lobby";
 import * as lobbyUtils from "../lobby/utils";
 import styles from "./lobby.module.scss";
 import type { ILobbyProps, ILobbyState } from "./type";
-import { settingsLuckyNext } from "../games/lucky-three/game-settings";
-import { settingsSeDie } from "../games/sedie/game-settings";
-import getConfig from "next/config";
 
-const isSC: boolean = getConfig().publicRuntimeConfig.isSC;
-const setting = isSC ? settingsSeDie : settingsLuckyNext;
+const setting = getGameSetting(appSettings.defaultGameId);
 
 @observer
 class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {

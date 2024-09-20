@@ -10,5 +10,6 @@
     "subDirectory": "uat",
     "env": "UAT",
     "enableMsgpackParserAllGames": true,
-    "enableMsgpackParserOnNotification": true
+    "enableMsgpackParserOnNotification": true,
+    "defaultGameId": 1003
 }

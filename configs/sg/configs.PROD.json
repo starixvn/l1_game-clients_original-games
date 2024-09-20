@@ -10,5 +10,6 @@
     "env": "PROD",
     "enableMsgpackParserAllGames": true,
     "enableMsgpackParserOnNotification": true,
-    "enableSourceMap": false
+    "enableSourceMap": false,
+    "defaultGameId": 2
 }
