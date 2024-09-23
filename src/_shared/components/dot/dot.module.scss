@@ -71,7 +71,7 @@
         top: -2px;
         bottom: -2px;
         border-radius: 50%;
-        border: 1px solid #FFAE12;
+        border: 1px solid #ffae12;
     }
 }
 
@@ -115,14 +115,13 @@
 
 .dot-grid-even {
     @extend %dot;
-    background: linear-gradient(180deg, #F7F7F7 0%, #B5B5B5 100%);
-
+    background: linear-gradient(180deg, #f7f7f7 0%, #b5b5b5 100%);
 
     color: var(--dot-even-text-color);
     font-weight: 500;
 
     &:before {
-        background: linear-gradient(180deg, #EEEEEE 0%, #CCCCCC 100%);
+        background: linear-gradient(180deg, #eeeeee 0%, #cccccc 100%);
     }
 
     &.kenopromax,
@@ -139,10 +138,10 @@
     &.kenowest,
     &.kenonorth {
         color: #fff;
-        background: linear-gradient(180deg, #569CE9 -6.58%, #1F5E9F 100%);
+        background: linear-gradient(180deg, #569ce9 -6.58%, #1f5e9f 100%);
 
         &:before {
-            background: linear-gradient(180deg, #4C91E2 0%, #306CA6 100%);
+            background: linear-gradient(180deg, #4c91e2 0%, #306ca6 100%);
         }
     }
 }
@@ -170,8 +169,6 @@
             background: var(--bigSmall-dot-small-background);
         }
     }
-
-
 }
 
 .dot-grid-odd {
@@ -197,10 +194,10 @@
 
 .dot-grid-big {
     @extend %dot;
-    background: linear-gradient(180deg, #569CE9 -6.58%, #1F5E9F 100%);
+    background: linear-gradient(180deg, #569ce9 -6.58%, #1f5e9f 100%);
 
     &:before {
-        background: linear-gradient(180deg, #4C91E2 0%, #306CA6 100%);
+        background: linear-gradient(180deg, #4c91e2 0%, #306ca6 100%);
     }
 }
 
@@ -216,16 +213,16 @@
 
 .dot-grid-small {
     @extend %dot;
-    background: linear-gradient(180deg, #FF5661 0%, #BE1C28 100%);
+    background: linear-gradient(180deg, #ff5661 0%, #be1c28 100%);
 
     &:before {
-        background: linear-gradient(180deg, #FA3744 6.04%, #CD0D1B 100%);
+        background: linear-gradient(180deg, #fa3744 6.04%, #cd0d1b 100%);
     }
 }
 
-
 // lucky next
-.dot-over {
+.dot-over,
+.dot-big {
     @extend %dot;
     background: var(--dot-even-border);
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
@@ -234,11 +231,10 @@
     &:before {
         background: #315dc5;
     }
-
-
 }
 
-.dot-under {
+.dot-under,
+.dot-small {
     @extend %dot;
     background: var(--dot-odd-border);
     box-shadow: var(--dot-odd-shadow);

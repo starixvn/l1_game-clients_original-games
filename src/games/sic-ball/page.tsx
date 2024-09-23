@@ -9,6 +9,7 @@ import type { GameBaseProps } from "../../_shared/components/game-base/type";
 import { containerOptions, settingsSicball, siteConfigs } from "./game-settings";
 import { FunctionUtils } from "../../_shared/utils/funtion-utils";
 import SicBallBetOptions from "./bet-option/sic-ball-bet-option";
+import SicBallRoundHistory from "./round-history";
 @observer(settingsSicball.mainObserverNamespace)
 export default class SicBall extends GameBase<GameBaseProps, IGameBaseState> {
     constructor(props: GameBaseProps) {
@@ -20,7 +21,7 @@ export default class SicBall extends GameBase<GameBaseProps, IGameBaseState> {
     closeConnect() {}
 
     renderStatistic() {
-        return <> </>;
+        return <SicBallRoundHistory namespace={this.props.namespace} />;
     }
 
     renderRoundIdSection() {
