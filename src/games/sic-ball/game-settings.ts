@@ -9,7 +9,11 @@ export const siteConfigs = getSiteConfig(GameIds.SicBall);
 export const containerOptions: gc.IContainerOptions = {
     globalContainer: sharedContainer,
     onContainerCreated: (container) => {
-        container.bind(gc.GameConfigs.GameSetting).toConstantValue(settingsSicball);
+        if (container.isBound(gc.GameConfigs.GameSetting)) {
+            container.unbind(gc.GameConfigs.GameSetting);
+        }
+
+        container.bind(gc.GameTurnBase.GameConfigs.GameSetting).toConstantValue(settingsSicball);
         container.bind(gc.Configs.SiteConfigs).toConstantValue(siteConfigs);
 
         gc.GameTurnBase.onContainerCreated(container);
