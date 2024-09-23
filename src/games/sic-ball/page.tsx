@@ -10,6 +10,7 @@ import { containerOptions, settingsSicball, siteConfigs } from "./game-settings"
 import { FunctionUtils } from "../../_shared/utils/funtion-utils";
 import SicBallBetOptions from "./bet-option/sic-ball-bet-option";
 import SicBallRoundHistory from "./round-history";
+import SicBallSettlementResult from "./settlement-result/sic-ball-settlement-result";
 @observer(settingsSicball.mainObserverNamespace)
 export default class SicBall extends GameBase<GameBaseProps, IGameBaseState> {
     constructor(props: GameBaseProps) {
@@ -37,8 +38,7 @@ export default class SicBall extends GameBase<GameBaseProps, IGameBaseState> {
     }
 
     renderResultBlock() {
-        return <> </>;
-        // return <SeDieSettlementResult namespace={this.props.namespace} />;
+        return <SicBallSettlementResult namespace={this.props.namespace} />;
     }
 
     async showResult(
