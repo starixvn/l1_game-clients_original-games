@@ -31,10 +31,20 @@
     }
 
     .lucky-next-header {
-        grid-template-columns: 1fr 9rem 9rem;
+        grid-template-columns: 1fr 10rem 10rem;
     }
 
     .lucky-next-block-wrapper {
-        grid-template-columns: 1fr 38rem 18rem;
+        grid-template-columns: 15rem 1fr 20rem;
+
+        @media screen and (max-width: 992px) {
+            grid-template-columns: 12rem 1fr 20rem;
+        }
+
+        @media screen and (max-width: 768px) {
+            grid-template-columns: 10rem 1fr 20rem;
+        }
+
+
     }
 }

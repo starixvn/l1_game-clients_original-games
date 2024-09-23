@@ -1,6 +1,16 @@
 .ball-container {
-    display: flex;
+    display: grid;
     justify-content: center;
-    gap: 0.6rem;
+    gap: 1rem;
     margin-top: -0.4rem;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+
+    @media screen and (max-width: 992px) {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    @media screen and (max-width: 768px) {
+        grid-template-columns: 1fr 1fr;
+    }
+
 }

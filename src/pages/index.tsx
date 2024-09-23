@@ -12,7 +12,7 @@ const Demo = () => {
 
     return (
         <div data-react="true">
-            <Container className="mt-3">
+            <Container className="mt-3" fluid="xl">
                 <Lobby />
                 <TimeOutContainer />
             </Container>
