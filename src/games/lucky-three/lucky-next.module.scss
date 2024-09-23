@@ -68,9 +68,13 @@
     background-color: #fce0d7;
     padding: 8px 4px;
     border-top: 1px solid #ccc;
+    display: flex;
+    flex-wrap: wrap;
 
     .hstack-round {
         margin-top: 0 !important;
+        display: flex;
+        flex-wrap: wrap;
     }
 
     .arrow {
@@ -78,4 +82,5 @@
         height: 8px;
         width: 8px;
     }
+
 }

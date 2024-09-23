@@ -33,8 +33,8 @@ export default class LuckyNextRoundHistory extends ObserverComponent<IPropsObser
 
         return (
             <div className={Styles["round-history"]}>
+                <div> Previous round:</div>
                 <Stack direction="horizontal" gap={1} className={Styles["hstack-round"]}>
-                    Previous round:
                     {roundHistories.toReversed().map((roundHistory) => {
                         return this.RoundHistoryItem(roundHistory);
                     })}
