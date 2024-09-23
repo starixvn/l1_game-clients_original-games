@@ -8,7 +8,7 @@ import { configGameContainer } from "../../_shared/components/game-base/startup"
 import type { GameBaseProps } from "../../_shared/components/game-base/type";
 import { containerOptions, settingsSicball, siteConfigs } from "./game-settings";
 import { FunctionUtils } from "../../_shared/utils/funtion-utils";
-
+import SicBallBetOptions from "./bet-option/sic-ball-bet-option";
 @observer(settingsSicball.mainObserverNamespace)
 export default class SicBall extends GameBase<GameBaseProps, IGameBaseState> {
     constructor(props: GameBaseProps) {
@@ -32,8 +32,7 @@ export default class SicBall extends GameBase<GameBaseProps, IGameBaseState> {
     }
 
     renderBettingBlock() {
-        return <> </>;
-        // return <SeDieBetOptions namespace={this.props.namespace} />;
+        return <SicBallBetOptions namespace={this.props.namespace} />;
     }
 
     renderResultBlock() {

@@ -3,22 +3,21 @@
     border: 1px solid #712cf94d;
     text-transform: capitalize;
     padding: 0;
+    margin-right: 10px;
 }
 
 .container-bets {
     display: flex;
     justify-content: space-between;
-}
-
-.wrapper-dots {
-    display: grid;
-    align-items: center;
-    grid-template-columns: repeat(4, 2.2rem);
-    grid-gap: 0;
+    min-width: 7rem;
+    .sub-option {
+        justify-content: center;
+    }
 }
 
 .main-option {
     font-weight: 500;
+    min-width: 4rem;
 }
 
 .border-right {
@@ -26,10 +25,18 @@
 }
 
 .padding-bet {
-    padding: .75rem;
+    padding: 0.75rem;
 }
 
 .margin-x-0 {
     margin-right: 0;
     margin-left: 0;
+}
+
+.sub-option-container {
+    background-color: #fff6f3;
+    margin: 0.2rem;
+}
+.text-center {
+    text-align: center;
 }

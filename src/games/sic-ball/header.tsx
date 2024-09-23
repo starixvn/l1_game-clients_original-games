@@ -13,7 +13,7 @@ const Header = () => {
         <div className={styles["game-title"]}>
             <div>{gameName}</div>
             <div className={styles["text-center"]}>Big/Small</div>
-            <div className={styles["text-center"]}>Odd/Even</div>
+            <div className={styles["text-center"]}>Ball Number</div>
         </div>
     );
 };

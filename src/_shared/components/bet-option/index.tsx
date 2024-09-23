@@ -98,7 +98,7 @@ export default class BetOptions extends ObserverComponent<IPropsObserver, IBetOp
     protected clearHighlightStatic() {}
     protected clearHighlightAnim() {}
 
-    renderSubOptions(choice: string, odd: number, fractional: boolean) {
+    renderSubOptions(choice: string, odd: number, fractional: boolean, name: string = "") {
         return <></>;
     }
 
