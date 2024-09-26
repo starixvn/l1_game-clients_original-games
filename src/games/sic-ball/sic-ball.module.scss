@@ -10,7 +10,7 @@
     display: flex;
     justify-content: space-between;
     min-width: 7rem;
-    .sub-option {
+    &.sub-option {
         justify-content: center;
     }
 }

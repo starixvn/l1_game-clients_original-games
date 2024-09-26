@@ -27,7 +27,7 @@ export default class SicBallBetOptions extends BetOptions {
     renderSubOptions = (betChoice: string, odd: number, fractional: boolean, name: string) => {
         return (
             <BettingBlock odd={odd} betChoice={betChoice} namespace={gameSetting.mainObserverNamespace}>
-                <div className={`${Styles["container-bets"]}`}>
+                <div className={`${Styles["container-bets"]} ${Styles["sub-option"]}`}>
                     <div>
                         <div>{name}</div>
                     </div>
