@@ -2,6 +2,7 @@ import * as gc from "@sg/sg-game-client";
 import { render } from "@sg/sg-observer";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../_shared/components/observer-component/observer-component";
 import NoticeDialog from "./notice-dialog";
+import { FunctionUtils } from "../../utils/funtion-utils";
 
 export interface INoticeState extends IStateObserver {
     notice: gc.Notices.Notice;
@@ -30,9 +31,15 @@ export default class Notice extends ObserverComponent<IPropsObserver, INoticeSta
         }
     }
 
+    closeNotice() {
+        this.setState({ isShow: false });
+    }
+
     render() {
+        const { notice } = this.state;
+        const onClose = FunctionUtils.isFunctionNotExistedOrEmpty(notice.onClose) ? this.closeNotice.bind(this) : notice.onClose;
         return this.state.isShow ? (
-            <NoticeDialog {...this.state.notice}>
+            <NoticeDialog {...this.state.notice} onClose={() => onClose}>
                 <div>{this.state.notice?.message}</div>
             </NoticeDialog>
         ) : (
