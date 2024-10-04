@@ -19,3 +19,20 @@ export const ChoiceSeDieIconMapper: Record<string, boolean[]> = {
     red3: [true, true, true, false],
     white3: [true, false, false, false],
 };
+
+export type SedieResult = {
+    red1: boolean;
+    red2: boolean;
+    red3: boolean;
+    red4: boolean;
+};
+
+export type SedieSettlementResult = {
+    odd: boolean;
+    even: boolean;
+    red2: boolean;
+    red3: boolean;
+    red4: boolean;
+    white3: boolean;
+    white4: boolean;
+};

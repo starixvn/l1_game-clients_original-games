@@ -86,6 +86,10 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         return <></>;
     }
 
+    renderStatistic() {
+        return <>Statistic</>;
+    }
+
     @render(Settlements.SettlementStore, (store) => store.currentFinish, {
         fireImmediately: false,
     })
@@ -192,6 +196,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                         {renderArrow(this.state.isOpenStatistic)}
                     </div>
                 </div>
+                {this.state.isOpenStatistic && this.renderStatistic()}
 
                 {this.renderNotice()}
                 {this.renderWarning()}

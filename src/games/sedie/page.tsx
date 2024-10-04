@@ -11,6 +11,7 @@ import SeDieRoundHistory from "./round-history";
 import SeDieBetOptions from "./bet-option/sedie-bet-options";
 import SeDieSettlementResult from "./settlement-result";
 import { FunctionUtils } from "../../_shared/utils/funtion-utils";
+import { SedieStatistic } from "./statistic";
 
 @observer(settingsSeDie.mainObserverNamespace)
 export default class SeDie extends GameBase<GameBaseProps, IGameBaseState> {
@@ -40,6 +41,10 @@ export default class SeDie extends GameBase<GameBaseProps, IGameBaseState> {
 
     renderResultBlock() {
         return <SeDieSettlementResult namespace={this.props.namespace} />;
+    }
+
+    renderStatistic() {
+        return <SedieStatistic namespace={this.props.namespace} />;
     }
 
     async showResult(
