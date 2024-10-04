@@ -2,7 +2,7 @@ import * as gc from "@sg/sg-game-client";
 import { handle, observer, render } from "@sg/sg-observer";
 import { withRouter } from "next/router";
 import React from "react";
-import { Tab, Tabs } from "react-bootstrap";
+import { Tabs } from "react-bootstrap";
 import appSettings, { getGameSetting } from "../_shared/app-settings";
 import { configSharedContainer } from "../_shared/components/game-base/startup";
 import { LobbyStore } from "../_shared/states/lobby";
@@ -14,6 +14,8 @@ const setting = getGameSetting(appSettings.defaultGameId);
 
 @observer
 class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
+    private reRenderGameTimeout?: NodeJS.Timeout;
+
     constructor(props: ILobbyProps) {
         configSharedContainer();
         super(props);
@@ -21,7 +23,18 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
             isAuthorized: false,
             offerGames: [],
             connectedCount: 0,
+            isRenderGame: true,
         } as ILobbyState;
+    }
+    clearReRenderGameTimeout = () => {
+        if (!this.reRenderGameTimeout) {
+            return;
+        }
+        clearTimeout(this.reRenderGameTimeout);
+    };
+
+    componentWillUnmount() {
+        this.clearReRenderGameTimeout();
     }
 
     async componentDidMount() {
@@ -71,39 +84,23 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
     triggerRecheckIn() {}
 
     getGames() {
-        const { offerGames } = this.state;
+        const { offerGames, isRenderGame } = this.state;
 
         const filteredGames = lobbyUtils.getFilteredGames(offerGames);
-
-        return filteredGames.map((gameId) => this.getGameTabById(gameId));
-    }
-
-    @render(LobbyStore, (store) => store.connectedCount)
-    updateConnectedCount(connectedCount: number) {
-        this.setState({ connectedCount });
-    }
-
-    renderGame(gameId: number) {
         const { router } = this.props;
 
-        return (
-            <>
-                {lobbyUtils.getGameHeaderById(gameId)}
-                <div className={styles["game-lobby"]}>{lobbyUtils.getGameById(gameId, router)}</div>
-            </>
-        );
+        return filteredGames.map((gameId) => lobbyUtils.getGameTabById(gameId, router, isRenderGame));
     }
 
-    getGameTabById(gameId: number) {
-        const gameSetting = getGameSetting(gameId);
-
-        const gameName = gc.Translator.t(`${gameSetting.gameName}.game_name`);
-        const key = gameSetting.mainObserverNamespace;
-        return (
-            <Tab key={key} eventKey={key} title={gameName} unmountOnExit={true}>
-                {this.renderGame(gameId)}
-            </Tab>
-        );
+    @render(LobbyStore, (store) => store.tryToConnectCount)
+    updateConnectedCount(connectedCount: number) {
+        const isDisconnect = connectedCount > 0;
+        if (isDisconnect) {
+            this.setState({ connectedCount, isRenderGame: false });
+            this.reRenderGameTimeout = setTimeout(() => {
+                this.setState({ isRenderGame: true });
+            }, 500);
+        }
     }
 
     renderGames() {

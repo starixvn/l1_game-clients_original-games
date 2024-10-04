@@ -13,9 +13,9 @@ export class LobbyStore {
         makeAutoObservable(this);
     }
 
-    connectedCount: number = 0;
+    tryToConnectCount: number = 0;
 
-    increaseConnectedCount() {
-        this.connectedCount = +1;
+    handleTryToConnect() {
+        this.tryToConnectCount += 1;
     }
 }

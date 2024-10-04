@@ -19,7 +19,13 @@ const getGameById = (gameId: number, router: NextRouter) => {
     const games: { [x: number]: JSX.Element } = {
         [settingsSeDie.id]: <SeDie router={router} namespace={settingsSeDie.mainObserverNamespace} />,
         [settingsBigSmall.id]: <BigSmall router={router} namespace={settingsBigSmall.mainObserverNamespace} />,
-        [settingsLuckyNext.id]: <LuckyNext router={router} namespace={settingsLuckyNext.mainObserverNamespace} overrideClasses={styles["lucky-next-block-wrapper"]} />,
+        [settingsLuckyNext.id]: (
+            <LuckyNext
+                router={router}
+                namespace={settingsLuckyNext.mainObserverNamespace}
+                overrideClasses={styles["lucky-next-block-wrapper"]}
+            />
+        ),
         [settingsSicball.id]: <SicBall router={router} namespace={settingsSicball.mainObserverNamespace} />,
     };
     return games[gameId];
@@ -45,7 +51,7 @@ const getFilteredGames = (
     return gameSettingIds.filter((gameSettingId) => offerGames.find((offerGame) => offerGame.gameId === gameSettingId));
 };
 
-const getGameTabById = (gameId: number, router: NextRouter) => {
+const getGameTabById = (gameId: number, router: NextRouter, isRenderGame: boolean) => {
     const gameSetting = getGameSetting(gameId);
 
     const gameName = gc.Translator.t(`${gameSetting.gameName}.game_name`);
@@ -53,9 +59,9 @@ const getGameTabById = (gameId: number, router: NextRouter) => {
     return (
         <Tab key={key} eventKey={key} title={gameName} unmountOnExit={true}>
             {getGameHeaderById(gameId)}
-            <div className={styles["game-lobby"]}>{getGameById(gameId, router)}</div>
+            {isRenderGame && <div className={styles["game-lobby"]}>{getGameById(gameId, router)}</div>}
         </Tab>
     );
 };
 
-export { getGameById, getGameHeaderById, getFilteredGames, getGameTabById };
+export { getGameHeaderById, getFilteredGames, getGameTabById };

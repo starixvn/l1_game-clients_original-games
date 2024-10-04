@@ -15,26 +15,16 @@ import { sharedContainer } from "./startup";
 import { GameBaseProps } from "./type";
 
 export interface IGameBaseState {
-    isReConnecting: boolean;
     isConnected: boolean;
     initialized: boolean;
     disabled: boolean;
 }
 
 abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> extends React.PureComponent<P, S> {
-    private isReConnectingTimeout?: NodeJS.Timeout;
     constructor(props: P) {
         super(props);
-        this.state = { isReConnecting: false } as S;
+        this.state = { isConnected: false } as S;
     }
-
-    clearReconnecting = () => {
-        if (!this.isReConnectingTimeout) {
-            return;
-        }
-        clearTimeout(this.isReConnectingTimeout);
-        this.setState({ isReConnecting: false });
-    };
 
     componentDidMount() {
         document.addEventListener("visibilitychange", this.onVisibilityChange);
@@ -48,15 +38,14 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     onDestroy() {
         this.closeConnect();
-        this.clearReconnecting();
     }
 
     abstract closeConnect(): void;
 
-    onVisibilityChange = () => { };
+    onVisibilityChange = () => {};
 
     @handle(gc.Connection.ConnectionHandlers.ConnectHandler)
-    connectToService() { }
+    connectToService() {}
 
     @render(gc.Connection.ConnectionStore, (store) => store.signedIn)
     handleSignedIn(signedIn: boolean) {
@@ -129,18 +118,15 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         //show result
     }
 
-    @handle(Lobby.LobbyHandlers.IncreaseConnectedCountHandler)
-    handleIncreaseConnectedCount() { }
+    @handle(Lobby.LobbyHandlers.TryToConnectHandler)
+    tryToConnectHandler() {}
 
     @render(gc.Connection.ConnectionStore, (store) => store.isConnected)
     handleDisconnected(isConnected: boolean) {
-        this.setState({ isConnected });
-        if (!isConnected) {
+        if (isConnected === null) {
             return;
         }
-        this.handleIncreaseConnectedCount();
-
-        this.clearReconnecting();
+        this.setState({ isConnected });
     }
 
     @render(gc.GameConfigs.GameConfigStore, (store) => store.initialized)
@@ -153,24 +139,11 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         this.setState({ disabled } as IGameBaseState);
     }
 
-    @handle(gc.Connection.ConnectionHandlers.ConnectHandler)
-    handleReconnect() {
-        this.setState({ isReConnecting: true });
-        this.isReConnectingTimeout = setTimeout(() => {
-            this.setState({ isReConnecting: false });
-        }, 3000);
-    }
-
     getRenderTemplate() {
         const { isConnected, initialized: isGameConfigInitialized, disabled } = this.state;
         const isFirstInit = !isGameConfigInitialized && !disabled;
         if (isFirstInit || disabled) {
-            return (
-                <>
-                    {!disabled && this.renderLoading()}
-                    {this.renderNotice()}
-                </>
-            );
+            return disabled ? this.renderNotice() : this.renderLoading();
         }
 
         return !isConnected ? (
@@ -198,33 +171,25 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     private renderLoading() {
         return (
-            <>
-                <Container className="col-md-1 mx-auto mt-5">
-                    <Loading />
-                </Container>
-            </>
+            <Container className="col-md-1 mx-auto mt-5">
+                <Loading />
+            </Container>
         );
     }
 
     private renderDisconnect() {
-        const { isReConnecting } = this.state;
-
         return (
-            <div>
+            <>
                 <p>Connection fail</p>
-                {!isReConnecting ? (
-                    <Button
-                        variant="success"
-                        onClick={() => {
-                            this.handleReconnect();
-                        }}
-                    >
-                        Reconnect
-                    </Button>
-                ) : (
-                    <Loading />
-                )}
-            </div>
+                <Button
+                    variant="success"
+                    onClick={() => {
+                        this.tryToConnectHandler();
+                    }}
+                >
+                    Reconnect
+                </Button>
+            </>
         );
     }
 

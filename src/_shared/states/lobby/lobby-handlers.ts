@@ -3,11 +3,11 @@ import { LobbyStore } from "./lobby-store";
 
 export namespace LobbyHandlers {
     @injectable()
-    export class IncreaseConnectedCountHandler {
+    export class TryToConnectHandler {
         constructor(@inject(LobbyStore) protected readonly store: LobbyStore) {}
 
         handle() {
-            this.store.increaseConnectedCount();
+            this.store.handleTryToConnect();
         }
     }
 }

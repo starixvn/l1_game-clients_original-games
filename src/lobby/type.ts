@@ -8,4 +8,5 @@ export interface ILobbyState {
     isAuthorized: boolean;
     offerGames: { gameId: number }[];
     connectedCount: number;
+    isRenderGame: boolean;
 }
