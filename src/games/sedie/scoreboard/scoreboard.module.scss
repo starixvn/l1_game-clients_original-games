@@ -1,0 +1,12 @@
+.scoreboard {
+    width: 1000px;
+    height: 100px;
+
+    .scoreboard-content {
+        overflow-x: scroll;
+        .scoreboard-row {
+            .scoreboard-point {
+            }
+        }
+    }
+}

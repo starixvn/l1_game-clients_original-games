@@ -1,6 +1,6 @@
 import Styles from "./statistic.module.scss";
 import { SedieResultHistory } from "../result-history";
-import { SedieScoreboard } from "../scoreboard";
+import { SedieScoreBoard } from "../scoreboard";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../_shared/components/observer-component/observer-component";
 
 type Props = {
@@ -17,9 +17,7 @@ export class SedieStatistic extends ObserverComponent<IPropsObserver, ISedieStat
     render() {
         return (
             <div className={`${Styles["statistic"]}`}>
-                <div>
-                    <SedieScoreboard />
-                </div>
+                <SedieScoreBoard namespace={this.props.namespace} />
                 <div>
                     <SedieResultHistory namespace={this.props.namespace} />
                 </div>
