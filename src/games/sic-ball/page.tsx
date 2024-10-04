@@ -21,7 +21,7 @@ export default class SicBall extends GameBase<GameBaseProps, IGameBaseState> {
     @handle(Connection.ConnectionHandlers.CloseConnectHandler)
     closeConnect() {}
 
-    renderStatistic() {
+    renderRoundHistory() {
         return <SicBallRoundHistory namespace={this.props.namespace} />;
     }
 

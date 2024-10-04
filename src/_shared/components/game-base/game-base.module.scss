@@ -39,11 +39,8 @@
     .info {
         display: flex;
         align-items: center;
-        gap: .4rem;
-
+        gap: 0.4rem;
     }
-
-
 }
 
 .count-down {
@@ -65,9 +62,47 @@
 
         .count-down-badge {
             width: 3rem;
-            padding: .3rem 0;
+            padding: 0.3rem 0;
             position: absolute;
             left: 0.6rem;
+        }
+    }
+}
+
+.history-block {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fce0d7;
+    border-top: 1px solid #ccc;
+
+    .statistic-button {
+        width: 100px;
+        height: 30px;
+        padding: 2px 5px;
+        margin-top: 7px;
+        margin-right: 10px;
+        border: solid 1px #bcb6b6;
+        cursor: pointer;
+        color: #78acff;
+
+        .arrow-icon {
+            font-weight: bold;
+            padding-left: 12px;
+
+            svg {
+                margin-top: -30px;
+                display: inline-block;
+                margin-bottom: 20px;
+                margin-left: 50px;
+            }
+        }
+    }
+
+    .statistic-button:hover {
+        background-color: #78acff;
+        color: white;
+        .svg-icon {
+            stroke: white;
         }
     }
 }

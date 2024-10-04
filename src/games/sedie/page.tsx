@@ -22,7 +22,7 @@ export default class SeDie extends GameBase<GameBaseProps, IGameBaseState> {
     @handle(Connection.ConnectionHandlers.CloseConnectHandler)
     closeConnect() {}
 
-    renderStatistic() {
+    renderRoundHistory() {
         return <SeDieRoundHistory namespace={this.props.namespace} />;
     }
 

@@ -20,9 +20,9 @@ export default class LuckyNext extends GameBase<GameBaseProps, IGameBaseState> {
     }
 
     @handle(Connection.ConnectionHandlers.CloseConnectHandler)
-    closeConnect() { }
+    closeConnect() {}
 
-    renderStatistic() {
+    renderRoundHistory() {
         return <LuckyNextRoundHistory namespace={this.props.namespace} />;
     }
 

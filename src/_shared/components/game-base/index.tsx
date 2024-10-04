@@ -11,19 +11,20 @@ import Loading from "../loading";
 import Notice from "../notices/notice";
 import Warning from "../notices/warning";
 import Styles from "./game-base.module.scss";
-import { sharedContainer } from "./startup";
 import { GameBaseProps } from "./type";
 
 export interface IGameBaseState {
     isConnected: boolean;
     initialized: boolean;
     disabled: boolean;
+    isOpenStatistic: boolean;
 }
 
 abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> extends React.PureComponent<P, S> {
     constructor(props: P) {
         super(props);
-        this.state = { isConnected: false } as S;
+        this.state = { isConnected: false, isOpenStatistic: false } as S;
+        this.toggleStatistic = this.toggleStatistic.bind(this);
     }
 
     componentDidMount() {
@@ -81,7 +82,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         return <></>;
     }
 
-    renderStatistic() {
+    renderRoundHistory() {
         return <></>;
     }
 
@@ -139,12 +140,34 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         this.setState({ disabled } as IGameBaseState);
     }
 
+    toggleStatistic() {
+        this.setState({ isOpenStatistic: !this.state.isOpenStatistic });
+    }
+
     getRenderTemplate() {
         const { isConnected, initialized: isGameConfigInitialized, disabled } = this.state;
         const isFirstInit = !isGameConfigInitialized && !disabled;
         if (isFirstInit || disabled) {
             return disabled ? this.renderNotice() : this.renderLoading();
         }
+
+        const renderArrow = (isOpenStatistic: boolean) => {
+            return (
+                <i className={`${Styles["arrow-icon"]}`}>
+                    <svg
+                        className={`${Styles["svg-icon"]}`}
+                        width="24"
+                        height="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="#78acff"
+                    >
+                        <path d={isOpenStatistic ? "M18 9l-6 6-6-6" : "M6 15l6-6 6 6"} />
+                    </svg>
+                </i>
+            );
+        };
 
         return !isConnected ? (
             this.renderDisconnect()
@@ -162,7 +185,14 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                     </div>
                 </div>
 
-                {this.renderStatistic()}
+                <div className={Styles["history-block"]}>
+                    <div className={Styles["previous-round"]}>{this.renderRoundHistory()}</div>
+                    <div className={Styles["statistic-button"]} onClick={this.toggleStatistic}>
+                        <span>Statistic</span>
+                        {renderArrow(this.state.isOpenStatistic)}
+                    </div>
+                </div>
+
                 {this.renderNotice()}
                 {this.renderWarning()}
             </>
