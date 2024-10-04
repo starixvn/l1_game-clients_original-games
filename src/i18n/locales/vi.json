@@ -207,5 +207,10 @@
         "glossary_odd": "Lẻ",
         "glossary_over": "Tài",
         "glossary_under": "Xỉu"
+    },
+    "SabaNumber": {
+        "message_draw_maxbet": "Tổng tiền cược tối đa ở phiên này là %{maxBet}",
+        "message_max_payout": "Tiền cược vượt quá giới hạn thanh toán.",
+        "message_placebet_next_draw": "Vui lòng đặt cược ở phiên sau."
     }
 }

@@ -207,5 +207,10 @@
         "glossary_odd": "单",
         "glossary_over": "大",
         "glossary_under": "小"
+    },
+    "SabaNumber": {
+        "message_draw_maxbet": "本次抽到的最大总投注额为 %{maxBet}",
+        "message_max_payout": "您的赌注已超过最大赔付额。",
+        "message_placebet_next_draw": "请等待下一次抽取。"
     }
 }

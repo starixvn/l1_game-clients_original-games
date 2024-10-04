@@ -207,5 +207,10 @@
         "glossary_odd": "คี่",
         "glossary_over": "สูง",
         "glossary_under": "ต่ำ"
+    },
+    "SabaNumber": {
+        "message_draw_maxbet": "เงินเดิมพันรวมสูงสุดในการจับรางวัลนี้คือ %{maxBet}",
+        "message_max_payout": "เดิมพันของคุณเกินการจ่ายเงินสูงสุด",
+        "message_placebet_next_draw": "กรุณารอการจับรางวัลครั้งต่อไป"
     }
 }

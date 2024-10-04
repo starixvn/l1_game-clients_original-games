@@ -207,5 +207,10 @@
         "glossary_odd": "Ganjil",
         "glossary_over": "Besar",
         "glossary_under": "Kecil"
+    },
+    "SabaNumber": {
+        "message_draw_maxbet": "Total taruhan maksimal pada undian ini adalah %{maxBet}",
+        "message_max_payout": "Taruhan anda telah melebihi Pembayaran Maks",
+        "message_placebet_next_draw": "Mohon tunggu pengundian selanjutnya."
     }
 }
