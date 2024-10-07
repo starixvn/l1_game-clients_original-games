@@ -5,7 +5,7 @@ import Styles from "./scoreboard.module.scss";
 import { RoundDot } from "../../../_shared/components/dot";
 import { SeDieChoices, SedieResult, SedieSettlementResult } from "../type";
 import { BigRoadScoreboard, Converter } from "sc-scoreboards";
-import { createRef, useEffect, useRef } from "react";
+import { createRef } from "react";
 import React from "react";
 
 export interface ISeDieResultHistoryState extends IStateObserver {
