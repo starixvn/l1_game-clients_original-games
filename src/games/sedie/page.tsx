@@ -16,7 +16,7 @@ import { FunctionUtils } from "../../_shared/utils/funtion-utils";
 export default class SeDie extends GameBase<GameBaseProps, IGameBaseState> {
     constructor(props: GameBaseProps) {
         super(props);
-        configGameContainer(settingsSeDie.name, containerOptions, siteConfigs);
+        configGameContainer(settingsSeDie.name, containerOptions);
     }
 
     @handle(Connection.ConnectionHandlers.CloseConnectHandler)

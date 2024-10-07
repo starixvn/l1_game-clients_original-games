@@ -16,7 +16,7 @@ import LuckyNextRoundHistory from "./round-history";
 export default class LuckyNext extends GameBase<GameBaseProps, IGameBaseState> {
     constructor(props: GameBaseProps) {
         super(props);
-        configGameContainer(settingsLuckyNext.name, containerOptions, siteConfigs);
+        configGameContainer(settingsLuckyNext.name, containerOptions);
     }
 
     @handle(Connection.ConnectionHandlers.CloseConnectHandler)

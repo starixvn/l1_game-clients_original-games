@@ -3,12 +3,12 @@ import { Stack } from "react-bootstrap";
 import BetOptions, { IBetOptionsState } from "../../../_shared/components/bet-option";
 import BettingBlock from "../../../_shared/components/bet-option/betting-block";
 import Odds from "../../../_shared/components/bet-option/odd";
-import { settingsSicball } from "../game-settings";
+import { settingsSicBall } from "../game-settings";
 import Styles from "../sic-ball.module.scss";
 // import styles from "../../../lobby/lobby.module.scss";
 
 import { bottomChoices, topChoices, SicBallChoices, SicBallSubChoicesOdds } from "../type";
-const gameSetting = settingsSicball;
+const gameSetting = settingsSicBall;
 export default class SicBallBetOptions extends BetOptions {
     renderMainOption = (name: string, odd: number, betChoice: string, fractional: boolean) => {
         return (

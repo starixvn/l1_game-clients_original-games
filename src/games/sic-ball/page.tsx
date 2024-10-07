@@ -6,16 +6,16 @@ import RoundId from "../../_shared/components/round-id";
 import GameBase, { IGameBaseState } from "../../_shared/components/game-base";
 import { configGameContainer } from "../../_shared/components/game-base/startup";
 import type { GameBaseProps } from "../../_shared/components/game-base/type";
-import { containerOptions, settingsSicball, siteConfigs } from "./game-settings";
+import { containerOptions, settingsSicBall, siteConfigs } from "./game-settings";
 import { FunctionUtils } from "../../_shared/utils/funtion-utils";
 import SicBallBetOptions from "./bet-option/sic-ball-bet-option";
 import SicBallRoundHistory from "./round-history";
 import SicBallSettlementResult from "./settlement-result/sic-ball-settlement-result";
-@observer(settingsSicball.mainObserverNamespace)
+@observer(settingsSicBall.mainObserverNamespace)
 export default class SicBall extends GameBase<GameBaseProps, IGameBaseState> {
     constructor(props: GameBaseProps) {
         super(props);
-        configGameContainer(settingsSicball.name, containerOptions, siteConfigs);
+        configGameContainer(settingsSicBall.name, containerOptions);
     }
 
     @handle(Connection.ConnectionHandlers.CloseConnectHandler)

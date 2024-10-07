@@ -14,7 +14,7 @@ import { FunctionUtils } from "../../_shared/utils/funtion-utils";
 export default class BigSmall extends GameBase<GameBaseProps, IGameBaseState> {
     constructor(props: GameBaseProps) {
         super(props);
-        configGameContainer(settingsBigSmall.name, containerOptions, siteConfigs);
+        configGameContainer(settingsBigSmall.name, containerOptions);
     }
 
     @handle(Connection.ConnectionHandlers.CloseConnectHandler)

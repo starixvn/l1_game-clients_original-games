@@ -2,9 +2,9 @@ import * as gc from "@sg/sg-game-client";
 import React from "react";
 import { getGameSetting } from "../../_shared/app-settings";
 import styles from "../../../src/lobby/lobby.module.scss";
-import { settingsSicball } from "./game-settings";
+import { settingsSicBall } from "./game-settings";
 
-const gameId = settingsSicball.id;
+const gameId = settingsSicBall.id;
 const gameSetting = getGameSetting(gameId);
 const gameName = gc.Translator.t(`${gameSetting.gameName}.game_name`);
 

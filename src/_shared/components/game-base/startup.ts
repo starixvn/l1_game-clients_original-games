@@ -3,9 +3,8 @@ import * as Observer from "@sg/sg-observer";
 import * as mobx from "mobx";
 import { reaction } from "mobx";
 import "reflect-metadata";
-import { getSiteConfig } from "../../app-settings";
+import { getSiteConfig, appSettings } from "../../app-settings";
 import { Lobby } from "../../states";
-import appSettings from "../../app-settings";
 interface Languages {
     [key: string]: any;
 }
@@ -30,12 +29,8 @@ function getSharedContainer(siteConfigs: gc.Configs.SiteConfigs) {
             gc.ConnectSite.FEATURE_NAME,
             gc.ChipSetting.FEATURE_NAME,
             Lobby.FEATURE_NAME,
-            // gc.GameTurnBase.ProvablyFair.FEATURE_NAME
         ],
         features: [...gc.defaultFeatures, Lobby],
-        disabledFeatures: [
-            // gc.Rounds.FEATURE_NAME
-        ],
     };
 
     return gc.getContainer(containerOptions);
@@ -48,11 +43,11 @@ export function configSharedContainer() {
     return sharedContainer;
 }
 
-export function configGameContainer(gameName: string, containerOptions: gc.IContainerOptions, siteConfigs: gc.Configs.SiteConfigs) {
+export function configGameContainer(gameName: string, containerOptions: gc.IContainerOptions) {
     const container = gc.getContainer(containerOptions);
     const observerContainer = gc.buildObserverContainer(container);
 
     Observer.configure({ [gameName]: { mobx: { reaction }, container: observerContainer } });
-
+    console.log("create container", gameName);
     return container;
 }

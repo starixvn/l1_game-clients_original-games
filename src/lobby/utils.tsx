@@ -12,7 +12,7 @@ import { getGameSettingIds, getGameSetting } from "../_shared/app-settings";
 import { Tab } from "react-bootstrap";
 import styles from "./lobby.module.scss";
 import { settingsLuckyNext } from "../games/lucky-three/game-settings";
-import { settingsSicball } from "../games/sic-ball/game-settings";
+import { settingsSicBall } from "../games/sic-ball/game-settings";
 import LuckyNext from "../games/lucky-three/page";
 import SicBall from "../games/sic-ball/page";
 const getGameById = (gameId: number, router: NextRouter) => {
@@ -26,7 +26,7 @@ const getGameById = (gameId: number, router: NextRouter) => {
                 overrideClasses={styles["lucky-next-block-wrapper"]}
             />
         ),
-        [settingsSicball.id]: <SicBall router={router} namespace={settingsSicball.mainObserverNamespace} />,
+        [settingsSicBall.id]: <SicBall router={router} namespace={settingsSicBall.mainObserverNamespace} />,
     };
     return games[gameId];
 };
@@ -36,7 +36,7 @@ const getGameHeaderById = (gameId: number) => {
         [settingsSeDie.id]: <SeDieHeader />,
         [settingsBigSmall.id]: <BigSmallHeader />,
         [settingsLuckyNext.id]: <LuckyNextHeader />,
-        [settingsSicball.id]: <SicBallHeader />,
+        [settingsSicBall.id]: <SicBallHeader />,
     };
     return gameHeader[gameId];
 };
