@@ -4,6 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "next dev -p 3001",
+        "dev-gn": "cross-env CONFIG_TYPE=DEV_GN next dev -p 3001",
         "dev-node18": "set NODE_OPTIONS=--openssl-legacy-provider && next dev -p 3001",
         "build": "next build",
         "build-node18": "set NODE_OPTIONS=--openssl-legacy-provider && next build",
@@ -51,6 +52,7 @@
         "babel-core": "^6.26.3",
         "babel-jest": "^27.0.2",
         "critters": "^0.0.16",
+        "cross-env": "^7.0.3",
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-16": "^1.15.6",
         "enzyme-to-json": "^3.6.2",

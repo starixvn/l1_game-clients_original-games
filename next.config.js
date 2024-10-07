@@ -1,7 +1,15 @@
 const basePath = "";
 const gameSettings = require("./game-settings.json");
-const configs = require("./configs.json");
 const { v4: uuidv4 } = require("uuid");
+
+const configType = process.env.CONFIG_TYPE || "DEFAULT";
+let configs;
+
+if (configType === "DEV_GN") {
+    configs = require("./configs.gn.json");
+} else {
+    configs = require("./configs.json");
+}
 
 const appSettings = {
     ...configs,
