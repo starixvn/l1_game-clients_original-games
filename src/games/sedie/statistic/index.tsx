@@ -18,9 +18,7 @@ export class SedieStatistic extends ObserverComponent<IPropsObserver, ISedieStat
         return (
             <div className={`${Styles["statistic"]}`}>
                 <SedieScoreBoard namespace={this.props.namespace} />
-                <div>
-                    <SedieResultHistory namespace={this.props.namespace} />
-                </div>
+                <SedieResultHistory namespace={this.props.namespace} />
             </div>
         );
     }

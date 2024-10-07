@@ -9,7 +9,7 @@ export interface ISeDieResultHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
 }
 
-const numberOfResult = 5;
+const numberOfResult = 100;
 export class SedieResultHistory extends ObserverComponent<IPropsObserver, ISeDieResultHistoryState> {
     constructor(props: IPropsObserver) {
         super(props);
@@ -18,7 +18,6 @@ export class SedieResultHistory extends ObserverComponent<IPropsObserver, ISeDie
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
         this.setState({ rounds: rounds.slice(0, numberOfResult) });
-        console.log("rounds", this.state.rounds);
     }
 
     renderDots = (roundHistory: gc.RoundHistories.RoundHistory) => {
@@ -32,11 +31,9 @@ export class SedieResultHistory extends ObserverComponent<IPropsObserver, ISeDie
         return settlement.odd ? <div className={Styles["odd"]}>ODD</div> : <div className={Styles["even"]}>EVEN</div>;
     }
 
-    renderRoundResult(roundHistory: gc.RoundHistories.RoundHistory) {
-        console.log(JSON.stringify(roundHistory), JSON.stringify(roundHistory.settlementResult));
-
+    renderRoundResult(roundHistory: gc.RoundHistories.RoundHistory, index: number) {
         return (
-            <div className={Styles["result-item"]}>
+            <div className={Styles["result-item"]} key={index}>
                 <div>{`No.${roundHistory.roundId}`}</div>
                 <div className={Styles["item-dot"]}>{this.renderDots(roundHistory)}</div>
                 <div>{this.renderOddEven(roundHistory)}</div>
@@ -55,9 +52,11 @@ export class SedieResultHistory extends ObserverComponent<IPropsObserver, ISeDie
             <div className={Styles["result-history"]}>
                 <div className={Styles["result-title"]}>Result</div>
 
-                {roundHistories.map((roundHistory) => {
-                    return this.renderRoundResult(roundHistory);
-                })}
+                <div className={Styles["result-content"]}>
+                    {roundHistories.map((roundHistory, index) => {
+                        return this.renderRoundResult(roundHistory, index);
+                    })}
+                </div>
             </div>
         );
     }

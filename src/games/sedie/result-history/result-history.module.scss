@@ -1,29 +1,39 @@
 .result-history {
-    background-color: #f2d8cf;
     padding: 10px;
+    width: 300px;
 
     .result-title {
         font-weight: bold;
     }
 
-    .result-item {
-        display: flex;
-        gap: 10px;
+    .result-content {
+        background-color: #fff6f3;
+        height: 210px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 5px;
+        scrollbar-width: thin; /* Set scrollbar width to thin */
+        scrollbar-color: #c9c4c4 #f1f1f1; /* Handle color and track color */
 
-        .item-dot {
+        .result-item {
             display: flex;
-            gap: 2px;
-            margin-top: 4px;
-        }
+            gap: 10px;
 
-        .odd {
-            color: red;
-            font-weight: bold;
-        }
+            .item-dot {
+                display: flex;
+                gap: 2px;
+                margin-top: 4px;
+            }
 
-        .even {
-            color: rgb(145, 141, 141);
-            font-weight: bold;
+            .odd {
+                color: red;
+                font-weight: bold;
+            }
+
+            .even {
+                color: rgb(145, 141, 141);
+                font-weight: bold;
+            }
         }
     }
 }
