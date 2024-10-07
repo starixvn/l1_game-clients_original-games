@@ -1,42 +1,38 @@
 import * as gc from "@sg/sg-game-client";
-import { settingsBigSmall } from "../games/big-small/game-settings";
-import BigSmall from "../games/big-small/page";
-import { settingsSeDie } from "../games/sedie/game-settings";
-import SeDie from "../games/sedie/page";
-import SeDieHeader from "../games/sedie/header";
-import BigSmallHeader from "../games/big-small/header";
-import LuckyNextHeader from "../games/lucky-three/header";
-import SicBallHeader from "../games/sic-ball/header";
 import { NextRouter } from "next/router";
-import { getGameSettingIds, getGameSetting } from "../_shared/app-settings";
 import { Tab } from "react-bootstrap";
+import { getGameSetting, getGameSettingIds } from "../_shared/app-settings";
 import styles from "./lobby.module.scss";
-import { settingsLuckyNext } from "../games/lucky-three/game-settings";
-import { settingsSicBall } from "../games/sic-ball/game-settings";
-import LuckyNext from "../games/lucky-three/page";
-import SicBall from "../games/sic-ball/page";
+import { SicBall, LuckyNext } from "../games/saba-xD";
+import { SeDie, BigSmall } from "../games/saba-club";
+
+const settingsSeDie = SeDie.Setting.setting;
+const settingsBigSmall = BigSmall.Setting.setting;
+
+const settingsSicBall = SicBall.Setting.setting;
+const settingsLuckyNext = LuckyNext.Setting.setting;
 const getGameById = (gameId: number, router: NextRouter) => {
     const games: { [x: number]: JSX.Element } = {
-        [settingsSeDie.id]: <SeDie router={router} namespace={settingsSeDie.mainObserverNamespace} />,
-        [settingsBigSmall.id]: <BigSmall router={router} namespace={settingsBigSmall.mainObserverNamespace} />,
+        [settingsSeDie.id]: <SeDie.Page router={router} namespace={settingsSeDie.mainObserverNamespace} />,
+        [settingsBigSmall.id]: <BigSmall.Page router={router} namespace={settingsBigSmall.mainObserverNamespace} />,
         [settingsLuckyNext.id]: (
-            <LuckyNext
+            <LuckyNext.Page
                 router={router}
                 namespace={settingsLuckyNext.mainObserverNamespace}
                 overrideClasses={styles["lucky-next-block-wrapper"]}
             />
         ),
-        [settingsSicBall.id]: <SicBall router={router} namespace={settingsSicBall.mainObserverNamespace} />,
+        [settingsSicBall.id]: <SicBall.Page router={router} namespace={settingsSicBall.mainObserverNamespace} />,
     };
     return games[gameId];
 };
 
 const getGameHeaderById = (gameId: number) => {
     const gameHeader = {
-        [settingsSeDie.id]: <SeDieHeader />,
-        [settingsBigSmall.id]: <BigSmallHeader />,
-        [settingsLuckyNext.id]: <LuckyNextHeader />,
-        [settingsSicBall.id]: <SicBallHeader />,
+        [settingsSeDie.id]: <SeDie.Header />,
+        [settingsBigSmall.id]: <BigSmall.Header />,
+        [settingsLuckyNext.id]: <LuckyNext.Header />,
+        [settingsSicBall.id]: <SicBall.Header />,
     };
     return gameHeader[gameId];
 };
@@ -64,4 +60,4 @@ const getGameTabById = (gameId: number, router: NextRouter, isRenderGame: boolea
     );
 };
 
-export { getGameHeaderById, getFilteredGames, getGameTabById };
+export { getFilteredGames, getGameHeaderById, getGameTabById };
