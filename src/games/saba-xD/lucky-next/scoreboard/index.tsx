@@ -5,10 +5,12 @@ import { Stack } from "react-bootstrap";
 import { BigRoadScoreboard } from "sc-scoreboards";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
 import { hasBlink, OddEvenBigRoadConverter, OverUnderBigRoadConverter, ScoreBoard } from "../../../../_shared/components/scoreboard/";
-import { ScoreboardDotContent } from "../../../../_shared/components/scoreboard/types";
+import { ScoreboardItemContent } from "../../../../_shared/components/scoreboard/types";
 import { choices } from "../../../../_shared/types/settlement-result";
 import { LuckyNextSettlementResult } from "../type";
 import Styles from "./scoreboard.module.scss";
+import { BetPercentages } from "../../../../_shared/components/bet-percentages";
+import { Translator } from "@sg/sg-game-client";
 const numberOfResult = 100;
 
 export interface ILuckyNextScoreboardState extends IStateObserver {
@@ -74,64 +76,45 @@ export class LuckyNextScoreBoard extends ObserverComponent<Props, ILuckyNextScor
         bigRoad.initialize(input, hasBlink(roundState));
         const rows = bigRoad.rows();
 
-        const calPercentage = (settlements: any[], left: string, right: string) => {
-            const totalCount = settlements.length;
-
-            const overCount = settlements.filter((entry) => entry[left]).length;
-            const underCount = settlements.filter((entry) => entry[right]).length;
-
-            const leftPercentage = totalCount > 0 ? parseFloat(((overCount / totalCount) * 100).toFixed(2)) : 0;
-            const rightPercentage = totalCount > 0 ? parseFloat(((underCount / totalCount) * 100).toFixed(2)) : 0;
-
-            return {
-                left: leftPercentage,
-                right: rightPercentage,
-            };
+        const scoreboardCharacter: ScoreboardItemContent = {
+            positiveItemContent: `${isOverUnder ? choices.over : choices.odd}`,
+            negativeItemContent: `${isOverUnder ? choices.under : choices.even}`,
         };
-        const percentagesOverUnder = calPercentage(settlements, choices.over, choices.under);
-        const percentagesOddEven = calPercentage(settlements, choices.odd, choices.even);
-        const renderPercentageOddEven = () => (
-            <div className={Styles["scoreboard-percentage"]}>
-                <div className={Styles["left-percentage"]}>{`Odd ${percentagesOddEven.left}%`}</div>
-                <div className={Styles["split-percentage"]}>|</div>
-                <div className={Styles["right-percentage"]}>{`Even ${percentagesOddEven.right}%`}</div>
-            </div>
-        );
 
-        const renderPercentageOverUnder = () => (
-            <div className={Styles["scoreboard-percentage"]}>
-                <div className={Styles["left-percentage"]}>{`Over ${percentagesOverUnder.left}%`}</div>
-                <div className={Styles["split-percentage"]}>|</div>
-                <div className={Styles["right-percentage"]}>{`Under ${percentagesOverUnder.right}%`}</div>
-            </div>
-        );
+        const scoreboardDotClassName: ScoreboardItemContent = {
+            positiveItemContent: "dot-over",
+            negativeItemContent: `dot-under`,
+        };
+
         const setIsOverUnder = (isOverUnder = OVER_UNDER_AS_DEFAULT_SCOREBOARD) => {
             this.setState({ isOverUnder });
         };
-        const scoreboardCharacterContent: ScoreboardDotContent = {
-            positiveDotContent: `${isOverUnder ? choices.over : choices.odd}`,
-            negativeDotContent: `${isOverUnder ? choices.under : choices.even}`,
-        };
-        const scoreboardDotClassName: ScoreboardDotContent = {
-            positiveDotContent: "dot-over",
-            negativeDotContent: `dot-under`,
-        };
-
+        const translateBetOption = (option) => Translator.t(`${this.props.gameName}.glossary_${option}`);
         return (
             <div className={Styles["scoreboard"]}>
-                <div className={Styles["scoreboard-title"]}>LuckyNext Scoreboard</div>
+                <div className={Styles["scoreboard-title"]}>Lucky Next Scoreboard</div>
                 <Stack direction="horizontal">
-                    <button onClick={() => setIsOverUnder()}>Over/Under</button>
-                    <button onClick={() => setIsOverUnder(false)}>Odd/Even</button>
+                    <button
+                        className={`${isOverUnder ? Styles["selected"] : Styles["un-selected"]} ${Styles["bet-group"]}`}
+                        onClick={() => setIsOverUnder()}
+                    >
+                        {translateBetOption(choices.over)}/{translateBetOption(choices.under)}
+                    </button>
+                    <button
+                        className={`${isOverUnder ? Styles["un-selected"] : Styles["selected"]} ${Styles["bet-group"]}`}
+                        onClick={() => setIsOverUnder(false)}
+                    >
+                        {translateBetOption(choices.odd)}/{translateBetOption(choices.even)}
+                    </button>
                 </Stack>
 
-                {isOverUnder ? renderPercentageOverUnder() : renderPercentageOddEven()}
+                {<BetPercentages gameName={this.props.gameName} scoreboardCharacter={scoreboardCharacter} settlements={settlements} />}
                 <div className={Styles["scoreboard-content"]} ref={this.scrollDivRef}>
                     {
                         <ScoreBoard
                             gameName={this.props.gameName}
                             rows={rows}
-                            scoreboardCharacter={scoreboardCharacterContent}
+                            scoreboardCharacter={scoreboardCharacter}
                             scoreboardDotClassName={scoreboardDotClassName}
                         />
                     }

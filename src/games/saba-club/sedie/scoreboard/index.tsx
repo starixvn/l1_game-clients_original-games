@@ -8,44 +8,24 @@ import { BigRoadScoreboard, Converter } from "sc-scoreboards";
 import { createRef } from "react";
 import React from "react";
 import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
+import { ScoreboardItemContent } from "../../../../_shared/components/scoreboard/types";
+import { choices } from "../../../../_shared/types/settlement-result";
+import { BetPercentages } from "../../../../_shared/components/bet-percentages";
+import { OddEvenBigRoadConverter, ScoreBoard } from "../../../../_shared/components/scoreboard";
 
 export interface ISeDieResultHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
     roundState: string;
 }
 
-export class SedieBigRoadConverter extends Converter<SedieSettlementResult> {
-    static addBlinkNode(rounds: SedieSettlementResult[]) {
-        const lastRound = rounds.find((round) => round.odd || round.even);
+type Props = IPropsObserver & {
+    gameName?: string;
+};
 
-        const blinkRound = {
-            even: lastRound?.even,
-            odd: undefined,
-            red2: undefined,
-            red3: undefined,
-            red4: undefined,
-            white3: undefined,
-            white4: undefined,
-        };
-
-        rounds.unshift(blinkRound);
-    }
-
-    static instance = new SedieBigRoadConverter();
-
-    protected positiveKey(): string {
-        return SeDieChoices.even;
-    }
-
-    protected specialKey(): string {
-        return "";
-    }
-}
-
-export class SedieScoreBoard extends ObserverComponent<IPropsObserver, ISeDieResultHistoryState> {
+export class SedieScoreBoard extends ObserverComponent<Props, ISeDieResultHistoryState> {
     private scrollDivRef = createRef<HTMLDivElement>();
 
-    constructor(props: IPropsObserver) {
+    constructor(props: Props) {
         super(props);
 
         this.scrollDivRef = React.createRef();
@@ -75,12 +55,6 @@ export class SedieScoreBoard extends ObserverComponent<IPropsObserver, ISeDieRes
         this.setState({ roundState });
     }
 
-    renderDots = (roundHistory: gc.RoundHistories.RoundHistory) => {
-        const result = roundHistory.result as SedieResult;
-        const dots = [result.red1, result.red2, result.red3, result.red4];
-        return dots.map((isRed, index) => <RoundDot key={index} choice={isRed ? SeDieChoices.odd : SeDieChoices.even} size="small" />);
-    };
-
     render() {
         const { rounds, roundState } = this.state;
 
@@ -88,7 +62,7 @@ export class SedieScoreBoard extends ObserverComponent<IPropsObserver, ISeDieRes
             return <></>;
         }
 
-        const bigRoad = new BigRoadScoreboard({ converter: SedieBigRoadConverter.instance, height: 6 });
+        const bigRoad = new BigRoadScoreboard({ converter: OddEvenBigRoadConverter.instance, height: 6 });
         const settlements = rounds.map((round) => {
             return round.settlementResult as SedieSettlementResult;
         });
@@ -98,54 +72,30 @@ export class SedieScoreBoard extends ObserverComponent<IPropsObserver, ISeDieRes
         bigRoad.initialize(input, hasBlink);
         const rows = bigRoad.rows();
 
-        const getDotClass = (status: boolean) => {
-            return status ? Styles["dot-even"] : Styles["dot-odd"];
+        const scoreboardCharacter: ScoreboardItemContent = {
+            positiveItemContent: `${choices.odd}`,
+            negativeItemContent: `${choices.even}`,
         };
 
-        const calPercentage = (settlements: SedieSettlementResult[]) => {
-            const totalCount = settlements.length;
-
-            const oddCount = settlements.filter((entry) => entry.odd).length;
-            const evenCount = settlements.filter((entry) => entry.even).length;
-
-            const oddPercentage = totalCount > 0 ? parseFloat(((oddCount / totalCount) * 100).toFixed(2)) : 0;
-            const evenPercentage = totalCount > 0 ? parseFloat(((evenCount / totalCount) * 100).toFixed(2)) : 0;
-
-            return {
-                oddPercentage,
-                evenPercentage,
-            };
+        const scoreboardDotClassName: ScoreboardItemContent = {
+            positiveItemContent: "dot-odd",
+            negativeItemContent: `dot-even`,
         };
 
-        const percentages = calPercentage(settlements);
         return (
             <div className={Styles["scoreboard"]}>
                 <div className={Styles["scoreboard-title"]}>Sedie Scoreboard</div>
-                <div className={Styles["scoreboard-percentage"]}>
-                    <div className={Styles["odd-percentage"]}>{`Odd ${percentages.oddPercentage}%`}</div>
-                    <div className={Styles["split-percentage"]}>|</div>
-                    <div className={Styles["even-percentage"]}>{`Even ${percentages.evenPercentage}%`}</div>
-                </div>
+                {<BetPercentages gameName={this.props.gameName} scoreboardCharacter={scoreboardCharacter} settlements={settlements} />}
+
                 <div className={Styles["scoreboard-content"]} ref={this.scrollDivRef}>
-                    {rows.map((row, row_index) => {
-                        return row.map((point, col_index) => {
-                            return point.status !== undefined ? (
-                                <div
-                                    className={Styles["dot-item"]}
-                                    style={{ gridColumnStart: col_index + 1, gridRowStart: row_index + 1 }}
-                                    key={`${row_index}_${col_index}`}
-                                >
-                                    {point.isBlink ? (
-                                        <div className={Styles["dot-blink"]}></div>
-                                    ) : (
-                                        <div className={getDotClass(point.status)}>{point.status ? "E" : "O"}</div>
-                                    )}
-                                </div>
-                            ) : (
-                                <div className={Styles["dot-item"]} key={`${row_index}_${col_index}`}></div>
-                            );
-                        });
-                    })}
+                    {
+                        <ScoreBoard
+                            gameName={this.props.gameName}
+                            rows={rows}
+                            scoreboardCharacter={scoreboardCharacter}
+                            scoreboardDotClassName={scoreboardDotClassName}
+                        />
+                    }
                 </div>
             </div>
         );

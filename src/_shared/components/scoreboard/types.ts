@@ -1,5 +1,5 @@
-export type ScoreboardDotContent = {
-    positiveDotContent: string;
-    negativeDotContent: string;
-    specialDotContent?: string;
+export type ScoreboardItemContent = {
+    positiveItemContent: string;
+    negativeItemContent: string;
+    specialItemContent?: string;
 };

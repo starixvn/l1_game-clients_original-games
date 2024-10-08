@@ -176,7 +176,9 @@
     "SeDie": {
         "game_name": "Xóc Dĩa",
         "glossary_even": "Chẵn",
-        "glossary_odd": "Lẻ"
+        "glossary_odd": "Lẻ",
+        "beadboard_even": "C",
+        "beadboard_odd": "L"
     },
     "BigSmall": {
         "game_name": "Tài Xỉu"

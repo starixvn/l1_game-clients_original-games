@@ -2,18 +2,18 @@ import { Translator } from "@sg/sg-game-client";
 import Styles from "./scoreboard.module.scss";
 import { hasBlink } from "./helper";
 import { OddEvenBigRoadConverter, OverUnderBigRoadConverter } from "./converters";
-import { ScoreboardDotContent } from "./types";
+import { ScoreboardItemContent } from "./types";
 type Props = {
     gameName: string;
     rows: any[];
-    scoreboardCharacter: ScoreboardDotContent;
-    scoreboardDotClassName: ScoreboardDotContent;
+    scoreboardCharacter: ScoreboardItemContent;
+    scoreboardDotClassName: ScoreboardItemContent;
 };
 
 const ScoreBoard: React.FunctionComponent<Props> = ({ gameName, rows, scoreboardCharacter, scoreboardDotClassName }) => {
     const translateCharacter = (option) => Translator.t(`${gameName}.beadboard_${option}`);
-    const { positiveDotContent: positiveCharacter, negativeDotContent: negativeCharacter } = scoreboardCharacter;
-    const { positiveDotContent: positiveClassName, negativeDotContent: negativeClassName } = scoreboardDotClassName;
+    const { positiveItemContent: positiveCharacter, negativeItemContent: negativeCharacter } = scoreboardCharacter;
+    const { positiveItemContent: positiveClassName, negativeItemContent: negativeClassName } = scoreboardDotClassName;
     const getDotClass = (status: boolean) => {
         return status ? Styles[positiveClassName] : Styles[negativeClassName];
     };

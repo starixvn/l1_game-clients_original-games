@@ -44,7 +44,7 @@ export default class SeDie extends GameBase<GameBaseProps, IGameBaseState> {
     }
 
     renderStatistic() {
-        return <SedieStatistic namespace={this.props.namespace} />;
+        return <SedieStatistic namespace={this.props.namespace} gameName={setting.gameName} />;
     }
 
     async showResult(

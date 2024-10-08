@@ -6,30 +6,6 @@
         font-weight: bold;
     }
 
-    .scoreboard-percentage {
-        display: flex;
-        align-items: center; /* Align items vertically centered */
-        justify-content: space-between; /* Distributes space between items */
-        width: 100%; /* Make the parent container full width */
-        color: white;
-        background: #274980;
-
-        .left-percentage {
-            flex: 1; /* Allows this to take available space on the left */
-            text-align: right; /* Align text to the left */
-        }
-
-        .split-percentage {
-            margin: 0 10px; /* Optional: Add some horizontal margin for spacing */
-            text-align: center; /* Center the split indicator */
-        }
-
-        .right-percentage {
-            flex: 1; /* Allows this to take available space on the right */
-            text-align: left; /* Align text to the right */
-        }
-    }
-
     .scoreboard-content {
         overflow-x: auto;
         overflow-y: hidden;
@@ -38,5 +14,24 @@
         background: whitesmoke;
         scrollbar-width: thin; /* Set scrollbar width to thin */
         scrollbar-color: #c9c4c4 #f1f1f1; /* Handle color and track color */
+    }
+
+    .selected {
+        opacity: 1;
+    }
+
+    .bet-group {
+        background-color: #274980;
+        color: white;
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 0rem;
+        width: 12rem;
+    }
+    .un-selected {
+        border-bottom: 1rem;
+        border-color: transparent;
+        opacity: 0.5;
     }
 }

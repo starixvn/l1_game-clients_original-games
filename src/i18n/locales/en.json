@@ -176,7 +176,9 @@
     "SeDie": {
         "game_name": "SeDie",
         "glossary_even": "Even",
-        "glossary_odd": "Odd"
+        "glossary_odd": "Odd",
+        "beadboard_even": "E",
+        "beadboard_odd": "O"
     },
     "BigSmall": {
         "game_name": "Big Small"
