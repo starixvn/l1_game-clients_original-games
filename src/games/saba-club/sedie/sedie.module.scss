@@ -19,7 +19,6 @@
     }
 }
 
-
 .main-option {
     font-weight: 500;
 }
@@ -41,14 +40,12 @@
 .bet-options-wrapper {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-gap: .2rem;
-
+    grid-gap: 0.2rem;
 }
 
 .round-history {
     background-color: #fce0d7;
     padding: 8px 4px;
-    border-top: 1px solid #ccc;
 
     .hstack-round {
         margin-top: 0 !important;
