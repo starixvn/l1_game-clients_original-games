@@ -84,16 +84,18 @@ export default class LuckyNextSettlementResult extends ObserverComponent<IPropsO
     }
 
     render() {
-        const { result, roundState, turnCounter, isAnimationResult, roundData } = this.state;
+        const { roundState, turnCounter, isAnimationResult, roundData } = this.state;
 
         if (roundState === TURN_ROUND_STATE.SWITCH_ROUND && !isAnimationResult) {
             return <></>;
         }
 
+        const animationClassName = roundState === TURN_ROUND_STATE.SWITCH_ROUND &&
+            isAnimationResult ? "showResultContainer" : "";
+
         return (
             <div
-                className={`${Style["result-container"]} ${roundState === TURN_ROUND_STATE.SWITCH_ROUND && isAnimationResult ? "showResultContainer" : ""
-                    }`}
+                className={`${Style["result-container"]} ${animationClassName}`}
             >
                 <div className={Style["result"]}>
                     <TurnBaseResultSlotContainer
