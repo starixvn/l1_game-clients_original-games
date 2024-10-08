@@ -7,9 +7,11 @@ import { SeDieChoices, SedieResult, SedieSettlementResult } from "../type";
 import { BigRoadScoreboard, Converter } from "sc-scoreboards";
 import { createRef } from "react";
 import React from "react";
+import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
 
 export interface ISeDieResultHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
+    roundState: string;
 }
 
 export class SedieBigRoadConverter extends Converter<SedieSettlementResult> {
@@ -64,7 +66,13 @@ export class SedieScoreBoard extends ObserverComponent<IPropsObserver, ISeDieRes
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
-        this.setState({ rounds: rounds });
+        this.setState({ rounds });
+    }
+
+    @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
+    renderCountDownTimerState(roundState: string) {
+        console.log("roundState", roundState);
+        this.setState({ roundState });
     }
 
     renderDots = (roundHistory: gc.RoundHistories.RoundHistory) => {
@@ -74,7 +82,8 @@ export class SedieScoreBoard extends ObserverComponent<IPropsObserver, ISeDieRes
     };
 
     render() {
-        const { rounds } = this.state;
+        const { rounds, roundState } = this.state;
+
         if (!rounds || rounds.length === 0) {
             return <></>;
         }
@@ -84,7 +93,9 @@ export class SedieScoreBoard extends ObserverComponent<IPropsObserver, ISeDieRes
             return round.settlementResult as SedieSettlementResult;
         });
         const input = [...settlements].reverse();
-        bigRoad.initialize(input);
+
+        const hasBlink = roundState === ROUND_STATE.LOCKING_BET || roundState === ROUND_STATE.SHOW_ANIMATION_RESULT;
+        bigRoad.initialize(input, hasBlink);
         const rows = bigRoad.rows();
 
         const getDotClass = (status: boolean) => {
@@ -118,13 +129,17 @@ export class SedieScoreBoard extends ObserverComponent<IPropsObserver, ISeDieRes
                 <div className={Styles["scoreboard-content"]} ref={this.scrollDivRef}>
                     {rows.map((row, row_index) => {
                         return row.map((point, col_index) => {
-                            return point.index >= 0 ? (
+                            return point.status !== undefined ? (
                                 <div
                                     className={Styles["dot-item"]}
                                     style={{ gridColumnStart: col_index + 1, gridRowStart: row_index + 1 }}
                                     key={`${row_index}_${col_index}`}
                                 >
-                                    <div className={getDotClass(point.status)}>{point.status ? "E" : "O"}</div>
+                                    {point.isBlink ? (
+                                        <div className={Styles["dot-blink"]}></div>
+                                    ) : (
+                                        <div className={getDotClass(point.status)}>{point.status ? "E" : "O"}</div>
+                                    )}
                                 </div>
                             ) : (
                                 <div className={Styles["dot-item"]} key={`${row_index}_${col_index}`}></div>
