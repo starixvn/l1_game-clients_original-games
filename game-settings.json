@@ -86,7 +86,7 @@
             "generatingResult": 1,
             "showingResult": 6,
             "startRound": 0,
-            "switchRoundAnimation": 0
+            "switchRoundAnimation": 4
         },
         "totalTurns": 1,
         "numberOfRoundHistory": 100,
