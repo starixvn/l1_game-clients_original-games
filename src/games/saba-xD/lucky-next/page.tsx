@@ -11,6 +11,7 @@ import { FunctionUtils } from "../../../_shared/utils/funtion-utils";
 import LuckyNextBetOptions from "./bet-option/lucky-next-bet-options";
 import LuckyNextSettlementResult from "./lucky-next-settlement-result";
 import LuckyNextRoundHistory from "./round-history";
+import { LuckyNextStatistic } from "./statistic";
 
 @observer(setting.mainObserverNamespace)
 export default class LuckyNext extends GameBase<GameBaseProps, IGameBaseState> {
@@ -40,6 +41,10 @@ export default class LuckyNext extends GameBase<GameBaseProps, IGameBaseState> {
 
     renderResultBlock() {
         return <LuckyNextSettlementResult namespace={this.props.namespace} />;
+    }
+
+    renderStatistic() {
+        return <LuckyNextStatistic namespace={this.props.namespace} gameName={setting.gameName} />;
     }
 
     async showResult(
