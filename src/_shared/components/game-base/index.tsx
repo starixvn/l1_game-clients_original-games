@@ -14,7 +14,7 @@ import Styles from "./game-base.module.scss";
 import { GameBaseProps } from "./type";
 
 export interface IGameBaseState {
-    isConnected: boolean;
+    isConnectFailed: boolean;
     initialized: boolean;
     disabled: boolean;
     isOpenStatistic: boolean;
@@ -23,7 +23,7 @@ export interface IGameBaseState {
 abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> extends React.PureComponent<P, S> {
     constructor(props: P) {
         super(props);
-        this.state = { isConnected: false, isOpenStatistic: false } as S;
+        this.state = { isConnectFailed: false, isOpenStatistic: false } as S;
         this.toggleStatistic = this.toggleStatistic.bind(this);
     }
 
@@ -126,12 +126,12 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     @handle(Lobby.LobbyHandlers.TryToConnectHandler)
     tryToConnectHandler() {}
 
-    @render(gc.Connection.ConnectionStore, (store) => store.isConnected)
-    handleDisconnected(isConnected: boolean) {
-        if (isConnected === null) {
+    @render(gc.Connection.ConnectionStore, (store) => store.isConnectFailed)
+    handleDisconnected(isConnectFailed: boolean) {
+        if (isConnectFailed === null) {
             return;
         }
-        this.setState({ isConnected });
+        this.setState({ isConnectFailed: isConnectFailed });
     }
 
     @render(gc.GameConfigs.GameConfigStore, (store) => store.initialized)
@@ -149,7 +149,12 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     getRenderTemplate() {
-        const { isConnected, initialized: isGameConfigInitialized, disabled } = this.state;
+        const { isConnectFailed, initialized: isGameConfigInitialized, disabled } = this.state;
+
+        if (isConnectFailed) {
+            return this.renderDisconnect();
+        }
+
         const isFirstInit = !isGameConfigInitialized && !disabled;
         if (isFirstInit || disabled) {
             return disabled ? this.renderNotice() : this.renderLoading();
@@ -173,9 +178,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
             );
         };
 
-        return !isConnected ? (
-            this.renderDisconnect()
-        ) : (
+        return (
             <>
                 <div className={`${Styles["block-wrapper"]} ${this.props.overrideClasses}`}>
                     <div className={Styles["info"]}>
@@ -216,12 +219,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         return (
             <>
                 <p>Connection fail</p>
-                <Button
-                    variant="success"
-                    onClick={() => {
-                        this.tryToConnectHandler();
-                    }}
-                >
+                <Button variant="success" onClick={this.tryToConnectHandler}>
                     Reconnect
                 </Button>
             </>

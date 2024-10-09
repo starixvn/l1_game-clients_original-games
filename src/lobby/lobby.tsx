@@ -22,7 +22,6 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
         this.state = {
             isAuthorized: false,
             offerGames: [],
-            connectedCount: 0,
             isRenderGame: true,
         } as ILobbyState;
     }
@@ -62,6 +61,7 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
 
     @render(gc.Auth.AuthStore, (store) => store.isAuthorized)
     handleAuthorized(isAuthorized: boolean) {
+        console.log(`isAuthorized`, isAuthorized);
         if (isAuthorized) {
             this.clearQueryParams();
             this.setState({ isAuthorized: true });
@@ -93,10 +93,10 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
     }
 
     @render(LobbyStore, (store) => store.tryToConnectCount)
-    updateConnectedCount(connectedCount: number) {
-        const isDisconnect = connectedCount > 0;
+    updateTryToConnectCount(tryToConnectCount: number) {
+        const isDisconnect = tryToConnectCount > 0;
         if (isDisconnect) {
-            this.setState({ connectedCount, isRenderGame: false });
+            this.setState({ isRenderGame: false });
             this.reRenderGameTimeout = setTimeout(() => {
                 this.setState({ isRenderGame: true });
             }, 500);
