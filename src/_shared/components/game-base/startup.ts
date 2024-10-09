@@ -5,6 +5,7 @@ import { reaction } from "mobx";
 import "reflect-metadata";
 import { getSiteConfig, appSettings } from "../../app-settings";
 import { Lobby } from "../../states";
+import { LobbyStore } from "../../states/lobby";
 interface Languages {
     [key: string]: any;
 }
@@ -45,6 +46,10 @@ export function configSharedContainer() {
 
 export function configGameContainer(gameName: string, containerOptions: gc.IContainerOptions) {
     const container = gc.getContainer(containerOptions);
+
+    const lobbyStore = sharedContainer.get(LobbyStore);
+    container.bind(LobbyStore).toConstantValue(lobbyStore);
+
     const observerContainer = gc.buildObserverContainer(container);
 
     Observer.configure({ [gameName]: { mobx: { reaction }, container: observerContainer } });

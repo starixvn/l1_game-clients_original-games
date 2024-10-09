@@ -19,12 +19,12 @@ export default class Notice extends ObserverComponent<IPropsObserver, INoticeSta
         } as INoticeState;
     }
 
-    @render(gc.Notices.NoticeStore, (store) => store.notice, { fireImmediately: false })
+    @render(gc.Notices.NoticeStore, (store) => store.notice, { fireImmediately: true })
     setNotice(notice: gc.Notices.Notice) {
         !!notice && this.setState({ notice, isShow: true });
     }
 
-    @render(gc.DisabledGame.DisabledGameStore, (store) => store.showPopup, { fireImmediately: false })
+    @render(gc.DisabledGame.DisabledGameStore, (store) => store.showPopup, { fireImmediately: true })
     setHideNotice(showPopup: boolean) {
         if (!showPopup && this.state.isShow) {
             this.setState({ isShow: false });
