@@ -1520,10 +1520,10 @@
   resolved "https://npm.lumigame.com/@rushstack/eslint-patch/-/eslint-patch-1.10.4.tgz#427d5549943a9c6fce808e39ea64dbe60d4047f1"
   integrity sha512-WJgX9nzTqknM393q1QJDJmoW28kUfEnybeTfVNcNAPnIx210RXm2DiXiHzfNPJNIUUb1tJnz/l4QGtJ30PgWmA==
 
-"@sg/sg-game-client@1.0.4-beta.1":
-  version "1.0.4-beta.1"
-  resolved "http://npm.lumigame.com/@sg/sg-game-client/-/sg-game-client-1.0.4-beta.1.tgz#2e43089222746f54c311a49b84c7b52b13d162c3"
-  integrity sha512-rqX0ezFXbbYr8Vwe8XMuGU3BC9epdK5q9yJCZuUZai+KMVeGHi9EJ9d6+bDdPWnAZNfllF3rnuzYBrsywP99AQ==
+"@sg/sg-game-client@1.0.4-beta.2":
+  version "1.0.4-beta.2"
+  resolved "http://npm.lumigame.com/@sg/sg-game-client/-/sg-game-client-1.0.4-beta.2.tgz#0e990a408fd00707412f6c87b887437fe44ccb96"
+  integrity sha512-7r+Y2Ji0H5gd2DGnKIjRccAYtoXKaWoD2Nk2gq6wDYS73Rd49Ueqj/cpOGo02xvinKgVRtQDRqKc6JU5GAb62Q==
   dependencies:
     "@sg/sg-user-service-client" "^1.8.1"
     base64-string "^1.1.2"

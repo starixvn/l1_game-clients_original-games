@@ -14,6 +14,7 @@ import Styles from "./game-base.module.scss";
 import { GameBaseProps } from "./type";
 
 export interface IGameBaseState {
+    isConnected: boolean;
     isConnectFailed: boolean;
     initialized: boolean;
     showDisabledPopup: boolean;
@@ -127,11 +128,19 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     tryToConnectHandler() {}
 
     @render(gc.Connection.ConnectionStore, (store) => store.isConnectFailed)
-    handleDisconnected(isConnectFailed: boolean) {
+    handleConnectFail(isConnectFailed: boolean) {
         if (isConnectFailed === null) {
             return;
         }
         this.setState({ isConnectFailed: isConnectFailed });
+    }
+
+    @render(gc.Connection.ConnectionStore, (store) => store.isConnected)
+    handleDisconnected(isConnected: boolean) {
+        if (isConnected === null) {
+            return;
+        }
+        this.setState({ isConnected });
     }
 
     @render(gc.GameConfigs.GameConfigStore, (store) => store.initialized)
@@ -149,7 +158,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     getRenderTemplate() {
-        const { isConnectFailed, initialized: isGameConfigInitialized, showDisabledPopup } = this.state;
+        const { isConnected, isConnectFailed, initialized: isGameConfigInitialized, showDisabledPopup } = this.state;
 
         if (isConnectFailed) {
             return this.renderDisconnect();
@@ -178,7 +187,9 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
             );
         };
 
-        return (
+        return !isConnected ? (
+            this.renderDisconnect()
+        ) : (
             <>
                 <div className={`${Styles["block-wrapper"]} ${this.props.overrideClasses}`}>
                     <div className={Styles["info"]}>
