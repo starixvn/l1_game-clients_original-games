@@ -16,7 +16,7 @@ import { GameBaseProps } from "./type";
 export interface IGameBaseState {
     isConnectFailed: boolean;
     initialized: boolean;
-    disabled: boolean;
+    showDisabledPopup: boolean;
     isOpenStatistic: boolean;
 }
 
@@ -139,9 +139,9 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         this.setState({ initialized } as IGameBaseState);
     }
 
-    @render(gc.DisabledGame.DisabledGameStore, (store) => store.disabled)
-    handleDisabledGame(disabled: boolean) {
-        this.setState({ disabled } as IGameBaseState);
+    @render(gc.DisabledGame.DisabledGameStore, (store) => store.showPopup)
+    handleDisabledGame(showPopup: boolean) {
+        this.setState({ showDisabledPopup: showPopup } as IGameBaseState);
     }
 
     toggleStatistic() {
@@ -149,15 +149,15 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     getRenderTemplate() {
-        const { isConnectFailed, initialized: isGameConfigInitialized, disabled } = this.state;
+        const { isConnectFailed, initialized: isGameConfigInitialized, showDisabledPopup } = this.state;
 
         if (isConnectFailed) {
             return this.renderDisconnect();
         }
 
-        const isFirstInit = !isGameConfigInitialized && !disabled;
-        if (isFirstInit || disabled) {
-            return disabled ? this.renderNotice() : this.renderLoading();
+        const isFirstInit = !isGameConfigInitialized && !showDisabledPopup;
+        if (isFirstInit || showDisabledPopup) {
+            return showDisabledPopup ? this.renderNotice() : this.renderLoading();
         }
 
         const renderArrow = (isOpenStatistic: boolean) => {
