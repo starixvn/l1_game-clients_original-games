@@ -21,7 +21,7 @@ export default class SicBallRoundHistory extends ObserverComponent<IPropsObserve
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.firstJoinGameHistory)
     renderFirstRoundHistory(firstJoinGameHistory: any) {
-        console.log({ firstJoinGameHistory });
+        // console.log({ firstJoinGameHistory });
     }
 
     render() {

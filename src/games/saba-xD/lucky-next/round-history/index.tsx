@@ -21,7 +21,7 @@ export default class LuckyNextRoundHistory extends ObserverComponent<IPropsObser
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.firstJoinGameHistory)
     renderFirstRoundHistory(firstJoinGameHistory: any) {
-        console.log({ firstJoinGameHistory })
+        // console.log({ firstJoinGameHistory })
     }
 
     render() {

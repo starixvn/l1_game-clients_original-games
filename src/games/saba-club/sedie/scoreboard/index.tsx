@@ -51,7 +51,6 @@ export class SedieScoreBoard extends ObserverComponent<Props, ISeDieResultHistor
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
     renderCountDownTimerState(roundState: string) {
-        console.log("roundState", roundState);
         this.setState({ roundState });
     }
 

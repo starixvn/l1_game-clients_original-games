@@ -61,7 +61,6 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
 
     @render(gc.Auth.AuthStore, (store) => store.isAuthorized)
     handleAuthorized(isAuthorized: boolean) {
-        console.log(`isAuthorized`, isAuthorized);
         if (isAuthorized) {
             this.clearQueryParams();
             this.setState({ isAuthorized: true });

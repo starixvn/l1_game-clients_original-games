@@ -46,7 +46,6 @@ export default class SicBallSettlementResult extends ObserverComponent<IPropsObs
     async handleRoundData(roundData: any) {
         const { isAnimationResult } = this.state;
         isAnimationResult && (await FunctionUtils.delay(1000));
-        console.log(`isAnimationResult`, isAnimationResult);
         this.setState({ roundData });
     }
 
