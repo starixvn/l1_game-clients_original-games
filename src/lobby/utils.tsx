@@ -44,7 +44,7 @@ const getFilteredGames = (
 ) => {
     const gameSettingIds = getGameSettingIds();
 
-    return gameSettingIds.filter((gameSettingId) => offerGames.find((offerGame) => offerGame.gameId === gameSettingId));
+    return offerGames.filter((offerGame) => gameSettingIds.find((gameId) => gameId === offerGame.gameId));
 };
 
 const getGameTabById = (gameId: number, router: NextRouter, isRenderGame: boolean) => {
@@ -53,7 +53,7 @@ const getGameTabById = (gameId: number, router: NextRouter, isRenderGame: boolea
     const gameName = gc.Translator.t(`${gameSetting.gameName}.game_name`);
     const key = gameSetting.mainObserverNamespace;
     return (
-        <Tab key={key} eventKey={key} title={gameName} unmountOnExit={true}>
+        <Tab key={gameId} eventKey={gameId} title={gameName} unmountOnExit={true}>
             {getGameHeaderById(gameId)}
             {isRenderGame && <div className={styles["game-lobby"]}>{getGameById(gameId, router)}</div>}
         </Tab>

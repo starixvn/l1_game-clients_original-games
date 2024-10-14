@@ -75,7 +75,8 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
         }[]
     ) {
         if (offerGames?.length > 0) {
-            this.setState({ offerGames } as ILobbyState);
+            const filteredOfferGames = lobbyUtils.getFilteredGames(offerGames);
+            this.setState({ offerGames: filteredOfferGames } as ILobbyState);
         }
     }
 
@@ -84,11 +85,9 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
 
     getGames() {
         const { offerGames, isRenderGame } = this.state;
-
-        const filteredGames = lobbyUtils.getFilteredGames(offerGames);
         const { router } = this.props;
 
-        return filteredGames.map((gameId) => lobbyUtils.getGameTabById(gameId, router, isRenderGame));
+        return offerGames.map((filterGame) => lobbyUtils.getGameTabById(filterGame.gameId, router, isRenderGame));
     }
 
     @render(LobbyStore, (store) => store.tryToConnectCount)
@@ -107,8 +106,9 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
         if (offerGames.length === 0) {
             return <>No games offer</>;
         }
+
         return (
-            <Tabs defaultActiveKey={setting.mainObserverNamespace} className={styles["lobby-tabs"]}>
+            <Tabs defaultActiveKey={offerGames[0].gameId} className={styles["lobby-tabs"]}>
                 {this.getGames()}
             </Tabs>
         );
