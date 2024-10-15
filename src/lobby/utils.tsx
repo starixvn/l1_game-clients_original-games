@@ -42,9 +42,11 @@ const getFilteredGames = (
         gameId: number;
     }[]
 ) => {
-    const gameSettingIds = getGameSettingIds();
-
-    return offerGames.filter((offerGame) => gameSettingIds.find((gameId) => gameId === offerGame.gameId));
+    return getGameSettingIds()
+        .filter((gameId) => offerGames.find((offerGame) => offerGame.gameId === gameId))
+        .map((gameId) => {
+            return { gameId };
+        });
 };
 
 const getGameTabById = (gameId: number, router: NextRouter, isRenderGame: boolean) => {
