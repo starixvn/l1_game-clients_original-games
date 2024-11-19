@@ -2,9 +2,9 @@ import * as gc from "@sg/sg-game-client";
 import { NextRouter } from "next/router";
 import { Tab } from "react-bootstrap";
 import { getGameSetting, getGameSettingIds } from "../_shared/app-settings";
+import { BigSmall, SeDie } from "../games/saba-club";
+import { LuckyNext, SicBall } from "../games/saba-xD";
 import styles from "./lobby.module.scss";
-import { SicBall, LuckyNext } from "../games/saba-xD";
-import { SeDie, BigSmall } from "../games/saba-club";
 
 const settingsSeDie = SeDie.Setting.setting;
 const settingsBigSmall = BigSmall.Setting.setting;

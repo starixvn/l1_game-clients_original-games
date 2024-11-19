@@ -50,7 +50,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     connectToService() {}
 
     @render(gc.Connection.ConnectionStore, (store) => store.signedIn)
-    handleSignedIn(signedIn: boolean) {
+    handleConnected(signedIn: boolean) {
         signedIn && this.inGame();
     }
 

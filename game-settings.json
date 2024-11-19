@@ -3,9 +3,7 @@
         "id": 1,
         "gameName": "BigSmall",
         "name": "BigSmall",
-        "namespaces": [
-            "BigSmall"
-        ],
+        "namespaces": ["BigSmall"],
         "durations": {
             "wholeRound": 61,
             "lockingBet": 5,
@@ -16,19 +14,18 @@
         },
         "numberOfRoundHistory": 100,
         "websocket": {
-            "proxyPath": "bigsmall",
-            "route": "bigsmall"
+            "proxyPath": "",
+            "route": "livepagegateway"
         },
         "mainObserverNamespace": "BigSmall",
-        "order": 2
+        "order": 2,
+        "isSocketGateway": true
     },
     "2": {
         "id": 2,
         "gameName": "SeDie",
         "name": "SeDie",
-        "namespaces": [
-            "SeDie"
-        ],
+        "namespaces": ["SeDie"],
         "durations": {
             "wholeRound": 39,
             "lockingBet": 5,
@@ -39,19 +36,18 @@
         },
         "numberOfRoundHistory": 100,
         "websocket": {
-            "proxyPath": "sedie",
-            "route": "sedie"
+            "proxyPath": "",
+            "route": "livepagegateway"
         },
         "mainObserverNamespace": "SeDie",
-        "order": 1
+        "order": 1,
+        "isSocketGateway": true
     },
     "1003": {
         "id": 1003,
         "gameName": "LuckyNext1",
         "name": "LuckyNext1",
-        "namespaces": [
-            "LuckyNext1"
-        ],
+        "namespaces": ["LuckyNext1"],
         "durations": {
             "wholeRound": 164,
             "wholeTurn": 20,
@@ -75,9 +71,7 @@
         "id": 1007,
         "gameName": "SicBall",
         "name": "SicBall",
-        "namespaces": [
-            "SicBall"
-        ],
+        "namespaces": ["SicBall"],
         "durations": {
             "wholeRound": 30,
             "wholeTurn": 30,

@@ -3,7 +3,7 @@ import * as Observer from "@sg/sg-observer";
 import * as mobx from "mobx";
 import { reaction } from "mobx";
 import "reflect-metadata";
-import { getSiteConfig, appSettings } from "../../app-settings";
+import { appSettings, getSiteConfig } from "../../app-settings";
 import { Lobby } from "../../states";
 import { LobbyStore } from "../../states/lobby";
 interface Languages {
@@ -29,6 +29,7 @@ function getSharedContainer(siteConfigs: gc.Configs.SiteConfigs) {
             gc.Notification.FEATURE_NAME,
             gc.ConnectSite.FEATURE_NAME,
             gc.ChipSetting.FEATURE_NAME,
+            gc.GatewayConnection.FEATURE_NAME,
             Lobby.FEATURE_NAME,
         ],
         features: [...gc.defaultFeatures, Lobby],

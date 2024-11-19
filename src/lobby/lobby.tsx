@@ -63,10 +63,13 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
     handleAuthorized(isAuthorized: boolean) {
         if (isAuthorized) {
             this.clearQueryParams();
-            this.setState({ isAuthorized: true });
-            this.triggerRecheckIn();
+            this.setState({ isViewOnly: true });
+            this.connectLiveGateway();
         }
     }
+
+    @handle(gc.GatewayConnection.GatewayConnectionHandlers.ConnectHandler)
+    connectLiveGateway() {}
 
     @render(gc.Player.MainPlayerStore, (store) => store.offerGames)
     handleOfferGames(
