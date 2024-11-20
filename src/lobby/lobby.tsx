@@ -83,9 +83,6 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
         }
     }
 
-    @handle(gc.Auth.AuthHandlers.TriggerRecheckIn)
-    triggerRecheckIn() {}
-
     getGames() {
         const { offerGames, isRenderGame } = this.state;
         const { router } = this.props;
