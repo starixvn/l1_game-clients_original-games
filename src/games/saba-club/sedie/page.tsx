@@ -20,10 +20,8 @@ export default class SeDie extends GatewayGameBase<GameBaseProps, IGameBaseState
         configGameContainer(setting.name, containerOptions);
     }
 
-    @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler, gameName: string) => handler.handleGateway(gameName))
-    closeConnect() {
-        return setting.name;
-    }
+    @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handleGateway())
+    closeConnect() {}
 
     renderRoundHistory() {
         return <SeDieRoundHistory namespace={this.props.namespace} />;

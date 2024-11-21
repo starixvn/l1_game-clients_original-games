@@ -12,6 +12,13 @@ import type { ILobbyProps, ILobbyState } from "./type";
 
 const setting = getGameSetting(appSettings.defaultGameId);
 
+export interface IOfferGame {
+    gameId: number;
+    minBet: number;
+    maxBet: number;
+    maxBetPerChoices: object;
+}
+
 @observer
 class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
     private reRenderGameTimeout?: NodeJS.Timeout;
@@ -20,7 +27,7 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
         configSharedContainer();
         super(props);
         this.state = {
-            isAuthorized: false,
+            isViewOnly: false,
             offerGames: [],
             isRenderGame: true,
         } as ILobbyState;
@@ -61,7 +68,7 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
 
     @render(gc.Auth.AuthStore, (store) => store.isAuthorized)
     handleAuthorized(isAuthorized: boolean) {
-        if (isAuthorized) {
+        if (!isAuthorized) {
             this.clearQueryParams();
             this.setState({ isViewOnly: true });
             this.connectLiveGateway();
@@ -72,11 +79,7 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
     connectLiveGateway() {}
 
     @render(gc.Player.MainPlayerStore, (store) => store.offerGames)
-    handleOfferGames(
-        offerGames: {
-            gameId: number;
-        }[]
-    ) {
+    handleOfferGames(offerGames: IOfferGame[]) {
         if (offerGames?.length > 0) {
             const filteredOfferGames = lobbyUtils.getFilteredGames(offerGames);
             this.setState({ offerGames: filteredOfferGames } as ILobbyState);
@@ -115,8 +118,8 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
     }
 
     render() {
-        const { isAuthorized } = this.state;
-        return <div className={styles["lobby"]}>{isAuthorized && this.renderGames()}</div>;
+        const { isViewOnly } = this.state;
+        return <div className={styles["lobby"]}>{isViewOnly && this.renderGames()}</div>;
     }
 }
 

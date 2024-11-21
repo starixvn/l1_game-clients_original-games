@@ -4,7 +4,7 @@ export type ILobbyProps = {
 } & WithRouterProps;
 
 export interface ILobbyState {
-    isAuthorized: boolean;
+    isViewOnly: boolean;
     offerGames: { gameId: number }[];
     isRenderGame: boolean;
 }

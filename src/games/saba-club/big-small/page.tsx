@@ -17,7 +17,7 @@ export default class BigSmall extends GatewayGameBase<GameBaseProps, IGameBaseSt
         configGameContainer(setting.name, containerOptions);
     }
 
-    @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler, gameName: string) => handler.handleGateway(gameName))
+    @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler, gameName: string) => handler.handleGateway())
     closeConnect() {
         return setting.name;
     }
