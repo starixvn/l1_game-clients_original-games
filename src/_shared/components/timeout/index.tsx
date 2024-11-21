@@ -1,5 +1,5 @@
 import * as gc from "@sg/sg-game-client";
-import { observer, render } from "@sg/sg-observer";
+import { handle, observer, render } from "@sg/sg-observer";
 import { Router, withRouter } from "next/router";
 import { PureComponent } from "react";
 
@@ -17,9 +17,13 @@ class TimeOutContainer extends PureComponent<TimeOutContainerProps> {
     redirectToSessionTimeoutPage(isSessionTimeout: boolean) {
         const { router } = this.props;
         if (isSessionTimeout) {
+            this.clearRecheckInInterval();
             router.push("timeout");
         }
     }
+
+    @handle(gc.Auth.AuthHandlers.ClearRecheckInInterval)
+    clearRecheckInInterval() {}
 
     render() {
         return <></>;
