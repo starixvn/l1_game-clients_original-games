@@ -1,4 +1,4 @@
-import { Auth } from "@sg/sg-game-client";
+import { Auth, Connection } from "@sg/sg-game-client";
 import { handle, render } from "@sg/sg-observer";
 import { ReactNode } from "react";
 import { GameBettingZoneContext } from "../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context";
@@ -18,10 +18,12 @@ interface IBettingBlockState extends IStateObserver {
     odd: number;
     show: boolean;
     isAuthorized: boolean;
+    isSignedIn: boolean;
 }
 
 class BettingBlock extends ObserverComponent<IBettingBlockProps, IBettingBlockState> {
-    timeoutId: NodeJS.Timeout | null = null;
+    protected timeoutId: NodeJS.Timeout | null = null;
+    protected maxTimeoutDuration = 10000;
 
     constructor(props: IBettingBlockProps) {
         super(props);
@@ -32,6 +34,7 @@ class BettingBlock extends ObserverComponent<IBettingBlockProps, IBettingBlockSt
             show: false,
             isAuthorized: false,
             dispose: null,
+            isSignedIn: false,
         };
 
         this.onHide = this.onHide.bind(this);
@@ -47,26 +50,31 @@ class BettingBlock extends ObserverComponent<IBettingBlockProps, IBettingBlockSt
     }
 
     @render(Auth.AuthStore, (store) => store.isAuthorized)
-    handleAuthorized(isAuthorized: boolean) {
+    protected handleAuthorized(isAuthorized: boolean) {
         this.setState({ isAuthorized });
     }
 
-    onHide() {
+    @render(Connection.ConnectionStore, (store) => store.isSignedIn)
+    protected handSignIn(isSignedIn: boolean) {
+        isSignedIn && this.setState({ isSignedIn });
+    }
+
+    protected onHide() {
         this.setState({ show: false });
     }
 
-    handleOnClick() {
+    protected handleOnClick() {
         const { betChoice, odd } = this.props;
+        const { isAuthorized } = this.state;
 
-        if (this.state.isAuthorized) {
-            this.updateBettingState(betChoice, odd);
-            return;
+        if (!isAuthorized) {
+            this.autoCreateNickname();
         }
 
         this.waitForAuthorization(betChoice, odd);
     }
 
-    updateBettingState(betChoice: string, odd: number) {
+    protected updateBettingState(betChoice: string, odd: number) {
         this.setState((prevState) => ({
             betChoice,
             odd,
@@ -74,25 +82,28 @@ class BettingBlock extends ObserverComponent<IBettingBlockProps, IBettingBlockSt
         }));
     }
 
-    waitForAuthorization(betChoice: string, odd: number) {
-        const timeoutDuration = 5000;
+    protected waitForAuthorization(betChoice: string, odd: number) {
         const interval = 100;
         const startTime = Date.now();
+        this.clearTimeout();
 
         const checkAuthorization = () => {
             if (this.state.isAuthorized) {
+                this.handleSignIn();
                 this.updateBettingState(betChoice, odd);
                 this.clearTimeout();
-            } else if (Date.now() - startTime < timeoutDuration) {
+            } else if (Date.now() - startTime < this.maxTimeoutDuration) {
                 this.timeoutId = setTimeout(checkAuthorization, interval);
             }
         };
-
-        this.clearTimeout();
         this.timeoutId = setTimeout(checkAuthorization, interval);
     }
 
-    clearTimeout() {
+    protected handleSignIn() {
+        !this.state.isSignedIn && this.signIn();
+    }
+
+    protected clearTimeout() {
         if (this.timeoutId) {
             clearTimeout(this.timeoutId);
             this.timeoutId = null;
@@ -100,7 +111,10 @@ class BettingBlock extends ObserverComponent<IBettingBlockProps, IBettingBlockSt
     }
 
     @handle(Auth.AuthHandlers.Authorize, (handler) => handler.handleAutoGenerateName())
-    autoCreateNickname() {}
+    protected autoCreateNickname() {}
+
+    @handle(Connection.ConnectionHandlers.SignInHandler)
+    protected signIn() {}
 
     render() {
         const { children, namespace } = this.props;

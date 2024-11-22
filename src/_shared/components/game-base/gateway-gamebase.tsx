@@ -15,14 +15,11 @@ export default abstract class GatewayGameBase<P extends GameBaseProps, S extends
     @handle(gc.Connection.ConnectionHandlers.ConnectHandler, (handler) => handler.handleGateway())
     connectLiveGateway() {}
 
-    @render(gc.Connection.ConnectionStore, (store) => store.getConnectionStatus())
-    dispatchServiceAction(status: gc.Connection.TConnectionStatus) {
-        if (!status.isConnected) {
-            return;
+    @render(gc.Connection.ConnectionStore, (store) => store.isConnected)
+    handleJoinGame(isConnected: boolean) {
+        if (isConnected) {
+            !this.isJoinGame && this.joinGame();
         }
-
-        !this.isJoinGame && this.joinGame();
-        status.isAuthorized && this.signIn();
     }
 
     @handle(gc.Connection.ConnectionHandlers.JoinGameHandler)
