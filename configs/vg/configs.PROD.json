@@ -10,5 +10,6 @@
     "env": "PROD",
     "enableMsgpackParserAllGames": true,
     "enableMsgpackParserOnNotification": true,
-    "defaultGameId": 2
+    "defaultGameId": 2,
+    "userServicePath": "livepageuser"
 }

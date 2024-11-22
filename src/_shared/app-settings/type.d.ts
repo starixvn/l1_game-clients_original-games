@@ -52,4 +52,5 @@ export default interface AppSettings {
     subDirectory: string;
     simulatorConfigs: SimulatorConfigs;
     defaultGameId: number;
+    userServicePath: string;
 }

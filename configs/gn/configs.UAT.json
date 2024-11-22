@@ -11,5 +11,6 @@
     "env": "UAT",
     "enableMsgpackParserAllGames": true,
     "enableMsgpackParserOnNotification": true,
-    "defaultGameId": 1003
+    "defaultGameId": 1003,
+    "userServicePath": "user"
 }
