@@ -107,7 +107,7 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
     renderGames() {
         const { offerGames } = this.state;
         if (offerGames.length === 0) {
-            return <>No games offer</>;
+            return <></>;
         }
 
         return (
