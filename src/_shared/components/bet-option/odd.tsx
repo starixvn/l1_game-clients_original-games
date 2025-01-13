@@ -8,16 +8,18 @@ export interface OddPros {
     fractional: boolean;
     namespace?: string;
     choice?: string;
+    isBoostedChoice?: boolean;
 }
 
-export const Odds: React.FC<OddPros> = ({ value, fractional }) => {
+export const Odds: React.FC<OddPros> = ({ value, fractional, isBoostedChoice }) => {
     return useMemo(() => {
         if (value <= 0) {
             return null;
         }
 
-        return <div className={`${Styles["odd"]}`}>{gc.FormatUtils.formatOdds(value, fractional)}</div>;
-    }, [value]);
+        const boostedChoiceClass = isBoostedChoice ? Styles["boosted-odd"] : "";
+        return <div className={`${Styles["odd"]} ${boostedChoiceClass}`}>{gc.FormatUtils.formatOdds(value, fractional)}</div>;
+    }, [value, isBoostedChoice]);
 };
 
 export default Odds;

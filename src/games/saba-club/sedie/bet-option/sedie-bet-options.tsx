@@ -12,20 +12,20 @@ export default class SeDieBetOptions extends BetOptions {
     renderDots = (dots: boolean[]) =>
         dots.map((isRed, index) => <RoundDot key={index} choice={isRed ? SeDieChoices.odd : SeDieChoices.even} size="small" />);
 
-    renderSubOptions = (betChoice: string, odd: number, fractional: boolean) => {
+    renderSubOptions = (betChoice: string, odd: number, fractional: boolean, name: string = "", isBoostedChoice: boolean = false) => {
         return (
             <BettingBlock odd={odd} betChoice={betChoice} namespace={setting.mainObserverNamespace}>
-                <div className={Styles["container-bets"]}>
+                <div className={`${Styles["container-bets"]} ${Styles["padding-bet"]}`}>
                     <div className={`${Styles["wrapper-dots"]} ${Styles["wrapper-dots-small"]}`}>
                         {this.renderDots(ChoiceSeDieIconMapper[betChoice])}
                     </div>
-                    <Odds value={odd} fractional={fractional} />
+                    <Odds value={odd} fractional={fractional} isBoostedChoice={isBoostedChoice} />
                 </div>
             </BettingBlock>
         );
     };
 
-    renderMainOption = (name: string, odd: number, betChoice: string, fractional: boolean) => {
+    renderMainOption = (name: string, odd: number, betChoice: string, fractional: boolean, isBoostedChoice: boolean = false) => {
         return (
             <BettingBlock odd={odd} betChoice={betChoice} namespace={setting.mainObserverNamespace}>
                 <div className={`${Styles["container-bets"]} ${Styles["padding-bet"]}`}>
@@ -33,7 +33,7 @@ export default class SeDieBetOptions extends BetOptions {
                         <div className={Styles["main-option"]}>{name}</div>
                     </div>
                     <div>
-                        <Odds value={odd} fractional={fractional} />
+                        <Odds value={odd} fractional={fractional} isBoostedChoice={isBoostedChoice} />
                     </div>
                 </div>
             </BettingBlock>
@@ -48,34 +48,44 @@ export default class SeDieBetOptions extends BetOptions {
         return <OwnBet value={this.state?.ownBets?.[choice]} choice={choice} />;
     }
 
+    isBoostedChoice(choice: string, boostedChoices: string[]) {
+        return boostedChoices ? boostedChoices.includes(choice) : false;
+    }
+
     render() {
-        const { roundOdds } = this.state as IBetOptionsState;
-        const odds = roundOdds?.odds;
+        const { roundOdds, boostedOdds } = this.state as IBetOptionsState;
+        const odds = boostedOdds ? boostedOdds.values : roundOdds?.odds;
+        const boostedChoices = boostedOdds ? boostedOdds.boostedChoices : roundOdds?.boostedChoices;
         const fractional = roundOdds?.fractional;
+
         return (
             <div className={Styles["bet-options-wrapper"]}>
-                <div className={`${Styles["bet"]} ${Styles["bets-bg"]}`}>{this.renderMainOption("O", odds?.odd, "odd", fractional)}</div>
+                <div className={`${Styles["bet"]} ${Styles["bets-bg"]}`}>
+                    {this.renderMainOption("O", odds?.odd, "odd", fractional, this.isBoostedChoice("odd", boostedChoices))}
+                </div>
                 {Object.keys(SeDieChoices).map((choiceKey) => {
                     if (topChoices.includes(choiceKey)) {
                         const choiceName = SeDieChoices[choiceKey as keyof typeof SeDieChoices];
                         const odd = odds?.[choiceName] || 0;
 
                         return (
-                            <div className={`${Styles["bets-bg"]} ${Styles["padding-bet"]}`} key={choiceKey}>
-                                {this.renderSubOptions(choiceKey, odd, fractional)}
+                            <div className={`${Styles["bets-bg"]}`} key={choiceKey}>
+                                {this.renderSubOptions(choiceKey, odd, fractional, "", this.isBoostedChoice(choiceName, boostedChoices))}
                             </div>
                         );
                     }
                 })}
-                <div className={`${Styles["bet"]} ${Styles["bets-bg"]}`}>{this.renderMainOption("E", odds?.even, "even", fractional)}</div>
+                <div className={`${Styles["bet"]} ${Styles["bets-bg"]}`}>
+                    {this.renderMainOption("E", odds?.even, "even", fractional, this.isBoostedChoice("even", boostedChoices))}
+                </div>
                 {Object.keys(SeDieChoices).map((choiceKey) => {
                     if (bottomChoices.includes(choiceKey)) {
                         const choiceName = SeDieChoices[choiceKey as keyof typeof SeDieChoices];
                         const odd = odds?.[choiceName] || 0;
 
                         return (
-                            <div className={`${Styles["bets-bg"]} ${Styles["padding-bet"]}`} key={choiceKey}>
-                                {this.renderSubOptions(choiceKey, odd, fractional)}
+                            <div className={`${Styles["bets-bg"]} `} key={choiceKey}>
+                                {this.renderSubOptions(choiceKey, odd, fractional, "", this.isBoostedChoice(choiceName, boostedChoices))}
                             </div>
                         );
                     }
