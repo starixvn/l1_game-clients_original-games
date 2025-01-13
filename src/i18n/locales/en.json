@@ -171,19 +171,42 @@
         "bet_info": "INFORMATION",
         "bet_accepted": "Your bet is accepted",
         "total_bets": "Total Bets",
-        "total_stake": "Total Stake"
+        "min_bet": "Min",
+        "max_bet": "Max",
+        "payout": "Payout",
+        "btn_bet": "Bet",
+        "btn_cancel": "Cancel",
+        "result_no": "No.",
+        "result_title": "Result",
+        "statistic_title": "Statistic",
+        "scoreboard": "Scoreboard",
+        "match": "Match",
+        "previous_round": "Previous Rounds",
+        "morethanmax": "Your stake exceeds the max stake.",
+        "lessthanmin": "Your stake is less than min stake.",
+        "decimal": "Dec"
     },
     "SeDie": {
-        "game_name": "SeDie",
+        "game_vendor": "SABA.games",
+        "game_name": "Se Die",
+        "choices_type1": "Odd/Even",
+        "choices_type2": "Red/White",
         "glossary_even": "Even",
         "glossary_odd": "Odd",
+        "glossary_red4": "4 Red",
+        "glossary_red3": "3 Red",
+        "glossary_red2": "2 Red",
+        "glossary_white4": "4 White",
+        "glossary_white3": "1 Red",
         "beadboard_even": "E",
         "beadboard_odd": "O"
     },
     "BigSmall": {
+        "game_vendor": "SABA.games",
         "game_name": "Big Small"
     },
     "SicBall": {
+        "game_vendor": "SABA xD",
         "game_name": "Sic Ball",
         "beadboard_big": "B",
         "beadboard_small": "S",
@@ -200,6 +223,7 @@
         "odds_triple": "Triple"
     },
     "LuckyNext1": {
+        "game_vendor": "SABA xD",
         "game_name": "Lucky Next",
         "beadboard_even": "E",
         "beadboard_odd": "O",
