@@ -53,6 +53,6 @@ export default class SeDie extends GatewayGameBase<GameBaseProps, IGameBaseState
         settlementResult?: gc.GameServiceMessage.TSettlementResult
     ) {
         //implement animation
-        await FunctionUtils.delay(1000);
+        await FunctionUtils.delay(2000);
     }
 }

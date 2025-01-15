@@ -94,11 +94,17 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
     };
 
     render() {
+        const isEmpty = (obj: object): boolean => {
+            return JSON.stringify(obj) === "{}";
+        };
+
         const { result, roundState } = this.state;
 
-        return !result || roundState !== ROUND_STATE.SHOW_RESULT ? (
-            this.renderNoResultIcons()
-        ) : (
+        if (!result || isEmpty(result as object) || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET) {
+            return this.renderNoResultIcons();
+        }
+
+        return (
             <Row>
                 <Col>{this.renderIcons(result)}</Col>
             </Row>
