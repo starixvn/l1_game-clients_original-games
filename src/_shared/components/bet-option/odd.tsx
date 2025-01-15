@@ -18,7 +18,7 @@ export const Odds: React.FC<OddPros> = ({ value, fractional, isBoostedChoice }) 
         }
 
         const boostedChoiceClass = isBoostedChoice ? Styles["boosted-odd"] : "";
-        return <div className={`${Styles["odd"]} ${boostedChoiceClass}`}>{gc.FormatUtils.formatOdds(value, fractional)}</div>;
+        return <div className={`${Styles["odd"]} ${boostedChoiceClass}`}>{value}</div>;
     }, [value, isBoostedChoice]);
 };
 
