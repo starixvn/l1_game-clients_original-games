@@ -10,32 +10,18 @@ import { bottomChoices, ChoiceSeDieIconMapper, SeDieChoices, topChoices } from "
 
 export default class SeDieBetOptions extends BetOptions {
     componentDidMount() {
-        console.log('[SeDieBetOptions] Component mounted');
         super.componentDidMount?.();
     }
 
     componentDidUpdate(prevProps: any, prevState: IBetOptionsState) {
-        console.log('[SeDieBetOptions] Component updated', {
-            prevState,
-            currentState: this.state,
-            stateChanged: prevState !== this.state
-        });
         super.componentDidUpdate?.(prevProps, prevState);
     }
 
     protected renderDots(dots: boolean[]) {
-        console.log('[SeDieBetOptions] Rendering dots', { dotsArray: dots });
         return dots.map((isRed, index) => <RoundDot key={index} choice={isRed ? SeDieChoices.odd : SeDieChoices.even} size="small" />);
     }
 
     public renderSubOptions(betChoice: string, odd: number, fractional: boolean, name: string = "", isBoostedChoice: boolean = false) {
-        console.log('[SeDieBetOptions] Rendering sub options', {
-            betChoice,
-            odd,
-            fractional,
-            name,
-            isBoostedChoice
-        });
         return (
             <BettingBlock odd={odd} betChoice={betChoice} namespace={setting.mainObserverNamespace}>
                 <div className={`${Styles["container-bets"]} ${Styles["padding-bet"]}`}>
@@ -49,13 +35,6 @@ export default class SeDieBetOptions extends BetOptions {
     }
 
     public renderMainOption(name: string, odd: number, betChoice: string, fractional: boolean, isBoostedChoice: boolean = false) {
-        console.log('[SeDieBetOptions] Rendering main option', {
-            name,
-            odd,
-            betChoice,
-            fractional,
-            isBoostedChoice
-        });
         return (
             <BettingBlock odd={odd} betChoice={betChoice} namespace={setting.mainObserverNamespace}>
                 <div className={`${Styles["container-bets"]} ${Styles["padding-bet"]}`}>
@@ -71,29 +50,15 @@ export default class SeDieBetOptions extends BetOptions {
     }
 
     renderTotalBet(choice: string) {
-        console.log('[SeDieBetOptions] Rendering total bet', {
-            choice,
-            totalBetValue: this.state?.totalBets?.[choice]
-        });
         return <TotalBet value={this.state?.totalBets?.[choice]} choice={choice} />;
     }
 
     renderOwnBet(choice: string) {
-        console.log('[SeDieBetOptions] Rendering own bet', {
-            choice,
-            ownBetValue: this.state?.ownBets?.[choice]
-        });
         return <OwnBet value={this.state?.ownBets?.[choice]} choice={choice} />;
     }
 
     isBoostedChoice(choice: string, boostedChoices: string[]) {
-        const isBoosted = boostedChoices ? boostedChoices.includes(choice) : false;
-        console.log('[SeDieBetOptions] Checking boosted choice', {
-            choice,
-            boostedChoices,
-            isBoosted
-        });
-        return isBoosted;
+        return boostedChoices ? boostedChoices.includes(choice) : false;
     }
 
     render() {
@@ -101,15 +66,6 @@ export default class SeDieBetOptions extends BetOptions {
         const odds = boostedOdds ? boostedOdds.values : roundOdds?.odds;
         const boostedChoices = boostedOdds ? boostedOdds.boostedChoices : roundOdds?.boostedChoices;
         const fractional = roundOdds?.fractional;
-
-        console.log('[SeDieBetOptions] Rendering component', {
-            roundOdds,
-            boostedOdds,
-            odds,
-            boostedChoices,
-            fractional,
-            state: this.state
-        });
 
         return (
             <div className={Styles["bet-options-wrapper"]}>

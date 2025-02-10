@@ -3,16 +3,10 @@ import Styles from "../vip-sedie.module.scss";
 
 export default class VIPSeDieBetOptions extends SeDieBetOptions {
     componentDidMount() {
-        console.log('[VIPSeDieBetOptions] Component mounted');
         super.componentDidMount?.();
     }
 
     componentDidUpdate(prevProps: any, prevState: any) {
-        console.log('[VIPSeDieBetOptions] Component updated', {
-            prevState,
-            currentState: this.state,
-            stateChanged: prevState !== this.state
-        });
         super.componentDidUpdate?.(prevProps, prevState);
     }
 
