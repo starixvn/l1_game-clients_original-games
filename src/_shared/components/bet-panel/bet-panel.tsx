@@ -17,6 +17,7 @@ export interface IBetPanel extends IStateObserver {
 class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends ObserverComponent<IPropsObserver, IStateObserver> {
     constructor(props: P) {
         super(props);
+        console.log("[BetPanel] Initializing component");
         this.state = {
             dispose: null,
             stakeLevel: {},
@@ -29,6 +30,7 @@ class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends O
     @render(gc.Player.MainPlayerStore, (store) => store.stakeLevel)
     setUserStakeLevel(stakeLevel: gc.Player.IStakeLevel) {
         if (stakeLevel) {
+            console.log("[BetPanel] Updating stake level:", stakeLevel);
             this.setState({ stakeLevel } as IBetPanel);
         }
     }
@@ -47,12 +49,13 @@ class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends O
         maxBet: number;
         maxBetPerChoices: gc.GameServiceMessage.MaxBetPerChoices;
     }) {
-
+        console.log("[BetPanel] Updating bet limits:", { minBet, maxBet, maxBetPerChoices });
         this.setState({ maxBetPerChoices, minBet, maxBet } as IBetPanel);
     }
 
     @handle(gc.Bet.BetHandler)
     handleBet(amount: number, betChoice: string) {
+        console.log("[BetPanel] Handling bet:", { amount, betChoice });
         return { amount, betChoice };
     }
 
@@ -84,15 +87,39 @@ const BetPanel: React.FC<{
     const [max, setMax] = useState(0);
 
     useEffect(() => {
-        setMin(Math.max(minBet, stakeLevel.minBet));
-        betChoice && setMax(Math.min(maxBetPerChoices?.[betChoice] || 0, Math.min(maxBet, stakeLevel.maxBet)));
+        const newMin = Math.max(minBet, stakeLevel.minBet);
+        const newMax = Math.min(maxBetPerChoices?.[betChoice] || 0, Math.min(maxBet, stakeLevel.maxBet));
+        console.log("[BetPanel] Updating bet limits:", {
+            newMin,
+            newMax,
+            betChoice,
+            maxBetPerChoices: maxBetPerChoices?.[betChoice],
+            stakeLevelMin: stakeLevel.minBet,
+            stakeLevelMax: stakeLevel.maxBet
+        });
+        setMin(newMin);
+        setMax(newMax);
     }, [maxBetPerChoices, minBet, maxBet, stakeLevel, betChoice]);
 
     const handleAmount = (event: any) => {
-        setAmount(+event?.target.value || 0);
+        const newAmount = +event?.target.value || 0;
+        console.log("[BetPanel] Amount changed:", {
+            newAmount,
+            isValid: newAmount >= min && newAmount <= max,
+            min,
+            max
+        });
+        setAmount(newAmount);
     };
 
     const onClickBet = () => {
+        console.log("[BetPanel] Attempting to place bet:", {
+            amount,
+            betChoice,
+            isValid: amount >= min && amount <= max,
+            min,
+            max
+        });
         if (amount >= min && amount <= max) {
             betChoice && handleBet?.(amount, betChoice);
             onHide?.();

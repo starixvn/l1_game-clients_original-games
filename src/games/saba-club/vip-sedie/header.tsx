@@ -12,7 +12,7 @@ const Header = () => {
     return (
         <div className={styles["game-title"]}>
             <div>{gameName}</div>
-            <div className={styles["text-center"]}>VIP Odd/Even</div>
+            <div className={styles["text-center"]}>Odd/Even</div>
             <div className={styles["text-center"]}>Red/White</div>
         </div>
     );
