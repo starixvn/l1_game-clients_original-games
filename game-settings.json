@@ -3,7 +3,9 @@
         "id": 1,
         "gameName": "BigSmall",
         "name": "BigSmall",
-        "namespaces": ["BigSmall"],
+        "namespaces": [
+            "BigSmall"
+        ],
         "durations": {
             "wholeRound": 61,
             "lockingBet": 5,
@@ -18,14 +20,16 @@
             "route": "livepagegateway"
         },
         "mainObserverNamespace": "BigSmall",
-        "order": 2,
+        "order": 3,
         "isSocketGateway": true
     },
     "2": {
         "id": 2,
         "gameName": "SeDie",
         "name": "SeDie",
-        "namespaces": ["SeDie"],
+        "namespaces": [
+            "SeDie"
+        ],
         "durations": {
             "wholeRound": 39,
             "lockingBet": 5,
@@ -40,6 +44,30 @@
             "route": "livepagegateway"
         },
         "mainObserverNamespace": "SeDie",
+        "order": 2,
+        "isSocketGateway": true
+    },
+    "22": {
+        "id": 22,
+        "gameName": "VipSeDie",
+        "name": "VipSeDie",
+        "namespaces": [
+            "VipSeDie"
+        ],
+        "durations": {
+            "wholeRound": 39,
+            "lockingBet": 5,
+            "placingBet": 30,
+            "generatingResult": 1,
+            "showingResult": 6,
+            "startRound": 2
+        },
+        "numberOfRoundHistory": 100,
+        "websocket": {
+            "proxyPath": "",
+            "route": "livepagegateway"
+        },
+        "mainObserverNamespace": "VipSeDie",
         "order": 1,
         "isSocketGateway": true
     },
@@ -47,7 +75,9 @@
         "id": 1003,
         "gameName": "LuckyNext1",
         "name": "LuckyNext1",
-        "namespaces": ["LuckyNext1"],
+        "namespaces": [
+            "LuckyNext1"
+        ],
         "durations": {
             "wholeRound": 164,
             "wholeTurn": 20,
@@ -71,7 +101,9 @@
         "id": 1007,
         "gameName": "SicBall",
         "name": "SicBall",
-        "namespaces": ["SicBall"],
+        "namespaces": [
+            "SicBall"
+        ],
         "durations": {
             "wholeRound": 30,
             "wholeTurn": 30,

@@ -76,7 +76,7 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
     }
 
     @handle(gc.GatewayConnection.GatewayConnectionHandlers.ConnectHandler)
-    connectLiveGateway() {}
+    connectLiveGateway() { }
 
     @render(gc.Player.MainPlayerStore, (store) => store.offerGames)
     handleOfferGames(offerGames: IOfferGame[]) {
