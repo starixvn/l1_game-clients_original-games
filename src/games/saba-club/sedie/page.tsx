@@ -17,11 +17,20 @@ import { SedieStatistic } from "./statistic";
 export default class SeDie extends GatewayGameBase<GameBaseProps, IGameBaseState> {
     constructor(props: GameBaseProps) {
         super(props);
-        configGameContainer(setting.name, containerOptions);
+
+        // Initialize game container before any observer usage
+        try {
+            configGameContainer(setting.name, containerOptions);
+            console.log(`[SeDie] Game container initialized for ${setting.name}`);
+        } catch (error) {
+            console.error(`[SeDie] Error initializing game container:`, error);
+        }
     }
 
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handleGateway())
-    closeConnect() {}
+    closeConnect() {
+        console.log(`[SeDie] Closing connection for game: ${setting.gameName}`);
+    }
 
     renderRoundHistory() {
         return <SeDieRoundHistory namespace={this.props.namespace} />;

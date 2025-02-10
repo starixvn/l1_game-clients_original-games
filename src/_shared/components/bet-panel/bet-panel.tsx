@@ -17,7 +17,7 @@ export interface IBetPanel extends IStateObserver {
 class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends ObserverComponent<IPropsObserver, IStateObserver> {
     constructor(props: P) {
         super(props);
-        console.log("[BetPanel] Initializing component");
+        console.log(`[BetPanel][${this.props.namespace}] Initializing component`);
         this.state = {
             dispose: null,
             stakeLevel: {},
@@ -30,7 +30,7 @@ class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends O
     @render(gc.Player.MainPlayerStore, (store) => store.stakeLevel)
     setUserStakeLevel(stakeLevel: gc.Player.IStakeLevel) {
         if (stakeLevel) {
-            console.log("[BetPanel] Updating stake level:", stakeLevel);
+            console.log(`[BetPanel][${this.props.namespace}] Updating stake level:`, stakeLevel);
             this.setState({ stakeLevel } as IBetPanel);
         }
     }
@@ -49,13 +49,13 @@ class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends O
         maxBet: number;
         maxBetPerChoices: gc.GameServiceMessage.MaxBetPerChoices;
     }) {
-        console.log("[BetPanel] Updating bet limits:", { minBet, maxBet, maxBetPerChoices });
+        console.log(`[BetPanel][${this.props.namespace}] Updating bet limits:`, { minBet, maxBet, maxBetPerChoices });
         this.setState({ maxBetPerChoices, minBet, maxBet } as IBetPanel);
     }
 
     @handle(gc.Bet.BetHandler)
     handleBet(amount: number, betChoice: string) {
-        console.log("[BetPanel] Handling bet:", { amount, betChoice });
+        console.log(`[BetPanel][${this.props.namespace}] Handling bet:`, { amount, betChoice });
         return { amount, betChoice };
     }
 
@@ -89,7 +89,7 @@ const BetPanel: React.FC<{
     useEffect(() => {
         const newMin = Math.max(minBet, stakeLevel.minBet);
         const newMax = Math.min(maxBetPerChoices?.[betChoice] || 0, Math.min(maxBet, stakeLevel.maxBet));
-        console.log("[BetPanel] Updating bet limits:", {
+        console.log("[BetPanel][Functional] Updating bet limits:", {
             newMin,
             newMax,
             betChoice,
@@ -103,7 +103,7 @@ const BetPanel: React.FC<{
 
     const handleAmount = (event: any) => {
         const newAmount = +event?.target.value || 0;
-        console.log("[BetPanel] Amount changed:", {
+        console.log("[BetPanel][Functional] Amount changed:", {
             newAmount,
             isValid: newAmount >= min && newAmount <= max,
             min,
@@ -113,7 +113,7 @@ const BetPanel: React.FC<{
     };
 
     const onClickBet = () => {
-        console.log("[BetPanel] Attempting to place bet:", {
+        console.log("[BetPanel][Functional] Attempting to place bet:", {
             amount,
             betChoice,
             isValid: amount >= min && amount <= max,

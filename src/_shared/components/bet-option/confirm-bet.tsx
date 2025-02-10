@@ -22,11 +22,11 @@ export class ConfirmBet extends ObserverComponent<IPropsObserver, IConfirmBet> {
     }
 
     componentDidMount() {
-        console.log("[ConfirmBet] Component mounted");
+        console.log("[ConfirmBet] Component mounted" + this.props.namespace);
     }
 
     componentWillUnmount() {
-        console.log("[ConfirmBet] Component will unmount");
+        console.log("[ConfirmBet] Component will unmount" + this.props.namespace);
     }
 
     @render(gc.Bet.BetStore, (store) => store.lastReceivedBet)

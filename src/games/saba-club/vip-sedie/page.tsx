@@ -21,7 +21,9 @@ export default class VipSeDie extends GatewayGameBase<GameBaseProps, IGameBaseSt
     }
 
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handleGateway())
-    closeConnect() { }
+    closeConnect() {
+        console.log(`[VipSeDie] Closing connection for game: ${setting.gameName}`);
+    }
 
     renderRoundHistory() {
         return <SeDieRoundHistory namespace={this.props.namespace} />;
