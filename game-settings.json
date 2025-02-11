@@ -44,7 +44,7 @@
             "route": "livepagegateway"
         },
         "mainObserverNamespace": "SeDie",
-        "order": 2,
+        "order": 1,
         "isSocketGateway": true
     },
     "22": {
@@ -68,7 +68,7 @@
             "route": "livepagegateway"
         },
         "mainObserverNamespace": "VipSeDie",
-        "order": 1,
+        "order": 2,
         "isSocketGateway": true
     },
     "1003": {
