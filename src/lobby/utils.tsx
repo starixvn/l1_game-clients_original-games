@@ -1,6 +1,7 @@
 import * as gc from "@sg/sg-game-client";
 import { NextRouter } from "next/router";
 import { Tab } from "react-bootstrap";
+import Image from "next/image";
 import { getGameSetting, getGameSettingIds } from "../_shared/app-settings";
 import { BigSmall, SeDie, VipSeDie } from "../games/saba-club";
 import { LuckyNext, SicBall } from "../games/saba-xD";
@@ -62,6 +63,35 @@ const getFilteredGames = (
     return filteredGames;
 };
 
+const getGameIconPath = (gameId: number): string => {
+    const iconMap: { [key: number]: string } = {
+        [settingsSeDie.id]: "/static/images/game-icons/sedie.png",
+        [settingsVipSeDie.id]: "/static/images/game-icons/vip-sedie.png",
+        // Add other game icons here as they become available
+    };
+    return iconMap[gameId] || "";
+};
+
+const TabTitleWithIcon = ({ gameId, gameName }: { gameId: number; gameName: string }) => {
+    const iconPath = getGameIconPath(gameId);
+
+    return (
+        <div className={styles["tab-title"]}>
+            {iconPath && (
+                <Image
+                    src={iconPath}
+                    alt={gameName}
+                    width={32}
+                    height={32}
+                    className={styles["tab-icon"]}
+                    priority
+                />
+            )}
+            <span>{gameName}</span>
+        </div>
+    );
+};
+
 const getGameTabById = (gameId: number, router: NextRouter, isRenderGame: boolean) => {
     const gameSetting = getGameSetting(gameId);
     if (!gameSetting) {
@@ -72,7 +102,12 @@ const getGameTabById = (gameId: number, router: NextRouter, isRenderGame: boolea
     const key = gameSetting.mainObserverNamespace;
 
     return (
-        <Tab key={gameId} eventKey={gameId} title={gameName} unmountOnExit={true}>
+        <Tab
+            key={gameId}
+            eventKey={gameId}
+            title={<TabTitleWithIcon gameId={gameId} gameName={gameName} />}
+            unmountOnExit={true}
+        >
             {getGameHeaderById(gameId)}
             {isRenderGame && <div className={styles["game-lobby"]}>{getGameById(gameId, router)}</div>}
         </Tab>

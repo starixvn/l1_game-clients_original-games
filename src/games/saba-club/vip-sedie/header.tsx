@@ -3,6 +3,7 @@ import React from "react";
 import { setting } from "./game-settings";
 import { getGameSetting } from "../../../_shared/app-settings";
 import styles from "../../../../src/lobby/lobby.module.scss";
+import Image from "next/image";
 
 const gameId = setting.id;
 const gameSetting = getGameSetting(gameId);
@@ -11,7 +12,17 @@ const gameName = gc.Translator.t(`${gameSetting.gameName}.game_name`);
 const Header = () => {
     return (
         <div className={styles["game-title"]}>
-            <div>{gameName}</div>
+            <div className={styles["title-with-icon"]}>
+                <Image
+                    src="/static/images/game-icons/vip-sedie.png"
+                    alt="VIP Sedie Game Icon"
+                    width={32}
+                    height={32}
+                    className={styles["game-icon"]}
+                    priority
+                />
+                <div>{gameName}</div>
+            </div>
             <div className={styles["text-center"]}>Odd/Even</div>
             <div className={styles["text-center"]}>Red/White</div>
         </div>
