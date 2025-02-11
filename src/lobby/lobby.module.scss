@@ -5,6 +5,7 @@
 
         :global(.nav-tabs) {
             border: none;
+            border-bottom: none;
             padding: 4px 4px 0;
         }
 
@@ -83,7 +84,13 @@
         .title-with-icon {
             display: flex;
             align-items: center;
-            gap: 8px;
+            // gap: 8px;
+
+            .divider {
+                border-left: 2px solid #ccc;
+                height: 30px;
+                margin-left: 8px;
+            }
 
             .arrow-icon {
                 object-fit: contain;
@@ -93,8 +100,12 @@
                 align-items: center;
                 justify-content: center;
                 padding: 0;
-                border-right: 1px solid #ccc;
-                padding-right: 8px;
+                cursor: pointer;
+                transition: transform 0.2s ease;
+
+                &.collapsed {
+                    transform: rotate(-90deg);
+                }
             }
 
             .game-icon {
@@ -106,6 +117,20 @@
                 justify-content: center;
                 padding: 0;
             }
+        }
+    }
+
+    .game-lobby {
+        padding: 10px 0px;
+        transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
+        max-height: 2000px;
+        opacity: 1;
+        overflow: hidden;
+
+        &.collapsed {
+            max-height: 0;
+            opacity: 0;
+            padding: 0;
         }
     }
 

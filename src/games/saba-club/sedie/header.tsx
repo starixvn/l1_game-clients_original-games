@@ -9,7 +9,14 @@ const gameId = setting.id;
 const gameSetting = getGameSetting(gameId);
 const gameName = gc.Translator.t(`${gameSetting.gameName}.game_name`);
 
-const Header = () => {
+interface HeaderProps {
+    arrowProps?: {
+        className?: string;
+        onClick?: (e: React.MouseEvent) => void;
+    };
+}
+
+const Header: React.FC<HeaderProps> = ({ arrowProps }) => {
     return (
         <div className={styles["game-title"]}>
             <div className={styles["title-with-icon"]}>
@@ -18,9 +25,10 @@ const Header = () => {
                     alt="Arrow Icon"
                     width={24}
                     height={24}
-                    className={styles["arrow-icon"]}
+                    {...arrowProps}
                     priority
                 />
+                <span className={styles.divider} />
                 <Image
                     src="/static/images/game-icons/sedie.png"
                     alt="Sedie Game Icon"
@@ -29,7 +37,6 @@ const Header = () => {
                     className={styles["game-icon"]}
                     priority
                 />
-
                 <div>{gameName}</div>
             </div>
             <div className={styles["text-center"]}>Odd/Even</div>

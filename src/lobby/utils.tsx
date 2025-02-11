@@ -2,10 +2,12 @@ import * as gc from "@sg/sg-game-client";
 import { NextRouter } from "next/router";
 import { Tab } from "react-bootstrap";
 import Image from "next/image";
+import React from "react";
 import { getGameSetting, getGameSettingIds } from "../_shared/app-settings";
 import { BigSmall, SeDie, VipSeDie } from "../games/saba-club";
 import { LuckyNext, SicBall } from "../games/saba-xD";
 import styles from "./lobby.module.scss";
+import classNames from "classnames";
 
 // Initialize settings
 const settingsSeDie = SeDie.Setting.setting;
@@ -32,7 +34,7 @@ const getGameById = (gameId: number, router: NextRouter) => {
     return games[gameId];
 };
 
-const getGameHeaderById = (gameId: number) => {
+const getGameHeaderById = (gameId: number, isExpanded: boolean, onToggleExpand: (gameId: number) => void) => {
     const gameHeader = {
         [settingsSeDie.id]: <SeDie.Header />,
         [settingsBigSmall.id]: <BigSmall.Header />,
@@ -41,7 +43,19 @@ const getGameHeaderById = (gameId: number) => {
         [settingsVipSeDie.id]: <VipSeDie.Header />,
     };
 
-    return gameHeader[gameId];
+    const header = gameHeader[gameId];
+    if (!header) return null;
+
+    // Clone the header element and add the click handler to its arrow icon
+    return React.cloneElement(header, {
+        arrowProps: {
+            className: classNames(styles["arrow-icon"], { [styles.collapsed]: !isExpanded }),
+            onClick: (e: React.MouseEvent) => {
+                e.stopPropagation();
+                onToggleExpand(gameId);
+            }
+        }
+    });
 };
 
 const getFilteredGames = (
@@ -92,7 +106,13 @@ const TabTitleWithIcon = ({ gameId, gameName }: { gameId: number; gameName: stri
     );
 };
 
-const getGameTabById = (gameId: number, router: NextRouter, isRenderGame: boolean) => {
+const getGameTabById = (
+    gameId: number,
+    router: NextRouter,
+    isRenderGame: boolean,
+    isExpanded: boolean,
+    onToggleExpand: (gameId: number) => void
+) => {
     const gameSetting = getGameSetting(gameId);
     if (!gameSetting) {
         return null;
@@ -108,8 +128,10 @@ const getGameTabById = (gameId: number, router: NextRouter, isRenderGame: boolea
             title={<TabTitleWithIcon gameId={gameId} gameName={gameName} />}
             unmountOnExit={true}
         >
-            {getGameHeaderById(gameId)}
-            {isRenderGame && <div className={styles["game-lobby"]}>{getGameById(gameId, router)}</div>}
+            {getGameHeaderById(gameId, isExpanded, onToggleExpand)}
+            <div className={classNames(styles["game-lobby"], { [styles.collapsed]: !isExpanded })}>
+                {isRenderGame && getGameById(gameId, router)}
+            </div>
         </Tab>
     );
 };
