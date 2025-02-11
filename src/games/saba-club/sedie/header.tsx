@@ -39,8 +39,12 @@ const Header: React.FC<HeaderProps> = ({ arrowProps }) => {
                 />
                 <div>{gameName}</div>
             </div>
-            <div className={styles["text-center"]}>Odd/Even</div>
-            <div className={styles["text-center"]}>Red/White</div>
+            <div className={styles["game-title-text-center"]}>
+                Odd/Even
+            </div>
+            <div className={styles["game-title-text-center"]}>
+                Red/White
+            </div>
         </div>
     );
 };

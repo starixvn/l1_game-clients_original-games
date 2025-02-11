@@ -76,11 +76,20 @@
         grid-template-columns: 1fr 10rem 30rem;
 
         * {
-            padding: .2rem .4rem;
+            padding: 0rem .4rem;
         }
 
         .text-center {
             text-align: center;
+        }
+
+        .game-title-text-center {
+            text-align: center;
+            border-left: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            justify-items: center;
         }
 
         .title-with-icon {
@@ -89,7 +98,7 @@
             // gap: 8px;
 
             .divider {
-                border-left: 2px solid #ccc;
+                border-left: 1px solid #ccc;
                 height: 30px;
                 margin-left: 8px;
             }
@@ -124,7 +133,7 @@
     }
 
     .game-lobby {
-        padding: 10px 0px;
+        // padding: 10px 0px;
         transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
         max-height: 2000px;
         opacity: 1;
