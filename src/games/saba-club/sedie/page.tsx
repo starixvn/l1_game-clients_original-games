@@ -18,18 +18,15 @@ export default class SeDie extends GatewayGameBase<GameBaseProps, IGameBaseState
     constructor(props: GameBaseProps) {
         super(props);
 
-        // Initialize game container before any observer usage
         try {
             configGameContainer(setting.name, containerOptions);
-            console.log(`[SeDie] Game container initialized for ${setting.name}`);
         } catch (error) {
-            console.error(`[SeDie] Error initializing game container:`, error);
+            // Silent fail on initialization error
         }
     }
 
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handleGateway())
     closeConnect() {
-        console.log(`[SeDie] Closing connection for game: ${setting.gameName}`);
     }
 
     renderRoundHistory() {
@@ -61,7 +58,6 @@ export default class SeDie extends GatewayGameBase<GameBaseProps, IGameBaseState
         result?: gc.GameServiceMessage.TResult,
         settlementResult?: gc.GameServiceMessage.TSettlementResult
     ) {
-        //implement animation
         await FunctionUtils.delay(2000);
     }
 }

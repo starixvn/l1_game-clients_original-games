@@ -18,52 +18,28 @@ export class ConfirmBet extends ObserverComponent<IPropsObserver, IConfirmBet> {
             validBet: {},
             betChoice: "",
         } as IConfirmBet;
-        console.log("[ConfirmBet] Initialized with state:", this.state);
-    }
-
-    componentDidMount() {
-        console.log("[ConfirmBet] Component mounted" + this.props.namespace);
-    }
-
-    componentWillUnmount() {
-        console.log("[ConfirmBet] Component will unmount" + this.props.namespace);
     }
 
     @render(gc.Bet.BetStore, (store) => store.lastReceivedBet)
     setTotalStake(lastReceivedBet: gc.Bet.ILastReceivedBet) {
-        console.log("[ConfirmBet] Received new bet:", lastReceivedBet);
-        lastReceivedBet && this.setState({ totalStake: lastReceivedBet.value }, () => {
-            console.log("[ConfirmBet] Updated total stake:", this.state.totalStake);
-        });
+        lastReceivedBet && this.setState({ totalStake: lastReceivedBet.value });
     }
-
     @render(gc.Bet.BetStore, (store) => store.betChoice)
     setBetChoice(betChoice: string) {
-        console.log("[ConfirmBet] Received bet choice:", betChoice);
-        betChoice && this.setState({ betChoice }, () => {
-            console.log("[ConfirmBet] Updated bet choice:", this.state.betChoice);
-        });
+        betChoice && this.setState({ betChoice });
     }
 
     @render(gc.Bet.BetStore, (store) => store.validBet)
     setIsValidBet(validBet: gc.Bet.IValidBet) {
-        console.log("[ConfirmBet] Received valid bet update:", validBet);
-        this.setState({ validBet }, () => {
-            console.log("[ConfirmBet] Updated valid bet state:", this.state.validBet);
-        });
+        this.setState({ validBet });
     }
 
     handleClose = () => {
-        console.log("[ConfirmBet] Modal closing");
-        this.setState({ validBet: { value: false } }, () => {
-            console.log("[ConfirmBet] Modal closed, state updated:", this.state);
-        });
+        this.setState({ validBet: { value: false } });
     };
 
     render() {
         const { totalStake, validBet, betChoice } = this.state;
-        console.log("[ConfirmBet] Rendering with state:", { totalStake, validBet, betChoice });
-
         return validBet?.value ? (
             <Modal show={true} onHide={this.handleClose} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
                 <Modal.Header closeButton>

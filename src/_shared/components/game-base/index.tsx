@@ -39,16 +39,15 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     onDestroy() {
-        console.log(`Game ${this.props.namespace} is being destroyed.`);
         this.closeConnect();
     }
 
     abstract closeConnect(): void;
 
-    onVisibilityChange = () => { };
+    onVisibilityChange = () => {};
 
     @handle(gc.Connection.ConnectionHandlers.ConnectHandler)
-    connectToService() { }
+    connectToService() {}
 
     @render(gc.Connection.ConnectionStore, (store) => store.isSignedIn)
     handleConnected(isSignedIn: boolean) {
@@ -126,7 +125,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     @handle(Lobby.LobbyHandlers.TryToConnectHandler)
-    tryToConnectHandler() { }
+    tryToConnectHandler() {}
 
     @render(gc.Connection.ConnectionStore, (store) => store.isConnectFailed)
     handleConnectFail(isConnectFailed: boolean) {
