@@ -6,6 +6,7 @@
         "namespaces": [
             "BigSmall"
         ],
+        "isVisible": false,
         "durations": {
             "wholeRound": 61,
             "lockingBet": 5,
@@ -30,6 +31,7 @@
         "namespaces": [
             "SeDie"
         ],
+        "isVisible": true,
         "durations": {
             "wholeRound": 39,
             "lockingBet": 5,
@@ -54,6 +56,7 @@
         "namespaces": [
             "VipSeDie"
         ],
+        "isVisible": true,
         "durations": {
             "wholeRound": 39,
             "lockingBet": 5,
@@ -78,6 +81,7 @@
         "namespaces": [
             "LuckyNext1"
         ],
+        "isVisible": true,
         "durations": {
             "wholeRound": 164,
             "wholeTurn": 20,
@@ -104,6 +108,7 @@
         "namespaces": [
             "SicBall"
         ],
+        "isVisible": true,
         "durations": {
             "wholeRound": 30,
             "wholeTurn": 30,

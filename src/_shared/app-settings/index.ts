@@ -40,14 +40,29 @@ export const getGameSetting = (gameId: number) => {
     return settings;
 };
 
-export const getGameSettingIds = () => {
+export const getGameSettingIds = (visibleOnly: boolean = true) => {
     const gameSettings = Object.keys(appSettings.gameSettings).map((value) => {
         return appSettings.gameSettings[value];
     });
-    const orderedGameSettings = gameSettings.sort((a, b) => a.order - b.order);
+
+    const filteredSettings = visibleOnly
+        ? gameSettings.filter(setting => setting.isVisible)
+        : gameSettings;
+
+    const orderedGameSettings = filteredSettings.sort((a, b) => a.order - b.order);
 
     const ids = orderedGameSettings.map((value) => value.id);
     return ids;
+};
+
+export const getVisibleGameSettings = () => {
+    const gameSettings = Object.keys(appSettings.gameSettings).map((value) => {
+        return appSettings.gameSettings[value];
+    });
+
+    return gameSettings
+        .filter(setting => setting.isVisible)
+        .sort((a, b) => a.order - b.order);
 };
 
 export default appSettings;
