@@ -1,6 +1,9 @@
-
-
-html {
+html,
+body {
+    background: linear-gradient(180deg, #D9D9D9 0%, #FFFFFF 100%);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
     // dots
     --dot-even-background: linear-gradient(180deg, #ffffff 0%, #e7e7e7 100%);
     --dot-current-highlight: linear-gradient(180deg, #EFEFEF 0%, #ADADAD 100%);

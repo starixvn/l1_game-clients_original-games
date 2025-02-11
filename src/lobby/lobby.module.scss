@@ -1,21 +1,20 @@
 .lobby {
     .lobby-tabs {
-        margin-bottom: 0 !important;
-        background-color: #e6e6e6;
+        margin-bottom: 10px !important;
+        // background-color: #e6e6e6;
 
         :global(.nav-tabs) {
             border: none;
             padding: 4px 4px 0;
-            gap: 4px;
         }
 
         :global(.nav-item) {
-            margin: 0;
+            margin-right: 5px;
         }
 
         :global(.nav-link) {
             border: none;
-            background: #CCCCCC;
+            background: #e6e6e6;
             border-radius: 4px 4px 0 0;
             padding: 8px 12px;
             color: #333;
