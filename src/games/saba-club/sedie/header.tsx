@@ -14,6 +14,14 @@ const Header = () => {
         <div className={styles["game-title"]}>
             <div className={styles["title-with-icon"]}>
                 <Image
+                    src="/static/images/lobby/arrow.png"
+                    alt="Arrow Icon"
+                    width={24}
+                    height={24}
+                    className={styles["arrow-icon"]}
+                    priority
+                />
+                <Image
                     src="/static/images/game-icons/sedie.png"
                     alt="Sedie Game Icon"
                     width={32}
@@ -21,6 +29,7 @@ const Header = () => {
                     className={styles["game-icon"]}
                     priority
                 />
+
                 <div>{gameName}</div>
             </div>
             <div className={styles["text-center"]}>Odd/Even</div>
