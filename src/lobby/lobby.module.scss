@@ -15,19 +15,21 @@
 
         :global(.nav-link) {
             border: none;
-            background: #e6e6e6;
+            background: url('/static/images/lobby/inactive-bg.png') no-repeat center center / cover;
             border-radius: 4px 4px 0 0;
             padding: 8px 12px;
             color: #333;
             margin: 0;
+            filter: brightness(1.05);
 
             &:hover {
-                background: #f0f0f0;
+                background: url('/static/images/lobby/inactive-bg.png') no-repeat center center / cover;
+                filter: brightness(1.1);
                 border: none;
             }
 
             &:global(.active) {
-                background: #2D4976;
+                background: url('/static/images/lobby/active-bg.png') no-repeat center center / cover;
                 border: none;
                 color: #fff;
             }
@@ -102,9 +104,10 @@
                 padding: 0;
                 cursor: pointer;
                 transition: transform 0.2s ease;
+                transform: rotate(90deg);
 
                 &.collapsed {
-                    transform: rotate(-90deg);
+                    transform: rotate(0deg);
                 }
             }
 
