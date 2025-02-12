@@ -1,5 +1,4 @@
 import SeDieBetOptions from "../../sedie/bet-option/sedie-bet-options";
-import Styles from "../vip-sedie.module.scss";
 
 export default class VIPSeDieBetOptions extends SeDieBetOptions {
     public renderSubOptions(betChoice: string, odd: number, fractional: boolean, name: string = "", isBoostedChoice: boolean = false) {

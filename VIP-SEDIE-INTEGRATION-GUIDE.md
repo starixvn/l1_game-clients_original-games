@@ -13,10 +13,11 @@
     - [Integration Steps](#integration-steps)
     - [WebSocket Integration](#websocket-integration)
     - [Component Inheritance](#component-inheritance)
-    - [Styling Implementation](#styling-implementation)
-5. [Testing & Quality Assurance](#testing--quality-assurance)
-6. [Deployment & Maintenance](#deployment--maintenance)
-7. [Reference](#reference)
+5. [Checklist](#checklist)
+6. [Reference](#reference)
+    - [Key Differences from Regular Se Die](#key-differences-from-regular-se-die)
+    - [Best Practices](#best-practices)
+    - [Troubleshooting](#troubleshooting)
 
 ## Overview
 
@@ -87,8 +88,7 @@ vip-sedie/
 ├── game-settings.ts
 ├── header.tsx
 ├── index.ts
-├── page.tsx
-└── vip-sedie.module.scss
+└── page.tsx
 ```
 
 2. **Required Assets** (`public/static/images/`):
@@ -174,7 +174,7 @@ export const GAME_IDS = {
 2. **Localization Files**:
 
 ```json
-// src/i18n/locales/en.json & id.json
+// src/i18n/locales/en.json & id.json & th.json & vi.json & zh_cn.json & zh_tw.json
 {
     "games": {
         "vip_sedie": {
@@ -249,69 +249,13 @@ export default class VipSeDie extends GatewayGameBase<GameBaseProps, IGameBaseSt
 }
 ```
 
-### Styling Implementation
-
-1. **VIP-Specific Styles**:
-
-```scss
-.bet-options-wrapper {
-    background: linear-gradient(to bottom, #2c3e50, #3498db);
-    padding: 1rem;
-    border-radius: 8px;
-}
-
-.container-bets {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-}
-```
-
-2. **Header Component**:
-
-```typescript
-const Header: React.FC<HeaderProps> = ({ arrowProps }) => (
-    <div className={styles["game-title"]}>
-        <div className={styles["title-with-icon"]}>
-            <Image src="/static/images/lobby/arrow.png" alt="Arrow Icon" width={24} height={24} {...arrowProps} priority />
-            <Image
-                src="/static/images/game-icons/vip-sedie.png"
-                alt="VIP Sedie Game Icon"
-                width={32}
-                height={32}
-                className={styles["game-icon"]}
-                priority
-            />
-            <div>{gameName}</div>
-        </div>
-        <div className={styles["game-title-text-center"]}>Odd/Even</div>
-        <div className={styles["game-title-text-center"]}>Red/White</div>
-    </div>
-);
-```
-
-## Testing & Quality Assurance
-
--   Component Testing: Game initialization, betting, WebSocket, state management
--   Integration Testing: Lobby interaction, transitions, VIP features
--   Performance Testing: Resource loading, state management, WebSocket stability
-
-## Deployment & Maintenance
-
-### Checklist & Monitoring
+## Checklist
 
 -   [ ] Configuration setup
 -   [ ] Asset integration
 -   [ ] Component implementation
 -   [ ] Translations
--   [ ] Testing (WebSocket, styling, betting, results)
--   [ ] Performance & security testing
-
-### Metrics & Logging
-
--   Performance: Component rendering, asset loading, WebSocket stability
--   User Engagement: VIP features, betting patterns, session duration
--   Error Tracking: VIP-specific errors, component boundaries
--   System Events: Component lifecycle, state transitions, WebSocket events
+-   [ ] Testing (WebSocket, betting, results)
 
 ## Reference
 
@@ -319,7 +263,7 @@ const Header: React.FC<HeaderProps> = ({ arrowProps }) => (
 
 -   Game ID: Regular (2) vs VIP (22)
 -   Enhanced UI Components & Premium Features
--   VIP-specific betting limits and rules
+-   VIP-specific betting limits
 
 ### Best Practices
 
@@ -330,7 +274,6 @@ const Header: React.FC<HeaderProps> = ({ arrowProps }) => (
 ### Troubleshooting
 
 -   WebSocket: Check namespace configuration and routes
--   Styling: Verify SCSS imports and class conflicts
 -   State Management: Observer pattern implementation
 -   Game Registration: Verify configs.json and game ID configuration
 
