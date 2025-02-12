@@ -590,4 +590,241 @@ Common issues and solutions:
     - Use environment variables where appropriate
     - Maintain clear documentation
 
+## 12. Component Inheritance Structure
+
+### 12.1 Bet Options Component
+
+The VIP Se Die bet options component inherits from the base Se Die implementation:
+
+```typescript
+// src/games/saba-club/vip-sedie/bet-option/vip-sedie-bet-options.tsx
+import SeDieBetOptions from "../../sedie/bet-option/sedie-bet-options";
+
+export default class VIPSeDieBetOptions extends SeDieBetOptions {
+    public renderSubOptions(betChoice: string, odd: number, fractional: boolean, name: string = "", isBoostedChoice: boolean = false) {
+        return super.renderSubOptions(betChoice, odd, fractional, name, isBoostedChoice);
+    }
+
+    public renderMainOption(name: string, odd: number, betChoice: string, fractional: boolean, isBoostedChoice: boolean = false) {
+        return super.renderMainOption(name, odd, betChoice, fractional, isBoostedChoice);
+    }
+}
+```
+
+### 12.2 Main Game Component
+
+The main game component extends GatewayGameBase and uses the observer pattern:
+
+```typescript
+@observer(setting.mainObserverNamespace)
+export default class VipSeDie extends GatewayGameBase<GameBaseProps, IGameBaseState> {
+    constructor(props: GameBaseProps) {
+        super(props);
+        configGameContainer(setting.name, containerOptions);
+    }
+
+    // Component implementations
+}
+```
+
+## 13. Styling Updates
+
+### 13.1 VIP-Specific Styling
+
+The VIP version includes premium styling with a gradient background and enhanced visual effects:
+
+```scss
+.bet-options-wrapper {
+    background: linear-gradient(to bottom, #2c3e50, #3498db);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.container-bets {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+}
+
+.bets-bg {
+    background-color: rgba(255, 246, 243, 0.15);
+    backdrop-filter: blur(5px);
+}
+
+.main-option {
+    color: #fff;
+    font-weight: 600;
+}
+```
+
+### 13.2 Header Component
+
+The header component has been updated with VIP-specific styling and layout:
+
+```typescript
+const Header: React.FC<HeaderProps> = ({ arrowProps }) => {
+    return (
+        <div className={styles["game-title"]}>
+            <div className={styles["title-with-icon"]}>
+                <Image src="/static/images/lobby/arrow.png" alt="Arrow Icon" width={24} height={24} {...arrowProps} priority />
+                <span className={styles.divider} />
+                <Image
+                    src="/static/images/game-icons/vip-sedie.png"
+                    alt="VIP Sedie Game Icon"
+                    width={32}
+                    height={32}
+                    className={styles["game-icon"]}
+                    priority
+                />
+                <div>{gameName}</div>
+            </div>
+            <div className={styles["game-title-text-center"]}>Odd/Even</div>
+            <div className={styles["game-title-text-center"]}>Red/White</div>
+        </div>
+    );
+};
+```
+
+## 14. Implementation Changes
+
+### 14.1 Game Settings
+
+The game settings have been updated to use a more modular approach:
+
+```typescript
+import { getGameSetting, getSiteConfig } from "../../../_shared/app-settings";
+import { GameIds } from "../../../_shared/constants";
+
+export const setting = getGameSetting(GameIds.VipSeDie);
+export const siteConfigs = getSiteConfig(GameIds.VipSeDie);
+export const containerOptions: gc.IContainerOptions = gc.getGameContainer(setting, siteConfigs, sharedContainer);
+```
+
+### 14.2 Component Reuse
+
+The VIP version reuses several components from the base Se Die implementation:
+
+```typescript
+import SeDieRoundHistory from "../sedie/round-history";
+import SeDieSettlementResult from "../sedie/settlement-result";
+import { SedieStatistic } from "../sedie/statistic";
+```
+
+### 14.3 Result Display
+
+The result display implementation has been enhanced:
+
+```typescript
+async showResult(
+    hasAnimation: boolean,
+    result?: gc.GameServiceMessage.TResult,
+    settlementResult?: gc.GameServiceMessage.TSettlementResult
+) {
+    await FunctionUtils.delay(2000);
+}
+```
+
+## 15. Testing Considerations
+
+### 15.1 Component Testing
+
+When testing VIP Se Die components, consider:
+
+1. **Inheritance Testing**
+
+    - Test that overridden methods maintain base functionality
+    - Verify VIP-specific enhancements work correctly
+    - Test interaction between parent and child components
+
+2. **Styling Tests**
+
+    - Verify VIP-specific styles are applied correctly
+    - Test responsive behavior
+    - Ensure proper inheritance of base styles
+
+3. **Integration Tests**
+    - Test interaction with shared components
+    - Verify proper game state management
+    - Test betting flow with VIP limits
+
+### 15.2 Performance Testing
+
+Additional performance considerations for VIP implementation:
+
+1. **Resource Loading**
+
+    - Monitor loading time of VIP assets
+    - Test performance with premium animations
+    - Verify memory usage with enhanced graphics
+
+2. **State Management**
+    - Test observer pattern implementation
+    - Verify proper cleanup of resources
+    - Monitor WebSocket connection stability
+
+## 16. Deployment Notes
+
+### 16.1 Asset Management
+
+1. **VIP Assets**
+
+    - Ensure all VIP-specific assets are properly optimized
+    - Verify asset paths in production build
+    - Implement proper caching strategies
+
+2. **Build Process**
+    - Update build configuration for VIP assets
+    - Verify proper bundling of VIP components
+    - Test production build performance
+
+### 16.2 Configuration Management
+
+1. **Environment Settings**
+
+    - Verify VIP-specific settings in all environments
+    - Test configuration inheritance
+    - Validate WebSocket endpoints
+
+2. **Feature Flags**
+    - Implement VIP feature toggles
+    - Test graceful degradation
+    - Verify access control
+
+## 17. Monitoring and Analytics
+
+### 17.1 VIP-Specific Metrics
+
+Monitor these additional metrics for VIP implementation:
+
+1. **Performance Metrics**
+
+    - Component render times
+    - Asset loading performance
+    - WebSocket connection stability
+
+2. **User Engagement**
+
+    - VIP feature usage
+    - Betting patterns
+    - Session duration
+
+3. **Error Tracking**
+    - VIP-specific error rates
+    - Component error boundaries
+    - WebSocket connection issues
+
+### 17.2 Logging
+
+Implement additional logging for VIP features:
+
+1. **User Actions**
+
+    - VIP betting patterns
+    - Feature usage
+    - Error scenarios
+
+2. **System Events**
+    - Component lifecycle events
+    - State transitions
+    - WebSocket events
+
 This guide provides a comprehensive overview of integrating VIP Se Die into your project. Follow each section carefully and ensure proper testing at each stage of integration.
