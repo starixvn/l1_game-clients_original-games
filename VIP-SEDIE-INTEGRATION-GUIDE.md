@@ -97,9 +97,13 @@ public/static/images/
 Add these imports to your components:
 
 ```typescript
+import * as gc from "@sg/sg-game-client";
 import { GameBase } from "@shared/components/game-base";
 import { ObserverComponent } from "@shared/components/observer-component";
 import { BetOption } from "@shared/components/bet-option";
+import { withRouter } from "next/router";
+import { Tabs } from "react-bootstrap";
+import Image from "next/image";
 ```
 
 ### 3.2 Game Settings Implementation
@@ -110,6 +114,7 @@ In `src/games/saba-club/vip-sedie/game-settings.ts`:
 export const gameSettings = {
     gameId: 22,
     namespace: "VipSeDie",
+    mainObserverNamespace: "VipSeDie",
     // Add other specific settings
 };
 ```
@@ -121,83 +126,348 @@ export const gameSettings = {
     - Extend from base game implementation
     - Implement VIP-specific features
     - Use the VIP Se Die game settings
+    - Implement proper component lifecycle management
+    - Use `ObserverComponent` for efficient updates
 
 2. **Header Component (header.tsx)**
 
     - Customize header for VIP version
     - Implement VIP-specific UI elements
+    - Include game icon and title display
+    - Add collapsible section support
 
 3. **Bet Options (vip-sedie-bet-options.tsx)**
     - Implement custom betting options
     - Extend from base-sedie-bet-options if needed
     - Add VIP-specific betting features
+    - Include bet validation logic
 
-## 4. Integration Steps
+## 4. Game Navigation Bar (Lobby) Integration
 
-### 4.1 Update App Settings
+### 4.1 Navigation Bar Structure
 
-1. Modify `src/_shared/app-settings/index.ts` to include VIP Se Die
-2. Update types in `src/_shared/app-settings/type.d.ts`
-3. Add VIP Se Die related constants to `src/_shared/constants/index.ts`
+The game navigation bar (formerly referred to as lobby) is implemented using React-Bootstrap Tabs with the following structure:
 
-### 4.2 Implement Localization
-
-Add translations in:
-
-1. English (src/i18n/locales/en.json):
-
-```json
-{
-    "games": {
-        "vip_sedie": {
-            "title": "VIP Se Die"
-            // Add other translations
-        }
-    }
-}
+```typescript
+<Tabs defaultActiveKey={offerGames[0].gameId} className={styles["lobby-tabs"]}>
+    {games.map((game) => (
+        <Tab key={gameId} eventKey={gameId} title={<TabTitleWithIcon gameId={gameId} gameName={gameName} />} unmountOnExit={true}>
+            {/* Game content */}
+        </Tab>
+    ))}
+</Tabs>
 ```
 
-2. Indonesian (src/i18n/locales/id.json):
+### 4.2 Navigation Tab Components
 
-```json
-{
-    "games": {
-        "vip_sedie": {
-            "title": "VIP Se Die"
-            // Add other translations
-        }
-    }
-}
-```
+Each game navigation tab includes:
 
-### 4.3 Update Game Navigation Bar (Lobby) Integration
+1. **Tab Header**
 
--   Modify `src/lobby/lobby.module.scss` for VIP Se Die styling in the game navigation bar
--   Add game to navigation bar list
+    - Game icon (24x24 pixels)
+    - Game name
+    - Active/Inactive states
+    - Custom styling for VIP version
 
-Note: The term "lobby" in this codebase refers to the game navigation bar component that allows users to switch between different games.
+2. **Game Content**
+    - Collapsible game section
+    - Expandable/collapsible toggle
+    - Transition animations
+    - Game-specific content area
 
-### 4.4 Update Lobby Integration
+### 4.3 Navigation Bar Styling
 
--   Modify `src/lobby/lobby.module.scss` for VIP Se Die styling
--   Add game to lobby list
-
-## 5. Styling Implementation
-
-### 5.1 Game-Specific Styles
-
-Create `vip-sedie.module.scss`:
+The game navigation bar uses modular SCSS with the following key style components:
 
 ```scss
-// Import base styles
-@import "@shared/components/game-base/game-base.module.scss";
+.lobby-tabs {
+    // Tab navigation styling
+    :global(.nav-tabs) {
+        border: none;
+        padding: 4px 4px 0;
+    }
 
-// Add VIP Se Die specific styles
+    // Tab item styling
+    :global(.nav-link) {
+        background: url("/static/images/lobby/inactive-bg.png");
+        border-radius: 4px 4px 0 0;
+
+        &:global(.active) {
+            background: url("/static/images/lobby/active-bg.png");
+            color: #fff;
+        }
+    }
+
+    // Tab title with icon
+    .tab-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .tab-icon {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+    }
+}
 ```
 
-### 5.2 Update Shared Styles
+### 4.4 Navigation State Management
 
-Modify `src/_shared/components/game-base/game-base.module.scss` if needed
+The game navigation implements state management for:
+
+1. **Game Expansion State**
+
+```typescript
+interface ILobbyState {
+    isViewOnly: boolean;
+    offerGames: { gameId: number }[];
+    isRenderGame: boolean;
+    expandedGames: { [gameId: number]: boolean };
+}
+```
+
+2. **Game Navigation**
+
+-   Handles game selection
+-   Manages tab state
+-   Controls game visibility
+-   Handles collapsible sections
+
+### 4.5 Game Icons and Assets
+
+Game icons should be placed in:
+
+```
+public/static/images/game-icons/
+├── sedie.png
+└── vip-sedie.png
+```
+
+Icon specifications:
+
+-   Size: 24x24 pixels
+-   Format: PNG with transparency
+-   Quality: Optimized for web
+
+### 4.6 Responsive Behavior
+
+The game navigation implementation includes:
+
+1. **Adaptive Layout**
+
+    - Flexible grid system
+    - Mobile-friendly navigation
+    - Responsive tab handling
+
+2. **Performance Optimization**
+    - Lazy loading of game components
+    - Efficient state updates
+    - Optimized asset loading
+
+## 5. Integration Steps
+
+### 5.1 Update App Settings
+
+1. **App Settings Configuration**
+
+```typescript
+// src/_shared/app-settings/index.ts
+import { settingsVipSeDie } from "../../games/saba-club/vip-sedie/game-settings";
+
+export const gameSettings = {
+    // ... existing settings ...
+    [settingsVipSeDie.id]: settingsVipSeDie,
+};
+```
+
+2. **Type Definitions**
+
+```typescript
+// src/_shared/app-settings/type.d.ts
+export interface IGameSettings {
+    // ... existing types ...
+    22: typeof import("../../games/saba-club/vip-sedie/game-settings").settingsVipSeDie;
+}
+```
+
+3. **Constants**
+
+```typescript
+// src/_shared/constants/index.ts
+export const GAME_IDS = {
+    // ... existing ids ...
+    VIP_SE_DIE: 22,
+} as const;
+```
+
+### 5.2 Implement Localization
+
+1. **English Translations**
+
+```json
+// src/i18n/locales/en.json
+{
+    "games": {
+        "vip_sedie": {
+            "title": "VIP Se Die",
+            "game_name": "VIP Se Die",
+            "bet_options": {
+                "big": "Big",
+                "small": "Small",
+                "specific": "Specific"
+            },
+            "messages": {
+                "bet_success": "Bet placed successfully",
+                "bet_failed": "Failed to place bet",
+                "insufficient_balance": "Insufficient balance"
+            }
+        }
+    }
+}
+```
+
+2. **Indonesian Translations**
+
+```json
+// src/i18n/locales/id.json
+{
+    "games": {
+        "vip_sedie": {
+            "title": "VIP Se Die",
+            "game_name": "VIP Se Die",
+            "bet_options": {
+                "big": "Besar",
+                "small": "Kecil",
+                "specific": "Spesifik"
+            },
+            "messages": {
+                "bet_success": "Taruhan berhasil dipasang",
+                "bet_failed": "Gagal memasang taruhan",
+                "insufficient_balance": "Saldo tidak mencukupi"
+            }
+        }
+    }
+}
+```
+
+### 5.3 Component Integration
+
+1. **Game Registration**
+
+```typescript
+// src/lobby/utils.tsx
+import { VipSeDie } from "../games/saba-club";
+
+const getGameById = (gameId: number, router: NextRouter) => {
+    const games: { [x: number]: JSX.Element } = {
+        // ... existing games ...
+        [settingsVipSeDie.id]: <VipSeDie.Page router={router} namespace={settingsVipSeDie.mainObserverNamespace} />,
+    };
+    return games[gameId];
+};
+```
+
+2. **Header Integration**
+
+```typescript
+const getGameHeaderById = (gameId: number, isExpanded: boolean, onToggleExpand: (gameId: number) => void) => {
+    const gameHeader = {
+        // ... existing headers ...
+        [settingsVipSeDie.id]: <VipSeDie.Header />,
+    };
+    // ... rest of the implementation
+};
+```
+
+3. **Icon Registration**
+
+```typescript
+const getGameIconPath = (gameId: number): string => {
+    const iconMap: { [key: number]: string } = {
+        // ... existing icons ...
+        [settingsVipSeDie.id]: "/static/images/game-icons/vip-sedie.png",
+    };
+    return iconMap[gameId] || "";
+};
+```
+
+### 5.4 Styling Integration
+
+1. **Game-Specific Styles**
+
+```scss
+// src/games/saba-club/vip-sedie/vip-sedie.module.scss
+@import "@shared/components/game-base/game-base.module.scss";
+
+.vip-sedie {
+    &-container {
+        background: var(--vip-background);
+        border-radius: 8px;
+        padding: 16px;
+    }
+
+    &-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+    }
+
+    &-bet-options {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-top: 16px;
+    }
+}
+```
+
+2. **Lobby Style Updates**
+
+```scss
+// src/lobby/lobby.module.scss
+.lobby-tabs {
+    // ... existing styles ...
+
+    .vip-game {
+        .nav-link {
+            background: url("/static/images/lobby/vip-inactive-bg.png");
+
+            &:global(.active) {
+                background: url("/static/images/lobby/vip-active-bg.png");
+            }
+        }
+    }
+}
+```
+
+### 5.5 WebSocket Integration
+
+1. **Namespace Configuration**
+
+```typescript
+// src/games/saba-club/vip-sedie/game-settings.ts
+export const settingsVipSeDie = {
+    // ... other settings ...
+    websocket: {
+        proxyPath: "",
+        route: "livepagegateway",
+    },
+    mainObserverNamespace: "VipSeDie",
+    isSocketGateway: true,
+};
+```
+
+2. **Connection Handler**
+
+```typescript
+@handle(gc.GatewayConnection.GatewayConnectionHandlers.ConnectHandler)
+protected handleConnect() {
+    // VIP Se Die specific connection logic
+}
+```
 
 ## 6. Testing Requirements
 
@@ -251,11 +521,6 @@ Modify `src/_shared/components/game-base/game-base.module.scss` if needed
 -   Implement proper bet validation
 -   Ensure secure WebSocket communication
 
-### 8.4 Game Not Appearing in Navigation Bar
-
-    - Check game registration in configs.json
-    - Verify game ID configuration
-
 ## 9. Troubleshooting
 
 Common issues and solutions:
@@ -275,7 +540,7 @@ Common issues and solutions:
     - Verify observer pattern implementation
     - Check state updates in components
 
-4. **Game Not Appearing in Navigation Bar**
+4. **Game Not Appearing in Lobby**
     - Check game registration in configs.json
     - Verify game ID configuration
 
@@ -319,7 +584,6 @@ Common issues and solutions:
     - Use proper naming conventions
     - Optimize images for web
     - Maintain consistent directory structure
-    - Ensure navigation bar (lobby) icons follow the established pattern
 
 3. **Configuration**:
     - Keep game settings modular
