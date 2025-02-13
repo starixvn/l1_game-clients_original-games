@@ -19,12 +19,13 @@ export interface IGameBaseState {
     initialized: boolean;
     showDisabledPopup: boolean;
     isOpenStatistic: boolean;
+    isExpanded: boolean;
 }
 
 abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> extends React.PureComponent<P, S> {
     constructor(props: P) {
         super(props);
-        this.state = { isConnectFailed: false, isOpenStatistic: false } as S;
+        this.state = { isConnectFailed: false, isOpenStatistic: false, isExpanded: false } as S;
         this.toggleStatistic = this.toggleStatistic.bind(this);
     }
 
@@ -44,10 +45,10 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     abstract closeConnect(): void;
 
-    onVisibilityChange = () => {};
+    onVisibilityChange = () => { };
 
     @handle(gc.Connection.ConnectionHandlers.ConnectHandler)
-    connectToService() {}
+    connectToService() { }
 
     @render(gc.Connection.ConnectionStore, (store) => store.isSignedIn)
     handleConnected(isSignedIn: boolean) {
@@ -91,6 +92,10 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         return <>Statistic</>;
     }
 
+    renderHeader() {
+        return <></>;
+    }
+
     @render(Settlements.SettlementStore, (store) => store.currentFinish, {
         fireImmediately: false,
     })
@@ -125,7 +130,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     @handle(Lobby.LobbyHandlers.TryToConnectHandler)
-    tryToConnectHandler() {}
+    tryToConnectHandler() { }
 
     @render(gc.Connection.ConnectionStore, (store) => store.isConnectFailed)
     handleConnectFail(isConnectFailed: boolean) {
@@ -191,7 +196,8 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
             this.renderDisconnect()
         ) : (
             <>
-                <div className={`${Styles["block-wrapper"]} ${this.props.overrideClasses}`}>
+                {this.renderHeader()}
+                <div className={`${Styles["block-wrapper"]} ${this.props.overrideClasses} ${!this.state.isExpanded ? Styles.collapsed : ''}`}>
                     <div className={Styles["info"]}>
                         {this.renderRoundIdSection()}
                         {this.renderCountDownTimer()}
@@ -203,14 +209,14 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                     </div>
                 </div>
 
-                <div className={Styles["history-block"]}>
+                <div className={`${Styles["history-block"]} ${!this.state.isExpanded ? Styles.collapsed : ''}`}>
                     <div className={Styles["previous-round"]}>{this.renderRoundHistory()}</div>
                     <div className={Styles["statistic-button"]} onClick={this.toggleStatistic}>
                         <span>Statistic</span>
                         {renderArrow(this.state.isOpenStatistic)}
                     </div>
                 </div>
-                {this.state.isOpenStatistic && this.renderStatistic()}
+                {this.state.isOpenStatistic && this.state.isExpanded && this.renderStatistic()}
 
                 {this.renderNotice()}
                 {this.renderWarning()}

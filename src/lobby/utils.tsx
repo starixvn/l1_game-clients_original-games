@@ -36,7 +36,6 @@ const getGameById = (gameId: number, router: NextRouter) => {
 
 const getGameHeaderById = (gameId: number, isExpanded: boolean, onToggleExpand: (gameId: number) => void) => {
     const gameHeader = {
-        [settingsSeDie.id]: <SeDie.Header />,
         [settingsBigSmall.id]: <BigSmall.Header />,
         [settingsLuckyNext.id]: <LuckyNext.Header />,
         [settingsSicBall.id]: <SicBall.Header />,

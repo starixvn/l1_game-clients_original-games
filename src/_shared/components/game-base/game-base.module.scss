@@ -3,6 +3,16 @@
     grid-template-columns: 1fr 14rem 40rem;
     background-color: #fce0d7;
     align-items: center;
+    transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
+    max-height: 2000px;
+    opacity: 1;
+    overflow: hidden;
+
+    &.collapsed {
+        max-height: 0;
+        opacity: 0;
+        padding: 0;
+    }
 
     .info,
     .result,
@@ -77,6 +87,16 @@
     justify-content: space-between;
     background-color: #fce0d7;
     border-top: 1px solid #ccc;
+    transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
+    max-height: 2000px;
+    opacity: 1;
+    overflow: hidden;
+
+    &.collapsed {
+        max-height: 0;
+        opacity: 0;
+        padding: 0;
+    }
 
     .statistic-button {
         width: 100px;

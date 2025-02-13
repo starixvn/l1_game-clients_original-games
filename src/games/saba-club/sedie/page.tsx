@@ -12,11 +12,20 @@ import { containerOptions, setting } from "./game-settings";
 import SeDieRoundHistory from "./round-history";
 import SeDieSettlementResult from "./settlement-result";
 import { SedieStatistic } from "./statistic";
+import Header from "./header";
+
+interface ISeDieState extends IGameBaseState {
+    isExpanded: boolean;
+}
 
 @observer(setting.mainObserverNamespace)
-export default class SeDie extends GatewayGameBase<GameBaseProps, IGameBaseState> {
+export default class SeDie extends GatewayGameBase<GameBaseProps, ISeDieState> {
     constructor(props: GameBaseProps) {
         super(props);
+        this.state = {
+            ...this.state,
+            isExpanded: true
+        };
 
         try {
             configGameContainer(setting.name, containerOptions);
@@ -27,6 +36,22 @@ export default class SeDie extends GatewayGameBase<GameBaseProps, IGameBaseState
 
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handleGateway())
     closeConnect() {
+    }
+
+    handleToggleExpand = () => {
+        this.setState(prevState => ({
+            isExpanded: !prevState.isExpanded
+        }));
+    };
+
+    override renderHeader() {
+        return (
+            <Header
+                namespace={this.props.namespace}
+                isExpanded={this.state.isExpanded}
+                onToggleExpand={this.handleToggleExpand}
+            />
+        );
     }
 
     renderRoundHistory() {
