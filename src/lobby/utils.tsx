@@ -38,8 +38,7 @@ const getGameHeaderById = (gameId: number, isExpanded: boolean, onToggleExpand: 
     const gameHeader = {
         [settingsBigSmall.id]: <BigSmall.Header />,
         [settingsLuckyNext.id]: <LuckyNext.Header />,
-        [settingsSicBall.id]: <SicBall.Header />,
-        [settingsVipSeDie.id]: <VipSeDie.Header />,
+        [settingsSicBall.id]: <SicBall.Header />
     };
 
     const header = gameHeader[gameId];

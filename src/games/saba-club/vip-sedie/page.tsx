@@ -12,16 +12,46 @@ import { containerOptions, setting } from "./game-settings";
 import SeDieRoundHistory from "../sedie/round-history";
 import SeDieSettlementResult from "../sedie/settlement-result";
 import { SedieStatistic } from "../sedie/statistic";
+import Header, { VIPSeDieHeaderProps } from "./header";
+
+interface IVIPSeDieState extends IGameBaseState {
+    isExpanded: boolean;
+}
 
 @observer(setting.mainObserverNamespace)
-export default class VipSeDie extends GatewayGameBase<GameBaseProps, IGameBaseState> {
+export default class VipSeDie extends GatewayGameBase<GameBaseProps, IVIPSeDieState> {
     constructor(props: GameBaseProps) {
         super(props);
-        configGameContainer(setting.name, containerOptions);
+        this.state = {
+            ...this.state,
+            isExpanded: true
+        };
+
+        try {
+            configGameContainer(setting.name, containerOptions);
+        } catch (error) {
+            // Silent fail on initialization error
+        }
     }
 
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handleGateway())
     closeConnect() {
+    }
+
+    handleToggleExpand = () => {
+        this.setState(prevState => ({
+            isExpanded: !prevState.isExpanded
+        }));
+    };
+
+    override renderHeader() {
+        return (
+            <Header
+                namespace={this.props.namespace}
+                isExpanded={this.state.isExpanded}
+                onToggleExpand={this.handleToggleExpand}
+            />
+        );
     }
 
     renderRoundHistory() {
@@ -53,6 +83,11 @@ export default class VipSeDie extends GatewayGameBase<GameBaseProps, IGameBaseSt
         result?: gc.GameServiceMessage.TResult,
         settlementResult?: gc.GameServiceMessage.TSettlementResult
     ) {
-        await FunctionUtils.delay(2000);
+        if (!this.isValidResult(result, settlementResult)) {
+            return;
+        }
+
+        await FunctionUtils.delay(1000);
+        this.finishShowResult();
     }
 } 
