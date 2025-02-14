@@ -44,14 +44,15 @@
 
 .bet-options-wrapper {
     display: grid;
-    grid-template-columns: 155px 1fr;
-    gap: 0.2rem;
+    grid-template-columns: 159px 1fr;
+    
     width: 100%;
 
     .main-options-container {
         display: grid;
         grid-template-rows: repeat(2, 1fr);
         gap: 0.2rem;
+        padding: 4px;
         
         .bet {
             min-width: 120px;
@@ -71,6 +72,8 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 0.2rem;
+        padding: 4px;
+        border-left: 1px solid #ccc;
     }
 }
 

@@ -3,7 +3,7 @@ import GameBase, { IGameBaseState } from ".";
 import { GameBaseProps } from "./type";
 import React from "react";
 import { handle, render } from "@sg/sg-observer";
-export { GameHeader } from "./game-header";
+export { GameHeader } from "./game-header/game-header";
 
 export default abstract class GatewayGameBase<P extends GameBaseProps, S extends IGameBaseState> extends GameBase<P, S> {
     protected isJoinGame = false;
