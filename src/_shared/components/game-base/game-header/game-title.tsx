@@ -1,7 +1,7 @@
 import * as gc from "@sg/sg-game-client";
 import React from "react";
 import Image from "next/image";
-import styles from "../../../../lobby/lobby.module.scss";
+import styles from "./game-header.module.scss";
 import { getGameSetting } from "../../../app-settings";
 
 export interface GameTitleProps {
@@ -23,6 +23,7 @@ export const GameTitle: React.FC<GameTitleProps> = ({ gameId, arrowProps }) => {
                 alt="Arrow Icon"
                 width={24}
                 height={24}
+                className={styles["arrow-icon"]}
                 {...arrowProps}
                 priority
             />

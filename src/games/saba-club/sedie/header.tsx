@@ -1,25 +1,17 @@
 import React from "react";
 import { GameHeader } from "../../../_shared/components/game-base/gateway-gamebase";
 import { GameHeaderProps } from "../../../_shared/components/game-base/game-header/game-header";
-import styles from "../../../lobby/lobby.module.scss";
-import classNames from "classnames";
 import GameHeaderCenterTexts from "../../../_shared/components/game-base/game-header/game-header-center-texts";
 
 interface SeDieHeaderProps extends Omit<GameHeaderProps, 'centerTextsComponent'> {
     namespace: string;
-    isExpanded?: boolean;
-    onToggleExpand?: () => void;
 }
 
-const Header: React.FC<SeDieHeaderProps> = ({ isExpanded = true, onToggleExpand, ...props }) => {
+const Header: React.FC<SeDieHeaderProps> = (props) => {
     return (
         <GameHeader
             {...props}
             centerTextsComponent={<GameHeaderCenterTexts texts={["Odd/Even", "Red/White"]} />}
-            arrowProps={{
-                className: classNames(styles["arrow-icon"], { [styles.collapsed]: !isExpanded }),
-                onClick: onToggleExpand
-            }}
         />
     );
 };

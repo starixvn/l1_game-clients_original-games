@@ -1,19 +1,26 @@
 import React from "react";
-import styles from "../../../../lobby/lobby.module.scss";
+import styles from "./game-header.module.scss";
 import GameTitle from "./game-title";
+import classNames from "classnames";
 
 export interface GameHeaderProps {
     gameId: number;
-    arrowProps?: {
-        className?: string;
-        onClick?: (e: React.MouseEvent) => void;
-    };
+    isExpanded?: boolean;
+    onToggleExpand?: () => void;
     centerTextsComponent?: React.ReactNode;
 }
 
-export abstract class GameHeader extends React.Component<GameHeaderProps> {
+export class GameHeader extends React.Component<GameHeaderProps> {
+    static defaultProps = {
+        isExpanded: true
+    };
+
     render() {
-        const { arrowProps, centerTextsComponent, gameId } = this.props;
+        const { centerTextsComponent, gameId, isExpanded, onToggleExpand } = this.props;
+        const arrowProps = {
+            className: classNames(styles["arrow-icon"], { [styles.collapsed]: !isExpanded }),
+            onClick: onToggleExpand
+        };
 
         return (
             <div className={styles["game-title"]}>
