@@ -63,30 +63,17 @@ const getFilteredGames = (
     return filteredGames;
 };
 
-const getGameIconPath = (gameId: number): string => {
-    const iconMap: { [key: number]: string } = {
-        [settingsSeDie.id]: "/static/images/game-icons/sedie.png",
-        [settingsVipSeDie.id]: "/static/images/game-icons/vip-sedie.png",
-        // Add other game icons here as they become available
-    };
-    return iconMap[gameId] || "";
-};
-
 const TabTitleWithIcon = ({ gameId, gameName }: { gameId: number; gameName: string }) => {
-    const iconPath = getGameIconPath(gameId);
-
     return (
         <div className={styles["tab-title"]}>
-            {iconPath && (
-                <Image
-                    src={iconPath}
-                    alt={gameName}
-                    width={32}
-                    height={32}
-                    className={styles["tab-icon"]}
-                    priority
-                />
-            )}
+            <Image
+                src={`/static/images/game-icons/game-icon-${gameId}.png`}
+                alt={gameName}
+                width={32}
+                height={32}
+                className={styles["tab-icon"]}
+                priority
+            />
             <span>{gameName}</span>
         </div>
     );
@@ -103,7 +90,6 @@ const getGameTabById = (
     }
 
     const gameName = gc.Translator.t(`${gameSetting.gameName}.game_name`);
-    const key = gameSetting.mainObserverNamespace;
 
     return (
         <Tab

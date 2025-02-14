@@ -20,7 +20,6 @@ const Header: React.FC<SeDieHeaderProps> = ({ isExpanded = true, onToggleExpand,
     return (
         <SeDieHeader
             {...props}
-            gameIconPath="/static/images/game-icons/sedie.png"
             centerTexts={["Odd/Even", "Red/White"]}
             arrowProps={{
                 className: classNames(styles["arrow-icon"], { [styles.collapsed]: !isExpanded }),

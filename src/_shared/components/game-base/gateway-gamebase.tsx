@@ -13,13 +13,12 @@ export interface GameHeaderProps {
         className?: string;
         onClick?: (e: React.MouseEvent) => void;
     };
-    gameIconPath?: string;
     centerTexts?: string[];
 }
 
 export abstract class GameHeader extends React.Component<GameHeaderProps> {
     render() {
-        const { arrowProps, gameIconPath = "/static/images/game-icons/default.png", centerTexts = [] } = this.props;
+        const { arrowProps, centerTexts = [] } = this.props;
         const gameSetting = getGameSetting(this.getGameId());
         const gameName = gc.Translator.t(`${gameSetting?.gameName}.game_name`);
 
@@ -36,7 +35,7 @@ export abstract class GameHeader extends React.Component<GameHeaderProps> {
                     />
                     <span className={styles.divider} />
                     <Image
-                        src={gameIconPath}
+                        src={`/static/images/game-icons/game-icon-${this.getGameId()}.png`}
                         alt="Game Icon"
                         width={32}
                         height={32}

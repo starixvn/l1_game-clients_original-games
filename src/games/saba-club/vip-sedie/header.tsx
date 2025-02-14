@@ -20,7 +20,6 @@ const Header: React.FC<VIPSeDieHeaderProps> = ({ isExpanded = true, onToggleExpa
     return (
         <VIPSeDieHeader
             {...props}
-            gameIconPath="/static/images/game-icons/vip-sedie.png"
             centerTexts={["Odd/Even", "Red/White"]}
             arrowProps={{
                 className: classNames(styles["arrow-icon"], { [styles.collapsed]: !isExpanded }),
