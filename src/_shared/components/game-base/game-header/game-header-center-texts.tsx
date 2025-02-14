@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../../../lobby/lobby.module.scss";
+import styles from "./game-header-center-texts.module.scss";
 
 export interface GameHeaderCenterTextsProps {
     texts: string[];
