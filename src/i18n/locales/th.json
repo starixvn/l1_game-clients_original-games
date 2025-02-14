@@ -216,6 +216,22 @@
         "beadboard_even": "คู่",
         "beadboard_odd": "คี่"
     },
+    "Baccarat": {
+        "banker_win": "เจ้ามือชนะ!",
+        "game_icon_name": "บาคาร่า",
+        "game_name": "บาคาร่า",
+        "glossary_banker": "เจ้ามือ",
+        "glossary_banker_pair": "คู่เจ้ามือ",
+        "glossary_big": "ใหญ่",
+        "glossary_player": "ผู้เล่น",
+        "glossary_player_pair": "คู่ผู้เล่น",
+        "glossary_small": "เล็ก",
+        "glossary_tie": "เสมอ",
+        "player_win": "ผู้้เล่นชนะ",
+        "short_banker": "B",
+        "short_player": "P",
+        "tie_win": "เสมอ"
+    },
     "BigSmall": {
         "game_name": "Big Small"
     },

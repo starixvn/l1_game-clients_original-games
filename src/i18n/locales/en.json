@@ -216,6 +216,22 @@
         "beadboard_even": "E",
         "beadboard_odd": "O"
     },
+    "Baccarat": {
+        "banker_win": "BANKER WIN",
+        "game_icon_name": "Baccarat",
+        "game_name": "Baccarat",
+        "glossary_banker": "Banker",
+        "glossary_banker_pair": "Banker pair",
+        "glossary_big": "Big",
+        "glossary_player": "Player",
+        "glossary_player_pair": "Player pair",
+        "glossary_small": "Small",
+        "glossary_tie": "Tie",
+        "player_win": "PLAYER WIN",
+        "short_banker": "B",
+        "short_player": "P",
+        "tie_win": "TIE"
+    },
     "BigSmall": {
         "game_vendor": "SABA.games",
         "game_name": "Big Small"
