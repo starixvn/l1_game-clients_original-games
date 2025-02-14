@@ -39,6 +39,7 @@ export default class SeDie extends GatewayGameBase<GameBaseProps, IGameBaseState
                 namespace={this.props.namespace}
                 isExpanded={this.state.isExpanded}
                 onToggleExpand={this.handleToggleExpand}
+                gameId={setting.id}
             />
         );
     }

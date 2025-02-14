@@ -12,7 +12,7 @@ import { containerOptions, setting } from "./game-settings";
 import SeDieRoundHistory from "../sedie/round-history";
 import SeDieSettlementResult from "../sedie/settlement-result";
 import { SedieStatistic } from "../sedie/statistic";
-import Header, { VIPSeDieHeaderProps } from "./header";
+import Header from "../sedie/header";
 
 @observer(setting.mainObserverNamespace)
 export default class VipSeDie extends GatewayGameBase<GameBaseProps, IGameBaseState> {
@@ -39,6 +39,7 @@ export default class VipSeDie extends GatewayGameBase<GameBaseProps, IGameBaseSt
                 namespace={this.props.namespace}
                 isExpanded={this.state.isExpanded}
                 onToggleExpand={this.handleToggleExpand}
+                gameId={setting.id}
             />
         );
     }
