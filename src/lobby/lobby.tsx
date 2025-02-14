@@ -81,15 +81,6 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
     connectLiveGateway() {
     }
 
-    handleToggleExpand = (gameId: number) => {
-        this.setState(prevState => ({
-            expandedGames: {
-                ...prevState.expandedGames,
-                [gameId]: !prevState.expandedGames[gameId]
-            }
-        }));
-    };
-
     @render(gc.Player.MainPlayerStore, (store) => store.offerGames)
     handleOfferGames(offerGames: IOfferGame[]) {
         if (offerGames?.length > 0) {
@@ -115,9 +106,7 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
             return lobbyUtils.getGameTabById(
                 filterGame.gameId,
                 router,
-                isRenderGame,
-                expandedGames[filterGame.gameId] ?? true,
-                this.handleToggleExpand
+                isRenderGame
             );
         });
     }

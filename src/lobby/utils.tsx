@@ -34,26 +34,14 @@ const getGameById = (gameId: number, router: NextRouter) => {
     return games[gameId];
 };
 
-const getGameHeaderById = (gameId: number, isExpanded: boolean, onToggleExpand: (gameId: number) => void) => {
+const getGameHeaderById = (gameId: number) => {
     const gameHeader = {
         [settingsBigSmall.id]: <BigSmall.Header />,
         [settingsLuckyNext.id]: <LuckyNext.Header />,
         [settingsSicBall.id]: <SicBall.Header />
     };
 
-    const header = gameHeader[gameId];
-    if (!header) return null;
-
-    // Clone the header element and add the click handler to its arrow icon
-    return React.cloneElement(header, {
-        arrowProps: {
-            className: classNames(styles["arrow-icon"], { [styles.collapsed]: !isExpanded }),
-            onClick: (e: React.MouseEvent) => {
-                e.stopPropagation();
-                onToggleExpand(gameId);
-            }
-        }
-    });
+    return gameHeader[gameId];
 };
 
 const getFilteredGames = (
@@ -107,9 +95,7 @@ const TabTitleWithIcon = ({ gameId, gameName }: { gameId: number; gameName: stri
 const getGameTabById = (
     gameId: number,
     router: NextRouter,
-    isRenderGame: boolean,
-    isExpanded: boolean,
-    onToggleExpand: (gameId: number) => void
+    isRenderGame: boolean
 ) => {
     const gameSetting = getGameSetting(gameId);
     if (!gameSetting) {
@@ -126,8 +112,8 @@ const getGameTabById = (
             title={<TabTitleWithIcon gameId={gameId} gameName={gameName} />}
             unmountOnExit={true}
         >
-            {getGameHeaderById(gameId, isExpanded, onToggleExpand)}
-            <div className={classNames(styles["game-lobby"], { [styles.collapsed]: !isExpanded })}>
+            {getGameHeaderById(gameId)}
+            <div className={classNames(styles["game-lobby"])}>
                 {isRenderGame && getGameById(gameId, router)}
             </div>
         </Tab>
