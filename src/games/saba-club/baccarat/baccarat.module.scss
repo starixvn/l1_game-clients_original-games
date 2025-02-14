@@ -1,51 +1,288 @@
 @import "../../../_shared/styles/variables";
 @import "../../../_shared/styles/mixins";
 
-.baccarat-container {
+// Font sizes
+$font-size-xs: 0.75rem;  // 12px
+$font-size-sm: 0.875rem; // 14px
+$font-size-md: 1rem;     // 16px
+$font-size-lg: 1.25rem;  // 20px
+$font-size-xl: 1.5rem;   // 24px
+$font-size-2xl: 2rem;    // 32px
+
+// Spacing
+$spacing-xs: 0.25rem;   // 4px
+$spacing-sm: 0.5rem;    // 8px
+$spacing-md: 1rem;      // 16px
+$spacing-lg: 1.5rem;    // 24px
+$spacing-xl: 2rem;      // 32px
+
+// Border radius
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+
+.container {
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    height: 100%;
-    width: 100%;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    padding: $spacing-md;
-    gap: $spacing-md;
+}
 
-    .main-content {
+.content {
+    display: flex;
+    flex: 1;
+    gap: 8px;
+    padding: 8px;
+}
+
+.gameArea {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.gameInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    background-color: #fff6f3;
+    border-radius: 4px;
+}
+
+.gameTable {
+    background-color: #fff6f3;
+    border-radius: 4px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .playerArea, .bankerArea {
         display: flex;
-        flex: 1;
-        gap: $spacing-md;
-
-        .game-area {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: $spacing-md;
-
-            .betting-area {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: $spacing-md;
-                padding: $spacing-md;
-                background: var(--surface-color);
-                border-radius: $border-radius-lg;
-            }
-
-            .result-area {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: $spacing-lg;
-                background: var(--surface-color);
-                border-radius: $border-radius-lg;
-            }
+        flex-direction: column;
+        gap: 8px;
+        
+        .areaLabel {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
         }
 
-        .side-content {
-            width: 300px;
+        .cardsContainer {
             display: flex;
-            flex-direction: column;
-            gap: $spacing-md;
+            gap: 8px;
+            justify-content: center;
+        }
+    }
+}
+
+.bettingArea {
+    display: grid;
+    grid-template-columns: 159px 1fr;
+    gap: 8px;
+    background-color: #fff6f3;
+    border-radius: 4px;
+    padding: 8px;
+}
+
+.historyArea {
+    background-color: #fce0d7;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.sideContent {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    
+    > * {
+        background-color: #fff6f3;
+        border-radius: 4px;
+        padding: 8px;
+    }
+}
+
+// Betting options styles
+.betOptionsWrapper {
+    display: grid;
+    grid-template-columns: 159px 1fr;
+    width: 100%;
+
+    .mainOptionsContainer {
+        display: grid;
+        grid-template-rows: repeat(2, 1fr);
+        gap: 0.2rem;
+        padding: 4px;
+        
+        .bet {
+            min-width: 120px;
+            
+            .containerBets {
+                padding: 12px;
+                
+                .mainOption {
+                    font-size: 1.2rem;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
+    .subOptionsContainer {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.2rem;
+        padding: 4px;
+        border-left: 1px solid #ccc;
+    }
+}
+
+// Common bet styles
+.bet {
+    text-transform: capitalize;
+    padding: 0;
+    background-color: #fff6f3;
+    border-radius: 4px;
+}
+
+.containerBets {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+
+    .wrapperDots {
+        display: grid;
+        align-items: center;
+        grid-template-columns: repeat(4, 1.2rem);
+        grid-gap: 0.2rem;
+
+        &Small {
+            grid-template-columns: repeat(4, 1rem);
+        }
+    }
+}
+
+.mainOption {
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+// Utility classes
+.betsBg {
+    background-color: #fff6f3;
+    border-radius: 4px;
+}
+
+.paddingBet {
+    padding: 8px;
+}
+
+.marginX0 {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.card {
+    width: 70px;
+    height: 100px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: $font-size-xl;
+    position: relative;
+    margin: 0.5rem;
+    transition: transform 0.3s ease;
+
+    &.player {
+        border: 2px solid var(--player-color);
+    }
+
+    &.banker {
+        border: 2px solid var(--banker-color);
+    }
+
+    .card-value {
+        position: absolute;
+        top: $spacing-xs;
+        left: $spacing-xs;
+        font-size: $font-size-md;
+    }
+
+    .card-suit {
+        font-size: $font-size-xl;
+        &.hearts,
+        &.diamonds {
+            color: var(--red-color);
+        }
+        &.spades,
+        &.clubs {
+            color: var(--black-color);
+        }
+    }
+}
+
+.bet-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-md;
+    background: var(--surface-color-light);
+    border-radius: $border-radius-lg;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: var(--surface-color-hover);
+    }
+
+    &.selected {
+        background: var(--primary-color);
+        color: var(--on-primary-color);
+    }
+
+    .bet-type {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-bold;
+        text-transform: uppercase;
+    }
+
+    .odds {
+        font-size: $font-size-md;
+        color: var(--accent-color);
+    }
+
+    .amount {
+        font-size: $font-size-sm;
+        color: var(--text-color-secondary);
+    }
+
+    &.player {
+        border: 2px solid var(--player-color);
+        .bet-type {
+            color: var(--player-color);
+        }
+    }
+
+    &.banker {
+        border: 2px solid var(--banker-color);
+        .bet-type {
+            color: var(--banker-color);
+        }
+    }
+
+    &.tie {
+        border: 2px solid var(--tie-color);
+        .bet-type {
+            color: var(--tie-color);
         }
     }
 }
@@ -105,36 +342,6 @@
                 color: var(--tie-color);
             }
         }
-    }
-}
-
-.bet-option {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: $spacing-sm;
-    padding: $spacing-md;
-    background: var(--surface-color-light);
-    border-radius: $border-radius-lg;
-    cursor: pointer;
-    transition: all 0.2s ease;
-
-    &:hover {
-        background: var(--surface-color-hover);
-    }
-
-    &.selected {
-        background: var(--primary-color);
-        color: var(--on-primary-color);
-    }
-
-    .odds {
-        font-size: $font-size-lg;
-        font-weight: $font-weight-bold;
-    }
-
-    .amount {
-        font-size: $font-size-md;
     }
 }
 
@@ -223,29 +430,6 @@
                 flex: 1;
             }
         }
-    }
-}
-
-.card {
-    width: 70px;
-    height: 100px;
-    background: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-    position: relative;
-    margin: 0.5rem;
-    transition: transform 0.3s ease;
-
-    &.player {
-        border: 2px solid var(--player-color);
-    }
-
-    &.banker {
-        border: 2px solid var(--banker-color);
     }
 }
 

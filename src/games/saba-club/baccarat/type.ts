@@ -1,4 +1,5 @@
 import * as gc from "@sg/sg-game-client";
+import { IGameBaseState } from "../../../_shared/components/game-base";
 
 export interface IBaccaratResult {
     playerScore: number;
@@ -13,7 +14,7 @@ export interface IBaccaratBet {
     amount: number;
 }
 
-export interface IBaccaratState extends gc.GameServiceMessage.IGameState {
+export interface IBaccaratState extends IGameBaseState {
     currentBets: IBaccaratBet[];
     lastResult?: IBaccaratResult;
     roundHistory: IBaccaratResult[];

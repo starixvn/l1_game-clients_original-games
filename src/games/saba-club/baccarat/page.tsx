@@ -16,8 +16,12 @@ import { containerOptions, setting } from "./game-settings";
 import Header from "./header";
 import styles from "./baccarat.module.scss";
 
+interface IBaccaratState extends IGameBaseState {
+    isExpanded: boolean;
+}
+
 @observer(setting.mainObserverNamespace)
-export default class Baccarat extends GatewayGameBase<GameBaseProps, IGameBaseState> {
+export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratState> {
     constructor(props: GameBaseProps) {
         super(props);
         this.state = {
@@ -86,15 +90,30 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IGameBaseSt
                 {this.renderHeader()}
                 <div className={styles['main-content']}>
                     <div className={styles['game-area']}>
+                        <div className={styles['game-info']}>
+                            {this.renderRoundIdSection()}
+                            {this.renderCountDownTimer()}
+                        </div>
+                        <div className={styles['game-table']}>
+                            <div className={styles['player-area']}>
+                                <div className={styles['area-label']}>PLAYER</div>
+                                <div className={styles['cards-container']}>
+                                    {this.renderResultBlock()}
+                                </div>
+                            </div>
+                            <div className={styles['banker-area']}>
+                                <div className={styles['area-label']}>BANKER</div>
+                                <div className={styles['cards-container']}>
+                                    {/* Banker cards will be rendered by settlement result */}
+                                </div>
+                            </div>
+                        </div>
                         <div className={styles['betting-area']}>
                             {this.renderBettingBlock()}
                         </div>
-                        <div className={styles['result-area']}>
-                            {this.renderResultBlock()}
+                        <div className={styles['history-area']}>
+                            {this.renderRoundHistory()}
                         </div>
-                        {this.renderRoundHistory()}
-                        {this.renderRoundIdSection()}
-                        {this.renderCountDownTimer()}
                     </div>
                     {this.state.isExpanded && this.renderStatistic()}
                 </div>
