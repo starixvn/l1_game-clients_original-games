@@ -1,19 +1,28 @@
-import React from "react";
-import { GameHeader } from "../../../_shared/components/game-base/gateway-gamebase";
-import { GameHeaderProps } from "../../../_shared/components/game-base/game-header/game-header";
-import GameHeaderCenterTexts from "../../../_shared/components/game-base/game-header/game-header-center-texts";
+import React from 'react';
+import { GameHeader } from '../../../_shared/components/game-base/game-header/game-header';
+import styles from './sedie.module.scss';
+import classNames from 'classnames';
+import GameHeaderCenterTexts from '../../../_shared/components/game-base/game-header/game-header-center-texts';
 
-interface SeDieHeaderProps extends Omit<GameHeaderProps, 'centerTextsComponent'> {
+interface SedieHeaderProps {
+    gameId: number;
+    isExpanded?: boolean;
+    onToggleExpand?: () => void;
     namespace: string;
+    centerTextsComponent?: React.ReactNode;
 }
 
-const Header: React.FC<SeDieHeaderProps> = (props) => {
+const SedieHeader: React.FC<SedieHeaderProps> = ({ gameId, isExpanded, onToggleExpand, centerTextsComponent }) => {
     return (
-        <GameHeader
-            {...props}
-            centerTextsComponent={<GameHeaderCenterTexts texts={["Odd/Even", "Red/White"]} />}
-        />
+        <div className={classNames(styles.header, 'sedie-header')}>
+            <GameHeader
+                gameId={gameId}
+                isExpanded={isExpanded}
+                onToggleExpand={onToggleExpand}
+                centerTextsComponent={<GameHeaderCenterTexts texts={["Odd/Even", "Red/White"]} />}
+            />
+        </div>
     );
 };
 
-export default Header;
+export default SedieHeader;

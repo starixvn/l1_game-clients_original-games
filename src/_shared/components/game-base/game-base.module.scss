@@ -1,79 +1,64 @@
+@import './styles/theme';
+
 .block-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 14rem 40rem;
-    background-color: #fce0d7;
+    @include responsive-grid(1fr 14rem 40rem);
+    background-color: $primary-bg;
     align-items: center;
-    transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
-    max-height: 2000px;
-    opacity: 1;
-    overflow: hidden;
+    @include collapsible;
 
-    &.collapsed {
-        max-height: 0;
-        opacity: 0;
-        padding: 0;
-    }
-
-    .info,
-    .result {
-        padding: 4px;
+    .info {
+        @include flex-center;
+        gap: $spacing-md;
+        padding: $spacing-md;
     }
 
     .bet-options {
-        border-left: 1px solid #ccc;
+        border-left: 1px solid $border-color;
     }
+
     .result {
         height: 100%;
-        display: flex;
-        align-items: center;
+        @include flex-center;
 
-        .result-container {
+        &-container {
             display: grid;
             grid-template-columns: repeat(4, 2.5rem);
             grid-template-rows: 2.5rem;
-            grid-gap: 0.5rem;
+            gap: $grid-gap;
         }
     }
 
-    .round-id {
+    .round-id,
+    .turn-counter {
         font-weight: bold;
         font-size: 13px;
     }
 
     .turn-counter {
-        font-weight: bold;
-        font-size: 13px;
         position: absolute;
         left: 10rem;
-    }
-
-    .info {
-        display: flex;
-        align-items: center;
-        gap: 0.4rem;
     }
 }
 
 .count-down {
     .clock {
-        width: 20px;
-        height: 20px;
+        width: $icon-md;
+        height: $icon-md;
     }
 
     .timer-wrapper {
-        display: flex;
-        align-items: flex-end;
+        @include flex-center;
         padding: 0;
         position: relative;
 
         .timer-badge {
-            padding: 0.2rem;
-            z-index: 99;
+            padding: $spacing-xs;
+            z-index: $z-index-overlay;
         }
 
         .count-down-badge {
-            width: 3rem;
-            padding: 0.3rem 0;
+            width: $timer-width;
+            padding: $spacing-sm 0;
             position: absolute;
             left: 0.6rem;
         }
@@ -83,28 +68,19 @@
 .history-block {
     display: flex;
     justify-content: space-between;
-    background-color: #fce0d7;
-    border-top: 1px solid #ccc;
-    transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
-    max-height: 2000px;
-    opacity: 1;
-    overflow: hidden;
-
-    &.collapsed {
-        max-height: 0;
-        opacity: 0;
-        padding: 0;
-    }
+    background-color: $primary-bg;
+    border-top: 1px solid $border-color;
+    @include collapsible;
 
     .statistic-button {
-        width: 100px;
+        width: $statistic-btn-width;
         height: 30px;
         padding: 2px 5px;
         margin-top: 7px;
         margin-right: 10px;
-        border: solid 1px #bcb6b6;
+        border: solid 1px $border-color;
         cursor: pointer;
-        color: #78acff;
+        color: $text-secondary;
 
         .arrow-icon {
             font-weight: bold;
@@ -117,13 +93,13 @@
                 margin-left: 50px;
             }
         }
-    }
 
-    .statistic-button:hover {
-        background-color: #78acff;
-        color: white;
-        .svg-icon {
-            stroke: white;
+        &:hover {
+            background-color: $text-secondary;
+            color: $text-light;
+            .svg-icon {
+                stroke: $text-light;
+            }
         }
     }
 }

@@ -1,3 +1,5 @@
+@import './styles/overrides';
+
 .bet {
     text-transform: capitalize;
     padding: 0;
@@ -89,5 +91,33 @@
         background-image: url("/static/images/arrow.svg");
         height: 8px;
         width: 8px;
+    }
+}
+
+.sedie-game {
+    @include sedie-block;
+
+    .header {
+        @include sedie-header;
+    }
+
+    // Extend base game styles with Sedie-specific modifications
+    :global {
+        .block-wrapper {
+            background-color: $sedie-primary-bg;
+        }
+
+        .game-title {
+            background-color: $sedie-header-bg;
+        }
+
+        .statistic-button {
+            color: $sedie-accent-color;
+
+            &:hover {
+                background-color: $sedie-accent-color;
+                color: $text-light;
+            }
+        }
     }
 }

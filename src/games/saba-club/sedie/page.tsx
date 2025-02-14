@@ -13,6 +13,7 @@ import SeDieRoundHistory from "./round-history";
 import SeDieSettlementResult from "./settlement-result";
 import { SedieStatistic } from "./statistic";
 import Header from "./header";
+import GameHeaderCenterTexts from "../../../_shared/components/game-base/game-header/game-header-center-texts";
 
 @observer(setting.mainObserverNamespace)
 export default class SeDie extends GatewayGameBase<GameBaseProps, IGameBaseState> {
@@ -32,6 +33,7 @@ export default class SeDie extends GatewayGameBase<GameBaseProps, IGameBaseState
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handleGateway())
     closeConnect() {
     }
+
 
     override renderHeader() {
         return (
