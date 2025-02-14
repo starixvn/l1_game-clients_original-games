@@ -27,6 +27,7 @@ export default class BaccaratStatistics extends React.Component<IBaccaratStatist
             bankerPairs: 0
         };
 
+        return null;
         return (
             <div className={styles['statistics']}>
                 <h3>Statistics</h3>

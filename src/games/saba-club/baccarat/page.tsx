@@ -16,17 +16,12 @@ import { containerOptions, setting } from "./game-settings";
 import Header from "./header";
 import styles from "./baccarat.module.scss";
 
-interface IBaccaratState extends IGameBaseState {
-    isExpanded: boolean;
-}
-
 @observer(setting.mainObserverNamespace)
-export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratState> {
+export default class Baccarat extends GatewayGameBase<GameBaseProps, IGameBaseState> {
     constructor(props: GameBaseProps) {
         super(props);
         this.state = {
-            ...this.state,
-            isExpanded: true
+            ...this.state
         };
 
         try {
@@ -39,10 +34,6 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratSt
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handleGateway())
     closeConnect() {
     }
-
-    handleToggleExpand = () => {
-        this.setState({ isExpanded: !this.state.isExpanded });
-    };
 
     override renderHeader() {
         return (
@@ -76,46 +67,39 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratSt
     }
 
     renderStatistic() {
-        return (
-            <div className={styles['side-content']}>
-                <BaccaratStatistics namespace={this.props.namespace} />
-                <BaccaratScoreboard namespace={this.props.namespace} />
-            </div>
-        );
+        return <BaccaratStatistics namespace={this.props.namespace} />;
+    }
+
+    renderScoreboard() {
+        return <BaccaratScoreboard namespace={this.props.namespace} />;
     }
 
     override render() {
         return (
-            <div className={styles['baccarat-container']}>
+            <div className={styles.container}>
                 {this.renderHeader()}
-                <div className={styles['main-content']}>
-                    <div className={styles['game-area']}>
-                        <div className={styles['game-info']}>
+                <div className={styles.content}>
+                    <div className={styles.gameArea}>
+                        <div className={styles.gameInfo}>
                             {this.renderRoundIdSection()}
                             {this.renderCountDownTimer()}
                         </div>
-                        <div className={styles['game-table']}>
-                            <div className={styles['player-area']}>
-                                <div className={styles['area-label']}>PLAYER</div>
-                                <div className={styles['cards-container']}>
-                                    {this.renderResultBlock()}
-                                </div>
-                            </div>
-                            <div className={styles['banker-area']}>
-                                <div className={styles['area-label']}>BANKER</div>
-                                <div className={styles['cards-container']}>
-                                    {/* Banker cards will be rendered by settlement result */}
-                                </div>
-                            </div>
+                        <div className={styles.gameTable}>
+                            {this.renderResultBlock()}
                         </div>
-                        <div className={styles['betting-area']}>
+                        <div className={styles.bettingArea}>
                             {this.renderBettingBlock()}
                         </div>
-                        <div className={styles['history-area']}>
+                        <div className={styles.historyArea}>
                             {this.renderRoundHistory()}
                         </div>
                     </div>
-                    {this.state.isExpanded && this.renderStatistic()}
+                    {this.state.isExpanded && (
+                        <div className={styles.sideContent}>
+                            {this.renderStatistic()}
+                            {this.renderScoreboard()}
+                        </div>
+                    )}
                 </div>
             </div>
         );

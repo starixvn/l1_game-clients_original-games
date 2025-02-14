@@ -16,7 +16,7 @@ const Header: React.FC<IBaccaratHeaderProps> = ({ isExpanded = true, onToggleExp
     return (
         <GameHeader
             {...props}
-            centerTextsComponent={<GameHeaderCenterTexts texts={["Player", "Banker", "Tie"]} />}
+            centerTextsComponent={<GameHeaderCenterTexts texts={["Player/Banker", "Tie", "Pair"]} />}
             arrowProps={{
                 className: classNames(styles["arrow-icon"], { [styles.collapsed]: !isExpanded }),
                 onClick: onToggleExpand

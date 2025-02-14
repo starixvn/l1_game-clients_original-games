@@ -13,7 +13,7 @@ export default class BaccaratScoreboard extends React.Component<IBaccaratScorebo
     render() {
         // TODO: Get actual results from state
         const mockResults: IBaccaratResult[] = [];
-
+        return null;
         return (
             <div className={styles['scoreboard']}>
                 <h3>Scoreboard</h3>
