@@ -1,0 +1,1 @@
+export { default as BaccaratScoreboard } from './baccarat-scoreboard'; 

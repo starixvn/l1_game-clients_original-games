@@ -1,0 +1,68 @@
+.settlement-result {
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 0.5rem;
+    text-align: center;
+
+    .cards-container {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 1rem;
+
+        .player-cards,
+        .banker-cards {
+            h4 {
+                color: #ffd700;
+                margin: 0 0 0.5rem;
+            }
+
+            .cards {
+                display: flex;
+                gap: 0.5rem;
+                justify-content: center;
+
+                .card {
+                    width: 70px;
+                    height: 100px;
+                    background: #fff;
+                    border-radius: 5px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 1.5rem;
+                    color: #000;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                }
+            }
+        }
+
+        .player-cards .card {
+            border: 2px solid #4a90e2;
+        }
+
+        .banker-cards .card {
+            border: 2px solid #e24a4a;
+        }
+    }
+
+    .winner-player {
+        color: #4a90e2;
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
+    }
+
+    .winner-banker {
+        color: #e24a4a;
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-shadow: 0 0 10px rgba(226, 74, 74, 0.5);
+    }
+
+    .winner-tie {
+        color: #4ae24a;
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-shadow: 0 0 10px rgba(74, 226, 74, 0.5);
+    }
+} 

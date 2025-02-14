@@ -4,7 +4,7 @@ import { Tab } from "react-bootstrap";
 import Image from "next/image";
 import React from "react";
 import { getGameSetting, getGameSettingIds } from "../_shared/app-settings";
-import { BigSmall, SeDie, VipSeDie } from "../games/saba-club";
+import { BigSmall, SeDie, VipSeDie, Baccarat } from "../games/saba-club";
 import { LuckyNext, SicBall } from "../games/saba-xD";
 import styles from "./lobby.module.scss";
 import tabStyles from "./lobby-tabs.module.scss";
@@ -16,6 +16,7 @@ const settingsBigSmall = BigSmall.Setting.setting;
 const settingsSicBall = SicBall.Setting.setting;
 const settingsLuckyNext = LuckyNext.Setting.setting;
 const settingsVipSeDie = VipSeDie.Setting.setting;
+const settingsBaccarat = Baccarat.setting;
 
 const getGameById = (gameId: number, router: NextRouter) => {
     const games: { [x: number]: JSX.Element } = {
@@ -30,6 +31,7 @@ const getGameById = (gameId: number, router: NextRouter) => {
         ),
         [settingsSicBall.id]: <SicBall.Page router={router} namespace={settingsSicBall.mainObserverNamespace} />,
         [settingsVipSeDie.id]: <VipSeDie.Page router={router} namespace={settingsVipSeDie.mainObserverNamespace} />,
+        [settingsBaccarat.id]: <Baccarat.Baccarat router={router} namespace={settingsBaccarat.mainObserverNamespace} />,
     };
 
     return games[gameId];
@@ -39,7 +41,7 @@ const getGameHeaderById = (gameId: number) => {
     const gameHeader = {
         [settingsBigSmall.id]: <BigSmall.Header />,
         [settingsLuckyNext.id]: <LuckyNext.Header />,
-        [settingsSicBall.id]: <SicBall.Header />
+        [settingsSicBall.id]: <SicBall.Header />,
     };
 
     return gameHeader[gameId];

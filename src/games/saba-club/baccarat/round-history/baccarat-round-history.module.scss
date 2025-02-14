@@ -1,0 +1,47 @@
+.round-history {
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 0.5rem;
+
+    h3 {
+        margin: 0 0 1rem;
+        color: #ffd700;
+        text-align: center;
+    }
+
+    .history-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 0.5rem;
+        max-height: 300px;
+        overflow-y: auto;
+
+        .history-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 0.25rem;
+            padding: 0.5rem;
+            text-align: center;
+
+            .winner-player {
+                color: #4a90e2;
+                font-weight: bold;
+            }
+
+            .winner-banker {
+                color: #e24a4a;
+                font-weight: bold;
+            }
+
+            .winner-tie {
+                color: #4ae24a;
+                font-weight: bold;
+            }
+
+            .scores {
+                font-size: 0.8rem;
+                margin-top: 0.25rem;
+                color: #fff;
+            }
+        }
+    }
+} 

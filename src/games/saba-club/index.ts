@@ -1,5 +1,4 @@
-import * as SeDie from "./sedie";
-import * as BigSmall from "./big-small";
-import * as VipSeDie from "./vip-sedie";
-
-export { SeDie, VipSeDie, BigSmall };
+export * as BigSmall from "./big-small";
+export * as SeDie from "./sedie";
+export * as VipSeDie from "./vip-sedie";
+export * as Baccarat from "./baccarat";

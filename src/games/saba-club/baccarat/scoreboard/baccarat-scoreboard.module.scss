@@ -1,0 +1,68 @@
+.scoreboard {
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 0.5rem;
+
+    h3 {
+        margin: 0 0 1rem;
+        color: #ffd700;
+        text-align: center;
+    }
+
+    .board {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 0.25rem;
+
+        .result-dot {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 24px;
+        }
+    }
+
+    .dot-player,
+    .dot-banker,
+    .dot-tie {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+    }
+
+    .dot-player {
+        background: #4a90e2;
+        box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+    }
+
+    .dot-banker {
+        background: #e24a4a;
+        box-shadow: 0 0 5px rgba(226, 74, 74, 0.5);
+    }
+
+    .dot-tie {
+        background: #4ae24a;
+        box-shadow: 0 0 5px rgba(74, 226, 74, 0.5);
+    }
+
+    .legend {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            span {
+                color: #fff;
+                font-size: 0.9rem;
+            }
+        }
+    }
+} 
