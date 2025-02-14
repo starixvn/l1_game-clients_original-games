@@ -14,17 +14,12 @@ import SeDieSettlementResult from "./settlement-result";
 import { SedieStatistic } from "./statistic";
 import Header from "./header";
 
-interface ISeDieState extends IGameBaseState {
-    isExpanded: boolean;
-}
-
 @observer(setting.mainObserverNamespace)
-export default class SeDie extends GatewayGameBase<GameBaseProps, ISeDieState> {
+export default class SeDie extends GatewayGameBase<GameBaseProps, IGameBaseState> {
     constructor(props: GameBaseProps) {
         super(props);
         this.state = {
-            ...this.state,
-            isExpanded: true
+            ...this.state
         };
 
         try {
@@ -37,12 +32,6 @@ export default class SeDie extends GatewayGameBase<GameBaseProps, ISeDieState> {
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handleGateway())
     closeConnect() {
     }
-
-    handleToggleExpand = () => {
-        this.setState(prevState => ({
-            isExpanded: !prevState.isExpanded
-        }));
-    };
 
     override renderHeader() {
         return (

@@ -25,7 +25,11 @@ export interface IGameBaseState {
 abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> extends React.PureComponent<P, S> {
     constructor(props: P) {
         super(props);
-        this.state = { isConnectFailed: false, isOpenStatistic: false, isExpanded: false } as S;
+        this.state = {
+            isConnectFailed: false,
+            isOpenStatistic: false,
+            isExpanded: true
+        } as S;
         this.toggleStatistic = this.toggleStatistic.bind(this);
     }
 
@@ -161,6 +165,12 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     toggleStatistic() {
         this.setState({ isOpenStatistic: !this.state.isOpenStatistic });
     }
+
+    handleToggleExpand = () => {
+        this.setState(prevState => ({
+            isExpanded: !prevState.isExpanded
+        }));
+    };
 
     getRenderTemplate() {
         const { isConnected, isConnectFailed, initialized: isGameConfigInitialized, showDisabledPopup } = this.state;
