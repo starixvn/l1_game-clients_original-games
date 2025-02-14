@@ -3,14 +3,12 @@ import { handle, observer, render } from "@sg/sg-observer";
 import { withRouter } from "next/router";
 import React from "react";
 import { Tabs } from "react-bootstrap";
-import appSettings, { getGameSetting } from "../_shared/app-settings";
 import { configSharedContainer } from "../_shared/components/game-base/startup";
 import { LobbyStore } from "../_shared/states/lobby";
 import * as lobbyUtils from "../lobby/utils";
 import styles from "./lobby.module.scss";
+import tabStyles from "./lobby-tabs.module.scss";
 import type { ILobbyProps, ILobbyState } from "./type";
-
-const setting = getGameSetting(appSettings.defaultGameId);
 
 export interface IOfferGame {
     gameId: number;
@@ -129,7 +127,7 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
         }
 
         return (
-            <Tabs defaultActiveKey={offerGames[0].gameId} className={styles["lobby-tabs"]}>
+            <Tabs defaultActiveKey={offerGames[0].gameId} className={tabStyles["lobby-tabs"]}>
                 {this.getGames()}
             </Tabs>
         );

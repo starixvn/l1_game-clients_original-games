@@ -7,6 +7,7 @@ import { getGameSetting, getGameSettingIds } from "../_shared/app-settings";
 import { BigSmall, SeDie, VipSeDie } from "../games/saba-club";
 import { LuckyNext, SicBall } from "../games/saba-xD";
 import styles from "./lobby.module.scss";
+import tabStyles from "./lobby-tabs.module.scss";
 import classNames from "classnames";
 
 // Initialize settings
@@ -65,13 +66,13 @@ const getFilteredGames = (
 
 const TabTitleWithIcon = ({ gameId, gameName }: { gameId: number; gameName: string }) => {
     return (
-        <div className={styles["tab-title"]}>
+        <div className={tabStyles["tab-title"]}>
             <Image
                 src={`/static/images/game-icons/game-icon-${gameId}.png`}
                 alt={gameName}
                 width={32}
                 height={32}
-                className={styles["tab-icon"]}
+                className={tabStyles["tab-icon"]}
                 priority
             />
             <span>{gameName}</span>
