@@ -1,3 +1,143 @@
+@import "../../../_shared/styles/variables";
+@import "../../../_shared/styles/mixins";
+
+.baccarat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    padding: $spacing-md;
+    gap: $spacing-md;
+
+    .main-content {
+        display: flex;
+        flex: 1;
+        gap: $spacing-md;
+
+        .game-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-md;
+
+            .betting-area {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: $spacing-md;
+                padding: $spacing-md;
+                background: var(--surface-color);
+                border-radius: $border-radius-lg;
+            }
+
+            .result-area {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: $spacing-lg;
+                background: var(--surface-color);
+                border-radius: $border-radius-lg;
+            }
+        }
+
+        .side-content {
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-md;
+        }
+    }
+}
+
+.statistics {
+    background: var(--surface-color);
+    border-radius: $border-radius-lg;
+    padding: $spacing-md;
+
+    .title {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-bold;
+        margin-bottom: $spacing-sm;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: $spacing-sm;
+    }
+}
+
+.scoreboard {
+    background: var(--surface-color);
+    border-radius: $border-radius-lg;
+    padding: $spacing-md;
+
+    .title {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-bold;
+        margin-bottom: $spacing-sm;
+    }
+
+    .score-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 2px;
+
+        .cell {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: $font-size-sm;
+            background: var(--surface-color-light);
+            border-radius: $border-radius-sm;
+
+            &.player {
+                color: var(--player-color);
+            }
+
+            &.banker {
+                color: var(--banker-color);
+            }
+
+            &.tie {
+                color: var(--tie-color);
+            }
+        }
+    }
+}
+
+.bet-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-md;
+    background: var(--surface-color-light);
+    border-radius: $border-radius-lg;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: var(--surface-color-hover);
+    }
+
+    &.selected {
+        background: var(--primary-color);
+        color: var(--on-primary-color);
+    }
+
+    .odds {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-bold;
+    }
+
+    .amount {
+        font-size: $font-size-md;
+    }
+}
+
 .baccarat-game {
     display: flex;
     flex-direction: column;
@@ -101,11 +241,11 @@
     transition: transform 0.3s ease;
 
     &.player {
-        border: 2px solid #4a90e2;
+        border: 2px solid var(--player-color);
     }
 
     &.banker {
-        border: 2px solid #e24a4a;
+        border: 2px solid var(--banker-color);
     }
 }
 

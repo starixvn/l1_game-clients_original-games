@@ -13,6 +13,7 @@ import BaccaratSettlementResult from "./settlement-result/baccarat-settlement-re
 import BaccaratStatistics from "./statistic/baccarat-statistics";
 import BaccaratScoreboard from "./scoreboard/baccarat-scoreboard";
 import { containerOptions, setting } from "./game-settings";
+import Header from "./header";
 import styles from "./baccarat.module.scss";
 
 @observer(setting.mainObserverNamespace)
@@ -20,7 +21,8 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IGameBaseSt
     constructor(props: GameBaseProps) {
         super(props);
         this.state = {
-            ...this.state
+            ...this.state,
+            isExpanded: true
         };
 
         try {
@@ -34,15 +36,18 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IGameBaseSt
     closeConnect() {
     }
 
+    handleToggleExpand = () => {
+        this.setState({ isExpanded: !this.state.isExpanded });
+    };
+
     override renderHeader() {
         return (
-            <div className={styles['baccarat-header']}>
-                <h1>{setting.name}</h1>
-                <div className={styles['controls']}>
-                    {/* These are already rendered by the base component */}
-                    {/* Only add custom header elements specific to baccarat here */}
-                </div>
-            </div>
+            <Header
+                namespace={this.props.namespace}
+                isExpanded={this.state.isExpanded}
+                onToggleExpand={this.handleToggleExpand}
+                gameId={setting.id}
+            />
         );
     }
 
@@ -75,14 +80,34 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IGameBaseSt
         );
     }
 
+    override render() {
+        return (
+            <div className={styles['baccarat-container']}>
+                {this.renderHeader()}
+                <div className={styles['main-content']}>
+                    <div className={styles['game-area']}>
+                        <div className={styles['betting-area']}>
+                            {this.renderBettingBlock()}
+                        </div>
+                        <div className={styles['result-area']}>
+                            {this.renderResultBlock()}
+                        </div>
+                        {this.renderRoundHistory()}
+                        {this.renderRoundIdSection()}
+                        {this.renderCountDownTimer()}
+                    </div>
+                    {this.state.isExpanded && this.renderStatistic()}
+                </div>
+            </div>
+        );
+    }
+
     async showResult(
         hasAnimation: boolean,
         result?: gc.GameServiceMessage.TResult,
         settlementResult?: gc.GameServiceMessage.TSettlementResult
     ) {
         if (!result) return;
-
-        // TODO: Implement result animation and display
         await FunctionUtils.delay(2000);
     }
 } 

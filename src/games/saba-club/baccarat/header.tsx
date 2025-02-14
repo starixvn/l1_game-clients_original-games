@@ -1,30 +1,28 @@
 import React from 'react';
-import { observer } from '@sg/sg-observer';
-import { setting } from './game-settings';
-import styles from './baccarat.module.scss';
+import { GameHeader } from "../../../_shared/components/game-base/gateway-gamebase";
+import { GameHeaderProps } from "../../../_shared/components/game-base/game-header/game-header";
+import styles from "../../../lobby/lobby.module.scss";
+import classNames from "classnames";
+import GameHeaderCenterTexts from "../../../_shared/components/game-base/game-header/game-header-center-texts";
 
-interface IBaccaratHeaderProps {
+interface IBaccaratHeaderProps extends Omit<GameHeaderProps, 'centerTextsComponent'> {
     namespace: string;
     isExpanded?: boolean;
     onToggleExpand?: () => void;
     gameId: number;
 }
 
-@observer(setting.mainObserverNamespace)
-export default class BaccaratHeader extends React.Component<IBaccaratHeaderProps> {
-    render() {
-        return (
-            <div className={styles['baccarat-header']}>
-                <h1>{setting.name}</h1>
-                <div className={styles['controls']}>
-                    <button
-                        className={styles['expand-button']}
-                        onClick={this.props.onToggleExpand}
-                    >
-                        {this.props.isExpanded ? 'Collapse' : 'Expand'}
-                    </button>
-                </div>
-            </div>
-        );
-    }
-} 
+const Header: React.FC<IBaccaratHeaderProps> = ({ isExpanded = true, onToggleExpand, ...props }) => {
+    return (
+        <GameHeader
+            {...props}
+            centerTextsComponent={<GameHeaderCenterTexts texts={["Player", "Banker", "Tie"]} />}
+            arrowProps={{
+                className: classNames(styles["arrow-icon"], { [styles.collapsed]: !isExpanded }),
+                onClick: onToggleExpand
+            }}
+        />
+    );
+};
+
+export default Header; 
