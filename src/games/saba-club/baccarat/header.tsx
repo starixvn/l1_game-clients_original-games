@@ -12,7 +12,7 @@ interface BaccaratHeaderProps {
     centerTextsComponent?: React.ReactNode;
 }
 
-const BaccaratHeader: React.FC<BaccaratHeaderProps> = ({ gameId, isExpanded, onToggleExpand }) => {
+const BaccaratHeader: React.FC<BaccaratHeaderProps> = ({ gameId, isExpanded, onToggleExpand, centerTextsComponent }) => {
     return (
         <div className={classNames(styles.header, 'baccarat-header')}>
             <GameHeader
@@ -20,6 +20,7 @@ const BaccaratHeader: React.FC<BaccaratHeaderProps> = ({ gameId, isExpanded, onT
                 isExpanded={isExpanded}
                 onToggleExpand={onToggleExpand}
                 centerTextsComponent={<GameHeaderCenterTexts texts={["Player/Banker", "Tie", "Pair"]} />}
+                className={styles.baccaratGameTitle}
             />
         </div>
     );

@@ -27,3 +27,62 @@
         }
     }
 }
+
+.header {
+    width: 100%;
+}
+
+.baccaratGameTitle {
+    width: 100%;
+    background-color: $baccarat-header-bg;
+    grid-template-columns: 1fr 12rem 12rem 12rem;
+}
+
+.bet {
+    text-transform: capitalize;
+    padding: 0;
+    background-color: $baccarat-primary-bg;
+    border-radius: 4px;
+}
+
+.container-bets {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+
+    .wrapper-dots {
+        display: grid;
+        align-items: center;
+        grid-template-columns: repeat(4, 1.2rem);
+        grid-gap: 0.2rem;
+
+        &-small {
+            grid-template-columns: repeat(4, 1rem);
+        }
+    }
+}
+
+.main-option {
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.bets-bg {
+    background-color: $baccarat-primary-bg;
+    border-radius: 4px;
+}
+
+.padding-bet {
+    padding: 8px;
+}
+
+.margin-x-0 {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.bet-options-wrapper {
+    display: grid;
+    grid-template-columns: 159px 1fr;
+}
