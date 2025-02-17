@@ -11,7 +11,9 @@
     :global {
         .block-wrapper {
             background-color: $baccarat-primary-bg;
-            grid-template-columns: 1fr 14rem 36rem;
+            grid-template-columns: 1fr 14rem 36rem !important;
+            padding: 1rem;
+            gap: 1rem;
         }
 
         .game-title {
@@ -27,6 +29,10 @@
             }
         }
     }
+}
+
+.block-wrapper {
+    grid-template-columns: 1fr 14rem 36rem !important;
 }
 
 .header {

@@ -14,9 +14,13 @@ import BaccaratStatistics from "./statistic/baccarat-statistics";
 import BaccaratScoreboard from "./scoreboard/baccarat-scoreboard";
 import { containerOptions, setting } from "./game-settings";
 import Header from "./header";
-
+import Styles from "./baccarat.module.scss";
 @observer(setting.mainObserverNamespace)
 export default class Baccarat extends GatewayGameBase<GameBaseProps, IGameBaseState> {
+    override overrideClasses = {
+        blockWrapper: Styles["block-wrapper"]
+    }
+
     constructor(props: GameBaseProps) {
         super(props);
         this.state = {

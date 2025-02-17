@@ -1,7 +1,7 @@
 @import './styles/theme';
 
 .block-wrapper {
-    @include responsive-grid(1fr 14rem 40rem);
+    @include responsive-grid(1fr 16rem 40rem);
     background-color: $primary-bg;
     align-items: center;
     @include collapsible;
@@ -10,6 +10,7 @@
         @include flex-center;
         gap: $spacing-md;
         padding: $spacing-md;
+        justify-content: left;
     }
 
     .bet-options {

@@ -52,26 +52,33 @@
     border-radius: 4px;
 }
 
-.main-bets-container {
+// Add mixin for common container styles
+@mixin bet-container-grid {
     display: grid;
     grid-template-rows: 1fr 1fr;
     gap: 8px;
-    padding-right: 12px;
+    padding: 12px;
+}
+
+// Base container class
+.base-container {
+    @include bet-container-grid;
     border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.main-bets-container {
+    @extend .base-container;
 }
 
 .tie-container {
-    display: flex;
-    align-items: center;
-    padding: 0 12px;
-    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    @extend .base-container;
+    border-right: none ;
 }
 
 .pair-container {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    gap: 8px;
-    padding-left: 12px;
+    @include bet-container-grid;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 12px;  // Only unique property for this container
 }
 
 .bet-option {

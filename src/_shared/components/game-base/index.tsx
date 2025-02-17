@@ -22,7 +22,12 @@ export interface IGameBaseState {
     isExpanded: boolean;
 }
 
+interface GameStyleOverrides {
+    [key: string]: string;
+}
+
 abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> extends React.PureComponent<P, S> {
+    protected overrideClasses?: GameStyleOverrides;
     constructor(props: P) {
         super(props);
         this.state = {
@@ -172,6 +177,65 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         }));
     };
 
+    protected renderArrow(isOpenStatistic: boolean) {
+        return (
+            <i className={`${Styles["arrow-icon"]}`}>
+                <svg
+                    className={`${Styles["svg-icon"]}`}
+                    width="24"
+                    height="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="#78acff"
+                >
+                    <path d={isOpenStatistic ? "M18 9l-6 6-6-6" : "M6 15l6-6 6 6"} />
+                </svg>
+            </i>
+        );
+    }
+
+    protected renderMainContent() {
+        return (
+            <div className={`${Styles["block-wrapper"]} ${this.overrideClasses?.blockWrapper} ${!this.state.isExpanded ? Styles.collapsed : ''}`}>
+                <div className={Styles["info"]}>
+                    {this.renderRoundIdSection()}
+                    {this.renderCountDownTimer()}
+                </div>
+                <div className={Styles["result"]}>{this.renderResultBlock()}</div>
+                <div className={Styles["bet-options"]}>
+                    {this.renderBettingBlock()}
+                    <ConfirmBet namespace={this.props.namespace} />
+                </div>
+            </div>
+        );
+    }
+
+    protected renderHistorySection() {
+        return (
+            <div className={`${Styles["history-block"]} ${!this.state.isExpanded ? Styles.collapsed : ''}`}>
+                <div className={Styles["previous-round"]}>{this.renderRoundHistory()}</div>
+                <div className={Styles["statistic-button"]} onClick={this.toggleStatistic}>
+                    <span>Statistic</span>
+                    {this.renderArrow(this.state.isOpenStatistic)}
+                </div>
+            </div>
+        );
+    }
+
+    protected renderStatisticSection() {
+        return this.state.isOpenStatistic && this.state.isExpanded && this.renderStatistic();
+    }
+
+    protected renderNotifications() {
+        return (
+            <>
+                {this.renderNotice()}
+                {this.renderWarning()}
+            </>
+        );
+    }
+
     getRenderTemplate() {
         const { isConnected, isConnectFailed, initialized: isGameConfigInitialized, showDisabledPopup } = this.state;
 
@@ -184,52 +248,15 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
             return showDisabledPopup ? this.renderNotice() : this.renderLoading();
         }
 
-        const renderArrow = (isOpenStatistic: boolean) => {
-            return (
-                <i className={`${Styles["arrow-icon"]}`}>
-                    <svg
-                        className={`${Styles["svg-icon"]}`}
-                        width="24"
-                        height="24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="#78acff"
-                    >
-                        <path d={isOpenStatistic ? "M18 9l-6 6-6-6" : "M6 15l6-6 6 6"} />
-                    </svg>
-                </i>
-            );
-        };
-
         return !isConnected ? (
             this.renderDisconnect()
         ) : (
             <>
                 {this.renderHeader()}
-                <div className={`${Styles["block-wrapper"]} ${this.props.overrideClasses} ${!this.state.isExpanded ? Styles.collapsed : ''}`}>
-                    <div className={Styles["info"]}>
-                        {this.renderRoundIdSection()}
-                        {this.renderCountDownTimer()}
-                    </div>
-                    <div className={Styles["result"]}>{this.renderResultBlock()}</div>
-                    <div className={Styles["bet-options"]}>
-                        {this.renderBettingBlock()}
-                        <ConfirmBet namespace={this.props.namespace} />
-                    </div>
-                </div>
-
-                <div className={`${Styles["history-block"]} ${!this.state.isExpanded ? Styles.collapsed : ''}`}>
-                    <div className={Styles["previous-round"]}>{this.renderRoundHistory()}</div>
-                    <div className={Styles["statistic-button"]} onClick={this.toggleStatistic}>
-                        <span>Statistic</span>
-                        {renderArrow(this.state.isOpenStatistic)}
-                    </div>
-                </div>
-                {this.state.isOpenStatistic && this.state.isExpanded && this.renderStatistic()}
-
-                {this.renderNotice()}
-                {this.renderWarning()}
+                {this.renderMainContent()}
+                {this.renderHistorySection()}
+                {this.renderStatisticSection()}
+                {this.renderNotifications()}
             </>
         );
     }
