@@ -1,0 +1,24 @@
+@import '../../../../_shared/components/game-base/styles/theme';
+
+// Override variables for Baccarat game
+$baccarat-primary-bg: #f5f0ff;
+$baccarat-header-bg: #e6e6e6;
+$baccarat-accent-color: #9c27b0;
+
+// Game-specific mixins
+@mixin baccarat-header {
+    background-color: $baccarat-header-bg;
+    padding: $spacing-md;
+}
+
+@mixin baccarat-block {
+    background-color: $baccarat-primary-bg;
+    border: 1px solid $border-color;
+}
+
+// Export classes for use in Baccarat components
+:export {
+    primaryBg: $baccarat-primary-bg;
+    headerBg: $baccarat-header-bg;
+    accentColor: $baccarat-accent-color;
+} 

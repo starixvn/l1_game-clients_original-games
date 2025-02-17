@@ -1,0 +1,29 @@
+@import './styles/overrides';
+
+.baccarat-game {
+    @include baccarat-block;
+
+    .header {
+        @include baccarat-header;
+    }
+
+    // Extend base game styles with Baccarat-specific modifications
+    :global {
+        .block-wrapper {
+            background-color: $baccarat-primary-bg;
+        }
+
+        .game-title {
+            background-color: $baccarat-header-bg;
+        }
+
+        .statistic-button {
+            color: $baccarat-accent-color;
+
+            &:hover {
+                background-color: $baccarat-accent-color;
+                color: $text-light;
+            }
+        }
+    }
+}
