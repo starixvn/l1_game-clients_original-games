@@ -14,6 +14,7 @@ export default class BaccaratRoundHistory extends React.Component<IBaccaratRound
         // TODO: Get actual round history from state
         const mockHistory: IBaccaratResult[] = [];
 
+        return null;
         return (
             <div className={styles['round-history']}>
                 <h3>Round History</h3>

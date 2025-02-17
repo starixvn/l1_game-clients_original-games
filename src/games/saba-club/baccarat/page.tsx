@@ -14,7 +14,6 @@ import BaccaratStatistics from "./statistic/baccarat-statistics";
 import BaccaratScoreboard from "./scoreboard/baccarat-scoreboard";
 import { containerOptions, setting } from "./game-settings";
 import Header from "./header";
-import styles from "./baccarat.module.scss";
 
 @observer(setting.mainObserverNamespace)
 export default class Baccarat extends GatewayGameBase<GameBaseProps, IGameBaseState> {
@@ -67,42 +66,16 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IGameBaseSt
     }
 
     renderStatistic() {
-        return <BaccaratStatistics namespace={this.props.namespace} />;
+        return (
+            <>
+                <BaccaratStatistics namespace={this.props.namespace} />
+                {this.renderScoreboard()}
+            </>
+        );
     }
 
     renderScoreboard() {
         return <BaccaratScoreboard namespace={this.props.namespace} />;
-    }
-
-    override render() {
-        return (
-            <div className={styles.container}>
-                {this.renderHeader()}
-                <div className={styles.content}>
-                    <div className={styles.gameArea}>
-                        <div className={styles.gameInfo}>
-                            {this.renderRoundIdSection()}
-                            {this.renderCountDownTimer()}
-                        </div>
-                        <div className={styles.gameTable}>
-                            {this.renderResultBlock()}
-                        </div>
-                        <div className={styles.bettingArea}>
-                            {this.renderBettingBlock()}
-                        </div>
-                        <div className={styles.historyArea}>
-                            {this.renderRoundHistory()}
-                        </div>
-                    </div>
-                    {this.state.isExpanded && (
-                        <div className={styles.sideContent}>
-                            {this.renderStatistic()}
-                            {this.renderScoreboard()}
-                        </div>
-                    )}
-                </div>
-            </div>
-        );
     }
 
     async showResult(

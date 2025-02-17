@@ -1,0 +1,9 @@
+@import '../styles/overrides';
+
+.statistic {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px;
+    background-color: $baccarat-primary-bg;
+    margin-top: 10px;
+}

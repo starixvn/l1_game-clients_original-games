@@ -1,0 +1,16 @@
+@import '../styles/overrides';
+
+.round-history {
+    background-color: $baccarat-primary-bg;
+    padding: 8px 4px;
+
+    .hstack-round {
+        margin-top: 0 !important;
+    }
+
+    .arrow {
+        background-image: url("/static/images/arrow.svg");
+        height: 8px;
+        width: 8px;
+    }
+}
