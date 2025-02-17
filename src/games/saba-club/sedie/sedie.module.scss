@@ -100,24 +100,9 @@
     .header {
         @include sedie-header;
     }
+}
 
-    // Extend base game styles with Sedie-specific modifications
-    :global {
-        .block-wrapper {
-            background-color: $sedie-primary-bg;
-        }
-
-        .game-title {
-            background-color: $sedie-header-bg;
-        }
-
-        .statistic-button {
-            color: $sedie-accent-color;
-
-            &:hover {
-                background-color: $sedie-accent-color;
-                color: $text-light;
-            }
-        }
-    }
+.sedieGameTitle {
+    background-color: $sedie-header-bg !important;
+    grid-template-columns: 1fr 10rem 30rem !important;
 }

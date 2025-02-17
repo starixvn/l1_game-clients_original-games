@@ -20,6 +20,7 @@ const SedieHeader: React.FC<SedieHeaderProps> = ({ gameId, isExpanded, onToggleE
                 isExpanded={isExpanded}
                 onToggleExpand={onToggleExpand}
                 centerTextsComponent={<GameHeaderCenterTexts texts={["Odd/Even", "Red/White"]} />}
+                className={styles.sedieGameTitle}
             />
         </div>
     );

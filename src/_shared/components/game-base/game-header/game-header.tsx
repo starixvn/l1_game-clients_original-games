@@ -8,6 +8,7 @@ export interface GameHeaderProps {
     isExpanded?: boolean;
     onToggleExpand?: () => void;
     centerTextsComponent?: React.ReactNode;
+    className?: string;
 }
 
 export class GameHeader extends React.Component<GameHeaderProps> {
@@ -16,14 +17,14 @@ export class GameHeader extends React.Component<GameHeaderProps> {
     };
 
     render() {
-        const { centerTextsComponent, gameId, isExpanded, onToggleExpand } = this.props;
+        const { centerTextsComponent, gameId, isExpanded, onToggleExpand, className } = this.props;
         const arrowProps = {
             className: classNames(styles["arrow-icon"], { [styles.collapsed]: !isExpanded }),
             onClick: onToggleExpand
         };
 
         return (
-            <div className={styles["game-title"]}>
+            <div className={classNames(styles["game-title"], className)}>
                 <GameTitle gameId={gameId} arrowProps={arrowProps} />
                 {centerTextsComponent}
             </div>
