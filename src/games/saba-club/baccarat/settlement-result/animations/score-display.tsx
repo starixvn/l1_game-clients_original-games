@@ -13,7 +13,7 @@ export const ScoreDisplay: React.FC<ScoreDisplayProps> = ({ label, score, cardsC
 
     return (
         <div className={`${Styles[classGroupCards]} ${Styles.score} ${Styles[`${type}-score`]}`}>
-            {label}
+            {/* {label} */}
             <span className={Styles["score-number"]}>{score}</span>
         </div>
     );

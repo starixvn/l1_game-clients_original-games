@@ -5,6 +5,7 @@ import Styles from "./baccarat-animations.module.scss";
 import { BaccaratCard } from "./baccarat-card";
 import { ScoreDisplay } from "./score-display";
 import { calculateTotalScore, sumScore } from "./score-utils";
+import { CardSection } from "./card-section";
 
 interface PlayerBankerResultProps {
     playResultAnimation: boolean;
@@ -96,29 +97,20 @@ export class PlayerBankerResultComponent extends React.PureComponent<PlayerBanke
         return (
             <div className={`overlay-mask ${Styles[classOpenCards]}`}>
                 <div className={Styles["animation-container"]}>
-                    <div className={`${Styles["player"]} ${!playResultAnimation ? Styles["move-up-no-animation"] : ""}`}>
-                        {playerCards.map(card => (
-                            <BaccaratCard key={card.order} card={card} />
-                        ))}
-                        <ScoreDisplay
-                            label={texts.player}
-                            score={playerScore}
-                            cardsCount={playerCards.length}
-                            type="player"
-                        />
-                    </div>
-
-                    <div className={`${Styles["banker"]} ${!playResultAnimation ? Styles["move-up-no-animation"] : ""}`}>
-                        {bankerCards.map(card => (
-                            <BaccaratCard key={card.order} card={card} />
-                        ))}
-                        <ScoreDisplay
-                            label={texts.banker}
-                            score={bankerScore}
-                            cardsCount={bankerCards.length}
-                            type="banker"
-                        />
-                    </div>
+                    <CardSection
+                        cards={playerCards}
+                        label={texts.player}
+                        score={playerScore}
+                        type="player"
+                        playResultAnimation={playResultAnimation}
+                    />
+                    <CardSection
+                        cards={bankerCards}
+                        label={texts.banker}
+                        score={bankerScore}
+                        type="banker"
+                        playResultAnimation={playResultAnimation}
+                    />
                 </div>
             </div>
         );

@@ -1,18 +1,18 @@
 @import './variables';
 
 .score {
-    --width-score: 8.4rem;
-    --height-score: 2.2rem;
+    --width-score: 4.5rem;
+    --height-score: 2.5rem;
     --font-size-score: 1.4rem;
     --bottom-score: 0;
     position: absolute;           
     width: var(--width-score);
     height: var(--height-score);
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
     color: #fff;
     display: flex;
-    align-items: flex-end;
+    align-items: cen;
     justify-content: center;
     line-height: 1.9rem;
     font-size: var(--font-size-score);
@@ -22,18 +22,17 @@
         font-size: 2rem;
         font-family: var(--font-number);
         position: relative;
-        padding-left: 0.3rem;
-        top: -0.1rem;
+        // padding-left: 0.3rem;
+         top: 0.4rem;
     }
 
     &.player-score {
-        margin-left: 50%;
-        left: -4.7rem;
+        right: 2rem;
         background: linear-gradient(180deg, #65a1e7 0%, #2d6db8 100%);
     }
 
     &.banker-score {
         background: linear-gradient(180deg, #f56566 0%, #ce333f 100%);
-        left: 7.8rem;
+        left:1.5rem;
     }
 } 
