@@ -10,6 +10,7 @@ interface CardSectionProps {
     score: number;
     type: "player" | "banker";
     playResultAnimation: boolean;
+    isShowResult: boolean;
 }
 
 export const CardSection: React.FC<CardSectionProps> = ({
@@ -18,6 +19,7 @@ export const CardSection: React.FC<CardSectionProps> = ({
     score,
     type,
     playResultAnimation,
+    isShowResult,
 }) => {
     return (
         <div className={Styles.cardSection} style={{ height: "100%" }}>
@@ -28,15 +30,18 @@ export const CardSection: React.FC<CardSectionProps> = ({
                         key={card.order}
                         card={card}
                         className={index === 0 && type === "player" && cards.length === 3 ? Styles.rotateLeft : index === 2 && type === "banker" ? Styles.rotateRight : ""}
+                        isShowResult={isShowResult}
                     />
                 ))}
                 <div className={Styles.scoreOverlay}>
-                    <ScoreDisplay
-                        label={label}
-                        score={score}
-                        cardsCount={cards.length}
-                        type={type}
-                    />
+                    {isShowResult && (
+                        <ScoreDisplay
+                            label={label}
+                            score={score}
+                            cardsCount={cards.length}
+                            type={type}
+                        />
+                    )}
                 </div>
             </div>
         </div>

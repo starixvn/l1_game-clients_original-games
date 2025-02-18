@@ -14,6 +14,7 @@ interface PlayerBankerResultProps {
         player: string;
         banker: string;
     };
+    isShowResult: boolean;
 }
 
 interface PlayerBankerResultState {
@@ -55,6 +56,7 @@ export class PlayerBankerResultComponent extends React.PureComponent<PlayerBanke
 
     private startAnimation = () => {
         const { result } = this.props;
+        console.log('Starting animation with result:', result);
         const cardOpenedTimes = [
             { t: 700, c: result.player.card1, isBanker: false },
             { t: 1500, c: result.banker.card1, isBanker: true },
@@ -67,12 +69,17 @@ export class PlayerBankerResultComponent extends React.PureComponent<PlayerBanke
         cardOpenedTimes
             .filter((ct) => !!ct.c)
             .forEach((ct, i) => {
+                console.log(`Setting timeout for card: ${ct.c.card}, isBanker: ${ct.isBanker}, time: ${ct.t}`);
                 const timeout = setTimeout(() => {
-                    this.setState(prevState => ({
-                        bankerScore: ct.isBanker ? sumScore(prevState.bankerScore, ct.c.card) : prevState.bankerScore,
-                        playerScore: !ct.isBanker ? sumScore(prevState.playerScore, ct.c.card) : prevState.playerScore,
-                        openedCards: i + 1,
-                    }));
+                    this.setState(prevState => {
+                        const newState = {
+                            bankerScore: ct.isBanker ? sumScore(prevState.bankerScore, ct.c.card) : prevState.bankerScore,
+                            playerScore: !ct.isBanker ? sumScore(prevState.playerScore, ct.c.card) : prevState.playerScore,
+                            openedCards: i + 1,
+                        };
+                        console.log('Updated state:', newState);
+                        return newState;
+                    });
                 }, ct.t);
                 this.timeouts.push(timeout);
             });
@@ -87,7 +94,7 @@ export class PlayerBankerResultComponent extends React.PureComponent<PlayerBanke
     };
 
     render() {
-        const { playResultAnimation, result, texts } = this.props;
+        const { playResultAnimation, result, texts, isShowResult } = this.props;
         const { openedCards, playerScore, bankerScore } = this.state;
 
         const playerCards = GetPlayerCardsResult(result);
@@ -103,6 +110,7 @@ export class PlayerBankerResultComponent extends React.PureComponent<PlayerBanke
                         score={playerScore}
                         type="player"
                         playResultAnimation={playResultAnimation}
+                        isShowResult={isShowResult}
                     />
                     <CardSection
                         cards={bankerCards}
@@ -110,6 +118,7 @@ export class PlayerBankerResultComponent extends React.PureComponent<PlayerBanke
                         score={bankerScore}
                         type="banker"
                         playResultAnimation={playResultAnimation}
+                        isShowResult={isShowResult}
                     />
                 </div>
             </div>

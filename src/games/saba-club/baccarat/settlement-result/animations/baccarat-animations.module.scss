@@ -66,7 +66,7 @@ $time-delay-zoom-in-card-animation: 0.1s + $time-zoom-in-card-animation;
     &.card-5, &.card-6 {
         .player {
             position: relative;
-            left: 4rem;
+            // left: 4rem;
         }
         .animation-container .move-up-no-animation.player{
             left: 0;
