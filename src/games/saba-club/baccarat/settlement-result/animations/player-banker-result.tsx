@@ -104,6 +104,7 @@ export class PlayerBankerResultComponent extends React.PureComponent<PlayerBanke
                             label={texts.player}
                             score={playerScore}
                             cardsCount={playerCards.length}
+                            type="player"
                         />
                     </div>
 
@@ -115,6 +116,7 @@ export class PlayerBankerResultComponent extends React.PureComponent<PlayerBanke
                             label={texts.banker}
                             score={bankerScore}
                             cardsCount={bankerCards.length}
+                            type="banker"
                         />
                     </div>
                 </div>

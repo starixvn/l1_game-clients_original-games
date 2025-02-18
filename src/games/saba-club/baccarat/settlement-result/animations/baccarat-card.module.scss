@@ -1,0 +1,43 @@
+@use "sass:math";
+@import './variables';
+
+.card {
+    position: relative;
+    // margin-right: -3rem;
+    
+    &:last-child {
+        margin-right: 0;
+    }
+}
+
+.card-back {
+    background-size: 7.757rem 110.74rem;
+    width: 7.757rem;
+    height: 10.74rem;
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 2;
+    animation-name: hide-card-back-animation;
+    animation-duration: math.div($time-open-card-animation, 6);
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
+    transition: transform 0.1s;
+}
+
+.rotate-card {
+    transform: rotateY(0deg);
+    position: relative;
+    animation-name: open-card-animation;
+    animation-duration: math.div($time-open-card-animation, 6);
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in;
+    transition: transform 0.1s;
+    
+    &.flipped {
+        transform: rotateY(180deg);
+    }
+} 

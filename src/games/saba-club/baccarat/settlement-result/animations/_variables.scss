@@ -1,0 +1,17 @@
+// Animation timing variables
+$time-draw-card-animation: 0.8s;
+$time-open-card-animation: 1.8s;
+$time-zoom-in-card-animation: 0.4s;
+$time-show-score-animation: 0.2s;
+$time-blink-score-animation: 0.3s;
+$time-move-left-player: 0.4s;
+
+$time-delay-open-card-2: 0.2s;
+$time-delay-open-card-4: $time-delay-open-card-2 + 0s;
+$time-delay-zoom-in-card-animation: 0.1s + $time-zoom-in-card-animation;
+
+// Layout variables
+$gap-player-banker-default: 2rem;
+$gap-player-banker-desktop: 3rem;
+$distance-first-second-card: -0.5rem;
+$distance-second-third-card: -1rem; 

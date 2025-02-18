@@ -29,12 +29,14 @@ $time-delay-zoom-in-card-animation: 0.1s + $time-zoom-in-card-animation;
         justify-self: flex-end;
         display: flex;
         flex: 1 1 8.9rem;
+        gap: 1rem;
     }
 
     .banker {
         justify-self: flex-start;
         display: flex;
         flex: 1 1 8.9rem;
+        gap: 1rem;
     }
 }
 

@@ -1,0 +1,47 @@
+@import './variables';
+
+.animation-container {
+    top: 0.3rem;
+    width: 100%;  
+    pointer-events: none;
+    display: grid;
+    --gap-player-banker: $gap-player-banker-default;
+    grid-template-columns: repeat(2, calc(50% - var(--gap-player-banker)));
+    grid-column-gap: calc(var(--gap-player-banker)*2);
+    scale: 0.5;
+
+    .player {
+        justify-self: flex-end;
+        display: flex;
+        flex: 1 1 8.9rem;
+        position: relative;
+        
+        &.move-left {
+            --move-left-from-player: 4.2rem;
+            --move-left-to-player: 0;        
+            animation: move-left $time-move-left-player linear forwards;
+        }
+    }
+
+    .banker {
+        justify-self: flex-start;
+        display: flex;
+        flex: 1 1 8.9rem;
+        position: relative;
+    }
+}
+
+@media(min-width: 1278px) {    
+    .animation-container {
+        --gap-player-banker: $gap-player-banker-desktop;       
+    }
+}
+
+@keyframes move-left {
+    from {
+        left: var(--move-left-from-player);
+    }
+    to {
+        left: var(--move-left-to-player);
+    }
+} 
