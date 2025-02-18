@@ -1,30 +1,10 @@
-import * as gc from "@sg/sg-game-client";
 import React from "react";
-import Card from "../../../../../_shared/components/card";
-import { CardOrder, Result } from "../../baccarat";
+import { Result } from "../../baccarat";
 import { GetBankerCardsResult, GetPlayerCardsResult } from "../../baccarat-helper";
 import Styles from "./baccarat-animations.module.scss";
-
-const classAnimationContainer = "animation-container";
-const classMoveUpNoAnimation = "move-up-no-animation";
-
-const generateResult = (cards: CardOrder[]) => {
-    return cards.map((card) => {
-        const classCardOrder = `card${card.order}`;
-        return (
-            <div key={card.order} className={`${Styles[classCardOrder]}`}>
-                <div className={Styles["rotate-card"]}>
-                    <Card result={card.value} customClassName={"card-baccarat"}></Card>
-                </div>
-                <div className={`${Styles["card-back"]} `}></div>
-            </div>
-        );
-    });
-};
-
-const sumScore = (score: number, card: number) => {
-    return card + 1 >= 10 ? score : (score + card + 1) % 10;
-};
+import { BaccaratCard } from "./baccarat-card";
+import { ScoreDisplay } from "./score-display";
+import { calculateTotalScore, sumScore } from "./score-utils";
 
 interface PlayerBankerResultProps {
     playResultAnimation: boolean;
@@ -36,11 +16,8 @@ interface PlayerBankerResultProps {
 }
 
 interface PlayerBankerResultState {
-    playResultAnimation: boolean;
-    result?: Result;
     playerScore: number;
     bankerScore: number;
-    texts: any;
     openedCards: number;
 }
 
@@ -51,7 +28,6 @@ export class PlayerBankerResultComponent extends React.PureComponent<PlayerBanke
         super(props);
 
         this.state = {
-            ...props,
             playerScore: 0,
             bankerScore: 0,
             openedCards: 0,
@@ -60,98 +36,86 @@ export class PlayerBankerResultComponent extends React.PureComponent<PlayerBanke
 
     componentDidMount() {
         if (this.props.playResultAnimation) {
-            const cardOpenedTimes = [
-                { t: 700, c: this.props.result.player.card1, isBanker: false },
-                { t: 1500, c: this.props.result.banker.card1, isBanker: true },
-                { t: 2300, c: this.props.result.player.card2, isBanker: false },
-                { t: 3100, c: this.props.result.banker.card2, isBanker: true },
-                {
-                    t: 4400,
-                    c: this.props.result.player.card3 ?? this.props.result.banker.card3,
-                    isBanker: !this.props.result.player.card3,
-                },
-                { t: 5800, c: !!this.props.result.player.card3 ? this.props.result.banker.card3 : null, isBanker: true },
-            ];
-
-            cardOpenedTimes
-                .filter((ct) => !!ct.c)
-                .forEach((ct, i) => {
-                    const timeout = setTimeout(() => {
-                        if (ct.isBanker) {
-                            this.setState({
-                                bankerScore: sumScore(this.state.bankerScore, ct.c.card),
-                                openedCards: i + 1,
-                            });
-                        } else {
-                            this.setState({
-                                playerScore: sumScore(this.state.playerScore, ct.c.card),
-                                openedCards: i + 1,
-                            });
-                        }
-                    }, ct.t);
-                    this.timeouts.push(timeout);
-                });
+            this.startAnimation();
         } else {
             this.updateScorePlayerBanker();
         }
     }
 
     componentWillUnmount() {
-        if (this.timeouts && this.timeouts.length) {
-            this.timeouts.forEach((timeout) => {
-                clearTimeout(timeout);
-            });
-        }
+        this.timeouts.forEach(clearTimeout);
     }
 
-    componentDidUpdate() {
-        if (!this.props.playResultAnimation) {
+    componentDidUpdate(prevProps: PlayerBankerResultProps) {
+        if (!this.props.playResultAnimation && prevProps.result !== this.props.result) {
             this.updateScorePlayerBanker();
         }
     }
 
-    updateScorePlayerBanker = () => {
-        let pc = sumScore(0, this.props.result.player.card1.card);
-        pc = sumScore(pc, this.props.result.player.card2.card);
-        pc = sumScore(pc, this.props.result.player.card3?.card ?? -1);
+    private startAnimation = () => {
+        const { result } = this.props;
+        const cardOpenedTimes = [
+            { t: 700, c: result.player.card1, isBanker: false },
+            { t: 1500, c: result.banker.card1, isBanker: true },
+            { t: 2300, c: result.player.card2, isBanker: false },
+            { t: 3100, c: result.banker.card2, isBanker: true },
+            { t: 4400, c: result.player.card3 ?? result.banker.card3, isBanker: !result.player.card3 },
+            { t: 5800, c: result.player.card3 ? result.banker.card3 : null, isBanker: true },
+        ];
 
-        let bc = sumScore(0, this.props.result.banker.card1.card);
-        bc = sumScore(bc, this.props.result.banker.card2.card);
-        bc = sumScore(bc, this.props.result.banker.card3?.card ?? -1);
+        cardOpenedTimes
+            .filter((ct) => !!ct.c)
+            .forEach((ct, i) => {
+                const timeout = setTimeout(() => {
+                    this.setState(prevState => ({
+                        bankerScore: ct.isBanker ? sumScore(prevState.bankerScore, ct.c.card) : prevState.bankerScore,
+                        playerScore: !ct.isBanker ? sumScore(prevState.playerScore, ct.c.card) : prevState.playerScore,
+                        openedCards: i + 1,
+                    }));
+                }, ct.t);
+                this.timeouts.push(timeout);
+            });
+    };
 
+    private updateScorePlayerBanker = () => {
+        const { result } = this.props;
         this.setState({
-            playerScore: pc,
-            bankerScore: bc,
+            playerScore: calculateTotalScore([result.player.card1, result.player.card2, result.player.card3]),
+            bankerScore: calculateTotalScore([result.banker.card1, result.banker.card2, result.banker.card3]),
         });
     };
 
     render() {
-        const playerCards = GetPlayerCardsResult(this.props.result);
-        const bankerCards = GetBankerCardsResult(this.props.result);
-        const classOpenCards = `opened-cards-${this.state.openedCards}`;
-        const classGroupPlayerCards = `group-${playerCards.length}-cards`;
-        const classGroupBankerCards = `group-${bankerCards.length}-cards`;
+        const { playResultAnimation, result, texts } = this.props;
+        const { openedCards, playerScore, bankerScore } = this.state;
+
+        const playerCards = GetPlayerCardsResult(result);
+        const bankerCards = GetBankerCardsResult(result);
+        const classOpenCards = `opened-cards-${openedCards}`;
+
         return (
             <div className={`overlay-mask ${Styles[classOpenCards]}`}>
-                <div className={`${Styles[classAnimationContainer]}`}>
-                    <div
-                        className={`${Styles["player"]} ${this.props.playResultAnimation ? "" : Styles[classMoveUpNoAnimation]}`}
-                    >
-                        {generateResult(playerCards)}
-                        <div className={`${Styles[classGroupPlayerCards]} ${Styles["score"]}`}>
-                            {this.state.texts.player}
-                            <span className={Styles["score-number"]}>{this.state.playerScore}</span>
-                        </div>
+                <div className={Styles["animation-container"]}>
+                    <div className={`${Styles["player"]} ${!playResultAnimation ? Styles["move-up-no-animation"] : ""}`}>
+                        {playerCards.map(card => (
+                            <BaccaratCard key={card.order} card={card} />
+                        ))}
+                        <ScoreDisplay
+                            label={texts.player}
+                            score={playerScore}
+                            cardsCount={playerCards.length}
+                        />
                     </div>
 
-                    <div
-                        className={`${Styles["banker"]} ${this.props.playResultAnimation ? "" : Styles[classMoveUpNoAnimation]}`}
-                    >
-                        {generateResult(bankerCards)}
-                        <div className={`${Styles[classGroupBankerCards]} ${Styles["score"]}`}>
-                            {this.state.texts.banker}
-                            <span className={Styles["score-number"]}>{this.state.bankerScore}</span>
-                        </div>
+                    <div className={`${Styles["banker"]} ${!playResultAnimation ? Styles["move-up-no-animation"] : ""}`}>
+                        {bankerCards.map(card => (
+                            <BaccaratCard key={card.order} card={card} />
+                        ))}
+                        <ScoreDisplay
+                            label={texts.banker}
+                            score={bankerScore}
+                            cardsCount={bankerCards.length}
+                        />
                     </div>
                 </div>
             </div>

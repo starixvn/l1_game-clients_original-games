@@ -7,6 +7,10 @@ import Card from "../../../../../_shared/components/card";
 import { CardOrder, Result, SettlementResult } from "../../baccarat";
 import { GetBankerCardsResult, GetPlayerCardsResult } from "../../baccarat-helper";
 import Styles from "./baccarat-animations.module.scss";
+import { getCardOpeningSequence } from './card-timing';
+import { calculatePlayerBankerScores } from './score-utils';
+import { SettlementInfo } from './settlement-info';
+import BaccaratResult from "./baccarat-result";
 
 const classAnimation = "has-animation";
 const classAnimationContainer = "animation-container";
@@ -162,8 +166,11 @@ class PlayerBankerResultComponent extends React.PureComponent<
     }
 }
 
-export { default as BaccaratResult } from "./baccarat-result";
-export { PlayerBankerResultComponent } from "./player-banker-result";
+export {
+    BaccaratResult,
+    PlayerBankerResultComponent,
+    SettlementInfo,
+};
 
 export const generateSettlementInfo = (settlementResult: SettlementResult, resources: Object, isShowTicketHistory = false) => {
     const resultCount = 2 + (settlementResult.playerPair ? 1 : 0) + (settlementResult.bankerPair ? 1 : 0);
