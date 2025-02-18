@@ -1,8 +1,8 @@
 @use "sass:math";
-@import "../../../../assets/components/result-label-collapse-mode";
-@import "../../../../assets/components/animations/common";
-@import "../../../../assets/components/game-cards/card-animation";
-@import "../../../../assets/components/settlement-info";
+@import "../../../../../assets/components/result-label-collapse-mode";
+@import "../../../../../assets/components/animations/common";
+@import "../../../../../assets/components/game-cards/card-animation";
+@import "../../../../../assets/components/settlement-info";
 
 $time-draw-card-animation: 0.8s;
 $time-open-card-animation: 1.8s;
@@ -16,7 +16,7 @@ $time-delay-open-card-4: $time-delay-open-card-2 + 0s;
 $time-delay-zoom-in-card-animation: 0.1s + $time-zoom-in-card-animation;
 
 .animation-container {
-    position: absolute;
+    // position: absolute;
     top: 0.3rem;
     width: 100%;  
     pointer-events: none;
@@ -24,7 +24,7 @@ $time-delay-zoom-in-card-animation: 0.1s + $time-zoom-in-card-animation;
     --gap-player-banker: 2rem;
     grid-template-columns: repeat(2, calc(50% - var(--gap-player-banker))) ;
     grid-column-gap: calc(var(--gap-player-banker)*2);
-    
+    scale: 0.5;
     .player {
         justify-self: flex-end;
         display: flex;
@@ -47,8 +47,8 @@ $time-delay-zoom-in-card-animation: 0.1s + $time-zoom-in-card-animation;
 }
 
 .open-cards {
-    --distance-first-second-card: 5.5rem;
-    --distance-second-third-card: 9.4rem;
+    --distance-first-second-card: -0.5rem;
+    --distance-second-third-card: -1rem;
     &.card-4 {
         @include position-cards(
             (
@@ -141,7 +141,7 @@ $time-delay-zoom-in-card-animation: 0.1s + $time-zoom-in-card-animation;
             position: relative;
             .score {
                 margin-left: 50%;
-                left: -1.4rem;
+                left: -4.7rem;
                 background: linear-gradient(180deg, #65a1e7 0%, #2d6db8 100%);             
             }
             &.group-2-cards {                
@@ -152,7 +152,7 @@ $time-delay-zoom-in-card-animation: 0.1s + $time-zoom-in-card-animation;
             position: relative;
             .score {
                 background: linear-gradient(180deg, #f56566 0%, #ce333f 100%);
-                left: .8rem;
+                left: 7.8rem;
             }
             &.group-2-cards {
                 font-size: inherit;
@@ -526,10 +526,13 @@ $time-delay-zoom-in-card-animation: 0.1s + $time-zoom-in-card-animation;
     display: grid;
     grid-template-columns: 1fr 1fr;
     padding: 0.8rem;
-    position: relative;
-    top: -1.2rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     grid-gap: 0.5rem;
     width: auto;
+    z-index: 10;
 
     .result-info {
         min-width: 10.3rem;
@@ -542,7 +545,10 @@ $time-delay-zoom-in-card-animation: 0.1s + $time-zoom-in-card-animation;
         background: linear-gradient(180deg, #4fff95 0%, #2ce476 25.31%, #03b053 100%);
     }
     &.ticket-history {
+        position: relative;
         top: 0;
+        left: 0;
+        transform: none;
         min-height: unset;
         &.result-3,
         &.result-4 {
@@ -556,8 +562,10 @@ $time-delay-zoom-in-card-animation: 0.1s + $time-zoom-in-card-animation;
     }
     &.result-3,
     &.result-4 {
-        position: relative;
-        top: -2.5rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 
     &.result-3 {

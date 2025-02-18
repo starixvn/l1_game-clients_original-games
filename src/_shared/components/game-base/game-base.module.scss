@@ -20,6 +20,7 @@
     .result {
         height: 100%;
         @include flex-center;
+        contain: content;
 
         &-container {
             display: grid;

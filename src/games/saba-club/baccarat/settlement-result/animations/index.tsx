@@ -162,51 +162,8 @@ class PlayerBankerResultComponent extends React.PureComponent<
     }
 }
 
-export const BaccaratResult: React.FC<{ result?: Result }> = ({ result }) => {
-    // const { playResultAnimation, viewMode } = useGameContext();
-    const resultCount = 4 + (!!result.player.card3 ? 1 : 0) + (!!result.banker.card3 ? 1 : 0);
-    const suffix = !result.player.card3 && !!result.banker.card3 ? "-banker" : "";
-    const classCardCount = `card-${resultCount}${suffix}`;
-    // const { gameSetting } = useGameContext();
-    const texts = {
-        player: gc.Translator.t(`player`),
-        banker: gc.Translator.t(`banker`),
-    };
-
-    const playResultAnimation = true;
-    return (
-        <div className={`${Styles["open-cards"]} ${Styles[classCardCount]}  ${playResultAnimation ? Styles[classAnimation] : ""}`}>
-            <PlayerBankerResultComponent playResultAnimation={playResultAnimation} result={result} texts={texts} />
-        </div>
-    );
-};
-
-export const BaccaratResultCollapse: React.FC<{ result: Result; settlementResult: SettlementResult }> = ({ result, settlementResult }) => {
-    // const { gameSetting, playResultAnimation,  } = useGameContext();
-    const texts = {
-        player: gc.Translator.t(`player`),
-        banker: gc.Translator.t(`banker`),
-        tie: gc.Translator.t(`tie`)
-    };
-
-    const resultCount = 4 + (!!result.player.card3 ? 1 : 0) + (!!result.banker.card3 ? 1 : 0);
-    const suffix = !result.player.card3 && !!result.banker.card3 ? "-banker" : "";
-    const classCardCount = `card-${resultCount}${suffix}`;
-    const playResultAnimation = true;
-    return (
-        <div
-            className={`${Styles["open-cards"]}  ${Styles[classCardCount]} ${Styles["result-collapse-mode"]} ${playResultAnimation ? Styles[classAnimation] : ""
-                }`}
-        >
-            <PlayerBankerResultComponent playResultAnimation={playResultAnimation} result={result} texts={texts} />
-            {!playResultAnimation && settlementResult && (
-                <div className={Styles["result-label"]}>
-                    {settlementResult.player ? texts.player : settlementResult.banker ? texts.banker : texts.tie}
-                </div>
-            )}
-        </div>
-    );
-};
+export { default as BaccaratResult } from "./baccarat-result";
+export { PlayerBankerResultComponent } from "./player-banker-result";
 
 export const generateSettlementInfo = (settlementResult: SettlementResult, resources: Object, isShowTicketHistory = false) => {
     const resultCount = 2 + (settlementResult.playerPair ? 1 : 0) + (settlementResult.bankerPair ? 1 : 0);
