@@ -18,6 +18,7 @@ interface IBaccaratResultState extends IStateObserver {
     result?: Result;
     roundState: string;
     isAnimationResult: boolean;
+    isResultVisible: boolean;
 }
 
 @observer(setting.mainObserverNamespace)
@@ -29,6 +30,7 @@ export default class BaccaratResult extends ObserverComponent<IPropsObserver, IB
             result: undefined,
             roundState: "",
             isAnimationResult: false,
+            isResultVisible: false,
         };
     }
 
@@ -65,14 +67,18 @@ export default class BaccaratResult extends ObserverComponent<IPropsObserver, IB
         }
     }
 
+    toggleResultVisibility = () => {
+        this.setState((prevState) => ({ isResultVisible: !prevState.isResultVisible }));
+    };
+
     render() {
-        const { result, roundState, isAnimationResult } = this.state;
+        const { result, roundState, isAnimationResult, isResultVisible } = this.state;
 
         // if (!result || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET) {
         //     return null;
         // }
 
-        const isShowResult = !(!result || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET);
+        const isShowResult = isResultVisible; //&& !(!result || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET);
         let resultTemp = {
             banker: { card1: { card: 1, type: 0 }, card2: { card: 11, type: 2 }, card3: { card: 12, type: 2 } },
             player: { card1: { card: 8, type: 3 }, card2: { card: 5, type: 3 }, card3: { card: 8, type: 1 } },
@@ -88,6 +94,9 @@ export default class BaccaratResult extends ObserverComponent<IPropsObserver, IB
 
         return (
             <div className={`${Styles["open-cards"]} ${Styles[classCardCount]} ${isAnimationResult ? Styles[classAnimation] : ""}`}>
+                <button onClick={this.toggleResultVisibility}>
+                    {isResultVisible ? "Hide Result" : "Show Result"}
+                </button>
                 <PlayerBankerResultComponent
                     playResultAnimation={true}
                     result={resultTemp}

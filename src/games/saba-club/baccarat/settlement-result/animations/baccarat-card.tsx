@@ -8,11 +8,12 @@ interface BaccaratCardProps {
     card: CardOrder;
     className?: string;
     isShowResult: boolean;
+    animationDuration: number;
 }
 
-export const BaccaratCard: React.FC<BaccaratCardProps> = ({ card, className, isShowResult }) => {
+export const BaccaratCard: React.FC<BaccaratCardProps> = ({ card, className, isShowResult, animationDuration }) => {
     return (
-        <div className={`${Styles.card} card${card.order} ${className || ""}`}>
+        <div className={`${Styles.card} card${card.order} ${className || ""}`} style={{ animationDuration: `${animationDuration}s` }}>
             <div className={Styles["rotate-card"]}>
                 {isShowResult && <Card result={card.value} customClassName={"card-baccarat"} />}
                 {!isShowResult && <CardBack />}

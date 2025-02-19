@@ -49,7 +49,16 @@ export class PlayerBankerResultComponent extends React.PureComponent<PlayerBanke
     }
 
     componentDidUpdate(prevProps: PlayerBankerResultProps) {
-        if (!this.props.playResultAnimation && prevProps.result !== this.props.result) {
+        if (this.props.isShowResult !== prevProps.isShowResult) {
+            this.setState({
+                playerScore: 0,
+                bankerScore: 0,
+                openedCards: 0,
+            });
+            if (this.props.isShowResult) {
+                this.startAnimation();
+            }
+        } else if (!this.props.playResultAnimation && prevProps.result !== this.props.result) {
             this.updateScorePlayerBanker();
         }
     }
@@ -58,13 +67,16 @@ export class PlayerBankerResultComponent extends React.PureComponent<PlayerBanke
         const { result } = this.props;
         console.log('Starting animation with result:', result);
         const cardOpenedTimes = [
-            { t: 700, c: result.player.card1, isBanker: false },
-            { t: 1500, c: result.banker.card1, isBanker: true },
-            { t: 2300, c: result.player.card2, isBanker: false },
-            { t: 3100, c: result.banker.card2, isBanker: true },
-            { t: 4400, c: result.player.card3 ?? result.banker.card3, isBanker: !result.player.card3 },
-            { t: 5800, c: result.player.card3 ? result.banker.card3 : null, isBanker: true },
+            { t: 50, c: result.player.card1, isBanker: false },
+            { t: 350, c: result.banker.card1, isBanker: true },
+            { t: 650, c: result.player.card2, isBanker: false },
+            { t: 950, c: result.banker.card2, isBanker: true },
+            { t: 1250, c: result.player.card3 ?? result.banker.card3, isBanker: !result.player.card3 },
+            { t: 1550, c: result.player.card3 ? result.banker.card3 : null, isBanker: true },
         ];
+
+        this.timeouts.forEach(clearTimeout);
+        this.timeouts.length = 0;
 
         cardOpenedTimes
             .filter((ct) => !!ct.c)
