@@ -3,9 +3,10 @@ import { CardOrder } from "../../baccarat"
 import Styles from "./baccarat-animations.module.scss";
 import { BaccaratCard } from "./baccarat-card";
 import { ScoreDisplay } from "./score-display";
+import { CardOrderWithTiming } from "../../baccarat-helper";
 
 interface CardSectionProps {
-    cards: CardOrder[];
+    cards: CardOrderWithTiming[];
     label: string;
     score: number;
     type: "player" | "banker";
@@ -35,7 +36,7 @@ export const CardSection: React.FC<CardSectionProps> = ({
                     console.log(`Updated score: ${newScore}`);
                     return newScore;
                 });
-            }, 300); // Adjust delay as needed
+            }, cards[currentCardIndex].animationDelay); // Use the card's animation delay
             return () => clearTimeout(timer);
         }
     }, [currentCardIndex, cards]);
@@ -48,9 +49,10 @@ export const CardSection: React.FC<CardSectionProps> = ({
                     <BaccaratCard
                         key={card.order}
                         card={card}
-                        className={index === 0 && type === "player" && cards.length === 3 ? Styles.rotateLeft : index === 2 && type === "banker" ? Styles.rotateRight : ""}
                         isShowResult={isShowResult}
-                        animationDuration={index * 0.5}
+                        animationDuration={0.8} // Standard animation duration
+                        animationDelay={card.animationDelay / 1000} // Convert to seconds
+                    // className={index === 0 && type === "player" && cards.length === 3 ? Styles.rotateLeft : index === 2 && type === "banker" ? Styles.rotateRight : ""}
                     />
                 ))}
                 <div className={Styles.scoreOverlay}>

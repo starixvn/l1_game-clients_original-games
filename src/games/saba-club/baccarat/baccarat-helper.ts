@@ -66,24 +66,66 @@ export const StatisticRuleEntriesBigSmall = Object.entries({
 
 export const StatisticRuleMapping = [StatisticRuleEntriesBankerPlayer, StatisticRuleEntriesBigSmall];
 
-export const GetPlayerCardsResult = (result: Result): CardOrder[] => {
+export const CardAnimationConfig = {
+    baseDelay: 50,
+    intervalDelay: 300,
+    orders: {
+        playerCard1: 1,
+        bankerCard1: 2,
+        playerCard2: 3,
+        bankerCard2: 4,
+        playerCard3: 5,
+        bankerCard3: 6
+    },
+    getAnimationTime: (order: number) => (order - 1) * 500 + 50
+};
+
+export interface CardOrderWithTiming {
+    value: any;
+    order: number;
+    animationDelay: number;
+}
+
+export const GetPlayerCardsResult = (result: Result): CardOrderWithTiming[] => {
+    const { orders, getAnimationTime } = CardAnimationConfig;
     return [
-        { value: result.player.card1, order: 1 },
-        { value: result.player.card2, order: 3 },
-        { value: result.player?.card3, order: 5 },
+        {
+            value: result.player.card1,
+            order: orders.playerCard1,
+            animationDelay: getAnimationTime(orders.playerCard1)
+        },
+        {
+            value: result.player.card2,
+            order: orders.playerCard2,
+            animationDelay: getAnimationTime(orders.playerCard2)
+        },
+        {
+            value: result.player?.card3,
+            order: orders.playerCard3,
+            animationDelay: getAnimationTime(orders.playerCard3)
+        }
     ].filter((c) => c.value);
 };
 
-export const GetBankerCardsResult = (result: Result): CardOrder[] => {
+export const GetBankerCardsResult = (result: Result): CardOrderWithTiming[] => {
+    const { orders, getAnimationTime } = CardAnimationConfig;
     const bankerCards = [
-        { value: result.banker.card1, order: 2 },
-        { value: result.banker.card2, order: 4 },
-        { value: result.banker?.card3, order: 6 },
+        {
+            value: result.banker.card1,
+            order: orders.bankerCard1,
+            animationDelay: getAnimationTime(orders.bankerCard1)
+        },
+        {
+            value: result.banker.card2,
+            order: orders.bankerCard2,
+            animationDelay: getAnimationTime(orders.bankerCard2)
+        },
+        {
+            value: result.banker?.card3,
+            order: !result.player.card3 ? orders.playerCard3 : orders.bankerCard3,
+            animationDelay: getAnimationTime(!result.player.card3 ? orders.playerCard3 : orders.bankerCard3)
+        }
     ];
-
-    if (!result.player.card3) {
-        bankerCards[2].order = 5;
-    }
 
     return bankerCards.filter((c) => c.value);
 };

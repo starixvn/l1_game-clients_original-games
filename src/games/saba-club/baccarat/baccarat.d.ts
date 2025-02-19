@@ -40,6 +40,7 @@ export type Odd = {
 export type CardOrder = {
     value: CardType;
     order: number;
+    animationDuration?: number;
 };
 
 export interface BaccaratState<Result, SettlementResult> extends GameBaseState<any, any> {

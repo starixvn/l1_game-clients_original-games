@@ -1,6 +1,6 @@
 import React from "react";
 import { Result } from "../../baccarat";
-import { GetBankerCardsResult, GetPlayerCardsResult } from "../../baccarat-helper";
+import { GetBankerCardsResult, GetPlayerCardsResult, CardAnimationConfig } from "../../baccarat-helper";
 import Styles from "./baccarat-animations.module.scss";
 import { BaccaratCard } from "./baccarat-card";
 import { ScoreDisplay } from "./score-display";
@@ -66,35 +66,34 @@ export class PlayerBankerResultComponent extends React.PureComponent<PlayerBanke
     private startAnimation = () => {
         const { result } = this.props;
         console.log('Starting animation with result:', result);
-        const cardOpenedTimes = [
-            { t: 50, c: result.player.card1, isBanker: false },
-            { t: 350, c: result.banker.card1, isBanker: true },
-            { t: 650, c: result.player.card2, isBanker: false },
-            { t: 950, c: result.banker.card2, isBanker: true },
-            { t: 1250, c: result.player.card3 ?? result.banker.card3, isBanker: !result.player.card3 },
-            { t: 1550, c: result.player.card3 ? result.banker.card3 : null, isBanker: true },
-        ];
+
+        const playerCards = GetPlayerCardsResult(result);
+        const bankerCards = GetBankerCardsResult(result);
+
+        // Combine and sort cards by animation order
+        const allCards = [...playerCards, ...bankerCards]
+            .sort((a, b) => a.order - b.order)
+            .filter(card => card.value);
 
         this.timeouts.forEach(clearTimeout);
         this.timeouts.length = 0;
 
-        cardOpenedTimes
-            .filter((ct) => !!ct.c)
-            .forEach((ct, i) => {
-                console.log(`Setting timeout for card: ${ct.c.card}, isBanker: ${ct.isBanker}, time: ${ct.t}`);
-                const timeout = setTimeout(() => {
-                    this.setState(prevState => {
-                        const newState = {
-                            bankerScore: ct.isBanker ? sumScore(prevState.bankerScore, ct.c.card) : prevState.bankerScore,
-                            playerScore: !ct.isBanker ? sumScore(prevState.playerScore, ct.c.card) : prevState.playerScore,
-                            openedCards: i + 1,
-                        };
-                        console.log('Updated state:', newState);
-                        return newState;
-                    });
-                }, ct.t);
-                this.timeouts.push(timeout);
-            });
+        allCards.forEach((card, index) => {
+            console.log(`Setting timeout for card: ${card.value.card}, order: ${card.order}, delay: ${card.animationDelay}`);
+            const timeout = setTimeout(() => {
+                this.setState(prevState => {
+                    const isBanker = bankerCards.some(bc => bc.value === card.value);
+                    const newState = {
+                        bankerScore: isBanker ? sumScore(prevState.bankerScore, card.value.card) : prevState.bankerScore,
+                        playerScore: !isBanker ? sumScore(prevState.playerScore, card.value.card) : prevState.playerScore,
+                        openedCards: index + 1,
+                    };
+                    console.log('Updated state:', newState);
+                    return newState;
+                });
+            }, card.animationDelay);
+            this.timeouts.push(timeout);
+        });
     };
 
     private updateScorePlayerBanker = () => {
@@ -113,6 +112,8 @@ export class PlayerBankerResultComponent extends React.PureComponent<PlayerBanke
         const bankerCards = GetBankerCardsResult(result);
         const classOpenCards = `opened-cards-${openedCards}`;
 
+        console.log('playerCards', playerCards);
+        console.log('bankerCards', bankerCards);
         return (
             <div className={`overlay-mask ${Styles[classOpenCards]}`}>
                 <div className={Styles["animation-container"]}>
