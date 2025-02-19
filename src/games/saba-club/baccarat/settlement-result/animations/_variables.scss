@@ -1,17 +1,56 @@
-// Animation timing variables
-$time-draw-card-animation: 0.8s;
-$time-open-card-animation: 1.8s;
-$time-zoom-in-card-animation: 0.4s;
-$time-show-score-animation: 0.2s;
-$time-blink-score-animation: 0.3s;
-$time-move-left-player: 0.4s;
+// Base animation durations
+$animation-duration: (
+    draw-card: 0.8s,
+    open-card: 1.8s,
+    zoom-in: 0.4s,
+    show-score: 0.2s,
+    blink-score: 0.3s,
+    move-left: 0.4s
+);
 
-$time-delay-open-card-2: 0.2s;
-$time-delay-open-card-4: $time-delay-open-card-2 + 0s;
-$time-delay-zoom-in-card-animation: 0.1s + $time-zoom-in-card-animation;
+// Animation delays
+$animation-delay: (
+    open-card-2: 0.2s,
+    open-card-4: 0.2s,
+    zoom-in: 0.5s // 0.1s + zoom-in duration
+);
 
-// Layout variables
-$gap-player-banker-default: 1.5rem;
-$gap-player-banker-desktop: 2rem;
-$distance-first-second-card: -0.5rem;
-$distance-second-third-card: -1rem; 
+// Card timing sequence
+$card-timing: (
+    first-pair: 0ms,     // Cards 1 and 3
+    second-pair: 300ms,  // Cards 2 and 4
+    third-card: 1400ms,  // Fifth card
+    fourth-card: 2100ms  // Sixth card
+);
+
+// Layout spacing
+$spacing: (
+    gap-default: 1.5rem,
+    gap-desktop: 2rem,
+    card-spacing: (
+        first-second: -0.5rem,
+        second-third: -1rem
+    )
+);
+
+// Export variables for legacy support
+$time-draw-card-animation: map-get($animation-duration, draw-card);
+$time-open-card-animation: map-get($animation-duration, open-card);
+$time-zoom-in-card-animation: map-get($animation-duration, zoom-in);
+$time-show-score-animation: map-get($animation-duration, show-score);
+$time-blink-score-animation: map-get($animation-duration, blink-score);
+$time-move-left-player: map-get($animation-duration, move-left);
+
+$time-delay-open-card-2: map-get($animation-delay, open-card-2);
+$time-delay-open-card-4: map-get($animation-delay, open-card-4);
+$time-delay-zoom-in-card-animation: map-get($animation-delay, zoom-in);
+
+$first-pair-time: map-get($card-timing, first-pair);
+$second-pair-time: map-get($card-timing, second-pair);
+$third-card-time: map-get($card-timing, third-card);
+$fourth-card-time: map-get($card-timing, fourth-card);
+
+$gap-player-banker-default: map-get($spacing, gap-default);
+$gap-player-banker-desktop: map-get($spacing, gap-desktop);
+$distance-first-second-card: map-get($spacing, card-spacing, first-second);
+$distance-second-third-card: map-get($spacing, card-spacing, second-third); 

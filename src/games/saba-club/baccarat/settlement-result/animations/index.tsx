@@ -1,38 +1,14 @@
-import * as gc from "@sg/sg-game-client";
 import React from "react";
-
 import Card from "../../../../../_shared/components/card";
-
-
-import { CardOrder, Result, SettlementResult } from "../../baccarat";
+import { Result, SettlementResult, CardOrder } from "../../baccarat";
 import { GetBankerCardsResult, GetPlayerCardsResult } from "../../baccarat-helper";
 import Styles from "./baccarat-animations.module.scss";
-import { getCardOpeningSequence } from './card-timing';
-import { calculatePlayerBankerScores } from './score-utils';
 import { SettlementInfo } from './settlement-info';
-import BaccaratResult from "./baccarat-result";
+import BaccaratSettlementResult from "../baccarat-settlement-result";
+import { sumScore } from "./score-utils";
 
-const classAnimation = "has-animation";
 const classAnimationContainer = "animation-container";
 const classMoveUpNoAnimation = "move-up-no-animation";
-
-export const generateResult = (cards: CardOrder[]) => {
-    return cards.map((card, _) => {
-        const classCardOrder = `card${card.order}`;
-        return (
-            <div key={card.order} className={`${Styles[classCardOrder]}`}>
-                <div className={Styles["rotate-card"]}>
-                    <Card result={card.value} customClassName={"card-baccarat"}></Card>
-                </div>
-                <div className={`${Styles["card-back"]} `}></div>
-            </div>
-        );
-    });
-};
-
-const sumScore = (score: number, card: number) => {
-    return card + 1 >= 10 ? score : (score + card + 1) % 10;
-};
 
 class PlayerBankerResultComponent extends React.PureComponent<
     {
@@ -142,7 +118,7 @@ class PlayerBankerResultComponent extends React.PureComponent<
                         className={`${Styles["player"]} ${this.props.playResultAnimation ? "" : Styles[classMoveUpNoAnimation]
                             }`}
                     >
-                        {generateResult(playerCards)}
+                        <CardSection cards={playerCards} />
                         <div className={`${Styles[classGroupPlayerCards]} ${Styles["score"]}`}>
                             {this.state.texts.player}
                             <span className={Styles["score-number"]}>{this.state.playerScore}</span>
@@ -153,21 +129,38 @@ class PlayerBankerResultComponent extends React.PureComponent<
                         className={`${Styles["banker"]} ${this.props.playResultAnimation ? "" : Styles[classMoveUpNoAnimation]
                             }`}
                     >
-                        {generateResult(bankerCards)}
+                        <CardSection cards={bankerCards} />
                         <div className={`${Styles[classGroupBankerCards]} ${Styles["score"]}`}>
                             {this.state.texts.banker}
                             <span className={Styles["score-number"]}>{this.state.bankerScore}</span>
                         </div>
                     </div>
                 </div>
-
             </div>
         );
     }
 }
 
+const CardSection: React.FC<{ cards: CardOrder[] }> = ({ cards }) => {
+    return (
+        <>
+            {cards.map((card) => {
+                const classCardOrder = `card${card.order}`;
+                return (
+                    <div key={card.order} className={`${Styles[classCardOrder]}`}>
+                        <div className={Styles["rotate-card"]}>
+                            <Card result={card.value} customClassName={"card-baccarat"}></Card>
+                        </div>
+                        <div className={`${Styles["card-back"]} `}></div>
+                    </div>
+                );
+            })}
+        </>
+    );
+};
+
 export {
-    BaccaratResult,
+    BaccaratSettlementResult as BaccaratResult,
     PlayerBankerResultComponent,
     SettlementInfo,
 };
