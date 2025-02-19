@@ -61,14 +61,10 @@
     transform-style: preserve-3d;
     perspective: 1000px;
     margin-right: 0.5rem;
+    opacity: 1;
     
     &:last-child {
         margin-right: 0;
-    }
-
-    &.has-animation {
-        animation: dealCard var(--animation-duration) ease-out forwards;
-        animation-delay: var(--animation-delay);
     }
 }
 
@@ -76,7 +72,7 @@
     position: relative;
     width: 100%;
     height: 100%;
-    transition: transform 0.6s;
+    transition: transform 0.6s ease-in-out;
     transform-style: preserve-3d;
 
     &.flip {
@@ -110,29 +106,27 @@
     }
 }
 
-.card.has-animation {
-    // Card index specific animations
-    &.card1 {
-        --animation-delay: 0s;
-    }
+// Card index specific delays
+.card1 {
+    --animation-delay: 0s;
+}
 
-    &.card2 {
-        --animation-delay: 0.5s;
-    }
+.card2 {
+    --animation-delay: 0.5s;
+}
 
-    &.card3 {
-        --animation-delay: 1s;
-    }
+.card3 {
+    --animation-delay: 1s;
+}
 
-    &.card4 {
-        --animation-delay: 1.5s;
-    }
+.card4 {
+    --animation-delay: 1.5s;
+}
 
-    &.card5 {
-        --animation-delay: 2s;
-    }
+.card5 {
+    --animation-delay: 2s;
+}
 
-    &.card6 {
-        --animation-delay: 2.5s;
-    }
+.card6 {
+    --animation-delay: 2.5s;
 } 

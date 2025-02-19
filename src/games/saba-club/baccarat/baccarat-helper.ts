@@ -1,5 +1,6 @@
 import * as gc from "@sg/sg-game-client";
 import { Result, CardOrder } from "./baccarat";
+import { sumScore } from "./settlement-result/animations/score-utils";
 
 
 export const Choices = {
@@ -68,7 +69,7 @@ export const StatisticRuleMapping = [StatisticRuleEntriesBankerPlayer, Statistic
 
 export const CardAnimationConfig = {
     baseDelay: 50,
-    intervalDelay: 300,
+    intervalDelay: 200,
     orders: {
         playerCard1: 1,
         bankerCard1: 2,
@@ -77,53 +78,72 @@ export const CardAnimationConfig = {
         playerCard3: 5,
         bankerCard3: 6
     },
-    getAnimationTime: (order: number) => (order - 1) * 500 + 50
+    getAnimationTime: (order: number) => {
+        const baseTime = 50;
+        const cardInterval = 200;
+        const pairDelay = 100;
+
+        const pairIndex = Math.floor((order - 1) / 2);
+
+        const positionInPair = (order - 1) % 2;
+
+        return baseTime + (pairIndex * (cardInterval + pairDelay)) + (positionInPair * cardInterval);
+    }
 };
 
 export interface CardOrderWithTiming {
     value: any;
     order: number;
     animationDelay: number;
+    accumulatedScore: number;
 }
 
 export const GetPlayerCardsResult = (result: Result): CardOrderWithTiming[] => {
     const { orders, getAnimationTime } = CardAnimationConfig;
+    let runningScore = 0;
     return [
         {
             value: result.player.card1,
             order: orders.playerCard1,
-            animationDelay: getAnimationTime(orders.playerCard1)
+            animationDelay: getAnimationTime(orders.playerCard1),
+            accumulatedScore: runningScore = sumScore(0, result.player.card1.card)
         },
         {
             value: result.player.card2,
             order: orders.playerCard2,
-            animationDelay: getAnimationTime(orders.playerCard2)
+            animationDelay: getAnimationTime(orders.playerCard2),
+            accumulatedScore: runningScore = sumScore(runningScore, result.player.card2.card)
         },
         {
             value: result.player?.card3,
             order: orders.playerCard3,
-            animationDelay: getAnimationTime(orders.playerCard3)
+            animationDelay: getAnimationTime(orders.playerCard3),
+            accumulatedScore: result.player?.card3 ? sumScore(runningScore, result.player.card3.card) : runningScore
         }
     ].filter((c) => c.value);
 };
 
 export const GetBankerCardsResult = (result: Result): CardOrderWithTiming[] => {
     const { orders, getAnimationTime } = CardAnimationConfig;
+    let runningScore = 0;
     const bankerCards = [
         {
             value: result.banker.card1,
             order: orders.bankerCard1,
-            animationDelay: getAnimationTime(orders.bankerCard1)
+            animationDelay: getAnimationTime(orders.bankerCard1),
+            accumulatedScore: runningScore = sumScore(0, result.banker.card1.card)
         },
         {
             value: result.banker.card2,
             order: orders.bankerCard2,
-            animationDelay: getAnimationTime(orders.bankerCard2)
+            animationDelay: getAnimationTime(orders.bankerCard2),
+            accumulatedScore: runningScore = sumScore(runningScore, result.banker.card2.card)
         },
         {
             value: result.banker?.card3,
             order: !result.player.card3 ? orders.playerCard3 : orders.bankerCard3,
-            animationDelay: getAnimationTime(!result.player.card3 ? orders.playerCard3 : orders.bankerCard3)
+            animationDelay: getAnimationTime(!result.player.card3 ? orders.playerCard3 : orders.bankerCard3),
+            accumulatedScore: result.banker?.card3 ? sumScore(runningScore, result.banker.card3.card) : runningScore
         }
     ];
 

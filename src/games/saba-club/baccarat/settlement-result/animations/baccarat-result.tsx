@@ -80,7 +80,7 @@ export default class BaccaratResult extends ObserverComponent<IPropsObserver, IB
 
         const isShowResult = isResultVisible; //&& !(!result || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET);
         let resultTemp = {
-            banker: { card1: { card: 1, type: 0 }, card2: { card: 11, type: 2 }, card3: { card: 12, type: 2 } },
+            banker: { card1: { card: 1, type: 0 }, card2: { card: 5, type: 2 }, card3: { card: 7, type: 2 } },
             player: { card1: { card: 8, type: 3 }, card2: { card: 5, type: 3 }, card3: { card: 8, type: 1 } },
         };
 

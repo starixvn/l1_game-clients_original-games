@@ -644,3 +644,14 @@ $time-delay-zoom-in-card-animation: 0.1s + $time-zoom-in-card-animation;
     left: 0.7rem;
     bottom: -0.7rem;
 }
+
+.scoreWrapper {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    
+    &.visible {
+        opacity: 1;
+        visibility: visible;
+    }
+}

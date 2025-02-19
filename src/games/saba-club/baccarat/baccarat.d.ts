@@ -41,6 +41,7 @@ export type CardOrder = {
     value: CardType;
     order: number;
     animationDuration?: number;
+    accumulatedScore: number;
 };
 
 export interface BaccaratState<Result, SettlementResult> extends GameBaseState<any, any> {

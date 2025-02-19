@@ -79,13 +79,13 @@ export class PlayerBankerResultComponent extends React.PureComponent<PlayerBanke
         this.timeouts.length = 0;
 
         allCards.forEach((card, index) => {
-            console.log(`Setting timeout for card: ${card.value.card}, order: ${card.order}, delay: ${card.animationDelay}`);
+            console.log(`Setting timeout for card: ${card.value.card}, order: ${card.order}, delay: ${card.animationDelay}, accumulated score: ${card.accumulatedScore}`);
             const timeout = setTimeout(() => {
                 this.setState(prevState => {
                     const isBanker = bankerCards.some(bc => bc.value === card.value);
                     const newState = {
-                        bankerScore: isBanker ? sumScore(prevState.bankerScore, card.value.card) : prevState.bankerScore,
-                        playerScore: !isBanker ? sumScore(prevState.playerScore, card.value.card) : prevState.playerScore,
+                        bankerScore: isBanker ? card.accumulatedScore : prevState.bankerScore,
+                        playerScore: !isBanker ? card.accumulatedScore : prevState.playerScore,
                         openedCards: index + 1,
                     };
                     console.log('Updated state:', newState);
