@@ -108,25 +108,25 @@
 
 // Card index specific delays
 .card1 {
-    --animation-delay: 0s;
+    --animation-delay: 0.7s; // 700ms for first pair
 }
 
 .card2 {
-    --animation-delay: 0.5s;
+    --animation-delay: 0.7s; // 700ms for first pair
 }
 
 .card3 {
-    --animation-delay: 1s;
+    --animation-delay: 2.0s; // 2000ms for second pair
 }
 
 .card4 {
-    --animation-delay: 1.5s;
+    --animation-delay: 2.0s; // 2000ms for second pair
 }
 
 .card5 {
-    --animation-delay: 2s;
+    --animation-delay: 3.3s; // 3300ms for third card
 }
 
 .card6 {
-    --animation-delay: 2.5s;
+    --animation-delay: 4.7s; // 4700ms for fourth card
 } 

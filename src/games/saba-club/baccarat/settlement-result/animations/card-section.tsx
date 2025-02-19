@@ -23,26 +23,16 @@ export const CardSection: React.FC<CardSectionProps> = ({
     playResultAnimation,
     isShowResult,
 }) => {
-    const [currentScore, setCurrentScore] = useState(0);
-    const [openedCards, setOpenedCards] = useState<CardOrderWithTiming[]>([]);
     const [visibleScores, setVisibleScores] = useState<{ [key: number]: boolean }>({});
 
     // Reset states when show result changes
     useEffect(() => {
         if (!isShowResult) {
-            setCurrentScore(0);
-            setOpenedCards([]);
             setVisibleScores({});
         }
     }, [isShowResult]);
 
     const handleCardFlip = useCallback((card: CardOrder, accumulatedScore: number) => {
-        setOpenedCards(prev => {
-            const newOpenedCards = [...prev, card as CardOrderWithTiming];
-            // Sort by order to ensure we show the correct accumulated score
-            return newOpenedCards.sort((a, b) => a.order - b.order);
-        });
-        setCurrentScore(card.accumulatedScore);
 
         // Set visibility for this card's score
         setVisibleScores(prev => ({
@@ -50,7 +40,7 @@ export const CardSection: React.FC<CardSectionProps> = ({
             [card.order]: true
         }));
 
-        console.log(`${type} card ${card.order} opened: ${card.value.card + 1}, accumulated score: ${accumulatedScore}`);
+        console.log(`${type} card ${card.order} opened: ${card.value.card + 1}, accumulated score: ${accumulatedScore}, time: ${new Date()}`);
     }, [type]);
 
     // Get the appropriate score display class based on card order

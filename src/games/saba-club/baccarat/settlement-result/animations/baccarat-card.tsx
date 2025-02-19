@@ -18,6 +18,12 @@ interface AnimationStyles extends React.CSSProperties {
     '--animation-delay': string;
 }
 
+// Define fixed timings for card pairs
+const FIRST_PAIR_TIME = 0;    // Immediate for cards 1 and 3
+const SECOND_PAIR_TIME = 300; // For cards 2 and 4
+const THIRD_CARD_TIME = 1400;
+const FOURTH_CARD_TIME = 2100;
+
 export const BaccaratCard: React.FC<BaccaratCardProps> = ({
     card,
     className,
@@ -30,18 +36,33 @@ export const BaccaratCard: React.FC<BaccaratCardProps> = ({
 
     useEffect(() => {
         if (isShowResult) {
+            // Group cards for simultaneous opening
+            let delay;
+            if (card.order === 1 || card.order === 3) { // First and third cards together
+                delay = FIRST_PAIR_TIME;
+            } else if (card.order === 2 || card.order === 4) { // Second and fourth cards together
+                delay = SECOND_PAIR_TIME;
+            } else if (card.order === 5) {
+                delay = THIRD_CARD_TIME;
+            } else {
+                delay = FOURTH_CARD_TIME;
+            }
+
             const flipTimer = setTimeout(() => {
                 setIsFlipped(true);
                 if (onCardFlip) {
-                    console.log(`Card flipped: ${card.value.card + 1}, accumulated score: ${card.accumulatedScore}`);
+                    const cardType = card.order <= 2 ? 'player' : 'banker';
+                    const cardNumber = card.order <= 2 ? card.order : card.order - 2;
+                    console.log(`${cardType} card ${cardNumber} opened: ${card.value.card + 1}, accumulated score: ${card.accumulatedScore}`);
                     onCardFlip(card, card.accumulatedScore);
                 }
-            }, animationDelay * 1000);
+            }, delay);
+
             return () => clearTimeout(flipTimer);
         } else {
             setIsFlipped(false);
         }
-    }, [isShowResult, animationDelay, card, onCardFlip]);
+    }, [isShowResult, card, onCardFlip]);
 
     return (
         <div className={`${Styles.card} ${Styles[`card${card.order}`]} ${className || ''}`}>

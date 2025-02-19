@@ -112,8 +112,8 @@ export class PlayerBankerResultComponent extends React.PureComponent<PlayerBanke
         const bankerCards = GetBankerCardsResult(result);
         const classOpenCards = `opened-cards-${openedCards}`;
 
-        console.log('playerCards', playerCards);
-        console.log('bankerCards', bankerCards);
+        // console.log('playerCards', playerCards);
+        // console.log('bankerCards', bankerCards);
         return (
             <div className={`overlay-mask ${Styles[classOpenCards]}`}>
                 <div className={Styles["animation-container"]}>
