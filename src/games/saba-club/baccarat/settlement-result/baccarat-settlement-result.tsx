@@ -23,11 +23,12 @@ interface IBaccaratSettlementResultState extends IStateObserver {
     isResultVisible: boolean;
     isLoading: boolean;
     error?: Error;
+    isAutoSwitchEnabled: boolean;
 }
 
 const DEMO_RESULT = {
-    banker: { card1: { card: 1, type: 0 }, card2: { card: 5, type: 2 }, card3: { card: 7, type: 2 } },
-    player: { card1: { card: 8, type: 3 }, card2: { card: 5, type: 3 }, card3: { card: 8, type: 1 } },
+    banker: { card1: { card: 1, type: 0 }, card2: { card: 5, type: 2 } },
+    player: { card1: { card: 8, type: 3 }, card2: { card: 5, type: 3 }, card3: { card: 7, type: 2 } },
 } as const;
 
 @observer(setting.mainObserverNamespace)
@@ -36,6 +37,7 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
         player: gc.Translator.t(TRANSLATIONS.PLAYER),
         banker: gc.Translator.t(TRANSLATIONS.BANKER),
     };
+    private autoSwitchTimer: NodeJS.Timeout | null = null;
 
     constructor(props: IPropsObserver) {
         super(props);
@@ -47,7 +49,29 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
             isResultVisible: false,
             isLoading: true,
             error: undefined,
+            isAutoSwitchEnabled: true,
         };
+    }
+
+    componentWillUnmount(): void {
+        this.clearAutoSwitchTimer();
+    }
+
+    private clearAutoSwitchTimer(): void {
+        if (this.autoSwitchTimer) {
+            clearTimeout(this.autoSwitchTimer);
+            this.autoSwitchTimer = null;
+        }
+    }
+
+    private startAutoSwitchTimer(): void {
+        this.clearAutoSwitchTimer();
+        if (this.state.isAutoSwitchEnabled) {
+            this.autoSwitchTimer = setTimeout(() => {
+                this.toggleResultVisibility();
+                this.startAutoSwitchTimer(); // Restart the timer for continuous switching
+            }, 4000);
+        }
     }
 
     @render(RoundTimeStore, (store) => store.roundState)
@@ -67,7 +91,9 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
         try {
             const result = gameStateService.handleSettlement(currentFinish);
             if (result && gameStateService.validateResult(result)) {
-                this.setState({ result, isAnimationResult: true, isLoading: false });
+                this.setState({ result, isAnimationResult: true, isLoading: false }, () => {
+                    this.startAutoSwitchTimer();
+                });
             }
         } catch (error) {
             this.setState({ error: error as Error });
@@ -79,7 +105,9 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
         try {
             const result = gameStateService.handleGameHistory(firstJoinGameHistory);
             if (result && gameStateService.validateResult(result)) {
-                this.setState({ result, isLoading: false });
+                this.setState({ result, isLoading: false }, () => {
+                    this.startAutoSwitchTimer();
+                });
             }
         } catch (error) {
             this.setState({ error: error as Error });
@@ -90,15 +118,36 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
         this.setState((prevState) => ({ isResultVisible: !prevState.isResultVisible }));
     };
 
+    private toggleAutoSwitch = (): void => {
+        this.setState(
+            prevState => ({ isAutoSwitchEnabled: !prevState.isAutoSwitchEnabled }),
+            () => {
+                if (this.state.isAutoSwitchEnabled) {
+                    this.startAutoSwitchTimer();
+                } else {
+                    this.clearAutoSwitchTimer();
+                }
+            }
+        );
+    };
+
     private renderToggleButton(): JSX.Element {
-        const { isResultVisible } = this.state;
+        const { isResultVisible, isAutoSwitchEnabled } = this.state;
         return (
-            <button
-                onClick={this.toggleResultVisibility}
-                className={Styles['toggle-button']}
-            >
-                {isResultVisible ? BUTTON_LABELS.HIDE : BUTTON_LABELS.SHOW}
-            </button>
+            <div className={Styles['button-container']}>
+                <button
+                    onClick={this.toggleResultVisibility}
+                    className={Styles['toggle-button']}
+                >
+                    {isResultVisible ? BUTTON_LABELS.HIDE : BUTTON_LABELS.SHOW}
+                </button>
+                <button
+                    onClick={this.toggleAutoSwitch}
+                    className={`${Styles['toggle-button']} ${Styles['auto-switch-button']}`}
+                >
+                    {isAutoSwitchEnabled ? 'Stop Auto Switch' : 'Start Auto Switch'}
+                </button>
+            </div>
         );
     }
 

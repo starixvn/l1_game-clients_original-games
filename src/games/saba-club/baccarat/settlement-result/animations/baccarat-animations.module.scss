@@ -148,6 +148,21 @@ $fourth-card-time: 2100ms;
         ));   
     }
 
+    // &.card-6, &.card-5 {
+    //     .card5 { // Banker's third card
+    //         .rotate-card {
+    //             transform: rotate(90deg); // Rotate right
+    //             transition: transform 0.6s ease-in-out;
+    //         }
+    //     }
+    //     .card6 { // Player's third card
+    //         .rotate-card {
+    //             transform: rotate(-90deg); // Rotate left
+    //             transition: transform 0.6s ease-in-out;
+    //         }
+    //     }
+    // }
+
     // Animation states
     &.has-animation {
         .score {
@@ -246,15 +261,36 @@ $fourth-card-time: 2100ms;
     display: grid;
     gap: 1rem;
     padding: 1rem;
-}
 
-// Toggle button
-.toggle-button {
-    padding: 0.5rem 1rem;
-    @include button-style(
-        map.get($colors, 'button', 'primary'),
-        map.get($colors, 'button', 'hover')
-    );
+    .button-container {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+
+    .toggle-button {
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        background: #fff;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background: #f5f5f5;
+        }
+
+        &.auto-switch-button {
+            background: #f0f0f0;
+            border-color: #ddd;
+
+            &:hover {
+                background: #e5e5e5;
+            }
+        }
+    }
 }
 
 // Desktop layout

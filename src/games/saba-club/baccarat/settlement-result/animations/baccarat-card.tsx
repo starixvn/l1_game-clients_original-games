@@ -34,6 +34,21 @@ export const BaccaratCard: React.FC<BaccaratCardProps> = ({
 }) => {
     const [isFlipped, setIsFlipped] = useState(false);
 
+    // Add rotation class based on card order
+    const getRotationClass = (order: number) => {
+        if (order === 5) return Styles['rotate-right']; // Player's third card
+        if (order === 6) return Styles['rotate-left']; // Banker's third card
+        return '';
+    };
+
+    // Add banker third card class when it's the third card and player has only 2 cards
+    const getBankerThirdCardClass = (order: number) => {
+        if (order === 5 && !card.playerHasThirdCard) {
+            return Styles['banker-third-card'];
+        }
+        return '';
+    };
+
     useEffect(() => {
         if (isShowResult) {
             // Group cards for simultaneous opening
@@ -65,8 +80,8 @@ export const BaccaratCard: React.FC<BaccaratCardProps> = ({
     }, [isShowResult, card, onCardFlip]);
 
     return (
-        <div className={`${Styles.card} ${Styles[`card${card.order}`]} ${className || ''}`}>
-            <div className={`${Styles["rotate-card"]} ${isFlipped ? Styles['flip'] : ''}`}>
+        <div className={`${Styles.card} ${Styles[`card${card.order}`]} ${isFlipped ? Styles['flip'] : ''} ${getRotationClass(card.order)} ${getBankerThirdCardClass(card.order)} ${className || ''}`}>
+            <div className={Styles["rotate-card"]}>
                 <div className={Styles.cardFace}>
                     <div className={Styles["card-back"]}>
                         <CardBack />
