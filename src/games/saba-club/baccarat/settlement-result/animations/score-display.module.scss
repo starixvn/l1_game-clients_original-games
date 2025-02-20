@@ -1,5 +1,28 @@
 @import './variables';
 
+@keyframes scoreAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.5) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes scoreNumberPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
 .score {
     --width-score: 4.5rem;
     --height-score: 2.5rem;
@@ -12,11 +35,14 @@
     border-top-right-radius: 50px;
     color: #fff;
     display: flex;
-    align-items: cen;
+    align-items: center;
     justify-content: center;
     line-height: 1.9rem;
     font-size: var(--font-size-score);
     bottom: var(--bottom-score);
+    opacity: 0;
+    animation: scoreAppear 0.4s ease-out forwards;
+    will-change: transform, opacity;
 
     &-number {
         font-size: 2rem;
@@ -24,6 +50,8 @@
         position: relative;
         // padding-left: 0.3rem;
          top: 0.4rem;
+        animation: scoreNumberPulse 0.6s ease-in-out;
+        will-change: transform;
     }
 
     &.player-score {

@@ -3,7 +3,6 @@ import Card from "../../../../../_shared/components/card";
 import { Result, SettlementResult, CardOrder } from "../../baccarat";
 import { GetBankerCardsResult, GetPlayerCardsResult } from "../../baccarat-helper";
 import Styles from "./baccarat-animations.module.scss";
-import { SettlementInfo } from './settlement-info';
 import BaccaratSettlementResult from "../baccarat-settlement-result";
 import { sumScore } from "./score-utils";
 
@@ -162,7 +161,6 @@ const CardSection: React.FC<{ cards: CardOrder[] }> = ({ cards }) => {
 export {
     BaccaratSettlementResult as BaccaratResult,
     PlayerBankerResultComponent,
-    SettlementInfo,
 };
 
 export const generateSettlementInfo = (settlementResult: SettlementResult, resources: Object, isShowTicketHistory = false) => {

@@ -33,14 +33,14 @@ export const CardSection: React.FC<CardSectionProps> = ({
     }, [isShowResult]);
 
     const handleCardFlip = useCallback((card: CardOrder, accumulatedScore: number) => {
-
-        // Set visibility for this card's score
-        setVisibleScores(prev => ({
-            ...prev,
-            [card.order]: true
-        }));
-
-        console.log(`${type} card ${card.order} opened: ${card.value.card + 1}, accumulated score: ${accumulatedScore}, time: ${new Date()}`);
+        // Add delay to match card flip animation completion
+        setTimeout(() => {
+            setVisibleScores(prev => ({
+                ...prev,
+                [card.order]: true
+            }));
+            console.log(`${type} card ${card.order} opened: ${card.value.card + 1}, accumulated score: ${accumulatedScore}, time: ${new Date()}`);
+        }, 600); // Match the animation duration from BaccaratCard
     }, [type]);
 
     // Get the appropriate score display class based on card order
@@ -66,12 +66,13 @@ export const CardSection: React.FC<CardSectionProps> = ({
                 ))}
                 <div className={Styles.scoreOverlay}>
                     {isShowResult && cards.map((card, index) => (
-                        <div key={card.order} className={getScoreDisplayClass(card.order)}>
+                        <div key={card.order}>
                             <ScoreDisplay
                                 label={label}
                                 score={card.accumulatedScore}
                                 cardsCount={index + 1}
                                 type={type}
+                                visible={visibleScores[card.order]}
                             />
                         </div>
                     ))}
