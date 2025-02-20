@@ -32,6 +32,12 @@
         margin-right: 0;
     }
 
+    &.card5, &.card6 {
+        &:not(.flip) {
+            opacity: 0;
+        }
+    }
+
     &.flip {
         transform: rotateY(180deg);
     }

@@ -31,6 +31,8 @@ $fourth-card-time: 2100ms;
     --gap-player-banker: map.get($layout, 'gap-player-banker', 'default');
     grid-column-gap: calc(var(--gap-player-banker)*2);
     grid-template-columns: 1fr 1fr;
+    position: relative;
+    align-items: center;
 }
 
 // Player and banker base styles
@@ -344,4 +346,53 @@ $fourth-card-time: 2100ms;
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+// Winner display animation
+@keyframes floatIn {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 40px);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+.winner-display {
+    position: absolute;
+    left: 50%;
+    top: calc(50% - 2rem);
+    width: fit-content;
+    min-width: 160px;
+    margin: 0 auto;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 0.8rem;
+    padding: 0.8rem 1.5rem;
+    color: #FFD700;
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-align: center;
+    animation: floatIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: $fourth-card-time + 0.5s;
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: 
+        0 0 20px rgba(255, 215, 0, 0.3),
+        0 0 40px rgba(255, 215, 0, 0.15);
+    grid-column: 1 / -1;
+    align-self: center;
+    justify-self: center;
+    border: 1px solid rgba(255, 215, 0, 0.4);
+}
+
+.winner-text {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+    white-space: nowrap;
+    line-height: 1.2;
 }

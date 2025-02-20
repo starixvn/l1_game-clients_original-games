@@ -82,7 +82,7 @@ export const CardAnimationConfig = {
         const baseTime = 50;
         const cardInterval = 200;
         const pairDelay = 100;
-        const thirdCardExtraDelay = 100; // Extra delay for third cards
+        const thirdCardExtraDelay = 300; // Extra delay for third cards
 
         const pairIndex = Math.floor((order - 1) / 2);
         const positionInPair = (order - 1) % 2;

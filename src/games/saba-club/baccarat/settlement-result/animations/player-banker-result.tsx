@@ -21,6 +21,7 @@ interface PlayerBankerResultState {
     playerScore: number;
     bankerScore: number;
     openedCards: number;
+    showWinner: boolean;
 }
 
 export class PlayerBankerResultComponent extends React.PureComponent<PlayerBankerResultProps, PlayerBankerResultState> {
@@ -33,6 +34,7 @@ export class PlayerBankerResultComponent extends React.PureComponent<PlayerBanke
             playerScore: 0,
             bankerScore: 0,
             openedCards: 0,
+            showWinner: false
         };
     }
 
@@ -63,12 +65,23 @@ export class PlayerBankerResultComponent extends React.PureComponent<PlayerBanke
         }
     }
 
-    private startAnimation = () => {
-        const { result } = this.props;
-        console.log('Starting animation with result:', result);
+    private getWinnerText = () => {
+        const { playerScore, bankerScore } = this.state;
+        const { texts } = this.props;
 
-        const playerCards = GetPlayerCardsResult(result);
-        const bankerCards = GetBankerCardsResult(result);
+        if (playerScore > bankerScore) {
+            return `${texts.player} WINS!`;
+        } else if (bankerScore > playerScore) {
+            return `${texts.banker} WINS!`;
+        }
+        return "TIE";
+    }
+
+    private startAnimation = () => {
+        if (!this.props.result) return;
+
+        const playerCards = GetPlayerCardsResult(this.props.result);
+        const bankerCards = GetBankerCardsResult(this.props.result);
 
         // Combine and sort cards by animation order
         const allCards = [...playerCards, ...bankerCards]
@@ -87,6 +100,7 @@ export class PlayerBankerResultComponent extends React.PureComponent<PlayerBanke
                         bankerScore: isBanker ? card.accumulatedScore : prevState.bankerScore,
                         playerScore: !isBanker ? card.accumulatedScore : prevState.playerScore,
                         openedCards: index + 1,
+                        showWinner: index === allCards.length - 1
                     };
                     console.log('Updated state:', newState);
                     return newState;
@@ -106,7 +120,7 @@ export class PlayerBankerResultComponent extends React.PureComponent<PlayerBanke
 
     render() {
         const { playResultAnimation, result, texts, isShowResult } = this.props;
-        const { openedCards, playerScore, bankerScore } = this.state;
+        const { openedCards, playerScore, bankerScore, showWinner } = this.state;
 
         const playerCards = GetPlayerCardsResult(result);
         const bankerCards = GetBankerCardsResult(result);
@@ -125,6 +139,16 @@ export class PlayerBankerResultComponent extends React.PureComponent<PlayerBanke
                         playResultAnimation={playResultAnimation}
                         isShowResult={isShowResult}
                     />
+
+                    {/* Winner Display */}
+                    {showWinner && isShowResult && (
+                        <div className={Styles['winner-display']}>
+                            <p className={Styles['winner-text']}>
+                                {this.getWinnerText()}
+                            </p>
+                        </div>
+                    )}
+
                     <CardSection
                         cards={bankerCards}
                         label={texts.banker}

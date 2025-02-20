@@ -13,6 +13,7 @@ import type { IPropsObserver, IStateObserver } from "../../../../_shared/compone
 import { ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
 import { setting } from "../game-settings";
 import { BUTTON_LABELS, TRANSLATIONS } from "./constants";
+import { DEMO_RESULTS } from "./constants/demo-results";
 import { gameStateService } from "./services/game-state.service";
 import Styles from "./animations/baccarat-animations.module.scss";
 
@@ -24,12 +25,8 @@ interface IBaccaratSettlementResultState extends IStateObserver {
     isLoading: boolean;
     error?: Error;
     isAutoSwitchEnabled: boolean;
+    currentDemoIndex: number;
 }
-
-const DEMO_RESULT = {
-    banker: { card1: { card: 1, type: 0 }, card2: { card: 5, type: 2 } },
-    player: { card1: { card: 8, type: 3 }, card2: { card: 5, type: 3 }, card3: { card: 7, type: 2 } },
-} as const;
 
 @observer(setting.mainObserverNamespace)
 export default class BaccaratSettlementResult extends ObserverComponent<IPropsObserver, IBaccaratSettlementResultState> {
@@ -50,6 +47,7 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
             isLoading: true,
             error: undefined,
             isAutoSwitchEnabled: true,
+            currentDemoIndex: 0,
         };
     }
 
@@ -69,8 +67,15 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
         if (this.state.isAutoSwitchEnabled) {
             this.autoSwitchTimer = setTimeout(() => {
                 this.toggleResultVisibility();
-                this.startAutoSwitchTimer(); // Restart the timer for continuous switching
-            }, 4000);
+                // After hiding the current result, move to the next demo
+                if (!this.state.isResultVisible) {
+                    this.setState(prevState => ({
+                        currentDemoIndex: (prevState.currentDemoIndex + 1) % DEMO_RESULTS.length,
+                        isAnimationResult: true
+                    }));
+                }
+                this.startAutoSwitchTimer();
+            }, 5000);
         }
     }
 
@@ -152,12 +157,12 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
     }
 
     private renderCardDisplay(): JSX.Element | null {
-        const { result, isAnimationResult, isResultVisible } = this.state;
-        if (!result) return null;
+        const { result, isAnimationResult, isResultVisible, currentDemoIndex } = this.state;
+        if (!result && currentDemoIndex >= DEMO_RESULTS.length) return null;
 
         return (
             <CardDisplay
-                result={DEMO_RESULT}
+                result={DEMO_RESULTS[currentDemoIndex]}
                 isAnimationResult={isAnimationResult}
                 isShowResult={isResultVisible}
                 texts={this.texts}
