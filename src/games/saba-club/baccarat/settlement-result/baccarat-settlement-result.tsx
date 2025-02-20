@@ -1,28 +1,42 @@
 import * as gc from "@sg/sg-game-client";
+import React from "react";
 import { RoundHistoryStore } from "@sg/sg-game-client/dist/game/round-histories";
-import { ROUND_STATE, RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds";
+import { RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds";
 import { SettlementStore } from "@sg/sg-game-client/dist/game/settlements";
 import { render } from "@sg/sg-observer";
-import React from "react";
 import { observer } from '@sg/sg-observer';
 import type { Result } from "../baccarat";
-import Styles from "./animations/baccarat-animations.module.scss";
-import { PlayerBankerResultComponent } from "./animations/player-banker-result";
-import { setting } from "../game-settings";
+import { CardDisplay } from "./components/card-display";
+import { ErrorBoundary } from "./components/error-boundary";
+import { Loading } from "./components/loading";
 import type { IPropsObserver, IStateObserver } from "../../../../_shared/components/observer-component/observer-component";
 import { ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
+import { setting } from "../game-settings";
+import { BUTTON_LABELS, TRANSLATIONS } from "./constants";
+import { gameStateService } from "./services/game-state.service";
+import Styles from "./animations/baccarat-animations.module.scss";
 
-const classAnimation = "has-animation";
-
-interface IBaccaratResultState extends IStateObserver {
+interface IBaccaratSettlementResultState extends IStateObserver {
     result?: Result;
     roundState: string;
     isAnimationResult: boolean;
     isResultVisible: boolean;
+    isLoading: boolean;
+    error?: Error;
 }
 
+const DEMO_RESULT = {
+    banker: { card1: { card: 1, type: 0 }, card2: { card: 5, type: 2 }, card3: { card: 7, type: 2 } },
+    player: { card1: { card: 8, type: 3 }, card2: { card: 5, type: 3 }, card3: { card: 8, type: 1 } },
+} as const;
+
 @observer(setting.mainObserverNamespace)
-export default class BaccaratSettlementResult extends ObserverComponent<IPropsObserver, IBaccaratResultState> {
+export default class BaccaratSettlementResult extends ObserverComponent<IPropsObserver, IBaccaratSettlementResultState> {
+    private readonly texts = {
+        player: gc.Translator.t(TRANSLATIONS.PLAYER),
+        banker: gc.Translator.t(TRANSLATIONS.BANKER),
+    };
+
     constructor(props: IPropsObserver) {
         super(props);
         this.state = {
@@ -31,79 +45,101 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
             roundState: "",
             isAnimationResult: false,
             isResultVisible: false,
+            isLoading: true,
+            error: undefined,
         };
     }
 
     @render(RoundTimeStore, (store) => store.roundState)
-    handleRoundState(roundState: string) {
-        this.setState({ roundState });
+    private handleRoundState(roundState: string): void {
+        try {
+            gameStateService.handleRoundState(roundState);
+            this.setState({ roundState, isLoading: false });
+        } catch (error) {
+            this.setState({ error: error as Error });
+        }
     }
 
     @render(SettlementStore, (store) => store.currentFinish, {
         fireImmediately: false,
     })
-    renderCurrentFinish(currentFinish: gc.GameServiceMessage.Finish) {
-        if (!currentFinish) {
-            return;
+    private handleCurrentFinish(currentFinish: gc.GameServiceMessage.Finish): void {
+        try {
+            const result = gameStateService.handleSettlement(currentFinish);
+            if (result && gameStateService.validateResult(result)) {
+                this.setState({ result, isAnimationResult: true, isLoading: false });
+            }
+        } catch (error) {
+            this.setState({ error: error as Error });
         }
-        const { result } = currentFinish;
-
-        if (!result) {
-            return;
-        }
-
-        this.setState({ result: result as Result, isAnimationResult: true });
     }
 
     @render(RoundHistoryStore, (store) => store.firstJoinGameHistory)
-    handleJoinGameAndShowResult(firstJoinGameHistory: gc.RoundHistories.IFirstJoinGameHistory) {
-        if (!firstJoinGameHistory) {
-            return;
-        }
-
-        const lastRound = firstJoinGameHistory?.roundHistory;
-        if (lastRound) {
-            this.setState({ result: lastRound?.result as Result });
+    private handleJoinGameAndShowResult(firstJoinGameHistory: gc.RoundHistories.IFirstJoinGameHistory): void {
+        try {
+            const result = gameStateService.handleGameHistory(firstJoinGameHistory);
+            if (result && gameStateService.validateResult(result)) {
+                this.setState({ result, isLoading: false });
+            }
+        } catch (error) {
+            this.setState({ error: error as Error });
         }
     }
 
-    toggleResultVisibility = () => {
+    private toggleResultVisibility = (): void => {
         this.setState((prevState) => ({ isResultVisible: !prevState.isResultVisible }));
     };
 
-    render() {
-        const { result, roundState, isAnimationResult, isResultVisible } = this.state;
+    private renderToggleButton(): JSX.Element {
+        const { isResultVisible } = this.state;
+        return (
+            <button
+                onClick={this.toggleResultVisibility}
+                className={Styles['toggle-button']}
+            >
+                {isResultVisible ? BUTTON_LABELS.HIDE : BUTTON_LABELS.SHOW}
+            </button>
+        );
+    }
 
-        // if (!result || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET) {
-        //     return null;
-        // }
-
-        const isShowResult = isResultVisible; //&& !(!result || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET);
-        let resultTemp = {
-            banker: { card1: { card: 1, type: 0 }, card2: { card: 5, type: 2 }, card3: { card: 7, type: 2 } },
-            player: { card1: { card: 8, type: 3 }, card2: { card: 5, type: 3 }, card3: { card: 8, type: 1 } },
-        };
-
-        const resultCount = 4 + (!!resultTemp.player.card3 ? 1 : 0) + (!!resultTemp.banker.card3 ? 1 : 0);
-        const suffix = !resultTemp.player.card3 && !!resultTemp.banker.card3 ? "-banker" : "";
-        const classCardCount = `card-${resultCount}${suffix}`;
-        const texts = {
-            player: gc.Translator.t(`player`),
-            banker: gc.Translator.t(`banker`),
-        };
+    private renderCardDisplay(): JSX.Element | null {
+        const { result, isAnimationResult, isResultVisible } = this.state;
+        if (!result) return null;
 
         return (
-            <div className={`${Styles["open-cards"]} ${Styles[classCardCount]} ${isAnimationResult ? Styles[classAnimation] : ""}`}>
-                <button onClick={this.toggleResultVisibility}>
-                    {isResultVisible ? "Hide Result" : "Show Result"}
-                </button>
-                <PlayerBankerResultComponent
-                    playResultAnimation={true}
-                    result={resultTemp}
-                    texts={texts}
-                    isShowResult={isShowResult}
-                />
+            <CardDisplay
+                result={DEMO_RESULT}
+                isAnimationResult={isAnimationResult}
+                isShowResult={isResultVisible}
+                texts={this.texts}
+            />
+        );
+    }
+
+    private renderContent(): JSX.Element {
+        const { isLoading, error } = this.state;
+
+        if (error) {
+            throw error;
+        }
+
+        if (isLoading) {
+            return <Loading message="Loading game results..." />;
+        }
+
+        return (
+            <div className={Styles['settlement-container']}>
+                {this.renderToggleButton()}
+                {this.renderCardDisplay()}
             </div>
+        );
+    }
+
+    render(): JSX.Element {
+        return (
+            <ErrorBoundary>
+                {this.renderContent()}
+            </ErrorBoundary>
         );
     }
 } 

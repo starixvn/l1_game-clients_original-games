@@ -1,3 +1,90 @@
+// Animation Timings
+$timings: (
+    'draw-card': 0.8s,
+    'open-card': 1.8s,
+    'zoom-in-card': 0.4s,
+    'show-score': 0.2s,
+    'blink-score': 0.3s,
+    'move-left-player': 0.4s,
+    'delay': (
+        'open-card-2': 0.2s,
+        'open-card-4': 0.2s,
+        'zoom-in': 0.5s
+    )
+) !default;
+
+// Card Animation Sequence
+$card-sequence: (
+    'first-pair': 0ms,
+    'second-pair': 300ms,
+    'third-card': 1400ms,
+    'fourth-card': 2100ms
+) !default;
+
+// Layout
+$layout: (
+    'gap-player-banker': (
+        'default': 2rem,
+        'desktop': 4rem
+    ),
+    'card-distances': (
+        'first-second': 5rem,
+        'second-third': 8rem
+    )
+) !default;
+
+// Score Display
+$score: (
+    'dimensions': (
+        'width': 8.4rem,
+        'height': 2.2rem,
+        'font-size': 1.4rem,
+        'number-font-size': 2rem
+    ),
+    'colors': (
+        'player': (
+            'start': #65a1e7,
+            'end': #2d6db8
+        ),
+        'banker': (
+            'start': #f56566,
+            'end': #ce333f
+        )
+    )
+) !default;
+
+// Breakpoints
+$breakpoints: (
+    'desktop': 1278px
+) !default;
+
+// Card Dimensions
+$card: (
+    'width': 7.757rem,
+    'height': 10.74rem,
+    'background': (
+        'width': 7.757rem,
+        'height': 110.74rem
+    )
+) !default;
+
+// Colors
+$colors: (
+    'text': (
+        'player': #65a1e7,
+        'banker': #f56566
+    ),
+    'button': (
+        'primary': #3498db,
+        'hover': #2980b9
+    ),
+    'loading': (
+        'spinner': #f3f3f3,
+        'spinner-active': #3498db,
+        'text': #666
+    )
+) !default;
+
 // Base animation durations
 $animation-duration: (
     draw-card: 0.8s,

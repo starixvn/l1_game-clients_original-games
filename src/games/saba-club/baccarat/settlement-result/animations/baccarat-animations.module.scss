@@ -1,5 +1,8 @@
-@use "sass:math";
-@import "./_variables.scss";
+@use "sass:math" as math;
+@use "sass:map";
+@import "./variables";
+@import "./mixins";
+@import "./animations";
 
 $time-draw-card-animation: 0.8s;
 $time-open-card-animation: 1.8s;
@@ -25,68 +28,67 @@ $fourth-card-time: 2100ms;
     height: 100%;
     pointer-events: none;
     display: grid;
-    --gap-player-banker: $gap-player-banker-default;
+    --gap-player-banker: map.get($layout, 'gap-player-banker', 'default');
     grid-column-gap: calc(var(--gap-player-banker)*2);
-    display: grid;
     grid-template-columns: 1fr 1fr;
+}
 
-    // Player and banker sections
-    %player-banker-base {
-        display: flex;
-        flex: 1 1 8.9rem;
-        gap: 0.5rem;
-        position: relative;
+// Player and banker base styles
+%player-banker-base {
+    display: flex;
+    flex: 1 1 8.9rem;
+    gap: 0.5rem;
+    position: relative;
+}
+
+// Player section
+.player {
+    @extend %player-banker-base;
+    justify-self: flex-end;
+
+    .score {
+        margin-left: 50%;
+        left: -4.7rem;
+        @include score-gradient(
+            map.get($score, 'colors', 'player', 'start'),
+            map.get($score, 'colors', 'player', 'end')
+        );
     }
+}
 
-    .player {
-        @extend %player-banker-base;
-        justify-self: flex-end;
-    }
+// Banker section
+.banker {
+    @extend %player-banker-base;
+    justify-self: flex-start;
 
-    .banker {
-        @extend %player-banker-base;
-        justify-self: flex-start;
+    .score {
+        left: 7.8rem;
+        @include score-gradient(
+            map.get($score, 'colors', 'banker', 'start'),
+            map.get($score, 'colors', 'banker', 'end')
+        );
     }
 }
 
 // Score display
 .score {
-    --width-score: 8.4rem;
-    --height-score: 2.2rem;
-    --font-size-score: 1.4rem;
-    --bottom-score: 0;
     position: absolute;           
-    width: var(--width-score);
-    height: var(--height-score);
+    width: map.get($score, 'dimensions', 'width');
+    height: map.get($score, 'dimensions', 'height');
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     color: #fff;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
+    @include flex-center;
     line-height: 1.9rem;
-    font-size: var(--font-size-score);
-    bottom: var(--bottom-score);
+    font-size: map.get($score, 'dimensions', 'font-size');
+    bottom: 0;
 
     &-number {
-        font-size: 2rem;
+        font-size: map.get($score, 'dimensions', 'number-font-size');
         font-family: var(--font-number);
         position: relative;
         padding-left: 0.3rem;
         top: -0.1rem;
-    }
-
-    // Player score
-    .player & {
-        margin-left: 50%;
-        left: -4.7rem;
-        background: linear-gradient(180deg, #65a1e7 0%, #2d6db8 100%);             
-    }
-
-    // Banker score
-    .banker & {
-        left: 7.8rem;
-        background: linear-gradient(180deg, #f56566 0%, #ce333f 100%);
     }
 }
 
@@ -99,13 +101,13 @@ $fourth-card-time: 2100ms;
     }
 }
 
-// Open cards animations and positioning
+// Open cards layout
 .open-cards {
-    --distance-first-second-card: $distance-first-second-card;
-    --distance-second-third-card: $distance-second-third-card;
+    --distance-first-second-card: map.get($layout, 'card-distances', 'first-second');
+    --distance-second-third-card: map.get($layout, 'card-distances', 'second-third');
     height: 100%;
 
-    // Card positioning for different card counts
+    // Card positioning variants
     &.card-4 {
         @include position-cards((
             "1": var(--distance-first-second-card),
@@ -165,9 +167,9 @@ $fourth-card-time: 2100ms;
 
         // Card animations
         .card-back {
-            background-size: 7.757rem 110.74rem;
-            width: 7.757rem;
-            height: 10.74rem;
+            background-size: map.get($card, 'background', 'width') map.get($card, 'background', 'height');
+            width: map.get($card, 'width');
+            height: map.get($card, 'height');
             display: block;
             position: absolute;
             inset: 0;
@@ -206,28 +208,68 @@ $fourth-card-time: 2100ms;
     }
 }
 
-// Desktop layout adjustments
-@media(min-width: 1278px) {    
+// Card styles
+.card-back {
+    background-size: map.get($card, 'background', 'width') map.get($card, 'background', 'height');
+    width: map.get($card, 'width');
+    height: map.get($card, 'height');
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    transition: transform 0.1s;
+}
+
+// Loading styles
+.loading-container {
+    @include flex-center;
+    flex-direction: column;
+    padding: 2rem;
+    
+    .loading-spinner {
+        @include loading-spinner(
+            40px,
+            4px,
+            map.get($colors, 'loading', 'spinner'),
+            map.get($colors, 'loading', 'spinner-active')
+        );
+    }
+    
+    p {
+        margin-top: 1rem;
+        color: map.get($colors, 'loading', 'text');
+    }
+}
+
+// Settlement container
+.settlement-container {
+    display: grid;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+// Toggle button
+.toggle-button {
+    padding: 0.5rem 1rem;
+    @include button-style(
+        map.get($colors, 'button', 'primary'),
+        map.get($colors, 'button', 'hover')
+    );
+}
+
+// Desktop layout
+@include respond-to('desktop') {    
     .animation-container {
-        --gap-player-banker: $gap-player-banker-desktop;       
+        --gap-player-banker: map.get($layout, 'gap-player-banker', 'desktop');       
     }
 
     .open-cards {
-        --distance-first-second-card: 5rem;
-        --distance-second-third-card: 8rem;
+        --distance-first-second-card: map.get($layout, 'card-distances', 'first-second');
+        --distance-second-third-card: map.get($layout, 'card-distances', 'second-third');
 
         .animation-container {
             .player .score { left: -2.6rem; }
             .banker .score { left: 1rem; }
-        }
-
-        &.card-5, &.card-6 {
-            .player {
-
-                .animation-container & {
-                    --move-left-from-player: 5rem;
-                }
-            }
         }
     }
 }
@@ -247,8 +289,8 @@ $fourth-card-time: 2100ms;
     font-size: 20px;
     line-height: 22px;
 
-    &-player { color: #65a1e7; }
-    &-banker { color: #f56566; }
+    &-player { color: map.get($colors, 'text', 'player'); }
+    &-banker { color: map.get($colors, 'text', 'banker'); }
 }
 
 // Score wrapper transitions
@@ -261,4 +303,9 @@ $fourth-card-time: 2100ms;
         opacity: 1;
         visibility: visible;
     }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

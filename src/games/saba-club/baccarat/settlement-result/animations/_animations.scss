@@ -1,0 +1,78 @@
+@use "sass:math" as math;
+@use "sass:map";
+@import "./variables";
+
+// Spin animation
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+// Card animations
+@keyframes hide-card-back-animation {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes open-card-animation {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(180deg); }
+}
+
+@keyframes zoom-in-animation {
+    0% { transform: scale(1); }
+    100% { transform: scale(0.9); }
+}
+
+@keyframes move-up-result-animation-cards {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10%); }
+}
+
+// Score animations
+@keyframes appearance-settlement-info-animation {
+    0% { 
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes score-blink {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 1; }
+}
+
+// Animation classes
+.has-animation {
+    .score {
+        opacity: 0;
+        animation: appearance-settlement-info-animation map.get($timings, 'show-score') forwards;
+
+        &-number {
+            animation: score-blink map.get($timings, 'blink-score') forwards ease-in-out;
+        }
+    }
+
+    .animation-container {
+        animation: 
+            zoom-in-animation map.get($timings, 'zoom-in-card') cubic-bezier(.17,.67,.83,.67) forwards,
+            move-up-result-animation-cards 0.3s cubic-bezier(1, 0.01, 1, 0.01) forwards;
+    }
+
+    .card-back {
+        $open-card-time: map.get($timings, 'open-card');
+        $division-result: math.div($open-card-time, 6);
+        animation: hide-card-back-animation #{$division-result} linear forwards;
+    }
+
+    .open-card {
+        $open-card-time: map.get($timings, 'open-card');
+        $division-result: math.div($open-card-time, 6);
+        animation: open-card-animation #{$division-result} ease-in forwards;
+    }
+} 
