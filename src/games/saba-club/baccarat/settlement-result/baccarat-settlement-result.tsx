@@ -13,7 +13,6 @@ import type { IPropsObserver, IStateObserver } from "../../../../_shared/compone
 import { ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
 import { setting } from "../game-settings";
 import { TRANSLATIONS } from "./constants";
-import { DEMO_RESULTS } from "./constants/demo-results";
 import { gameStateService } from "./services/game-state.service";
 import Styles from "./animations/baccarat-animations.module.scss";
 import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";

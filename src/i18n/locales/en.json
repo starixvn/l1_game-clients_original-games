@@ -231,9 +231,11 @@
         "short_banker": "B",
         "short_player": "P",
         "tie_win": "TIE",
-        "beadboard_player": "P",
-        "beadboard_banker": "B",
-        "beadboard_tie": "T"
+        "beadboard_P": "P",
+        "beadboard_B": "B",
+        "beadboard_T": "T",
+        "glossary_B": "Banker",
+        "glossary_P": "Player"
     },
     "BigSmall": {
         "game_vendor": "SABA.games",

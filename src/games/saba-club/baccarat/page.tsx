@@ -70,7 +70,7 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IGameBaseSt
     }
 
     renderStatistic() {
-        return <BaccaratStatistic namespace={this.props.namespace} />;
+        return <BaccaratStatistic namespace={this.props.namespace} gameName={setting.gameName} />;
     }
 
     async showResult(

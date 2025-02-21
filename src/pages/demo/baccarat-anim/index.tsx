@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { CardDisplay } from '../../../games/saba-club/baccarat/settlement-result/components/card-display';
-import { DEMO_RESULTS } from '../../../games/saba-club/baccarat/settlement-result/constants/demo-results';
+import { DEMO_RESULTS } from './constants';
 import { DemoControls } from './components/DemoControls';
 import { useAutoSwitch } from './hooks/useAutoSwitch';
 import { useAnimationScale } from './hooks/useAnimationScale';

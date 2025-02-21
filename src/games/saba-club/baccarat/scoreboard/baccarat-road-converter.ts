@@ -1,16 +1,27 @@
-import { IConverter } from "sc-scoreboards";
+import { Converter } from "sc-scoreboards";
 import { BaccaratSettlementResult } from "../type";
 
-export class BaccaratRoadConverter implements IConverter<BaccaratSettlementResult> {
-    private static _instance: BaccaratRoadConverter;
+export class BaccaratRoadConverter extends Converter<BaccaratSettlementResult> {
+    static addBlinkNode(rounds: BaccaratSettlementResult[]) {
+        const lastRound = rounds.find((round) => round.winner === 'player' || round.winner === 'banker');
 
-    private constructor() { }
+        const blinkRound: BaccaratSettlementResult = {
+            winner: lastRound?.winner || 'player',
+            playerPair: false,
+            bankerPair: false
+        };
 
-    public static get instance(): BaccaratRoadConverter {
-        if (!BaccaratRoadConverter._instance) {
-            BaccaratRoadConverter._instance = new BaccaratRoadConverter();
-        }
-        return BaccaratRoadConverter._instance;
+        rounds.unshift(blinkRound);
+    }
+
+    static instance = new BaccaratRoadConverter();
+
+    protected positiveKey(): string {
+        return 'player';
+    }
+
+    protected specialKey(): string {
+        return 'tie';
     }
 
     group(items: BaccaratSettlementResult[]): BaccaratSettlementResult[][] {

@@ -19,6 +19,10 @@
 .dot-odd,
 .dot-over,
 .dot-under,
+.dot-even,
+.dot-player ,
+.dot-banker,
+.dot-tie,
 .dot-blink {
     display: flex;
     -moz-box-align: center;
@@ -52,6 +56,21 @@
 
 .dot-under {
     background: linear-gradient(180deg, #ff5661, #be1c28);
+    color: whitesmoke;
+}
+
+.dot-player {
+    background: #315dc5;
+    color: whitesmoke;
+}
+
+.dot-banker {
+    background: linear-gradient(180deg, #ff5661, #be1c28);
+    color: whitesmoke;
+}
+
+.dot-tie {
+    background: #315dc5;
     color: whitesmoke;
 }
 

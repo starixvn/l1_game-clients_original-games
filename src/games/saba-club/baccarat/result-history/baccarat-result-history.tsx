@@ -84,7 +84,7 @@ export class BaccaratResultHistory extends ObserverComponent<IPropsObserver, IBa
 
         return (
             <div className={Styles["result-history"]}>
-                <div className={Styles["result-title"]}>Result History</div>
+                <div className={Styles["result-title"]}>Result</div>
                 <div className={Styles["result-content"]}>
                     {roundHistories.map((roundHistory, index) => {
                         return this.renderRoundResult(roundHistory, index);
