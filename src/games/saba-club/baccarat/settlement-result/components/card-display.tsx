@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import type { Result } from "../../baccarat";
-import { PlayerBankerResultComponent } from "../animations/player-banker-result";
 import { useCardAnimation } from '../hooks/use-card-animation';
+import PlayerBankerResultComponent from '../animations/player-banker-result';
 
 interface CardDisplayProps {
     result: Result;

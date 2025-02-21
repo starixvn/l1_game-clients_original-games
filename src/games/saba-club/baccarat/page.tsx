@@ -10,7 +10,6 @@ import { FunctionUtils } from "../../../_shared/utils/funtion-utils";
 import BaccaratBetOptions from "./bet-option/baccarat-bet-options";
 import BaccaratRoundHistory from "./round-history/baccarat-round-history";
 import BaccaratSettlementResult from "./settlement-result/baccarat-settlement-result";
-import { BaccaratResult } from "./settlement-result/animations";
 import BaccaratStatistics from "./statistic/baccarat-statistics";
 import BaccaratScoreboard from "./scoreboard/baccarat-scoreboard";
 import { containerOptions, setting } from "./game-settings";
@@ -67,8 +66,7 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IGameBaseSt
     }
 
     renderResultBlock() {
-        return <BaccaratResult namespace={this.props.namespace} />;
-        // return <BaccaratSettlementResult namespace={this.props.namespace} />;
+        return <BaccaratSettlementResult namespace={this.props.namespace} />;
     }
 
     renderStatistic() {

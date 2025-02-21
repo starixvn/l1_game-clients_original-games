@@ -1,9 +1,7 @@
 import React from "react";
 import { Result } from "../../baccarat";
-import { GetBankerCardsResult, GetPlayerCardsResult, CardAnimationConfig } from "../../baccarat-helper";
+import { GetBankerCardsResult, GetPlayerCardsResult } from "../../baccarat-helper";
 import Styles from "./baccarat-animations.module.scss";
-import { BaccaratCard } from "./baccarat-card";
-import { ScoreDisplay } from "./score-display";
 import { calculateTotalScore, sumScore } from "./score-utils";
 import { CardSection } from "./card-section";
 
@@ -24,7 +22,7 @@ interface PlayerBankerResultState {
     showWinner: boolean;
 }
 
-export class PlayerBankerResultComponent extends React.PureComponent<PlayerBankerResultProps, PlayerBankerResultState> {
+export default class PlayerBankerResultComponent extends React.PureComponent<PlayerBankerResultProps, PlayerBankerResultState> {
     private readonly timeouts: NodeJS.Timeout[] = [];
 
     constructor(props: PlayerBankerResultProps) {
