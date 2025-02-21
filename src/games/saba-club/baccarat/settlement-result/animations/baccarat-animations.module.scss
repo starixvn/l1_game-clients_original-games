@@ -320,15 +320,15 @@ $fourth-card-time: 2100ms;
 
 // Labels
 .label {
-    text-align: center;
+   
     text-transform: uppercase;
     font-weight: bold;
     margin: 0.5rem 0;
     font-size: 20px;
     line-height: 22px;
 
-    &-player { color: map.get($colors, 'text', 'player'); }
-    &-banker { color: map.get($colors, 'text', 'banker'); }
+    &-player { color: map.get($colors, 'text', 'player');  text-align: right; margin-right: 2rem;}
+    &-banker { color: map.get($colors, 'text', 'banker'); text-align: left; margin-left: 2rem;}
 }
 
 // Score wrapper transitions
