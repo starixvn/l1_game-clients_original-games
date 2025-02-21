@@ -61,12 +61,9 @@ export default class BaccaratBetOptions extends BetOptions {
 
     render() {
         const { roundOdds, boostedOdds } = this.state as IBetOptionsState;
-        const odds = boostedOdds?.values || roundOdds?.odds || {};
-        const boostedChoices = boostedOdds?.boostedChoices || roundOdds?.boostedChoices;
+        const odds = roundOdds?.odds || {};
+        const boostedChoices = roundOdds?.boostedChoices;
         const fractional = roundOdds?.fractional;
-
-        console.log('Current round odds:', odds);
-        console.log('Is fractional:', fractional);
 
         return (
             <div className={styles['bet-options-wrapper']}>

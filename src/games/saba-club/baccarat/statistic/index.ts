@@ -1,1 +1,1 @@
-export { default as BaccaratStatistics } from './baccarat-statistics'; 
+export { BaccaratStatistic } from './baccarat-statistics'; 

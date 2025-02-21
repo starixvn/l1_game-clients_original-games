@@ -39,15 +39,22 @@ export const CardSection: React.FC<CardSectionProps> = ({
                 ...prev,
                 [card.order]: true
             }));
-            console.log(`${type} card ${card.order} opened: ${card.value.card + 1}, accumulated score: ${accumulatedScore}, time: ${new Date()}`);
         }, 600); // Match the animation duration from BaccaratCard
-    }, [type]);
+    }, []);
 
     // Get the appropriate score display class based on card order
     const getScoreDisplayClass = (cardOrder: number) => {
         const baseClass = Styles.scoreWrapper;
         const visibleClass = visibleScores[cardOrder] ? Styles.visible : '';
         return `${baseClass} ${visibleClass}`;
+    };
+
+    const handleCardOpen = (card: CardOrder) => {
+        setVisibleScores(prev => ({
+            ...prev,
+            [card.order]: true
+        }));
+        handleCardFlip(card, score);
     };
 
     return (
@@ -61,7 +68,7 @@ export const CardSection: React.FC<CardSectionProps> = ({
                         isShowResult={isShowResult}
                         animationDuration={0.6}
                         animationDelay={card.animationDelay / 1000}
-                        onCardFlip={handleCardFlip}
+                        onCardFlip={handleCardOpen}
                     />
                 ))}
                 <div className={Styles.scoreOverlay}>

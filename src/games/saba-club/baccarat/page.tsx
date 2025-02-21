@@ -73,10 +73,6 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IGameBaseSt
         return <BaccaratStatistic namespace={this.props.namespace} />;
     }
 
-    renderScoreboard() {
-        return <BaccaratScoreboard namespace={this.props.namespace} />;
-    }
-
     async showResult(
         hasAnimation: boolean,
         result?: gc.GameServiceMessage.TResult,

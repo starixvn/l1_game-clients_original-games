@@ -68,7 +68,6 @@ export const BaccaratCard: React.FC<BaccaratCardProps> = ({
                 if (onCardFlip) {
                     const cardType = card.order <= 2 ? 'player' : 'banker';
                     const cardNumber = card.order <= 2 ? card.order : card.order - 2;
-                    console.log(`${cardType} card ${cardNumber} opened: ${card.value.card + 1}, accumulated score: ${card.accumulatedScore}`);
                     onCardFlip(card, card.accumulatedScore);
                 }
             }, delay);

@@ -53,12 +53,12 @@ export class BaccaratResultHistory extends ObserverComponent<IPropsObserver, IBa
 
         return (
             <div className={Styles["result-value"]}>
-                <div className={Styles["player-value"]}>
+                {/* <div className={Styles["player-value"]}>
                     Player: {result.playerValue}
                 </div>
                 <div className={Styles["banker-value"]}>
                     Banker: {result.bankerValue}
-                </div>
+                </div> */}
                 <div className={Styles[settlement.winner]}>
                     {settlement.winner.toUpperCase()}
                 </div>

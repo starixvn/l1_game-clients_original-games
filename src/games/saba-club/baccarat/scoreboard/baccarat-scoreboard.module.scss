@@ -6,6 +6,7 @@
 
     .scoreboard-title {
         font-weight: bold;
+        margin-bottom: 10px;
     }
 
     .scoreboard-percentage {
@@ -15,8 +16,10 @@
         width: 100%;
         color: white;
         background: #274980;
+        padding: 5px 10px;
+        margin-bottom: 10px;
 
-        .odd-percentage {
+        .player-percentage {
             flex: 1;
             text-align: right;
         }
@@ -24,9 +27,10 @@
         .split-percentage {
             margin: 0 10px;
             text-align: center;
+            flex: 2;
         }
 
-        .even-percentage {
+        .banker-percentage {
             flex: 1;
             text-align: left;
         }
@@ -39,28 +43,35 @@
         background: whitesmoke;
         scrollbar-width: thin;
         scrollbar-color: #c9c4c4 #f1f1f1;
+        border: 1px solid #ebe4e4;
+        padding: 5px;
 
-        .dot-item {
-            border-right: 1px solid #ebe4e4;
-            border-bottom: 1px solid #ebe4e4;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font: 0.5rem var(--font-number);
-            pointer-events: none;
-            color: #fff;
-            z-index: 1;
-            font-size: 0.9rem;
-            padding: 4px;
-        }
+        &:global(.baccarat-scoreboard) {
+            .dot-item {
+                border-right: 1px solid #ebe4e4;
+                border-bottom: 1px solid #ebe4e4;
+                position: relative;
+                display: -moz-box;
+                display: flex;
+                -moz-box-align: center;
+                -moz-box-pack: center;
+                justify-content: center;
+                font: 0.5rem var(--font-number);
+                pointer-events: none;
+                color: #fff;
+                z-index: 1;
+                font-size: 0.9rem;
+                padding: 4px;
+            }
 
-        :global {
             .dot-player,
             .dot-banker,
-            .dot-tie {
+            .dot-tie,
+            .dot-blink {
                 display: flex;
+                -moz-box-align: center;
                 align-items: center;
+                -moz-box-pack: center;
                 justify-content: center;
                 width: 1.3rem;
                 height: 1.3rem;

@@ -106,19 +106,30 @@ export class BaccaratScoreboard extends ObserverComponent<Props, IBaccaratScoreb
         };
 
         return (
-            <div className={Styles["scoreboard"]}>
+            <div className={Styles.scoreboard}>
                 <div className={Styles["scoreboard-title"]}>Baccarat Scoreboard</div>
-                {<BetPercentages gameName={this.props.gameName} scoreboardCharacter={scoreboardCharacter} settlements={settlements} />}
-
-                <div className={Styles["scoreboard-content"]} ref={this.scrollDivRef}>
-                    {
-                        <ScoreBoard
+                <div className={Styles["scoreboard-percentage"]}>
+                    <div className={Styles["player-percentage"]}>
+                        Player
+                    </div>
+                    <div className={Styles["split-percentage"]}>
+                        <BetPercentages
                             gameName={this.props.gameName}
-                            rows={rows}
                             scoreboardCharacter={scoreboardCharacter}
-                            scoreboardDotClassName={scoreboardDotClassName}
+                            settlements={settlements}
                         />
-                    }
+                    </div>
+                    <div className={Styles["banker-percentage"]}>
+                        Banker
+                    </div>
+                </div>
+                <div className={`${Styles["scoreboard-content"]} baccarat-scoreboard`} ref={this.scrollDivRef}>
+                    <ScoreBoard
+                        gameName={this.props.gameName}
+                        rows={rows}
+                        scoreboardCharacter={scoreboardCharacter}
+                        scoreboardDotClassName={scoreboardDotClassName}
+                    />
                 </div>
             </div>
         );

@@ -230,7 +230,10 @@
         "player_win": "NHÀ CON THẮNG",
         "short_banker": "B",
         "short_player": "P",
-        "tie_win": "HÒA"
+        "tie_win": "HÒA",
+        "beadboard_player": "P",
+        "beadboard_banker": "B",
+        "beadboard_tie": "T"
     },
     "BigSmall": {
         "game_name": "Tài Xỉu"

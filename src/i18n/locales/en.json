@@ -230,7 +230,10 @@
         "player_win": "PLAYER WIN",
         "short_banker": "B",
         "short_player": "P",
-        "tie_win": "TIE"
+        "tie_win": "TIE",
+        "beadboard_player": "P",
+        "beadboard_banker": "B",
+        "beadboard_tie": "T"
     },
     "BigSmall": {
         "game_vendor": "SABA.games",

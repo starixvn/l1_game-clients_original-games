@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Result } from "../../baccarat";
 import { GetBankerCardsResult, GetPlayerCardsResult } from "../../baccarat-helper";
 import Styles from "./baccarat-animations.module.scss";
@@ -20,52 +20,41 @@ interface PlayerBankerResultState {
     bankerScore: number;
     openedCards: number;
     showWinner: boolean;
+    cardStates: { [key: number]: boolean };
 }
 
-export default class PlayerBankerResultComponent extends React.PureComponent<PlayerBankerResultProps, PlayerBankerResultState> {
-    private readonly timeouts: NodeJS.Timeout[] = [];
+export default function PlayerBankerResultComponent(props: PlayerBankerResultProps) {
+    const { playResultAnimation, result, texts, isShowResult } = props;
+    const [state, setState] = useState<PlayerBankerResultState>({
+        playerScore: 0,
+        bankerScore: 0,
+        openedCards: 0,
+        showWinner: false,
+        cardStates: {}
+    });
 
-    constructor(props: PlayerBankerResultProps) {
-        super(props);
-
-        this.state = {
-            playerScore: 0,
-            bankerScore: 0,
-            openedCards: 0,
-            showWinner: false
-        };
-    }
-
-    componentDidMount() {
-        if (this.props.playResultAnimation) {
-            this.startAnimation();
+    useEffect(() => {
+        if (playResultAnimation) {
+            startAnimation();
         } else {
-            this.updateScorePlayerBanker();
+            updateScorePlayerBanker();
         }
-    }
+    }, [playResultAnimation]);
 
-    componentWillUnmount() {
-        this.timeouts.forEach(clearTimeout);
-    }
-
-    componentDidUpdate(prevProps: PlayerBankerResultProps) {
-        if (this.props.isShowResult !== prevProps.isShowResult) {
-            this.setState({
-                playerScore: 0,
-                bankerScore: 0,
-                openedCards: 0,
-            });
-            if (this.props.isShowResult) {
-                this.startAnimation();
-            }
-        } else if (!this.props.playResultAnimation && prevProps.result !== this.props.result) {
-            this.updateScorePlayerBanker();
+    useEffect(() => {
+        if (isShowResult) {
+            startAnimation();
         }
-    }
+    }, [isShowResult]);
 
-    private getWinnerText = () => {
-        const { playerScore, bankerScore } = this.state;
-        const { texts } = this.props;
+    useEffect(() => {
+        if (result && !playResultAnimation) {
+            updateScorePlayerBanker();
+        }
+    }, [result, playResultAnimation]);
+
+    const getWinnerText = () => {
+        const { playerScore, bankerScore } = state;
 
         if (playerScore > bankerScore) {
             return `${texts.player} WINS!`;
@@ -75,88 +64,84 @@ export default class PlayerBankerResultComponent extends React.PureComponent<Pla
         return "TIE";
     }
 
-    private startAnimation = () => {
-        if (!this.props.result) return;
+    const startAnimation = () => {
+        if (!result) return;
 
-        const playerCards = GetPlayerCardsResult(this.props.result);
-        const bankerCards = GetBankerCardsResult(this.props.result);
+        const playerCards = GetPlayerCardsResult(result);
+        const bankerCards = GetBankerCardsResult(result);
 
         // Combine and sort cards by animation order
         const allCards = [...playerCards, ...bankerCards]
             .sort((a, b) => a.order - b.order)
             .filter(card => card.value);
 
-        this.timeouts.forEach(clearTimeout);
-        this.timeouts.length = 0;
-
         allCards.forEach((card, index) => {
-            console.log(`Setting timeout for card: ${card.value.card}, order: ${card.order}, delay: ${card.animationDelay}, accumulated score: ${card.accumulatedScore}`);
-            const timeout = setTimeout(() => {
-                this.setState(prevState => {
+            setTimeout(() => {
+                setState(prevState => {
                     const isBanker = bankerCards.some(bc => bc.value === card.value);
                     const newState = {
                         bankerScore: isBanker ? card.accumulatedScore : prevState.bankerScore,
                         playerScore: !isBanker ? card.accumulatedScore : prevState.playerScore,
                         openedCards: index + 1,
-                        showWinner: index === allCards.length - 1
+                        showWinner: index === allCards.length - 1,
+                        cardStates: {
+                            ...prevState.cardStates,
+                            [card.order]: true,
+                        },
                     };
-                    console.log('Updated state:', newState);
                     return newState;
                 });
             }, card.animationDelay);
-            this.timeouts.push(timeout);
         });
     };
 
-    private updateScorePlayerBanker = () => {
-        const { result } = this.props;
-        this.setState({
-            playerScore: calculateTotalScore([result.player.card1, result.player.card2, result.player.card3]),
-            bankerScore: calculateTotalScore([result.banker.card1, result.banker.card2, result.banker.card3]),
-        });
+    const updateScorePlayerBanker = () => {
+        if (result) {
+            setState(prevState => ({
+                ...prevState,
+                playerScore: calculateTotalScore([result.player.card1, result.player.card2, result.player.card3]),
+                bankerScore: calculateTotalScore([result.banker.card1, result.banker.card2, result.banker.card3]),
+                cardStates: {}
+            }));
+        }
     };
 
-    render() {
-        const { playResultAnimation, result, texts, isShowResult } = this.props;
-        const { openedCards, playerScore, bankerScore, showWinner } = this.state;
+    const { openedCards, playerScore, bankerScore, showWinner, cardStates } = state;
 
-        const playerCards = GetPlayerCardsResult(result);
-        const bankerCards = GetBankerCardsResult(result);
-        const classOpenCards = `opened-cards-${openedCards}`;
+    const playerCards = GetPlayerCardsResult(result);
+    const bankerCards = GetBankerCardsResult(result);
+    const classOpenCards = `opened-cards-${openedCards}`;
 
-        // console.log('playerCards', playerCards);
-        // console.log('bankerCards', bankerCards);
-        return (
-            <div className={`overlay-mask ${Styles[classOpenCards]}`}>
-                <div className={Styles["animation-container"]}>
-                    <CardSection
-                        cards={playerCards}
-                        label={texts.player}
-                        score={playerScore}
-                        type="player"
-                        playResultAnimation={playResultAnimation}
-                        isShowResult={isShowResult}
-                    />
+    return (
+        <div className={`overlay-mask ${Styles[classOpenCards]}`}>
+            <div className={Styles["animation-container"]}>
+                <CardSection
+                    cards={playerCards}
+                    label={texts.player}
+                    score={playerScore}
+                    type="player"
+                    playResultAnimation={playResultAnimation}
+                    isShowResult={isShowResult}
+                />
 
-                    {/* Winner Display */}
-                    {showWinner && isShowResult && (
-                        <div className={Styles['winner-display']}>
-                            <p className={Styles['winner-text']}>
-                                {this.getWinnerText()}
-                            </p>
-                        </div>
-                    )}
+                {/* Winner Display */}
+                {showWinner && isShowResult && (
+                    <div className={Styles['winner-display']}>
+                        <p className={Styles['winner-text']}>
+                            {getWinnerText()}
+                        </p>
+                    </div>
+                )}
 
-                    <CardSection
-                        cards={bankerCards}
-                        label={texts.banker}
-                        score={bankerScore}
-                        type="banker"
-                        playResultAnimation={playResultAnimation}
-                        isShowResult={isShowResult}
-                    />
-                </div>
+                <CardSection
+                    cards={bankerCards}
+                    label={texts.banker}
+                    score={bankerScore}
+                    type="banker"
+                    playResultAnimation={playResultAnimation}
+                    isShowResult={isShowResult}
+                />
             </div>
-        );
-    }
+        </div>
+    );
 } 
