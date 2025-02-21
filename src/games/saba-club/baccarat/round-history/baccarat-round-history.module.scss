@@ -1,16 +1,84 @@
 @import '../styles/overrides';
 
+// Move variables to a local class
 .round-history {
-    background-color: $baccarat-primary-bg;
-    padding: 8px 4px;
+    // Baccarat-specific variables
+    --baccarat-player-bg: #4a90e2;
+    --baccarat-player-border: #357abd;
+    --baccarat-banker-bg: #e74c3c;
+    --baccarat-banker-border: #c0392b;
+    --baccarat-tie-bg: #27ae60;
+    --baccarat-tie-border: #219a52;
+    --baccarat-next-bg: #f0f0f0;
+    --baccarat-next-border: #ddd;
+    --baccarat-text-light: #fff;
+    --baccarat-text-dark: #666;
+
+    background-color: #fce0d7;
+    padding: 8px 12px;
+    border-radius: 4px;
 
     .hstack-round {
         margin-top: 0 !important;
+        align-items: center;
+        gap: 4px !important;
+
+        > span:first-child {
+            color: var(--baccarat-text-dark);
+            font-size: 14px;
+            margin-right: 8px;
+        }
+    }
+
+    .history-item {
+        align-items: center;
     }
 
     .arrow {
         background-image: url("/static/images/arrow.svg");
-        height: 8px;
-        width: 8px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        height: 12px;
+        width: 12px;
+        opacity: 0.6;
+        margin: 0 2px;
+    }
+
+    // Baccarat-specific dot styles
+    .baccarat-dot {
+        width: 24px !important;
+        height: 24px !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+
+        &.player {
+            background: var(--baccarat-player-bg) !important;
+            color: var(--baccarat-text-light) !important;
+            border: 1px solid var(--baccarat-player-border) !important;
+        }
+
+        &.banker {
+            background: var(--baccarat-banker-bg) !important;
+            color: var(--baccarat-text-light) !important;
+            border: 1px solid var(--baccarat-banker-border) !important;
+        }
+
+        &.tie {
+            background: var(--baccarat-tie-bg) !important;
+            color: var(--baccarat-text-light) !important;
+            border: 1px solid var(--baccarat-tie-border) !important;
+        }
+
+        &.next {
+            background: var(--baccarat-next-bg) !important;
+            color: var(--baccarat-text-dark) !important;
+            border: 1px solid var(--baccarat-next-border) !important;
+        }
     }
 }
