@@ -4,7 +4,7 @@ import { Stack } from "react-bootstrap";
 import { RoundDot } from "../../../../_shared/components/dot";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
 import Styles from "./baccarat-round-history.module.scss";
-import { IBaccaratResult } from "../type";
+import { IBaccaratResult, BaccaratSettlementResult } from "../type";
 
 export interface IBaccaratRoundHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
@@ -46,20 +46,46 @@ export default class BaccaratRoundHistory extends ObserverComponent<IPropsObserv
         );
     }
 
+    private getSettlementResult(settlementResult: gc.GameServiceMessage.TSettlementResult): BaccaratSettlementResult {
+        const result: BaccaratSettlementResult = {
+            winner: 'player',
+            playerPair: false,
+            bankerPair: false
+        };
+
+        if (settlementResult && typeof settlementResult === "object") {
+            if (settlementResult.player) {
+                result.winner = 'player';
+            } else if (settlementResult.banker) {
+                result.winner = 'banker';
+            } else if (settlementResult.tie) {
+                result.winner = 'tie';
+            }
+
+            const gameData = settlementResult.gameData;
+            if (gameData && typeof gameData === "object") {
+                const data = gameData as Record<string, unknown>;
+                result.playerPair = !!data.playerPair;
+                result.bankerPair = !!data.bankerPair;
+            }
+        }
+
+        return result;
+    }
+
     private RoundHistoryItem(roundHistory: gc.RoundHistories.RoundHistory): JSX.Element {
         if (!roundHistory.settlementResult) {
             return <></>;
         }
-        const result = this.getResult(roundHistory.settlementResult);
-        const { winner } = result;
+        const settlement = this.getSettlementResult(roundHistory.settlementResult);
 
         return (
             <Stack key={roundHistory.roundId} direction="horizontal" gap={1} className={Styles["history-item"]}>
                 <RoundDot
-                    choice={winner}
+                    choice={settlement.winner}
                     size="large"
-                    value={winner.charAt(0).toUpperCase()}
-                    className={`${Styles["baccarat-dot"]} ${Styles[winner]}`}
+                    value={settlement.winner.charAt(0).toUpperCase()}
+                    className={`${Styles["baccarat-dot"]} ${Styles[settlement.winner]}`}
                 />
                 <span className={Styles["arrow"]}></span>
             </Stack>
@@ -68,39 +94,21 @@ export default class BaccaratRoundHistory extends ObserverComponent<IPropsObserv
 
     private getResult(settlementResult: gc.GameServiceMessage.TSettlementResult): IBaccaratResult {
         const result: IBaccaratResult = {
-            playerScore: 0,
-            bankerScore: 0,
-            playerCards: [],
-            bankerCards: [],
-            winner: "player"
+            playerValue: 0,
+            bankerValue: 0
         };
 
         if (settlementResult && typeof settlementResult === "object") {
-            // Extract winner
-            if (settlementResult.player) {
-                result.winner = "player";
-            } else if (settlementResult.banker) {
-                result.winner = "banker";
-            } else if (settlementResult.tie) {
-                result.winner = "tie";
-            }
-
-            // Extract scores and cards if available in settlement data
+            // Extract scores if available in settlement data
             const gameData = settlementResult.gameData;
             if (gameData && typeof gameData === "object") {
                 const data = gameData as Record<string, unknown>;
 
                 if ("playerScore" in data) {
-                    result.playerScore = Number(data.playerScore) || 0;
+                    result.playerValue = Number(data.playerScore) || 0;
                 }
                 if ("bankerScore" in data) {
-                    result.bankerScore = Number(data.bankerScore) || 0;
-                }
-                if ("playerCards" in data && Array.isArray(data.playerCards)) {
-                    result.playerCards = [...data.playerCards];
-                }
-                if ("bankerCards" in data && Array.isArray(data.bankerCards)) {
-                    result.bankerCards = [...data.bankerCards];
+                    result.bankerValue = Number(data.bankerScore) || 0;
                 }
             }
         }

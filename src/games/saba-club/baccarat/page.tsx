@@ -10,8 +10,8 @@ import { FunctionUtils } from "../../../_shared/utils/funtion-utils";
 import BaccaratBetOptions from "./bet-option/baccarat-bet-options";
 import BaccaratRoundHistory from "./round-history/baccarat-round-history";
 import BaccaratSettlementResult from "./settlement-result/baccarat-settlement-result";
-import BaccaratStatistics from "./statistic/baccarat-statistics";
-import BaccaratScoreboard from "./scoreboard/baccarat-scoreboard";
+import { BaccaratStatistic } from "./statistic/baccarat-statistics";
+import { BaccaratScoreboard } from "./scoreboard/baccarat-scoreboard";
 import { containerOptions, setting } from "./game-settings";
 import Header from "./header";
 import Styles from "./baccarat.module.scss";
@@ -70,12 +70,7 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IGameBaseSt
     }
 
     renderStatistic() {
-        return (
-            <>
-                <BaccaratStatistics namespace={this.props.namespace} />
-                {this.renderScoreboard()}
-            </>
-        );
+        return <BaccaratStatistic namespace={this.props.namespace} />;
     }
 
     renderScoreboard() {

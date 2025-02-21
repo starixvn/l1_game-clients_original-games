@@ -1,12 +1,23 @@
 import * as gc from "@sg/sg-game-client";
 import { IGameBaseState } from "../../../_shared/components/game-base";
 
+export type BaccaratWinner = 'player' | 'banker' | 'tie';
+
 export interface IBaccaratResult {
-    playerScore: number;
-    bankerScore: number;
-    playerCards: string[];
-    bankerCards: string[];
-    winner: "player" | "banker" | "tie";
+    playerValue: number;
+    bankerValue: number;
+}
+
+export interface BaccaratSettlementResult {
+    winner: BaccaratWinner;
+    playerPair: boolean;
+    bankerPair: boolean;
+}
+
+export interface BaccaratRoadConverterResult {
+    isPlayer: boolean;
+    isBanker: boolean;
+    isTie: boolean;
 }
 
 export interface IBaccaratBet {

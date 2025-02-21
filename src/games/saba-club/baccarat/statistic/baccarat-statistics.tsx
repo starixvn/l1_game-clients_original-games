@@ -1,58 +1,26 @@
-import React from 'react';
-import { observer } from '@sg/sg-observer';
-import { setting } from '../game-settings';
-import styles from './baccarat-statistics.module.scss';
+import * as gc from "@sg/sg-game-client";
+import { render } from "@sg/sg-observer";
+import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
+import Styles from "./baccarat-statistics.module.scss";
+import { BaccaratScoreboard } from "../scoreboard";
+import { BaccaratResultHistory } from "../result-history";
 
-interface IBaccaratStatisticsProps {
-    namespace: string;
-}
+type Props = IPropsObserver & {
+    gameName?: string;
+};
 
-interface IStatistics {
-    playerWins: number;
-    bankerWins: number;
-    ties: number;
-    playerPairs: number;
-    bankerPairs: number;
-}
+export interface IBaccaratStatisticState extends IStateObserver { }
 
-@observer(setting.mainObserverNamespace)
-export default class BaccaratStatistics extends React.Component<IBaccaratStatisticsProps> {
+export class BaccaratStatistic extends ObserverComponent<Props, IBaccaratStatisticState> {
+    constructor(props: Props) {
+        super(props);
+    }
+
     render() {
-        // TODO: Get actual statistics from state
-        const mockStats: IStatistics = {
-            playerWins: 0,
-            bankerWins: 0,
-            ties: 0,
-            playerPairs: 0,
-            bankerPairs: 0
-        };
-
-        return null;
         return (
-            <div className={styles['statistics']}>
-                <h3>Statistics</h3>
-                <div className={styles['stats-grid']}>
-                    <div className={styles['stat-item']}>
-                        <div className={styles['label']}>Player Wins</div>
-                        <div className={styles['value']}>{mockStats.playerWins}</div>
-                    </div>
-                    <div className={styles['stat-item']}>
-                        <div className={styles['label']}>Banker Wins</div>
-                        <div className={styles['value']}>{mockStats.bankerWins}</div>
-                    </div>
-                    <div className={styles['stat-item']}>
-                        <div className={styles['label']}>Ties</div>
-                        <div className={styles['value']}>{mockStats.ties}</div>
-                    </div>
-                    <div className={styles['stat-item']}>
-                        <div className={styles['label']}>Player Pairs</div>
-                        <div className={styles['value']}>{mockStats.playerPairs}</div>
-                    </div>
-                    <div className={styles['stat-item']}>
-                        <div className={styles['label']}>Banker Pairs</div>
-                        <div className={styles['value']}>{mockStats.bankerPairs}</div>
-                    </div>
-                </div>
+            <div className={`${Styles["statistic"]}`}>
+                <BaccaratScoreboard namespace={this.props.namespace} gameName={this.props.gameName} />
+                <BaccaratResultHistory namespace={this.props.namespace} />
             </div>
         );
     }

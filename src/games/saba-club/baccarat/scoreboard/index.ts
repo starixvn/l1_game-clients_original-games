@@ -1,1 +1,2 @@
-export { default as BaccaratScoreboard } from './baccarat-scoreboard'; 
+export * from './baccarat-scoreboard';
+export * from './baccarat-road-converter'; 

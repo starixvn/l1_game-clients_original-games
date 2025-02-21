@@ -1,0 +1,59 @@
+.result-history {
+    padding: 10px;
+    width: 20rem;
+
+    .result-title {
+        font-weight: bold;
+    }
+
+    .result-content {
+        background-color: #fff6f3;
+        height: 13.2rem;
+        overflow-y: auto;
+        overflow-x: hidden;
+        scrollbar-width: thin;
+        scrollbar-color: #c9c4c4 #f1f1f1;
+        border: solid 1px #ebcdcd;
+
+        .result-item {
+            display: flex;
+            gap: 10px;
+            border-bottom: solid 1px #c9ced2;
+            background-color: #fff6f3;
+            padding: 5px 7px;
+
+            .item-result {
+                display: flex;
+                gap: 10px;
+                flex: 1;
+            }
+
+            .result-value {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                flex: 1;
+                justify-content: space-between;
+
+                .player-value, .banker-value {
+                    color: #333;
+                }
+
+                .player {
+                    color: #ff5661;
+                    font-weight: bold;
+                }
+
+                .banker {
+                    color: rgb(145, 141, 141);
+                    font-weight: bold;
+                }
+
+                .tie {
+                    color: #274980;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+} 
