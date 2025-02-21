@@ -259,4 +259,53 @@
       background: #4a4a4a;
     }
   }
+}
+
+// Animation transitions
+.animationContainer {
+    transition: opacity 0.4s ease-in-out;
+    
+    &.fadeOut {
+        opacity: 0;
+    }
+    
+    &.fadeIn {
+        opacity: 1;
+    }
+}
+
+.resultTransition {
+    transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+    
+    &.slideOut {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    
+    &.slideIn {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+// Button styles
+.button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    &:hover:not(.disabled) {
+        background: #f5f5f5;
+        transform: translateY(-1px);
+    }
+    
+    &.disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        background: #f0f0f0;
+    }
 } 

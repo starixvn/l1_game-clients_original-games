@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { CardDisplay } from '../../../games/saba-club/baccarat/settlement-result/components/card-display';
 import { DEMO_RESULTS } from './constants';
-import { DemoControls } from './components/DemoControls';
-import { useAutoSwitch } from './hooks/useAutoSwitch';
 import { useAnimationScale } from './hooks/useAnimationScale';
-import { AUTO_SWITCH_INTERVAL, TEXTS } from './constants';
+import { TEXTS } from './constants';
 import styles from './styles.module.scss';
 
 // Chevron icon component
@@ -41,10 +39,41 @@ const RawResultData: React.FC<{
 };
 
 const BaccaratAnimationDemo: React.FC = () => {
-    const [
-        { isEnabled, isResultVisible, currentIndex, isAnimationResult, isTransitioning },
-        { toggleAutoSwitch, toggleResult, nextDemo }
-    ] = useAutoSwitch(AUTO_SWITCH_INTERVAL, DEMO_RESULTS.length);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isAnimationResult, setIsAnimationResult] = useState(true);
+    const [isTransitioning, setIsTransitioning] = useState(false);
+    const [isShowResult, setIsShowResult] = useState(true);
+
+    const nextDemo = () => {
+        if (isTransitioning) return;
+        setIsTransitioning(true);
+
+        // First hide all animations and results
+        setIsShowResult(false);
+        setIsAnimationResult(false);
+
+        // Wait for current animation to fully clear
+        setTimeout(() => {
+            // Update to next demo index
+            setCurrentIndex(prev => {
+                const newIndex = (prev + 1) % DEMO_RESULTS.length;
+                console.log(`Current index is set to: ${newIndex}`);
+                return newIndex;
+            });
+
+            // Wait for DOM update with new index
+            requestAnimationFrame(() => {
+                // Show cards without animation first
+                setIsShowResult(true);
+
+                // Start new animation sequence after a brief delay
+                setTimeout(() => {
+                    setIsAnimationResult(true);
+                    setIsTransitioning(false);
+                }, 300);
+            });
+        }, 500);
+    };
 
     const [isRawDataCollapsed, setIsRawDataCollapsed] = useState(true);
     const [isRawDataHidden, setIsRawDataHidden] = useState(true);
@@ -73,26 +102,26 @@ const BaccaratAnimationDemo: React.FC = () => {
         <div className={styles.demoContainer}>
             <h1 className={styles.demoTitle}>Baccarat Animation Demo</h1>
 
-            <DemoControls
-                isAutoSwitchEnabled={isEnabled}
-                isResultVisible={isResultVisible}
-                onToggleResult={toggleResult}
-                onNextDemo={nextDemo}
-                onToggleAutoSwitch={toggleAutoSwitch}
-                isTransitioning={isTransitioning}
-            />
+            <div className={styles.controls}>
+                <button
+                    onClick={nextDemo}
+                    className={`${styles.button} ${isTransitioning ? styles.disabled : ''}`}
+                    disabled={isTransitioning}
+                >
+                    Next Demo
+                </button>
+            </div>
 
             <div className={`${styles.contentWrapper} ${isRawDataCollapsed || isRawDataHidden ? styles.collapsed : ''}`}>
                 <div className={styles.demoContent} ref={contentRef}>
                     <div
-                        className={`animation-container ${isTransitioning ? 'fade-out' : 'fade-in'}`}
                         style={{ transform: `scale(${scale})` }}
                     >
-                        <div className={`result-transition ${isTransitioning ? 'slide-out' : 'slide-in'}`}>
+                        <div >
                             <CardDisplay
                                 result={DEMO_RESULTS[currentIndex]}
                                 isAnimationResult={isAnimationResult}
-                                isShowResult={isResultVisible}
+                                isShowResult={isShowResult}
                                 texts={TEXTS}
                             />
                         </div>
