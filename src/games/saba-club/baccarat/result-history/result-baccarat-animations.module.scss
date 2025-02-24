@@ -19,7 +19,6 @@
 %player-banker-base {
     display: flex;
     flex: 1 1 8.9rem;
-    gap: 0.5rem;
     position: relative;
 }
 
@@ -89,9 +88,15 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
     }
 
     .cardWrapper {
         position: relative;
+        margin-left: -1.5rem; // Create overlap effect
+        
+        &:first-child {
+            margin-left: 0; // No margin for first card
+        }
     }
 }

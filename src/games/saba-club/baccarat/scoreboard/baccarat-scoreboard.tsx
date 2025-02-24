@@ -107,7 +107,7 @@ export class BaccaratScoreboard extends ObserverComponent<Props, IBaccaratScoreb
 
         return (
             <div className={Styles.scoreboard}>
-                <div className={Styles["scoreboard-title"]}>Baccarat Scoreboard</div>
+                <div className={Styles["scoreboard-title"]}>Scoreboard</div>
                 <div className={Styles["scoreboard-percentage"]}>
                     {/* <div className={Styles["player-percentage"]}>
                         Player

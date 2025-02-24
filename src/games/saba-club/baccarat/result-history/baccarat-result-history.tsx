@@ -10,7 +10,7 @@ export interface IBaccaratResultHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
 }
 
-const numberOfResult = 3;
+const numberOfResult = 100;
 
 export class BaccaratResultHistory extends ObserverComponent<IPropsObserver, IBaccaratResultHistoryState> {
     constructor(props: IPropsObserver) {
@@ -42,32 +42,21 @@ export class BaccaratResultHistory extends ObserverComponent<IPropsObserver, IBa
         return result;
     }
 
-
-    renderResult(roundHistory: gc.RoundHistories.RoundHistory) {
+    renderRoundResult(roundHistory: gc.RoundHistories.RoundHistory, index: number) {
         const result = roundHistory?.result as Result;
         const settlement = this.getSettlementResult(roundHistory.settlementResult);
 
         return (
-            <div className={Styles.resultRow}>
-                <div className={Styles.playerCards}>
-                    <ResultCardSection cards={result?.player} />
-                </div>
-                <div className={Styles.bankerCards}>
-                    <ResultCardSection cards={result?.banker} />
-                </div>
-                <div className={`${Styles.winner} ${Styles[settlement.winner]}`}>
-                    {settlement.winner.charAt(0).toUpperCase() + settlement.winner.slice(1)}
-                </div>
-            </div>
-        );
-    }
-
-    renderRoundResult(roundHistory: gc.RoundHistories.RoundHistory, index: number) {
-
-        return (
             <div className={Styles.historyRow} key={index}>
-                <div className={Styles.roundNumber}>{roundHistory?.roundId}</div>
-                {this.renderResult(roundHistory)}
+                <div className={Styles.contentWrapper}>
+                    <span className={Styles.roundNumber}>{roundHistory?.roundId}</span>
+                    <ResultCardSection cards={result?.player} />
+                    <span className={Styles.divider} />
+                    <ResultCardSection cards={result?.banker} />
+                    <span className={`${Styles.winner} ${Styles[settlement.winner]}`}>
+                        {settlement.winner.charAt(0).toUpperCase() + settlement.winner.slice(1)}
+                    </span>
+                </div>
             </div>
         );
     }
@@ -75,21 +64,20 @@ export class BaccaratResultHistory extends ObserverComponent<IPropsObserver, IBa
     render() {
         const { rounds } = this.state;
         if (!rounds || rounds.length === 0) {
-            return <></>;
+            return null;
         }
-        const roundHistories = rounds as gc.RoundHistories.RoundHistory[];
 
         return (
             <div className={Styles.resultHistory}>
                 <div className={Styles.header}>
-                    <div className={Styles.playerHeader}>Player</div>
-                    <div className={Styles.divider}>|</div>
-                    <div className={Styles.bankerHeader}>Banker</div>
+                    <span>Round</span>
+                    <span>Player</span>
+                    <span className={Styles.divider} />
+                    <span>Banker</span>
+                    <span>Winner</span>
                 </div>
                 <div className={Styles.historyContent}>
-                    {roundHistories.map((roundHistory, index) => {
-                        return this.renderRoundResult(roundHistory, index);
-                    })}
+                    {rounds.map(this.renderRoundResult.bind(this))}
                 </div>
             </div>
         );
