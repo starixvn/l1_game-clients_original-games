@@ -151,21 +151,6 @@ $fourth-card-time: 2100ms;
         ));   
     }
 
-    // &.card-6, &.card-5 {
-    //     .card5 { // Banker's third card
-    //         .rotate-card {
-    //             transform: rotate(90deg); // Rotate right
-    //             transition: transform 0.6s ease-in-out;
-    //         }
-    //     }
-    //     .card6 { // Player's third card
-    //         .rotate-card {
-    //             transform: rotate(-90deg); // Rotate left
-    //             transition: transform 0.6s ease-in-out;
-    //         }
-    //     }
-    // }
-
     // Animation states
     &.has-animation {
         .score {
@@ -181,7 +166,7 @@ $fourth-card-time: 2100ms;
             animation: 
                 zoom-in-animation $time-zoom-in-card-animation cubic-bezier(.17,.67,.83,.67) forwards,
                 move-up-result-animation-cards 0.3s cubic-bezier(1, 0.01, 1, 0.01) forwards;
-            }
+        }
 
         // Card animations
         .card-back {
@@ -203,7 +188,7 @@ $fourth-card-time: 2100ms;
         }
 
         // Card timing
-        @each $pair, $time in $card-timing {
+        @each $pair, $time in $card-sequence {
             $cards: ();
             @if $pair == first-pair {
                 $cards: 1, 3;

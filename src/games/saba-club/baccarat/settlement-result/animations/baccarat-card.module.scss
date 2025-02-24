@@ -98,7 +98,7 @@
 // Card animation timing
 @for $i from 1 through 6 {
     .card#{$i} {
-        --animation-delay: map-get($card-timing, 
+        --animation-delay: map-get($card-sequence, 
             if($i <= 2, first-pair,
                 if($i <= 4, second-pair,
                     if($i == 5, third-card, fourth-card)

@@ -8,14 +8,7 @@ interface BaccaratCardProps {
     card: CardOrder;
     className?: string;
     isShowResult: boolean;
-    animationDuration: number;
-    animationDelay: number;
     onCardFlip?: (card: CardOrder, accumulatedScore: number) => void;
-}
-
-interface AnimationStyles extends React.CSSProperties {
-    '--animation-duration': string;
-    '--animation-delay': string;
 }
 
 // Define fixed timings for card pairs
@@ -28,8 +21,6 @@ export const BaccaratCard: React.FC<BaccaratCardProps> = ({
     card,
     className,
     isShowResult,
-    animationDuration,
-    animationDelay,
     onCardFlip
 }) => {
     const [isFlipped, setIsFlipped] = useState(false);
@@ -66,8 +57,6 @@ export const BaccaratCard: React.FC<BaccaratCardProps> = ({
             const flipTimer = setTimeout(() => {
                 setIsFlipped(true);
                 if (onCardFlip) {
-                    const cardType = card.order <= 2 ? 'player' : 'banker';
-                    const cardNumber = card.order <= 2 ? card.order : card.order - 2;
                     onCardFlip(card, card.accumulatedScore);
                 }
             }, delay);

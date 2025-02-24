@@ -1,28 +1,5 @@
 @import './variables';
 
-@keyframes scoreAppear {
-    from {
-        opacity: 0;
-        transform: scale(0.5) translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-@keyframes scoreNumberPulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.2);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
 .score {
     --width-score: 4.5rem;
     --height-score: 2.5rem;
@@ -48,8 +25,7 @@
         font-size: 2rem;
         font-family: var(--font-number);
         position: relative;
-        // padding-left: 0.3rem;
-         top: 0.4rem;
+        top: 0.4rem;
         animation: scoreNumberPulse 0.6s ease-in-out;
         will-change: transform;
     }
@@ -62,5 +38,28 @@
     &.banker-score {
         background: linear-gradient(180deg, #f56566 0%, #ce333f 100%);
         left:1.5rem;
+    }
+}
+
+@keyframes scoreAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.5) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes scoreNumberPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
     }
 } 

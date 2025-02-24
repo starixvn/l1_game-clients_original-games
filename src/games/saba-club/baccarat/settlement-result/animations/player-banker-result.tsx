@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Result } from "../../baccarat";
 import { GetBankerCardsResult, GetPlayerCardsResult } from "../../baccarat-helper";
 import Styles from "./baccarat-animations.module.scss";
-import { calculateTotalScore, sumScore } from "./score-utils";
+import { calculateTotalScore } from "./score-utils";
 import { CardSection } from "./card-section";
 
 interface PlayerBankerResultProps {
@@ -20,7 +20,6 @@ interface PlayerBankerResultState {
     bankerScore: number;
     openedCards: number;
     showWinner: boolean;
-    cardStates: { [key: number]: boolean };
 }
 
 export default function PlayerBankerResultComponent(props: PlayerBankerResultProps) {
@@ -29,8 +28,7 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
         playerScore: 0,
         bankerScore: 0,
         openedCards: 0,
-        showWinner: false,
-        cardStates: {}
+        showWinner: false
     });
 
     useEffect(() => {
@@ -79,17 +77,12 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
             setTimeout(() => {
                 setState(prevState => {
                     const isBanker = bankerCards.some(bc => bc.value === card.value);
-                    const newState = {
+                    return {
                         bankerScore: isBanker ? card.accumulatedScore : prevState.bankerScore,
                         playerScore: !isBanker ? card.accumulatedScore : prevState.playerScore,
                         openedCards: index + 1,
-                        showWinner: index === allCards.length - 1,
-                        cardStates: {
-                            ...prevState.cardStates,
-                            [card.order]: true,
-                        },
+                        showWinner: index === allCards.length - 1
                     };
-                    return newState;
                 });
             }, card.animationDelay);
         });
@@ -100,13 +93,12 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
             setState(prevState => ({
                 ...prevState,
                 playerScore: calculateTotalScore([result.player.card1, result.player.card2, result.player.card3]),
-                bankerScore: calculateTotalScore([result.banker.card1, result.banker.card2, result.banker.card3]),
-                cardStates: {}
+                bankerScore: calculateTotalScore([result.banker.card1, result.banker.card2, result.banker.card3])
             }));
         }
     };
 
-    const { openedCards, playerScore, bankerScore, showWinner, cardStates } = state;
+    const { openedCards, playerScore, bankerScore, showWinner } = state;
 
     const playerCards = GetPlayerCardsResult(result);
     const bankerCards = GetBankerCardsResult(result);

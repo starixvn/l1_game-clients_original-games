@@ -4,7 +4,6 @@ import Styles from "./baccarat-animations.module.scss";
 import { BaccaratCard } from "./baccarat-card";
 import { ScoreDisplay } from "./score-display";
 import { CardOrderWithTiming } from "../../baccarat-helper";
-import { sumScore } from "./score-utils";
 
 interface CardSectionProps {
     cards: CardOrderWithTiming[];
@@ -43,13 +42,6 @@ export const CardSection: React.FC<CardSectionProps> = ({
         }, 600); // Match the animation duration from BaccaratCard
     }, [type]);
 
-    // Get the appropriate score display class based on card order
-    const getScoreDisplayClass = (cardOrder: number) => {
-        const baseClass = Styles.scoreWrapper;
-        const visibleClass = visibleScores[cardOrder] ? Styles.visible : '';
-        return `${baseClass} ${visibleClass}`;
-    };
-
     return (
         <div className={Styles.cardSection} style={{ height: "100%" }}>
             <div className={`${Styles.label} ${type === "player" ? Styles["label-player"] : Styles["label-banker"]}`}>{label}</div>
@@ -59,8 +51,6 @@ export const CardSection: React.FC<CardSectionProps> = ({
                         key={card.order}
                         card={card}
                         isShowResult={isShowResult}
-                        animationDuration={0.6}
-                        animationDelay={card.animationDelay / 1000}
                         onCardFlip={handleCardFlip}
                     />
                 ))}
@@ -68,7 +58,6 @@ export const CardSection: React.FC<CardSectionProps> = ({
                     {isShowResult && cards.map((card, index) => (
                         <div key={card.order}>
                             <ScoreDisplay
-                                label={label}
                                 score={card.accumulatedScore}
                                 cardsCount={index + 1}
                                 type={type}
