@@ -103,6 +103,7 @@
   max-width: 1800px;
   align-items: stretch;
   transition: all 0.3s ease-in-out;
+  flex-direction: row;
 
   &.collapsed {
     max-width: 100%;
@@ -138,6 +139,39 @@
       transition: all 0.3s ease-in-out;
       transform-origin: center center;
     }
+  }
+}
+
+.demoSelector {
+  flex: 0 0 400px;
+  background: #2a2a2a;
+  border-radius: 8px;
+  padding: 2rem;
+  height: 800px;
+  overflow-y: auto;
+  order: 3;
+
+  h3 {
+    margin-bottom: 1.5rem;
+    color: #4CAF50;
+  }
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #1a1a1a;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #3a3a3a;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #4a4a4a;
   }
 }
 
@@ -307,5 +341,196 @@
         opacity: 0.6;
         cursor: not-allowed;
         background: #f0f0f0;
+    }
+}
+
+.categoryGroup {
+    margin-bottom: 24px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 8px;
+    overflow: hidden;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.categoryHeader {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.03);
+    transition: background-color 0.2s ease;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    &.hasSelected {
+        background: rgba(76, 175, 80, 0.05);
+
+        .categoryTitle {
+            color: #4CAF50;
+        }
+    }
+}
+
+.categoryTitle {
+    color: #fff;
+    font-size: 1.1em;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s ease;
+}
+
+.scenarioCount {
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: normal;
+}
+
+.collapseIcon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    color: rgba(255, 255, 255, 0.5);
+    flex-shrink: 0;
+
+    svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    &.collapsed {
+        transform: rotate(-90deg);
+    }
+}
+
+.radioGroup {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 12px;
+    padding: 16px;
+    transition: all 0.3s ease;
+    transform-origin: top;
+
+    &.collapsed {
+        display: none;
+        padding: 0 16px;
+    }
+}
+
+.radioLabel {
+    display: flex;
+    align-items: flex-start;
+    padding: 12px 16px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid transparent;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateY(-1px);
+    }
+
+    &.selected {
+        background: rgba(76, 175, 80, 0.1);
+        border-color: rgba(76, 175, 80, 0.3);
+    }
+
+    &.playerWin {
+        border-left: 3px solid #2196F3;
+        .radioText::after {
+            content: '👤';
+            margin-left: 8px;
+        }
+    }
+
+    &.bankerWin {
+        border-left: 3px solid #FF9800;
+        .radioText::after {
+            content: '🏦';
+            margin-left: 8px;
+        }
+    }
+
+    &.tieGame {
+        border-left: 3px solid #9C27B0;
+        .radioText::after {
+            content: '🤝';
+            margin-left: 8px;
+        }
+    }
+
+    &:focus-within {
+        outline: 2px solid #4CAF50;
+        outline-offset: 2px;
+    }
+}
+
+.radioInput {
+    margin: 4px 12px 0 0;
+    cursor: pointer;
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+
+        & + .radioContent {
+            opacity: 0.5;
+        }
+    }
+}
+
+.radioContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.radioText {
+    color: #fff;
+    font-size: 1em;
+    font-weight: 500;
+    user-select: none;
+}
+
+.radioDescription {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85em;
+    line-height: 1.4;
+    user-select: none;
+}
+
+// Animation keyframes
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
     }
 } 
