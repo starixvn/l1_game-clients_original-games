@@ -1,4 +1,4 @@
-import type { Result } from "../../../games/saba-club/baccarat/baccarat";
+import type { Result } from "../baccarat";
 
 export const BUTTON_LABELS = {
     NEXT_DEMO: 'Next Demo',
@@ -70,7 +70,4 @@ export const DEMO_RESULTS: ReadonlyArray<Result> = [
         banker: { card1: { card: 4, type: 2 }, card2: { card: 5, type: 2 } },
         player: { card1: { card: 2, type: 3 }, card2: { card: 3, type: 3 }, card3: { card: 3, type: 3 } },
     }
-] as const;
-
-// Add default export for Next.js build
-export default DEMO_RESULTS; 
+] as const; 

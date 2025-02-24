@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { CardDisplay } from '../../../games/saba-club/baccarat/settlement-result/components/card-display';
-import { DEMO_RESULTS } from './constants';
+import { DEMO_RESULTS, TEXTS } from '../../../games/saba-club/baccarat/baccarat-anim/constants';
 import { useAnimationScale } from '../../../_shared/hooks/useAnimationScale';
-import { TEXTS } from './constants';
 import styles from './styles.module.scss';
 
 // Chevron icon component
