@@ -146,14 +146,31 @@
   flex: 0 0 400px;
   background: #2a2a2a;
   border-radius: 8px;
-  padding: 2rem;
+  padding: 0;
   height: 800px;
   overflow-y: auto;
   order: 3;
+  position: relative;
 
   h3 {
-    margin-bottom: 1.5rem;
+    margin: 0;
     color: #4CAF50;
+    padding: 1.5rem 2rem;
+    background: #2a2a2a;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .categoryGroup {
+    padding: 0 2rem;
+    &:first-of-type {
+      padding-top: 0.5rem;
+    }
+    &:last-of-type {
+      padding-bottom: 2rem;
+    }
   }
 
   &::-webkit-scrollbar {
@@ -430,12 +447,14 @@
 .radioLabel {
     display: flex;
     align-items: flex-start;
-    padding: 12px 16px;
+    padding: 16px;
     cursor: pointer;
     border-radius: 6px;
     transition: all 0.2s ease;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid transparent;
+    min-height: 85px;
+    width: 289px;
 
     &:hover {
         background: rgba(255, 255, 255, 0.08);
@@ -480,6 +499,7 @@
 .radioInput {
     margin: 4px 12px 0 0;
     cursor: pointer;
+    flex-shrink: 0;
 
     &:disabled {
         cursor: not-allowed;
@@ -495,7 +515,9 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
+    min-width: 0;
+    overflow: visible;
 }
 
 .radioText {
@@ -503,6 +525,9 @@
     font-size: 1em;
     font-weight: 500;
     user-select: none;
+    white-space: normal;
+    overflow: visible;
+    word-wrap: break-word;
 }
 
 .radioDescription {
@@ -510,6 +535,9 @@
     font-size: 0.85em;
     line-height: 1.4;
     user-select: none;
+    overflow: visible;
+    white-space: normal;
+    word-wrap: break-word;
 }
 
 // Animation keyframes
@@ -532,5 +560,39 @@
     to {
         opacity: 0;
         transform: translateY(-10px);
+    }
+}
+
+.quickGuide {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    padding: 0.75rem 1.5rem;
+    margin: 0.5rem 0 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    .guideItem {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.9rem;
+
+        span {
+            font-size: 1.1rem;
+        }
+    }
+
+    kbd {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+        padding: 0.1rem 0.3rem;
+        font-size: 0.8rem;
+        font-family: monospace;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: rgba(255, 255, 255, 0.9);
+        margin: 0 0.1rem;
     }
 } 

@@ -11,6 +11,18 @@ const ChevronIcon: React.FC = () => (
     </svg>
 );
 
+// Quick Guide component
+const QuickGuide: React.FC = () => (
+    <div className={styles.quickGuide}>
+        <div className={styles.guideItem}>
+            <span>📋</span> Select from Natural, Three Card, or Pairs scenarios on the right
+        </div>
+        <div className={styles.guideItem}>
+            <span>🎴</span> Watch cards being dealt
+        </div>
+    </div>
+);
+
 // Raw Result Data component
 const RawResultData: React.FC<{
     result: any;
@@ -47,75 +59,111 @@ interface ScenarioType {
 const SCENARIOS: ScenarioType[] = [
     {
         label: 'Natural 9 vs 8',
-        description: 'Natural hands: Player (9) vs Banker (8)',
+        description: 'Player has Natural 8 (3♣+5♦=8) vs Banker Natural 9 (4♠+5♥=9). Both hands are Natural (2 cards).',
+        category: 'natural',
+        winner: 'banker'
+    },
+    {
+        label: 'Natural 8 vs Natural 9',
+        description: 'Player has Natural 9 (5♣+4♦=9) vs Banker Natural 8 (4♠+4♥=8). Both hands are Natural (2 cards).',
         category: 'natural',
         winner: 'player'
     },
     {
+        label: 'Natural Tie (Both 8)',
+        description: 'Player has Natural 8 (3♣+5♦=8) vs Banker Natural 8 (4♠+4♥=8). Both hands are Natural (2 cards).',
+        category: 'natural',
+        winner: 'tie'
+    },
+    {
+        label: 'Perfect Pair - Banker',
+        description: 'Player has (3♣+4♦=7) vs Banker Perfect Pair (4♠+4♠=8). Banker wins with Perfect Pair paying special odds.',
+        category: 'pairs',
+        winner: 'banker'
+    },
+    {
+        label: 'Perfect Pair - Player',
+        description: 'Player has Perfect Pair (4♣+4♣=8) vs Banker (3♠+4♥=7). Player wins with Perfect Pair paying special odds.',
+        category: 'pairs',
+        winner: 'player'
+    },
+    {
+        label: 'Both Perfect Pairs',
+        description: 'Player has Perfect Pair (3♣+3♣=6) vs Banker Perfect Pair (4♠+4♠=8). Both Perfect Pairs pay special odds.',
+        category: 'pairs',
+        winner: 'banker'
+    },
+    {
+        label: 'Super 6',
+        description: 'Player has (2♣+3♦=5) vs Banker (3♠+3♥=6). Banker wins with Super 6 paying special odds.',
+        category: 'three_cards',
+        winner: 'banker'
+    },
+    {
+        label: 'Dragon Bonus - Natural Win',
+        description: 'Player has (3♣+4♦=7) vs Banker Natural 9 (4♠+5♥=9). Natural win by 2 points qualifies for Dragon Bonus.',
+        category: 'natural',
+        winner: 'banker'
+    },
+    {
+        label: 'Dragon Bonus - Non-Natural Win',
+        description: 'Player has Natural 9 (9♦+J♠=9) vs Banker three cards (4♠+5♥+A♣=0). 9-point win pays Dragon Bonus.',
+        category: 'three_cards',
+        winner: 'player'
+    },
+    {
         label: 'Banker 3 Cards vs Player 2',
-        description: 'Banker draws third card (2,3,4) vs Player (5,3)',
+        description: 'Player has two cards (3♦+4♠=7) vs Banker three cards (2♠+3♥+3♣=8). Shows Banker drawing rules.',
         category: 'three_cards',
         winner: 'banker'
     },
     {
         label: 'Player 3 Cards vs Banker 2',
-        description: 'Player draws third card (1,2,6) vs Banker (2,3)',
+        description: 'Player draws third card (2♣+3♦+5♠=0) vs Banker two cards (3♠+4♥=7). Shows Player drawing first.',
         category: 'three_cards',
-        winner: 'player'
+        winner: 'banker'
     },
     {
         label: 'Both 3 Cards - Player Wins',
-        description: 'Both draw third card, Player (1,2,5) vs Banker (2,1,3)',
+        description: 'Player three cards (3♣+4♦+4♠=1) wins vs Banker three cards (2♠+3♥+3♣=8). Shows complete drawing rules.',
         category: 'three_cards',
         winner: 'player'
     },
     {
         label: 'Both 3 Cards - Banker Wins',
-        description: 'Both draw third card, Banker (3,2,4) vs Player (2,3,3)',
+        description: 'Player three cards (2♣+3♦+2♥=7) vs Banker three cards (3♠+4♥+3♣=0). Shows complete drawing rules.',
         category: 'three_cards',
         winner: 'banker'
     },
     {
         label: 'Both 3 Cards - Tie',
-        description: 'Both draw third card to tie, both hands total 8',
+        description: 'Player three cards (3♣+4♦+2♠=8) ties with Banker three cards (2♠+3♥+3♣=8). Rare three-card tie scenario.',
         category: 'three_cards',
         winner: 'tie'
     },
     {
-        label: 'Natural 8 vs Third Card',
-        description: 'Banker Natural 8 vs Player draws third card',
-        category: 'natural',
-        winner: 'banker'
-    },
-    {
-        label: 'Banker Pair with 3 Cards',
-        description: 'Banker has pair of 7s and draws third card',
+        label: 'Multiple Pairs with 3 Cards',
+        description: 'Player has pair (4♦+4♠+2♥=0) vs Banker three of a kind (3♠+3♥+3♣=9). Shows multiple pair combinations.',
         category: 'pairs',
         winner: 'banker'
     },
     {
-        label: 'Player Pair with 3 Cards',
-        description: 'Player has pair of 8s and draws third card',
-        category: 'pairs',
+        label: 'Dragon 7',
+        description: 'Player has (3♦+4♠=6) vs Banker three cards (2♠+3♥+3♣=7). Banker Dragon 7 pays special odds.',
+        category: 'three_cards',
+        winner: 'banker'
+    },
+    {
+        label: 'Panda 8',
+        description: 'Player three cards (2♣+3♦+4♠=8) vs Banker (3♠+4♥=7). Player Panda 8 pays special odds.',
+        category: 'three_cards',
         winner: 'player'
     },
     {
-        label: 'Both Pairs and 3 Cards',
-        description: 'Both hands have pairs and draw third cards',
-        category: 'pairs',
-        winner: 'banker'
-    },
-    {
-        label: 'Natural 9 Player vs 3 Cards',
-        description: 'Player Natural 9 vs Banker draws third card',
+        label: 'Natural Tie 9',
+        description: 'Player Natural 9 (5♣+4♦=9) ties with Banker Natural 9 (4♠+5♥=9). Highest possible Natural tie.',
         category: 'natural',
-        winner: 'player'
-    },
-    {
-        label: 'Natural 9 Banker vs 3 Cards',
-        description: 'Banker Natural 9 vs Player draws third card',
-        category: 'natural',
-        winner: 'banker'
+        winner: 'tie'
     }
 ];
 
@@ -289,6 +337,7 @@ const BaccaratAnimationDemo: React.FC = () => {
     return (
         <div className={styles.demoContainer}>
             <h1 className={styles.demoTitle}>Baccarat Animation Demo</h1>
+            <QuickGuide />
 
             <div className={`${styles.contentWrapper} ${isRawDataCollapsed || isRawDataHidden ? styles.collapsed : ''}`}>
                 <DemoSelector
