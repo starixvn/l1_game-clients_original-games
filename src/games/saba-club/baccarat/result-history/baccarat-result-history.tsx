@@ -2,14 +2,16 @@ import * as gc from "@sg/sg-game-client";
 import { render } from "@sg/sg-observer";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
 import Styles from "./baccarat-result-history.module.scss";
-import { RoundDot } from "../../../../_shared/components/dot";
-import { IBaccaratResult, BaccaratSettlementResult } from "../type";
+import { BaccaratSettlementResult } from "../type";
+import { ResultCardSection } from "./result-card-section";
+import { Result } from "../baccarat";
 
 export interface IBaccaratResultHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
 }
 
-const numberOfResult = 100;
+const numberOfResult = 3;
+
 export class BaccaratResultHistory extends ObserverComponent<IPropsObserver, IBaccaratResultHistoryState> {
     constructor(props: IPropsObserver) {
         super(props);
@@ -35,42 +37,37 @@ export class BaccaratResultHistory extends ObserverComponent<IPropsObserver, IBa
             } else if (settlementResult.tie) {
                 result.winner = 'tie';
             }
-
-            const gameData = settlementResult.gameData;
-            if (gameData && typeof gameData === "object") {
-                const data = gameData as Record<string, unknown>;
-                result.playerPair = !!data.playerPair;
-                result.bankerPair = !!data.bankerPair;
-            }
         }
 
         return result;
     }
 
+
     renderResult(roundHistory: gc.RoundHistories.RoundHistory) {
-        const result = roundHistory.result as IBaccaratResult;
+        const result = roundHistory?.result as Result;
         const settlement = this.getSettlementResult(roundHistory.settlementResult);
 
         return (
-            <div className={Styles["result-value"]}>
-                {/* <div className={Styles["player-value"]}>
-                    Player: {result.playerValue}
+            <div className={Styles.resultRow}>
+                <div className={Styles.playerCards}>
+                    <ResultCardSection cards={result?.player} />
                 </div>
-                <div className={Styles["banker-value"]}>
-                    Banker: {result.bankerValue}
-                </div> */}
-                <div className={Styles[settlement.winner]}>
-                    {settlement.winner.toUpperCase()}
+                <div className={Styles.bankerCards}>
+                    <ResultCardSection cards={result?.banker} />
+                </div>
+                <div className={`${Styles.winner} ${Styles[settlement.winner]}`}>
+                    {settlement.winner.charAt(0).toUpperCase() + settlement.winner.slice(1)}
                 </div>
             </div>
         );
     }
 
     renderRoundResult(roundHistory: gc.RoundHistories.RoundHistory, index: number) {
+
         return (
-            <div className={Styles["result-item"]} key={index}>
-                <div>{`No.${roundHistory.roundId}`}</div>
-                <div className={Styles["item-result"]}>{this.renderResult(roundHistory)}</div>
+            <div className={Styles.historyRow} key={index}>
+                <div className={Styles.roundNumber}>{roundHistory?.roundId}</div>
+                {this.renderResult(roundHistory)}
             </div>
         );
     }
@@ -83,9 +80,13 @@ export class BaccaratResultHistory extends ObserverComponent<IPropsObserver, IBa
         const roundHistories = rounds as gc.RoundHistories.RoundHistory[];
 
         return (
-            <div className={Styles["result-history"]}>
-                <div className={Styles["result-title"]}>Result</div>
-                <div className={Styles["result-content"]}>
+            <div className={Styles.resultHistory}>
+                <div className={Styles.header}>
+                    <div className={Styles.playerHeader}>Player</div>
+                    <div className={Styles.divider}>|</div>
+                    <div className={Styles.bankerHeader}>Banker</div>
+                </div>
+                <div className={Styles.historyContent}>
                     {roundHistories.map((roundHistory, index) => {
                         return this.renderRoundResult(roundHistory, index);
                     })}

@@ -381,3 +381,28 @@ $fourth-card-time: 2100ms;
     white-space: nowrap;
     line-height: 1.2;
 }
+
+// Result card section styles
+.resultCardSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    width: 100%;
+    
+    .cardContainer {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .cardWrapper {
+        position: relative;
+        transition: transform 0.2s ease;
+
+        &:hover {
+            transform: translateY(-5px);
+        }
+    }
+}

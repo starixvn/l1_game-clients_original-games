@@ -38,7 +38,7 @@ export const CardSection: React.FC<CardSectionProps> = ({
                 ...prev,
                 [card.order]: true
             }));
-            console.log(`${type} card ${card.order} opened: ${card.value.card + 1}, accumulated score: ${accumulatedScore}, time: ${new Date()}`);
+            // console.log(`${type} card ${card.order} opened: ${card.value.card + 1}, accumulated score: ${accumulatedScore}, time: ${new Date()}`);
         }, 600); // Match the animation duration from BaccaratCard
     }, [type]);
 

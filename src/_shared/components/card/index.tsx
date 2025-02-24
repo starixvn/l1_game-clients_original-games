@@ -10,7 +10,7 @@ const Card: React.FC<Props> = (props) => {
     const isDisplayMiniCard = isSmall;
 
     const getCardsDefault = () => {
-        const nameCard = `${convertRank(result.card)}-${suffixNameMapping[result.type]}.svg`;
+        const nameCard = `${convertRank(result?.card)}-${suffixNameMapping[result?.type]}.svg`;
         return (
             <img
                 src={`/static/images/cards/${nameCard}#v1`}

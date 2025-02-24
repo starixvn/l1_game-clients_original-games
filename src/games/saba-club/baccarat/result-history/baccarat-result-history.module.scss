@@ -1,59 +1,94 @@
-.result-history {
-    padding: 10px;
-    width: 20rem;
+.resultHistory {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 400px;
+    font-family: Arial, sans-serif;
 
-    .result-title {
-        font-weight: bold;
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        // padding: 10px;
+        background-color: #fff2f2;
+        border-bottom: 1px solid #e0e0e0;
+        font-size: 14px;
+        font-weight: 500;
+
+        .playerHeader, .bankerHeader {
+            color: #000;
+        }
+
+        .divider {
+            margin: 0 10px;
+            color: #666;
+        }
     }
 
-    .result-content {
-        background-color: #fff6f3;
-        height: 13.2rem;
+    .historyContent {
+        max-height: 400px;
         overflow-y: auto;
-        overflow-x: hidden;
-        scrollbar-width: thin;
-        scrollbar-color: #c9c4c4 #f1f1f1;
-        border: solid 1px #ebcdcd;
 
-        .result-item {
+        .historyRow {
             display: flex;
-            gap: 10px;
-            border-bottom: solid 1px #c9ced2;
-            background-color: #fff6f3;
-            padding: 5px 7px;
+            align-items: center;
+            // padding: 8px 12px;
+            border-bottom: 1px solid #f0f0f0;
+            background-color: #fff;
 
-            .item-result {
-                display: flex;
-                gap: 10px;
-                flex: 1;
+            &:hover {
+                background-color: #fafafa;
             }
 
-            .result-value {
+            .roundNumber {
+                width: 80px;
+                color: #666;
+                font-size: 13px;
+            }
+
+            .resultRow {
                 display: flex;
-                gap: 10px;
+                flex: 1;
                 align-items: center;
-                flex: 1;
-                justify-content: space-between;
 
-                .player-value, .banker-value {
-                    color: #333;
+                .playerCards, .bankerCards {
+                    display: flex;
+                    gap: 4px;
+
+                    .card {
+                        font-size: 14px;
+                        font-weight: 500;
+
+                        &.spades, &.clubs {
+                            color: #000;
+                        }
+
+                        &.hearts, &.diamonds {
+                            color: #ff0000;
+                        }
+                    }
                 }
 
-                .player {
-                    color: #ff5661;
-                    font-weight: bold;
-                }
-
-                .banker {
-                    color: rgb(145, 141, 141);
-                    font-weight: bold;
-                }
-
-                .tie {
-                    color: #274980;
-                    font-weight: bold;
+                .winner {
+                    margin-left: auto;
+                    color: #ff0000;
+                    font-size: 13px;
                 }
             }
+        }
+    }
+
+    ::-webkit-scrollbar {
+        width: 6px;
+        
+        &-track {
+            background: #f1f1f1;
+        }
+
+        &-thumb {
+            background: #c9c4c4;
+            border-radius: 3px;
         }
     }
 } 
