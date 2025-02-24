@@ -11,7 +11,6 @@ import BaccaratBetOptions from "./bet-option/baccarat-bet-options";
 import BaccaratRoundHistory from "./round-history/baccarat-round-history";
 import BaccaratSettlementResult from "./settlement-result/baccarat-settlement-result";
 import { BaccaratStatistic } from "./statistic/baccarat-statistics";
-import { BaccaratScoreboard } from "./scoreboard/baccarat-scoreboard";
 import { containerOptions, setting } from "./game-settings";
 import Header from "./header";
 import Styles from "./baccarat.module.scss";

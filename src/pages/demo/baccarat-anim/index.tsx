@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { CardDisplay } from '../../../games/saba-club/baccarat/settlement-result/components/card-display';
-import { DEMO_RESULTS, TEXTS } from '../../../games/saba-club/baccarat/baccarat-anim/constants';
+import { TEXTS, BACCARAT_SCENARIOS } from '../../../games/saba-club/baccarat/baccarat-anim/constants';
 import { useAnimationScale } from '../../../_shared/hooks/useAnimationScale';
 import styles from './styles.module.scss';
 
@@ -22,150 +22,6 @@ const QuickGuide: React.FC = () => (
         </div>
     </div>
 );
-
-// Raw Result Data component
-const RawResultData: React.FC<{
-    result: any;
-    isCollapsed: boolean;
-    onToggleCollapse: () => void;
-    isHidden: boolean;
-}> = ({ result, isCollapsed, onToggleCollapse, isHidden }) => {
-    if (isHidden) return null;
-
-    return (
-        <div className={`${styles.rawDataContainer} ${isCollapsed ? styles.collapsed : ''}`}>
-            <div className={styles.rawDataHeader} onClick={onToggleCollapse}>
-                <h3 className={styles.rawDataTitle}>
-                    Raw Result Data
-                    <div className={styles.collapseIcon}>
-                        <ChevronIcon />
-                    </div>
-                </h3>
-            </div>
-            <pre className={styles.rawDataContent}>
-                {JSON.stringify(result, null, 2)}
-            </pre>
-        </div>
-    );
-};
-
-interface ScenarioType {
-    label: string;
-    description: string;
-    category: 'natural' | 'three_cards' | 'pairs';
-    winner?: 'player' | 'banker' | 'tie';
-}
-
-const SCENARIOS: ScenarioType[] = [
-    {
-        label: 'Natural 9 vs 8',
-        description: 'Player has Natural 8 (3♣+5♦=8) vs Banker Natural 9 (4♠+5♥=9). Both hands are Natural (2 cards).',
-        category: 'natural',
-        winner: 'banker'
-    },
-    {
-        label: 'Natural 8 vs Natural 9',
-        description: 'Player has Natural 9 (5♣+4♦=9) vs Banker Natural 8 (4♠+4♥=8). Both hands are Natural (2 cards).',
-        category: 'natural',
-        winner: 'player'
-    },
-    {
-        label: 'Natural Tie (Both 8)',
-        description: 'Player has Natural 8 (3♣+5♦=8) vs Banker Natural 8 (4♠+4♥=8). Both hands are Natural (2 cards).',
-        category: 'natural',
-        winner: 'tie'
-    },
-    {
-        label: 'Perfect Pair - Banker',
-        description: 'Player has (3♣+4♦=7) vs Banker Perfect Pair (4♠+4♠=8). Banker wins with Perfect Pair paying special odds.',
-        category: 'pairs',
-        winner: 'banker'
-    },
-    {
-        label: 'Perfect Pair - Player',
-        description: 'Player has Perfect Pair (4♣+4♣=8) vs Banker (3♠+4♥=7). Player wins with Perfect Pair paying special odds.',
-        category: 'pairs',
-        winner: 'player'
-    },
-    {
-        label: 'Both Perfect Pairs',
-        description: 'Player has Perfect Pair (3♣+3♣=6) vs Banker Perfect Pair (4♠+4♠=8). Both Perfect Pairs pay special odds.',
-        category: 'pairs',
-        winner: 'banker'
-    },
-    {
-        label: 'Super 6',
-        description: 'Player has (2♣+3♦=5) vs Banker (3♠+3♥=6). Banker wins with Super 6 paying special odds.',
-        category: 'three_cards',
-        winner: 'banker'
-    },
-    {
-        label: 'Dragon Bonus - Natural Win',
-        description: 'Player has (3♣+4♦=7) vs Banker Natural 9 (4♠+5♥=9). Natural win by 2 points qualifies for Dragon Bonus.',
-        category: 'natural',
-        winner: 'banker'
-    },
-    {
-        label: 'Dragon Bonus - Non-Natural Win',
-        description: 'Player has Natural 9 (9♦+J♠=9) vs Banker three cards (4♠+5♥+A♣=0). 9-point win pays Dragon Bonus.',
-        category: 'three_cards',
-        winner: 'player'
-    },
-    {
-        label: 'Banker 3 Cards vs Player 2',
-        description: 'Player has two cards (3♦+4♠=7) vs Banker three cards (2♠+3♥+3♣=8). Shows Banker drawing rules.',
-        category: 'three_cards',
-        winner: 'banker'
-    },
-    {
-        label: 'Player 3 Cards vs Banker 2',
-        description: 'Player draws third card (2♣+3♦+5♠=0) vs Banker two cards (3♠+4♥=7). Shows Player drawing first.',
-        category: 'three_cards',
-        winner: 'banker'
-    },
-    {
-        label: 'Both 3 Cards - Player Wins',
-        description: 'Player three cards (3♣+4♦+4♠=1) wins vs Banker three cards (2♠+3♥+3♣=8). Shows complete drawing rules.',
-        category: 'three_cards',
-        winner: 'player'
-    },
-    {
-        label: 'Both 3 Cards - Banker Wins',
-        description: 'Player three cards (2♣+3♦+2♥=7) vs Banker three cards (3♠+4♥+3♣=0). Shows complete drawing rules.',
-        category: 'three_cards',
-        winner: 'banker'
-    },
-    {
-        label: 'Both 3 Cards - Tie',
-        description: 'Player three cards (3♣+4♦+2♠=8) ties with Banker three cards (2♠+3♥+3♣=8). Rare three-card tie scenario.',
-        category: 'three_cards',
-        winner: 'tie'
-    },
-    {
-        label: 'Multiple Pairs with 3 Cards',
-        description: 'Player has pair (4♦+4♠+2♥=0) vs Banker three of a kind (3♠+3♥+3♣=9). Shows multiple pair combinations.',
-        category: 'pairs',
-        winner: 'banker'
-    },
-    {
-        label: 'Dragon 7',
-        description: 'Player has (3♦+4♠=6) vs Banker three cards (2♠+3♥+3♣=7). Banker Dragon 7 pays special odds.',
-        category: 'three_cards',
-        winner: 'banker'
-    },
-    {
-        label: 'Panda 8',
-        description: 'Player three cards (2♣+3♦+4♠=8) vs Banker (3♠+4♥=7). Player Panda 8 pays special odds.',
-        category: 'three_cards',
-        winner: 'player'
-    },
-    {
-        label: 'Natural Tie 9',
-        description: 'Player Natural 9 (5♣+4♦=9) ties with Banker Natural 9 (4♠+5♥=9). Highest possible Natural tie.',
-        category: 'natural',
-        winner: 'tie'
-    }
-];
 
 const DemoSelector: React.FC<{
     currentIndex: number;
@@ -198,7 +54,7 @@ const DemoSelector: React.FC<{
 
     // Find if current selection is in a category
     const getCurrentCategory = () => {
-        const currentScenario = SCENARIOS[currentIndex];
+        const currentScenario = BACCARAT_SCENARIOS[currentIndex];
         return currentScenario?.category;
     };
 
@@ -218,9 +74,9 @@ const DemoSelector: React.FC<{
             <h3>Select Demo Scenario:</h3>
             {Object.entries(categories).map(([category, title]) => {
                 const isCollapsed = collapsedCategories[category];
-                const categoryScenarios = SCENARIOS.filter(scenario => scenario.category === category);
+                const categoryScenarios = BACCARAT_SCENARIOS.filter(scenario => scenario.category === category);
                 const hasSelectedScenario = categoryScenarios.some((_, idx) =>
-                    SCENARIOS.findIndex(s => s.category === category) + idx === currentIndex
+                    BACCARAT_SCENARIOS.findIndex(s => s.category === category) + idx === currentIndex
                 );
 
                 return (
@@ -240,21 +96,21 @@ const DemoSelector: React.FC<{
                             </h4>
                         </div>
                         <div className={`${styles.radioGroup} ${isCollapsed ? styles.collapsed : ''}`}>
-                            {categoryScenarios.map((scenario, idx) => {
-                                const index = SCENARIOS.findIndex(s => s.label === scenario.label);
+                            {categoryScenarios.map((scenario) => {
+                                const scenarioIndex = BACCARAT_SCENARIOS.findIndex(s => s.label === scenario.label);
                                 return (
                                     <label
                                         key={scenario.label}
-                                        className={`${styles.radioLabel} ${currentIndex === index ? styles.selected : ''
+                                        className={`${styles.radioLabel} ${currentIndex === scenarioIndex ? styles.selected : ''
                                             } ${getWinnerColor(scenario.winner)}`}
                                         title={scenario.description}
                                     >
                                         <input
                                             type="radio"
                                             name="demoScenario"
-                                            value={index}
-                                            checked={currentIndex === index}
-                                            onChange={() => onChange(index)}
+                                            value={scenarioIndex}
+                                            checked={currentIndex === scenarioIndex}
+                                            onChange={() => onChange(scenarioIndex)}
                                             disabled={disabled}
                                             className={styles.radioInput}
                                             aria-label={scenario.label}
@@ -282,6 +138,25 @@ const BaccaratAnimationDemo: React.FC = () => {
     const [isAnimationResult, setIsAnimationResult] = useState(true);
     const [isTransitioning, setIsTransitioning] = useState(false);
     const [isShowResult, setIsShowResult] = useState(true);
+    const [isDocked, setIsDocked] = useState(false);
+    const headerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (headerRef.current) {
+                const headerRect = headerRef.current.getBoundingClientRect();
+                const shouldDock = headerRect.top <= 0;
+                setIsDocked(shouldDock);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        handleScroll(); // Check initial position
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     const handleScenarioChange = (newIndex: number) => {
         if (isTransitioning || currentIndex === newIndex) return;
@@ -311,35 +186,17 @@ const BaccaratAnimationDemo: React.FC = () => {
         }, 500);
     };
 
-    const [isRawDataCollapsed, setIsRawDataCollapsed] = useState(true);
-    const [isRawDataHidden, setIsRawDataHidden] = useState(true);
     const contentRef = useRef<HTMLDivElement>(null);
     const scale = useAnimationScale(contentRef);
 
-    const handleToggleCollapse = () => {
-        setIsRawDataCollapsed(prev => !prev);
-    };
-
-    // Add keyboard shortcut to toggle raw data visibility
-    useEffect(() => {
-        const handleKeyPress = (event: KeyboardEvent) => {
-            // Toggle raw data section with Alt + R
-            if (event.altKey && event.key.toLowerCase() === 'r') {
-                setIsRawDataHidden(prev => !prev);
-                setIsRawDataCollapsed(false); // Expand when showing
-            }
-        };
-
-        window.addEventListener('keydown', handleKeyPress);
-        return () => window.removeEventListener('keydown', handleKeyPress);
-    }, []);
-
     return (
         <div className={styles.demoContainer}>
-            <h1 className={styles.demoTitle}>Baccarat Animation Demo</h1>
-            <QuickGuide />
+            <div ref={headerRef} className={`${styles.headerSection} ${isDocked ? styles.docked : ''}`}>
+                <h1 className={styles.demoTitle}>Baccarat Animation Demo</h1>
+                <QuickGuide />
+            </div>
 
-            <div className={`${styles.contentWrapper} ${isRawDataCollapsed || isRawDataHidden ? styles.collapsed : ''}`}>
+            <div className={styles.contentWrapper}>
                 <DemoSelector
                     currentIndex={currentIndex}
                     onChange={handleScenarioChange}
@@ -350,7 +207,7 @@ const BaccaratAnimationDemo: React.FC = () => {
                     <div style={{ transform: `scale(${scale})` }}>
                         <div>
                             <CardDisplay
-                                result={DEMO_RESULTS[currentIndex]}
+                                result={BACCARAT_SCENARIOS[currentIndex]}
                                 isAnimationResult={isAnimationResult}
                                 isShowResult={isShowResult}
                                 texts={TEXTS}
@@ -358,13 +215,6 @@ const BaccaratAnimationDemo: React.FC = () => {
                         </div>
                     </div>
                 </div>
-
-                <RawResultData
-                    result={DEMO_RESULTS[currentIndex]}
-                    isCollapsed={isRawDataCollapsed}
-                    onToggleCollapse={handleToggleCollapse}
-                    isHidden={isRawDataHidden}
-                />
             </div>
         </div>
     );

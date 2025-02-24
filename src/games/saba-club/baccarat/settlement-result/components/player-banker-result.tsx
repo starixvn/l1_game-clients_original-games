@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Result } from "../../baccarat";
 import { GetBankerCardsResult, GetPlayerCardsResult } from "../../baccarat-helper";
-import Styles from "./baccarat-animations.module.scss";
+import Styles from "../styles/baccarat-animations.module.scss";
 import { calculateTotalScore } from "./score-utils";
 import { CardSection } from "./card-section";
 

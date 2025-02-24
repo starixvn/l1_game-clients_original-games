@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import type { Result } from "../../baccarat";
 import { ANIMATION_CLASSES, CARD_DISPLAY } from '../constants';
-import Styles from "../animations/baccarat-animations.module.scss";
+import Styles from "../styles/baccarat-animations.module.scss";
 
 interface UseCardAnimationProps {
     result: Result;

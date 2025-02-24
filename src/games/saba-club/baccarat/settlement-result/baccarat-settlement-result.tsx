@@ -14,7 +14,7 @@ import { ObserverComponent } from "../../../../_shared/components/observer-compo
 import { setting } from "../game-settings";
 import { TRANSLATIONS } from "./constants";
 import { gameStateService } from "./services/game-state.service";
-import Styles from "./animations/baccarat-animations.module.scss";
+import Styles from "./styles/baccarat-animations.module.scss";
 import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
 
 const DEFAULT_RESULT: Result = {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Card from "../../../../../_shared/components/card";
 import { CardOrder } from "../../baccarat";
-import Styles from "./baccarat-card.module.scss";
+import Styles from "../styles/baccarat-card.module.scss";
 import CardBack from "../../../../../_shared/components/card/card-back";
 
 interface BaccaratCardProps {

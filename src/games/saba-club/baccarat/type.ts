@@ -1,4 +1,3 @@
-import * as gc from "@sg/sg-game-client";
 import { IGameBaseState } from "../../../_shared/components/game-base";
 
 export type BaccaratWinner = 'player' | 'banker' | 'tie';

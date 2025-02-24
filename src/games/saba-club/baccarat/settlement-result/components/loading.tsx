@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import Styles from "../animations/baccarat-animations.module.scss";
+import Styles from "../styles/baccarat-animations.module.scss";
 
 interface LoadingProps {
     message?: string;

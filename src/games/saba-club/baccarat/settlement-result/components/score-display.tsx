@@ -1,5 +1,5 @@
 import React from "react";
-import Styles from "./score-display.module.scss";
+import Styles from "../styles/score-display.module.scss";
 
 interface ScoreDisplayProps {
     score: number;

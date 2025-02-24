@@ -1,6 +1,6 @@
 import * as gc from "@sg/sg-game-client";
 import { Result, CardOrder } from "./baccarat";
-import { sumScore } from "./settlement-result/animations/score-utils";
+import { sumScore } from "./settlement-result/components/score-utils";
 
 
 export const Choices = {
