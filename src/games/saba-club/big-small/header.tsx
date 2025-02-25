@@ -1,21 +1,29 @@
-import * as gc from "@sg/sg-game-client";
 import React from "react";
-import { getGameSetting } from "../../../_shared/app-settings";
-import styles from "../../../../src/lobby/lobby.module.scss";
-import { setting } from "./game-settings";
+import { GameHeader } from "../../../_shared/components/game-base/game-header/game-header";
+import styles from "./bigsmall.module.scss";
+import classNames from "classnames";
+import GameHeaderCenterTexts from "../../../_shared/components/game-base/game-header/game-header-center-texts";
 
-const gameId = setting.id;
-const gameSetting = getGameSetting(gameId);
-const gameName = gc.Translator.t(`${gameSetting.gameName}.game_name`);
+interface BigSmallHeaderProps {
+    gameId: number;
+    isExpanded?: boolean;
+    onToggleExpand?: () => void;
+    namespace: string;
+    centerTextsComponent?: React.ReactNode;
+}
 
-const Header = () => {
+const BigSmallHeader: React.FC<BigSmallHeaderProps> = ({ gameId, isExpanded, onToggleExpand, centerTextsComponent }) => {
     return (
-        <div className={styles["game-title"]}>
-            <div>{gameName}</div>
-            <div className={styles["text-center"]}>Big/Small</div>
-            <div className={styles["text-center"]}>Odd/Even</div>
+        <div className={classNames(styles.header, "sedie-header")}>
+            <GameHeader
+                gameId={gameId}
+                isExpanded={isExpanded}
+                onToggleExpand={onToggleExpand}
+                centerTextsComponent={<GameHeaderCenterTexts texts={["Big/Small"]} />}
+                className={styles.sedieGameTitle}
+            />
         </div>
     );
 };
 
-export default Header;
+export default BigSmallHeader;

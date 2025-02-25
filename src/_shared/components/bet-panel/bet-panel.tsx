@@ -50,7 +50,6 @@ class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends O
         maxBetPerChoices: gc.GameServiceMessage.MaxBetPerChoices;
     }) {
 
-
         this.setState({ maxBetPerChoices, minBet, maxBet } as IBetPanel);
 
     }

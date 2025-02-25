@@ -275,5 +275,9 @@
         "message_draw_maxbet": "Max total stake on this draw is %{maxBet} ",
         "message_max_payout": "Your bet(s) have exceeded the Max Payout.",
         "message_placebet_next_draw": "Please wait for the next draw."
+    },
+    "UnbalancedBigSmall2": {
+        "game_vendor": "SABA.games",
+        "game_name": "Big Small"
     }
 }

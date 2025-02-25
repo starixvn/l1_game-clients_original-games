@@ -119,6 +119,7 @@ class BettingBlock extends ObserverComponent<IBettingBlockProps, IBettingBlockSt
     render() {
         const { children, namespace } = this.props;
         const { betChoice, odd, show } = this.state;
+        console.log("betChoice", betChoice);
 
         const bettingZoneState = {
             betChoice,

@@ -3,9 +3,7 @@
         "id": 1,
         "gameName": "BigSmall",
         "name": "BigSmall",
-        "namespaces": [
-            "BigSmall"
-        ],
+        "namespaces": ["BigSmall"],
         "isVisible": false,
         "durations": {
             "wholeRound": 61,
@@ -28,9 +26,7 @@
         "id": 2,
         "gameName": "SeDie",
         "name": "SeDie",
-        "namespaces": [
-            "SeDie"
-        ],
+        "namespaces": ["SeDie"],
         "isVisible": true,
         "durations": {
             "wholeRound": 39,
@@ -53,9 +49,7 @@
         "id": 10,
         "gameName": "Baccarat",
         "name": "Baccarat",
-        "namespaces": [
-            "Baccarat"
-        ],
+        "namespaces": ["Baccarat"],
         "isVisible": true,
         "durations": {
             "wholeRound": 46,
@@ -80,9 +74,7 @@
         "id": 22,
         "gameName": "VipSeDie",
         "name": "VipSeDie",
-        "namespaces": [
-            "VipSeDie"
-        ],
+        "namespaces": ["VipSeDie"],
         "isVisible": true,
         "durations": {
             "wholeRound": 39,
@@ -105,9 +97,7 @@
         "id": 1003,
         "gameName": "LuckyNext1",
         "name": "LuckyNext1",
-        "namespaces": [
-            "LuckyNext1"
-        ],
+        "namespaces": ["LuckyNext1"],
         "isVisible": true,
         "durations": {
             "wholeRound": 164,
@@ -132,9 +122,7 @@
         "id": 1007,
         "gameName": "SicBall",
         "name": "SicBall",
-        "namespaces": [
-            "SicBall"
-        ],
+        "namespaces": ["SicBall"],
         "isVisible": true,
         "durations": {
             "wholeRound": 30,
@@ -154,5 +142,28 @@
         },
         "mainObserverNamespace": "SicBall",
         "order": 2
+    },
+    "51": {
+        "id": 51,
+        "gameName": "UnbalancedBigSmall2",
+        "name": "UnbalancedBigSmall2",
+        "namespaces": ["UnbalancedBigSmall2"],
+        "isVisible": true,
+        "durations": {
+            "wholeRound": 40,
+            "lockingBet": 5,
+            "placingBet": 30,
+            "generatingResult": 1,
+            "showingResult": 2,
+            "startRound": 2
+        },
+        "totalTurns": 1,
+        "numberOfRoundHistory": 100,
+        "websocket": {
+            "proxyPath": "unbalancedbigsmall",
+            "route": "unbalancedbigsmall"
+        },
+        "mainObserverNamespace": "UnbalancedBigSmall2",
+        "order": 20
     }
 }

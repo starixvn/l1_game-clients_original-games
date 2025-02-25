@@ -39,7 +39,6 @@ const getGameById = (gameId: number, router: NextRouter) => {
 
 const getGameHeaderById = (gameId: number) => {
     const gameHeader = {
-        [settingsBigSmall.id]: <BigSmall.Header />,
         [settingsLuckyNext.id]: <LuckyNext.Header />,
         [settingsSicBall.id]: <SicBall.Header />,
     };
@@ -82,11 +81,7 @@ const TabTitleWithIcon = ({ gameId, gameName }: { gameId: number; gameName: stri
     );
 };
 
-const getGameTabById = (
-    gameId: number,
-    router: NextRouter,
-    isRenderGame: boolean
-) => {
+const getGameTabById = (gameId: number, router: NextRouter, isRenderGame: boolean) => {
     const gameSetting = getGameSetting(gameId);
     if (!gameSetting) {
         return null;
@@ -95,16 +90,9 @@ const getGameTabById = (
     const gameName = gc.Translator.t(`${gameSetting.gameName}.game_name`);
 
     return (
-        <Tab
-            key={gameId}
-            eventKey={gameId}
-            title={<TabTitleWithIcon gameId={gameId} gameName={gameName} />}
-            unmountOnExit={true}
-        >
+        <Tab key={gameId} eventKey={gameId} title={<TabTitleWithIcon gameId={gameId} gameName={gameName} />} unmountOnExit={true}>
             {getGameHeaderById(gameId)}
-            <div className={classNames(styles["game-lobby"])}>
-                {isRenderGame && getGameById(gameId, router)}
-            </div>
+            <div className={classNames(styles["game-lobby"])}>{isRenderGame && getGameById(gameId, router)}</div>
         </Tab>
     );
 };
