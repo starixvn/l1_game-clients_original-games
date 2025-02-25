@@ -68,16 +68,19 @@ export class BaccaratResultHistory extends ObserverComponent<IPropsObserver, IBa
         }
 
         return (
-            <div className={Styles.resultHistory}>
-                <div className={Styles.header}>
-                    <span>Round</span>
-                    <span>Player</span>
-                    <span className={Styles.divider} />
-                    <span>Banker</span>
-                    <span></span>
-                </div>
-                <div className={Styles.historyContent}>
-                    {rounds.map(this.renderRoundResult.bind(this))}
+            <div className={Styles.resultHistoryContainer}>
+                <div className={Styles["result-title"]}>Result</div>
+                <div className={Styles.resultHistory}>
+                    <div className={Styles.header}>
+                        <span>Round</span>
+                        <span>Player</span>
+                        <span className={Styles.divider} />
+                        <span>Banker</span>
+                        <span></span>
+                    </div>
+                    <div className={Styles.historyContent}>
+                        {rounds.map(this.renderRoundResult.bind(this))}
+                    </div>
                 </div>
             </div>
         );
