@@ -143,11 +143,11 @@
         "mainObserverNamespace": "SicBall",
         "order": 2
     },
-    "51": {
-        "id": 51,
-        "gameName": "UnbalancedBigSmall2",
-        "name": "UnbalancedBigSmall2",
-        "namespaces": ["UnbalancedBigSmall2"],
+    "55": {
+        "id": 55,
+        "gameName": "UnbalancedBigSmall4",
+        "name": "UnbalancedBigSmall4",
+        "namespaces": ["UnbalancedBigSmall4"],
         "isVisible": true,
         "durations": {
             "wholeRound": 40,
@@ -163,7 +163,7 @@
             "proxyPath": "unbalancedbigsmall",
             "route": "unbalancedbigsmall"
         },
-        "mainObserverNamespace": "UnbalancedBigSmall2",
+        "mainObserverNamespace": "UnbalancedBigSmall4",
         "order": 20
     }
 }
