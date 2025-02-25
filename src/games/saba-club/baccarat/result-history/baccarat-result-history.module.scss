@@ -42,7 +42,7 @@
     }
 
     .historyContent {
-        max-height: 280px;
+        max-height: 235px;
         overflow: auto;
         overflow-x: hidden;
         background-color: #fff6f3;
@@ -90,6 +90,16 @@
             text-align: center;
             gap: 0;
             width: 100%;
+
+            > :nth-child(2) {
+                justify-content: flex-end;
+                display: flex;
+            }
+
+            > :nth-child(4) {
+                justify-content: flex-start;
+                display: flex;
+            }
         }
 
         .roundNumber {

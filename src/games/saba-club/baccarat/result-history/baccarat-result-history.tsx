@@ -74,7 +74,7 @@ export class BaccaratResultHistory extends ObserverComponent<IPropsObserver, IBa
                     <span>Player</span>
                     <span className={Styles.divider} />
                     <span>Banker</span>
-                    <span>Winner</span>
+                    <span></span>
                 </div>
                 <div className={Styles.historyContent}>
                     {rounds.map(this.renderRoundResult.bind(this))}
