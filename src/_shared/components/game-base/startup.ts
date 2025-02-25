@@ -54,6 +54,5 @@ export function configGameContainer(gameName: string, containerOptions: gc.ICont
     const observerContainer = gc.buildObserverContainer(container);
 
     Observer.configure({ [gameName]: { mobx: { reaction }, container: observerContainer } });
-    console.log("create container", gameName);
     return container;
 }

@@ -170,7 +170,6 @@ const BaccaratAnimationDemo: React.FC = () => {
         setTimeout(() => {
             // Update to selected demo index
             setCurrentIndex(newIndex);
-            console.log(`Current index is set to: ${newIndex}`);
 
             // Wait for DOM update with new index
             requestAnimationFrame(() => {

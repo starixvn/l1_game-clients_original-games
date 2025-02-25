@@ -1,0 +1,58 @@
+.baccarat-percentages {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    // background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.percentage-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.split-percentage {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.indicator {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 4px;
+    font-weight: bold;
+   
+    
+    &.player {
+        background-color: #0066FF;
+    }
+    
+    &.banker {
+        background-color: #FF0000;
+    }
+    
+    &.tie {
+        background-color: #00FF00;
+    }
+    
+    &.player-pair {
+        background: white;
+        border: 2px solid #0066FF;
+    }
+    
+    &.banker-pair {
+        background: white;
+        border: 2px solid #FF0000;
+    }
+}
+
+.count {
+    margin-left: 4px;
+} 

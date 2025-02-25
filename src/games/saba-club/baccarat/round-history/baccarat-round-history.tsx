@@ -49,11 +49,20 @@ export default class BaccaratRoundHistory extends ObserverComponent<IPropsObserv
     private getSettlementResult(settlementResult: gc.GameServiceMessage.TSettlementResult): BaccaratSettlementResult {
         const result: BaccaratSettlementResult = {
             winner: 'player',
+            player: false,
+            banker: false,
+            tie: false,
             playerPair: false,
-            bankerPair: false
+            bankerPair: false,
+            big: false,
+            small: false
         };
 
         if (settlementResult && typeof settlementResult === "object") {
+            result.player = !!settlementResult.player;
+            result.banker = !!settlementResult.banker;
+            result.tie = !!settlementResult.tie;
+
             if (settlementResult.player) {
                 result.winner = 'player';
             } else if (settlementResult.banker) {
@@ -67,6 +76,8 @@ export default class BaccaratRoundHistory extends ObserverComponent<IPropsObserv
                 const data = gameData as Record<string, unknown>;
                 result.playerPair = !!data.playerPair;
                 result.bankerPair = !!data.bankerPair;
+                result.big = !!data.big;
+                result.small = !!data.small;
             }
         }
 

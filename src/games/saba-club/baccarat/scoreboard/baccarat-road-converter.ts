@@ -8,7 +8,12 @@ export class BaccaratRoadConverter extends Converter<BaccaratSettlementResult> {
         const blinkRound: BaccaratSettlementResult = {
             winner: lastRound?.winner || 'player',
             playerPair: false,
-            bankerPair: false
+            bankerPair: false,
+            player: false,
+            banker: false,
+            tie: false,
+            big: false,
+            small: false
         };
 
         rounds.unshift(blinkRound);

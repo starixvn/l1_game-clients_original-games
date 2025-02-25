@@ -12,7 +12,6 @@ export const ResultStaticBaccaratCard: React.FC<StaticBaccaratCardProps> = ({
     card,
     className
 }) => {
-    console.log(card);
     return (
         <div className={`${Styles.card} ${Styles[`card`]}${className || ''}`}>
             <div className={Styles["rotate-card"]}>

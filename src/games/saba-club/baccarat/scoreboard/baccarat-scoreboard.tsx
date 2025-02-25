@@ -7,10 +7,10 @@ import { createRef } from "react";
 import React from "react";
 import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
 import { ScoreboardItemContent } from "../../../../_shared/components/scoreboard/types";
-import { BetPercentages } from "../../../../_shared/components/bet-percentages";
 import { ScoreBoard } from "../../../../_shared/components/scoreboard";
 import { BaccaratSettlementResult } from "../type";
 import { BaccaratRoadConverter } from "./baccarat-road-converter";
+import { BaccaratBetPercentages } from "../baccarat-bet-percentages";
 
 export interface IBaccaratScoreboardState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
@@ -55,10 +55,19 @@ export class BaccaratScoreboard extends ObserverComponent<Props, IBaccaratScoreb
         const result: BaccaratSettlementResult = {
             winner: 'player',
             playerPair: false,
-            bankerPair: false
+            bankerPair: false,
+            player: false,
+            banker: false,
+            tie: false,
+            big: false,
+            small: false
         };
 
         if (settlementResult && typeof settlementResult === "object") {
+            result.player = !!settlementResult.player;
+            result.banker = !!settlementResult.banker;
+            result.tie = !!settlementResult.tie;
+
             if (settlementResult.player) {
                 result.winner = 'player';
             } else if (settlementResult.banker) {
@@ -72,6 +81,8 @@ export class BaccaratScoreboard extends ObserverComponent<Props, IBaccaratScoreb
                 const data = gameData as Record<string, unknown>;
                 result.playerPair = !!data.playerPair;
                 result.bankerPair = !!data.bankerPair;
+                result.big = !!data.big;
+                result.small = !!data.small;
             }
         }
 
@@ -113,10 +124,10 @@ export class BaccaratScoreboard extends ObserverComponent<Props, IBaccaratScoreb
                         Player
                     </div> */}
                     <div className={Styles["split-percentage"]}>
-                        <BetPercentages
+                        <BaccaratBetPercentages
                             gameName={this.props.gameName}
-                            scoreboardCharacter={scoreboardCharacter}
                             settlements={settlements}
+                            rounds={rounds}
                         />
                     </div>
                     {/* <div className={Styles["banker-percentage"]}>

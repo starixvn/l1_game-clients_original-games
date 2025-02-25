@@ -10,7 +10,7 @@ export interface IBaccaratResultHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
 }
 
-const numberOfResult = 100;
+const numberOfResult = 102;
 
 export class BaccaratResultHistory extends ObserverComponent<IPropsObserver, IBaccaratResultHistoryState> {
     constructor(props: IPropsObserver) {
@@ -23,19 +23,39 @@ export class BaccaratResultHistory extends ObserverComponent<IPropsObserver, IBa
     }
 
     private getSettlementResult(settlementResult: gc.GameServiceMessage.TSettlementResult): BaccaratSettlementResult {
+
+
         const result: BaccaratSettlementResult = {
             winner: 'player',
+            player: false,
+            banker: false,
+            tie: false,
             playerPair: false,
-            bankerPair: false
+            bankerPair: false,
+            big: false,
+            small: false
         };
 
         if (settlementResult && typeof settlementResult === "object") {
+            result.player = !!settlementResult.player;
+            result.banker = !!settlementResult.banker;
+            result.tie = !!settlementResult.tie;
+
             if (settlementResult.player) {
                 result.winner = 'player';
             } else if (settlementResult.banker) {
                 result.winner = 'banker';
             } else if (settlementResult.tie) {
                 result.winner = 'tie';
+            }
+
+            const gameData = settlementResult.gameData;
+            if (gameData && typeof gameData === "object") {
+                const data = gameData as Record<string, unknown>;
+                result.playerPair = !!data.playerPair;
+                result.bankerPair = !!data.bankerPair;
+                result.big = !!data.big;
+                result.small = !!data.small;
             }
         }
 

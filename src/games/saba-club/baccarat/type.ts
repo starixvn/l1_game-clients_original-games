@@ -9,8 +9,13 @@ export interface IBaccaratResult {
 
 export interface BaccaratSettlementResult {
     winner: BaccaratWinner;
+    player: boolean;
+    banker: boolean;
+    tie: boolean;
     playerPair: boolean;
     bankerPair: boolean;
+    big: boolean;
+    small: boolean;
 }
 
 export interface BaccaratRoadConverterResult {
