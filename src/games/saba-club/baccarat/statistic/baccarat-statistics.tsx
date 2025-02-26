@@ -1,5 +1,3 @@
-import * as gc from "@sg/sg-game-client";
-import { render } from "@sg/sg-observer";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
 import Styles from "./baccarat-statistics.module.scss";
 import { BaccaratScoreboard } from "../scoreboard";

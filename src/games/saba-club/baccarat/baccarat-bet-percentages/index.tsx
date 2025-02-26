@@ -1,6 +1,7 @@
 import { Translator } from "@sg/sg-game-client";
 import Styles from "./baccarat-bet-percentages.module.scss";
 import * as gc from "@sg/sg-game-client";
+import React from "react";
 
 // Types and Interfaces
 interface BetResult {
@@ -90,15 +91,14 @@ const BaccaratBetPercentages: React.FC<Props> = ({
     return (
         <div className={Styles["baccarat-percentages"]}>
             {BET_DISPLAY_CONFIG.map((config, index) => (
-                <>
-                    {index > 0 && <div key={`split-${index}`} className={Styles["split-percentage"]}>|</div>}
+                <React.Fragment key={config.key}>
+                    {index > 0 && <div className={Styles["split-percentage"]}>|</div>}
                     <BetPercentageItem
-                        key={config.key}
                         config={config}
                         count={betCounts[config.key]}
                         translateBetOption={translator}
                     />
-                </>
+                </React.Fragment>
             ))}
         </div>
     );

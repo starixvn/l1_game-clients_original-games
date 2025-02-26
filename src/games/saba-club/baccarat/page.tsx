@@ -1,5 +1,5 @@
 import * as gc from "@sg/sg-game-client";
-import { handle, observer } from "@sg/sg-observer";
+import { handle, observer, render } from "@sg/sg-observer";
 import CountDownTimer from "../../../_shared/components/count-down-timer";
 import { IGameBaseState } from "../../../_shared/components/game-base";
 import GatewayGameBase from "../../../_shared/components/game-base/gateway-gamebase";
@@ -14,8 +14,16 @@ import { BaccaratStatistic } from "./statistic/baccarat-statistics";
 import { containerOptions, setting } from "./game-settings";
 import Header from "./header";
 import Styles from "./baccarat.module.scss";
+import { IBaccaratBet } from "./type";
+import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
+
+interface IBaccaratState extends IGameBaseState {
+    previousWinningBet?: IBaccaratBet['type'];
+    roundState: string;
+}
+
 @observer(setting.mainObserverNamespace)
-export default class Baccarat extends GatewayGameBase<GameBaseProps, IGameBaseState> {
+export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratState> {
     override overrideClasses = {
         blockWrapper: Styles["block-wrapper"]
     }
@@ -23,7 +31,8 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IGameBaseSt
     constructor(props: GameBaseProps) {
         super(props);
         this.state = {
-            ...this.state
+            ...this.state,
+            previousWinningBet: undefined
         };
 
         try {
@@ -61,7 +70,11 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IGameBaseSt
     }
 
     renderBettingBlock() {
-        return <BaccaratBetOptions namespace={this.props.namespace} />;
+        return <BaccaratBetOptions
+            namespace={this.props.namespace}
+            previousWinningBet={this.state.previousWinningBet}
+            roundState={this.state.roundState}
+        />;
     }
 
     renderResultBlock() {
@@ -72,12 +85,24 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IGameBaseSt
         return <BaccaratStatistic namespace={this.props.namespace} gameName={setting.gameName} />;
     }
 
+    @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
+    renderCountDownTimerState(roundState: string) {
+        this.setState({ roundState });
+    }
+
     async showResult(
         hasAnimation: boolean,
         result?: gc.GameServiceMessage.TResult,
         settlementResult?: gc.GameServiceMessage.TSettlementResult
     ) {
         if (!result) return;
+
+        // Update the previous winning bet based on the settlement result
+        if (settlementResult && this.state.roundState == ROUND_STATE.LOCKING_BET) {
+            const winningBet = Object.entries(settlementResult).find(([_, value]) => Number(value) > 0)?.[0] as IBaccaratBet['type'];
+            this.setState({ previousWinningBet: winningBet });
+        }
+
         await FunctionUtils.delay(2000);
     }
 } 

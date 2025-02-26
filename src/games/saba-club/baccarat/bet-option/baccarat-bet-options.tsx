@@ -8,9 +8,12 @@ import BettingBlock from "../../../../_shared/components/bet-option/betting-bloc
 import Odds from "../../../../_shared/components/bet-option/odd";
 import OwnBet from "../../../../_shared/components/bet-option/own-bet";
 import TotalBet from "../../../../_shared/components/bet-option/total-bet";
+import { IPropsObserver } from "../../../../_shared/components/observer-component/observer-component";
+import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
 
-interface IBaccaratBetOptionsProps {
-    namespace: string;
+interface IBaccaratBetOptionsProps extends IPropsObserver {
+    previousWinningBet?: IBaccaratBet['type'];
+    roundState: string;
 }
 
 interface BetOptionProps {
@@ -19,10 +22,18 @@ interface BetOptionProps {
     name: string;
     fractional: boolean;
     isBoostedChoice: boolean;
+    isWinningBet?: boolean;
 }
 
 @observer(setting.mainObserverNamespace)
 export default class BaccaratBetOptions extends BetOptions {
+    declare props: IBaccaratBetOptionsProps;
+
+    private isDisabled(): boolean {
+        const { roundState } = this.props;
+        return roundState === ROUND_STATE.SHOW_RESULT || roundState === ROUND_STATE.LOCKING_BET;
+    }
+
     private renderBetOptionContent({ odd, name, fractional, isBoostedChoice }: BetOptionProps) {
         return (
             <div className={styles['bet-container']}>
@@ -61,14 +72,16 @@ export default class BaccaratBetOptions extends BetOptions {
 
     render() {
         const { roundOdds, boostedOdds } = this.state as IBetOptionsState;
+        const { previousWinningBet } = this.props;
         const odds = roundOdds?.odds || {};
         const boostedChoices = roundOdds?.boostedChoices;
         const fractional = roundOdds?.fractional;
+        const isDisabled = this.isDisabled();
 
         return (
-            <div className={styles['bet-options-wrapper']}>
+            <div className={`${styles['bet-options-wrapper']} ${isDisabled ? styles['bet-options-disabled'] : ''}`}>
                 <div className={styles['main-bets-container']}>
-                    <div className={styles['bet-option']}>
+                    <div className={`${styles['bet-option']} ${previousWinningBet === 'player' ? styles['winning-bet'] : ''}`}>
                         {this.renderBetOption({
                             name: 'Player',
                             odd: odds?.player,
@@ -79,7 +92,7 @@ export default class BaccaratBetOptions extends BetOptions {
                         {this.renderTotalBet('player')}
                         {this.renderOwnBet('player')}
                     </div>
-                    <div className={styles['bet-option']}>
+                    <div className={`${styles['bet-option']} ${previousWinningBet === 'banker' ? styles['winning-bet'] : ''}`}>
                         {this.renderBetOption({
                             name: 'Banker',
                             odd: odds?.banker,
@@ -92,7 +105,7 @@ export default class BaccaratBetOptions extends BetOptions {
                     </div>
                 </div>
                 <div className={styles['tie-container']}>
-                    <div className={styles['bet-option']}>
+                    <div className={`${styles['bet-option']} ${previousWinningBet === 'tie' ? styles['winning-bet'] : ''}`}>
                         {this.renderBetOption({
                             name: 'Tie',
                             odd: odds?.tie,
@@ -105,7 +118,7 @@ export default class BaccaratBetOptions extends BetOptions {
                     </div>
                 </div>
                 <div className={styles['pair-container']}>
-                    <div className={styles['bet-option']}>
+                    <div className={`${styles['bet-option']} ${previousWinningBet === 'playerPair' ? styles['winning-bet'] : ''}`}>
                         {this.renderBetOption({
                             name: 'P.Pair',
                             odd: odds?.playerPair,
@@ -116,7 +129,7 @@ export default class BaccaratBetOptions extends BetOptions {
                         {this.renderTotalBet('playerPair')}
                         {this.renderOwnBet('playerPair')}
                     </div>
-                    <div className={styles['bet-option']}>
+                    <div className={`${styles['bet-option']} ${previousWinningBet === 'bankerPair' ? styles['winning-bet'] : ''}`}>
                         {this.renderBetOption({
                             name: 'B.Pair',
                             odd: odds?.bankerPair,
