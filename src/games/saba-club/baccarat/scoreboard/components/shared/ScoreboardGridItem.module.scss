@@ -1,0 +1,94 @@
+.scoreboard-grid-item {
+    --cell-size: 32px;
+    --dot-size: 26px;
+    width: var(--cell-size);
+    height: var(--cell-size);
+    min-width: var(--cell-size);
+    min-height: var(--cell-size);
+    max-width: var(--cell-size);
+    max-height: var(--cell-size);
+    border-right: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 600;
+    position: relative;
+    background-color: white;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+.empty-cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    min-width: var(--cell-size);
+    min-height: var(--cell-size);
+    max-width: var(--cell-size);
+    max-height: var(--cell-size);
+    background-color: white;
+    border-right: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+    box-sizing: border-box;
+}
+
+.cell {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    
+    &.player-win .result-indicator {
+        background-color: #0066FF;
+        color: white;
+    }
+    
+    &.banker-win .result-indicator {
+        background-color: #FF0000;
+        color: white;
+    }
+}
+
+.cell-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.result-indicator {
+    width: var(--dot-size);
+    height: var(--dot-size);
+    min-width: var(--dot-size);
+    min-height: var(--dot-size);
+    max-width: var(--dot-size);
+    max-height: var(--dot-size);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1rem;
+    color: white;
+}
+
+.tie-indicators {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.tie-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #274980;
+} 

@@ -11,6 +11,7 @@ export interface IStateObserver {
 export class ObserverComponent<P extends IPropsObserver, S extends IStateObserver> extends React.PureComponent<P, S> {
     constructor(props: P) {
         super(props);
+        console.log(`[ObserverComponent] Initializing with namespace: ${props.namespace}`);
         this.state = {
             dispose: null,
         } as S;

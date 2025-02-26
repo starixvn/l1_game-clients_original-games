@@ -37,6 +37,8 @@ class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends O
         minBet: store.minBet,
         maxBet: store.maxBet,
         maxBetPerChoices: store.maxBetPerChoices,
+        odds: store.odds,
+        enableFreeBet: store.enableFreeBet,
     }))
     setMaxBetPerChoices({
         minBet,
@@ -48,7 +50,9 @@ class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends O
         maxBetPerChoices: gc.GameServiceMessage.MaxBetPerChoices;
     }) {
 
+
         this.setState({ maxBetPerChoices, minBet, maxBet } as IBetPanel);
+
     }
 
     @handle(gc.Bet.BetHandler)
