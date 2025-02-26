@@ -99,6 +99,7 @@
 
     .header {
         @include sedie-header;
+        width: 100%;
     }
 }
 

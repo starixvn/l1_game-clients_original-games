@@ -11,7 +11,8 @@ export type BigSmallResult = {
     dice3: number;
 };
 
-export type SedieSettlementResult = {
+export type BigSmallSettlementResult = {
+    winner: string;
     big: boolean;
     small: boolean;
 };

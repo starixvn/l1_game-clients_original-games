@@ -278,6 +278,8 @@
     },
     "UnbalancedBigSmall4": {
         "game_vendor": "SABA.games",
-        "game_name": "Big Small"
+        "game_name": "Big Small",
+        "big": "Big",
+        "small": "Small"
     }
 }

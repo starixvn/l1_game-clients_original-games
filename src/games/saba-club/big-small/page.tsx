@@ -7,12 +7,12 @@ import { configGameContainer } from "../../../_shared/components/game-base/start
 import type { GameBaseProps } from "../../../_shared/components/game-base/type";
 import RoundId from "../../../_shared/components/round-id";
 import { FunctionUtils } from "../../../_shared/utils/funtion-utils";
-import BigSmallBetOptions from "./bet-option/big-small-options";
 import { containerOptions, setting } from "./game-settings";
-import SeDieRoundHistory from "../sedie/round-history";
-import SeDieSettlementResult from "../sedie/settlement-result";
 import { SedieStatistic } from "../sedie/statistic";
 import Header from "./header";
+import { BigSmallSettlementResult } from "./settlement-result";
+import { BigSmallRoundHistory } from "./round-history";
+import { BigSmallBetOptions } from "./bet-option";
 
 @observer(setting.mainObserverNamespace)
 export default class BigSmall extends GatewayGameBase<GameBaseProps, IGameBaseState> {
@@ -44,7 +44,7 @@ export default class BigSmall extends GatewayGameBase<GameBaseProps, IGameBaseSt
     }
 
     renderRoundHistory() {
-        return <SeDieRoundHistory namespace={this.props.namespace} />;
+        return <BigSmallRoundHistory namespace={this.props.namespace} />;
     }
 
     renderRoundIdSection() {
@@ -60,7 +60,7 @@ export default class BigSmall extends GatewayGameBase<GameBaseProps, IGameBaseSt
     }
 
     renderResultBlock() {
-        return <SeDieSettlementResult namespace={this.props.namespace} />;
+        return <BigSmallSettlementResult namespace={this.props.namespace} />;
     }
 
     renderStatistic() {

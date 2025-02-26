@@ -1,0 +1,76 @@
+@import '../styles/overrides';
+
+// Move variables to a local class
+.round-history {
+    // bigsmall-specific variables
+    --bigsmall-big-bg: #315dc5;
+    --bigsmall-big-border: #357abd;
+    --bigsmall-small-bg: linear-gradient(180deg, #ff5661, #be1c28);
+    --bigsmall-small-border: #c0392b;
+    --bigsmall-next-bg: #f0f0f0;
+    --bigsmall-next-border: #ddd;
+    --bigsmall-text-light: #fff;
+    --bigsmall-text-dark: #666;
+
+    background-color: #fce0d7;
+    padding: 8px 12px;
+    border-radius: 4px;
+
+    .hstack-round {
+        margin-top: 0 !important;
+        align-items: center;
+        gap: 4px !important;
+
+        > span:first-child {
+            color: var(--bigsmall-text-dark);
+            font-size: 14px;
+            margin-right: 8px;
+        }
+    }
+
+    .history-item {
+        align-items: center;
+    }
+
+    .arrow {
+        background-image: url("/static/images/arrow.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        height: 12px;
+        width: 12px;
+        opacity: 0.6;
+        margin: 0 2px;
+    }
+
+    // bigsmall-specific dot styles
+    .bigsmall-dot {
+        width: 24px !important;
+        height: 24px !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+
+        &.big {
+            background: var(--bigsmall-big-bg) !important;
+            color: var(--bigsmall-text-light) !important;
+            border: 1px solid var(--bigsmall-big-border) !important;
+        }
+
+        &.small {
+            background: var(--bigsmall-small-bg) !important;
+            color: var(--bigsmall-text-light) !important;
+            border: 1px solid var(--bigsmall-small-border) !important;
+        }
+
+        &.next {
+            background: var(--bigsmall-next-bg) !important;
+            color: var(--bigsmall-text-dark) !important;
+            border: 1px solid var(--bigsmall-next-border) !important;
+        }
+    }
+}

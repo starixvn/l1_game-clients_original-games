@@ -3,9 +3,10 @@ import BettingBlock from "../../../../_shared/components/bet-option/betting-bloc
 import Odds from "../../../../_shared/components/bet-option/odd";
 import OwnBet from "../../../../_shared/components/bet-option/own-bet";
 import TotalBet from "../../../../_shared/components/bet-option/total-bet";
-import { RoundDot } from "../../../../_shared/components/dot";
-import Styles from "../bigsmall.module.scss";
+import Styles from "./big-small-options.module.scss";
 import { BigSmallChoices } from "../type";
+import { getGameSetting } from "../../../../_shared/app-settings";
+import * as gc from "@sg/sg-game-client";
 
 interface BetOptionProps {
     odd: number;
@@ -16,11 +17,23 @@ interface BetOptionProps {
 }
 
 /**
- * SeDieBetOptions Component
+ * BigSmallBetOptions Component
  * Renders betting options for the Se Die game with main and sub-options
  * Extends the base BetOptions component with Se Die specific rendering logic
  */
-export default class SeDieBetOptions extends BetOptions {
+export default class BigSmallBetOptions extends BetOptions {
+
+    private readonly mainChoices = [
+        {
+            name: `${gc.Translator.t(`UnbalancedBigSmall4.big`)} [11 - 18]`,
+            choice: BigSmallChoices.big,
+        },
+        {
+            name: `${gc.Translator.t(`UnbalancedBigSmall4.small`)} [3 - 10]`,
+            choice: BigSmallChoices.small,
+        },
+    ];
+
     private renderBetOptionContent({ odd, betChoice, name, fractional, isBoostedChoice }: BetOptionProps) {
         return (
             <div className={`${Styles["container-bets"]} ${Styles["padding-bet"]}`}>
@@ -71,10 +84,7 @@ export default class SeDieBetOptions extends BetOptions {
         return (
             <div className={Styles["bet-options-wrapper"]}>
                 <div className={Styles["main-options-container"]}>
-                    {[
-                        { name: "Big", choice: "big" },
-                        { name: "Small", choice: "small" },
-                    ].map(({ name, choice }) => (
+                    {this.mainChoices.map(({ name, choice }) => (
                         <div key={choice} className={`${Styles["bet"]} ${Styles["bets-bg"]}`}>
                             {this.renderMainOption(
                                 name,
