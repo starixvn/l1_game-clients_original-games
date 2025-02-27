@@ -1,7 +1,35 @@
 import { Converter } from "sc-scoreboards";
 import { BaccaratSettlementResult } from "../type";
 
-export class BaccaratRoadConverter extends Converter<BaccaratSettlementResult> {
+interface ConverterOptions {
+    playerKey: string;
+    tieKey: string;
+}
+
+class BaseRoadConverter<T, R> {
+    constructor(protected readonly options: ConverterOptions) { }
+
+    protected positiveKey(): string {
+        return this.options.playerKey;
+    }
+
+    protected specialKey(): string {
+        return this.options.tieKey;
+    }
+
+    convert(data: T): R {
+        throw new Error('Not implemented');
+    }
+}
+
+export class BaccaratRoadConverter extends BaseRoadConverter<BaccaratSettlementResult[], boolean> {
+    private static defaultOptions: ConverterOptions = {
+        playerKey: 'player',
+        tieKey: 'tie'
+    };
+
+    static instance = new BaccaratRoadConverter(BaccaratRoadConverter.defaultOptions);
+
     static addBlinkNode(rounds: BaccaratSettlementResult[]) {
         const lastRound = rounds.find((round) => round.winner === 'player' || round.winner === 'banker');
 
@@ -19,14 +47,8 @@ export class BaccaratRoadConverter extends Converter<BaccaratSettlementResult> {
         rounds.unshift(blinkRound);
     }
 
-    static instance = new BaccaratRoadConverter();
-
-    protected positiveKey(): string {
-        return 'player';
-    }
-
-    protected specialKey(): string {
-        return 'tie';
+    constructor(options: ConverterOptions = BaccaratRoadConverter.defaultOptions) {
+        super(options);
     }
 
     group(items: BaccaratSettlementResult[]): BaccaratSettlementResult[][] {
@@ -52,6 +74,6 @@ export class BaccaratRoadConverter extends Converter<BaccaratSettlementResult> {
     convert(group: BaccaratSettlementResult[]): boolean {
         if (group.length === 0) return false;
         const firstItem = group[0];
-        return firstItem.winner === 'player';
+        return firstItem.winner === this.positiveKey();
     }
 } 
