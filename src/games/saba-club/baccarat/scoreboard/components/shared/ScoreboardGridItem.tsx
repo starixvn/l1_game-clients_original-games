@@ -3,10 +3,9 @@ import { BigRoadPoint } from '../baccarat/big-road/BigRoadHelper';
 import styles from './ScoreboardGridItem.module.scss';
 
 interface ScoreboardGridItemProps {
-    data: BigRoadPoint<unknown>[];
+    data: BigRoadPoint<any>[];
     x: number;
     y: number;
-    status?: boolean;
     ties?: number;
     result?: 'player' | 'banker';
 }
@@ -15,7 +14,6 @@ export const ScoreboardGridItem: React.FC<ScoreboardGridItemProps> = ({
     data,
     x,
     y,
-    status,
     ties = 0,
     result
 }) => {

@@ -1,15 +1,16 @@
 import React from 'react';
+import styles from './GridLayout.module.scss';
 
-interface GridLayoutProps {
-    data: any[];
-    renderItem: (props: any) => React.ReactNode;
+interface GridLayoutProps<T> {
+    data: T[];
+    renderItem: (item: T) => React.ReactNode;
 }
 
-export const GridLayout: React.FC<GridLayoutProps> = ({ data, renderItem }) => {
+export const GridLayout = <T,>({ data, renderItem }: GridLayoutProps<T>): React.ReactElement => {
     return (
-        <div className="grid-layout">
+        <div className={styles['grid-layout']}>
             {data.map((item, index) => (
-                <div key={index} className="grid-item">
+                <div key={index} className={styles['grid-item']}>
                     {renderItem(item)}
                 </div>
             ))}
