@@ -1,17 +1,13 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React from 'react';
+import * as gc from "@sg/sg-game-client";
+import { render } from "@sg/sg-observer";
+import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../../../../_shared/components/observer-component/observer-component";
 import { ScoreboardBigRoadAlgorithm } from './BaccaratBigRoadAlgorithm';
 import styles from './BaccaratBigRoad.module.scss';
 import { BaccaratBetPercentages } from '../../../../baccarat-bet-percentages';
 import { BaccaratSettlementResult } from '../../../../type';
-import * as gc from "@sg/sg-game-client";
-
-interface BaccaratBigRoadProps {
-    rounds: gc.RoundHistories.RoundHistory[];
-    noRender?: boolean;
-    gameName?: string;
-    maxColumns?: number;
-    maxRows?: number;
-}
+import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
+import { testRounds } from '../../../test';
 
 interface GridCell {
     status: boolean;  // true for Player, false for Banker
@@ -19,8 +15,21 @@ interface GridCell {
     ties?: number;
 }
 
+interface IBaccaratBigRoadState extends IStateObserver {
+    gridData: (GridCell | null)[][];
+    rounds: gc.RoundHistories.RoundHistory[];
+    roundState: string;
+}
+
+interface Props extends IPropsObserver {
+    gameName?: string;
+    maxColumns?: number;
+    maxRows?: number;
+    noRender?: boolean;
+}
+
 const DEFAULT_CONFIG = {
-    maxColumns: 30,
+    maxColumns: 1000,
     maxRows: 6,
     character: {
         positiveItemContent: 'P',
@@ -32,60 +41,101 @@ const DEFAULT_CONFIG = {
     }
 };
 
-export const BaccaratBigRoad: React.FC<BaccaratBigRoadProps> = ({
-    rounds,
-    noRender = false,
-    gameName,
-    maxColumns = DEFAULT_CONFIG.maxColumns,
-    maxRows = DEFAULT_CONFIG.maxRows
-}) => {
-    const [gridData, setGridData] = useState<(GridCell | null)[][]>([]);
-    const scrollDivRef = useRef<HTMLDivElement>(null);
-    const algorithm = new ScoreboardBigRoadAlgorithm();
+export class BaccaratBigRoad extends ObserverComponent<Props, IBaccaratBigRoadState> {
+    private scrollDivRef = React.createRef<HTMLDivElement>();
+    private algorithm = new ScoreboardBigRoadAlgorithm();
 
-    const getDotClass = useCallback((status: boolean) => {
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            gridData: [],
+            rounds: [],
+            roundState: '',
+            dispose: () => { /* cleanup logic if needed */ }
+        };
+        this.scrollDivRef = React.createRef();
+    }
+
+    componentDidUpdate(prevProps: Props, prevState: IBaccaratBigRoadState) {
+        if (prevState.rounds !== this.state.rounds) {
+            this.processRounds(this.state.rounds);
+            this.scrollToRight();
+        }
+    }
+
+    scrollToRight = () => {
+        if (this.scrollDivRef.current) {
+            this.scrollDivRef.current.scrollLeft = this.scrollDivRef.current.scrollWidth;
+        }
+    };
+
+    @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
+    renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
+        this.setState({ rounds });
+    }
+
+    @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
+    renderCountDownTimerState(roundState: string) {
+        this.setState({ roundState });
+    }
+
+    private getDotClass = (status: boolean): string => {
         const { positiveItemContent, negativeItemContent } = DEFAULT_CONFIG.dotClassName;
         return status ? styles[positiveItemContent] : styles[negativeItemContent];
-    }, []);
+    };
 
-    const getCharacter = useCallback((status: boolean) => {
+    private getCharacter = (status: boolean): string => {
         const { positiveItemContent, negativeItemContent } = DEFAULT_CONFIG.character;
         return status ? positiveItemContent : negativeItemContent;
-    }, []);
+    };
 
-    const processRounds = useCallback((rounds: unknown[]) => {
-        if (!rounds?.length) return;
-
-        const converted = algorithm.converter.convert(rounds);
-        const data = algorithm.apply(converted);
-        setGridData(organizeDataForBigRoad([...rounds].reverse()));
-    }, []);
-
-    const organizeDataForBigRoad = useCallback((rounds: any[]) => {
+    private organizeDataForBigRoad = (rounds: gc.RoundHistories.RoundHistory[]): (GridCell | null)[][] => {
+        const maxRows = this.props.maxRows || DEFAULT_CONFIG.maxRows;
         const grid: (GridCell | null)[][] = Array(maxRows).fill(null)
-            .map(() => Array(maxColumns).fill(null));
+            .map(() => Array(Math.max(DEFAULT_CONFIG.maxColumns, rounds.length)).fill(null));
 
         let currentCol = 0;
         let currentRow = 0;
         let lastResult: boolean | null = null;
-        let lastCol = 0;
+        let lastCol = -1;
         let tieCount = 0;
-        let maxColumn = 0;
 
-        const addToGrid = (round: any, isPlayer: boolean) => {
-            if (currentCol >= maxColumns) return;
+        const processRound = (round: gc.RoundHistories.RoundHistory) => {
+            const result = this.getSettlementResult(round.settlementResult);
 
-            grid[currentRow][currentCol] = {
-                status: isPlayer,
-                ties: tieCount,
-                isBlink: round.isBlink
-            };
-            maxColumn = Math.max(maxColumn, currentCol);
-            tieCount = 0;
-        };
+            if (result.tie) {
+                tieCount++;
+                return;
+            }
 
-        const findNextPosition = (isPlayer: boolean) => {
-            if (lastResult !== isPlayer) {
+            const isPlayer = result.player;
+
+            // First result
+            if (lastResult === null) {
+                grid[0][0] = {
+                    status: isPlayer,
+                    ties: tieCount,
+                    isBlink: this.state.roundState === ROUND_STATE.LOCKING_BET ||
+                        this.state.roundState === ROUND_STATE.SHOW_ANIMATION_RESULT
+                };
+                lastResult = isPlayer;
+                lastCol = 0;
+                tieCount = 0;
+                return;
+            }
+
+            // Same result as previous
+            if (isPlayer === lastResult) {
+                if (currentRow + 1 < maxRows && grid[currentRow + 1][currentCol] === null) {
+                    currentRow++;
+                } else {
+                    currentCol++;
+                    currentRow = 0;
+                    lastCol = currentCol;
+                }
+            }
+            // Different result
+            else {
                 currentCol = lastCol + 1;
                 currentRow = 0;
                 while (currentRow < maxRows && grid[currentRow][currentCol] !== null) {
@@ -96,52 +146,44 @@ export const BaccaratBigRoad: React.FC<BaccaratBigRoadProps> = ({
                     currentRow = 0;
                 }
                 lastCol = currentCol;
-            } else {
-                if (currentRow + 1 < maxRows && grid[currentRow + 1][currentCol] === null) {
-                    currentRow++;
-                } else {
-                    currentCol = lastCol + 1;
-                    currentRow = 0;
-                    lastCol = currentCol;
-                }
             }
+
+            grid[currentRow][currentCol] = {
+                status: isPlayer,
+                ties: tieCount,
+                isBlink: this.state.roundState === ROUND_STATE.LOCKING_BET ||
+                    this.state.roundState === ROUND_STATE.SHOW_ANIMATION_RESULT
+            };
+            lastResult = isPlayer;
+            tieCount = 0;
         };
 
-        rounds.forEach((round) => {
-            if (currentCol >= maxColumns) return;
+        // Process rounds in reverse order to show most recent on the right
+        [...rounds].reverse().forEach(processRound);
 
-            const result = round.settlementResult;
-            if (result.tie) {
-                tieCount++;
-                return;
+        // Find the last used column
+        let lastUsedColumn = 0;
+        for (let col = grid[0].length - 1; col >= 0; col--) {
+            for (let row = 0; row < maxRows; row++) {
+                if (grid[row][col] !== null) {
+                    lastUsedColumn = col;
+                    break;
+                }
             }
-
-            const isPlayer = result.player;
-            if (lastResult === null) {
-                addToGrid(round, isPlayer);
-            } else {
-                findNextPosition(isPlayer);
-                addToGrid(round, isPlayer);
-            }
-            lastResult = isPlayer;
-        });
-
-        return grid.map(row => row.slice(0, maxColumn + 1));
-    }, [maxColumns, maxRows]);
-
-    useEffect(() => {
-        if (rounds?.length) {
-            processRounds(rounds);
+            if (lastUsedColumn !== 0) break;
         }
-    }, [rounds, processRounds]);
 
-    useEffect(() => {
-        if (scrollDivRef.current) {
-            scrollDivRef.current.scrollLeft = scrollDivRef.current.scrollWidth;
-        }
-    }, [gridData]);
+        // Return all columns up to the last used one
+        return grid.map(row => row.slice(0, lastUsedColumn + 1));
+    };
 
-    const getSettlementResult = (settlementResult: gc.GameServiceMessage.TSettlementResult): BaccaratSettlementResult => {
+    private processRounds = (rounds: gc.RoundHistories.RoundHistory[]) => {
+        if (!rounds?.length) return;
+        const gridData = this.organizeDataForBigRoad(rounds);
+        this.setState({ gridData });
+    };
+
+    private getSettlementResult = (settlementResult: gc.GameServiceMessage.TSettlementResult): BaccaratSettlementResult => {
         const result: BaccaratSettlementResult = {
             winner: 'player',
             playerPair: false,
@@ -179,76 +221,81 @@ export const BaccaratBigRoad: React.FC<BaccaratBigRoadProps> = ({
         return result;
     };
 
-    const settlements = rounds.map(round => getSettlementResult(round.settlementResult));
+    render() {
+        const { noRender, gameName, maxRows = DEFAULT_CONFIG.maxRows } = this.props;
+        const { gridData, rounds } = this.state;
 
-    if (noRender) {
-        return null;
-    }
+        if (noRender || !rounds?.length) {
+            return null;
+        }
 
-    return (
-        <div className={styles.scoreboard}>
-            <div className={styles["scoreboard-title"]}>Big Road</div>
-            <div className={styles["scoreboard-percentage"]}>
-                <div className={styles["split-percentage"]}>
-                    <BaccaratBetPercentages
-                        gameName={gameName}
-                        settlements={settlements}
-                        rounds={rounds}
-                    />
+        const settlements = rounds.map(round => this.getSettlementResult(round.settlementResult));
+
+        return (
+            <div className={styles.scoreboard}>
+                <div className={styles["scoreboard-title"]}>Big Road</div>
+                <div className={styles["scoreboard-percentage"]}>
+                    <div className={styles["split-percentage"]}>
+                        <BaccaratBetPercentages
+                            gameName={gameName}
+                            settlements={settlements}
+                            rounds={rounds}
+                        />
+                    </div>
                 </div>
-            </div>
-            <div className={`${styles["scoreboard-content"]} baccarat-big-road`} ref={scrollDivRef}>
-                <div
-                    className={styles['grid-container']}
-                    style={{
-                        gridTemplateRows: `repeat(${maxRows}, var(--cell-size))`,
-                        gridAutoColumns: 'var(--cell-size)'
-                    }}
-                >
-                    {gridData.map((row, rowIndex) => (
-                        <React.Fragment key={rowIndex}>
-                            {row.map((cell, colIndex) => {
-                                if (!cell) {
+                <div className={`${styles["scoreboard-content"]} baccarat-big-road`} ref={this.scrollDivRef}>
+                    <div
+                        className={styles['grid-container']}
+                        style={{
+                            gridTemplateRows: `repeat(${maxRows}, var(--cell-size))`,
+                            gridAutoColumns: 'var(--cell-size)'
+                        }}
+                    >
+                        {gridData.map((row, rowIndex) => (
+                            <React.Fragment key={rowIndex}>
+                                {row.map((cell, colIndex) => {
+                                    if (!cell) {
+                                        return (
+                                            <div
+                                                className={styles["dot-item"]}
+                                                key={`${rowIndex}_${colIndex}`}
+                                                style={{
+                                                    gridColumnStart: colIndex + 1,
+                                                    gridRowStart: rowIndex + 1
+                                                }}
+                                            />
+                                        );
+                                    }
+
                                     return (
                                         <div
                                             className={styles["dot-item"]}
-                                            key={`${rowIndex}_${colIndex}`}
                                             style={{
                                                 gridColumnStart: colIndex + 1,
                                                 gridRowStart: rowIndex + 1
                                             }}
-                                        />
+                                            key={`${rowIndex}_${colIndex}`}
+                                        >
+                                            {cell.isBlink ? (
+                                                <div className={styles["dot-blink"]} />
+                                            ) : (
+                                                <div className={this.getDotClass(cell.status)}>
+                                                    {this.getCharacter(cell.status)}
+                                                    {cell.ties > 0 && (
+                                                        <span className={styles["tie-count"]}>
+                                                            {cell.ties}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            )}
+                                        </div>
                                     );
-                                }
-
-                                return (
-                                    <div
-                                        className={styles["dot-item"]}
-                                        style={{
-                                            gridColumnStart: colIndex + 1,
-                                            gridRowStart: rowIndex + 1
-                                        }}
-                                        key={`${rowIndex}_${colIndex}`}
-                                    >
-                                        {cell.isBlink ? (
-                                            <div className={styles["dot-blink"]} />
-                                        ) : (
-                                            <div className={getDotClass(cell.status)}>
-                                                {getCharacter(cell.status)}
-                                                {cell.ties > 0 && (
-                                                    <span className={styles["tie-count"]}>
-                                                        {cell.ties}
-                                                    </span>
-                                                )}
-                                            </div>
-                                        )}
-                                    </div>
-                                );
-                            })}
-                        </React.Fragment>
-                    ))}
+                                })}
+                            </React.Fragment>
+                        ))}
+                    </div>
                 </div>
             </div>
-        </div>
-    );
-}; 
+        );
+    }
+} 
