@@ -27,10 +27,5 @@ export class BigRoadScoreboard<T> {
     initialize(data: T[]): void {
         // Implement initialization logic
     }
-
-    getGoodRoad(): ScScoreboards.GoodRoad {
-        // Implement good road logic
-        return { x: 0, width: 0 };
-    }
 }
 
