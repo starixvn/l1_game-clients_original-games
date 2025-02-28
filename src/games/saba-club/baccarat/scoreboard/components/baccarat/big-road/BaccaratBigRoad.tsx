@@ -73,6 +73,10 @@ export class BaccaratBigRoad extends ObserverComponent<Props, IBaccaratBigRoadSt
         return `/static/images/baccarat/scoreboard/big-road/${status ? 'player' : 'banker'}.png`;
     };
 
+    private getTieImage = (): string => {
+        return '/static/images/baccarat/scoreboard/big-road/tie.png';
+    };
+
     private processRounds = (rounds: gc.RoundHistories.RoundHistory[]) => {
         if (!rounds?.length) return;
         const maxRows = this.props.maxRows || DEFAULT_CONFIG.maxRows;
@@ -140,9 +144,19 @@ export class BaccaratBigRoad extends ObserverComponent<Props, IBaccaratBigRoadSt
                                             <div className={styles["dot-image"]}>
                                                 <img src={imagePath} alt={cell.status ? "Player" : "Banker"} />
                                                 {cell.ties > 0 && (
-                                                    <span className={styles["tie-count"]}>
-                                                        {cell.ties}
-                                                    </span>
+                                                    <>
+                                                        {cell.ties >= 2 && (
+                                                            <span className={styles["tie-count"]}>
+                                                                {cell.ties}
+                                                            </span>
+                                                        )}
+
+                                                        <img
+                                                            className={styles["tie-image"]}
+                                                            src={this.getTieImage()}
+                                                            alt="Tie"
+                                                        />
+                                                    </>
                                                 )}
                                             </div>
                                         </div>
