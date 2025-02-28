@@ -1,21 +1,21 @@
 import React, { useMemo } from "react";
 import styles from "./styles.module.scss";
 
-interface DiceProps {
+interface DiceV1Props {
     diceNumber: number;
     rolling: boolean;
 }
 
-const Dice: React.FC<DiceProps> = ({ diceNumber, rolling }) => {
+const DiceV1: React.FC<DiceV1Props> = ({ diceNumber, rolling }) => {
     const diceClass = useMemo(() => (rolling ? "dice-rolling" : `dice-${diceNumber}`), [diceNumber, rolling]);
+
+    const backgroundImage = useMemo(() => `url(/static/images/big-small/dice-${diceNumber ? '1': "question-mark"}.png)`, [diceNumber]);
 
     return (
         <div className={`${styles.dice} ${styles[diceClass]}`}>
             <div
                 className={`${styles.face} ${styles.front}`}
-                style={{
-                    backgroundImage: `url(/static/images/big-small/dice-${diceNumber ? '1': "question-mark"}.png)`,
-                }}
+                style={{ backgroundImage }}
             ></div>
             <div className={`${styles.face} ${styles.back}`}></div>
             <div className={`${styles.face} ${styles.top}`}></div>
@@ -26,4 +26,4 @@ const Dice: React.FC<DiceProps> = ({ diceNumber, rolling }) => {
     );
 };
 
-export default Dice;
+export default DiceV1;

@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import styles from "./dicev2.module.scss";
+import styles from "./dice-v2.module.scss";
 
 interface DiceProps {
     diceNumber: number;
@@ -7,17 +7,13 @@ interface DiceProps {
 }
 
 const DiceV2: React.FC<DiceProps> = ({ diceNumber, rolling }) => {
+    const diceClass = useMemo(() => `dice-${diceNumber}`, [diceNumber]);
 
-    const diceClass = `dice-${diceNumber}`;    
+    const faceClass = diceNumber === 0 ? styles.dicequestionmarker : styles[diceClass];
+
     return (
-        <div className={`${styles.dice}`}>
-            {
-                diceNumber === 0 ? (
-                    <div className={`${styles.face} ${styles.dicequestionmarker}`}></div>
-                ): (
-                    <div className={`${styles.face} ${styles[diceClass]}`}></div>
-                )
-            }
+        <div className={styles.dice}>
+            <div className={`${styles.face} ${faceClass}`}></div>
         </div>
     );
 };
