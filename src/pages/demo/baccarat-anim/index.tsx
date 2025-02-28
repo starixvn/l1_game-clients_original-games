@@ -74,9 +74,11 @@ const DemoSelector: React.FC<{
             <h3>Select Demo Scenario:</h3>
             {Object.entries(categories).map(([category, title]) => {
                 const isCollapsed = collapsedCategories[category];
-                const categoryScenarios = BACCARAT_SCENARIOS.filter(scenario => scenario.category === category);
+                const categoryScenarios = BACCARAT_SCENARIOS.filter(scenario =>
+                    scenario.category === category && scenario.visible !== false
+                );
                 const hasSelectedScenario = categoryScenarios.some((_, idx) =>
-                    BACCARAT_SCENARIOS.findIndex(s => s.category === category) + idx === currentIndex
+                    BACCARAT_SCENARIOS.filter(s => s.visible !== false).findIndex(s => s.category === category) + idx === currentIndex
                 );
 
                 return (
@@ -97,7 +99,8 @@ const DemoSelector: React.FC<{
                         </div>
                         <div className={`${styles.radioGroup} ${isCollapsed ? styles.collapsed : ''}`}>
                             {categoryScenarios.map((scenario) => {
-                                const scenarioIndex = BACCARAT_SCENARIOS.findIndex(s => s.label === scenario.label);
+                                const scenarioIndex = BACCARAT_SCENARIOS.filter(s => s.visible !== false)
+                                    .findIndex(s => s.label === scenario.label);
                                 return (
                                     <label
                                         key={scenario.label}
