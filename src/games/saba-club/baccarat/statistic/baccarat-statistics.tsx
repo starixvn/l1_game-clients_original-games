@@ -38,7 +38,7 @@ export class BaccaratStatistic extends ObserverComponent<Props, IBaccaratStatist
                     <BaccaratScoreboard namespace={this.props.namespace} gameName={this.props.gameName} />
                     <BaccaratResultHistory namespace={this.props.namespace} />
                 </div>
-
+                {/* 
                 <div className={Styles["big-road-container"]}>
                     {this.state.rounds && this.state.rounds.length > 0 ? (
                         <BaccaratBigRoad
@@ -48,7 +48,7 @@ export class BaccaratStatistic extends ObserverComponent<Props, IBaccaratStatist
                     ) : (
                         <div>No rounds data available</div>
                     )}
-                </div>
+                </div> */}
             </Fragment>
         );
     }
