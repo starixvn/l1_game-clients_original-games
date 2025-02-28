@@ -108,8 +108,9 @@
     }
 
     .card-shadow {
-        width: 3.5rem;
-        height: 5rem;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
         border-radius: 4px;
     }
 }
