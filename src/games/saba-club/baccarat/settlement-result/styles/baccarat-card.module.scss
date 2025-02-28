@@ -32,6 +32,17 @@
         margin-right: 0;
     }
 
+
+    
+    &.card1, &.card3 {
+       margin-left: 10px;
+    }
+
+      
+    &.card2, &.card4 {
+        margin-right: 10px;
+     }
+     
     &.card5, &.card6 {
         &:not(.flip) {
             opacity: 0;

@@ -13,11 +13,15 @@ export const ResultStaticBaccaratCard: React.FC<StaticBaccaratCardProps> = ({
     className
 }) => {
     return (
-        <div className={`${Styles.card} ${Styles[`card`]}${className || ''}`}>
+        <div className={`${Styles.card} ${className || ''}`}>
             <div className={Styles["rotate-card"]}>
                 <div className={Styles.cardFace}>
-                    <div className={Styles["card-flip"]}>
-                        <Card result={card} customClassName={"card-baccarat"} />
+                    <div className={Styles["card-front"]}>
+                        <Card
+                            result={card}
+                            customClassName="card-baccarat"
+                            viewMode="history"
+                        />
                     </div>
                 </div>
             </div>

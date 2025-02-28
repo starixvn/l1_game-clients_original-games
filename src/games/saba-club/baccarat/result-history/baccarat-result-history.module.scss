@@ -24,9 +24,9 @@
         .header {
             height: 32px;
             display: grid;
-            grid-template-columns: 65px 65px 10px 65px  1fr;
+            grid-template-columns: 65px 75px 5px 75px  1fr;
             align-items: center;
-            padding: 2px 16px;
+            padding: 2px 5px;
             background-color: #f8f9fa;
             border-bottom: 1px solid #edf0f2;
             font-size: 16px;
@@ -57,7 +57,7 @@
         }
     
         .historyContent {
-            max-height: 190px;
+            max-height: 205px;
             overflow: auto;
             overflow-x: hidden;
             background-color: #fff6f3;
@@ -89,10 +89,10 @@
         .historyRow {
             display: flex;
             align-items: center;
-            padding: 0 16px;
+            padding: 0 5px;
             border-bottom: 1px solid #f0f0f0;
             transition: background-color 0.2s ease;
-            height: 46px;
+            height: 55px;
     
             &:hover {
                 background-color: #f8fafc;
@@ -100,7 +100,7 @@
     
             .contentWrapper {
                 display: grid;
-                grid-template-columns: 65px 65px 10px 65px 1fr;
+                grid-template-columns: 65px 75px 5px 75px 1fr;
                 align-items: center;
                 text-align: center;
                 gap: 0;

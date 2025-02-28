@@ -15,9 +15,7 @@ const Card: React.FC<Props> = (props) => {
             <img
                 src={`/static/images/cards/${nameCard}#v1`}
                 className={Styles["card-suite"]}
-                height={55}
-                width={40}
-                alt="suite"
+                alt={`${convertRank(result?.card)} of ${suffixNameMapping[result?.type]}`}
             />
         );
     };
