@@ -1,4 +1,4 @@
-@import './variables';
+@import './_variables';
 
 .score {
     --width-score: 4.5rem;
@@ -31,11 +31,11 @@
 
     &.player-score {
         right: 2rem;
-        background: linear-gradient(180deg, #65a1e7 0%, #2d6db8 100%);
+        background: #{$player-color};
     }
 
     &.banker-score {
-        background: linear-gradient(180deg, #f56566 0%, #ce333f 100%);
+        background: #{$banker-color};
         left:1.5rem;
     }
 }

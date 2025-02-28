@@ -1,19 +1,20 @@
 @import '../styles/overrides';
 
-// Move variables to a local class
-.round-history {
-    // Baccarat-specific variables
-    --baccarat-player-bg: #315dc5;
-    --baccarat-player-border: #357abd;
-    --baccarat-banker-bg: linear-gradient(180deg, #ff5661, #be1c28);
-    --baccarat-banker-border: #c0392b;
-    --baccarat-tie-bg: #27ae60;
-    --baccarat-tie-border: #219a52;
+.variables {
+    --baccarat-player-bg: linear-gradient(0deg, #{$player-color-start} 0%, #{$player-color-end} 100%);
+    --baccarat-player-border: #{$player-color-end};
+    --baccarat-banker-bg: linear-gradient(0deg, #{$banker-color-start} 6.041653826832771%, #{$banker-color-end} 100%);
+    --baccarat-banker-border: #{$banker-color-end};
+    --baccarat-tie-bg: linear-gradient(0deg, #{$tie-color-start} 6.041653826832771%, #{$tie-color-end} 100%);
+    --baccarat-tie-border: #{$tie-color-end};
     --baccarat-next-bg: #f0f0f0;
     --baccarat-next-border: #ddd;
     --baccarat-text-light: #fff;
-    --baccarat-text-dark: #666;
+    --baccarat-text-dark: #212529;
+}
 
+.round-history {
+    composes: variables;
     background-color: #fce0d7;
     padding: 8px 12px;
     border-radius: 4px;
@@ -25,8 +26,9 @@
 
         > span:first-child {
             color: var(--baccarat-text-dark);
-            font-size: 14px;
+            font-size: 13px;
             margin-right: 8px;
+            font-weight: bold;
         }
     }
 

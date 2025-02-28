@@ -1,4 +1,4 @@
-@import '../../../../styles/_overrides';
+@import '../../../../../styles/overrides';
 
 .variables {
     --cell-size: 32px;
@@ -7,9 +7,9 @@
     --scoreboard-bg: transparent;
     --content-bg: #274980;
     --title-color: #ffffff;
-    --player-color: #4a90e2;
-    --banker-color: #e74c3c;
-    --tie-color: #f1c40f;
+    --player-color: #{$player-color};
+    --banker-color: #{$banker-color};
+    --tie-color: #{$tie-color};
     --percentage-bg: #274980;
 }
 
@@ -165,4 +165,16 @@
     50% {
         opacity: 0.3;
     }
+}
+
+.player {
+    background: #{$player-color};
+}
+
+.banker {
+    background: #{$banker-color};
+}
+
+.tie {
+    background: #{$tie-color};
 } 

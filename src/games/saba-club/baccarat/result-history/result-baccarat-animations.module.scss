@@ -1,7 +1,8 @@
 @use "sass:math" as math;
 @use "sass:map";
-@import "../settlement-result/styles/variables";
-@import "../settlement-result/styles/mixins";
+@import "../settlement-result/styles/_variables";
+@import "../settlement-result/styles/_mixins";
+@import '../styles/_overrides';
 
 .animation-container {
     top: 0.3rem;

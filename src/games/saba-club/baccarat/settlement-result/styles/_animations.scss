@@ -1,6 +1,6 @@
 @use "sass:math" as math;
 @use "sass:map";
-@import "./variables";
+@import "./_variables";
 
 // Card animations
 @keyframes hide-card-back-animation {

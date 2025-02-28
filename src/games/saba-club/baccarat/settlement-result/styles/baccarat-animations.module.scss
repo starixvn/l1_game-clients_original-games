@@ -1,8 +1,8 @@
 @use "sass:math" as math;
 @use "sass:map";
-@import "./variables";
-@import "./mixins";
-@import "./animations";
+@import "./_variables";
+@import "./_mixins";
+@import "./_animations";
 
 $time-draw-card-animation: 0.8s;
 $time-open-card-animation: 1.2s;

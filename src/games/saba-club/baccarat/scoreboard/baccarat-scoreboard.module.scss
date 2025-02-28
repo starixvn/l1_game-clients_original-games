@@ -1,4 +1,4 @@
-@import '../styles/overrides';
+@import '../styles/_overrides';
 
 .scoreboard {
     padding: 10px;
@@ -83,18 +83,18 @@
             }
 
             .dot-player {
-                background: linear-gradient(180deg, #ff5661, #be1c28);
-                color: whitesmoke;
+                @include player-gradient;
+                border: 1px solid #{$player-color-end};
             }
 
             .dot-banker {
-                background: linear-gradient(180deg, #f7f7f7, #b5b5b5);
-                color: black;
+                @include banker-gradient;
+                border: 1px solid #{$banker-color-end};
             }
 
             .dot-tie {
-                background: #274980;
-                color: whitesmoke;
+                @include tie-gradient;
+                border: 1px solid #{$tie-color-end};
             }
 
             .dot-blink {

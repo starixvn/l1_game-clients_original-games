@@ -1,3 +1,5 @@
+@import '../../styles/_overrides';
+
 // Animation Timings
 $timings: (
     'draw-card': 0.8s,
@@ -43,12 +45,12 @@ $score: (
     ),
     'colors': (
         'player': (
-            'start': #65a1e7,
-            'end': #2d6db8
+            'start': #{$player-color-start},
+            'end': #{$player-color-end}
         ),
         'banker': (
-            'start': #f56566,
-            'end': #ce333f
+            'start': #{$banker-color-start},
+            'end': #{$banker-color-end}
         )
     )
 ) !default;
@@ -70,9 +72,17 @@ $card: (
 
 // Colors
 $colors: (
+    'player': (
+        'start': #{$player-color-start},
+        'end': #{$player-color-end}
+    ),
+    'banker': (
+        'start': #{$banker-color-start},
+        'end': #{$banker-color-end}
+    ),
     'text': (
-        'player': #0066ff,
-        'banker': #ff0000
+        'player': #{$player-color},
+        'banker': #{$banker-color}
     ),
     'button': (
         'primary': #3498db,

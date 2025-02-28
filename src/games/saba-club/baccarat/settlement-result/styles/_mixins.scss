@@ -1,6 +1,6 @@
 @use "sass:math" as math;
 @use "sass:map";
-@import "./variables";
+@import "./_variables";
 
 // Media query mixin
 @mixin respond-to($breakpoint) {

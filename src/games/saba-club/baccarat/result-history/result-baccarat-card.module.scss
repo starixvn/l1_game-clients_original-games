@@ -1,5 +1,6 @@
 @use "sass:math";
-@import "../settlement-result/styles/variables";
+@import "../settlement-result/styles/_variables";
+@import '../styles/_overrides';
 
 // Base card styles
 .card {

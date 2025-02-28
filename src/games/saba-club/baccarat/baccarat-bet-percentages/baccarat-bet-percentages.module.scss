@@ -1,3 +1,5 @@
+@import '../styles/overrides';
+
 .baccarat-percentages {
     display: flex;
     align-items: center;
@@ -31,28 +33,43 @@
    
     
     &.player {
-        background-color: #0066FF;
+        @include player-gradient;
+        border: 1px solid #{$player-color-end};
     }
     
     &.banker {
-        background-color: #FF0000;
+        @include banker-gradient;
+        border: 1px solid #{$banker-color-end};
     }
     
     &.tie {
-        background-color: #00FF00;
+        @include tie-gradient;
+        border: 1px solid #{$tie-color-end};
     }
     
     &.player-pair {
         background: white;
-        border: 2px solid #0066FF;
+        border: 2px solid #{$player-color-end};
     }
     
     &.banker-pair {
         background: white;
-        border: 2px solid #FF0000;
+        border: 2px solid #{$banker-color-end};
     }
 }
 
 .count {
     margin-left: 4px;
+}
+
+.player-border {
+    border: 2px solid #{$player-color-end};
+}
+
+.banker-border {
+    border: 2px solid #{$banker-color-end};
+}
+
+.tie-border {
+    border: 2px solid #{$tie-color-end};
 } 
