@@ -3,15 +3,26 @@ import React from "react";
 import { RoundHistoryStore } from "@sg/sg-game-client/dist/game/round-histories";
 import { RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds";
 import { render } from "@sg/sg-observer";
-import { observer } from '@sg/sg-observer';
-import { ObserverComponent, type IPropsObserver, type IStateObserver } from "../../../../_shared/components/observer-component/observer-component";
-import { setting } from "../game-settings";
+import { observer } from "@sg/sg-observer";
+import {
+    ObserverComponent,
+    type IPropsObserver,
+    type IStateObserver,
+} from "../../../../_shared/components/observer-component/observer-component";
 import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
 import { BigSmallResult } from "../type";
 import { SettlementStore } from "@sg/sg-game-client/dist/game/settlements";
 import { gameStateService } from "./services/game-state.service";
 import { Loading } from "../../baccarat/settlement-result/components/loading";
 import { ErrorBoundary } from "../../baccarat/settlement-result/components/error-boundary";
+import styles from "./styles.module.scss";
+import { DiceDisplay } from "./components/dice-display";
+
+const DEFAULT_RESULT: BigSmallResult = {
+    dice1: 0,
+    dice2: 0,
+    dice3: 0,
+};
 
 export interface IBigSmallSettlementResultState extends IStateObserver {
     result?: BigSmallResult;
@@ -29,7 +40,7 @@ export default class BigSmallSettlementResult extends ObserverComponent<IPropsOb
             result: {
                 dice1: 0,
                 dice2: 0,
-                dice3: 0
+                dice3: 0,
             },
             roundState: "",
             isAnimationResult: false,
@@ -75,18 +86,24 @@ export default class BigSmallSettlementResult extends ObserverComponent<IPropsOb
     }
 
     private renderDiceDisplay() {
-        const {result, isAnimationResult, roundState} = this.state;
+        const { result, isAnimationResult, roundState } = this.state;
 
         if (!result || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET) {
-            return <>
-                0 0 0
-            </>
+            return (
+                <div className={styles.settlementContainer}>
+                    <DiceDisplay
+                        result={DEFAULT_RESULT}
+                        isAnimationResult={false}
+                    />
+                </div>
+            );
         }
+
         return (
-            <>
-                {result.dice1} {result.dice2} {result.dice3}
-            </>
-        )
+            <div className={styles.settlementContainer}>
+                <DiceDisplay result={result} isAnimationResult={isAnimationResult} />
+            </div>
+        );
     }
 
     private renderContent(): JSX.Element {
@@ -100,20 +117,10 @@ export default class BigSmallSettlementResult extends ObserverComponent<IPropsOb
             return <Loading message="Loading game results..." />;
         }
 
-        return (
-            // <div className={Styles['settlement-container']}>
-            <div>
-                {this.renderDiceDisplay()}
-            </div>
-        );
+        return <div>{this.renderDiceDisplay()}</div>;
     }
 
     render(): JSX.Element {
-        return (
-            <ErrorBoundary>
-                {this.renderContent()}
-            </ErrorBoundary>
-        );
+        return <ErrorBoundary>{this.renderContent()}</ErrorBoundary>;
     }
-
 }

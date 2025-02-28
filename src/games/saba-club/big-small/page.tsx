@@ -13,9 +13,14 @@ import Header from "./header";
 import { BigSmallSettlementResult } from "./settlement-result";
 import { BigSmallRoundHistory } from "./round-history";
 import { BigSmallBetOptions } from "./bet-option";
-
+import styles from "./bigsmall.module.scss";
+import { BigSmallStatistic } from "./statistic";
 @observer(setting.mainObserverNamespace)
 export default class BigSmall extends GatewayGameBase<GameBaseProps, IGameBaseState> {
+    override overrideClasses = {
+        blockWrapper: styles["block-wrapper"]
+    }
+
     constructor(props: GameBaseProps) {
         super(props);
         this.state = {
@@ -63,8 +68,12 @@ export default class BigSmall extends GatewayGameBase<GameBaseProps, IGameBaseSt
         return <BigSmallSettlementResult namespace={this.props.namespace} />;
     }
 
+    // renderStatistic() {
+    //     return <SedieStatistic namespace={this.props.namespace} gameName={setting.gameName} />;
+    // }
+
     renderStatistic() {
-        return <SedieStatistic namespace={this.props.namespace} gameName={setting.gameName} />;
+        return <BigSmallStatistic namespace={this.props.namespace} gameName={setting.gameName} />;
     }
 
     async showResult(

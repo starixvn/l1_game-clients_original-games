@@ -12,15 +12,13 @@ const animationVersion = {
 type DiceControlsProps = {
     rollDice: () => void;
     resetDice: () => void;
-    rolling: boolean;
 };
 
-const DiceControls: React.FC<DiceControlsProps> = ({ rollDice, resetDice, rolling }) => (
+const DiceControls: React.FC<DiceControlsProps> = ({ rollDice, resetDice }) => (
     <div className={styles.buttons}>
         <button
             className={styles.roll}
             onClick={rollDice}
-            disabled={rolling}
             aria-label="Roll Dice"
         >
             Roll Dice
@@ -67,7 +65,7 @@ const BigSmallAnimDemo: React.FC = () => {
 
         const intervalId = setInterval(() => {
             setDiceNumbers(getRandomDiceNumbers());
-        }, 80);
+        }, 300);
 
         setTimeout(() => {
             clearInterval(intervalId);
@@ -75,7 +73,7 @@ const BigSmallAnimDemo: React.FC = () => {
             setDiceNumbers(newDiceNumbers);
             setTotalDiceNumber(calculateTotalDiceNumber(newDiceNumbers));
             setRolling(false);
-        }, 1000);
+        }, 1500);
     }, [rolling]);
 
     const resetDice = useCallback(() => {
@@ -88,7 +86,7 @@ const BigSmallAnimDemo: React.FC = () => {
             selectedAnimation === animationVersion.v1 ? (
                 <DiceV1 key={index} diceNumber={number} rolling={rolling} />
             ) : (
-                <DiceV2 key={index} diceNumber={number} rolling={rolling} />
+                <DiceV2 key={index} diceNumber={number}/>
             )
         ))
     ), [diceNumbers, rolling, selectedAnimation]);
@@ -104,7 +102,7 @@ const BigSmallAnimDemo: React.FC = () => {
                 {renderDice}
                 <div className={styles.diceResult}>{totalDiceNumber}</div>
             </div>
-            <DiceControls rollDice={rollDice} resetDice={resetDice} rolling={rolling} />
+            <DiceControls rollDice={rollDice} resetDice={resetDice} />
         </div>
     );
 };

@@ -280,6 +280,10 @@
         "game_vendor": "SABA.games",
         "game_name": "Big Small",
         "big": "Big",
-        "small": "Small"
+        "small": "Small",
+        "glossary_big": "Big",
+        "glossary_small": "Small",
+        "beadboard_big": "B",
+        "beadboard_small": "S"
     }
 }

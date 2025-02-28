@@ -5,7 +5,6 @@ import OwnBet from "../../../../_shared/components/bet-option/own-bet";
 import TotalBet from "../../../../_shared/components/bet-option/total-bet";
 import Styles from "./big-small-options.module.scss";
 import { BigSmallChoices } from "../type";
-import { getGameSetting } from "../../../../_shared/app-settings";
 import * as gc from "@sg/sg-game-client";
 
 interface BetOptionProps {

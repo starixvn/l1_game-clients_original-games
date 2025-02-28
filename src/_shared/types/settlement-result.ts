@@ -8,4 +8,9 @@ export type OddEvenSettlementResult = {
     even: boolean;
 };
 
-export const choices = { over: "over", under: "under", odd: "odd", even: "even" };
+export type BigSmallSettlementResult = {
+    big: boolean;
+    small: boolean;
+};
+
+export const choices = { over: "over", under: "under", odd: "odd", even: "even", big: "big", small: "small" };

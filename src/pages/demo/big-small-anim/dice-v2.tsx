@@ -3,10 +3,9 @@ import styles from "./dice-v2.module.scss";
 
 interface DiceProps {
     diceNumber: number;
-    rolling: boolean;
 }
 
-const DiceV2: React.FC<DiceProps> = ({ diceNumber, rolling }) => {
+const DiceV2: React.FC<DiceProps> = ({ diceNumber }) => {
     const diceClass = useMemo(() => `dice-${diceNumber}`, [diceNumber]);
 
     const faceClass = diceNumber === 0 ? styles.dicequestionmarker : styles[diceClass];
