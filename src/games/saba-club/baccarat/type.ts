@@ -14,8 +14,6 @@ export interface BaccaratSettlementResult {
     tie: boolean;
     playerPair: boolean;
     bankerPair: boolean;
-    big: boolean;
-    small: boolean;
 }
 
 export interface BaccaratRoadConverterResult {

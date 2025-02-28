@@ -2,15 +2,12 @@ import * as gc from "@sg/sg-game-client";
 import { Result, CardOrder } from "./baccarat";
 import { sumScore } from "./settlement-result/components/score-utils";
 
-
 export const Choices = {
     banker: "banker",
     player: "player",
-    big: "big",
-    small: "small",
     tie: "tie",
-    bankerPair: "B.Pair",
-    playerPair: "P.Pair",
+    bankerPair: "bankerPair",
+    playerPair: "playerPair",
 };
 
 export const BaccaratConfigs = {
@@ -18,30 +15,27 @@ export const BaccaratConfigs = {
         {
             name: "player",
             style: "player",
+            label: () => gc.Translator.t('Baccarat.glossary_player')
         },
         {
             name: "tie",
             style: "tie",
+            label: () => gc.Translator.t('Baccarat.glossary_tie')
         },
         {
             name: "banker",
             style: "banker",
-        },
-        {
-            name: "big",
-            style: "big",
-        },
-        {
-            name: "small",
-            style: "small",
+            label: () => gc.Translator.t('Baccarat.glossary_banker')
         },
         {
             name: "playerPair",
             style: "player-pair",
+            label: () => gc.Translator.t('Baccarat.glossary_playerPair')
         },
         {
             name: "bankerPair",
             style: "bank-pair",
+            label: () => gc.Translator.t('Baccarat.glossary_bankerPair')
         },
     ],
 };
@@ -57,15 +51,7 @@ export const StatisticRuleEntriesBankerPlayer = Object.entries({
         (countResult[Choices.tie] ? Math.round((countResult[Choices.tie] * 100) / total) : 0),
 });
 
-export const StatisticRuleEntriesBigSmall = Object.entries({
-    [Choices.big]: (countResult: object, total: number) =>
-        countResult[Choices.big] ? Math.round((countResult[Choices.big] * 100) / total) : 0,
-
-    [Choices.small]: (countResult: object, total: number) =>
-        100 - (countResult[Choices.big] ? Math.round((countResult[Choices.big] * 100) / total) : 0),
-});
-
-export const StatisticRuleMapping = [StatisticRuleEntriesBankerPlayer, StatisticRuleEntriesBigSmall];
+export const StatisticRuleMapping = [StatisticRuleEntriesBankerPlayer];
 
 export const CardAnimationConfig = {
     baseDelay: 50,
@@ -173,23 +159,18 @@ export const GetBankerCardsResult = (result: Result): CardOrderWithTiming[] => {
     return bankerCards;
 };
 
-export const GetTranslateChoiceMapping = (gameName = "baccarat") => {
+export const GetTranslateChoiceMapping = (gameName = "Baccarat") => {
     return {
-        player: gc.Translator.t(`${gameName}:player`),
-        banker: gc.Translator.t(`${gameName}:banker`),
-        tie: gc.Translator.t(`${gameName}:tie`),
-        playerPair: gc.Translator.t(`${gameName}:playerPair`),
-        bankerPair: gc.Translator.t(`${gameName}:bankerPair`),
-        big: gc.Translator.t(`${gameName}:big`),
-        small: gc.Translator.t(`${gameName}:small`),
+        player: gc.Translator.t(`${gameName}.glossary_player`),
+        banker: gc.Translator.t(`${gameName}.glossary_banker`),
+        tie: gc.Translator.t(`${gameName}.glossary_tie`),
+        playerPair: gc.Translator.t(`${gameName}.glossary_playerPair`),
+        bankerPair: gc.Translator.t(`${gameName}.glossary_bankerPair`),
     };
 };
 
 export const ChoiceForTabActive = [
     {
         choice: ["banker", "player", "tie"],
-    },
-    {
-        choice: ["big", "small"],
-    },
+    }
 ];

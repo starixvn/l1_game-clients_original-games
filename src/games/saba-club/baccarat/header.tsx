@@ -3,6 +3,7 @@ import { GameHeader } from '../../../_shared/components/game-base/game-header/ga
 import styles from './baccarat.module.scss';
 import classNames from 'classnames';
 import GameHeaderCenterTexts from '../../../_shared/components/game-base/game-header/game-header-center-texts';
+import * as gc from "@sg/sg-game-client";
 
 interface BaccaratHeaderProps {
     gameId: number;
@@ -19,7 +20,11 @@ const BaccaratHeader: React.FC<BaccaratHeaderProps> = ({ gameId, isExpanded, onT
                 gameId={gameId}
                 isExpanded={isExpanded}
                 onToggleExpand={onToggleExpand}
-                centerTextsComponent={<GameHeaderCenterTexts texts={["Player/Banker", "Tie", "Pair"]} />}
+                centerTextsComponent={<GameHeaderCenterTexts texts={[
+                    gc.Translator.t('Baccarat.glossary_player') + '/' + gc.Translator.t('Baccarat.glossary_banker'),
+                    gc.Translator.t('Baccarat.glossary_tie'),
+                    gc.Translator.t('Baccarat.glossary_playerPair') + '/' + gc.Translator.t('Baccarat.glossary_bankerPair')
+                ]} />}
                 className={styles.baccaratGameTitle}
             />
         </div>

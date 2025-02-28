@@ -54,7 +54,7 @@ $winner-delay-base: 1s; // Delay after last card before showing winner
 .player {
     @extend %player-banker-base;
     justify-self: flex-end;
-    margin-left: 10px;
+  
 
     .score {
         margin-left: 50%;

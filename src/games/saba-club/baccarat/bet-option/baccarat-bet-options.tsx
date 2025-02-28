@@ -10,6 +10,7 @@ import OwnBet from "../../../../_shared/components/bet-option/own-bet";
 import TotalBet from "../../../../_shared/components/bet-option/total-bet";
 import { IPropsObserver } from "../../../../_shared/components/observer-component/observer-component";
 import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
+import * as gc from "@sg/sg-game-client";
 
 interface IBaccaratBetOptionsProps extends IPropsObserver {
     previousWinningBet?: IBaccaratBet['type'];
@@ -83,7 +84,7 @@ export default class BaccaratBetOptions extends BetOptions {
                 <div className={styles['main-bets-container']}>
                     <div className={`${styles['bet-option']} ${previousWinningBet === 'player' ? styles['winning-bet'] : ''}`}>
                         {this.renderBetOption({
-                            name: 'Player',
+                            name: gc.Translator.t('Baccarat.glossary_player'),
                             odd: odds?.player,
                             betChoice: 'player',
                             fractional: !!fractional,
@@ -94,7 +95,7 @@ export default class BaccaratBetOptions extends BetOptions {
                     </div>
                     <div className={`${styles['bet-option']} ${previousWinningBet === 'banker' ? styles['winning-bet'] : ''}`}>
                         {this.renderBetOption({
-                            name: 'Banker',
+                            name: gc.Translator.t('Baccarat.glossary_banker'),
                             odd: odds?.banker,
                             betChoice: 'banker',
                             fractional: !!fractional,
@@ -107,7 +108,7 @@ export default class BaccaratBetOptions extends BetOptions {
                 <div className={styles['tie-container']}>
                     <div className={`${styles['bet-option']} ${previousWinningBet === 'tie' ? styles['winning-bet'] : ''}`}>
                         {this.renderBetOption({
-                            name: 'Tie',
+                            name: gc.Translator.t('Baccarat.glossary_tie'),
                             odd: odds?.tie,
                             betChoice: 'tie',
                             fractional: !!fractional,
@@ -120,7 +121,7 @@ export default class BaccaratBetOptions extends BetOptions {
                 <div className={styles['pair-container']}>
                     <div className={`${styles['bet-option']} ${previousWinningBet === 'playerPair' ? styles['winning-bet'] : ''}`}>
                         {this.renderBetOption({
-                            name: 'P.Pair',
+                            name: gc.Translator.t('Baccarat.glossary_playerPair'),
                             odd: odds?.playerPair,
                             betChoice: 'playerPair',
                             fractional: !!fractional,
@@ -131,7 +132,7 @@ export default class BaccaratBetOptions extends BetOptions {
                     </div>
                     <div className={`${styles['bet-option']} ${previousWinningBet === 'bankerPair' ? styles['winning-bet'] : ''}`}>
                         {this.renderBetOption({
-                            name: 'B.Pair',
+                            name: gc.Translator.t('Baccarat.glossary_bankerPair'),
                             odd: odds?.bankerPair,
                             betChoice: 'bankerPair',
                             fractional: !!fractional,

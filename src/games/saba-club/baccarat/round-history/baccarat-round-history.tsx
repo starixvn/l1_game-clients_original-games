@@ -53,9 +53,7 @@ export default class BaccaratRoundHistory extends ObserverComponent<IPropsObserv
             banker: false,
             tie: false,
             playerPair: false,
-            bankerPair: false,
-            big: false,
-            small: false
+            bankerPair: false
         };
 
         if (settlementResult && typeof settlementResult === "object") {
@@ -76,8 +74,6 @@ export default class BaccaratRoundHistory extends ObserverComponent<IPropsObserv
                 const data = gameData as Record<string, unknown>;
                 result.playerPair = !!data.playerPair;
                 result.bankerPair = !!data.bankerPair;
-                result.big = !!data.big;
-                result.small = !!data.small;
             }
         }
 

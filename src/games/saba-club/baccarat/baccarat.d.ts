@@ -3,11 +3,9 @@ import { GameBaseState } from "../../shared/game-base/type";
 export type SettlementResult = {
     banker: boolean;
     bankerPair: boolean;
-    big: boolean;
     natural: boolean;
     player: boolean;
     playerPair: boolean;
-    small: boolean;
     tie: boolean;
 };
 
@@ -33,8 +31,6 @@ export type Odd = {
     big: number;
     player: number;
     playerPair: number;
-    small: number;
-    tie: number;
 };
 
 export type CardOrder = {

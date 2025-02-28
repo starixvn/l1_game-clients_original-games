@@ -1,2 +1,1 @@
-export * from './baccarat-scoreboard';
-export * from './baccarat-road-converter'; 
+export * from './baccarat-scoreboards';
