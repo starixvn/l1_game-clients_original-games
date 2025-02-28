@@ -63,14 +63,14 @@ export class BaccaratBigRoad extends ObserverComponent<Props, IBaccaratBigRoadSt
         }
     }
 
-    private getDotClass = (status: boolean): string => {
-        const { positiveItemContent, negativeItemContent } = DEFAULT_CONFIG.dotClassName;
-        return status ? styles[positiveItemContent] : styles[negativeItemContent];
-    };
-
-    private getCharacter = (status: boolean): string => {
-        const { positiveItemContent, negativeItemContent } = DEFAULT_CONFIG.character;
-        return status ? positiveItemContent : negativeItemContent;
+    private getDotImage = (status: boolean, isBlink: boolean, hasPair: boolean = false): string => {
+        if (isBlink) {
+            return '/static/images/baccarat/scoreboard/big-road/Rectangle 9391.png';
+        }
+        if (hasPair) {
+            return `/static/images/baccarat/scoreboard/big-road/${status ? 'player' : 'banker'}-pair.png`;
+        }
+        return `/static/images/baccarat/scoreboard/big-road/${status ? 'player' : 'banker'}.png`;
     };
 
     private processRounds = (rounds: gc.RoundHistories.RoundHistory[]) => {
@@ -126,17 +126,7 @@ export class BaccaratBigRoad extends ObserverComponent<Props, IBaccaratBigRoadSt
                                         );
                                     }
 
-                                    const blinkDot = <div className={styles["dot-blink"]} />;
-                                    const dot = (
-                                        <div className={this.getDotClass(cell.status)}>
-                                            {this.getCharacter(cell.status)}
-                                            {cell.ties > 0 && (
-                                                <span className={styles["tie-count"]}>
-                                                    {cell.ties}
-                                                </span>
-                                            )}
-                                        </div>
-                                    );
+                                    const imagePath = this.getDotImage(cell.status, cell.isBlink, cell.hasPair);
 
                                     return (
                                         <div
@@ -147,7 +137,14 @@ export class BaccaratBigRoad extends ObserverComponent<Props, IBaccaratBigRoadSt
                                             }}
                                             key={`${rowIndex}_${colIndex}`}
                                         >
-                                            {cell.isBlink ? blinkDot : dot}
+                                            <div className={styles["dot-image"]}>
+                                                <img src={imagePath} alt={cell.status ? "Player" : "Banker"} />
+                                                {cell.ties > 0 && (
+                                                    <span className={styles["tie-count"]}>
+                                                        {cell.ties}
+                                                    </span>
+                                                )}
+                                            </div>
                                         </div>
                                     );
                                 })}

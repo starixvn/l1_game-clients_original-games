@@ -5,6 +5,7 @@ export interface GridCell {
     status: boolean;  // true for Player, false for Banker
     isBlink?: boolean;
     ties?: number;
+    hasPair?: boolean;
 }
 
 export interface BaccaratSettlementResult {
@@ -64,13 +65,15 @@ export const organizeDataForBigRoad = (
 
         const isPlayer = result.player;
         const isMostRecent = index === 0; // Since we're processing reversed array
+        const hasPair = isPlayer ? result.playerPair : result.bankerPair;
 
         // First result
         if (lastResult === null) {
             grid[0][0] = {
                 status: isPlayer,
                 ties: tieCount,
-                isBlink: isMostRecent && shouldBlink
+                isBlink: isMostRecent && shouldBlink,
+                hasPair
             };
             lastResult = isPlayer;
             lastCol = 0;
@@ -105,7 +108,8 @@ export const organizeDataForBigRoad = (
         grid[currentRow][currentCol] = {
             status: isPlayer,
             ties: tieCount,
-            isBlink: isMostRecent && shouldBlink
+            isBlink: isMostRecent && shouldBlink,
+            hasPair
         };
         lastResult = isPlayer;
         tieCount = 0;

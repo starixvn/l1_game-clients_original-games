@@ -35,11 +35,15 @@ export class BaccaratStatistic extends ObserverComponent<Props, IBaccaratStatist
         return (
             <Fragment>
                 <div className={`${Styles["statistic"]}`}>
-                    <BaccaratScoreboard namespace={this.props.namespace} gameName={this.props.gameName} />
+                    {/* <BaccaratScoreboard namespace={this.props.namespace} gameName={this.props.gameName} /> */}
+
+                    <BaccaratBigRoad
+                        namespace={this.props.namespace}
+                        gameName={this.props.gameName}
+                    />
                     <BaccaratResultHistory namespace={this.props.namespace} />
                 </div>
-                {/* 
-                <div className={Styles["big-road-container"]}>
+                {/* <div className={Styles["big-road-container"]}>
                     {this.state.rounds && this.state.rounds.length > 0 ? (
                         <BaccaratBigRoad
                             namespace={this.props.namespace}
