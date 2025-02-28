@@ -51,36 +51,26 @@
     .baccarat-dot {
         width: 24px !important;
         height: 24px !important;
-        border-radius: 50% !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        font-size: 14px !important;
-        font-weight: bold !important;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
-
-        &.player {
-            background: var(--baccarat-player-bg) !important;
-            color: var(--baccarat-text-light) !important;
-            border: 1px solid var(--baccarat-player-border) !important;
+        
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
-        &.banker {
-            background: var(--baccarat-banker-bg) !important;
-            color: var(--baccarat-text-light) !important;
-            border: 1px solid var(--baccarat-banker-border) !important;
-        }
-
-        &.tie {
-            background: var(--baccarat-tie-bg) !important;
-            color: var(--baccarat-text-light) !important;
-            border: 1px solid var(--baccarat-tie-border) !important;
+        &.player, &.banker, &.tie {
+            background: none !important;
+            border: none !important;
+            box-shadow: none !important;
         }
 
         &.next {
             background: var(--baccarat-next-bg) !important;
-            color: var(--baccarat-text-dark) !important;
             border: 1px solid var(--baccarat-next-border) !important;
+            color: var(--baccarat-text-dark) !important;
         }
     }
 }

@@ -89,15 +89,13 @@ export default class BaccaratRoundHistory extends ObserverComponent<IPropsObserv
             return <></>;
         }
         const settlement = this.getSettlementResult(roundHistory.settlementResult);
+        const beadPath = `/static/images/baccarat/scoreboard/indicator/${settlement.winner}-bead.png`;
 
         return (
             <Stack key={roundHistory.roundId} direction="horizontal" gap={1} className={Styles["history-item"]}>
-                <RoundDot
-                    choice={settlement.winner}
-                    size="large"
-                    value={settlement.winner.charAt(0).toUpperCase()}
-                    className={`${Styles["baccarat-dot"]} ${Styles[settlement.winner]}`}
-                />
+                <div className={`${Styles["baccarat-dot"]} ${Styles[settlement.winner]}`}>
+                    <img src={beadPath} alt={settlement.winner} width="24" height="24" />
+                </div>
                 <span className={Styles["arrow"]}></span>
             </Stack>
         );

@@ -2,10 +2,8 @@
     border-right: 1px solid #ebe4e4; /* Border for each grid item */
     border-bottom: 1px solid #ebe4e4; /* Border for each grid item */
     position: relative;
-    display: -moz-box;
     display: flex;
-    -moz-box-align: center;
-    -moz-box-pack: center;
+    align-items: center;
     justify-content: center;
     font: 0.5rem var(--font-number);
     pointer-events: none;
@@ -13,6 +11,23 @@
     z-index: 1;
     font-size: 0.9rem;
     padding: 4px;
+    width: 32px;
+    height: 32px;
+    box-sizing: border-box;
+}
+
+.dot-image {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
 }
 
 .dot-even,

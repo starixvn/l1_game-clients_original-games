@@ -116,6 +116,12 @@ export class BaccaratScoreboard extends ObserverComponent<Props, IBaccaratScoreb
             negativeItemContent: "dot-banker"
         };
 
+        const imageConfig = {
+            positiveImage: '/static/images/baccarat/scoreboard/big-road/player.png',
+            negativeImage: '/static/images/baccarat/scoreboard/big-road/banker.png',
+            blinkImage: '/static/images/baccarat/scoreboard/big-road/Rectangle 9391.png'
+        };
+
         return (
             <div className={Styles.scoreboard}>
                 <div className={Styles["scoreboard-title"]}>Scoreboard</div>
@@ -134,6 +140,8 @@ export class BaccaratScoreboard extends ObserverComponent<Props, IBaccaratScoreb
                         rows={rows}
                         scoreboardCharacter={scoreboardCharacter}
                         scoreboardDotClassName={scoreboardDotClassName}
+                        useImages={true}
+                        imageConfig={imageConfig}
                     />
                 </div>
             </div>

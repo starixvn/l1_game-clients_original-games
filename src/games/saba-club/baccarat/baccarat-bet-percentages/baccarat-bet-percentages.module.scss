@@ -22,39 +22,22 @@
 }
 
 .indicator {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
+    width: 24px;
+    height: 24px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     margin-right: 4px;
-    font-weight: bold;
-   
     
-    &.player {
-        @include player-gradient;
-        border: 1px solid #{$player-color-end};
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
     }
     
-    &.banker {
-        @include banker-gradient;
-        border: 1px solid #{$banker-color-end};
-    }
-    
-    &.tie {
-        @include tie-gradient;
-        border: 1px solid #{$tie-color-end};
-    }
-    
-    &.player-pair {
-        background: white;
-        border: 2px solid #{$player-color-end};
-    }
-    
-    &.banker-pair {
-        background: white;
-        border: 2px solid #{$banker-color-end};
+    &.player, &.banker, &.tie, &.player-pair, &.banker-pair {
+        background: none;
+        border: none;
     }
 }
 
