@@ -3,6 +3,7 @@ import Card from "../../../../../_shared/components/card";
 import { CardOrder } from "../../baccarat";
 import Styles from "../styles/baccarat-card.module.scss";
 import CardBack from "../../../../../_shared/components/card/card-back";
+import { CARD_TIMINGS } from '../constants';
 
 interface BaccaratCardProps {
     card: CardOrder;
@@ -10,12 +11,6 @@ interface BaccaratCardProps {
     isShowResult: boolean;
     onCardFlip?: (card: CardOrder, accumulatedScore: number) => void;
 }
-
-// Define fixed timings for card pairs
-const FIRST_PAIR_TIME = 0;    // Immediate for cards 1 and 3
-const SECOND_PAIR_TIME = 300; // For cards 2 and 4
-const THIRD_CARD_TIME = 1400;
-const FOURTH_CARD_TIME = 2100;
 
 export const BaccaratCard: React.FC<BaccaratCardProps> = ({
     card,
@@ -42,16 +37,29 @@ export const BaccaratCard: React.FC<BaccaratCardProps> = ({
 
     useEffect(() => {
         if (isShowResult) {
-            // Group cards for simultaneous opening
+            // Sequential card opening
             let delay;
-            if (card.order === 1 || card.order === 3) { // First and third cards together
-                delay = FIRST_PAIR_TIME;
-            } else if (card.order === 2 || card.order === 4) { // Second and fourth cards together
-                delay = SECOND_PAIR_TIME;
-            } else if (card.order === 5) {
-                delay = THIRD_CARD_TIME;
-            } else {
-                delay = FOURTH_CARD_TIME;
+            switch (card.order) {
+                case 1:
+                    delay = CARD_TIMINGS.CARD_1;
+                    break;
+                case 3:
+                    delay = CARD_TIMINGS.CARD_3;
+                    break;
+                case 2:
+                    delay = CARD_TIMINGS.CARD_2;
+                    break;
+                case 4:
+                    delay = CARD_TIMINGS.CARD_4;
+                    break;
+                case 5:
+                    delay = CARD_TIMINGS.CARD_5;
+                    break;
+                case 6:
+                    delay = CARD_TIMINGS.CARD_6;
+                    break;
+                default:
+                    delay = 0;
             }
 
             const flipTimer = setTimeout(() => {

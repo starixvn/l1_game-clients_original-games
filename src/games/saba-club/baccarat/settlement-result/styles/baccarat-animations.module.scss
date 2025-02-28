@@ -5,21 +5,26 @@
 @import "./animations";
 
 $time-draw-card-animation: 0.8s;
-$time-open-card-animation: 1.8s;
+$time-open-card-animation: 1.2s;
 $time-zoom-in-card-animation: 0.4s;
-$time-show-score-animation: 0.2s;
-$time-blink-score-animation: 0.3s;
+$time-show-score-animation: 0.3s;
+$time-blink-score-animation: 0.4s;
 $time-move-left-player: 0.4s;
 
-$time-delay-open-card-2: 0.2s;
-$time-delay-open-card-4: $time-delay-open-card-2 + 0s;
-$time-delay-zoom-in-card-animation: 0.1s + $time-zoom-in-card-animation;
+$time-delay-open-card-2: 0.3s;
+$time-delay-open-card-4: $time-delay-open-card-2 + 0.2s;
+$time-delay-zoom-in-card-animation: 0.2s + $time-zoom-in-card-animation;
 
-// Define timing variables at the top
-$first-pair-time: 0ms;    // Immediate for cards 1 and 3
-$second-pair-time: 300ms; // For cards 2 and 4
-$third-card-time: 1400ms;
-$fourth-card-time: 2100ms;
+// Sequential card timing variables
+$card-1-time: 0ms;      // First card immediate
+$card-2-time: 1000ms;   // Second to open
+$card-3-time: 2000ms;   // Third to open
+$card-4-time: 3000ms;   // Fourth to open
+$card-5-time: 4000ms;   // Fifth card (if present)
+$card-6-time: 5000ms;   // Sixth card (if present)
+
+// Animation timing for winner based on card count
+$winner-delay-base: 1s; // Delay after last card before showing winner
 
 // Layout container
 .animation-container {
@@ -109,8 +114,9 @@ $fourth-card-time: 2100ms;
     --distance-second-third-card: map.get($layout, 'card-distances', 'second-third');
     height: 100%;
 
-    // Card positioning variants
+    // Update card count classes to set the appropriate last card time
     &.card-4 {
+        --last-card-time: #{$card-4-time};
         @include position-cards((
             "1": var(--distance-first-second-card),
             "2": 0,
@@ -120,6 +126,7 @@ $fourth-card-time: 2100ms;
     }
 
     &.card-5 {
+        --last-card-time: #{$card-5-time};
         @include position-cards((
             "1": var(--distance-second-third-card),
             "2": 0,
@@ -140,6 +147,7 @@ $fourth-card-time: 2100ms;
     }
 
     &.card-6 {
+        --last-card-time: #{$card-6-time};
         @include position-cards((
             "1": var(--distance-second-third-card),
             "2": 0,
@@ -155,9 +163,11 @@ $fourth-card-time: 2100ms;
         .score {
             opacity: 0;
             animation: appearance-settlement-info-animation $time-show-score-animation forwards;
+            animation-delay: $card-4-time + 0.5s; // Show score after base cards are revealed
 
             &-number {
                 animation: score-blink $time-blink-score-animation forwards ease-in-out;
+                animation-delay: $card-4-time + 0.8s; // Blink after score appears
             }
         }
 
@@ -186,27 +196,13 @@ $fourth-card-time: 2100ms;
             transition: transform 0.1s;
         }
 
-        // Card timing
-        @each $pair, $time in $card-sequence {
-            $cards: ();
-            @if $pair == first-pair {
-                $cards: 1, 3;
-            } @else if $pair == second-pair {
-                $cards: 2, 4;
-            } @else if $pair == third-card {
-                $cards: 5;
-            } @else if $pair == fourth-card {
-                $cards: 6;
-            }
-
-            @each $card in $cards {
-                .card#{$card} {
-                    .card-back, .rotate-card {
-                        animation-delay: $time;
-                    }
-                }
-            }
-        }
+        // Update card timing to use sequential pattern
+        .card1 .card-back, .card1 .rotate-card { animation-delay: $card-1-time; }
+        .card2 .card-back, .card2 .rotate-card { animation-delay: $card-2-time; }
+        .card3 .card-back, .card3 .rotate-card { animation-delay: $card-3-time; }
+        .card4 .card-back, .card4 .rotate-card { animation-delay: $card-4-time; }
+        .card5 .card-back, .card5 .rotate-card { animation-delay: $card-5-time; }
+        .card6 .card-back, .card6 .rotate-card { animation-delay: $card-6-time; }
     }
 }
 
@@ -360,8 +356,8 @@ $fourth-card-time: 2100ms;
     font-size:0.8rem;
     font-weight: bold;
     text-align: center;
-    animation: floatIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    animation-delay: $fourth-card-time + 0.5s;
+    animation: floatIn 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: calc(var(--last-card-time, #{$card-4-time}) + #{$winner-delay-base}); // Dynamic delay based on last card
     opacity: 0;
     pointer-events: none;
     box-shadow: 
