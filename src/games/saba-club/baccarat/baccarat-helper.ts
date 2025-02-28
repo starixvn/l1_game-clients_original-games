@@ -9,8 +9,8 @@ export const Choices = {
     big: "big",
     small: "small",
     tie: "tie",
-    bankerPair: "bankerPair",
-    playerPair: "playerPair",
+    bankerPair: "B.Pair",
+    playerPair: "P.Pair",
 };
 
 export const BaccaratConfigs = {
