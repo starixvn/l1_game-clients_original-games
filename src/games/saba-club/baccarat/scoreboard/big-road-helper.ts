@@ -1,4 +1,4 @@
-import { BigRoadScoreboard } from '../../../types/scoreboard.types';
+import { BigRoadScoreboard } from './types/scoreboard.types';
 
 export interface BigRoadPoint<Raw> {
     x: number;

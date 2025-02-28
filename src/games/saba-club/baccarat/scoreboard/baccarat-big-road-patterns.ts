@@ -1,4 +1,4 @@
-import { ColumnLengthPattern } from '../../../types/scoreboard.types';
+import { ColumnLengthPattern } from './types/scoreboard.types';
 import * as gc from "@sg/sg-game-client";
 
 export interface GridCell {

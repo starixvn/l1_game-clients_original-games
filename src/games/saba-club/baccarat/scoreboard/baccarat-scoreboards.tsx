@@ -1,15 +1,15 @@
 import React from 'react';
 import * as gc from "@sg/sg-game-client";
 import { render } from "@sg/sg-observer";
-import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../../../../_shared/components/observer-component/observer-component";
-import styles from './BaccaratBigRoad.module.scss';
-import { BaccaratBetPercentages } from '../../../../baccarat-bet-percentages';
+import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
+import styles from './baccarat-scoreboards.module.scss';
+import { BaccaratBetPercentages } from '../baccarat-bet-percentages';
 import {
     DEFAULT_CONFIG,
     GridCell,
     organizeDataForBigRoad,
     getSettlementResult
-} from './BaccaratBigRoadPatterns';
+} from './baccarat-big-road-patterns';
 
 interface IBaccaratBigRoadState extends IStateObserver {
     gridData: (GridCell | null)[][];
@@ -96,7 +96,7 @@ export class BaccaratBigRoad extends ObserverComponent<Props, IBaccaratBigRoadSt
 
         return (
             <div className={styles.scoreboard}>
-                <div className={styles["scoreboard-title"]}>Big Road</div>
+                <div className={styles["scoreboard-title"]}>ScoreBoard</div>
                 <div className={styles["scoreboard-percentage"]}>
                     <div className={styles["split-percentage"]}>
                         <BaccaratBetPercentages
