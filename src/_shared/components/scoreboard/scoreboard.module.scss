@@ -23,7 +23,9 @@
 .dot-player ,
 .dot-banker,
 .dot-tie,
-.dot-blink {
+.dot-blink,
+.dot-big,
+.dot-small {
     display: flex;
     -moz-box-align: center;
     align-items: center;
@@ -72,6 +74,16 @@
 .dot-tie {
     background: #315dc5;
     color: whitesmoke;
+}
+
+.dot-big {
+    background: linear-gradient(180deg, #ff5661, #be1c28);
+    color: whitesmoke;
+}
+
+.dot-small {
+    background: linear-gradient(180deg, #f7f7f7, #b5b5b5);
+    color: black;
 }
 
 .dot-blink {

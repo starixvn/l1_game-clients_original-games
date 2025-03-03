@@ -16,7 +16,7 @@ export class BigSmallBigRoadConverter extends Converter<BigSmallSettlementResult
     static instance = new BigSmallBigRoadConverter();
 
     protected positiveKey(): string {
-        return choices.odd;
+        return choices.big;
     }
 
     protected specialKey(): string {
