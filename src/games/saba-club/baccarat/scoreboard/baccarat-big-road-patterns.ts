@@ -5,7 +5,8 @@ export interface GridCell {
     status: boolean;  // true for Player, false for Banker
     isBlink?: boolean;
     ties?: number;
-    hasPair?: boolean;
+    playerPair?: boolean;
+    bankerPair?: boolean;
     isNatural?: boolean;
     roundId?: number;
 }
@@ -92,7 +93,8 @@ export const organizeDataForBigRoad = (
             grid[currentRow][currentCol] = {
                 status: currentResult,
                 isBlink: shouldBlink && index === rounds.length - 1,
-                hasPair: result.playerPair || result.bankerPair,
+                playerPair: result.playerPair,
+                bankerPair: result.bankerPair,
                 isNatural: result.natural,
                 roundId: round.roundId
             };

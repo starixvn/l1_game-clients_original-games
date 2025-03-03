@@ -11,7 +11,7 @@ import {
 import { RoundHistory } from '../../../games/saba-club/baccarat/baccarat-anim/constants';
 
 // Demo data
-const DEMO_ROUNDS: gc.RoundHistories.RoundHistory[] = RoundHistory.slice(0, 50);
+const DEMO_ROUNDS: gc.RoundHistories.RoundHistory[] = RoundHistory;//.slice(0, 50);
 interface Props {
     gameName?: string;
     maxRows?: number;
@@ -47,11 +47,15 @@ export const BaccaratBigRoadDemo: React.FC<Props> = ({ noRender, gameName, maxRo
         return `/static/images/baccarat/scoreboard/big-road/${cell.status ? 'player' : 'banker'}.png`;
     };
 
-    const getPairDotImage = (cell: GridCell): string | null => {
-        if (cell.hasPair) {
-            return `/static/images/baccarat/scoreboard/big-road/${cell.status ? 'player-pair-dot' : 'banker-pair-dot'}.png`;
+    const getPairDotImage = (cell: GridCell): string[] => {
+        const pairDots: string[] = [];
+        if (cell.playerPair) {
+            pairDots.push('/static/images/baccarat/scoreboard/big-road/player-pair-dot.png');
         }
-        return null;
+        if (cell.bankerPair) {
+            pairDots.push('/static/images/baccarat/scoreboard/big-road/banker-pair-dot.png');
+        }
+        return pairDots;
     };
 
     const getNaturalImage = (): string => {
@@ -174,13 +178,14 @@ export const BaccaratBigRoadDemo: React.FC<Props> = ({ noRender, gameName, maxRo
                                     >
                                         <div className={styles["dot-image"]}>
                                             <img src={imagePath} alt={cell.status ? "Player" : "Banker"} />
-                                            {cell.hasPair && (
+                                            {(cell.playerPair || cell.bankerPair) && getPairDotImage(cell).map((pairDot, index) => (
                                                 <img
-                                                    className={styles["pair-dot"]}
-                                                    src={getPairDotImage(cell)}
-                                                    alt={`${cell.status ? "Player" : "Banker"} Pair`}
+                                                    key={index}
+                                                    className={`${styles["pair-dot"]} ${cell.playerPair ? styles["player-pair"] : styles["banker-pair"]}`}
+                                                    src={pairDot}
+                                                    alt="Pair"
                                                 />
-                                            )}
+                                            ))}
                                             {cell.isNatural && (
                                                 <img
                                                     className={styles["natural-image"]}

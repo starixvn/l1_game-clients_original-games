@@ -131,16 +131,14 @@
         object-fit: contain;
         z-index: 2;
 
-        // Player pair dot (bottom right)
-        &[alt^="Player"] {
+        &.player-pair {
             bottom: 2px;
             right: 2px;
             width: 10px;
             height: 10px;
         }
 
-        // Banker pair dot (top left)
-        &[alt^="Banker"] {
+        &.banker-pair {
             top: -2px;
             left: -2px;
             width: 10px;
@@ -171,20 +169,21 @@
 
     .tie-count {
         position: absolute;
-        top: -8px;
-        right: -8px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         color: #212529;
         font-size: 13px;
         font-weight: bold;
         z-index: 4;
-        background: white;
-        border-radius: 50%;
-        width: 16px;
-        height: 16px;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 2px;
+        text-shadow: 
+            -1px -1px 0 #fff,
+            1px -1px 0 #fff,
+            -1px 1px 0 #fff,
+            1px 1px 0 #fff;
     }
 }
 

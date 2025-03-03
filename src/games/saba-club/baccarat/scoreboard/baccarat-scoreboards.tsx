@@ -72,11 +72,15 @@ export class BaccaratBigRoad extends ObserverComponent<Props, IBaccaratBigRoadSt
         return `/static/images/baccarat/scoreboard/big-road/${cell.status ? 'player' : 'banker'}.png`;
     };
 
-    private getPairDotImage = (cell: GridCell): string | null => {
-        if (cell.hasPair) {
-            return `/static/images/baccarat/scoreboard/big-road/${cell.status ? 'player-pair-dot' : 'banker-pair-dot'}.png`;
+    private getPairDotImage = (cell: GridCell): string[] => {
+        const pairDots: string[] = [];
+        if (cell.playerPair) {
+            pairDots.push('/static/images/baccarat/scoreboard/big-road/player-pair-dot.png');
         }
-        return null;
+        if (cell.bankerPair) {
+            pairDots.push('/static/images/baccarat/scoreboard/big-road/banker-pair-dot.png');
+        }
+        return pairDots;
     };
 
     private getNaturalImage = (): string => {
@@ -121,7 +125,9 @@ export class BaccaratBigRoad extends ObserverComponent<Props, IBaccaratBigRoadSt
                         className={styles['grid-container']}
                         style={{
                             gridTemplateRows: `repeat(${maxRows}, var(--cell-size))`,
-                            gridAutoColumns: 'var(--cell-size)'
+                            gridAutoColumns: 'var(--cell-size)',
+                            position: 'relative',
+                            zIndex: 2
                         }}
                     >
                         {gridData.map((row, rowIndex) => (
@@ -150,16 +156,18 @@ export class BaccaratBigRoad extends ObserverComponent<Props, IBaccaratBigRoadSt
                                                 gridRowStart: rowIndex + 1
                                             }}
                                             key={`${rowIndex}_${colIndex}`}
+                                            data-round-id={cell.roundId}
                                         >
                                             <div className={styles["dot-image"]}>
                                                 <img src={imagePath} alt={cell.status ? "Player" : "Banker"} />
-                                                {cell.hasPair && (
+                                                {(cell.playerPair || cell.bankerPair) && this.getPairDotImage(cell).map((pairDot, index) => (
                                                     <img
-                                                        className={styles["pair-dot"]}
-                                                        src={this.getPairDotImage(cell)}
-                                                        alt={`${cell.status ? "Player" : "Banker"} Pair`}
+                                                        key={index}
+                                                        className={`${styles["pair-dot"]} ${cell.playerPair ? styles["player-pair"] : styles["banker-pair"]}`}
+                                                        src={pairDot}
+                                                        alt="Pair"
                                                     />
-                                                )}
+                                                ))}
                                                 {cell.isNatural && (
                                                     <img
                                                         className={styles["natural-image"]}
@@ -175,7 +183,6 @@ export class BaccaratBigRoad extends ObserverComponent<Props, IBaccaratBigRoadSt
                                                                 {cell.ties}
                                                             </span>
                                                         )}
-
                                                         <img
                                                             className={styles["tie-image"]}
                                                             src={this.getTieImage()}
