@@ -145,6 +145,8 @@ export const getSettlementResult = (settlementResult: gc.GameServiceMessage.TSet
         result.banker = !!settlementResult.banker;
         result.tie = !!settlementResult.tie;
         result.natural = !!settlementResult.natural;
+        result.playerPair = !!settlementResult.playerPair;
+        result.bankerPair = !!settlementResult.bankerPair;
 
         if (settlementResult.player) {
             result.winner = 'player';
@@ -154,11 +156,12 @@ export const getSettlementResult = (settlementResult: gc.GameServiceMessage.TSet
             result.winner = 'tie';
         }
 
+        // Check gameData for additional properties if they're not already set
         const gameData = settlementResult.gameData;
         if (gameData && typeof gameData === "object") {
             const data = gameData as Record<string, unknown>;
-            result.playerPair = !!data.playerPair;
-            result.bankerPair = !!data.bankerPair;
+            if (!result.playerPair) result.playerPair = !!data.playerPair;
+            if (!result.bankerPair) result.bankerPair = !!data.bankerPair;
             result.big = !!data.big;
             result.small = !!data.small;
             if (!result.natural) {

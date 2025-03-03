@@ -124,14 +124,67 @@
         z-index: 1;
     }
 
+    .pair-dot {
+        position: absolute !important;
+        width: 10px;
+        height: 10px;
+        object-fit: contain;
+        z-index: 2;
+
+        // Player pair dot (bottom right)
+        &[alt^="Player"] {
+            bottom: 1px;
+            right: 1px;
+            width: 12px;
+            height: 12px;
+        }
+
+        // Banker pair dot (top left)
+        &[alt^="Banker"] {
+            top: 1px;
+            left: 1px;
+            width: 12px;
+            height: 12px;
+        }
+    }
+
+    .natural-image {
+        position: absolute !important;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 16px;
+        height: 16px;
+        object-fit: contain;
+        z-index: 2;
+    }
+
     .tie-image {
         position: absolute !important;
         top: -4px;
-        right: 0px;
+        right: -4px;
         width: 14px;
         height: 14px;
         object-fit: contain;
         z-index: 3;
+    }
+
+    .tie-count {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        color: #212529;
+        font-size: 13px;
+        font-weight: bold;
+        z-index: 4;
+        background: white;
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2px;
     }
 }
 
@@ -171,30 +224,6 @@
     animation: blink 1.3s linear infinite;
 }
 
-.tie-count {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #212529;
-    font-size: 13px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    z-index: 4;
-    border-radius: 50%;
-    width: 16px;
-    height: 16px;
-    padding: 2px;
-}
-
-@keyframes blink {
-    50% {
-        opacity: 0.3;
-    }
-}
-
 .player {
     background: #{$player-color};
 }
@@ -205,4 +234,10 @@
 
 .tie {
     background: #{$tie-color};
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0.3;
+    }
 } 

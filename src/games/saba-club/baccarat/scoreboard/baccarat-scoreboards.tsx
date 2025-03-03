@@ -63,14 +63,24 @@ export class BaccaratBigRoad extends ObserverComponent<Props, IBaccaratBigRoadSt
         }
     }
 
-    private getDotImage = (status: boolean, isBlink: boolean, hasPair: boolean = false): string => {
-        if (isBlink) {
+    private getDotImage = (cell: GridCell): string => {
+        if (cell.isBlink) {
             return '/static/images/baccarat/scoreboard/big-road/Rectangle 9391.png';
         }
-        if (hasPair) {
-            return `/static/images/baccarat/scoreboard/big-road/${status ? 'player' : 'banker'}-pair.png`;
+
+        // Regular player or banker win (base circle)
+        return `/static/images/baccarat/scoreboard/big-road/${cell.status ? 'player' : 'banker'}.png`;
+    };
+
+    private getPairDotImage = (cell: GridCell): string | null => {
+        if (cell.hasPair) {
+            return `/static/images/baccarat/scoreboard/big-road/${cell.status ? 'player-pair-dot' : 'banker-pair-dot'}.png`;
         }
-        return `/static/images/baccarat/scoreboard/big-road/${status ? 'player' : 'banker'}.png`;
+        return null;
+    };
+
+    private getNaturalImage = (): string => {
+        return '/static/images/baccarat/scoreboard/big-road/natural.png';
     };
 
     private getTieImage = (): string => {
@@ -130,7 +140,7 @@ export class BaccaratBigRoad extends ObserverComponent<Props, IBaccaratBigRoadSt
                                         );
                                     }
 
-                                    const imagePath = this.getDotImage(cell.status, cell.isBlink, cell.hasPair);
+                                    const imagePath = this.getDotImage(cell);
 
                                     return (
                                         <div
@@ -143,6 +153,21 @@ export class BaccaratBigRoad extends ObserverComponent<Props, IBaccaratBigRoadSt
                                         >
                                             <div className={styles["dot-image"]}>
                                                 <img src={imagePath} alt={cell.status ? "Player" : "Banker"} />
+                                                {cell.hasPair && (
+                                                    <img
+                                                        className={styles["pair-dot"]}
+                                                        src={this.getPairDotImage(cell)}
+                                                        alt={`${cell.status ? "Player" : "Banker"} Pair`}
+                                                    />
+                                                )}
+                                                {cell.isNatural && (
+                                                    <img
+                                                        className={styles["natural-image"]}
+                                                        src={this.getNaturalImage()}
+                                                        style={{ width: '16px', height: '16px' }}
+                                                        alt="Natural"
+                                                    />
+                                                )}
                                                 {cell.ties > 0 && (
                                                     <>
                                                         {cell.ties >= 2 && (
