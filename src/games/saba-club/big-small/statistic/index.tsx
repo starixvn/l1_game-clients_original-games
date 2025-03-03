@@ -1,6 +1,6 @@
 import Styles from "./statistic.module.scss";
-import { BigSmallScoreBoard } from "../scoreboard";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
+import BigSmallScoreBoard from "../scoreboard/big-small-scoreboard";
 
 type Props = IPropsObserver & {
     gameName?: string;

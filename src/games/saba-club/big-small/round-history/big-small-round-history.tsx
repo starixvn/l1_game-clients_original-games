@@ -47,7 +47,7 @@ export default class BigSmallRoundHistory extends ObserverComponent<IPropsObserv
         );
     }
 
-    private getSettlementResult(settlementResult: gc.GameServiceMessage.TSettlementResult): BigSmallSettlementResult {
+    private getSettlementResult(settlementResult: gc.GameServiceMessage.TSettlementResult): BigSmallSettlementResult & { winner: string } {
         const result = {
             winner: BigSmallChoices.big,
             big: false,

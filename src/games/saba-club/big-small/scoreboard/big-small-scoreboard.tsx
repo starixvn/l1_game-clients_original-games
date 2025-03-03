@@ -1,15 +1,14 @@
 import * as gc from "@sg/sg-game-client";
 import { render } from "@sg/sg-observer";
-import Styles from "./scoreboard.module.scss";
-import { RoundDot } from "../../../../_shared/components/dot";
-import { BigRoadScoreboard, Converter } from "sc-scoreboards";
+import Styles from "./big-small-scoreboard.module.scss";
+import { BigRoadScoreboard } from "sc-scoreboards";
 import { createRef } from "react";
 import React from "react";
 import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
 import { ScoreboardItemContent } from "../../../../_shared/components/scoreboard/types";
 import { choices } from "../../../../_shared/types/settlement-result";
 import { BetPercentages } from "../../../../_shared/components/bet-percentages";
-import { OddEvenBigRoadConverter, ScoreBoard } from "../../../../_shared/components/scoreboard";
+import { ScoreBoard } from "../../../../_shared/components/scoreboard";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
 import { BigSmallResult, BigSmallRoundHistory, BigSmallSettlementResult } from "../type";
 import { BigSmallBigRoadConverter } from "../../../../_shared/components/scoreboard/converters";
@@ -26,7 +25,7 @@ type Props = IPropsObserver & {
 };
 
 
-export class BigSmallScoreBoard extends ObserverComponent<Props, IBigSmallResultHistoryState> {
+export default class BigSmallScoreBoard extends ObserverComponent<Props, IBigSmallResultHistoryState> {
     private scrollDivRef = createRef<HTMLDivElement>();
 
     constructor(props: Props) {
