@@ -9,7 +9,7 @@ import {
     organizeDataForBigRoad,
     getSettlementResult
 } from '../../../games/saba-club/baccarat/scoreboard/baccarat-big-road-patterns';
-import { RoundHistory } from '../../../games/saba-club/baccarat/baccarat-anim/constants';
+import { RoundHistory, MultiDragonTailsDemo, TwoAlternatingDragonTailsDemo } from '../../../games/saba-club/baccarat/baccarat-anim/constants';
 
 // Demo data
 const DEMO_ROUNDS: gc.RoundHistories.RoundHistory[] = RoundHistory;
@@ -18,15 +18,17 @@ interface Props {
     gameName?: string;
     maxRows?: number;
     noRender?: boolean;
+    title?: string;
+    rounds?: gc.RoundHistories.RoundHistory[];
 }
 
-const BaccaratBigRoadDemo: React.FC<Props> = ({ noRender, gameName, maxRows = DEFAULT_CONFIG.maxRows }) => {
+const BaccaratBigRoadDemo: React.FC<Props> = ({ noRender, gameName, maxRows = DEFAULT_CONFIG.maxRows, title = "ScoreBoard Demo", rounds = DEMO_ROUNDS }) => {
     const scrollDivRef = React.useRef<HTMLDivElement>(null);
     const [gridData, setGridData] = React.useState<(GridCell | null)[][]>([]);
 
     React.useEffect(() => {
-        processRounds(DEMO_ROUNDS);
-    }, [maxRows]);
+        processRounds(rounds);
+    }, [maxRows, rounds]);
 
     const scrollToRight = () => {
         if (scrollDivRef.current) {
@@ -69,21 +71,28 @@ const BaccaratBigRoadDemo: React.FC<Props> = ({ noRender, gameName, maxRows = DE
         setTimeout(scrollToRight, 100);
     };
 
-    if (noRender || !DEMO_ROUNDS?.length) {
+    if (noRender || !rounds?.length) {
         return null;
     }
 
-    const settlements = DEMO_ROUNDS.map(round => getSettlementResult(round.settlementResult));
+    // Log array of winners
+    const winners = rounds.map(round => {
+        const result = getSettlementResult(round.settlementResult);
+        return result.winner;
+    });
+    console.log('Round Winners:', winners);
+
+    const settlements = rounds.map(round => getSettlementResult(round.settlementResult));
 
     return (
         <div className={styles.scoreboard}>
-            <div className={styles["scoreboard-title"]}>ScoreBoard Demo</div>
+            <div className={styles["scoreboard-title"]}>{title}</div>
             <div className={`${styles["scoreboard-percentage"]} ${demoStyles["scoreboard-percentage-container"]}`}>
                 <div className={styles["split-percentage"]}>
                     <BaccaratBetPercentages
                         gameName={gameName}
                         settlements={settlements}
-                        rounds={DEMO_ROUNDS}
+                        rounds={rounds}
                     />
                 </div>
             </div>
@@ -172,9 +181,27 @@ const BaccaratBigRoadDemo: React.FC<Props> = ({ noRender, gameName, maxRows = DE
 const BaccaratScoreboardsDemo: React.FC = () => {
     return (
         <div className={demoStyles["demo-container"]}>
-            <BaccaratBigRoadDemo
-                gameName="Baccarat"
-            />
+            {/* <div className={demoStyles["demo-section"]}>
+                <BaccaratBigRoadDemo
+                    gameName="Baccarat"
+                    title="Single Dragon Tail Pattern"
+                    rounds={DEMO_ROUNDS}
+                />
+            </div>
+            <div className={demoStyles["demo-section"]}>
+                <BaccaratBigRoadDemo
+                    gameName="Baccarat"
+                    title="Multiple Dragon Tails Pattern"
+                    rounds={MultiDragonTailsDemo}
+                />
+            </div> */}
+            <div className={demoStyles["demo-section"]}>
+                <BaccaratBigRoadDemo
+                    gameName="Baccarat"
+                    title="Two Alternating Dragon Tails Pattern"
+                    rounds={TwoAlternatingDragonTailsDemo}
+                />
+            </div>
         </div>
     );
 };

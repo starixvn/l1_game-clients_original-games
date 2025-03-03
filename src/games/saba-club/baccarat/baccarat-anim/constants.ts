@@ -429,5 +429,274 @@ export const DragonTailDemo: gc.RoundHistories.RoundHistory[] = [
 // Use DragonTailDemo for RoundHistory
 export const RoundHistory: gc.RoundHistories.RoundHistory[] = DragonTailDemo;
 
+// Multiple Dragon Tails demo data
+export const MultiDragonTailsDemo: gc.RoundHistories.RoundHistory[] = [
+    // First column - 6 player wins
+    ...Array(6).fill(null).map((_, i) => ({
+        roundId: 2128301 + i,
+        result: {
+            player: {
+                card1: { card: 8, type: 0 },
+                card2: { card: 9, type: 1 }
+            },
+            banker: {
+                card1: { card: 3, type: 2 },
+                card2: { card: 4, type: 3 }
+            }
+        },
+        settlementResult: {
+            player: true,
+            banker: false,
+            tie: false,
+            playerPair: false,
+            bankerPair: false,
+            natural: true,
+            big: false,
+            small: true
+        }
+    })),
+    // First dragon tail - 3 more player wins
+    ...Array(3).fill(null).map((_, i) => ({
+        roundId: 2128307 + i,
+        result: {
+            player: {
+                card1: { card: 7, type: 0 },
+                card2: { card: 2, type: 1 },
+                card3: { card: 8, type: 2 }
+            },
+            banker: {
+                card1: { card: 4, type: 3 },
+                card2: { card: 3, type: 0 }
+            }
+        },
+        settlementResult: {
+            player: true,
+            banker: false,
+            tie: false,
+            playerPair: false,
+            bankerPair: false,
+            natural: false,
+            big: true,
+            small: false
+        }
+    })),
+    // Second column - 6 player wins
+    ...Array(6).fill(null).map((_, i) => ({
+        roundId: 2128310 + i,
+        result: {
+            player: {
+                card1: { card: 6, type: 1 },
+                card2: { card: 3, type: 2 }
+            },
+            banker: {
+                card1: { card: 2, type: 3 },
+                card2: { card: 4, type: 0 }
+            }
+        },
+        settlementResult: {
+            player: true,
+            banker: false,
+            tie: false,
+            playerPair: false,
+            bankerPair: false,
+            natural: true,
+            big: false,
+            small: true
+        }
+    })),
+    // Second dragon tail - 4 more player wins
+    ...Array(4).fill(null).map((_, i) => ({
+        roundId: 2128316 + i,
+        result: {
+            player: {
+                card1: { card: 5, type: 2 },
+                card2: { card: 4, type: 3 },
+                card3: { card: 9, type: 0 }
+            },
+            banker: {
+                card1: { card: 3, type: 1 },
+                card2: { card: 2, type: 2 }
+            }
+        },
+        settlementResult: {
+            player: true,
+            banker: false,
+            tie: false,
+            playerPair: false,
+            bankerPair: false,
+            natural: false,
+            big: true,
+            small: false
+        }
+    })),
+    // Switch to banker win
+    {
+        roundId: 2128320,
+        result: {
+            player: {
+                card1: { card: 2, type: 0 },
+                card2: { card: 3, type: 1 }
+            },
+            banker: {
+                card1: { card: 8, type: 2 },
+                card2: { card: 9, type: 3 }
+            }
+        },
+        settlementResult: {
+            player: false,
+            banker: true,
+            tie: false,
+            playerPair: false,
+            bankerPair: false,
+            natural: true,
+            big: false,
+            small: true
+        }
+    },
+    ...Array(7).fill(null).map((_, i) => ({
+        roundId: 2128320 + i,
+        result: {
+            player: {
+                card1: { card: 2, type: 0 },
+                card2: { card: 3, type: 1 }
+            },
+            banker: {
+                card1: { card: 8, type: 2 },
+                card2: { card: 9, type: 3 }
+            }
+        },
+        settlementResult: {
+            player: false,
+            banker: true,
+            tie: false,
+            playerPair: false,
+            bankerPair: false,
+            natural: true,
+            big: false,
+            small: true
+        }
+    })),
+];
+
+// Two Alternating Dragon Tails demo data
+export const TwoAlternatingDragonTailsDemo: gc.RoundHistories.RoundHistory[] = [
+    // First column - 6 banker wins
+    ...Array(6).fill(null).map((_, i) => ({
+        roundId: 2128401 + i,
+        result: {
+            player: {
+                card1: { card: 2, type: 0 },
+                card2: { card: 3, type: 1 }
+            },
+            banker: {
+                card1: { card: 8, type: 2 },
+                card2: { card: 9, type: 3 }
+            }
+        },
+        settlementResult: {
+            player: false,
+            banker: true,
+            tie: false,
+            playerPair: false,
+            bankerPair: false,
+            natural: true,
+            big: false,
+            small: true
+        }
+    })),
+    // First dragon tail - 3 more banker wins
+    ...Array(3).fill(null).map((_, i) => ({
+        roundId: 2128407 + i,
+        result: {
+            player: {
+                card1: { card: 3, type: 0 },
+                card2: { card: 2, type: 1 },
+                card3: { card: 1, type: 2 }
+            },
+            banker: {
+                card1: { card: 7, type: 3 },
+                card2: { card: 8, type: 0 },
+                card3: { card: 2, type: 1 }
+            }
+        },
+        settlementResult: {
+            player: false,
+            banker: true,
+            tie: false,
+            playerPair: false,
+            bankerPair: false,
+            natural: false,
+            big: true,
+            small: false
+        }
+    })),
+    // Switch to player wins - Second column starts
+    ...Array(6).fill(null).map((_, i) => ({
+        roundId: 2128410 + i,
+        result: {
+            player: {
+                card1: { card: 8, type: 0 },
+                card2: { card: 9, type: 1 }
+            },
+            banker: {
+                card1: { card: 3, type: 2 },
+                card2: { card: 4, type: 3 }
+            }
+        },
+        settlementResult: {
+            player: true,
+            banker: false,
+            tie: false,
+            playerPair: false,
+            bankerPair: false,
+            natural: true,
+            big: false,
+            small: true
+        }
+    })),
+    // Second dragon tail - 3 more player wins
+    ...Array(3).fill(null).map((_, i) => ({
+        roundId: 2128416 + i,
+        result: {
+            player: {
+                card1: { card: 7, type: 0 },
+                card2: { card: 2, type: 1 },
+                card3: { card: 8, type: 2 }
+            },
+            banker: {
+                card1: { card: 4, type: 3 },
+                card2: { card: 3, type: 0 }
+            }
+        },
+        settlementResult: {
+            player: true,
+            banker: false,
+            tie: false,
+            playerPair: false,
+            bankerPair: false,
+            natural: false,
+            big: true,
+            small: false
+        }
+    }))
+];
+
+// Combined SCOREBOARD_SCENARIOS with both scenarios
+export const SCOREBOARD_SCENARIOS = [{
+    id: 'two_alternating_dragon_tails',
+    label: 'Two Alternating Dragon Tails',
+    description: 'Shows two dragon tails - first banker tail (9 wins) followed by player tail (9 wins)',
+    category: 'patterns',
+    visible: true,
+    rounds: TwoAlternatingDragonTailsDemo
+}, {
+    id: 'multiple_dragon_tails',
+    label: 'Multiple Dragon Tails',
+    description: 'Shows how consecutive dragon tails turn right at the bottom without overlapping',
+    category: 'patterns',
+    visible: true,
+    rounds: MultiDragonTailsDemo
+}] as const;
+
 
 

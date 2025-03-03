@@ -56,25 +56,30 @@ export const organizeDataForBigRoad = (
     let currentCol = 0;
     let currentRow = 0;
     let lastResult: boolean | null = null;
-    let tieCount = 0;
     let lastWinningCell: { row: number; col: number } | null = null;
-    let dragonTailOffset = 0;
+    let dragonTailStartCol = -1;
+    let dragonTailLength = 0;
+    let lastDragonTailEndCol = -1;
 
     const shouldBlink = ['LOCKING_BET', 'SHOW_ANIMATION_RESULT'].includes(roundState);
 
+    // Find the next available position in the bottom row
+    const findNextAvailablePosition = (startCol: number): number => {
+        let col = startCol;
+        while (grid[maxRows - 1][col] !== null) {
+            col++;
+        }
+        return col;
+    };
+
     const processRound = (round: gc.RoundHistories.RoundHistory, index: number) => {
         const result = getSettlementResult(round.settlementResult);
-        const nextRound = index > 0 ? rounds[rounds.length - index - 1] : null;
-        const nextResult = nextRound ? getSettlementResult(nextRound.settlementResult) : null;
 
         if (result.tie) {
             if (lastWinningCell) {
                 const { row, col } = lastWinningCell;
                 if (grid[row][col]) {
                     grid[row][col]!.ties = (grid[row][col]!.ties || 0) + 1;
-                    if (nextResult?.natural && grid[row][col]!.roundId === 2127865) {
-                        grid[row][col]!.isNatural = true;
-                    }
                 }
             }
             return;
@@ -85,11 +90,16 @@ export const organizeDataForBigRoad = (
 
             if (lastResult === null || lastResult === currentResult) {
                 if (currentRow >= maxRows) {
-                    // Start dragon tail
-                    if (dragonTailOffset === 0) {
-                        dragonTailOffset = 1;
+                    // Start or continue dragon tail
+                    if (dragonTailStartCol === -1) {
+                        dragonTailStartCol = currentCol;
+                        dragonTailLength = 0;
                     }
-                    grid[maxRows - 1][currentCol + dragonTailOffset] = {
+
+                    // Find the next available position for the dragon tail
+                    const targetCol = findNextAvailablePosition(dragonTailStartCol);
+
+                    grid[maxRows - 1][targetCol] = {
                         status: currentResult,
                         isBlink: shouldBlink && index === rounds.length - 1,
                         playerPair: result.playerPair,
@@ -97,12 +107,14 @@ export const organizeDataForBigRoad = (
                         isNatural: result.natural,
                         roundId: round.roundId,
                         isDragonTail: true,
-                        dragonTailOffset: dragonTailOffset
+                        dragonTailOffset: dragonTailLength
                     };
-                    dragonTailOffset++;
-                    lastWinningCell = { row: maxRows - 1, col: currentCol + dragonTailOffset - 1 };
+
+                    dragonTailLength++;
+                    lastWinningCell = { row: maxRows - 1, col: targetCol };
+                    lastDragonTailEndCol = targetCol;
                 } else {
-                    dragonTailOffset = 0;
+                    // Normal vertical placement
                     grid[currentRow][currentCol] = {
                         status: currentResult,
                         isBlink: shouldBlink && index === rounds.length - 1,
@@ -115,9 +127,12 @@ export const organizeDataForBigRoad = (
                     currentRow++;
                 }
             } else {
+                // Start new column
                 currentRow = 0;
                 currentCol++;
-                dragonTailOffset = 0;
+                dragonTailStartCol = -1;
+                dragonTailLength = 0;
+
                 grid[currentRow][currentCol] = {
                     status: currentResult,
                     isBlink: shouldBlink && index === rounds.length - 1,
