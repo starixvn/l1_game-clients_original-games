@@ -1,6 +1,7 @@
 import React from 'react';
 import * as gc from "@sg/sg-game-client";
 import styles from '../../../games/saba-club/baccarat/scoreboard/baccarat-scoreboards.module.scss';
+import demoStyles from './baccarat-scoreboards-demo.module.scss';
 import { BaccaratBetPercentages } from '../../../games/saba-club/baccarat/baccarat-bet-percentages';
 import {
     DEFAULT_CONFIG,
@@ -22,15 +23,9 @@ interface Props {
 const BaccaratBigRoadDemo: React.FC<Props> = ({ noRender, gameName, maxRows = DEFAULT_CONFIG.maxRows }) => {
     const scrollDivRef = React.useRef<HTMLDivElement>(null);
     const [gridData, setGridData] = React.useState<(GridCell | null)[][]>([]);
-    // Add development mode flag
-    const isDevelopment = process.env.NODE_ENV === 'development';
 
     React.useEffect(() => {
         processRounds(DEMO_ROUNDS);
-        // Log for debugging
-        if (isDevelopment) {
-            console.log('Development mode enabled - background image should be visible');
-        }
     }, [maxRows]);
 
     const scrollToRight = () => {
@@ -83,25 +78,7 @@ const BaccaratBigRoadDemo: React.FC<Props> = ({ noRender, gameName, maxRows = DE
     return (
         <div className={styles.scoreboard}>
             <div className={styles["scoreboard-title"]}>ScoreBoard Demo</div>
-            <div style={{ width: '800px', margin: '20px 0', padding: '15px', backgroundColor: '#f5f5f5', borderRadius: '5px', lineHeight: '1.6' }}>
-                <h3 style={{ marginTop: 0, marginBottom: '10px', color: '#333' }}>How to Read the Scoreboard</h3>
-                <p style={{ margin: '0', color: '#444' }}>
-                    This board arranges the results in columns or streaks. Each filled column shows how many consecutive wins have happened for either banker or player.
-                    The icons in this roadmap are shown as hollow circles. Bankers are in red, Players are in blue.
-                </p>
-                <p style={{ margin: '10px 0', color: '#444' }}>
-                    Ties are NOT shown as a separate icon. Instead, they are shown as a green slash &quot;/&quot;, embedded inside the circle of the last round.
-                    If there are more than 1 consecutive Ties, the number of Ties will be written on the &quot;Slash&quot;.
-                </p>
-                <p style={{ margin: '10px 0', color: '#444' }}>
-                    Circles will have a yellow dot inside if the win was a &quot;natural&quot;. A &quot;natural&quot; is a hand that has a score of 9 or 8 with two cards.
-                </p>
-                <p style={{ margin: '0', color: '#444' }}>
-                    &quot;Banker Pair&quot; is shown as a small red circle placed on the top left corner of the symbol.<br />
-                    &quot;Player Pair&quot; is shown as a small blue circle placed on the bottom right of the symbol.
-                </p>
-            </div>
-            <div className={styles["scoreboard-percentage"]} style={{ width: '800px' }}>
+            <div className={`${styles["scoreboard-percentage"]} ${demoStyles["scoreboard-percentage-container"]}`}>
                 <div className={styles["split-percentage"]}>
                     <BaccaratBetPercentages
                         gameName={gameName}
@@ -111,21 +88,14 @@ const BaccaratBigRoadDemo: React.FC<Props> = ({ noRender, gameName, maxRows = DE
                 </div>
             </div>
             <div
-                className={`${styles["scoreboard-content"]} baccarat-big-road`}
+                className={`${styles["scoreboard-content"]} ${demoStyles["scoreboard-content"]} baccarat-big-road`}
                 ref={scrollDivRef}
-                style={{
-                    width: '800px',
-                    position: 'relative',
-                    border: isDevelopment ? '1px solid red' : undefined
-                }}
             >
                 <div
-                    className={styles['grid-container']}
+                    className={`${styles['grid-container']} ${demoStyles['grid-container']}`}
                     style={{
                         gridTemplateRows: `repeat(${maxRows}, var(--cell-size))`,
-                        gridAutoColumns: 'var(--cell-size)',
-                        position: 'relative',
-                        zIndex: 2
+                        gridAutoColumns: 'var(--cell-size)'
                     }}
                 >
                     {gridData.map((row, rowIndex) => (
@@ -201,7 +171,7 @@ const BaccaratBigRoadDemo: React.FC<Props> = ({ noRender, gameName, maxRows = DE
 
 const BaccaratScoreboardsDemo: React.FC = () => {
     return (
-        <div style={{ padding: '20px' }}>
+        <div className={demoStyles["demo-container"]}>
             <BaccaratBigRoadDemo
                 gameName="Baccarat"
             />
