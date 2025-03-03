@@ -6,6 +6,7 @@ export interface GridCell {
     isBlink?: boolean;
     ties?: number;
     hasPair?: boolean;
+    isNatural?: boolean;
 }
 
 export interface BaccaratSettlementResult {
@@ -17,6 +18,7 @@ export interface BaccaratSettlementResult {
     tie: boolean;
     big: boolean;
     small: boolean;
+    natural: boolean;
 }
 
 export const DEFAULT_CONFIG = {
@@ -50,7 +52,6 @@ export const organizeDataForBigRoad = (
     let currentCol = 0;
     let currentRow = 0;
     let lastResult: boolean | null = null;
-    let lastCol = -1;
     let tieCount = 0;
 
     const shouldBlink = ['LOCKING_BET', 'SHOW_ANIMATION_RESULT'].includes(roundState);
@@ -64,7 +65,7 @@ export const organizeDataForBigRoad = (
         }
 
         const isPlayer = result.player;
-        const isMostRecent = index === 0; // Since we're processing reversed array
+        const isMostRecent = index === 0;
         const hasPair = isPlayer ? result.playerPair : result.bankerPair;
 
         // First result
@@ -73,43 +74,36 @@ export const organizeDataForBigRoad = (
                 status: isPlayer,
                 ties: tieCount,
                 isBlink: isMostRecent && shouldBlink,
-                hasPair
+                hasPair,
+                isNatural: result.natural
             };
             lastResult = isPlayer;
-            lastCol = 0;
             tieCount = 0;
             return;
         }
 
         // Same result as previous
         if (isPlayer === lastResult) {
-            if (currentRow + 1 < maxRows && grid[currentRow + 1][currentCol] === null) {
+            // Try to stack vertically in the same column
+            if (currentRow + 1 < maxRows) {
                 currentRow++;
             } else {
+                // If column is full, start a new column
                 currentCol++;
                 currentRow = 0;
-                lastCol = currentCol;
             }
-        }
-        // Different result
-        else {
-            currentCol = lastCol + 1;
+        } else {
+            // Different result, start a new column
+            currentCol++;
             currentRow = 0;
-            while (currentRow < maxRows && grid[currentRow][currentCol] !== null) {
-                currentRow++;
-            }
-            if (currentRow >= maxRows) {
-                currentCol++;
-                currentRow = 0;
-            }
-            lastCol = currentCol;
         }
 
         grid[currentRow][currentCol] = {
             status: isPlayer,
             ties: tieCount,
             isBlink: isMostRecent && shouldBlink,
-            hasPair
+            hasPair,
+            isNatural: result.natural
         };
         lastResult = isPlayer;
         tieCount = 0;
@@ -142,13 +136,15 @@ export const getSettlementResult = (settlementResult: gc.GameServiceMessage.TSet
         banker: false,
         tie: false,
         big: false,
-        small: false
+        small: false,
+        natural: false
     };
 
     if (settlementResult && typeof settlementResult === "object") {
         result.player = !!settlementResult.player;
         result.banker = !!settlementResult.banker;
         result.tie = !!settlementResult.tie;
+        result.natural = !!settlementResult.natural;
 
         if (settlementResult.player) {
             result.winner = 'player';
@@ -165,6 +161,9 @@ export const getSettlementResult = (settlementResult: gc.GameServiceMessage.TSet
             result.bankerPair = !!data.bankerPair;
             result.big = !!data.big;
             result.small = !!data.small;
+            if (!result.natural) {
+                result.natural = !!data.natural || !!data.isNatural;
+            }
         }
     }
 

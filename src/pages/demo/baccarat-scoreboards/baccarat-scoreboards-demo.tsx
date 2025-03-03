@@ -11,7 +11,7 @@ import {
 import { RoundHistory } from '../../../games/saba-club/baccarat/baccarat-anim/constants';
 
 // Demo data
-const DEMO_ROUNDS: gc.RoundHistories.RoundHistory[] = RoundHistory;
+const DEMO_ROUNDS: gc.RoundHistories.RoundHistory[] = RoundHistory.slice(0, 20);
 interface Props {
     gameName?: string;
     maxRows?: number;
@@ -33,13 +33,25 @@ export const BaccaratBigRoadDemo: React.FC<Props> = ({ noRender, gameName, maxRo
     };
 
     const getDotImage = (status: boolean, isBlink: boolean, hasPair: boolean = false): string => {
+        const baseDir = '/static/images/baccarat/scoreboard/big-road';
         if (isBlink) {
-            return '/static/images/baccarat/scoreboard/big-road/Rectangle 9391.png';
+            return `${baseDir}/Rectangle 9391.png`;
         }
+
+        // Base filename (player or banker)
+        let filename = status ? 'player' : 'banker';
+
+        // Add pair modifier if needed
         if (hasPair) {
-            return `/static/images/baccarat/scoreboard/big-road/${status ? 'player' : 'banker'}-pair.png`;
+            filename += '-pair';
         }
-        return `/static/images/baccarat/scoreboard/big-road/${status ? 'player' : 'banker'}.png`;
+
+        return `${baseDir}/${filename}.png`;
+    };
+
+    const getPairImage = (status: boolean): string => {
+        const baseDir = '/static/images/baccarat/scoreboard/big-road';
+        return `${baseDir}/${status ? 'player' : 'banker'}-pair.png`;
     };
 
     const getTieImage = (): string => {
@@ -116,7 +128,11 @@ export const BaccaratBigRoadDemo: React.FC<Props> = ({ noRender, gameName, maxRo
                                     );
                                 }
 
-                                const imagePath = getDotImage(cell.status, cell.isBlink, cell.hasPair);
+                                const imagePath = getDotImage(
+                                    cell.status,
+                                    cell.isBlink,
+                                    cell.hasPair
+                                );
 
                                 return (
                                     <div
@@ -127,8 +143,37 @@ export const BaccaratBigRoadDemo: React.FC<Props> = ({ noRender, gameName, maxRo
                                         }}
                                         key={`${rowIndex}_${colIndex}`}
                                     >
-                                        <div className={styles["dot-image"]}>
-                                            <img src={imagePath} alt={cell.status ? "Player" : "Banker"} />
+                                        <div className={styles["dot-image"]} style={{ position: 'relative' }}>
+                                            <img src={imagePath} alt={cell.status ? "Player" : "Banker"} style={{ position: 'relative', zIndex: 1 }} />
+                                            {cell.hasPair && (
+                                                <img
+                                                    className={styles["pair-indicator"]}
+                                                    src={getPairImage(cell.status)}
+                                                    alt={`${cell.status ? "Player" : "Banker"} Pair`}
+                                                    style={{
+                                                        position: 'absolute',
+                                                        top: cell.status ? 'auto' : '0',
+                                                        bottom: cell.status ? '0' : 'auto',
+                                                        right: cell.status ? '0' : 'auto',
+                                                        left: cell.status ? 'auto' : '0',
+                                                        zIndex: 2
+                                                    }}
+                                                />
+                                            )}
+                                            {cell.isNatural && (
+                                                <img
+                                                    className={styles["natural-indicator"]}
+                                                    src="/static/images/baccarat/scoreboard/big-road/natural.png"
+                                                    alt="Natural"
+                                                    style={{
+                                                        position: 'absolute',
+                                                        top: '50%',
+                                                        left: '50%',
+                                                        transform: 'translate(-50%, -50%)',
+                                                        zIndex: 2
+                                                    }}
+                                                />
+                                            )}
                                             {cell.ties > 0 && (
                                                 <>
                                                     {cell.ties >= 2 && (
@@ -140,6 +185,7 @@ export const BaccaratBigRoadDemo: React.FC<Props> = ({ noRender, gameName, maxRo
                                                         className={styles["tie-image"]}
                                                         src={getTieImage()}
                                                         alt="Tie"
+                                                        style={{ position: 'relative', zIndex: 3 }}
                                                     />
                                                 </>
                                             )}
