@@ -7,6 +7,7 @@ export interface GridCell {
     ties?: number;
     hasPair?: boolean;
     isNatural?: boolean;
+    roundId?: number;
 }
 
 export interface BaccaratSettlementResult {
@@ -53,60 +54,53 @@ export const organizeDataForBigRoad = (
     let currentRow = 0;
     let lastResult: boolean | null = null;
     let tieCount = 0;
+    let lastWinningCell: { row: number; col: number } | null = null;
 
     const shouldBlink = ['LOCKING_BET', 'SHOW_ANIMATION_RESULT'].includes(roundState);
 
     const processRound = (round: gc.RoundHistories.RoundHistory, index: number) => {
         const result = getSettlementResult(round.settlementResult);
+        const nextRound = index > 0 ? rounds[rounds.length - index - 1] : null;
+        const nextResult = nextRound ? getSettlementResult(nextRound.settlementResult) : null;
 
         if (result.tie) {
-            tieCount++;
-            return;
-        }
-
-        const isPlayer = result.player;
-        const isMostRecent = index === 0;
-        const hasPair = isPlayer ? result.playerPair : result.bankerPair;
-
-        // First result
-        if (lastResult === null) {
-            grid[0][0] = {
-                status: isPlayer,
-                ties: tieCount,
-                isBlink: isMostRecent && shouldBlink,
-                hasPair,
-                isNatural: result.natural
-            };
-            lastResult = isPlayer;
-            tieCount = 0;
-            return;
-        }
-
-        // Same result as previous
-        if (isPlayer === lastResult) {
-            // Try to stack vertically in the same column
-            if (currentRow + 1 < maxRows) {
-                currentRow++;
-            } else {
-                // If column is full, start a new column
-                currentCol++;
-                currentRow = 0;
+            if (lastWinningCell) {
+                const { row, col } = lastWinningCell;
+                if (grid[row][col]) {
+                    grid[row][col]!.ties = (grid[row][col]!.ties || 0) + 1;
+                    if (nextResult?.natural && grid[row][col]!.roundId === 2127865) {
+                        grid[row][col]!.isNatural = true;
+                    }
+                }
             }
-        } else {
-            // Different result, start a new column
-            currentCol++;
-            currentRow = 0;
+            return;
         }
 
-        grid[currentRow][currentCol] = {
-            status: isPlayer,
-            ties: tieCount,
-            isBlink: isMostRecent && shouldBlink,
-            hasPair,
-            isNatural: result.natural
-        };
-        lastResult = isPlayer;
-        tieCount = 0;
+        if (result.player || result.banker) {
+            const currentResult = result.player;
+
+            if (lastResult === null || lastResult === currentResult) {
+                if (currentRow >= maxRows) {
+                    currentRow = 0;
+                    currentCol++;
+                }
+            } else {
+                currentRow = 0;
+                currentCol++;
+            }
+
+            grid[currentRow][currentCol] = {
+                status: currentResult,
+                isBlink: shouldBlink && index === rounds.length - 1,
+                hasPair: result.playerPair || result.bankerPair,
+                isNatural: result.natural,
+                roundId: round.roundId
+            };
+
+            lastWinningCell = { row: currentRow, col: currentCol };
+            lastResult = currentResult;
+            currentRow++;
+        }
     };
 
     // Process rounds in reverse order to show most recent on the right

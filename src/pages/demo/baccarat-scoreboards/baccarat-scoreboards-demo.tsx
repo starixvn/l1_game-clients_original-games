@@ -11,7 +11,7 @@ import {
 import { RoundHistory } from '../../../games/saba-club/baccarat/baccarat-anim/constants';
 
 // Demo data
-const DEMO_ROUNDS: gc.RoundHistories.RoundHistory[] = RoundHistory;//.slice(0, 20);
+const DEMO_ROUNDS: gc.RoundHistories.RoundHistory[] = RoundHistory.slice(0, 50);
 interface Props {
     gameName?: string;
     maxRows?: number;
@@ -21,9 +21,15 @@ interface Props {
 export const BaccaratBigRoadDemo: React.FC<Props> = ({ noRender, gameName, maxRows = DEFAULT_CONFIG.maxRows }) => {
     const scrollDivRef = React.useRef<HTMLDivElement>(null);
     const [gridData, setGridData] = React.useState<(GridCell | null)[][]>([]);
+    // Add development mode flag
+    const isDevelopment = process.env.NODE_ENV === 'development';
 
     React.useEffect(() => {
         processRounds(DEMO_ROUNDS);
+        // Log for debugging
+        if (isDevelopment) {
+            console.log('Development mode enabled - background image should be visible');
+        }
     }, [maxRows]);
 
     const scrollToRight = () => {
@@ -99,17 +105,45 @@ export const BaccaratBigRoadDemo: React.FC<Props> = ({ noRender, gameName, maxRo
                     />
                 </div>
             </div>
-            <div className={`${styles["scoreboard-content"]} baccarat-big-road`}
+            <div
+                className={`${styles["scoreboard-content"]} baccarat-big-road`}
                 ref={scrollDivRef}
-                style={{ width: '800px' }}
+                style={{
+                    width: '800px',
+                    position: 'relative',
+                    border: isDevelopment ? '1px solid red' : undefined // Debug border
+                }}
             >
+
                 <div
                     className={styles['grid-container']}
                     style={{
                         gridTemplateRows: `repeat(${maxRows}, var(--cell-size))`,
-                        gridAutoColumns: 'var(--cell-size)'
+                        gridAutoColumns: 'var(--cell-size)',
+                        position: 'relative',
+                        zIndex: 2
                     }}
                 >
+                    {/* {isDevelopment && (
+                        <div
+                            style={{
+                                position: 'absolute',
+                                top: 0,
+                                left: 0,
+                                right: 0,
+                                bottom: 0,
+                                width: '100%',
+                                height: '100%',
+                                backgroundImage: 'url(/static/images/baccarat/scoreboard/big-road/demo-result.png)',
+                                backgroundSize: 'contain',
+                                backgroundRepeat: 'no-repeat',
+                                backgroundColor: 'rgba(255,0,0,0.1)', // Debug background
+                                opacity: 0.3,
+                                pointerEvents: 'none',
+                                zIndex: 1
+                            }}
+                        />
+                    )} */}
                     {gridData.map((row, rowIndex) => (
                         <React.Fragment key={rowIndex}>
                             {row.map((cell, colIndex) => {
@@ -136,6 +170,7 @@ export const BaccaratBigRoadDemo: React.FC<Props> = ({ noRender, gameName, maxRo
                                             gridRowStart: rowIndex + 1
                                         }}
                                         key={`${rowIndex}_${colIndex}`}
+                                        data-round-id={cell.roundId}
                                     >
                                         <div className={styles["dot-image"]}>
                                             <img src={imagePath} alt={cell.status ? "Player" : "Banker"} />
