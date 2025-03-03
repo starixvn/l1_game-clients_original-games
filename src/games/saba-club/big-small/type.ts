@@ -12,7 +12,12 @@ export type BigSmallResult = {
 };
 
 export type BigSmallSettlementResult = {
-    winner: string;
     big: boolean;
     small: boolean;
+};
+
+export type BigSmallRoundHistory = {
+    settlementResult: BigSmallSettlementResult;
+    result: BigSmallResult;
+    roundId: number;
 };

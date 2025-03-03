@@ -11,7 +11,7 @@ import { choices } from "../../../../_shared/types/settlement-result";
 import { BetPercentages } from "../../../../_shared/components/bet-percentages";
 import { OddEvenBigRoadConverter, ScoreBoard } from "../../../../_shared/components/scoreboard";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
-import { BigSmallSettlementResult } from "../type";
+import { BigSmallResult, BigSmallRoundHistory, BigSmallSettlementResult } from "../type";
 import { BigSmallBigRoadConverter } from "../../../../_shared/components/scoreboard/converters";
 
 
@@ -70,7 +70,14 @@ export class BigSmallScoreBoard extends ObserverComponent<Props, IBigSmallResult
         const settlements = rounds.map((round) => {
             return round.settlementResult as unknown as BigSmallSettlementResult;
         });
-        const input = [...settlements].reverse();
+
+        // const input = [...settlements].reverse();
+
+        const input = [...rounds].map(round => ({
+            roundId: round.roundId,
+            settlementResult: round.settlementResult as unknown as BigSmallSettlementResult,
+            result: round.result as unknown as BigSmallResult
+        } as BigSmallRoundHistory)).reverse();
 
         const hasBlink = roundState === ROUND_STATE.LOCKING_BET || roundState === ROUND_STATE.SHOW_ANIMATION_RESULT;
         bigRoad.initialize(input, hasBlink);
@@ -83,7 +90,7 @@ export class BigSmallScoreBoard extends ObserverComponent<Props, IBigSmallResult
 
         const scoreboardDotClassName: ScoreboardItemContent = {
             positiveItemContent: "dot-big",
-            negativeItemContent: `dot-small`,
+            negativeItemContent: "dot-small",
         };
 
         return (

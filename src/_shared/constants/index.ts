@@ -8,3 +8,12 @@ export const GameIds = {
     LuckyNext: 1003,
     SicBall: 1007,
 };
+
+export const GameNames = {
+    UnbalancedBigSmall4: "UnbalancedBigSmall4",
+    SeDie: "SeDie",
+    Baccarat: "Baccarat",
+    VipSeDie: "VipSeDie",
+    LuckyNext: "LuckyNext",
+    SicBall: "SicBall",
+};
