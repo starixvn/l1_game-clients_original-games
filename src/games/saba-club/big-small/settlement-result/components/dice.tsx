@@ -1,20 +1,28 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react'
 import styles from "../styles.module.scss";
+import { Size } from "../../../../../_shared/constants";
 
 interface DiceProps {
-    diceNumber: number;
+  diceNumber: number;
+  size?: typeof Size.large | typeof Size.medium | typeof Size.small;
 }
 
-const Dice: React.FC<DiceProps> = ({ diceNumber }) => {
-    const diceClass = useMemo(() => `dice-${diceNumber}`, [diceNumber]);
+const Dice: React.FC<DiceProps> = ({ diceNumber, size = Size.large }) => {
+  
+  const diceImageUrl = useMemo(() =>{
+    if (diceNumber === 0) {
+      return "/static/images/big-small/dice-question-mark.png"
+    }
+    return `/static/images/big-small/dice-${diceNumber}.png`;
+  }, [diceNumber]);
 
-    const faceClass = diceNumber === 0 ? styles.dicequestionmarker : styles[diceClass];
-
-    return (
-        <div className={styles.dice}>
-            <div className={`${styles.face} ${faceClass}`}></div>
-        </div>
-    );
+  return (
+      <img 
+        className={`${styles[`dice-${size}`]}`} 
+        src={diceImageUrl} 
+        alt={`dice-${diceNumber}`} 
+      />
+  );
 };
 
 export default Dice;

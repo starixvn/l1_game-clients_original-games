@@ -43,7 +43,6 @@ const ScoreBoard: React.FunctionComponent<Props> = ({ gameName, rows, scoreboard
         return <div className={Styles["dot-empty"]}></div>;
     }
 
-
     return (
         <>
             {rows.map((row, row_index) =>

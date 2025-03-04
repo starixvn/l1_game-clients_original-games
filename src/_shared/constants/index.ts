@@ -17,3 +17,9 @@ export const GameNames = {
     LuckyNext: "LuckyNext",
     SicBall: "SicBall",
 };
+
+export const Size = {
+    large: "large",
+    medium: "medium",
+    small: "small",
+};

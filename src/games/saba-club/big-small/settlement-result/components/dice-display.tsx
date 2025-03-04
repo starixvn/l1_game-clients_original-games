@@ -1,8 +1,22 @@
-import React, { memo, useEffect, useState } from "react";
-import { BigSmallResult } from "../../type";
-import DiceList from "./dice-list";
-import { calculateTotalDiceNumber, getRandomDiceNumbers } from "../../../../../_shared/utils/number-helper";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import styles from "../styles.module.scss";
+import { BigSmallResult } from "../../type";
+import { calculateTotalDiceNumber, getRandomDiceNumbers } from "../../../../../_shared/utils/number-helper";
+import Dice from "./dice";
+
+interface DiceListProps {
+    diceNumbers: number[];
+}
+
+const DiceList: React.FC<DiceListProps> = ({ diceNumbers }) => {
+    return (
+        <div className={styles.diceList}>
+            {diceNumbers.map((number, index) => (
+                <Dice key={index} diceNumber={number} />
+            ))}
+        </div>
+    );
+};
 
 interface DiceDisplayProps {
     result: BigSmallResult;
@@ -12,13 +26,6 @@ interface DiceDisplayProps {
 export const DiceDisplay: React.FC<DiceDisplayProps> = memo(({ result, isAnimationResult }) => {
     const [diceNumbers, setDiceNumbers] = useState([0, 0, 0]);
     const [totalDiceNumber, setTotalDiceNumber] = useState(0);
-    
-    const updateDiceNumbers = (result) => {
-        const resultDiceNumbers = [result.dice1, result.dice2, result.dice3];
-        setDiceNumbers(resultDiceNumbers);
-        const totalDiceNumber = calculateTotalDiceNumber(resultDiceNumbers);
-        setTotalDiceNumber(totalDiceNumber);
-    };
 
     useEffect(() => {
         if (isAnimationResult) {
@@ -28,10 +35,12 @@ export const DiceDisplay: React.FC<DiceDisplayProps> = memo(({ result, isAnimati
 
             setTimeout(() => {
                 clearInterval(intervalId);
-                updateDiceNumbers(result);
+                setDiceNumbers([result.dice1, result.dice2, result.dice3]);
+                setTotalDiceNumber(calculateTotalDiceNumber([result.dice1, result.dice2, result.dice3]));
             }, 2500);
         } else {
-            updateDiceNumbers(result);
+            setDiceNumbers([result.dice1, result.dice2, result.dice3]);
+            setTotalDiceNumber(calculateTotalDiceNumber([result.dice1, result.dice2, result.dice3]));
         }
     }, [isAnimationResult, result]);
 

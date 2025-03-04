@@ -3,7 +3,6 @@ import React from "react";
 import { RoundHistoryStore } from "@sg/sg-game-client/dist/game/round-histories";
 import { RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds";
 import { render } from "@sg/sg-observer";
-import { observer } from "@sg/sg-observer";
 import {
     ObserverComponent,
     type IPropsObserver,
@@ -37,11 +36,7 @@ export default class BigSmallSettlementResult extends ObserverComponent<IPropsOb
         super(props);
         this.state = {
             dispose: null,
-            result: {
-                dice1: 0,
-                dice2: 0,
-                dice3: 0,
-            },
+            result: DEFAULT_RESULT,
             roundState: "",
             isAnimationResult: false,
             isLoading: false,
@@ -91,10 +86,7 @@ export default class BigSmallSettlementResult extends ObserverComponent<IPropsOb
         if (!result || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET) {
             return (
                 <div className={styles.settlementContainer}>
-                    <DiceDisplay
-                        result={DEFAULT_RESULT}
-                        isAnimationResult={false}
-                    />
+                    <DiceDisplay result={DEFAULT_RESULT} isAnimationResult={false} />
                 </div>
             );
         }
