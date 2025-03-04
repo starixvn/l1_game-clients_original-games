@@ -15,9 +15,11 @@ import { BigSmallRoundHistory } from "./round-history";
 import { BigSmallBetOptions } from "./bet-option";
 import styles from "./bigsmall.module.scss";
 import { BigSmallStatistic } from "./statistic";
+import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
 
 interface IBigSmallState extends IGameBaseState {
     roundState: string;
+    previousResult: "big" | "small" | undefined;
 }
 
 @observer(setting.mainObserverNamespace)
@@ -30,6 +32,7 @@ export default class BigSmall extends GatewayGameBase<GameBaseProps, IBigSmallSt
         super(props);
         this.state = {
             ...this.state,
+            previousResult: undefined,
         };
 
         try {
@@ -70,6 +73,7 @@ export default class BigSmall extends GatewayGameBase<GameBaseProps, IBigSmallSt
             <BigSmallBetOptions
                 namespace={this.props.namespace}
                 roundState={this.state.roundState}
+                previousResult={this.state.previousResult}
             />
         );
     }
@@ -94,6 +98,11 @@ export default class BigSmall extends GatewayGameBase<GameBaseProps, IBigSmallSt
     ) {
         if (!this.isValidResult(result, settlementResult)) {
             return;
+        }
+
+        if (settlementResult && this.state.roundState !== ROUND_STATE.LOCKING_BET) {
+            const result = settlementResult.big ? "big" : "small";
+            this.setState({ previousResult: result });
         }
 
         await FunctionUtils.delay(2000);

@@ -70,12 +70,12 @@
                 &:hover {
                     background-color: #ffedae;
                 }
-
-                &.winning-bet {
-                    background-color: #ffedae;
-                    box-shadow: 0 0 4px rgba(255, 251, 230, 0.4);
-                }
             }
+        }
+
+        .winning-bet {
+            background-color: #ffedae;
+            box-shadow: 0 0 4px rgba(255, 251, 230, 0.4);
         }
     }
 

@@ -12,6 +12,7 @@ import { observer } from "@sg/sg-observer";
 import { setting } from "../game-settings";
 
 interface IBigSmallBetOptionsProps extends IPropsObserver {
+    previousResult: "big" | "small" | undefined;
     roundState: string;
 }
 
@@ -24,7 +25,7 @@ interface BetOptionProps {
 }
 
 @observer(setting.mainObserverNamespace)
-export default class BigSmallBetOptions extends BetOptions {
+export default class BigSmallBetOptions  extends BetOptions {
     declare props: IBigSmallBetOptionsProps;
 
     private isDisabled(): boolean {
@@ -85,6 +86,7 @@ export default class BigSmallBetOptions extends BetOptions {
 
     render() {
         const { roundOdds, boostedOdds } = this.state as IBetOptionsState;
+        const { previousResult } = this.props;
         const odds = boostedOdds?.values || roundOdds?.odds;
         const boostedChoices = boostedOdds?.boostedChoices || roundOdds?.boostedChoices;
         const fractional = roundOdds?.fractional;
@@ -93,10 +95,10 @@ export default class BigSmallBetOptions extends BetOptions {
         return (
             <div className={`${Styles["bet-options-wrapper"]} ${isDisabled ? Styles["bet-options-disabled"] : ""}`}>
                 <div className={Styles["main-options-container"]}>
-                    {this.mainChoices.map(({ name, choice }) => (
+                    {this.mainChoices.map(({ name, choice }) =>
                         <div
                             key={choice}
-                            className={`${Styles["bet"]} ${Styles["bets-bg"]}`}
+                            className={`${Styles["bet"]} ${Styles["bets-bg"]} ${previousResult === choice ? Styles["winning-bet"] : ""}`}
                         >
                             {this.renderMainOption(
                                 name,
@@ -106,7 +108,7 @@ export default class BigSmallBetOptions extends BetOptions {
                                 this.isBoostedChoice(choice, boostedChoices)
                             )}
                         </div>
-                    ))}
+                    )}
                 </div>
             </div>
         );
