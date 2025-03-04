@@ -6,6 +6,14 @@ import TotalBet from "../../../../_shared/components/bet-option/total-bet";
 import Styles from "./big-small-options.module.scss";
 import { BigSmallChoices } from "../type";
 import * as gc from "@sg/sg-game-client";
+import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
+import { IPropsObserver } from "../../../../_shared/components/observer-component/observer-component";
+import { observer } from "@sg/sg-observer";
+import { setting } from "../game-settings";
+
+interface IBigSmallBetOptionsProps extends IPropsObserver {
+    roundState: string;
+}
 
 interface BetOptionProps {
     odd: number;
@@ -15,12 +23,14 @@ interface BetOptionProps {
     isBoostedChoice: boolean;
 }
 
-/**
- * BigSmallBetOptions Component
- * Renders betting options for the Se Die game with main and sub-options
- * Extends the base BetOptions component with Se Die specific rendering logic
- */
+@observer(setting.mainObserverNamespace)
 export default class BigSmallBetOptions extends BetOptions {
+    declare props: IBigSmallBetOptionsProps;
+
+    private isDisabled(): boolean {
+        const { roundState } = this.props;
+        return roundState === ROUND_STATE.SHOW_RESULT || roundState === ROUND_STATE.LOCKING_BET;
+    }
 
     private readonly mainChoices = [
         {
@@ -46,7 +56,6 @@ export default class BigSmallBetOptions extends BetOptions {
 
     private renderBetOption(props: BetOptionProps) {
         const { odd, betChoice, name } = props;
-        console.log("render bet choice", betChoice);
         return (
             <BettingBlock odd={odd} betChoice={betChoice} namespace={this.props.namespace}>
                 {this.renderBetOptionContent(props)}
@@ -79,12 +88,16 @@ export default class BigSmallBetOptions extends BetOptions {
         const odds = boostedOdds?.values || roundOdds?.odds;
         const boostedChoices = boostedOdds?.boostedChoices || roundOdds?.boostedChoices;
         const fractional = roundOdds?.fractional;
+        const isDisabled = this.isDisabled();
 
         return (
-            <div className={Styles["bet-options-wrapper"]}>
+            <div className={`${Styles["bet-options-wrapper"]} ${isDisabled ? Styles["bet-options-disabled"] : ""}`}>
                 <div className={Styles["main-options-container"]}>
                     {this.mainChoices.map(({ name, choice }) => (
-                        <div key={choice} className={`${Styles["bet"]} ${Styles["bets-bg"]}`}>
+                        <div
+                            key={choice}
+                            className={`${Styles["bet"]} ${Styles["bets-bg"]}`}
+                        >
                             {this.renderMainOption(
                                 name,
                                 odds?.[choice] || 0,

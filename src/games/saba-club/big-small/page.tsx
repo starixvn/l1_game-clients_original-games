@@ -1,5 +1,5 @@
 import * as gc from "@sg/sg-game-client";
-import { handle, observer } from "@sg/sg-observer";
+import { handle, observer, render } from "@sg/sg-observer";
 import CountDownTimer from "../../../_shared/components/count-down-timer";
 import { IGameBaseState } from "../../../_shared/components/game-base";
 import GatewayGameBase from "../../../_shared/components/game-base/gateway-gamebase";
@@ -15,11 +15,16 @@ import { BigSmallRoundHistory } from "./round-history";
 import { BigSmallBetOptions } from "./bet-option";
 import styles from "./bigsmall.module.scss";
 import { BigSmallStatistic } from "./statistic";
+
+interface IBigSmallState extends IGameBaseState {
+    roundState: string;
+}
+
 @observer(setting.mainObserverNamespace)
-export default class BigSmall extends GatewayGameBase<GameBaseProps, IGameBaseState> {
+export default class BigSmall extends GatewayGameBase<GameBaseProps, IBigSmallState> {
     override overrideClasses = {
-        blockWrapper: styles["block-wrapper"]
-    }
+        blockWrapper: styles["block-wrapper"],
+    };
 
     constructor(props: GameBaseProps) {
         super(props);
@@ -61,7 +66,12 @@ export default class BigSmall extends GatewayGameBase<GameBaseProps, IGameBaseSt
     }
 
     renderBettingBlock() {
-        return <BigSmallBetOptions namespace={this.props.namespace} />;
+        return (
+            <BigSmallBetOptions
+                namespace={this.props.namespace}
+                roundState={this.state.roundState}
+            />
+        );
     }
 
     renderResultBlock() {
@@ -70,6 +80,11 @@ export default class BigSmall extends GatewayGameBase<GameBaseProps, IGameBaseSt
 
     renderStatistic() {
         return <BigSmallStatistic namespace={this.props.namespace} gameName={setting.gameName} />;
+    }
+
+    @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
+    renderCountDownTimerState(roundState: string) {
+        this.setState({ roundState });
     }
 
     async showResult(
@@ -81,7 +96,7 @@ export default class BigSmall extends GatewayGameBase<GameBaseProps, IGameBaseSt
             return;
         }
 
-        await FunctionUtils.delay(1000);
+        await FunctionUtils.delay(2000);
         this.finishShowResult();
     }
 }

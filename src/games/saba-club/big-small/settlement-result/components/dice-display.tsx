@@ -37,7 +37,7 @@ export const DiceDisplay: React.FC<DiceDisplayProps> = memo(({ result, isAnimati
                 clearInterval(intervalId);
                 setDiceNumbers([result.dice1, result.dice2, result.dice3]);
                 setTotalDiceNumber(calculateTotalDiceNumber([result.dice1, result.dice2, result.dice3]));
-            }, 2500);
+            }, 2000);
         } else {
             setDiceNumbers([result.dice1, result.dice2, result.dice3]);
             setTotalDiceNumber(calculateTotalDiceNumber([result.dice1, result.dice2, result.dice3]));
