@@ -77,13 +77,17 @@
 }
 
 .dot-big {
-    background: linear-gradient(180deg, #ff5661, #be1c28);
-    color: whitesmoke;
+    background: linear-gradient(180deg, #7C7C77 0%, #2E322C 50%, #7C7C77 100%);
+    border: 1px solid #000000;
+    font-weight: 600;
+    color: #fff;
 }
 
 .dot-small {
-    background: linear-gradient(180deg, #f7f7f7, #b5b5b5);
-    color: black;
+    background: linear-gradient(180deg, #FFFFFF 0%, #B7B7B7 50%, #FFFFFF 100%);
+    border: 1px solid #000000;
+    font-weight: 600;
+    color: #000000;
 }
 
 .dot-blink {

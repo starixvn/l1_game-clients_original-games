@@ -4,7 +4,7 @@ import { hasBlink } from "./helper";
 import { OddEvenBigRoadConverter, OverUnderBigRoadConverter } from "./converters";
 import { ScoreboardItemContent } from "./types";
 import { GameNames } from "../../constants";
-import { BigSmallResult, BigSmallRoundHistory } from "../../../games/saba-club/big-small/type";
+import { BigSmallResult } from "../../../games/saba-club/big-small/type";
 import { calculateTotalDiceNumber } from "../../utils/number-helper";
 
 type Props = {

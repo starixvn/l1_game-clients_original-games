@@ -3,14 +3,15 @@
 // Move variables to a local class
 .round-history {
     // bigsmall-specific variables
-    --bigsmall-big-bg: #315dc5;
-    --bigsmall-big-border: #357abd;
-    --bigsmall-small-bg: linear-gradient(180deg, #ff5661, #be1c28);
-    --bigsmall-small-border: #c0392b;
+    --bigsmall-big-bg: linear-gradient(180deg, #7C7C77 0%, #2E322C 50%, #7C7C77 100%);
+    --bigsmall-big-border: #000000;
+    --bigsmall-small-bg: linear-gradient(180deg, #FFFFFF 0%, #B7B7B7 50%, #FFFFFF 100%);
+    --bigsmall-small-border: #000000;
     --bigsmall-next-bg: #f0f0f0;
     --bigsmall-next-border: #ddd;
     --bigsmall-text-light: #fff;
-    --bigsmall-text-dark: #666;
+    --bigsmall-text-dark: #000000;
+
 
     background-color: #fce0d7;
     padding: 8px 12px;
@@ -59,12 +60,18 @@
             background: var(--bigsmall-big-bg) !important;
             color: var(--bigsmall-text-light) !important;
             border: 1px solid var(--bigsmall-big-border) !important;
+            &::before {
+                background: var(--bigsmall-big-bg) !important;
+            }
         }
 
         &.small {
             background: var(--bigsmall-small-bg) !important;
-            color: var(--bigsmall-text-light) !important;
+            color: var(--bigsmall-text-dark) !important;
             border: 1px solid var(--bigsmall-small-border) !important;
+            &::before {
+                background: var(--bigsmall-small-bg) !important;
+            }
         }
 
         &.next {
