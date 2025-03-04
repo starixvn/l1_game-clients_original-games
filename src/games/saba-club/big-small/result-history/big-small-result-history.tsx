@@ -2,7 +2,8 @@ import * as gc from "@sg/sg-game-client";
 import { render } from "@sg/sg-observer";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
 import Styles from "./big-small-result-history.module.scss";
-import { BigSmallSettlementResult } from "../type";
+import { BigSmallResult, BigSmallSettlementResult } from "../type";
+import Dice from "./components/dice";
 
 export interface IBigSmallResultHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
@@ -18,6 +19,12 @@ export default class BigSmallResultHistory extends ObserverComponent<IPropsObser
     renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
         this.setState({ rounds: rounds.slice(0, numberOfResult) });
     }
+
+    renderDices = (roundHistory: gc.RoundHistories.RoundHistory) => {
+        const result = roundHistory.result as BigSmallResult;
+        const dices = [result.dice1, result.dice2, result.dice3];
+        return dices.map((diceNumber, index) => <Dice key={index} diceNumber={diceNumber} />);
+    };
 
     renderBigSmall(roundHistory: gc.RoundHistories.RoundHistory) {
         const { settlementResult } = roundHistory;
@@ -38,7 +45,8 @@ export default class BigSmallResultHistory extends ObserverComponent<IPropsObser
         return (
             <div className={Styles["result-item"]} key={index}>
                 <div>{`No.${roundHistory.roundId}`}</div>
-                <div>{this.renderBigSmall(roundHistory)}</div>
+                <div className={Styles["item-dot"]}>{this.renderDices(roundHistory)}</div>
+                <div style={{marginLeft: "-50px"}}>{this.renderBigSmall(roundHistory)}</div>
             </div>
         );
     }

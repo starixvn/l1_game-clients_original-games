@@ -1,0 +1,80 @@
+
+.dice {
+    transform: scale(0.38);
+    position: relative;
+    margin-left: -50px;
+    margin-top: -24px;
+    margin-bottom: -24px;
+    width: 100px;
+    height: 100px;
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease-in-out, opacity 0.1s ease-in-out;
+}
+
+.diceResult {
+    color: #212226;
+    font-family: "Segoe UI";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+/* Dice Faces */
+.face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.face::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-image: url("/static/images/big-small/dice-empty.png");
+}
+
+.face::after {
+    position: absolute;
+    content: "";
+    top: 50%;
+    left: 50%;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #131210;
+}
+
+.dice-1::after {
+    width: 20px;
+    height: 20px;
+    background: #f63330;
+    margin: -10px 0 0 -10px;
+}
+
+.dice-2::after {
+    margin: -30px 0 0 -30px;
+    box-shadow: 40px 40px;
+}
+
+.dice-3::after {
+    margin: -35px 0 0 -35px;
+    box-shadow: 25px 25px, 50px 50px;
+}
+
+.dice-4::after {
+    margin: -30px 0 0 -30px;
+    box-shadow: 40px 0, 0 40px, 40px 40px;
+}
+
+.dice-5::after {
+    margin: -36px 0 0 -36px;
+    box-shadow: 26px 26px, 52px 52px, 52px 0, 0 52px;
+}
+
+.dice-6::after {
+    margin: -35px 0 0 -30px;
+    box-shadow: 40px 0, 0 25px, 40px 25px, 0 50px, 40px 50px;
+}

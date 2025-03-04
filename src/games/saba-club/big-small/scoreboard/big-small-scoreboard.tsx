@@ -70,8 +70,6 @@ export default class BigSmallScoreBoard extends ObserverComponent<Props, IBigSma
             return round.settlementResult as unknown as BigSmallSettlementResult;
         });
 
-        // const input = [...settlements].reverse();
-
         const input = [...rounds].map(round => ({
             roundId: round.roundId,
             settlementResult: round.settlementResult as unknown as BigSmallSettlementResult,

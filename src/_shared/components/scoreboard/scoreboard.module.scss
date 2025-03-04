@@ -92,6 +92,23 @@
     animation: blinker 1.3s linear infinite;
 }
 
+.dot-empty {
+    display: flex;
+    -moz-box-align: center;
+    align-items: center;
+    -moz-box-pack: center;
+    justify-content: center;
+    width: 1.3rem;
+    height: 1.3rem;
+    border-radius: 50%;
+    font: 0.5rem var(--font-number);
+    pointer-events: none;
+    color: #fff;
+    z-index: 1;
+    font-size: 0.9rem;
+    background: transparent;
+}
+
 @keyframes blinker {
     50% {
         opacity: 0.3;

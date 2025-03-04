@@ -39,6 +39,11 @@ const ScoreBoard: React.FunctionComponent<Props> = ({ gameName, rows, scoreboard
         return <div className={getDotClass(status)}>{character}</div>;
     };
 
+    const dotEmpty = () => {
+        return <div className={Styles["dot-empty"]}></div>;
+    }
+
+
     return (
         <>
             {rows.map((row, row_index) =>
@@ -48,7 +53,7 @@ const ScoreBoard: React.FunctionComponent<Props> = ({ gameName, rows, scoreboard
                         style={{ gridColumnStart: col_index + 1, gridRowStart: row_index + 1 }}
                         key={`${row_index}_${col_index}`}
                     >
-                        {point?.status === undefined ? null : renderDot(point)}
+                        {point?.status === undefined ? dotEmpty() : renderDot(point)}
                     </div>
                 ))
             )}

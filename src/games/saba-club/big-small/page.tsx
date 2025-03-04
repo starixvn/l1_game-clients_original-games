@@ -68,10 +68,6 @@ export default class BigSmall extends GatewayGameBase<GameBaseProps, IGameBaseSt
         return <BigSmallSettlementResult namespace={this.props.namespace} />;
     }
 
-    // renderStatistic() {
-    //     return <SedieStatistic namespace={this.props.namespace} gameName={setting.gameName} />;
-    // }
-
     renderStatistic() {
         return <BigSmallStatistic namespace={this.props.namespace} gameName={setting.gameName} />;
     }
