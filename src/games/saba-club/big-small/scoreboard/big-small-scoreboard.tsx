@@ -12,8 +12,7 @@ import { ScoreBoard } from "../../../../_shared/components/scoreboard";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
 import { BigSmallResult, BigSmallRoundHistory, BigSmallSettlementResult } from "../type";
 import { BigSmallBigRoadConverter } from "../../../../_shared/components/scoreboard/converters";
-
-
+import BigSmallScoreBoardBody from "./components/big-small-scoreboard-body";
 
 export interface IBigSmallResultHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
@@ -23,7 +22,6 @@ export interface IBigSmallResultHistoryState extends IStateObserver {
 type Props = IPropsObserver & {
     gameName?: string;
 };
-
 
 export default class BigSmallScoreBoard extends ObserverComponent<Props, IBigSmallResultHistoryState> {
     private scrollDivRef = createRef<HTMLDivElement>();
@@ -97,7 +95,7 @@ export default class BigSmallScoreBoard extends ObserverComponent<Props, IBigSma
 
                 <div className={Styles["scoreboard-content"]} ref={this.scrollDivRef}>
                     {
-                        <ScoreBoard
+                        <BigSmallScoreBoardBody
                             gameName={this.props.gameName}
                             rows={rows}
                             scoreboardCharacter={scoreboardCharacter}

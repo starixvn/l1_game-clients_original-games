@@ -19,13 +19,7 @@
 .dot-odd,
 .dot-over,
 .dot-under,
-.dot-even,
-.dot-player ,
-.dot-banker,
-.dot-tie,
-.dot-blink,
-.dot-big,
-.dot-small {
+.dot-blink {
     display: flex;
     -moz-box-align: center;
     align-items: center;
@@ -61,56 +55,10 @@
     color: whitesmoke;
 }
 
-.dot-player {
-    background: #315dc5;
-    color: whitesmoke;
-}
-
-.dot-banker {
-    background: linear-gradient(180deg, #ff5661, #be1c28);
-    color: whitesmoke;
-}
-
-.dot-tie {
-    background: #315dc5;
-    color: whitesmoke;
-}
-
-.dot-big {
-    background: linear-gradient(180deg, #7C7C77 0%, #2E322C 50%, #7C7C77 100%);
-    border: 1px solid #000000;
-    font-weight: 600;
-    color: #fff;
-}
-
-.dot-small {
-    background: linear-gradient(180deg, #FFFFFF 0%, #B7B7B7 50%, #FFFFFF 100%);
-    border: 1px solid #000000;
-    font-weight: 600;
-    color: #000000;
-}
-
 .dot-blink {
     background: #8b8686;
     color: rgb(211, 202, 202);
     animation: blinker 1.3s linear infinite;
-}
-
-.dot-empty {
-    display: flex;
-    -moz-box-align: center;
-    align-items: center;
-    -moz-box-pack: center;
-    justify-content: center;
-    width: 1.3rem;
-    height: 1.3rem;
-    border-radius: 50%;
-    font: 0.5rem var(--font-number);
-    pointer-events: none;
-    color: #fff;
-    z-index: 1;
-    font-size: 0.9rem;
-    background: transparent;
 }
 
 @keyframes blinker {
