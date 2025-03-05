@@ -16,6 +16,7 @@ import { BigSmallBetOptions } from "./bet-option";
 import styles from "./bigsmall.module.scss";
 import { BigSmallStatistic } from "./statistic";
 import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
+import { BigSmallCountDownTimer } from "./count-down-timer";
 
 interface IBigSmallState extends IGameBaseState {
     roundState: string;
@@ -65,7 +66,7 @@ export default class BigSmall extends GatewayGameBase<GameBaseProps, IBigSmallSt
     }
 
     renderCountDownTimer() {
-        return <CountDownTimer namespace={this.props.namespace} />;
+        return <BigSmallCountDownTimer namespace={this.props.namespace} />;
     }
 
     renderBettingBlock() {

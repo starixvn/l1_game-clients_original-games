@@ -184,7 +184,8 @@
         "previous_round": "Previous Rounds",
         "morethanmax": "Your stake exceeds the max stake.",
         "lessthanmin": "Your stake is less than min stake.",
-        "decimal": "Dec"
+        "decimal": "Dec",
+        "open_result": "Open Result"
     },
     "SeDie": {
         "game_vendor": "SABA.games",
