@@ -7,17 +7,10 @@
     "build": {
       "executor": "@nx/webpack:webpack",
       "options": {
-        "outputPath": "dist/apps/seal-components",
+        "outputPath": "../../../public/nx-app",
         "webpackConfig": "apps/seal-components/webpack.config.js",
         "tsConfig": "apps/seal-components/tsconfig.app.json",
-        "assets": [
-          {
-            "input": "dist/libs",
-            "glob": "**/*",
-            "ignore": ["**/*.js"],
-            "output": "dist/app/seal-components"
-          }
-        ]
+        "baseHref": "/nx-app/"
       },
       "configurations": {
         "production": {

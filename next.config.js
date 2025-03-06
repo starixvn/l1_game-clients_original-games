@@ -68,6 +68,18 @@ const nextConfig = {
                 source: "/saba-games/:path*",
                 destination: "http://localhost:4200/saba-games/:path*",
             },
+            {
+                source: "/nx-app",
+                destination: "/nx-app/index.html",
+            },
+            {
+                source: "/nx-app/:path*",
+                destination: "/nx-app/:path*",
+            },
+            {
+                source: "/nx-app/_next/:path*",
+                destination: "/nx-app/_next/:path*",
+            },
         ];
     },
     cleanDistDir: true,
