@@ -10,6 +10,8 @@ import {
     getSettlementResult
 } from '../../../games/saba-club/baccarat/scoreboard/baccarat-big-road-patterns';
 import { RoundHistory, MultiDragonTailsDemo, TwoAlternatingDragonTailsDemo } from '../../../games/saba-club/baccarat/baccarat-anim/constants';
+import { BaccaratScoreboard } from '../../../games/saba-club/baccarat/scoreboard/ver1/baccarat-scoreboard';
+import BaccaratBigRoadDemo1 from './BaccaratBigRoadDemo1';
 
 // Demo data
 const DEMO_ROUNDS: gc.RoundHistories.RoundHistory[] = RoundHistory;
@@ -195,13 +197,15 @@ const BaccaratScoreboardsDemo: React.FC = () => {
                     rounds={MultiDragonTailsDemo}
                 />
             </div> */}
-            <div className={demoStyles["demo-section"]}>
+            {/* <div className={demoStyles["demo-section"]}>
                 <BaccaratBigRoadDemo
                     gameName="Baccarat"
                     title="Two Alternating Dragon Tails Pattern"
                     rounds={TwoAlternatingDragonTailsDemo}
                 />
-            </div>
+            </div> */}
+
+            <BaccaratBigRoadDemo1 />
         </div>
     );
 };

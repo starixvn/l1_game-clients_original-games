@@ -1,1 +1,1 @@
-export * from './baccarat-scoreboards';
+export * from './baccarat-big-road';

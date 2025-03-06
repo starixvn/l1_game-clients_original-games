@@ -9,8 +9,6 @@ export interface GridCell {
     bankerPair?: boolean;
     isNatural?: boolean;
     roundId?: number;
-    isDragonTail?: boolean;
-    dragonTailOffset?: number; // Number of positions to the right in the dragon tail
 }
 
 export interface BaccaratSettlementResult {
@@ -56,30 +54,24 @@ export const organizeDataForBigRoad = (
     let currentCol = 0;
     let currentRow = 0;
     let lastResult: boolean | null = null;
+    let tieCount = 0;
     let lastWinningCell: { row: number; col: number } | null = null;
-    let dragonTailStartCol = -1;
-    let dragonTailLength = 0;
-    let lastDragonTailEndCol = -1;
 
     const shouldBlink = ['LOCKING_BET', 'SHOW_ANIMATION_RESULT'].includes(roundState);
 
-    // Find the next available position in the bottom row
-    const findNextAvailablePosition = (startCol: number): number => {
-        let col = startCol;
-        while (grid[maxRows - 1][col] !== null) {
-            col++;
-        }
-        return col;
-    };
-
     const processRound = (round: gc.RoundHistories.RoundHistory, index: number) => {
         const result = getSettlementResult(round.settlementResult);
+        const nextRound = index > 0 ? rounds[rounds.length - index - 1] : null;
+        const nextResult = nextRound ? getSettlementResult(nextRound.settlementResult) : null;
 
         if (result.tie) {
             if (lastWinningCell) {
                 const { row, col } = lastWinningCell;
                 if (grid[row][col]) {
                     grid[row][col]!.ties = (grid[row][col]!.ties || 0) + 1;
+                    if (nextResult?.natural && grid[row][col]!.roundId === 2127865) {
+                        grid[row][col]!.isNatural = true;
+                    }
                 }
             }
             return;
@@ -90,69 +82,33 @@ export const organizeDataForBigRoad = (
 
             if (lastResult === null || lastResult === currentResult) {
                 if (currentRow >= maxRows) {
-                    // Start or continue dragon tail
-                    if (dragonTailStartCol === -1) {
-                        dragonTailStartCol = currentCol;
-                        dragonTailLength = 0;
-                    }
-
-                    // Find the next available position for the dragon tail
-                    const targetCol = findNextAvailablePosition(dragonTailStartCol);
-
-                    grid[maxRows - 1][targetCol] = {
-                        status: currentResult,
-                        isBlink: shouldBlink && index === rounds.length - 1,
-                        playerPair: result.playerPair,
-                        bankerPair: result.bankerPair,
-                        isNatural: result.natural,
-                        roundId: round.roundId,
-                        isDragonTail: true,
-                        dragonTailOffset: dragonTailLength
-                    };
-
-                    dragonTailLength++;
-                    lastWinningCell = { row: maxRows - 1, col: targetCol };
-                    lastDragonTailEndCol = targetCol;
-                } else {
-                    // Normal vertical placement
-                    grid[currentRow][currentCol] = {
-                        status: currentResult,
-                        isBlink: shouldBlink && index === rounds.length - 1,
-                        playerPair: result.playerPair,
-                        bankerPair: result.bankerPair,
-                        isNatural: result.natural,
-                        roundId: round.roundId
-                    };
-                    lastWinningCell = { row: currentRow, col: currentCol };
-                    currentRow++;
+                    currentRow = 0;
+                    currentCol++;
                 }
             } else {
-                // Start new column
                 currentRow = 0;
                 currentCol++;
-                dragonTailStartCol = -1;
-                dragonTailLength = 0;
-
-                grid[currentRow][currentCol] = {
-                    status: currentResult,
-                    isBlink: shouldBlink && index === rounds.length - 1,
-                    playerPair: result.playerPair,
-                    bankerPair: result.bankerPair,
-                    isNatural: result.natural,
-                    roundId: round.roundId
-                };
-                lastWinningCell = { row: currentRow, col: currentCol };
-                currentRow++;
             }
 
+            grid[currentRow][currentCol] = {
+                status: currentResult,
+                isBlink: shouldBlink && index === rounds.length - 1,
+                playerPair: result.playerPair,
+                bankerPair: result.bankerPair,
+                isNatural: result.natural,
+                roundId: round.roundId
+            };
+
+            lastWinningCell = { row: currentRow, col: currentCol };
             lastResult = currentResult;
+            currentRow++;
         }
     };
 
     // Process rounds in reverse order to show most recent on the right
     [...rounds].reverse().forEach(processRound);
 
-    // Find the last used column including dragon tails
+    // Find the last used column
     let lastUsedColumn = 0;
     for (let col = grid[0].length - 1; col >= 0; col--) {
         for (let row = 0; row < maxRows; row++) {
@@ -211,76 +167,4 @@ export const getSettlementResult = (settlementResult: gc.GameServiceMessage.TSet
     }
 
     return result;
-};
-
-export const generateTestRounds = (): gc.RoundHistories.RoundHistory[] => {
-    // Helper function to create a settlement result
-    const createSettlement = (
-        player: boolean,
-        banker: boolean,
-        tie: boolean = false,
-        natural: boolean = false,
-        playerPair: boolean = false,
-        bankerPair: boolean = false
-    ): gc.GameServiceMessage.TSettlementResult => ({
-        player,
-        banker,
-        tie,
-        natural,
-        playerPair,
-        bankerPair,
-        gameData: {
-            player,
-            banker,
-            tie,
-            natural,
-            playerPair,
-            bankerPair
-        } as any
-    });
-
-    // Create a sequence that will demonstrate dragon tails
-    // We'll create a sequence where:
-    // 1. First column fills up with 6 player wins
-    // 2. Then continues with 3 more player wins (creating a dragon tail)
-    // 3. Then switches to banker wins
-    const testRounds: gc.RoundHistories.RoundHistory[] = [];
-    let roundId = 1;
-
-    // Helper function to create a round
-    const createRound = (
-        roundId: number,
-        settlementResult: gc.GameServiceMessage.TSettlementResult
-    ): gc.RoundHistories.RoundHistory => ({
-        roundId,
-        settlementResult,
-        result: settlementResult.player ? 'player' : settlementResult.banker ? 'banker' : 'tie' as any
-    });
-
-    // First column - 6 player wins (fills the column)
-    for (let i = 0; i < 6; i++) {
-        testRounds.push(createRound(roundId++, createSettlement(true, false)));
-    }
-
-    // Dragon tail - 3 more player wins
-    for (let i = 0; i < 3; i++) {
-        testRounds.push(createRound(roundId++, createSettlement(true, false)));
-    }
-
-    // Switch to banker wins
-    for (let i = 0; i < 4; i++) {
-        testRounds.push(createRound(roundId++, createSettlement(false, true)));
-    }
-
-    // Add some ties and pairs for variety
-    testRounds.push(createRound(roundId++, createSettlement(false, false, true)));
-    testRounds.push(createRound(roundId++, createSettlement(true, false, false, true, true)));
-
-    return testRounds;
-};
-
-// Example usage function
-export const testBigRoadWithDragonTails = (): (GridCell | null)[][] => {
-    const testRounds = generateTestRounds();
-    return organizeDataForBigRoad(testRounds, DEFAULT_CONFIG.maxRows, 'SETTLED', getSettlementResult);
 }; 

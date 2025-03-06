@@ -700,3 +700,4072 @@ export const SCOREBOARD_SCENARIOS = [{
 
 
 
+
+
+export const RoundHistoryTestData = [
+    {
+        "roundId": 2130187,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 8,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 3,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 7,
+                    "type": 3
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 6,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 4,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 5,
+                    "type": 1
+                }
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130186,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 9,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 12,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 11,
+                    "type": 0
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 12,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 6,
+                    "type": 2
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130185,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 10,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 0,
+                    "type": 0
+                },
+                "card3": {
+                    "card": 3,
+                    "type": 3
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 5,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 9,
+                    "type": 3
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130184,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 1,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 9,
+                    "type": 1
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 9,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 7,
+                    "type": 0
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130183,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 9,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 3,
+                    "type": 3
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 11,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 8,
+                    "type": 0
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130182,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 8,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 9,
+                    "type": 3
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 1,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 2,
+                    "type": 3
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130181,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 9,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 0,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 6,
+                    "type": 3
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 2,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 0,
+                    "type": 0
+                },
+                "card3": {
+                    "card": 7,
+                    "type": 1
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130180,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 12,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 8,
+                    "type": 3
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 7,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 8,
+                    "type": 2
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130179,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 3,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 7,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 11,
+                    "type": 3
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 7,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 3,
+                    "type": 0
+                },
+                "card3": {
+                    "card": 2,
+                    "type": 0
+                }
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130178,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 9,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 7,
+                    "type": 0
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 10,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 4,
+                    "type": 3
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130177,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 0,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 7,
+                    "type": 2
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 4,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 1,
+                    "type": 1
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130176,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 1,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 3,
+                    "type": 1
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 2,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 10,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 8,
+                    "type": 1
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130175,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 4,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 6,
+                    "type": 0
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 6,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 1,
+                    "type": 1
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130174,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 8,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 3,
+                    "type": 0
+                },
+                "card3": {
+                    "card": 2,
+                    "type": 2
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 11,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 9,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 1,
+                    "type": 3
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130173,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 8,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 3,
+                    "type": 1
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 7,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 12,
+                    "type": 1
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130172,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 10,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 6,
+                    "type": 2
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 3,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 5,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 2,
+                    "type": 3
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130171,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 12,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 4,
+                    "type": 3
+                },
+                "card3": {
+                    "card": 2,
+                    "type": 3
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 3,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 5,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 8,
+                    "type": 1
+                }
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130170,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 9,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 0,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 12,
+                    "type": 0
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 1,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 2,
+                    "type": 3
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130169,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 6,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 1,
+                    "type": 3
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 6,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 0,
+                    "type": 0
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130168,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 7,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 0,
+                    "type": 0
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 0,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 10,
+                    "type": 0
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130167,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 3,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 4,
+                    "type": 3
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 11,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 6,
+                    "type": 3
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130166,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 2,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 11,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 0,
+                    "type": 1
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 2,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 6,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 0,
+                    "type": 0
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130165,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 9,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 0,
+                    "type": 3
+                },
+                "card3": {
+                    "card": 7,
+                    "type": 3
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 2,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 0,
+                    "type": 2
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130164,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 10,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 9,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 3,
+                    "type": 3
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 1,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 0,
+                    "type": 3
+                },
+                "card3": {
+                    "card": 11,
+                    "type": 2
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130163,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 9,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 8,
+                    "type": 3
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 12,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 11,
+                    "type": 0
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130162,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 11,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 1,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 4,
+                    "type": 2
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 4,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 11,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 1,
+                    "type": 3
+                }
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": true,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130161,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 11,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 4,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 3,
+                    "type": 3
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 9,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 11,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 12,
+                    "type": 1
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130160,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 12,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 8,
+                    "type": 0
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 5,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 9,
+                    "type": 3
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130159,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 7,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 0,
+                    "type": 1
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 0,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 2,
+                    "type": 0
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130158,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 11,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 1,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 3,
+                    "type": 3
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 0,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 12,
+                    "type": 0
+                },
+                "card3": {
+                    "card": 9,
+                    "type": 2
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130157,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 4,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 6,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 5,
+                    "type": 0
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 3,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 7,
+                    "type": 0
+                },
+                "card3": {
+                    "card": 11,
+                    "type": 3
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130156,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 4,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 6,
+                    "type": 3
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 12,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 7,
+                    "type": 1
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130155,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 7,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 10,
+                    "type": 3
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 4,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 12,
+                    "type": 1
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130154,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 10,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 0,
+                    "type": 0
+                },
+                "card3": {
+                    "card": 8,
+                    "type": 1
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 12,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 2,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 2,
+                    "type": 0
+                }
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130153,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 12,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 8,
+                    "type": 2
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 4,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 6,
+                    "type": 3
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130152,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 0,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 5,
+                    "type": 0
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 9,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 4,
+                    "type": 0
+                },
+                "card3": {
+                    "card": 0,
+                    "type": 2
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130151,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 5,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 6,
+                    "type": 0
+                },
+                "card3": {
+                    "card": 1,
+                    "type": 2
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 4,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 12,
+                    "type": 3
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": true,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130150,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 0,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 1,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 7,
+                    "type": 0
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 10,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 5,
+                    "type": 2
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130149,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 6,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 9,
+                    "type": 3
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 2,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 1,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 2,
+                    "type": 2
+                }
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130148,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 6,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 2,
+                    "type": 0
+                },
+                "card3": {
+                    "card": 7,
+                    "type": 3
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 8,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 0,
+                    "type": 3
+                },
+                "card3": {
+                    "card": 2,
+                    "type": 3
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130147,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 11,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 12,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 8,
+                    "type": 1
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 12,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 3,
+                    "type": 0
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130146,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 5,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 2,
+                    "type": 1
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 12,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 0,
+                    "type": 1
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130145,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 5,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 6,
+                    "type": 0
+                },
+                "card3": {
+                    "card": 11,
+                    "type": 3
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 6,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 3,
+                    "type": 3
+                },
+                "card3": {
+                    "card": 8,
+                    "type": 2
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130144,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 5,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 4,
+                    "type": 3
+                },
+                "card3": {
+                    "card": 3,
+                    "type": 0
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 0,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 2,
+                    "type": 0
+                },
+                "card3": {
+                    "card": 5,
+                    "type": 0
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130143,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 8,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 11,
+                    "type": 1
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 4,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 1,
+                    "type": 1
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130142,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 0,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 11,
+                    "type": 3
+                },
+                "card3": {
+                    "card": 4,
+                    "type": 1
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 7,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 7,
+                    "type": 0
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": true,
+            "playerPair": false,
+            "bankerPair": true,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130141,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 4,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 1,
+                    "type": 0
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 6,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 3,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 4,
+                    "type": 1
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130140,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 0,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 9,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 12,
+                    "type": 0
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 7,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 1,
+                    "type": 3
+                },
+                "card3": {
+                    "card": 9,
+                    "type": 3
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130139,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 8,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 10,
+                    "type": 3
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 9,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 7,
+                    "type": 3
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130138,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 7,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 12,
+                    "type": 3
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 2,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 8,
+                    "type": 3
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130137,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 2,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 11,
+                    "type": 2
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 10,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 8,
+                    "type": 0
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130136,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 5,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 1,
+                    "type": 0
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 10,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 8,
+                    "type": 1
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130135,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 10,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 7,
+                    "type": 2
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 2,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 8,
+                    "type": 0
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130134,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 9,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 10,
+                    "type": 3
+                },
+                "card3": {
+                    "card": 8,
+                    "type": 0
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 9,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 12,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 5,
+                    "type": 0
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130133,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 12,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 9,
+                    "type": 3
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 8,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 8,
+                    "type": 1
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": true,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130132,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 5,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 3,
+                    "type": 3
+                },
+                "card3": {
+                    "card": 12,
+                    "type": 2
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 4,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 10,
+                    "type": 0
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130131,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 7,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 4,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 12,
+                    "type": 3
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 10,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 11,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 3,
+                    "type": 0
+                }
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130130,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 10,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 4,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 9,
+                    "type": 2
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 0,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 10,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 4,
+                    "type": 2
+                }
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130129,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 12,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 12,
+                    "type": 3
+                },
+                "card3": {
+                    "card": 2,
+                    "type": 1
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 12,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 9,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 0,
+                    "type": 2
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": true,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130128,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 4,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 11,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 4,
+                    "type": 2
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 9,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 10,
+                    "type": 3
+                },
+                "card3": {
+                    "card": 8,
+                    "type": 0
+                }
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130127,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 2,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 4,
+                    "type": 2
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 5,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 8,
+                    "type": 0
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130126,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 4,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 3,
+                    "type": 2
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 8,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 4,
+                    "type": 2
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130125,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 11,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 7,
+                    "type": 2
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 9,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 12,
+                    "type": 0
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130124,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 0,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 8,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 11,
+                    "type": 1
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 9,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 0,
+                    "type": 0
+                },
+                "card3": {
+                    "card": 8,
+                    "type": 0
+                }
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": true,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130123,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 9,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 6,
+                    "type": 1
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 7,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 10,
+                    "type": 0
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130122,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 2,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 8,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 3,
+                    "type": 2
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 1,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 4,
+                    "type": 1
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130121,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 4,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 11,
+                    "type": 0
+                },
+                "card3": {
+                    "card": 4,
+                    "type": 3
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 2,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 1,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 1,
+                    "type": 3
+                }
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130120,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 7,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 10,
+                    "type": 0
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 5,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 12,
+                    "type": 0
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130119,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 5,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 4,
+                    "type": 1
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 0,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 7,
+                    "type": 3
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130118,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 4,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 5,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 11,
+                    "type": 3
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 10,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 2,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 6,
+                    "type": 2
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130117,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 11,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 0,
+                    "type": 3
+                },
+                "card3": {
+                    "card": 6,
+                    "type": 3
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 3,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 0,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 7,
+                    "type": 2
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130116,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 5,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 12,
+                    "type": 3
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 12,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 5,
+                    "type": 1
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": true,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130115,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 1,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 10,
+                    "type": 3
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 1,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 6,
+                    "type": 3
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130114,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 3,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 0,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 2,
+                    "type": 0
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 1,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 7,
+                    "type": 0
+                },
+                "card3": {
+                    "card": 7,
+                    "type": 2
+                }
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": true,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130113,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 1,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 5,
+                    "type": 3
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 7,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 0,
+                    "type": 0
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130112,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 1,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 12,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 7,
+                    "type": 2
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 5,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 6,
+                    "type": 2
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130111,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 11,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 2,
+                    "type": 0
+                },
+                "card3": {
+                    "card": 5,
+                    "type": 3
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 10,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 0,
+                    "type": 0
+                },
+                "card3": {
+                    "card": 2,
+                    "type": 3
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130110,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 6,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 11,
+                    "type": 1
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 3,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 9,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 7,
+                    "type": 1
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130109,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 1,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 7,
+                    "type": 3
+                },
+                "card3": {
+                    "card": 9,
+                    "type": 1
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 10,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 9,
+                    "type": 3
+                },
+                "card3": {
+                    "card": 7,
+                    "type": 2
+                }
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130108,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 1,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 0,
+                    "type": 3
+                },
+                "card3": {
+                    "card": 3,
+                    "type": 0
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 3,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 6,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 8,
+                    "type": 2
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130107,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 0,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 5,
+                    "type": 1
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 9,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 5,
+                    "type": 3
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130106,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 2,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 9,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 3,
+                    "type": 2
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 9,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 10,
+                    "type": 3
+                },
+                "card3": {
+                    "card": 7,
+                    "type": 2
+                }
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130105,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 6,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 5,
+                    "type": 0
+                },
+                "card3": {
+                    "card": 3,
+                    "type": 0
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 6,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 8,
+                    "type": 3
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130104,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 11,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 3,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 7,
+                    "type": 3
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 5,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 10,
+                    "type": 0
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130103,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 3,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 12,
+                    "type": 0
+                },
+                "card3": {
+                    "card": 1,
+                    "type": 0
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 11,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 1,
+                    "type": 3
+                },
+                "card3": {
+                    "card": 10,
+                    "type": 0
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130102,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 8,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 5,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 1,
+                    "type": 1
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 12,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 11,
+                    "type": 3
+                },
+                "card3": {
+                    "card": 5,
+                    "type": 3
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130101,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 6,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 2,
+                    "type": 0
+                },
+                "card3": {
+                    "card": 3,
+                    "type": 1
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 8,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 6,
+                    "type": 1
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130100,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 10,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 8,
+                    "type": 2
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 3,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 7,
+                    "type": 3
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130099,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 0,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 4,
+                    "type": 3
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 10,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 2,
+                    "type": 1
+                },
+                "card3": {
+                    "card": 9,
+                    "type": 2
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130098,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 0,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 2,
+                    "type": 3
+                },
+                "card3": {
+                    "card": 9,
+                    "type": 3
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 0,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 4,
+                    "type": 2
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130097,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 4,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 5,
+                    "type": 3
+                },
+                "card3": {
+                    "card": 2,
+                    "type": 1
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 6,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 12,
+                    "type": 1
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130096,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 10,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 3,
+                    "type": 0
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 5,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 2,
+                    "type": 3
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130095,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 8,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 12,
+                    "type": 3
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 5,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 8,
+                    "type": 3
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130094,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 11,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 6,
+                    "type": 1
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 6,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 4,
+                    "type": 3
+                },
+                "card3": {
+                    "card": 7,
+                    "type": 0
+                }
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130093,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 4,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 3,
+                    "type": 0
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 6,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 10,
+                    "type": 1
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130092,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 4,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 2,
+                    "type": 0
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 6,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 9,
+                    "type": 3
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": true,
+            "banker": false,
+            "big": false,
+            "small": true,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": true
+        }
+    },
+    {
+        "roundId": 2130091,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 0,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 5,
+                    "type": 3
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 9,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 1,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 6,
+                    "type": 3
+                }
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130090,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 11,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 6,
+                    "type": 2
+                },
+                "card3": null
+            },
+            "banker": {
+                "card1": {
+                    "card": 7,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 2,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 6,
+                    "type": 1
+                }
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130089,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 12,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 2,
+                    "type": 3
+                },
+                "card3": {
+                    "card": 0,
+                    "type": 1
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 10,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 0,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 5,
+                    "type": 3
+                }
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130088,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 0,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 2,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 6,
+                    "type": 2
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 6,
+                    "type": 3
+                },
+                "card2": {
+                    "card": 9,
+                    "type": 0
+                },
+                "card3": null
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130087,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 5,
+                    "type": 1
+                },
+                "card2": {
+                    "card": 5,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 2,
+                    "type": 1
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 8,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 4,
+                    "type": 2
+                },
+                "card3": {
+                    "card": 3,
+                    "type": 0
+                }
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": true,
+            "bankerPair": false,
+            "natural": false
+        }
+    },
+    {
+        "roundId": 2130086,
+        "result": {
+            "player": {
+                "card1": {
+                    "card": 9,
+                    "type": 2
+                },
+                "card2": {
+                    "card": 4,
+                    "type": 0
+                },
+                "card3": {
+                    "card": 0,
+                    "type": 0
+                }
+            },
+            "banker": {
+                "card1": {
+                    "card": 6,
+                    "type": 0
+                },
+                "card2": {
+                    "card": 5,
+                    "type": 3
+                },
+                "card3": {
+                    "card": 5,
+                    "type": 0
+                }
+            }
+        },
+        "settlementResult": {
+            "player": false,
+            "banker": true,
+            "big": true,
+            "small": false,
+            "tie": false,
+            "playerPair": false,
+            "bankerPair": false,
+            "natural": false
+        }
+    }
+];
