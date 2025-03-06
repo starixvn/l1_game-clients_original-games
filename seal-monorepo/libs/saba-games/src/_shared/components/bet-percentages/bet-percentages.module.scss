@@ -1,0 +1,30 @@
+.scoreboard-percentage {
+    // .c-ng-score .c-ng-score__title 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%; 
+    color: white;
+    font-size: 13px;
+    padding: 5px;
+
+    // .c-ng-score .c-ng-score__title 
+    background-color: var(--c-av-primary-color);
+    color: var(--c-av-white);
+
+    .left-percentage {
+        flex: 1; /* Allows this to take available space on the left */
+        text-align: right; /* Align text to the right */
+    }
+
+    .split-percentage {
+        margin: 0 10px; /* Optional: Add some horizontal margin for spacing */
+        text-align: center; /* Center the split indicator */
+    }
+
+    .right-percentage {
+        flex: 1; /* Allows this to take available space on the right */
+        text-align: left; /* Align text to the left */
+    }
+}

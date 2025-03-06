@@ -1,0 +1,20 @@
+.statistic-button {
+    // prod styles , local 看不出來
+    position: relative;
+    overflow: hidden;
+    width: 93px;
+    padding: 0;
+    margin: 0;
+    right: 10px;
+    top: 7px;
+    cursor: pointer;
+
+    font-size: var(--c-12px-3);
+}
+
+.statistic-button:hover {
+    color: white;
+    .svg-icon {
+        stroke: white;
+    }
+}

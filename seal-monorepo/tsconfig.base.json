@@ -1,0 +1,29 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "target": "es6",
+    "module": "ESNext",
+    "lib": ["ESNext", "dom"],
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["web/lib/*"],
+      "@E/*": ["web/lib/ESports/*"],
+      "@numberGame": ["libs/number-game/src/index.tsx"],
+      "@oneseal/utils": ["libs/utils/src/index.js"],
+      "@seal-components/translation": ["libs/translation/src/index.ts"],
+      "@virtualSport": ["libs/virtual-sport/src/index.ts"],
+      "@virtualSportRacing": ["libs/virtual-sport-racing/src/index.ts"],
+      "components-styles": ["libs/components-styles/*"],
+      "odds-server": ["libs/odds-server/src/index.ts"],
+      "virtual-sport-push": ["libs/virtual-sport-push/src/index.ts"]
+    },
+    "skipLibCheck": true
+  },
+  "exclude": ["node_modules"]
+}

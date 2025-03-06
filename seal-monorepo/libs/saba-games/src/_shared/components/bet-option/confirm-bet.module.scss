@@ -1,0 +1,71 @@
+.padding-top-10 {
+    padding-top: 10px;
+}
+
+.result-flex{
+    display: flex;
+    flex-direction: column;
+}
+
+.betting-row {
+    display: flex;
+    align-items: center;
+}
+
+.c-text-label {
+    min-width: 75px; /* 或根據需要調整寬度 */
+}
+
+.odd {
+    font-weight: 700;
+}
+
+.boosted-odd {
+    background-color: rgba(199, 34, 99, 0.2);
+    border: 1px solid rgba(199, 34, 99);
+    border-radius: 0.3rem;
+    padding: 0 0.4rem;
+    animation: start-boosted-odds 2s forwards infinite;
+}
+
+.total-stakes {
+    font-weight: 500;
+    height: 1.5rem;
+}
+
+.own-bet {
+    font-weight: 700;
+    color: yellow;
+}
+.betting-block {
+    display: block;
+    height: 100%;
+}
+
+@keyframes start-boosted-odds {
+    0%,
+    100% {
+        box-shadow: none;
+    }
+
+    50% {
+        box-shadow: 0 0 5px #c01357, 0 0 8px #ff8dba inset;
+    }
+}
+
+.bet-result-container {
+    display: flex;
+    position: absolute;
+    z-index: 5;
+    top: 20px;
+}
+
+.noti-label {
+    padding-left: 0;
+}
+
+.noti-input {
+    display: inline-block !important;
+    margin-top: 2px;
+    margin-right: 5px;
+}
