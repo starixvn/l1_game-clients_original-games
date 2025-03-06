@@ -5,6 +5,7 @@ import Styles from "./big-small-result-history.module.scss";
 import { BigSmallResult, BigSmallSettlementResult } from "../type";
 import Dice from "../settlement-result/components/dice";
 import { Size } from "../../../../_shared/constants";
+import { calculateTotalDiceNumber } from "../../../../_shared/utils/number-helper";
 
 export interface IBigSmallResultHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
@@ -27,26 +28,29 @@ export default class BigSmallResultHistory extends ObserverComponent<IPropsObser
         return dices.map((diceNumber, index) => <Dice key={index} diceNumber={diceNumber} size={Size.medium} />);
     };
 
+    renderTotalDice(roundHistory: gc.RoundHistories.RoundHistory) {
+        const result = roundHistory.result as BigSmallResult;
+        const totalDice = calculateTotalDiceNumber([result.dice1, result.dice2, result.dice3]);
+        return <div className={Styles["total-dice"]}>{totalDice}</div>;
+    }
+
     renderBigSmall(roundHistory: gc.RoundHistories.RoundHistory) {
         const { settlementResult } = roundHistory;
         const { big } = settlementResult as BigSmallSettlementResult;
-        
-        const resultText = big 
-            ? gc.Translator.t("UnbalancedBigSmall4.big")
-            : gc.Translator.t("UnbalancedBigSmall4.small");
-            
-        return (
-            <div className={Styles[big ? "big" : "small"]}>
-                {resultText}
-            </div>
-        );
+
+        const resultText = big ? gc.Translator.t("UnbalancedBigSmall4.big") : gc.Translator.t("UnbalancedBigSmall4.small");
+
+        return <div className={Styles[big ? "big" : "small"]}>{resultText}</div>;
     }
 
     renderRoundResult(roundHistory: gc.RoundHistories.RoundHistory, index: number) {
         return (
             <div className={Styles["result-item"]} key={index}>
                 <div>{`No.${roundHistory.roundId}`}</div>
-                <div className={Styles["item-dot"]}>{this.renderDices(roundHistory)}</div>
+                <div className={Styles["dice-result"]}>
+                    <div className={Styles["item-dot"]}>{this.renderDices(roundHistory)}</div>
+                    {this.renderTotalDice(roundHistory)}
+                </div>
                 <div>{this.renderBigSmall(roundHistory)}</div>
             </div>
         );

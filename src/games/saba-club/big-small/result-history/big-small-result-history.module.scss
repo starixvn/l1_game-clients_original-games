@@ -19,30 +19,37 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: solid 1px #c9ced2;
+            border-bottom: 1px solid #c9ced2;
             background-color: #fff6f3;
             padding: 5px 12px 5px 7px;
+
+            .big, .small {
+                display: flex;
+                justify-content: flex-end;
+                min-width: 3rem;
+                font-weight: bold;
+                color: #000;
+            }
+
+            .dice-result {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
 
             .item-dot {
                 display: flex;
                 justify-content: center;
                 gap: 8px;
-                margin-top: 4px;
+                margin: 4px 0.8rem 0 0;
             }
 
-            .big, .small {
-                display: flex;
-                justify-content: end;
-                min-width: 3rem;
-                font-weight: bold;
-            }
-
-            .big {
+            .total-dice {
                 color: #000;
-            }
-
-            .small {
-                color: #B7B7B7;
+                font-size: 16px;
+                font-weight: 600;
+                text-align: center;
+                width: 1ch;
             }
         }
     }
