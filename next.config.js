@@ -60,6 +60,14 @@ const nextConfig = {
                 source: "/health",
                 destination: "/api/health",
             },
+            {
+                source: "/saba-games",
+                destination: "http://localhost:4200/saba-games",
+            },
+            {
+                source: "/saba-games/:path*",
+                destination: "http://localhost:4200/saba-games/:path*",
+            },
         ];
     },
     cleanDistDir: true,

@@ -5,10 +5,16 @@ const { join } = require('path');
 module.exports = {
   output: {
     path: join(__dirname, '../../dist/libs/saba-games'),
+    publicPath: '/saba-games/',
   },
   devServer: {
     port: 4200,
-    historyApiFallback: true,
+    historyApiFallback: {
+      index: '/saba-games/index.html',
+    },
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
   },
   plugins: [
     new NxWebpackPlugin({
@@ -16,18 +22,18 @@ module.exports = {
       compiler: 'babel',
       main: './src/main.tsx',
       index: './preview-template/index.html',
-      baseHref: '/',
+      baseHref: '/saba-games/',
       assets: [
-        { 
-          "glob": "**/*",
-          "input": "libs/saba-games/preview-template",
-          "output": "/" 
+        {
+          glob: '**/*',
+          input: 'libs/saba-games/preview-template',
+          output: '/',
         },
-        { 
-          "glob": "**/*",
-          "input": "libs/saba-games/src/assets",
-          "output": "/assets" 
-        }
+        {
+          glob: '**/*',
+          input: 'libs/saba-games/src/assets',
+          output: '/assets',
+        },
       ],
       styles: ['./preview-template/styles.scss'],
       outputHashing: process.env['NODE_ENV'] === 'production' ? 'all' : 'none',
