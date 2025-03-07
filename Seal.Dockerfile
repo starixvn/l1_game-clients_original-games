@@ -1,85 +1,76 @@
 # Base stage for shared settings
 FROM hub.lumigame.com/base/node:20.9.0-alpine-24h1.1 AS base
-# Add build arguments for better configurability
 ARG PORT=5000
-ENV PORT=$PORT
-ENV HOST=0.0.0.0
+ENV PORT=$PORT \
+    HOST=0.0.0.0 \
+    NODE_ENV=production \
+    PATH="/app/node_modules/.bin:$PATH"
 
+# Dependencies stage
 FROM base AS deps
 WORKDIR /app
 
-# Add dependencies for native builds
-RUN apk add --no-cache libc6-compat python3 make g++
+# Add only necessary build dependencies
+RUN apk add --no-cache libc6-compat
 
-# Copy root level configuration files first
+# Copy only package files first to leverage cache
 COPY seal-monorepo/package.json seal-monorepo/yarn.lock ./
-COPY seal-monorepo/nx.json seal-monorepo/tsconfig.base.json seal-monorepo/tsconfig.json seal-monorepo/jest.config.ts seal-monorepo/jest.preset.js ./
+COPY seal-monorepo/nx.json seal-monorepo/tsconfig*.json seal-monorepo/jest.*.* ./
 
-# Copy all package.json files from apps and libs
-COPY seal-monorepo/apps/**/package.json ./apps/
-COPY seal-monorepo/libs/**/package.json ./libs/
-
-# Install dependencies with specific versions
-RUN yarn config set cache-folder /root/.yarn && \
-    yarn install --frozen-lockfile --network-timeout 1000000 && \
-    yarn global add nx@latest && \
-    yarn add -W -D webpack@5.88.2 webpack-cli@5.1.4 @nrwl/webpack@latest && \
+# Install dependencies with yarn cache mounted
+RUN --mount=type=cache,target=/root/.yarn \
+    yarn config set cache-folder /root/.yarn && \
+    yarn install --frozen-lockfile --production=false --network-timeout 1000000 && \
+    yarn add -W -D webpack@5.88.2 webpack-cli@5.1.4 @nrwl/webpack@15.9.2 @nrwl/workspace@15.9.2 && \
+    yarn global add nx@15.9.2 && \
+    # Clean up unnecessary files
     yarn cache clean
 
-# Verify installations
-RUN yarn list webpack webpack-cli @nrwl/webpack && \
-    yarn global list
-
+# Builder stage
 FROM base AS builder
 WORKDIR /app
 
-# Copy dependencies and configuration
+# Copy deps from previous stage
 COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/package.json ./package.json
-COPY --from=deps /app/nx.json ./nx.json
-COPY --from=deps /app/tsconfig*.json ./
-COPY --from=deps /app/jest.*.* ./
+COPY --from=deps /app/package.json /app/nx.json /app/tsconfig*.json /app/jest.*.* ./
 
 # Copy source code
-COPY seal-monorepo/apps/ ./apps/
 COPY seal-monorepo/libs/ ./libs/
 COPY seal-monorepo/scripts/ ./scripts/
+COPY seal-monorepo/apps/seal-components ./apps/seal-components
 
-# Build saba-games specifically
-ENV NODE_ENV=production
-ENV PATH="$PATH:/app/node_modules/.bin"
-RUN yarn nx build saba-games --verbose && node scripts/copy-saba-games.js
+# Build with cache mount for nx
+RUN --mount=type=cache,target=/root/.nx-cache \
+    NX_CACHE_DIRECTORY=/root/.nx-cache \
+    yarn nx build seal-components --verbose && \
+    node scripts/copy-saba-games.js
 
+# Production stage
 FROM hub.lumigame.com/base/node:20.9.0-alpine-24h1.1 AS runner
 WORKDIR /app
-ENV NODE_ENV=production
 
-# Add additional security hardening
-RUN apk add --no-cache tini
+# Add tini and create non-root user in one layer
+RUN apk add --no-cache tini && \
+    addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs && \
+    mkdir -p /app/dist && \
+    chown -R nextjs:nodejs /app
 
-# Create non-root user
-RUN addgroup --system --gid 1001 nodejs \
-    && adduser --system --uid 1001 nextjs
-
-# Create app directory structure and set permissions
-RUN mkdir -p /app/dist \
-    && chown -R nextjs:nodejs /app
-
-# Copy build output and necessary files
+# Copy only production necessary files
 COPY --from=builder --chown=nextjs:nodejs /app/dist ./dist
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
-COPY --from=builder --chown=nextjs:nodejs /app/package.json ./package.json
+COPY --from=builder --chown=nextjs:nodejs /app/package.json ./
+# Install only production dependencies
+COPY --from=builder --chown=nextjs:nodejs /app/yarn.lock ./
+RUN --mount=type=cache,target=/root/.yarn \
+    yarn install --frozen-lockfile --production=true --network-timeout 1000000 && \
+    yarn cache clean
 
 # Configure healthcheck
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
     CMD wget --no-verbose --tries=1 --spider http://localhost:${PORT}/ || exit 1
 
-# Switch to non-root user
 USER nextjs
-
-# Expose port
 EXPOSE $PORT
 
-# Use tini as init system
 ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["yarn", "start:window"] 
