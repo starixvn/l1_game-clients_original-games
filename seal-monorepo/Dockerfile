@@ -18,7 +18,8 @@ COPY libs/**/package.json ./libs/
 # Install dependencies with cache mount
 RUN --mount=type=cache,target=$YARN_CACHE_FOLDER \
     yarn install --frozen-lockfile --network-timeout 1000000 && \
-    yarn global add nx@latest
+    yarn global add nx@latest && \
+    yarn add -W -D webpack-cli
 
 FROM base AS builder
 WORKDIR /app
@@ -41,7 +42,7 @@ RUN yarn build-saba-games
 
 FROM hub.lumigame.com/base/node:20.9.0-alpine-24h1.1 AS runner
 WORKDIR /app
-ENV NODE_ENV production
+ENV NODE_ENV=production
 
 # Create non-root user
 RUN addgroup --system --gid 1001 nodejs \
@@ -59,7 +60,7 @@ RUN chown -R nextjs:nodejs /app
 USER nextjs
 
 EXPOSE 5000
-ENV PORT 5000
-ENV HOST 0.0.0.0
+ENV PORT=5000
+ENV HOST=0.0.0.0
 
 CMD ["yarn", "start:window"] 
