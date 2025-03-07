@@ -17,13 +17,11 @@ RUN apk add --no-cache libc6-compat
 COPY seal-monorepo/package.json seal-monorepo/yarn.lock ./
 COPY seal-monorepo/nx.json seal-monorepo/tsconfig*.json seal-monorepo/jest.*.* ./
 
-# Install dependencies with yarn cache mounted
-RUN --mount=type=cache,target=/root/.yarn \
-    yarn config set cache-folder /root/.yarn && \
+# Install dependencies
+RUN yarn config set cache-folder /root/.yarn && \
     yarn install --frozen-lockfile --production=false --network-timeout 1000000 && \
     yarn add -W -D webpack@5.88.2 webpack-cli@5.1.4 @nrwl/webpack@15.9.2 @nrwl/workspace@15.9.2 && \
     yarn global add nx@15.9.2 && \
-    # Clean up unnecessary files
     yarn cache clean
 
 # Builder stage
