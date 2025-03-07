@@ -19,15 +19,16 @@ COPY seal-monorepo/nx.json seal-monorepo/tsconfig.base.json seal-monorepo/tsconf
 COPY seal-monorepo/apps/**/package.json ./apps/
 COPY seal-monorepo/libs/**/package.json ./libs/
 
-# Install dependencies in separate steps for better error handling
+# Install dependencies with specific versions
 RUN yarn config set cache-folder /root/.yarn && \
-    yarn install --frozen-lockfile --network-timeout 1000000
+    yarn install --frozen-lockfile --network-timeout 1000000 && \
+    yarn global add nx@latest && \
+    yarn add -W -D webpack@5.88.2 webpack-cli@5.1.4 @nrwl/webpack@latest && \
+    yarn cache clean
 
-# Install additional build dependencies
-RUN yarn add -W -D webpack@5.x webpack-cli@5.x @nrwl/webpack
-
-# Install nx globally
-RUN yarn global add nx@latest
+# Verify installations
+RUN yarn list webpack webpack-cli @nrwl/webpack && \
+    yarn global list
 
 FROM base AS builder
 WORKDIR /app
@@ -46,6 +47,7 @@ COPY seal-monorepo/scripts/ ./scripts/
 
 # Build saba-games specifically
 ENV NODE_ENV=production
+ENV PATH="$PATH:/app/node_modules/.bin"
 RUN yarn nx build saba-games --verbose && node scripts/copy-saba-games.js
 
 FROM hub.lumigame.com/base/node:20.9.0-alpine-24h1.1 AS runner
