@@ -7,22 +7,39 @@ WORKDIR /app
 RUN apk add --no-cache libc6-compat python3 make g++
 ENV YARN_CACHE_FOLDER=/root/.yarn
 
+# Create necessary directories
+RUN mkdir -p apps/saba-games libs/saba-games
+
 # Install dependencies with cache mount
 COPY package.json yarn.lock ./
+COPY nx.json tsconfig.base.json tsconfig.json ./
+COPY apps/saba-games/package.json* ./apps/saba-games/
+COPY libs/saba-games/package.json* ./libs/saba-games/
+
 RUN --mount=type=cache,target=$YARN_CACHE_FOLDER \
-     yarn install --frozen-lockfile --network-timeout 1000000
+     yarn install --frozen-lockfile --network-timeout 1000000 && \
+     yarn global add nx@latest
 
 FROM base AS builder
 WORKDIR /app
 
-# Copy dependencies and all source files
+# Copy dependencies and configuration
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/package.json ./package.json
-COPY . .
+COPY --from=deps /app/nx.json ./nx.json
+COPY --from=deps /app/tsconfig*.json ./
+
+# Create necessary directories
+RUN mkdir -p apps/saba-games libs/saba-games scripts
+
+# Copy source files
+COPY scripts/ ./scripts/
+COPY libs/saba-games/ ./libs/saba-games/
+COPY apps/saba-games/ ./apps/saba-games/
 
 # Build the project
-RUN yarn build && \
-     yarn start:window
+RUN yarn nx build saba-games --prod && \
+     node scripts/copy-saba-games.js
 
 FROM hub.lumigame.com/base/node:20.9.0-alpine-24h1.1 AS runner
 WORKDIR /app
@@ -32,11 +49,11 @@ ENV NODE_ENV production
 RUN addgroup --system --gid 1001 nodejs \
      && adduser --system --uid 1001 nextjs
 
-# Copy build output
-COPY --from=builder /app/.next ./.next
+# Copy build output and necessary files
+COPY --from=builder /app/dist/libs/saba-games ./dist/libs/saba-games
+COPY --from=builder /app/public/saba-games ./public/saba-games
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/public ./public
 
 # Set permissions
 RUN chown -R nextjs:nodejs /app
