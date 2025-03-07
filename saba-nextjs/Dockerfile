@@ -16,10 +16,10 @@ FROM base AS builder
 WORKDIR /app
 
 COPY --from=deps /app/node_modules ./node_modules
-COPY package.json yarn.lock tsconfig.json configs.json game-settings.json next.config.js ./
-COPY configs ./configs
-COPY public ./public
-COPY src ./src
+COPY saba-nextjs/package.json saba-nextjs/yarn.lock saba-nextjs/tsconfig.json saba-nextjs/configs.json saba-nextjs/game-settings.json saba-nextjs/next.config.js ./
+COPY saba-nextjs/configs ./configs
+COPY saba-nextjs/public ./public
+COPY saba-nextjs/src ./src
 
 RUN yarn build
 

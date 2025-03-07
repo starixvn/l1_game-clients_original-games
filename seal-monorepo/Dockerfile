@@ -36,8 +36,8 @@ COPY libs/ ./libs/
 COPY scripts/ ./scripts/
 COPY public/ ./public/
 
-# Build all projects in the monorepo
-RUN yarn nx run-many --target=build --all --prod
+# Build saba-games specifically
+RUN yarn build-saba-games
 
 FROM hub.lumigame.com/base/node:20.9.0-alpine-24h1.1 AS runner
 WORKDIR /app
