@@ -15,7 +15,8 @@
         "test:watch": "jest --watch",
         "test-coverage": "jest --coverage",
         "reg": "npm set registry http://npm.lumigame.com",
-        "linkToSGGameClient": "yarn link @sg/sg-game-client"
+        "linkToSGGameClient": "yarn link @sg/sg-game-client",
+        "build-saba-games": "nx build saba-games && node scripts/copy-saba-games.js"
     },
     "dependencies": {
         "@sg/sg-game-client": "1.0.6",
