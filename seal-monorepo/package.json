@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "run-mono-saba-games": "nx serve saba-games"
+    "run-mono-saba-games": "nx serve saba-games",
+    "build-saba-games": "nx build saba-games && node scripts/copy-saba-games.js"
   },
   "private": true,
   "devDependencies": {
@@ -63,6 +64,7 @@
     "eslint-plugin-prettier": "~5.1.3",
     "eslint-plugin-react": "~7.32.2",
     "eslint-plugin-react-hooks": "4.6.0",
+    "fs-extra": "^11.3.0",
     "html-webpack-plugin": "^5.6.0",
     "i18next": "^23.11.2",
     "i18next-http-backend": "^2.5.1",
