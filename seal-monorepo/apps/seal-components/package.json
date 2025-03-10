@@ -1,6 +1,6 @@
 {
   "name": "seal-components",
-  "version": "1.30.0",
+  "version": "1.30.0-vg-sg.8",
   "description": "",
   "main": "./dist/seal-components.js",
   "types": "./types/index.d.ts",

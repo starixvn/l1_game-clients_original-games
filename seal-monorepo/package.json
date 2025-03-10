@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "run-mono-saba-games": "nx serve saba-games"
+    "run-mono-saba-games": "nx serve saba-games",
+    "build-mono-saba-games": "nx run seal-components:build"
   },
   "private": true,
   "devDependencies": {
