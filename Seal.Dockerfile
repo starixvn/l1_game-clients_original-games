@@ -14,25 +14,25 @@ RUN yarn config set cache-folder /root/.yarn && \
     yarn install --frozen-lockfile --production=false --network-timeout 1000000 && \
     yarn cache clean
 
-# Copy source code
+# Copy source code - only the necessary directories
 COPY seal-monorepo/libs/ ./libs/
-COPY seal-monorepo/apps/saba-games ./apps/saba-games
 COPY seal-monorepo/scripts/ ./scripts/
 
 # Build the application with cache mount for nx
 RUN --mount=type=cache,target=/root/.nx-cache \
     NX_CACHE_DIRECTORY=/root/.nx-cache \
-    yarn nx build saba-games --verbose
+    yarn nx build saba-games --configuration=production --verbose
 
 # Production stage
 FROM hub.lumigame.com/base/node:20.9.0-alpine-24h1.1 AS runner
 WORKDIR /app
 
-ARG PORT=5000
+ARG PORT=4200
 ENV PORT=$PORT \
     HOST=0.0.0.0 \
     NODE_ENV=production \
-    PATH="/app/node_modules/.bin:$PATH"
+    PATH="/app/node_modules/.bin:$PATH" \
+    PUBLIC_URL="/saba-games"
 
 # Add tini and create non-root user
 RUN apk add --no-cache tini && \
@@ -41,23 +41,18 @@ RUN apk add --no-cache tini && \
     mkdir -p /app && \
     chown -R nextjs:nodejs /app
 
-# Copy only production dependencies
-COPY --chown=nextjs:nodejs seal-monorepo/package.json seal-monorepo/yarn.lock ./
-
-# Install only production dependencies
-RUN yarn config set cache-folder /root/.yarn && \
-    yarn install --frozen-lockfile --production=true --network-timeout 1000000 && \
-    yarn cache clean
+# Install serve for static file serving
+RUN yarn global add serve@14.2.1
 
 # Copy built application from builder stage
-COPY --from=builder --chown=nextjs:nodejs /app/dist/apps/saba-games ./dist/
+COPY --from=builder --chown=nextjs:nodejs /app/dist/libs/saba-games ./dist/
 
 # Configure healthcheck
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost:${PORT}/ || exit 1
+    CMD wget --no-verbose --tries=1 --spider http://localhost:${PORT}/saba-games/ || exit 1
 
 USER nextjs
 EXPOSE $PORT
 
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["node", "dist/main.js"] 
+CMD ["serve", "-s", "dist", "--listen", "4200", "--cors", "--single"] 
