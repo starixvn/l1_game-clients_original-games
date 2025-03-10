@@ -20,7 +20,7 @@
       "options": {
         "cwd": "libs/saba-games",
         "args": [
-          "--node-env=production",
+          "--node-env=development",
           "--config=webpack.config.js"
         ],
         "command": "webpack-cli build"
@@ -42,7 +42,16 @@
         "{workspaceRoot}/dist\\libs\\saba-games"
       ],
       "executor": "nx:run-commands",
-      "configurations": {}
+      "configurations": {
+        "development": {
+          "options": {
+            "args": [
+              "--node-env=development",
+              "--config=webpack.dev.js"
+            ]
+          }
+        }
+      }
     },
     "lint": {
       "cache": true,

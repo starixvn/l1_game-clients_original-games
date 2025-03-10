@@ -19,6 +19,8 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 const isDevelopment = process.env.NODE_ENV === 'development';
 const App = isDevelopment ? Preview : SabaGamesGroup;
 
+// const App = Preview;
+
 // Pass empty props in both development and production modes
 const props = {};
 

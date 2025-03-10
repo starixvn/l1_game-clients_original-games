@@ -1,92 +1,40 @@
 # Build stage
-FROM hub.lumigame.com/base/node:20.9.0-alpine-24h1.1 AS builder
+FROM node:18-alpine AS builder
+
+# Set working directory
 WORKDIR /app
 
-# Add necessary build dependencies
-RUN apk add --no-cache libc6-compat
+# Copy package files
+COPY package*.json ./
 
-# Copy package files first for better caching
-COPY seal-monorepo/package.json seal-monorepo/yarn.lock ./
-COPY seal-monorepo/nx.json ./
-COPY seal-monorepo/tsconfig*.json ./
-COPY seal-monorepo/jest.* ./
-COPY seal-monorepo/.env ./
-COPY seal-monorepo/.eslintrc.json ./
+# Install dependencies and global packages
+RUN yarn install && \
+    yarn global add cross-env nx
 
-# Install dependencies
-RUN yarn config set cache-folder /root/.yarn && \
-    yarn install --frozen-lockfile
+# Copy the rest of the application
+COPY . .
 
-# Copy source files
-COPY seal-monorepo/libs ./libs
-COPY seal-monorepo/apps ./apps
-COPY seal-monorepo/scripts ./scripts
-
-# Remove any existing dist directory to avoid conflicts
-RUN rm -rf dist apps/seal-components/dist
-
-# Build the application
-RUN --mount=type=cache,target=/root/.nx-cache \
-    NX_CACHE_DIRECTORY=/root/.nx-cache yarn nx build saba-games --prod
+# Build the application for development
+WORKDIR /app/seal-monorepo
+RUN yarn install && \
+    nx reset && \
+    cross-env NODE_ENV=development nx build saba-games --configuration=development
 
 # Production stage
-FROM hub.lumigame.com/base/node:20.9.0-alpine-24h1.1 AS runner
-WORKDIR /app
+FROM nginx:alpine
 
-ARG PORT=4200
-ENV PORT=$PORT \
-    HOST=0.0.0.0 \
-    NODE_ENV=production \
-    PATH="/app/node_modules/.bin:$PATH"
+# Copy the build output to the Nginx directory
+COPY --from=builder /app/seal-monorepo/dist/libs/saba-games /usr/share/nginx/html
 
-# Add tini and create non-root user
-RUN apk add --no-cache tini && \
-    addgroup --system --gid 1001 nodejs && \
-    adduser --system --uid 1001 nextjs && \
-    mkdir -p /app && \
-    chown -R nextjs:nodejs /app
+# Copy nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Install serve for static file serving
-RUN yarn global add serve@14.2.1
+# Create necessary directories and set permissions
+RUN mkdir -p /usr/share/nginx/html/assets && \
+    chown -R nginx:nginx /usr/share/nginx/html
 
-# Copy built application from builder stage
-COPY --from=builder --chown=nextjs:nodejs /app/dist/libs/saba-games /app/dist
+# Expose the port Nginx is running on
+EXPOSE 4300
 
-# Create serve.json configuration
-RUN echo '{\
-    "headers": [\
-    {\
-    "source": "**/*.js",\
-    "headers": [{\
-    "key": "Content-Type",\
-    "value": "application/javascript; charset=utf-8"\
-    }]\
-    },\
-    {\
-    "source": "**/*.mjs",\
-    "headers": [{\
-    "key": "Content-Type",\
-    "value": "application/javascript; charset=utf-8"\
-    }]\
-    }\
-    ],\
-    "rewrites": [\
-    { "source": "/saba-games/**", "destination": "/index.html" },\
-    { "source": "/**", "destination": "/index.html" }\
-    ]\
-    }' > /app/dist/serve.json
-
-# Create startup script
-RUN printf '#!/bin/sh\ncd /app/dist\nexec serve -s . --listen ${PORT} --cors --single' > /docker-entrypoint.sh && \
-    chmod +x /docker-entrypoint.sh && \
-    chown nextjs:nodejs /docker-entrypoint.sh
-
-# Configure healthcheck
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost:${PORT}/saba-games/ || exit 1
-
-USER nextjs
-EXPOSE $PORT
-
-ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["/docker-entrypoint.sh"] 
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]
