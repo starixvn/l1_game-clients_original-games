@@ -13,7 +13,8 @@ import { checkValidAmount, parseInputValue, WarnMsgType } from '../../utils/bett
 import classNames from 'classnames';
 import { SE_DIE_CHOICES } from '../../../games/constants/saba-club';
 import { useAppContext } from '../../../appProvider';
-import { SABA_GAMES, SE_DIE_GAME_NAMESPACE, VGAMING, VIP_SE_DIE_GAME_NAMESPACE, VIVA88_SITE_ID } from '../../../../constant/app';
+import { SABA_GAMES, SE_DIE_GAME_NAMESPACE, UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE, VGAMING, VIP_SE_DIE_GAME_NAMESPACE, VIVA88_SITE_ID } from '../../../../constant/app';
+import Dice from '../dice';
 
 const WARNING_CLOSE_DELAY = 60000;
 
@@ -110,7 +111,7 @@ const BetPanel: React.FC<{
     stakeLevel: gc.Player.IStakeLevel;
     handleBet: (amount: number, betChoice: string) => void;
 }> = ({ namespace, clientRoundId, currency, minBet, maxBet, maxBetPerChoices, stakeLevel, handleBet }) => {
-    const { panelId, setPanelId } = useGameBettingOptionsContext();
+    const { panelId, setPanelId, setShow } = useGameBettingOptionsContext();
     const { gameName, betChoice, odd = 0 } = useGameBettingZoneContext();
     const { siteId } = useAppContext();
     const { minBet: stakeLevelMinBet = 0, maxBet: stakeLevelMaxBet = 0 } = stakeLevel || {};
@@ -128,12 +129,33 @@ const BetPanel: React.FC<{
     const displayAmount = amount > 0 ? gc.FormatUtils.numberWithCommas(amount) : '';
     const payout = amount > 0 ? addCommas(amount * odd, 2, false) : '0.00';
     const vendorName = siteId === VIVA88_SITE_ID ? SABA_GAMES : VGAMING;
+    const panelRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (panelRef.current && !panelRef.current.contains(event.target as Node)) {
+                setPanelId(null);
+                setShow(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [setPanelId]);
 
     useEffect(() => {
         if (!betChoice) return;
-
         const newMin = Math.max(minBet, stakeLevelMinBet);
-        const newMax = Math.min(betChoiceMax, maxBet, stakeLevel.maxBet);
+
+        let newMax = 0
+        if (Object.keys(maxBetPerChoices).length <= 0 && namespace === UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE) {
+            newMax = Math.min(maxBet, stakeLevel.maxBet);
+        }else {
+            newMax = Math.min(betChoiceMax, maxBet, stakeLevel.maxBet);
+        }
 
         setMin(newMin);
         setMax(newMax);
@@ -257,7 +279,7 @@ const BetPanel: React.FC<{
                     </span>
                 </div>
                 <div className='c-ticket__odds'>
-                    <span className='c-text-balls'>{renderDots()}</span>
+                    <span className='c-text-balls'>{renderGameElements(gameName)}</span>
                     <span className='c-text-odds'>
                         @
                         <span className={`${'c-odds'} ${'sg-bet-panel__text-bold'}`} data-odds-status='default'>
@@ -304,6 +326,26 @@ const BetPanel: React.FC<{
         ));
     };
 
+    const renderDices = () => {
+        return <>
+            <Dice diceNumber={0} size='small' />
+            <Dice diceNumber={0} size='small' />
+            <Dice diceNumber={0} size='small' />
+        </>
+    }
+
+    const renderGameElements = (gameName: string) => {
+        switch (gameName) {
+            case SE_DIE_GAME_NAMESPACE:
+            case VIP_SE_DIE_GAME_NAMESPACE:
+                return renderDots();
+            case UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE:
+                return renderDices();
+            default:
+                return null;
+        }
+    }
+
     const renderWarnMessage = ({ warnMsg }) => {
         if (!warnMsg) return;
         return (
@@ -321,7 +363,9 @@ const BetPanel: React.FC<{
     return (
         <div className='c-quick-bet c-quick-bet--bottom-left'>
             <div className='c-quick-bet__btn'></div>
-            <div className={classNames('c-quick-bet__panel', {
+            <div 
+                ref={panelRef}
+                className={classNames('c-quick-bet__panel', {
                 ['sg-bet-panel__left-dec-100']: SE_DIE_CHOICES.RED2 === betChoice
             })}>
                 <div className='c-betslip'>

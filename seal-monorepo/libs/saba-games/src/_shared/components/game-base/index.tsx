@@ -21,8 +21,13 @@ export interface IGameBaseState {
     showDisabledPopup: boolean;
     isOpenStatistic: boolean;
 }
+interface GameStyleOverrides {
+    [key: string]: string;
+}
 
 abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> extends React.PureComponent<P, S> {
+    protected overrideClasses?: GameStyleOverrides;
+
     constructor(props: P) {
         super(props);
         this.state = { isConnectFailed: false, isOpenStatistic: false } as S;
@@ -175,13 +180,13 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
             this.renderDisconnect()
         ) : (
             <>
-                <div className={`${Styles['block-wrapper']} ${this.props.overrideClasses}`}>
-                    <div className={Styles['info']}>
+                <div className={`${Styles['block-wrapper']} ${this.overrideClasses?.blockWrapper}`}>
+                    <div className={`${Styles['info']} ${this.overrideClasses?.info}`}>
                         {this.renderRoundIdSection()}
                         {this.renderCountDownTimer()}
                     </div>
-                    <div className={Styles['result']}>{this.renderResultBlock()}</div>
-                    <div className={Styles['bet-options']}>
+                    <div className={`${Styles['result']} ${this.overrideClasses?.result}`}>{this.renderResultBlock()}</div>
+                    <div className={`${Styles['bet-options']} ${this.overrideClasses?.betOptions}`}>
                         {this.renderBettingBlock()}
                         <ConfirmBet
                             namespace={this.props.namespace} 

@@ -1,0 +1,34 @@
+/* Dice Styles */
+
+.settlementContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+.diceContainer {
+    width: 100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.diceList {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin-right: 14px;
+}
+
+
+.diceResult {
+    color: #212226;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    width: 3ch;
+    text-align: center;
+}

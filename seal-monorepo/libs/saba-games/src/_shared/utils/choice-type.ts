@@ -1,4 +1,4 @@
-import { SE_DIE_GAME_NAMESPACE, VIP_SE_DIE_GAME_NAMESPACE } from '../../../constant/app';
+import { SE_DIE_GAME_NAMESPACE, UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE, VIP_SE_DIE_GAME_NAMESPACE } from '../../../constant/app';
 import { SE_DIE_CHOICES } from '../../games/constants/saba-club';
 
 export const getChoicesType = (gameName: string, betChoice: string) => {
@@ -18,8 +18,8 @@ export const getChoicesType = (gameName: string, betChoice: string) => {
         }
     }
     
-    if (gameName === 'BigSmall') {
-        return 'choices_type';
+    if (gameName === UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE) {
+        return `${gameName}.choices_type`;
     }
     
     return 'choices_type';

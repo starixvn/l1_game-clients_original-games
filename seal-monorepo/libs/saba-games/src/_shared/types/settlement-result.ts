@@ -4,8 +4,13 @@ export type OverUnderSettlementResult = {
 };
 
 export type OddEvenSettlementResult = {
-    odd: boolean;
-    even: boolean;
+    odd: boolean | undefined;
+    even: boolean | undefined;
 };
 
-export const choices = { over: 'over', under: 'under', odd: 'odd', even: 'even' };
+export type BigSmallSettlementResult = {
+    big: boolean | undefined;
+    small: boolean | undefined;
+};
+
+export const choices = { over: "over", under: "under", odd: "odd", even: "even", big: "big", small: "small" };

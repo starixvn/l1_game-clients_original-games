@@ -127,5 +127,28 @@
         },
         "mainObserverNamespace": "SicBall",
         "order": 2
+    },
+    "55": {
+        "id": 55,
+        "gameName": "UnbalancedBigSmall4",
+        "name": "UnbalancedBigSmall4",
+        "namespaces": ["UnbalancedBigSmall4"],
+        "isVisible": true,
+        "durations": {
+            "wholeRound": 40,
+            "lockingBet": 5,
+            "placingBet": 30,
+            "generatingResult": 1,
+            "showingResult": 2,
+            "startRound": 2
+        },
+        "totalTurns": 1,
+        "numberOfRoundHistory": 100,
+        "websocket": {
+            "proxyPath": "unbalancedbigsmall",
+            "route": "unbalancedbigsmall"
+        },
+        "mainObserverNamespace": "UnbalancedBigSmall4",
+        "order": 1
     }
 }

@@ -258,5 +258,17 @@
         "message_draw_maxbet": "Max total stake on this draw is %{maxBet} ",
         "message_max_payout": "Your bet(s) have exceeded the Max Payout.",
         "message_placebet_next_draw": "Please wait for the next draw."
+    },
+    "UnbalancedBigSmall4": {
+        "game_vendor": "SABA.games",
+        "game_name": "Monte Carlo Big Small",
+        "game_tab_name": "Big Small",
+        "choices_type": "Big/Small",
+        "big": "Big",
+        "small": "Small",
+        "glossary_big": "Big",
+        "glossary_small": "Small",
+        "beadboard_big": "B",
+        "beadboard_small": "S"
     }
 }
