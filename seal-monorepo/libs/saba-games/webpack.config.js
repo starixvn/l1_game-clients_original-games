@@ -4,12 +4,14 @@ const { join } = require('path');
 
 const getPreviewAssets = (isDev) => {
   if (!isDev) return [];
-  
-  return [{
-    glob: "**/*",
-    input: "libs/saba-games/preview-template",
-    output: "/"
-  }];
+
+  return [
+    {
+      glob: '**/*',
+      input: 'libs/saba-games/preview-template',
+      output: '/',
+    },
+  ];
 };
 
 module.exports = {
@@ -25,25 +27,33 @@ module.exports = {
       tsConfig: './tsconfig.app.json',
       compiler: 'babel',
       main: './src/main.tsx',
-      index: process.env.NODE_ENV === 'development' 
-        ? './preview-template/index.html'
-        : './src/index.html',
+      index:
+        process.env.NODE_ENV === 'development'
+          ? './preview-template/index.html'
+          : './src/index.html',
       assets: [
         ...getPreviewAssets(process.env.NODE_ENV === 'development'),
-        { 
-          glob: "**/*",
-          input: "libs/saba-games/src/assets",
-          output: "/assets" 
-        }
+        {
+          glob: '**/*',
+          input: 'libs/saba-games/src/assets',
+          output: '/assets',
+        },
+        {
+          glob: '**/*',
+          input: 'libs/saba-games/src/public/static',
+          output: '/static',
+        },
       ],
-      styles: process.env.NODE_ENV === 'development' 
-        ? ['./preview-template/styles.scss']
-        : [],
+
+      styles:
+        process.env.NODE_ENV === 'development'
+          ? ['./preview-template/styles.scss']
+          : [],
       outputHashing: process.env.NODE_ENV === 'production' ? 'all' : 'none',
       optimization: process.env.NODE_ENV === 'production',
       sourceMap: false,
     }),
-    
+
     new NxReactWebpackPlugin({
       // Uncomment this line if you don't want to use SVGR
       // See: https://react-svgr.com/

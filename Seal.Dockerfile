@@ -13,7 +13,7 @@ COPY package*.json ./
 
 # Install dependencies and global packages
 RUN yarn install && \
-    yarn global add cross-env nx
+    yarn global add cross-env nx open@^8.4.0
 
 # Copy the rest of the application
 COPY . .
@@ -23,8 +23,8 @@ WORKDIR /app/seal-monorepo
 RUN yarn install && \
     nx reset && \
     cross-env NODE_ENV=development nx build saba-games --configuration=development && \
-    mkdir -p dist/libs/saba-games/static && \
-    cp -r libs/saba-games/public/static/* dist/libs/saba-games/static/
+    mkdir -p dist/libs/saba-games/static/images/cards && \
+    cp -r libs/saba-games/public/static/images/cards/* dist/libs/saba-games/static/images/cards/
 
 # Production stage
 FROM nginx:alpine

@@ -34,6 +34,11 @@ module.exports = {
           input: 'libs/saba-games/src/assets',
           output: '/assets',
         },
+        {
+          glob: '**/*',
+          input: 'libs/saba-games/src/public/static',
+          output: '/static',
+        },
       ],
       styles: ['./preview-template/styles.scss'],
       outputHashing: process.env['NODE_ENV'] === 'production' ? 'all' : 'none',
