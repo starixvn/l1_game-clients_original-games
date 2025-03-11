@@ -100,18 +100,18 @@ export default class BetOptions extends ObserverComponent<IPropsObserver, IBetOp
         }
     }
 
-    protected showHighlightStatic(settlementResult: gc.GameServiceMessage.TSettlementResult) {}
-    protected showAnimationHighlight(settlementResult: gc.GameServiceMessage.TSettlementResult) {}
-    protected clearHighlightStatic() {}
-    protected clearHighlightAnim() {}
+    protected showHighlightStatic(settlementResult: gc.GameServiceMessage.TSettlementResult) { }
+    protected showAnimationHighlight(settlementResult: gc.GameServiceMessage.TSettlementResult) { }
+    protected clearHighlightStatic() { }
+    protected clearHighlightAnim() { }
 
-    renderSubOptions(choice: string, odd: number, fractional: boolean, name: string = "") {
+    public renderSubOptions(betChoice: string, odd: number, fractional: boolean, name: string = "", isBoostedChoice: boolean = false): JSX.Element {
         return <></>;
     }
 
-    renderMainOption = (name: string, odd: number, choice: string, fractional: boolean) => {
+    public renderMainOption(name: string, odd: number, betChoice: string, fractional: boolean, isBoostedChoice: boolean = false): JSX.Element {
         return <></>;
-    };
+    }
 
     renderTotalBet(choice: string) {
         return <></>;

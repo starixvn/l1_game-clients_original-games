@@ -18,14 +18,42 @@ export class ObserverComponent<P extends IPropsObserver, S extends IStateObserve
 
     componentDidMount(): void {
         const { namespace } = this.props;
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const dispose = useObserver(this, namespace);
-        this.setState({ dispose });
+
+        if (!namespace) {
+            return;
+        }
+
+        try {
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            const dispose = useObserver(this, namespace);
+            if (!dispose) {
+                throw new Error('Observer registration failed - no dispose function returned');
+            }
+            this.setState({ dispose });
+        } catch (error) {
+            // Attempt to recover by retrying once after a short delay
+            setTimeout(() => {
+                try {
+                    const dispose = useObserver(this, namespace);
+                    if (dispose) {
+                        this.setState({ dispose });
+                    }
+                } catch (retryError) {
+                    // Silent fail on retry
+                }
+            }, 100);
+        }
     }
 
     componentWillUnmount(): void {
         const { dispose } = this.state;
-        dispose?.();
+        if (dispose) {
+            try {
+                dispose();
+            } catch (error) {
+                // Silent fail on cleanup
+            }
+        }
     }
 
     render() {

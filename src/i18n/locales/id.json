@@ -201,6 +201,21 @@
         "beadboard_even": "GE",
         "beadboard_odd": "GA"
     },
+    "VipSeDie": {
+        "game_vendor": "SABA.games",
+        "game_name": "Vip Se Die",
+        "choices_type1": "Ganjil/Genap",
+        "choices_type2": "Merah/Putih",
+        "glossary_even": "Genap",
+        "glossary_odd": "Ganjil",
+        "glossary_red4": "4 Merah",
+        "glossary_red3": "3 Merah",
+        "glossary_red2": "2 Merah",
+        "glossary_white4": "4 Putih",
+        "glossary_white3": "1 Merah",
+        "beadboard_even": "GE",
+        "beadboard_odd": "GA"
+    },
     "BigSmall": {
         "game_name": "Big Small"
     },

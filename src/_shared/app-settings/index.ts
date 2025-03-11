@@ -6,6 +6,11 @@ export const appSettings: AppSettings = getConfig().publicRuntimeConfig.appSetti
 
 export const getSiteConfig = (gameId: number) => {
     const gameSetting = appSettings.gameSettings[gameId];
+
+    if (!gameSetting) {
+        throw new Error(`Game settings not found for gameId: ${gameId}`);
+    }
+
     const config: gc.Configs.SiteConfigs = {
         isDev: false,
         systemType: appSettings.systemType,
@@ -26,18 +31,38 @@ export const getSiteConfig = (gameId: number) => {
 };
 
 export const getGameSetting = (gameId: number) => {
-    return appSettings.gameSettings[gameId];
+    const settings = appSettings.gameSettings[gameId];
+
+    if (!settings) {
+        return null;
+    }
+
+    return settings;
 };
 
-export const getGameSettingIds = () => {
+export const getGameSettingIds = (visibleOnly: boolean = true) => {
     const gameSettings = Object.keys(appSettings.gameSettings).map((value) => {
         return appSettings.gameSettings[value];
     });
-    const orderedGameSettings = gameSettings.sort((a, b) => a.order - b.order);
 
-    return orderedGameSettings.map((value) => {
-        return value.id;
+    const filteredSettings = visibleOnly
+        ? gameSettings.filter(setting => setting.isVisible)
+        : gameSettings;
+
+    const orderedGameSettings = filteredSettings.sort((a, b) => a.order - b.order);
+
+    const ids = orderedGameSettings.map((value) => value.id);
+    return ids;
+};
+
+export const getVisibleGameSettings = () => {
+    const gameSettings = Object.keys(appSettings.gameSettings).map((value) => {
+        return appSettings.gameSettings[value];
     });
+
+    return gameSettings
+        .filter(setting => setting.isVisible)
+        .sort((a, b) => a.order - b.order);
 };
 
 export default appSettings;

@@ -7,4 +7,5 @@ export interface ILobbyState {
     isViewOnly: boolean;
     offerGames: { gameId: number }[];
     isRenderGame: boolean;
+    expandedGames: { [gameId: number]: boolean };
 }

@@ -201,6 +201,21 @@
         "beadboard_even": "C",
         "beadboard_odd": "L"
     },
+    "VipSeDie": {
+        "game_vendor": "SABA.games",
+        "game_name": "Xóc Đĩa VIP",
+        "choices_type1": "Lẻ/Chẵn",
+        "choices_type2": "Đỏ/Trắng",
+        "glossary_even": "Chẵn",
+        "glossary_odd": "Lẻ",
+        "glossary_red4": "4 Đỏ",
+        "glossary_red3": "3 Đỏ",
+        "glossary_red2": "2 Đỏ",
+        "glossary_white4": "4 Trắng",
+        "glossary_white3": "1 Đỏ",
+        "beadboard_even": "C",
+        "beadboard_odd": "L"
+    },
     "BigSmall": {
         "game_name": "Tài Xỉu"
     },

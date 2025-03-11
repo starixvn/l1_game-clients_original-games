@@ -10,8 +10,11 @@
         padding: 4px;
     }
 
+    .bet-options {
+        border-left: 1px solid #ccc;
+    }
     .result {
-        border-right: 1px solid #ccc;
+        
         height: 100%;
         display: flex;
         align-items: center;

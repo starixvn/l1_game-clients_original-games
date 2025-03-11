@@ -201,6 +201,21 @@
         "beadboard_even": "双",
         "beadboard_odd": "单"
     },
+    "VipSeDie": {
+        "game_vendor": "SABA.games",
+        "game_name": "VIP 色碟",
+        "choices_type1": "单/双",
+        "choices_type2": "红/白",
+        "glossary_even": "双",
+        "glossary_odd": "单",
+        "glossary_red4": "4 红",
+        "glossary_red3": "3 红",
+        "glossary_red2": "2 红",
+        "glossary_white4": "4 白",
+        "glossary_white3": "1 红",
+        "beadboard_even": "双",
+        "beadboard_odd": "单"
+    },
     "BigSmall": {
         "game_name": "Big Small"
     },

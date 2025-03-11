@@ -4,17 +4,17 @@ import Odds from "../../../../_shared/components/bet-option/odd";
 import OwnBet from "../../../../_shared/components/bet-option/own-bet";
 import TotalBet from "../../../../_shared/components/bet-option/total-bet";
 import { RoundDot } from "../../../../_shared/components/dot";
-import { setting } from "../game-settings";
 import Styles from "../sedie.module.scss";
 import { bottomChoices, ChoiceSeDieIconMapper, SeDieChoices, topChoices } from "../type";
 
 export default class SeDieBetOptions extends BetOptions {
-    renderDots = (dots: boolean[]) =>
-        dots.map((isRed, index) => <RoundDot key={index} choice={isRed ? SeDieChoices.odd : SeDieChoices.even} size="small" />);
+    protected renderDots(dots: boolean[]) {
+        return dots.map((isRed, index) => <RoundDot key={index} choice={isRed ? SeDieChoices.odd : SeDieChoices.even} size="small" />);
+    }
 
-    renderSubOptions = (betChoice: string, odd: number, fractional: boolean, name: string = "", isBoostedChoice: boolean = false) => {
+    public renderSubOptions(betChoice: string, odd: number, fractional: boolean, name: string = "", isBoostedChoice: boolean = false) {
         return (
-            <BettingBlock odd={odd} betChoice={betChoice} namespace={setting.mainObserverNamespace}>
+            <BettingBlock odd={odd} betChoice={betChoice} namespace={this.props.namespace}>
                 <div className={`${Styles["container-bets"]} ${Styles["padding-bet"]}`}>
                     <div className={`${Styles["wrapper-dots"]} ${Styles["wrapper-dots-small"]}`}>
                         {this.renderDots(ChoiceSeDieIconMapper[betChoice])}
@@ -23,11 +23,11 @@ export default class SeDieBetOptions extends BetOptions {
                 </div>
             </BettingBlock>
         );
-    };
+    }
 
-    renderMainOption = (name: string, odd: number, betChoice: string, fractional: boolean, isBoostedChoice: boolean = false) => {
+    public renderMainOption(name: string, odd: number, betChoice: string, fractional: boolean, isBoostedChoice: boolean = false) {
         return (
-            <BettingBlock odd={odd} betChoice={betChoice} namespace={setting.mainObserverNamespace}>
+            <BettingBlock odd={odd} betChoice={betChoice} namespace={this.props.namespace}>
                 <div className={`${Styles["container-bets"]} ${Styles["padding-bet"]}`}>
                     <div>
                         <div className={Styles["main-option"]}>{name}</div>
@@ -38,7 +38,7 @@ export default class SeDieBetOptions extends BetOptions {
                 </div>
             </BettingBlock>
         );
-    };
+    }
 
     renderTotalBet(choice: string) {
         return <TotalBet value={this.state?.totalBets?.[choice]} choice={choice} />;

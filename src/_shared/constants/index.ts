@@ -3,6 +3,7 @@ export const locales = { en: "en", vi: "vi", th: "th", id: "id", zh_cn: "zh_cn",
 export const GameIds = {
     BigSmall: 1,
     SeDie: 2,
+    VipSeDie: 22,
     LuckyNext: 1003,
     SicBall: 1007
 };

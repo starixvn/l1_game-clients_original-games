@@ -30,8 +30,10 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
             isViewOnly: false,
             offerGames: [],
             isRenderGame: true,
+            expandedGames: {},
         } as ILobbyState;
     }
+
     clearReRenderGameTimeout = () => {
         if (!this.reRenderGameTimeout) {
             return;
@@ -76,21 +78,48 @@ class Lobby extends React.PureComponent<ILobbyProps, ILobbyState> {
     }
 
     @handle(gc.GatewayConnection.GatewayConnectionHandlers.ConnectHandler)
-    connectLiveGateway() {}
+    connectLiveGateway() {
+    }
+
+    handleToggleExpand = (gameId: number) => {
+        this.setState(prevState => ({
+            expandedGames: {
+                ...prevState.expandedGames,
+                [gameId]: !prevState.expandedGames[gameId]
+            }
+        }));
+    };
 
     @render(gc.Player.MainPlayerStore, (store) => store.offerGames)
     handleOfferGames(offerGames: IOfferGame[]) {
         if (offerGames?.length > 0) {
             const filteredOfferGames = lobbyUtils.getFilteredGames(offerGames);
-            this.setState({ offerGames: filteredOfferGames } as ILobbyState);
+            // Initialize all games as expanded
+            const expandedGames = filteredOfferGames.reduce((acc, game) => {
+                acc[game.gameId] = true;
+                return acc;
+            }, {} as { [key: number]: boolean });
+
+            this.setState({
+                offerGames: filteredOfferGames,
+                expandedGames
+            } as ILobbyState);
         }
     }
 
     getGames() {
-        const { offerGames, isRenderGame } = this.state;
+        const { offerGames, isRenderGame, expandedGames } = this.state;
         const { router } = this.props;
 
-        return offerGames.map((filterGame) => lobbyUtils.getGameTabById(filterGame.gameId, router, isRenderGame));
+        return offerGames.map((filterGame) => {
+            return lobbyUtils.getGameTabById(
+                filterGame.gameId,
+                router,
+                isRenderGame,
+                expandedGames[filterGame.gameId] ?? true,
+                this.handleToggleExpand
+            );
+        });
     }
 
     @render(LobbyStore, (store) => store.tryToConnectCount)

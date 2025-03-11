@@ -201,6 +201,21 @@
         "beadboard_even": "E",
         "beadboard_odd": "O"
     },
+    "VipSeDie": {
+        "game_vendor": "SABA.games",
+        "game_name": "VIP Se Die",
+        "choices_type1": "Odd/Even",
+        "choices_type2": "Red/White",
+        "glossary_even": "Even",
+        "glossary_odd": "Odd",
+        "glossary_red4": "4 Red",
+        "glossary_red3": "3 Red",
+        "glossary_red2": "2 Red",
+        "glossary_white4": "4 White",
+        "glossary_white3": "1 Red",
+        "beadboard_even": "E",
+        "beadboard_odd": "O"
+    },
     "BigSmall": {
         "game_vendor": "SABA.games",
         "game_name": "Big Small"
