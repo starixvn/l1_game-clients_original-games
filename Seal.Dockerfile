@@ -22,7 +22,9 @@ COPY . .
 WORKDIR /app/seal-monorepo
 RUN yarn install && \
     nx reset && \
-    cross-env NODE_ENV=development nx build saba-games --configuration=development
+    cross-env NODE_ENV=development nx build saba-games --configuration=development && \
+    mkdir -p dist/libs/saba-games/static && \
+    cp -r libs/saba-games/public/static/* dist/libs/saba-games/static/
 
 # Production stage
 FROM nginx:alpine
@@ -34,13 +36,13 @@ COPY --from=builder /app/seal-monorepo/dist/libs/saba-games /usr/share/nginx/htm
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Create necessary directories and set permissions
-RUN mkdir -p /usr/share/nginx/html/assets && \
+RUN mkdir -p /usr/share/nginx/html/static/images/cards && \
     chown -R nginx:nginx /usr/share/nginx/html
 
 # Expose the port Nginx is running on
 EXPOSE $PORT
 
-# # Configure healthcheck
+# Configure healthcheck
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
     CMD wget --no-verbose --tries=1 --spider http://localhost:${PORT}/ || exit 1
 
