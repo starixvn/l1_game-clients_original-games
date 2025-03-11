@@ -2,6 +2,24 @@ import React, { useMemo } from 'react'
 import styles from "./dice.module.scss";
 import { Size } from 'libs/saba-games/src/_shared/constants';
 
+import dice1 from "../../../assets/big-small/dice-1.svg";
+import dice2 from "../../../assets/big-small/dice-2.svg";
+import dice3 from "../../../assets/big-small/dice-3.svg";
+import dice4 from "../../../assets/big-small/dice-4.svg";
+import dice5 from "../../../assets/big-small/dice-5.svg";
+import dice6 from "../../../assets/big-small/dice-6.svg";
+import diceQuestionMark from "../../../assets/big-small/dice-question-mark.svg";
+
+const diceImages: Record<number, string> = {
+  1: dice1,
+  2: dice2,
+  3: dice3,
+  4: dice4,
+  5: dice5,
+  6: dice6,
+};
+
+
 interface IDiceProps {
   diceNumber: number;
   size?: typeof Size.large | typeof Size.medium | typeof Size.small;
@@ -9,19 +27,14 @@ interface IDiceProps {
 
 const Dice: React.FC<IDiceProps> = ({ diceNumber, size = Size.large }) => {
   
-  const diceImageUrl = useMemo(() =>{
-    if (diceNumber === 0) {
-      return require(`../../../assets/big-small/dice-question-mark.png`);
-    }
-    return require(`../../../assets/big-small/dice-${diceNumber}.png`);
-  }, [diceNumber]);
+  const diceImageUrl = diceImages[diceNumber] || diceQuestionMark;
 
   return (
-      <img 
-        className={`${styles[`dice-${size}`]}`} 
-        src={diceImageUrl} 
-        alt={`dice-${diceNumber}`} 
-      />
+    <img
+      className={styles[`dice-${size}`]}
+      src={diceImageUrl}
+      alt={`dice-${diceNumber || "unknown"}`}
+    />
   );
 };
 
