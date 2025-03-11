@@ -1,0 +1,7 @@
+src/*
+!src/components
+!src/stories
+src/components/*
+
+dist/*
+seal-monorepo/*

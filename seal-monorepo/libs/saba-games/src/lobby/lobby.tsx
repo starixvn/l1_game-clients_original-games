@@ -5,7 +5,7 @@ import { configSharedContainer } from '../_shared/components/game-base/startup';
 import { LobbyStore } from '../_shared/states/lobby';
 import * as lobbyUtils from './utils';
 import styles from './lobby.module.scss';
-import { DropdownType } from '../_shared/components/league-dropdown';
+import { DropdownType } from '../_shared/components/all-tab-components/league-tab-dropdown';
 import { LeagueTabDropdown } from "../_shared/components/all-tab-components/league-tab-dropdown";
 import { AppContextConsumer } from '../appProvider';
 import Loading from '../_shared/components/loading';
