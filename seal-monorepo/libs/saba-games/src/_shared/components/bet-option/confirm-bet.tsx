@@ -10,6 +10,7 @@ export interface IConfirmBet extends IStateObserver {
     validBet: gc.Bet.IValidBet;
     betChoice: string;
     turnOffNotification: boolean;
+    namespace: string;
 }
 
 const NOTIF_KEY = 'turnOffNotification';
@@ -22,7 +23,8 @@ export class ConfirmBet extends ObserverComponent<IPropsObserver, IConfirmBet> {
             totalStake: 0,
             validBet: {},
             betChoice: '',
-            turnOffNotification : false, 
+            turnOffNotification: false,
+            namespace: props.namespace,
         } as IConfirmBet;
     }
 
@@ -45,7 +47,7 @@ export class ConfirmBet extends ObserverComponent<IPropsObserver, IConfirmBet> {
     };
 
     render() {
-        const { totalStake, validBet, betChoice } = this.state;
+        const { totalStake, validBet, betChoice, namespace } = this.state;
         const isShowNotification = sessionStorage.getItem(NOTIF_KEY) === 'true';
 
         if (!validBet?.value) {
@@ -66,13 +68,14 @@ export class ConfirmBet extends ObserverComponent<IPropsObserver, IConfirmBet> {
                 totalStake={totalStake}
                 betChoice={betChoice}
                 handleClose={this.handleClose}
+                namespace={namespace}
             />
         )
     }
 }
 
 // 接上memberSite時，className不用style，直接接上memberSite class
-const Overlay = ({ totalStake, betChoice, handleClose }) => {
+const Overlay = ({ totalStake, betChoice, handleClose, namespace }) => {
     const addCommas = gc.FormatUtils.numberWithCommas;
     const totalStakeWithCommas =  addCommas(totalStake);
 
@@ -94,7 +97,7 @@ const Overlay = ({ totalStake, betChoice, handleClose }) => {
                         <div className="c-modal__section padding-top-10">
                             <span className="c-text-group">
                                 <span className="c-text-label">
-                                    {gc.Translator.t('Common.bet_accepted')} : {gc.Translator.t(`SeDie.glossary_${betChoice}`)}
+                                    {gc.Translator.t('Common.bet_accepted')} : {gc.Translator.t(`${namespace}.glossary_${betChoice}`)}
                                 </span>
                             </span>
                             <br />
