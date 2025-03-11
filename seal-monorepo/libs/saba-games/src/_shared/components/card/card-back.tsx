@@ -7,7 +7,7 @@ const CardBack: React.FC = () => {
             <div className={Styles["card-shadow"]}></div>
             <div className={Styles["result"]} data-testid="card-back">
                 <img
-                    // src="/assets/cards/card-back.svg"
+                    src="/static/images/cards/card-back.svg?v=1fe9bf3fea"
                     className={Styles["card-suite"]}
                     height={80}
                     width={56}

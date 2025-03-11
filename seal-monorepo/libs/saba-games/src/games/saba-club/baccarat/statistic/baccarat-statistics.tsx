@@ -44,12 +44,12 @@ export class BaccaratStatistic extends ObserverComponent<Props, IBaccaratStatist
                     />
                     <BaccaratResultHistory namespace={this.props.namespace} />
                 </div>
-                <div className={`${Styles["statistic"]}`}>
+                {/* <div className={`${Styles["statistic"]}`}>
                     <BaccaratScoreboard namespace={this.props.namespace}
                         gameName={this.props.gameName}
                     />
                     <BaccaratResultHistory namespace={this.props.namespace} />
-                </div>
+                </div> */}
 
             </Fragment >
         );

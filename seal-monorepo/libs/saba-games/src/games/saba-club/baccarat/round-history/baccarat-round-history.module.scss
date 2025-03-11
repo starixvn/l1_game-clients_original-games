@@ -21,6 +21,7 @@
 
     .hstack-round {
         margin-top: 0 !important;
+        display: flex;
         align-items: center;
         gap: 4px !important;
 
@@ -33,7 +34,9 @@
     }
 
     .history-item {
+        display: flex;
         align-items: center;
+        gap: 2px;
     }
 
     .arrow {
@@ -47,13 +50,13 @@
         margin: 0 2px;
     }
 
-    // Baccarat-specific dot styles
     .baccarat-dot {
         width: 24px !important;
         height: 24px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
+        border-radius: 50%;
         
         img {
             width: 100%;
@@ -61,10 +64,19 @@
             object-fit: contain;
         }
 
-        &.player, &.banker, &.tie {
-            background: none !important;
-            border: none !important;
-            box-shadow: none !important;
+        &.player {
+            background: var(--baccarat-player-bg);
+            border: 1px solid var(--baccarat-player-border);
+        }
+
+        &.banker {
+            background: var(--baccarat-banker-bg);
+            border: 1px solid var(--baccarat-banker-border);
+        }
+
+        &.tie {
+            background: var(--baccarat-tie-bg);
+            border: 1px solid var(--baccarat-tie-border);
         }
 
         &.next {
