@@ -1,0 +1,157 @@
+// Define color variables
+$background-color: #eeeeee;
+$box-shadow-color: rgba(0, 0, 0, 0.1);
+$roll-button-color: #b33951;
+$roll-button-hover-color: #fff;
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background: $background-color;
+    box-shadow: 0 0 20px $box-shadow-color;
+}
+
+.diceContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.diceResult {
+    margin-left: 20px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #333;
+}
+
+
+/* Dice Styles */
+.dice {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    transform-style: preserve-3d;
+    
+}
+/* Dice rolling animation */
+@keyframes rolling {
+    50% {
+        transform: rotateX(720deg) rotateY(720deg);
+    }
+}
+
+.dice-rolling {
+    animation: rolling 1s;
+}
+
+/* Dice Faces */
+.face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+}
+
+/* Load images for each face */
+.front {
+    background-image: url("/static/images/big-small/dice-1.png");
+    transform: translateZ(50px);
+}
+.back {
+    background-image: url("/static/images/big-small/dice-6.png");
+    transform: rotateX(-180deg) translateZ(50px);
+}
+.top {
+    background-image: url("/static/images/big-small/dice-2.png");
+    transform: rotateX(90deg) translateZ(50px);
+}
+.bottom {
+    background-image: url("/static/images/big-small/dice-5.png");
+    transform: rotateX(-90deg) translateZ(50px);
+}
+.right {
+    background-image: url("/static/images/big-small/dice-3.png");
+    transform: rotateY(90deg) translateZ(50px);
+}
+.left {
+    background-image: url("/static/images/big-small/dice-4.png");
+    transform: rotateY(-90deg) translateZ(50px);
+}
+
+/* Transformations for different numbers */
+.dice-1 {
+    transform: rotateX(0deg) rotateY(0deg);
+}
+.dice-2 {
+    transform: rotateX(-90deg) rotateY(0deg);
+}
+.dice-3 {
+    transform: rotateX(0deg) rotateY(990deg);
+}
+.dice-4 {
+    transform: rotateX(0deg) rotateY(90deg);
+}
+.dice-5 {
+    transform: rotateX(90deg) rotateY(0deg);
+}
+.dice-6 {
+    transform: rotateX(180deg) rotateY(0deg);
+}
+
+/* Roll Button styles */
+.buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.roll {
+    cursor: pointer;
+    color: $roll-button-color;
+    margin-top: 60px;
+    padding: 6px 12px;
+    border-radius: 3px;
+    font: 700 16px "Montserrat";
+    border: 2px solid $roll-button-color;
+    transition: 0.4s;
+}
+
+.roll:hover {
+    color: $roll-button-hover-color;
+    background: $roll-button-color;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 20px;
+    margin-bottom: 100px;
+}
+
+.tabs button {
+    cursor: pointer;
+    color: $roll-button-color;
+    margin-top: 60px;
+    padding: 6px 12px;
+    border-radius: 3px;
+    font: 700 16px "Montserrat";
+    border: 2px solid $roll-button-color;
+    transition: 0.4s;
+}
+
+.tabs button:hover {
+    background-color: $roll-button-color;
+    color: #fff;
+}
+
+.activeTab {
+    background-color: $roll-button-color;
+    color: #fff !important;
+}
+

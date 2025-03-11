@@ -1,0 +1,26 @@
+.lobby {
+    .game-block {
+        .game-title {
+            background-color: #efe9e9;
+            padding: 5px 10px;
+            font-weight: bold;
+        }
+
+        .game-lobby {
+            padding: 10px 0px;
+        }
+    }
+
+    .game-lobby {
+        transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
+        max-height: 2000px;
+        opacity: 1;
+        overflow: hidden;
+
+        &.collapsed {
+            max-height: 0;
+            opacity: 0;
+            padding: 0;
+        }
+    }
+}

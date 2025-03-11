@@ -1,0 +1,40 @@
+.tab-button-wrapper {
+    display: flex;
+    padding: 5px 0 5px 25px;
+    gap: 5px;
+}
+
+.tab-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: url('../../../../assets/lobby/inactive-bg.png') no-repeat center center / cover;
+    border-radius: 4px;
+    padding: 8px 12px;
+    color: #333;
+    margin: 0;
+    filter: brightness(1.05);
+    cursor: pointer;
+    gap: 8px;
+}
+
+.tab-button-active {
+    background: url('../../../../assets/lobby/active-bg.png') no-repeat center center / cover;
+    color: #fff;
+}
+
+
+.sedie-icon {
+    background: url('../../../../assets/game-icons/sedie.png') no-repeat center center / cover;
+    width: 24px;
+    height: 24px;
+}
+
+.vip-sedie-icon {
+    background: url('../../../../assets/game-icons/vip-sedie.png') no-repeat center center / cover;
+    width: 24px;
+    height: 24px;
+}
+
+

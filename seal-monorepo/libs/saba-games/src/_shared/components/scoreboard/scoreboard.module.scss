@@ -1,0 +1,70 @@
+.dot-item {
+    border-right: 1px solid var(--c-av-theme-border-1); /* Border for each grid item */
+    border-bottom: 1px solid var(--c-av-theme-border-1); /* Border for each grid item */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    color: var(--c-av-white);
+    z-index: 1;
+    width: 34px;
+    height: 34px;
+}
+
+.dot-even,
+.dot-odd,
+.dot-over,
+.dot-under,
+.dot-blink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    color: var(--c-av-white);
+    z-index: 1;
+
+}
+
+.dot-even {
+    background: linear-gradient(180deg,#b5b5b5,#b5b5b5);
+}
+
+.dot-odd {
+    background-color: #d62836;
+}
+
+.dot-over {
+    background: inear-gradient(180deg,#b5b5b5,#b5b5b5);
+}
+
+.dot-under {
+    background-color: #d62836;
+}
+
+.dot-blink {
+    background: #8b8686;
+    color: rgb(211, 202, 202);
+    animation: blinker 1.3s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0.3;
+    }
+}
+
+.dot-even::before,
+.dot-odd::before {
+    content: "";
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    bottom: 1px;
+    right: 1px;
+    border-radius: 100%;
+    z-index: -1;
+}

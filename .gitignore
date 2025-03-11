@@ -2,6 +2,11 @@
 
 # dependencies
 /node_modules
+/seal-react/node_modules
+/seal-monorepo/node_modules
+/seal-react-native/node_modules
+/saba-games-standalone/node_modules
+/@seal-react/node_modules
 /.pnp
 .pnp.js
 

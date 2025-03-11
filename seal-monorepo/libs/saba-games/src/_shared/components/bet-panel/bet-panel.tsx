@@ -1,0 +1,427 @@
+import * as gc from '@sg/sg-game-client';
+import { RoundStore } from '@sg/sg-game-client/dist/game/rounds';
+import { handle, render } from '@sg/sg-observer';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { IPropsObserver, IStateObserver, ObserverComponent } from '../observer-component/observer-component';
+import { useGameBettingOptionsContext, useGameBettingZoneContext } from '../../react-contexts/game-betting-zone-context/game-betting-zone-context';
+import './bet-panel.scss';
+import { RoundDot } from '../dot';
+import { ChoiceSeDieIconMapper, SeDieChoices } from '../../../games/saba-club/sedie/type';
+import { getChoicesType } from '../../utils/choice-type';
+import BettingChips from '../betting-chips';
+import { checkValidAmount, parseInputValue, WarnMsgType } from '../../utils/betting-util';
+import classNames from 'classnames';
+import { SE_DIE_CHOICES } from '../../../games/constants/saba-club';
+import { useAppContext } from '../../../appProvider';
+import { SABA_GAMES, SE_DIE_GAME_NAMESPACE, VGAMING, VIP_SE_DIE_GAME_NAMESPACE, VIVA88_SITE_ID } from '../../../../constant/app';
+
+const WARNING_CLOSE_DELAY = 60000;
+
+export interface IBetPanel extends IStateObserver {
+    clientRoundId: number;
+    stakeLevel: gc.Player.IStakeLevel;
+    currency: string;
+    minBet: number;
+    maxBet: number;
+    maxBetPerChoices: gc.GameServiceMessage.MaxBetPerChoices;
+}
+
+class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends ObserverComponent<
+    IPropsObserver,
+    IStateObserver
+> {
+    constructor(props: P) {
+        super(props);
+        this.state = {
+            dispose: null,
+            clientRoundId: 0,
+            stakeLevel: {},
+            currency: '',
+            minBet: 0,
+            maxBet: 0,
+            maxBetPerChoices: {},
+        } as S;
+    }
+
+    @render(RoundStore, (store) => store.clientRoundId)
+    renderRoundId(clientRoundId: number) {
+        this.setState({ clientRoundId } as IBetPanel);
+    }
+
+    @render(gc.Player.MainPlayerStore, (store) => store.stakeLevel)
+    setUserStakeLevel(stakeLevel: gc.Player.IStakeLevel) {
+        if (stakeLevel) {
+            this.setState({ stakeLevel } as IBetPanel);
+        }
+    }
+
+    @render(gc.Player.MainPlayerStore, (store) => store.currency)
+    setCurrency(currency: string) {
+        this.setState({ currency } as IBetPanel);
+    }
+
+    @render(gc.GameConfigs.GameConfigStore, (store) => ({
+        minBet: store.minBet,
+        maxBet: store.maxBet,
+        maxBetPerChoices: store.maxBetPerChoices,
+    }))
+    setMaxBetPerChoices({
+        minBet,
+        maxBet,
+        maxBetPerChoices,
+    }: {
+        minBet: number;
+        maxBet: number;
+        maxBetPerChoices: gc.GameServiceMessage.MaxBetPerChoices;
+    }) {
+        this.setState({ maxBetPerChoices, minBet, maxBet } as IBetPanel);
+    }
+
+    @handle(gc.Bet.BetHandler)
+    handleBet(amount: number, betChoice: string) {
+        return { amount, betChoice };
+    }
+
+    render() {
+        const { clientRoundId, currency, minBet, maxBet, maxBetPerChoices, stakeLevel } = this.state as S;
+
+        return (
+            <BetPanel
+                namespace={this.props.namespace}
+                clientRoundId={clientRoundId}
+                currency={currency}
+                minBet={minBet}
+                maxBet={maxBet}
+                maxBetPerChoices={maxBetPerChoices}
+                stakeLevel={stakeLevel}
+                handleBet={this.handleBet.bind(this)}
+            ></BetPanel>
+        );
+    }
+}
+
+const BetPanel: React.FC<{
+    namespace: string;
+    clientRoundId: number;
+    currency: string;
+    minBet: number;
+    maxBet: number;
+    maxBetPerChoices: gc.GameServiceMessage.MaxBetPerChoices;
+    stakeLevel: gc.Player.IStakeLevel;
+    handleBet: (amount: number, betChoice: string) => void;
+}> = ({ namespace, clientRoundId, currency, minBet, maxBet, maxBetPerChoices, stakeLevel, handleBet }) => {
+    const { panelId, setPanelId } = useGameBettingOptionsContext();
+    const { gameName, betChoice, odd = 0 } = useGameBettingZoneContext();
+    const { siteId } = useAppContext();
+    const { minBet: stakeLevelMinBet = 0, maxBet: stakeLevelMaxBet = 0 } = stakeLevel || {};
+    const betChoiceMax = maxBetPerChoices?.[betChoice] || 0;
+
+    const [amount, setAmount] = useState(stakeLevelMinBet);
+    const [warnMsg, setWarnMsg] = useState('');
+    const [min, setMin] = useState(0);
+    const [max, setMax] = useState(0);
+    const warningTimeoutRef = useRef<NodeJS.Timeout>();
+
+    // TODO: 紅白翻譯要再跟ＰＭ要其他語系
+    const t = (key) => gc.Translator.translate(key, { languageId: gc.Translator.getCurrentLanguageId() });
+    const addCommas = gc.FormatUtils.numberWithCommas;
+    const displayAmount = amount > 0 ? gc.FormatUtils.numberWithCommas(amount) : '';
+    const payout = amount > 0 ? addCommas(amount * odd, 2, false) : '0.00';
+    const vendorName = siteId === VIVA88_SITE_ID ? SABA_GAMES : VGAMING;
+
+    useEffect(() => {
+        if (!betChoice) return;
+
+        const newMin = Math.max(minBet, stakeLevelMinBet);
+        const newMax = Math.min(betChoiceMax, maxBet, stakeLevel.maxBet);
+
+        setMin(newMin);
+        setMax(newMax);
+
+        setAmount(prev => {
+            if (prev < newMin) return newMin;
+            if (prev > newMax) return newMax;
+            return prev;
+        });
+    }, [betChoice, minBet, maxBet, stakeLevelMinBet, betChoiceMax, stakeLevel.maxBet]);
+
+    const setWarningWithTimeout = (message: string) => {
+        if (warningTimeoutRef.current) {
+            clearTimeout(warningTimeoutRef.current);
+        }
+
+        setWarnMsg(message);
+
+        warningTimeoutRef.current = setTimeout(() => {
+            setWarnMsg('');
+        }, WARNING_CLOSE_DELAY);
+    };
+
+    const onHide = () => {
+        setPanelId(null);
+        setWarnMsg('');
+    }
+
+    const handleInputChange = (event: any) => {
+        const numericValue = parseInputValue(event.target.value);
+
+        const { msg } = checkValidAmount(numericValue, min, max);
+
+        if (msg) {
+            if (msg === WarnMsgType.LESS_THAN_MIN) {
+                setWarnMsg(t('Common.lessthanmin'));
+            }
+
+            if (msg === WarnMsgType.MORE_THAN_MAX) {
+                setWarnMsg(t('Common.morethanmax'));
+            }
+        } else {
+            setWarnMsg('');
+        }
+       
+        setAmount(numericValue);
+    };
+
+    const handleClear = () => {
+        setAmount(0);
+    };
+
+    const handleClickBet = () => {
+        // TODO: 確認跟memberSite的betting api連動？或是照@sg api就好
+        const { newAmount: validatedAmount, msg } = checkValidAmount(amount, min, max);
+
+        if (msg) {
+            setAmount(validatedAmount);
+            if (msg === WarnMsgType.LESS_THAN_MIN) {
+                setWarningWithTimeout(t('Common.lessthanmin'));
+            }
+            if (msg === WarnMsgType.MORE_THAN_MAX) {
+                setWarningWithTimeout(t('Common.morethanmax'));
+            }
+            return;
+        }
+
+        if (betChoice) {
+            handleBet?.(validatedAmount, betChoice);
+            onHide?.();
+        }
+    };
+
+    const handleChipAmountChange = useCallback((addAmount: number) => {
+        const { newAmount, msg } = checkValidAmount(addAmount, min, max);
+
+        if (!msg) {
+            setWarnMsg('');
+        }
+        setAmount(newAmount);
+    }, [min, max]);
+
+
+    const renderTicketHeader = () => {
+        return (
+            <div className='c-ticket__header'>
+                <span className='c-text-bettype sg-bet-panel__header-flex'>
+                    <div className={classNames('sg-bet-panel__game-icon', {
+                        'sedie-icon': namespace === SE_DIE_GAME_NAMESPACE,
+                        'vip-sedie-icon': namespace === VIP_SE_DIE_GAME_NAMESPACE,
+                    })}></div>
+                    <span>
+                        {t(`${namespace}.game_name`)}/ {t(getChoicesType(namespace, betChoice))}
+                    </span>
+                </span>
+
+                <a
+                    className='c-btn c-btn--caret'
+                    aria-hidden='true'
+                >
+                    <i className='c-icon c-icon--caret'></i>
+                </a>
+                <a
+                    className='c-btn c-btn--clear'
+                    aria-hidden='true'
+                    onClick={() => onHide()}
+                >
+                    <i className='c-icon c-icon--clear'></i>
+                </a>
+            </div>
+        )
+    }
+
+    const renderTicketMain = () => {
+        const t = (key) => gc.Translator.translate(key, { languageId: gc.Translator.getCurrentLanguageId() });
+        return (
+            <div className='c-ticket__main'>
+                <div className='c-ticket__choice'>
+                    <span className='c-text-betchoice'>
+                        {t(`${gameName}.glossary_${betChoice}`)}
+                    </span>
+                </div>
+                <div className='c-ticket__odds'>
+                    <span className='c-text-balls'>{renderDots()}</span>
+                    <span className='c-text-odds'>
+                        @
+                        <span className={`${'c-odds'} ${'sg-bet-panel__text-bold'}`} data-odds-status='default'>
+                            {odd || 0}
+                        </span>
+                    </span>
+                    <span className='c-text-oddstype'>({t('Common.decimal')})</span>
+                </div>
+            </div>
+        )
+    }
+
+    const renderTicektInfo = () => {
+        const t = (key) => gc.Translator.translate(key, { languageId: gc.Translator.getCurrentLanguageId() });
+        const vendorName = siteId === VIVA88_SITE_ID ? SABA_GAMES : VGAMING;
+        const game = t(`${namespace}.game_name`);
+
+        return (
+            <div className='c-ticket__info'>
+                <div className='c-ticket-match-info'>
+                    <div className='c-ticket-match-info__row'>
+                        {vendorName}
+                    </div>
+                    <div className='c-ticket-match-info__row'>
+                        {game} {t(`Common.result_no`)} {clientRoundId}
+                    </div>
+                    <div className='c-ticket-match-info__row'></div>
+                </div>
+            </div>
+        )
+    }
+
+    const renderDots = () => {
+        const hasDots: boolean = betChoice ? Object.keys(ChoiceSeDieIconMapper).includes(betChoice) : false;
+        const dots = hasDots ? ChoiceSeDieIconMapper[betChoice as string] : [false, false, false, false];
+        return dots.map((isRed, index) => (
+            <RoundDot
+                key={index}
+                highlight={!hasDots}
+                choice={isRed ? SeDieChoices.odd : SeDieChoices.even}
+                size='small'
+                value={hasDots ? '' : '?'}
+            />
+        ));
+    };
+
+    const renderWarnMessage = ({ warnMsg }) => {
+        if (!warnMsg) return;
+        return (
+            <div className='c-ticket__status'>
+                <WarnMessage warnMsg={warnMsg} />
+            </div>
+        )
+    }
+
+    if ((panelId !== betChoice)) {
+        return <></>;
+    }
+
+    // TODO: 街上memberSite時，className不用style，直接接上memberSite class
+    return (
+        <div className='c-quick-bet c-quick-bet--bottom-left'>
+            <div className='c-quick-bet__btn'></div>
+            <div className={classNames('c-quick-bet__panel', {
+                ['sg-bet-panel__left-dec-100']: SE_DIE_CHOICES.RED2 === betChoice
+            })}>
+                <div className='c-betslip'>
+                    <div className='c-betslip__content'>
+                        <div className='c-betting-scroller'>
+                            <div className='c-betting-group' data-status='default'>
+                                <div className='c-betting' data-open='true'>
+                                    <div className='c-ticket' data-status='default' data-open='true'>
+                                        {
+                                            renderTicketHeader()
+                                        }
+
+                                        {
+                                            renderTicketMain()
+                                        }
+
+                                        {
+                                            renderTicektInfo()
+                                        }
+                                        {
+                                            renderWarnMessage({ warnMsg })
+                                        }
+                                    </div>
+                                    <div className='c-betting-stake-group'>
+                                        <div className='c-betting-stake'>
+                                            <div
+                                                className={`${'c-textfield'} ${'c-textfield--stake'}`}
+                                                data-focus='true'
+                                            >
+                                                <input
+                                                    type='text'
+                                                    className='c-textfield__input'
+                                                    placeholder={`${addCommas(min)} - ${addCommas(max)}`}
+                                                    value={displayAmount}
+                                                    onChange={handleInputChange}
+                                                />
+                                                <span className='c-textfield__currency'>{currency}</span>
+                                                <span className='c-textfield__bg'></span>
+                                                <a
+                                                    className={`${'c-btn'} ${'c-btn--clear'}`}
+                                                    aria-hidden='true'
+                                                    onClick={handleClear}
+                                                >
+                                                    <i
+                                                        className={`${'c-icon'} ${'c-icon--clear-solid'}`}
+                                                    ></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div className='c-betting-stake-info'>
+                                            <span className='c-text-group'>
+                                                <span className='c-text-label'>{t('Common.payout')} : </span>
+                                                <span className='c-text-value'>{payout}</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <BettingChips
+                                        min={min}
+                                        max={max}
+                                        currentAmount={amount}
+                                        onAmountChange={handleChipAmountChange}
+                                        t={t}
+                                        addCommas={addCommas}
+                                    />
+                                </div>
+                                <div className='c-betting-submit'>
+                                    <button
+                                        className={`${'c-btn'} ${'c-btn--bet'}`}
+                                        data-disabled={false}
+                                        aria-hidden='true'
+                                        onClick={handleClickBet}
+                                    >
+                                        <span className='c-text'>{t('Common.btn_bet')}</span>
+                                    </button>
+                                    <button
+                                        className={`${'c-btn'} ${'c-btn--default'}`}
+                                        aria-hidden='true'
+                                        onClick={() => onHide()}
+                                    >
+                                        <span className='c-text'>{t('Common.btn_cancel')}</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const WarnMessage = ({ warnMsg }) => {
+    if (!warnMsg) return null;
+
+    return (
+        <div className='c-betting-msg sg-bet-panel__betting-msg'>
+            <i className='c-icon c-icon--warning' data-icon="warning" />
+            <span className='c-text'>{warnMsg}</span>
+        </div>
+    );
+}
+
+export default BetPanelComponent;

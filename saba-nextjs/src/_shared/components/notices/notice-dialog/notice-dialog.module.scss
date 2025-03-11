@@ -1,0 +1,39 @@
+.overlay {
+    top: -0.8rem !important;
+    z-index: 9999;
+}
+
+.notice-container {
+    cursor: auto;
+    position: absolute;
+    color:white;
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto;
+    z-index: 9999;
+    bottom: 20px;
+    
+    .d-title{
+        color: yellow;
+        text-transform: capitalize;
+    }
+    .d-border{
+        border-bottom: 1px solid black;
+    }
+
+    .bg-info{  
+        background-color: #3a3939;
+    }
+    
+    .bg-error{
+        background-color: #791926;
+    }
+    
+
+}
+
+.ipad {
+    padding-bottom: 6.9rem;
+}
+

@@ -1,0 +1,76 @@
+.odd {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.boosted-odd {
+    background-color: rgba(199, 34, 99, 0.2);
+    border: 1px solid rgba(199, 34, 99);
+    border-radius: 0.3rem;
+    padding: 0 0.4rem;
+    animation: start-boosted-odds 2s forwards infinite;
+}
+
+@keyframes start-boosted-odds {
+    0%,
+    100% {
+        box-shadow: none;
+    }
+
+    50% {
+        box-shadow: 0 0 5px #c01357, 0 0 8px #ff8dba inset;
+    }
+}
+
+.total-stakes {
+    font-weight: 500;
+    height: 1.5rem;
+}
+
+.own-bet {
+    font-weight: 700;
+    color: yellow;
+}
+.betting-block {
+    display: block;
+    height: 100%;
+    cursor: pointer;
+    position: relative;
+}
+
+.betting-block:hover {
+    background-color: var(--c-av-odds-hover-bg);
+}
+
+.open-panel-background-color {
+    background-color: var(--c-av-odds-hover-bg);
+}
+
+.flash-and-keep-background-color {
+    animation: flash-background 1.5s ease-in-out 6, show-background 0s 9s forwards;
+    animation-fill-mode: forwards;
+    animation-delay: 2s;
+}
+
+@keyframes flash-background {
+    0% {
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    50% {
+        background-color: var(--c-av-odds-hover-bg);
+        box-shadow: inset 0 0 0 1px hsl(50, 80%, 40%);
+    }
+
+    100% {
+        background-color: transparent;
+        box-shadow: none;
+    }
+}
+
+@keyframes show-background {
+    to {
+        background-color: var(--c-av-odds-hover-bg);
+    }
+}

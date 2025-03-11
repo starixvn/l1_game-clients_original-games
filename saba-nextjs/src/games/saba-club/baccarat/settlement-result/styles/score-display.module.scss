@@ -1,0 +1,64 @@
+@import './_variables';
+
+.score {
+    --width-score: 4.5rem;
+    --height-score: 2.5rem;
+    --font-size-score: 1.4rem;
+    --bottom-score: 0;
+    position: absolute;           
+    width: var(--width-score);
+    height: var(--height-score);
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.9rem;
+    font-size: var(--font-size-score);
+    bottom: var(--bottom-score);
+    opacity: 0;
+    animation: scoreAppear 0.4s ease-out forwards;
+    will-change: transform, opacity;
+
+    &-number {
+        font-size: 2rem;
+        font-family: var(--font-number);
+        position: relative;
+        animation: scoreNumberPulse 0.6s ease-in-out;
+        will-change: transform;
+    }
+
+    &.player-score {
+        right: 2rem;
+        background: #{$player-color};
+    }
+
+    &.banker-score {
+        background: #{$banker-color};
+        left:1.5rem;
+    }
+}
+
+@keyframes scoreAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.5) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes scoreNumberPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+} 

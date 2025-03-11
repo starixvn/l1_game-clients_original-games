@@ -1,0 +1,55 @@
+import React, { memo, useEffect, useMemo, useState } from "react";
+import styles from "../styles.module.scss";
+import { BigSmallResult } from "../../type";
+import { calculateTotalDiceNumber, getRandomDiceNumbers } from "../../../../../_shared/utils/number-helper";
+import Dice from "./dice";
+
+interface DiceListProps {
+    diceNumbers: number[];
+}
+
+const DiceList: React.FC<DiceListProps> = ({ diceNumbers }) => {
+    return (
+        <div className={styles.diceList}>
+            {diceNumbers.map((number, index) => (
+                <Dice key={index} diceNumber={number} />
+            ))}
+        </div>
+    );
+};
+
+interface DiceDisplayProps {
+    result: BigSmallResult;
+    isAnimationResult: boolean;
+}
+
+export const DiceDisplay: React.FC<DiceDisplayProps> = memo(({ result, isAnimationResult }) => {
+    const [diceNumbers, setDiceNumbers] = useState([0, 0, 0]);
+    const [totalDiceNumber, setTotalDiceNumber] = useState(0);
+
+    useEffect(() => {
+        if (isAnimationResult) {
+            const intervalId = setInterval(() => {
+                setDiceNumbers(getRandomDiceNumbers());
+            }, 100);
+
+            setTimeout(() => {
+                clearInterval(intervalId);
+                setDiceNumbers([result.dice1, result.dice2, result.dice3]);
+                setTotalDiceNumber(calculateTotalDiceNumber([result.dice1, result.dice2, result.dice3]));
+            }, 2000);
+        } else {
+            setDiceNumbers([result.dice1, result.dice2, result.dice3]);
+            setTotalDiceNumber(calculateTotalDiceNumber([result.dice1, result.dice2, result.dice3]));
+        }
+    }, [isAnimationResult, result]);
+
+    return (
+        <div className={styles.diceContainer}>
+            <DiceList diceNumbers={diceNumbers} />
+            <div className={styles.diceResult}>{totalDiceNumber}</div>
+        </div>
+    );
+});
+
+DiceDisplay.displayName = "DiceDisplay";

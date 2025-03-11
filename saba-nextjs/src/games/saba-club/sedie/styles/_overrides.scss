@@ -1,0 +1,24 @@
+@import '../../../../_shared/components/game-base/styles/theme';
+
+// Override variables for Sedie game
+$sedie-primary-bg: #fce0d7;
+$sedie-header-bg: #e6e6e6;
+$sedie-accent-color: #78acff;
+
+// Game-specific mixins
+@mixin sedie-header {
+    background-color: $sedie-header-bg;
+    padding: $spacing-md;
+}
+
+@mixin sedie-block {
+    background-color: $sedie-primary-bg;
+    border: 1px solid $border-color;
+}
+
+// Export classes for use in Sedie components
+:export {
+    primaryBg: $sedie-primary-bg;
+    headerBg: $sedie-header-bg;
+    accentColor: $sedie-accent-color;
+} 
