@@ -13,7 +13,7 @@ import { checkValidAmount, parseInputValue, WarnMsgType } from '../../utils/bett
 import classNames from 'classnames';
 import { SE_DIE_CHOICES } from '../../../games/constants/saba-club';
 import { useAppContext } from '../../../appProvider';
-import { SABA_GAMES, SE_DIE_GAME_NAMESPACE, UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE, VGAMING, VIP_SE_DIE_GAME_NAMESPACE, VIVA88_SITE_ID } from '../../../../constant/app';
+import { SABA_GAMES, SE_DIE_GAME_NAMESPACE, UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE, VGAMING, VIP_SE_DIE_GAME_NAMESPACE, VIVA88_SITE_ID, BACCARAT_GAME_ID, BACCARAT_GAME_NAMESPACE } from '../../../../constant/app';
 import Dice from '../dice';
 
 const WARNING_CLOSE_DELAY = 60000;
@@ -153,7 +153,7 @@ const BetPanel: React.FC<{
         let newMax = 0
         if (Object.keys(maxBetPerChoices).length <= 0 && namespace === UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE) {
             newMax = Math.min(maxBet, stakeLevel.maxBet);
-        }else {
+        } else {
             newMax = Math.min(betChoiceMax, maxBet, stakeLevel.maxBet);
         }
 
@@ -200,7 +200,7 @@ const BetPanel: React.FC<{
         } else {
             setWarnMsg('');
         }
-       
+
         setAmount(numericValue);
     };
 
@@ -363,11 +363,11 @@ const BetPanel: React.FC<{
     return (
         <div className='c-quick-bet c-quick-bet--bottom-left'>
             <div className='c-quick-bet__btn'></div>
-            <div 
+            <div
                 ref={panelRef}
                 className={classNames('c-quick-bet__panel', {
-                ['sg-bet-panel__left-dec-100']: SE_DIE_CHOICES.RED2 === betChoice
-            })}>
+                    ['sg-bet-panel__left-dec-100']: SE_DIE_CHOICES.RED2 === betChoice
+                })}>
                 <div className='c-betslip'>
                     <div className='c-betslip__content'>
                         <div className='c-betting-scroller'>

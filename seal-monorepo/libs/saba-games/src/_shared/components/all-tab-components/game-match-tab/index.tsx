@@ -44,7 +44,7 @@ export const GameMatchTab: React.FC<GameMatchTabProps> = ({ gameId, className, l
                 >
                     <div className='c-match c-in-play'>
                         <AppContextConsumer>
-                            {({ language }) => 
+                            {({ language }) =>
                                 GamePageComponent && (
                                     <GamePageComponent namespace={namespace} language={language} />
                                 )

@@ -1,0 +1,118 @@
+@import '../../styles/_overrides';
+
+// Animation Timings
+$timings: (
+    'draw-card': 0.8s,
+    'open-card': 1.8s,
+    'zoom-in-card': 0.4s,
+    'show-score': 0.2s,
+    'blink-score': 0.3s,
+    'move-left-player': 0.4s,
+    'delay': (
+        'open-card-2': 0.2s,
+        'open-card-4': 0.2s,
+        'zoom-in': 0.5s
+    )
+) !default;
+
+// Card Animation Sequence
+$card-sequence: (
+    'first-pair': 0ms,
+    'second-pair': 300ms,
+    'third-card': 1400ms,
+    'fourth-card': 2100ms
+) !default;
+
+// Layout
+$layout: (
+    'gap-player-banker': (
+        'default': 2rem,
+        'desktop': 4rem
+    ),
+    'card-distances': (
+        'first-second': 5rem,
+        'second-third': 8rem
+    )
+) !default;
+
+// Score Display
+$score: (
+    'dimensions': (
+        'width': 8.4rem,
+        'height': 2.2rem,
+        'font-size': 1.4rem,
+        'number-font-size': 2rem
+    ),
+    'colors': (
+        'player': (
+            'start': #{$player-color-start},
+            'end': #{$player-color-end}
+        ),
+        'banker': (
+            'start': #{$banker-color-start},
+            'end': #{$banker-color-end}
+        )
+    )
+) !default;
+
+// Breakpoints
+$breakpoints: (
+    'desktop': 1278px
+) !default;
+
+// Card Dimensions
+$card: (
+    'width': 7.757rem,
+    'height': 10.74rem,
+    'background': (
+        'width': 7.757rem,
+        'height': 110.74rem
+    )
+) !default;
+
+// Colors
+$colors: (
+    'player': (
+        'start': #{$player-color-start},
+        'end': #{$player-color-end}
+    ),
+    'banker': (
+        'start': #{$banker-color-start},
+        'end': #{$banker-color-end}
+    ),
+    'text': (
+        'player': #{$player-color},
+        'banker': #{$banker-color}
+    ),
+    'button': (
+        'primary': #3498db,
+        'hover': #2980b9
+    ),
+    'loading': (
+        'spinner': #f3f3f3,
+        'spinner-active': #3498db,
+        'text': #666
+    )
+) !default;
+
+// Legacy variable exports (for backward compatibility)
+$time-draw-card-animation: map-get($timings, 'draw-card');
+$time-open-card-animation: map-get($timings, 'open-card');
+$time-zoom-in-card-animation: map-get($timings, 'zoom-in-card');
+$time-show-score-animation: map-get($timings, 'show-score');
+$time-blink-score-animation: map-get($timings, 'blink-score');
+$time-move-left-player: map-get($timings, 'move-left-player');
+
+$time-delay-open-card-2: map-get($timings, 'delay', 'open-card-2');
+$time-delay-open-card-4: map-get($timings, 'delay', 'open-card-4');
+$time-delay-zoom-in-card-animation: map-get($timings, 'delay', 'zoom-in');
+
+$first-pair-time: map-get($card-sequence, 'first-pair');
+$second-pair-time: map-get($card-sequence, 'second-pair');
+$third-card-time: map-get($card-sequence, 'third-card');
+$fourth-card-time: map-get($card-sequence, 'fourth-card');
+
+$gap-player-banker-default: map-get($layout, 'gap-player-banker', 'default');
+$gap-player-banker-desktop: map-get($layout, 'gap-player-banker', 'desktop');
+$distance-first-second-card: map-get($layout, 'card-distances', 'first-second');
+$distance-second-third-card: map-get($layout, 'card-distances', 'second-third'); 

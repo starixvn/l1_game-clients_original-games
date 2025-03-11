@@ -50,10 +50,10 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     abstract closeConnect(): void;
 
-    onVisibilityChange = () => {};
+    onVisibilityChange = () => { };
 
     @handle(gc.Connection.ConnectionHandlers.ConnectHandler)
-    connectToService() {}
+    connectToService() { }
 
     @render(gc.Connection.ConnectionStore, (store) => store.isSignedIn)
     handleConnected(isSignedIn: boolean) {
@@ -97,6 +97,11 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         return <>Statistic</>;
     }
 
+    renderHeader() {
+        return <></>;
+    }
+
+
     @render(Settlements.SettlementStore, (store) => store.currentFinish, {
         fireImmediately: false,
     })
@@ -131,7 +136,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     @handle(Lobby.LobbyHandlers.TryToConnectHandler)
-    tryToConnectHandler() {}
+    tryToConnectHandler() { }
 
     @render(gc.Connection.ConnectionStore, (store) => store.isConnectFailed)
     handleConnectFail(isConnectFailed: boolean) {
@@ -180,6 +185,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
             this.renderDisconnect()
         ) : (
             <>
+                {this.renderHeader()}
                 <div className={`${Styles['block-wrapper']} ${this.overrideClasses?.blockWrapper}`}>
                     <div className={`${Styles['info']} ${this.overrideClasses?.info}`}>
                         {this.renderRoundIdSection()}
@@ -189,7 +195,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                     <div className={`${Styles['bet-options']} ${this.overrideClasses?.betOptions}`}>
                         {this.renderBettingBlock()}
                         <ConfirmBet
-                            namespace={this.props.namespace} 
+                            namespace={this.props.namespace}
                         />
                     </div>
                 </div>
@@ -197,7 +203,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                 <div className={Styles["history-block"]}>
                     <div className={Styles["previous-round"]}>{this.renderRoundHistory()}</div>
                     <div className={Styles["statistic-btn"]}>
-                        <StatisticButton isOpenStatistic={this.state.isOpenStatistic} handleToggle={this.toggleStatistic} /> 
+                        <StatisticButton isOpenStatistic={this.state.isOpenStatistic} handleToggle={this.toggleStatistic} />
                     </div>
                 </div>
                 {this.state.isOpenStatistic && this.renderStatistic()}
