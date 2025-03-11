@@ -178,6 +178,7 @@
             "route": "unbalancedbigsmall"
         },
         "mainObserverNamespace": "UnbalancedBigSmall4",
-        "order": 4
+        "order": 4,
+        "isSocketGateway": true
     }
 }
