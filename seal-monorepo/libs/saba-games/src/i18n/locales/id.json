@@ -255,5 +255,17 @@
         "message_draw_maxbet": "Total taruhan maksimal pada undian ini adalah %{maxBet}",
         "message_max_payout": "Taruhan anda telah melebihi Pembayaran Maks",
         "message_placebet_next_draw": "Mohon tunggu pengundian selanjutnya."
+    },
+    "UnbalancedBigSmall4": {
+        "game_vendor": "SABA.games",
+        "game_name": "Monte Carlo Besar Kecil",
+        "game_tab_name": "Besar Kecil",
+        "choices_type": "Besar/Kecil",
+        "big": "Besar",
+        "small": "Kecil",
+        "glossary_big": "Besar",
+        "glossary_small": "Kecil",
+        "beadboard_big": "B",
+        "beadboard_small": "K"
     }
 }

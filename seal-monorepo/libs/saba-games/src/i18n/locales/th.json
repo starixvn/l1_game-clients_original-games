@@ -255,5 +255,17 @@
         "message_draw_maxbet": "เงินเดิมพันรวมสูงสุดในการจับรางวัลนี้คือ %{maxBet}",
         "message_max_payout": "เดิมพันของคุณเกินการจ่ายเงินสูงสุด",
         "message_placebet_next_draw": "กรุณารอการจับรางวัลครั้งต่อไป"
+    },
+    "UnbalancedBigSmall4": {
+        "game_vendor": "SABA.games",
+        "game_name": "มอนติคาร์โล ใหญ่-เล็ก",
+        "game_tab_name": "ใหญ่/เล็ก",
+        "choices_type": "ใหญ่/เล็ก",
+        "big": "ใหญ่",
+        "small": "เล็ก",
+        "glossary_big": "ใหญ่",
+        "glossary_small": "เล็ก",
+        "beadboard_big": "B",
+        "beadboard_small": "S"
     }
 }

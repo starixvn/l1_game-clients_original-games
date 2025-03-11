@@ -255,5 +255,17 @@
         "message_draw_maxbet": "本次抽到的最大总投注额为 %{maxBet}",
         "message_max_payout": "您的赌注已超过最大赔付额。",
         "message_placebet_next_draw": "请等待下一次抽取。"
+    },
+    "UnbalancedBigSmall4": {
+        "game_vendor": "SABA.games",
+        "game_name": "蒙特卡罗大小",
+        "game_tab_name": "大小",
+        "choices_type": "大/小",
+        "big": "大",
+        "small": "小",
+        "glossary_big": "大",
+        "glossary_small": "小",
+        "beadboard_big": "大",
+        "beadboard_small": "小"
     }
 }
