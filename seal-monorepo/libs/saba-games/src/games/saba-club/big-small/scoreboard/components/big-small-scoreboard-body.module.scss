@@ -1,57 +1,77 @@
-.dot-item {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font: 0.9rem var(--font-number);
-    color: #fff;
-    z-index: 1;
-    padding: 4px;
-    pointer-events: none;
-    border-right: 1px solid #ebe4e4;
-    border-bottom: 1px solid #ebe4e4;
+// Variables
+$dot-size: 24px;
+$font-size: 15px;
+$border-color: #ebe4e4;
+$text-light: #fff;
+$text-dark: #000;
+$dot-big-gradient: linear-gradient(180deg, hsla(0, 0%, 45%, 1) 0%, hsla(0, 0%, 18%, 1) 100%);
+$dot-small-gradient: linear-gradient(180deg, hsla(0, 0%, 100%, 1) 0%, hsla(0, 0%, 51%, 1) 100%);
+$dot-blink-color: #8b8686;
+$dot-blink-text: rgb(211, 202, 202);
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+@mixin dot-base {
+  @include flex-center;
+  width: $dot-size;
+  height: $dot-size;
+  border-radius: 50%;
+  font-size: $font-size;
+  font-weight: 600;
+  pointer-events: none;
+  z-index: 1;
+}
+
+// Main styles
+.dot-item {
+  position: relative;
+  @include flex-center;
+  font-size: $font-size;
+  color: $text-light;
+  z-index: 1;
+  padding: 4px;
+  pointer-events: none;
+  border-right: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
+}
+
+// Dot variants
 .dot-blink,
 .dot-big,
 .dot-small,
 .dot-empty {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 1.3rem;
-    height: 1.3rem;
-    border-radius: 50%;
-    font: 0.9rem var(--font-number);
-    font-weight: 600;
-    pointer-events: none;
-    z-index: 1;
+  @include dot-base;
 }
 
 .dot-big {
-    background: linear-gradient(180deg, #7c7c77 0%, #2e322c 50%, #7c7c77 100%);
-    border: 1px solid #000;
-    color: #fff;
+  background: $dot-big-gradient;
+  border: none;
+  color: $text-light;
 }
 
 .dot-small {
-    background: linear-gradient(180deg, #ffffff 0%, #b7b7b7 50%, #ffffff 100%);
-    border: 1px solid #000;
-    color: #000;
+  background: $dot-small-gradient;
+  border: none;
+  color: $text-dark;
 }
 
 .dot-blink {
-    background: #8b8686;
-    color: rgb(211, 202, 202);
-    animation: blinker 1.3s linear infinite;
+  background: $dot-blink-color;
+  color: $dot-blink-text;
+  animation: blinker 1.3s linear infinite;
 }
 
 .dot-empty {
-    background: transparent;
+  background: transparent;
 }
 
 @keyframes blinker {
-    50% {
-        opacity: 0.3;
-    }
+  50% {
+    opacity: 0.3;
+  }
 }

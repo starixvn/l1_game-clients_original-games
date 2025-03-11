@@ -38,9 +38,8 @@ export default class BigSmallRoundHistory extends ObserverComponent<IPropsObserv
                     <BigSmallRoundDot
                         highlight={true}
                         size="large"
-                        value={"?"}
+                        value="?"
                         choice="next"
-                        className={classNames(Styles["bigsmall-dot"], Styles["next"])}
                     />
                 </div>
             </div>
@@ -81,7 +80,6 @@ export default class BigSmallRoundHistory extends ObserverComponent<IPropsObserv
                     choice={settlement.winner}
                     size="large"
                     value={settlement.winner.charAt(0).toUpperCase()}
-                    className={classNames(Styles["bigsmall-dot"], Styles[settlement.winner])}
                 />
                 <span className={Styles["arrow"]}></span>
             </div>

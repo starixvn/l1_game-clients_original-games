@@ -1,14 +1,15 @@
 .result-history {
     padding: 10px;
-    width: 30rem;
+    width: 40rem;
 
     .result-title {
         font-weight: bold;
+        margin-bottom: 10px;
     }
 
     .result-content {
         background-color: #fff6f3;
-        height: 13.2rem;
+        height: 15rem;
         overflow-y: auto;
         overflow-x: hidden;
         scrollbar-width: thin; /* Set scrollbar width to thin */

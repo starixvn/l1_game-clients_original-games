@@ -23,11 +23,8 @@ const BigSmallRoundDot: React.FC<any> = ({
         <div
             className={classNames(
                 Styles[classDotName],
-                {
-                    [Styles['highlight-current-result']]: highlight
-                },
-                Styles[size],
-                gameName && Styles[gameName]
+                Styles[size]
+                // gameName && Styles[gameName]
             )}
             data-testid='round-dot'
         >

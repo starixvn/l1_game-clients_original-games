@@ -2,15 +2,6 @@
 // Move variables to a local class
 .round-history {
     // bigsmall-specific variables
-    --bigsmall-big-bg: linear-gradient(180deg, #7C7C77 0%, #2E322C 50%, #7C7C77 100%);
-    --bigsmall-big-border: #000000;
-    --bigsmall-small-bg: linear-gradient(180deg, #FFFFFF 0%, #B7B7B7 50%, #FFFFFF 100%);
-    --bigsmall-small-border: #000000;
-    --bigsmall-next-bg: #f0f0f0;
-    --bigsmall-next-border: #ddd;
-    --bigsmall-text-light: #fff;
-    --bigsmall-text-dark: #000000;
-    --bigsmall-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 
     background-color: #fce0d7;
     padding: 8px 12px;
@@ -42,10 +33,9 @@
         background-repeat: no-repeat;
         background-position: center;
         background-size: contain;
-        height: 12px;
-        width: 12px;
+        height: 8px;
+        width: 8px;
         opacity: 0.6;
-        margin: 0 2px;
     }
 }
 

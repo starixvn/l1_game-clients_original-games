@@ -1,10 +1,11 @@
 .scoreboard {
     padding: 10px;
-    width: calc(100% - 400px);
+    width: calc(100% - 500px);
     height: 100%;
 
     .scoreboard-title {
         font-weight: bold;
+        margin-bottom: 10px;
     }
 
     .scoreboard-percentage {
@@ -13,7 +14,7 @@
         justify-content: space-between; /* Distributes space between items */
         width: 100%; /* Make the parent container full width */
         color: white;
-        background: #274980;
+        background: #2D4976;;
 
         .big-percentage {
             flex: 1; /* Allows this to take available space on the left */
