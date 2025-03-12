@@ -30,6 +30,12 @@ body {
    
 }
 
+@font-face {
+    font-family: "SFDisplay";
+    src:
+      url("fonts/SF-fonts/SFPRODISPLAYREGULAR.OTF") format("opentype"),
+}
+
 
 .error-page {
     position: relative;
