@@ -8,12 +8,13 @@ import * as gc from "@sg/sg-game-client";
 interface BaccaratHeaderProps {
     gameId: number;
     isExpanded?: boolean;
-    onToggleExpand?: () => void;
+    handleToggle?: () => void;
     namespace: string;
     centerTextsComponent?: React.ReactNode;
 }
 
-const BaccaratHeader: React.FC<BaccaratHeaderProps> = ({ gameId, isExpanded, onToggleExpand, centerTextsComponent }) => {
+const BaccaratHeader: React.FC<BaccaratHeaderProps> = ({ gameId, isExpanded, handleToggle: onToggleExpand, centerTextsComponent }) => {
+    console.log('BaccaratHeader', gameId, isExpanded, onToggleExpand, centerTextsComponent);
     return (
         <div className={classNames(styles.header, 'baccarat-header')}>
             <GameHeader

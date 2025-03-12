@@ -28,13 +28,13 @@ export const GameMatchTab: React.FC<GameMatchTabProps> = ({ gameId, className, l
 
     const gameMapInfo = gamePageMap[gameId];
     const namespace = gameMapInfo?.namespace;
-    const GameHeaderComponent = gameHeaderMap[gameId];
-    const GamePageComponent = gameMapInfo?.component;
+    const GameHeaderComponent = gameHeaderMap[gameId] || null;
+    const GamePageComponent = gameMapInfo?.component || null;
 
     return (
         <div className={className}>
             <div className="c-league">
-                <GameHeaderComponent isExpanded={isExpanded} handleToggle={handleToggle} />
+                <GameHeaderComponent isExpanded={isExpanded} handleToggle={handleToggle} namespace={namespace} gameId={gameId} />
                 <div
                     className={classNames(styles['game-lobby'], {
                         [styles['collapsed']]: !isExpanded,
