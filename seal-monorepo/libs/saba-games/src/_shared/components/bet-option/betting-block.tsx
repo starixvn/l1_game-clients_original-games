@@ -65,18 +65,29 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
         }
     }
 
-    protected handleOnClick({ panelId, setPanelId, show, setShow}) {
+    protected handleOnClick({ panelId, setPanelId, show, setShow }) {
         return () => {
             const { betChoice, odd } = this.props;
             const { isAuthorized } = this.state;
 
+            console.log('[BettingBlock] Click handler:', {
+                betChoice,
+                odd,
+                isAuthorized,
+                currentPanelId: panelId,
+                show
+            });
+
             if (!isAuthorized) {
+                console.log('[BettingBlock] Not authorized, creating nickname');
                 this.autoCreateNickname();
             }
 
             if (panelId !== betChoice) {
+                console.log('[BettingBlock] Opening panel for:', betChoice);
                 setPanelId(betChoice);
             } else {
+                console.log('[BettingBlock] Closing panel');
                 setPanelId(null);
             }
 
@@ -120,10 +131,10 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
     }
 
     @handle(Auth.AuthHandlers.Authorize, (handler) => handler.handleAutoGenerateName())
-    protected autoCreateNickname() {}
+    protected autoCreateNickname() { }
 
     @handle(Connection.ConnectionHandlers.SignInHandler)
-    protected signIn() {}
+    protected signIn() { }
 
 
     render() {
@@ -141,11 +152,13 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
                     return (
                         <GameBettingZoneContext.Provider value={bettingZoneState}>
                             <div
+
                                 className={classNames(Styles['betting-block'], {
                                     [Styles['open-panel-background-color']]: panelId === betChoice,
                                     [Styles['flash-and-keep-background-color']]: flashAnimationClass,
                                 })}
                                 onClick={this.handleOnClick({ panelId, setPanelId, show, setShow })}
+
                             >
                                 {children}
                             </div>
