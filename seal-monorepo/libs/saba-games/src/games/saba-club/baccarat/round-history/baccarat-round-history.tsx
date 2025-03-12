@@ -36,7 +36,6 @@ export default class BaccaratRoundHistory extends ObserverComponent<IPropsObserv
                     })}
                     <RoundDot
                         highlight={true}
-                        size="large"
                         value={"?"}
                         choice="next"
                         className={`${Styles["baccarat-dot"]} ${Styles["next"]}`}
