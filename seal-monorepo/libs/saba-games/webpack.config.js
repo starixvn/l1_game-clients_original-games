@@ -40,7 +40,7 @@ module.exports = {
         },
         {
           glob: '**/*',
-          input: 'libs/saba-games/src/public/static',
+          input: 'libs/saba-games/public/static',
           output: '/static',
         },
       ],
