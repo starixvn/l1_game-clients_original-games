@@ -310,9 +310,11 @@ const BetPanel: React.FC<{
                         {vendorName}
                     </div>
                     <div className='c-ticket-match-info__row'>
-                        {game} {t(`Common.result_no`)} {clientRoundId}
+                        {game}
                     </div>
-                    <div className='c-ticket-match-info__row'></div>
+                    <div className='c-ticket-match-info__row'>
+                        {t(`Common.result_no`)} {clientRoundId}
+                    </div>
                 </div>
             </div>
         )
