@@ -36,8 +36,8 @@ $dot-blink-text: rgb(211, 202, 202);
   z-index: 1;
   padding: 4px;
   pointer-events: none;
-  border-right: 1px solid $border-color;
-  border-bottom: 1px solid $border-color;
+  border-right: 1px solid var(--c-av-theme-border-1); /* Border for each grid item */
+  border-bottom: 1px solid var(--c-av-theme-border-1); /* Border for each grid item */
 }
 
 // Dot variants

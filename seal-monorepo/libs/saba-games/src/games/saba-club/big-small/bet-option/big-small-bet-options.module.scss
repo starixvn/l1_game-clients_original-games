@@ -23,7 +23,6 @@
 }
 
 .main-option {
-    color: #000;
     font-family: "Segoe UI";
     font-size: 14px!important;
     font-style: normal;
@@ -32,7 +31,10 @@
 }
 
 .bets-bg {
-    background-color: #fff6f3;
+    background-color: var(--c-av-odds-in-play-bg);
+    border-width: var(--c-av-odds-button-border-width);
+    border-color: var(--c-av-odds-button-border);
+    border-radius: var(--c-av-border-radius);
 }
 
 .padding-bet {
@@ -68,10 +70,6 @@
                 .main-option {
                     font-size: 1.2rem;
                     font-weight: 600;
-                }
-
-                &:hover {
-                    background-color: #ffedae;
                 }
             }
         }

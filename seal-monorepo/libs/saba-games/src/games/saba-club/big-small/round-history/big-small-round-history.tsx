@@ -27,11 +27,12 @@ export default class BigSmallRoundHistory extends ObserverComponent<IPropsObserv
             return <></>;
         }
         const roundHistories = rounds as gc.RoundHistories.RoundHistory[];
+        const t = (key) => gc.Translator.translate(key, { languageId: gc.Translator.getCurrentLanguageId() });
 
         return (
             <div className={Styles["round-history"]}>
                 <div className={Styles["hstack-round"]}>
-                    <span>Previous Rounds:</span>
+                    {t('Common.previous_round')}:
                     {roundHistories.toReversed().map((roundHistory) => {
                         return this.RoundHistoryItem(roundHistory);
                     })}

@@ -37,9 +37,9 @@
         overflow-y: hidden;
         display: grid;
         //grid-gap: 0.4rem;
-        background: whitesmoke;
+        background: var(--c-av-lv1-theme-bg-2);
         scrollbar-width: thin; /* Set scrollbar width to thin */
-        scrollbar-color: #c9c4c4 #f1f1f1; /* Handle color and track color */
+        scrollbar-color: var(--scroll-bar-track) var(--c-av-lv1-theme-bg-2);
 
         .dot-item {
             border-right: 1px solid #ebe4e4; /* Border for each grid item */
