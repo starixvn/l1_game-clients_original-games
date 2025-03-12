@@ -96,11 +96,11 @@ export default class BaccaratBetOptions extends BetOptions {
     }
 
     public renderTotalBet(choice: string) {
-        return <TotalBet value={this.state?.totalBets?.[choice]} choice={choice} />;
+        return <></>;
     }
 
     public renderOwnBet(choice: string) {
-        return <OwnBet value={this.state?.ownBets?.[choice]} choice={choice} />;
+        return <></>;
     }
 
     private isBoostedChoice(choice: string, boostedChoices: string[] | undefined): boolean {
