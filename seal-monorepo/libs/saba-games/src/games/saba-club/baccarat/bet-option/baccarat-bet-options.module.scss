@@ -76,16 +76,16 @@
 @mixin bet-container-grid {
     display: grid;
     grid-template-rows: 1fr 1fr;
-    gap: 8px;
-    padding: 12px;
-    height: 79px;
-    width: 143px;
+    height: 80px;
+    justify-content: center;
+    align-items: center;
+    // width: 143px;
 }
 
 // Base container class
 .base-container {
     @include bet-container-grid;
-    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .main-bets-container {
@@ -113,8 +113,8 @@
     width: 135px;
 
     &:hover {
-        transform: scale(1.02);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        // transform: scale(1.02);
+        // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     &.winning-bet {
