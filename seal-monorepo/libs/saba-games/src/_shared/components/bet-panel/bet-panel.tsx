@@ -18,6 +18,13 @@ import Dice from '../dice';
 
 const WARNING_CLOSE_DELAY = 60000;
 
+// Game icon mapping constant
+const GAME_ICON_MAPPING = {
+    [SE_DIE_GAME_NAMESPACE]: 'sedie-icon',
+    [VIP_SE_DIE_GAME_NAMESPACE]: 'vip-sedie-icon',
+    [UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE]: 'bigsmall-icon'
+} as const;
+
 export interface IBetPanel extends IStateObserver {
     clientRoundId: number;
     stakeLevel: gc.Player.IStakeLevel;
@@ -240,13 +247,12 @@ const BetPanel: React.FC<{
 
 
     const renderTicketHeader = () => {
+        const gameIconClass = GAME_ICON_MAPPING[namespace] || '';
+        
         return (
             <div className='c-ticket__header'>
                 <span className='c-text-bettype sg-bet-panel__header-flex'>
-                    <div className={classNames('sg-bet-panel__game-icon', {
-                        'sedie-icon': namespace === SE_DIE_GAME_NAMESPACE,
-                        'vip-sedie-icon': namespace === VIP_SE_DIE_GAME_NAMESPACE,
-                    })}></div>
+                    <div className={classNames('sg-bet-panel__game-icon', gameIconClass)}></div>
                     <span>
                         {t(`${namespace}.game_name`)}/ {t(getChoicesType(namespace, betChoice))}
                     </span>

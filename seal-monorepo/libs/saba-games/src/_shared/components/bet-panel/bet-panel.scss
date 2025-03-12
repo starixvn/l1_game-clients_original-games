@@ -43,17 +43,24 @@
         }
     }
 
-    .sedie-icon {
-        background-image: url("../../../assets/game-icons/sedie.png");
+    %game-icon-base {
         background-position: center;
         background-repeat: no-repeat;
         background-size: contain;
     }
 
+    .sedie-icon {
+        @extend %game-icon-base;
+        background-image: url("/static/images/game-icons/sedie.png");
+    }
+
     .vip-sedie-icon {
-        background-image: url("../../../assets/game-icons/vip-sedie.png");
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain;
+        @extend %game-icon-base;
+        background-image: url("/static/images/game-icons/vip-sedie.png");
+    }
+
+    .bigsmall-icon {
+        @extend %game-icon-base;
+        background-image: url("/static/images/game-icons/big-small.png");
     }
 }
