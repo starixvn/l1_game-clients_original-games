@@ -1,10 +1,10 @@
 @import './_variables';
 
 .score {
-    --width-score: 4.5rem;
-    --height-score: 2.5rem;
-    --font-size-score: 1.4rem;
-    --bottom-score: 0;
+    --width-score: 53px;
+    --height-score: 33px;
+    --font-size-score: 20px;
+    --bottom-score: -5px;
     position: absolute;           
     width: var(--width-score);
     height: var(--height-score);
@@ -22,7 +22,9 @@
     will-change: transform, opacity;
 
     &-number {
-        font-size: 2rem;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 26px;
         font-family: var(--font-number);
         position: relative;
         animation: scoreNumberPulse 0.6s ease-in-out;
@@ -30,13 +32,13 @@
     }
 
     &.player-score {
-        right: 2rem;
+        right: 20px;
         background: #{$player-color};
     }
 
     &.banker-score {
         background: #{$banker-color};
-        left:1.5rem;
+        left: 20px;
     }
 }
 

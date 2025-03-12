@@ -100,7 +100,6 @@
 .pair-container {
     @include bet-container-grid;
     border-left: 1px solid rgba(0, 0, 0, 0.1);
-    padding-left: 12px;  // Only unique property for this container
 }
 
 .bet-option {
