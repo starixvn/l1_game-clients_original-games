@@ -1,7 +1,7 @@
 // statistic-button
 import * as gc from '@sg/sg-game-client';
-import Styles from './statistic-button.module.scss';
 import classNames from 'classnames';
+import Styles from './statistic-button.module.scss';
 
 const StatisticButton = ({ isOpenStatistic ,handleToggle }) => {
     const statisticTitle = gc.Translator.translate("Common.statistic_title")
@@ -10,12 +10,12 @@ const StatisticButton = ({ isOpenStatistic ,handleToggle }) => {
             <i className={`${Styles["arrow-icon"]}`}>
                 <svg
                     className={`${Styles["svg-icon"]}`}
-                    width="24"
-                    height="24"
+                    width="16"
+                    height="16"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke="#78acff"
+                    stroke="#2D4F8E"
                 >
                     <path d={isOpenStatistic ? "M18 9l-6 6-6-6" : "M6 15l6-6 6 6"} />
                 </svg>
@@ -26,7 +26,7 @@ const StatisticButton = ({ isOpenStatistic ,handleToggle }) => {
     return (
         <div className={classNames(Styles["statistic-button"], "c-match__option")} onClick={handleToggle}>
             <a className="c-btn c-btn--more c-is-close" title="Expand">
-                <span className="c-text">{statisticTitle}</span>
+                <span className={Styles["text"]}>{statisticTitle}</span>
                 {renderArrow(isOpenStatistic)}
                 {/* <i className="c-icon c-icon--caret"></i> */}
             </a>

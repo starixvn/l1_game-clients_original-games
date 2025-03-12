@@ -1,15 +1,28 @@
 .statistic-button {
     // prod styles , local 看不出來
     position: relative;
-    overflow: hidden;
-    width: 93px;
+    width: 130px;
+    height: 23px;
     padding: 0;
     margin: 0;
-    right: 10px;
-    top: 7px;
+    right: 10px;   
     cursor: pointer;
+    background-color: #FFF6F3;
+    font-size: 13px;
+    border-radius: 3px;
+    border: 1px solid #D6CECC;
+    display: flex;
+    align-items: center;
+    top: 8px;
+    .text {
+        color: #2D4976;
+    }
+}
 
-    font-size: var(--c-12px-3);
+.arrow-icon {
+    position: absolute;
+    right: 6px;
+    bottom: 1px;
 }
 
 .statistic-button:hover {
