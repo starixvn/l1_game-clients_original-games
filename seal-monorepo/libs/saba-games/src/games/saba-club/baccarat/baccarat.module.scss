@@ -11,7 +11,7 @@
     :global {
         .block-wrapper {
             background-color: $baccarat-primary-bg;
-            grid-template-columns: 1fr 14rem 36rem !important;
+            grid-template-columns: 1fr 14rem 448px !important;
             padding: 1rem;
             gap: 1rem;
         }
@@ -31,8 +31,19 @@
     }
 }
 
+
 .block-wrapper {
-    grid-template-columns: 1fr 27rem 30rem !important;
+  display: grid;
+    grid-template-columns: 1fr 27rem 448px !important;
+    // height: 80px !important;
+}
+
+.baccarat-info-block{
+  height: 80px !important;
+}
+
+.baccarat-result-block{
+  padding: 0 !important;
 }
 
 .header {
@@ -41,7 +52,7 @@
 
 .baccaratGameTitle {
     background-color: $baccarat-header-bg !important;
-    grid-template-columns: 1fr 10rem 10rem 10rem !important;
+    grid-template-columns: 1fr 10rem 10rem 448px !important;
 }
 
 .bet {
@@ -86,6 +97,12 @@
 .margin-x-0 {
     margin-right: 0;
     margin-left: 0;
+}
+
+.baccarat-bet-options-block{
+  width: 448px !important;
+  height: 80px !important;
+  min-width: 448px !important;
 }
 
 .bet-options-wrapper {

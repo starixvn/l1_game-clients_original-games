@@ -26,7 +26,10 @@ interface IBaccaratState extends IGameBaseState {
 @observer(setting.mainObserverNamespace)
 export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratState> {
     override overrideClasses = {
-        blockWrapper: Styles["block-wrapper"]
+        blockWrapper: Styles["block-wrapper"],
+        betOptions: Styles["baccarat-bet-options-block"],
+        info: Styles["baccarat-info-block"],
+        result: Styles["baccarat-result-block"]
     }
 
     constructor(props: GameBaseProps) {
@@ -57,7 +60,7 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratSt
     //         <Header
     //             namespace={this.props.namespace}
     //             isExpanded={this.state.isExpanded}
-    //             onToggleExpand={this.handleToggleExpand}
+    //             handleToggle={this.handleToggleExpand}
     //             gameId={setting.id}
     //         />
     //     );
