@@ -6,15 +6,14 @@
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 50%;
-    font: 1.1rem var(--font-number);
+    font-size: 1rem;
     pointer-events: none;
     color: #fff;
     z-index: 1;
+    font-family: "SFDisplay";
+    font-weight: 700;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 
-    @media (min-width: 1150px) {
-        width: 1.6rem;
-        height: 1.6rem;
-    }
 
     &:before {
         content: "";
@@ -26,6 +25,8 @@
         border-radius: 100%;
         z-index: -1;
     }
+
+
 
     &.large {
         height: 2rem;
@@ -88,6 +89,9 @@
 
     &:before {
         background: var(--dot-even-background);
+        height: calc(100% - 2px);
+        width: calc(100% - 2px);
+        position: absolute;
     }
 
     &.kenopromax,
@@ -151,10 +155,14 @@
     background: var(--dot-odd-border);
     box-shadow: var(--dot-odd-shadow);
     color: var(--dot-odd-text-color);
-
+    position: relative;
     &:before {
         background: var(--dot-odd-background);
+        height: calc(100% - 2px);
+        width: calc(100% - 2px);
+        position: absolute;
     }
+
 
     &.kenopromax,
     &.kenomatch1,

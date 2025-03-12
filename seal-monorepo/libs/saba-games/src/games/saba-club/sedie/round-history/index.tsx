@@ -35,13 +35,15 @@ export default class SeDieRoundHistory extends ObserverComponent<ISeDieRoundHist
         const t = (key) => gc.Translator.translate(key, { languageId: gc.Translator.getCurrentLanguageId() });
         
         return (
-            <div className={Styles['round-history']}>
-                <div className={Styles['hstack-round']}>
-                    {t('Common.previous_round')}:
+                <div className={Styles['round-history']}>
+                    <div className={Styles['hstack-round']}>
+                    <span className={`${Styles['hstack-box']} ${Styles['live']}`}><span className={Styles['hstack-live-icon']}></span></span>
+                    <span className={Styles['hstack-box']}><span className={Styles['hstack-history-icon']}></span></span>
+                    <span className={Styles['hstack-text']}>{t('Common.previous_round')}:</span>
                     {roundHistories.toReversed().map((roundHistory) => {
                         return this.RoundHistoryItem(roundHistory);
                     })}
-                    <RoundDot highlight={true} size='large' value={'?'} />
+                    <RoundDot highlight={true}  value={'?'} />
                 </div>
             </div>
         );
@@ -59,7 +61,7 @@ export default class SeDieRoundHistory extends ObserverComponent<ISeDieRoundHist
 
         return (
             <div className={Styles['hstack']} key={roundHistory.roundId}>
-                <RoundDot choice={isOdd ? SeDieChoices.odd : SeDieChoices.even} size='large' value={dotValue} />
+                <RoundDot choice={isOdd ? SeDieChoices.odd : SeDieChoices.even} value={dotValue} />
                 <span className={Styles['arrow']}></span>
             </div>
         );

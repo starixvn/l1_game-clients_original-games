@@ -24,9 +24,8 @@
 
 .bets-bg {
     background-color: var(--c-av-odds-in-play-bg);
-    border-width: var(--c-av-odds-button-border-width);
-    border-color: var(--c-av-odds-button-border);
     border-radius: var(--c-av-border-radius);
+    height: 2rem;
 }
 
 .padding-bet {
@@ -46,19 +45,19 @@
 .bet-options-container-left {
     display: flex;  
     width: 25%;
-    padding: 6px;
+    padding: 6px 4px;
     border-left: 1px solid var(--c-av-theme-border-1);
     border-right: 1px solid var(--c-av-theme-border-1);
     flex-direction: column;
-    gap: .2rem;
+    gap: 4px;
 }
 
 .bet-options-container-right {
     display: grid;
     width: 75%;
     grid-template-columns: repeat(3, 1fr);
-    padding: 6px;
-    gap: .2rem;
+    padding: 6px 4px;
+    gap: 4px;
 }
 
 .arrow {
@@ -77,6 +76,36 @@
     align-items: center;
     gap: 4px;
     margin-top: 0;
+    font-family: "SFDisplay";
+    font-size: 0.8125rem;
+    .hstack-text {
+        padding: 0 1.5rem 0 0.625rem;
+    }
+    .hstack-box {
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 3px;
+        border: 1px solid #D8D0CE;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        margin-left: 0.185rem;
+        &.live {
+            background-color: #FFF6F3;
+            margin-left: 0.625rem;
+        }
+    }
+    .hstack-live-icon {
+        background: url("../../../assets/round-history/icon-live.svg") no-repeat;
+        height: 11px;
+        width: 10px;
+    }
+    .hstack-history-icon {
+        background: url("../../../assets/round-history/icon-history.svg") no-repeat;
+        height: 16px;
+        width: 15px;
+    }
 }
 
 .hstack {
@@ -84,5 +113,6 @@
     align-self: stretch;
     flex-direction: row;
     align-items: center;
-    gap: .25rem;
+    gap: .5rem;
+    margin-right: 3px;
 }
