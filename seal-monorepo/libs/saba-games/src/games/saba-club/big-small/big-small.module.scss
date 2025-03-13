@@ -1,12 +1,18 @@
 
 .block-wrapper {
     .result {
-        width: 50%;
+        width: 40%;
         border-right: none;
+        @media screen and (min-width: 1102px) {
+            width: 50%;
+        }
     }
 
     .info {
-        width: 20%;
+        width: 30%;
+        @media screen and (min-width: 1102px) {
+            width: 20%;
+        }
     }
 
     .bet-options {

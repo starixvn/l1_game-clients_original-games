@@ -6,9 +6,9 @@
     --scoreboard-header-bg: #2D4976;
 }
 
-[data-darkmode="true"]:root{ 
-    --scoreboard-content-bg: var(--c-av-lv1-theme-bg-2);
-    --scoreboard-header-bg: var(--c-av-primary-color);
+[data-theme^="dark"]:root, [data-darkmode="true"]:root {
+        --scoreboard-content-bg: var(--c-av-lv1-theme-bg-2);
+        --scoreboard-header-bg: var(--c-av-primary-color);
 }
 
 html,
