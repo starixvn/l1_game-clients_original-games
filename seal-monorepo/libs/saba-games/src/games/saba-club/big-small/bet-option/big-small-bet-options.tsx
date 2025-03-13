@@ -22,12 +22,6 @@ interface BetOptionProps {
 @observer(setting.mainObserverNamespace)
 export default class BigSmallBetOptions  extends BetOptions {
 
-    //TODO: Handle when is Disabled bet
-    // private isDisabled(): boolean {
-    //     const { roundState } = this.props;
-    //     return roundState === ROUND_STATE.SHOW_RESULT || roundState === ROUND_STATE.LOCKING_BET;
-    // }
-
     private readonly mainChoices = [
         {
             name: `${gc.Translator.t(`UnbalancedBigSmall4.big`)} [11 - 18]`,
@@ -80,7 +74,6 @@ export default class BigSmallBetOptions  extends BetOptions {
         const odds = boostedOdds?.values || roundOdds?.odds;
         const boostedChoices = boostedOdds?.boostedChoices || roundOdds?.boostedChoices;
         const fractional = roundOdds?.fractional;
-        // const isDisabled = this.isDisabled();
 
         return (
             <div className={`${Styles["bet-options-wrapper"]}`}>

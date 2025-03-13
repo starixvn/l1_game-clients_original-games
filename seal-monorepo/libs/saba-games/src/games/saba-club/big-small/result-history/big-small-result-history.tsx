@@ -50,7 +50,7 @@ export default class BigSmallResultHistory extends ObserverComponent<IPropsObser
     renderRoundResult(roundHistory: gc.RoundHistories.RoundHistory, index: number) {
         return (
             <div className={Styles["result-item"]} key={index}>
-                <div>{`No.${roundHistory.roundId}`}</div>
+                <RoundTitle roundId={roundHistory.roundId} />
                 <div className={Styles["dice-result"]}>
                     <div className={Styles["item-dot"]}>{this.renderDices(roundHistory)}</div>
                     {this.renderTotalDice(roundHistory)}
@@ -66,10 +66,11 @@ export default class BigSmallResultHistory extends ObserverComponent<IPropsObser
             return <></>;
         }
         const roundHistories = rounds as gc.RoundHistories.RoundHistory[];
+        const resultTitle = gc.Translator.translate('Common.result_title');
 
         return (
             <div className={Styles["result-history"]}>
-                <div className={Styles["result-title"]}>Result</div>
+                <div className={Styles["result-title"]}>{resultTitle}</div>
 
                 <div className={Styles["result-content"]}>
                     {roundHistories.map((roundHistory, index) => {
@@ -80,3 +81,7 @@ export default class BigSmallResultHistory extends ObserverComponent<IPropsObser
         );
     }
 }
+
+export const RoundTitle: React.FC<{ roundId: number }> = (({ roundId }) => (
+    <div>{`${gc.Translator.translate('Common.result_no')} ${roundId}`}</div>
+));

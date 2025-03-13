@@ -32,17 +32,13 @@ $spacing-large: 10px;
   border-radius: $border-radius $border-radius 0 0;
   background-color: var(--c-av-primary-color);
   color: var(--c-av-white);
+  gap: 24px;
 
   .left-percentage {
     flex: 1;
     text-align: right;
     color: $text-color;
     @include text-base;
-  }
-
-  .split-percentage {
-    margin: 0 $spacing-large;
-    text-align: center;
   }
 
   .right-percentage {

@@ -88,9 +88,11 @@ export default class BigSmallScoreBoard extends ObserverComponent<Props, IBigSma
             negativeItemContent: "dot-small",
         };
 
+        const scoreboardText = gc.Translator.t('Common.scoreboard')
+
         return (
             <div className={Styles["scoreboard"]}>
-                <div className={Styles["scoreboard-title"]}>Big Small Scoreboard</div>
+                <div className={Styles["scoreboard-title"]}>{scoreboardText}</div>
                 {<BetPercentages gameName={this.props.gameName} scoreboardCharacter={scoreboardCharacter} settlements={settlements} />}
 
                 <div className={Styles["scoreboard-content"]} ref={this.scrollDivRef}>

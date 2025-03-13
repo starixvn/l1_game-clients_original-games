@@ -33,7 +33,6 @@ const BetPercentages: React.FunctionComponent<Props> = ({ gameName, settlements,
             <div className={Styles['left-percentage']}>{`${translateBetOption(
                 scoreboardCharacter.positiveItemContent,
             )} ${positiveItemContentPercentage}%`}</div>
-            <div className={Styles['split-percentage']}>|</div>
             <div className={Styles['right-percentage']}>{`${translateBetOption(
                 scoreboardCharacter.negativeItemContent,
             )} ${negativeItemContentPercentage}%`}</div>
