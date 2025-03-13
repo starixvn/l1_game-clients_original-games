@@ -22,9 +22,7 @@ COPY . .
 WORKDIR /app/seal-monorepo
 RUN yarn install && \
     nx reset && \
-    cross-env NODE_ENV=development nx build saba-games --configuration=development && \
-    mkdir -p dist/libs/saba-games/static/images/cards && \
-    cp -r libs/saba-games/public/static/images/cards/* dist/libs/saba-games/static/images/cards/
+    cross-env NODE_ENV=development nx build saba-games --configuration=development
 
 # Production stage
 FROM hub.lumigame.com/base/nginx:1.22-alpine-slim 
