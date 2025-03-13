@@ -1,5 +1,5 @@
 import { Converter } from "sc-scoreboards";
-import { BaccaratSettlementResult, BaccaratWinner } from "../../type";
+import { BaccaratSettlementResult, BaccaratWinner } from "../type";
 
 interface BigRoadCell {
     winner: BaccaratWinner;

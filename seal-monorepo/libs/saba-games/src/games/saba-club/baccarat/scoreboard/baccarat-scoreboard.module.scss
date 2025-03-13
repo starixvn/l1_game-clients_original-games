@@ -1,4 +1,4 @@
-@import '../../styles/_overrides';
+@import '../styles/_overrides';
 
 .variables {
     --cell-size: 32px;
@@ -28,7 +28,6 @@
     &-title {
         font-weight: bold;
         color: var(--title-color);
-        margin-bottom: 16px;
     }
 
     &-percentage {

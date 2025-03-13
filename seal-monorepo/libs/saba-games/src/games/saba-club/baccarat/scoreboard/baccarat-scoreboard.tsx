@@ -2,17 +2,11 @@ import React from 'react';
 import * as gc from "@sg/sg-game-client";
 import { render } from "@sg/sg-observer";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
-import styles from './baccarat-scoreboards.module.scss';
+import styles from './baccarat-scoreboard.module.scss';
 import { BaccaratBetPercentages } from '../baccarat-bet-percentages';
-import {
-    DEFAULT_CONFIG,
-    GridCell,
-    organizeDataForBigRoad,
-    getSettlementResult
-} from './baccarat-big-road-patterns';
-import { RoundHistoryTestData } from '../baccarat-anim/constants';
-
-interface IBaccaratBigRoadState extends IStateObserver {
+import { GridCell, organizeDataForBigRoad, getSettlementResult } from './baccarat-big-road-patterns';
+import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
+interface IBaccaratScoreboardState extends IStateObserver {
     gridData: (GridCell | null)[][];
     rounds: gc.RoundHistories.RoundHistory[];
     roundState: string;
@@ -28,20 +22,22 @@ interface ExtendedGridCell extends GridCell {
     ties: number;
 }
 
-export class BaccaratBigRoad extends ObserverComponent<Props, IBaccaratBigRoadState> {
+export class BaccaratScoreboard extends ObserverComponent<Props, IBaccaratScoreboardState> {
     private scrollDivRef = React.createRef<HTMLDivElement>();
+    private readonly DEFAULT_MAX_ROWS = 6;
 
     constructor(props: Props) {
         super(props);
         this.state = {
             gridData: [],
             rounds: [],
-            roundState: '',
+            roundState: ROUND_STATE.NONE,
             dispose: () => { }
         };
     }
 
-    componentDidUpdate(prevProps: Props, prevState: IBaccaratBigRoadState) {
+
+    componentDidUpdate(prevProps: Props, prevState: IBaccaratScoreboardState) {
         if (prevState.rounds !== this.state.rounds) {
             this.processRounds(this.state.rounds);
             this.scrollToRight();
@@ -56,7 +52,7 @@ export class BaccaratBigRoad extends ObserverComponent<Props, IBaccaratBigRoadSt
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     private onRoundHistoryUpdate(rounds: gc.RoundHistories.RoundHistory[]) {
-        this.setState({ rounds: RoundHistoryTestData });
+        this.setState({ rounds });
     }
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
@@ -72,8 +68,6 @@ export class BaccaratBigRoad extends ObserverComponent<Props, IBaccaratBigRoadSt
         if (cell.isBlink) {
             return '/static/images/baccarat/scoreboard/big-road/Rectangle 9391.png';
         }
-
-        // Regular player or banker win (base circle)
         return `/static/images/baccarat/scoreboard/big-road/${cell.status ? 'player' : 'banker'}.png`;
     };
 
@@ -98,13 +92,13 @@ export class BaccaratBigRoad extends ObserverComponent<Props, IBaccaratBigRoadSt
 
     private processRounds = (rounds: gc.RoundHistories.RoundHistory[]) => {
         if (!rounds?.length) return;
-        const maxRows = this.props.maxRows || DEFAULT_CONFIG.maxRows;
+        const maxRows = this.props.maxRows || this.DEFAULT_MAX_ROWS;
         const gridData = organizeDataForBigRoad(rounds, maxRows, this.state.roundState, getSettlementResult);
         this.setState({ gridData });
     };
 
     render(): React.ReactElement {
-        const { noRender, gameName, maxRows = DEFAULT_CONFIG.maxRows } = this.props;
+        const { noRender, gameName, maxRows = this.DEFAULT_MAX_ROWS } = this.props;
         const { gridData, rounds } = this.state;
 
         if (noRender || !rounds?.length) {

@@ -1,11 +1,10 @@
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
 import Styles from "./baccarat-statistics.module.scss";
 import { BaccaratResultHistory } from "../result-history";
-import { BaccaratBigRoad } from "../scoreboard/baccarat-big-road";
 import { render } from "@sg/sg-observer";
 import * as gc from "@sg/sg-game-client";
 import { Fragment } from "react";
-import { BaccaratScoreboard } from "../scoreboard/ver1/baccarat-scoreboard";
+import { BaccaratScoreboard } from "../scoreboard/baccarat-scoreboard";
 
 type Props = IPropsObserver & {
     gameName: string;
