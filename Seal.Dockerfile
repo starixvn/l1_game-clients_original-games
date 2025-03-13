@@ -1,5 +1,5 @@
 # Build stage
-FROM hub.lumigame.com/base/node:20.9.0-alpine-24h1.1 AS base
+FROM hub.lumigame.com/base/node:20.9.0-alpine-24h1.1 AS builder
 
 # Set working directory
 WORKDIR /app
@@ -27,7 +27,7 @@ RUN yarn install && \
     cp -r libs/saba-games/public/static/images/cards/* dist/libs/saba-games/static/images/cards/
 
 # Production stage
-FROM nginx:alpine
+FROM hub.lumigame.com/base/nginx:1.22-alpine-slim 
 
 # Copy the build output to the Nginx directory
 COPY --from=builder /app/seal-monorepo/dist/libs/saba-games /usr/share/nginx/html
