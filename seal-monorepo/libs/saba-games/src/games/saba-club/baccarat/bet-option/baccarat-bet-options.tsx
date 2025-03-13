@@ -37,22 +37,18 @@ export default class BaccaratBetOptions extends BetOptions {
 
     constructor(props: IBaccaratBetOptionsProps) {
         super(props);
-        console.log('[BaccaratBetOptions] Initializing with props:', props);
     }
 
     componentDidMount() {
         super.componentDidMount();
-        console.log('[BaccaratBetOptions] Component mounted');
     }
 
     private setPanelId = (id: string) => {
-        console.log('[BaccaratBetOptions] Setting panel ID:', { current: this.activePanelId, new: id });
         this.activePanelId = id;
         this.forceUpdate();
     };
 
     private setShowPanel = (show: boolean) => {
-        console.log('[BaccaratBetOptions] Setting show panel:', { current: this.showPanel, new: show });
         this.showPanel = show;
         this.forceUpdate();
     };
@@ -60,7 +56,6 @@ export default class BaccaratBetOptions extends BetOptions {
     private isDisabled(): boolean {
         const { roundState } = this.props;
         const disabled = roundState === ROUND_STATE.SHOW_RESULT || roundState === ROUND_STATE.LOCKING_BET;
-        console.log('[BaccaratBetOptions] Checking disabled state:', { roundState, disabled });
         return disabled;
     }
 
@@ -81,7 +76,6 @@ export default class BaccaratBetOptions extends BetOptions {
 
     private renderBetOption(props: BetOptionProps) {
         const { odd, betChoice } = props;
-        console.log('[BaccaratBetOptions] Rendering bet option:', { betChoice, odd });
         return (
             <BettingBlock
                 odd={odd}
@@ -114,14 +108,6 @@ export default class BaccaratBetOptions extends BetOptions {
         const boostedChoices = roundOdds?.boostedChoices;
         const fractional = roundOdds?.fractional;
         const isDisabled = this.isDisabled();
-
-        console.log('[BaccaratBetOptions] Rendering with state:', {
-            activePanelId: this.activePanelId,
-            showPanel: this.showPanel,
-            odds,
-            boostedChoices,
-            isDisabled
-        });
 
         return (
             <GameBettingOptionsContext.Provider

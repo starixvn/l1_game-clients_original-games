@@ -24,9 +24,6 @@ const App = isDevelopment ? Preview : SabaGamesGroup;
 // Pass empty props in both development and production modes
 const props = {};
 
-console.log('Environment:', process.env.NODE_ENV);
-console.log('Props:', props);
-
 root.render(
     <ErrorBoundary FallbackComponent={ErrorFallback}>
         <App {...props} />

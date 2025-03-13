@@ -5,8 +5,7 @@ import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../.
 import styles from './baccarat-scoreboard.module.scss';
 import { BaccaratBetPercentages } from '../../baccarat-bet-percentages';
 import { GridCell, organizeDataForBigRoad, getSettlementResult } from '../baccarat-big-road-patterns';
-import { RoundHistoryTestData } from '../../baccarat-anim/constants';
-
+import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
 interface IBaccaratScoreboardState extends IStateObserver {
     gridData: (GridCell | null)[][];
     rounds: gc.RoundHistories.RoundHistory[];
@@ -31,17 +30,12 @@ export class BaccaratScoreboard extends ObserverComponent<Props, IBaccaratScoreb
         super(props);
         this.state = {
             gridData: [],
-            rounds: props.gameName === 'baccarat-demo' ? RoundHistoryTestData : [],
-            roundState: 'BETTING',
+            rounds: [],
+            roundState: ROUND_STATE.NONE,
             dispose: () => { }
         };
     }
 
-    componentDidMount(): void {
-        if (this.props.gameName === 'baccarat-demo') {
-            this.processRounds(this.state.rounds);
-        }
-    }
 
     componentDidUpdate(prevProps: Props, prevState: IBaccaratScoreboardState) {
         if (prevState.rounds !== this.state.rounds) {
@@ -58,7 +52,7 @@ export class BaccaratScoreboard extends ObserverComponent<Props, IBaccaratScoreb
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     private onRoundHistoryUpdate(rounds: gc.RoundHistories.RoundHistory[]) {
-        this.setState({ rounds: RoundHistoryTestData });
+        this.setState({ rounds });
     }
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)

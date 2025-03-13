@@ -14,7 +14,6 @@ interface BaccaratHeaderProps {
 }
 
 const BaccaratHeader: React.FC<BaccaratHeaderProps> = ({ gameId, isExpanded, handleToggle: onToggleExpand, centerTextsComponent }) => {
-    console.log('BaccaratHeader', gameId, isExpanded, onToggleExpand, centerTextsComponent);
     return (
         <div className={classNames(styles.header, 'baccarat-header')}>
             <GameHeader

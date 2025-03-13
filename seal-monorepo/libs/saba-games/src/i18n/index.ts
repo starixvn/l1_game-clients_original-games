@@ -28,11 +28,11 @@ export const loadI18n = (propLanguageId: string) => {
                 return languages[languageId];
             },
             availableLanguages: languageIds,
-            onLoaded: () => {},
+            onLoaded: () => { },
         };
 
         gc.Translator.init(translationOptions);
     } catch (e) {
-        console.log(e);
+        // Error handling silently
     }
 };

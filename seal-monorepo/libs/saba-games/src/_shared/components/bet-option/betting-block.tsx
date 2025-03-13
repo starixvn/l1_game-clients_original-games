@@ -70,24 +70,13 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
             const { betChoice, odd } = this.props;
             const { isAuthorized } = this.state;
 
-            console.log('[BettingBlock] Click handler:', {
-                betChoice,
-                odd,
-                isAuthorized,
-                currentPanelId: panelId,
-                show
-            });
-
             if (!isAuthorized) {
-                console.log('[BettingBlock] Not authorized, creating nickname');
                 this.autoCreateNickname();
             }
 
             if (panelId !== betChoice) {
-                console.log('[BettingBlock] Opening panel for:', betChoice);
                 setPanelId(betChoice);
             } else {
-                console.log('[BettingBlock] Closing panel');
                 setPanelId(null);
             }
 
