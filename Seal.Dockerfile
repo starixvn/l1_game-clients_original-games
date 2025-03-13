@@ -1,5 +1,5 @@
 # Build stage
-FROM node:18-alpine AS builder
+FROM hub.lumigame.com/base/node:20.9.0-alpine-24h1.1 AS base
 
 # Set working directory
 WORKDIR /app
