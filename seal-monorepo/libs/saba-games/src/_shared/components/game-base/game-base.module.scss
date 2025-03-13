@@ -157,3 +157,16 @@
     max-width: 15rem;
     justify-items: self-end;
 }
+
+.reconnect-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.reconnect-btn {
+    padding: 10px 20px;
+}

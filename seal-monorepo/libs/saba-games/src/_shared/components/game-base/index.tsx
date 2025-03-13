@@ -32,6 +32,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         super(props);
         this.state = { isConnectFailed: false, isOpenStatistic: false } as S;
         this.toggleStatistic = this.toggleStatistic.bind(this);
+        this.handleReconnect = this.handleReconnect.bind(this);
     }
 
     componentDidMount() {
@@ -51,7 +52,6 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     abstract closeConnect(): void;
 
     onVisibilityChange = () => { };
-
     @handle(gc.Connection.ConnectionHandlers.ConnectHandler)
     connectToService() { }
 
@@ -180,7 +180,6 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
             return showDisabledPopup ? this.renderNotice() : this.renderLoading();
         }
 
-
         return !isConnected ? (
             this.renderDisconnect()
         ) : (
@@ -222,10 +221,25 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         );
     }
 
+    handleReconnect = () => {
+        this.handleConnected(true);
+    }
+
     private renderDisconnect() {
+        const reconnectText = gc.Translator.translate('Common.reconnect');
         return (
             <div className={`${Styles['block-wrapper']} ${this.props.overrideClasses}`}>
-                <p>{gc.Translator.t('Common.connect_failed')}</p>
+                {/* <p>{gc.Translator.t('Common.connect_failed')}</p> */}
+                <div className={Styles['reconnect-btn-container']}>
+                    <button
+                        className={`${'c-btn'} ${'c-btn--bet'} ${Styles['reconnect-btn']}`}
+                        data-disabled={false}
+                        aria-hidden='true'
+                        onClick={this.handleReconnect}
+                    >
+                        <span className='c-text'>{reconnectText}</span>
+                    </button>
+                </div>
             </div>
         );
     }
