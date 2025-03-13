@@ -10,9 +10,9 @@ import GameContainer from '../game-container';
 import Loading from '../loading';
 import Notice from '../notices/notice';
 import Warning from '../notices/warning';
-import StatisticButton from '../statistic-button/statistic-button';
 import Styles from './game-base.module.scss';
 import { GameBaseProps } from './type';
+import StatisticButton from '../statistic-button/statistic-button';
 
 export interface IGameBaseState {
     isConnected: boolean;
@@ -32,7 +32,6 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         super(props);
         this.state = { isConnectFailed: false, isOpenStatistic: false } as S;
         this.toggleStatistic = this.toggleStatistic.bind(this);
-        this.handleReconnect = this.handleReconnect.bind(this);
     }
 
     componentDidMount() {
@@ -52,7 +51,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     abstract closeConnect(): void;
 
     onVisibilityChange = () => { };
-    @handle(gc.Connection.ConnectionHandlers.ConnectHandler)
+    @handle(gc.Connection.ConnectionHandlers.ConnectHandler, (handler) => handler.handleGateway())
     connectToService() { }
 
     @render(gc.Connection.ConnectionStore, (store) => store.isSignedIn)
@@ -222,7 +221,8 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     handleReconnect = () => {
-        this.handleConnected(true);
+        document.addEventListener('visibilitychange', this.onVisibilityChange);
+        this.connectToService();
     }
 
     private renderDisconnect() {
