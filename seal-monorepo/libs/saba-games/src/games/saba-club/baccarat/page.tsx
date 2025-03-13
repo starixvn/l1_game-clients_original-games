@@ -71,7 +71,10 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratSt
     }
 
     renderRoundIdSection() {
-        return <RoundId namespace={this.props.namespace} language={gc.Translator.getCurrentLanguageId()} />;
+        return <RoundId
+            namespace={this.props.namespace}
+            language={this.props.language}
+        />;
     }
 
     renderCountDownTimer() {
@@ -83,7 +86,7 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratSt
             namespace={this.props.namespace}
             previousWinningBet={this.state.previousWinningBet}
             roundState={this.state.roundState}
-            language={gc.Translator.getCurrentLanguageId()}
+            language={this.props.language}
             gameName={setting.gameName}
         />;
     }
@@ -93,7 +96,11 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratSt
     }
 
     renderStatistic() {
-        return <BaccaratStatistic namespace={this.props.namespace} gameName={setting.gameName} />;
+        return <BaccaratStatistic
+            namespace={this.props.namespace}
+            gameName={setting.gameName}
+            language={this.props.language}
+        />;
     }
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)

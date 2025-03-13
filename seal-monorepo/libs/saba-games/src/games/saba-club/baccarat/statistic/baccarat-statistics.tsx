@@ -8,6 +8,7 @@ import { BaccaratScoreboard } from "../scoreboard/baccarat-scoreboard";
 
 type Props = IPropsObserver & {
     gameName: string;
+    language: string;
 };
 
 export interface IBaccaratStatisticState extends IStateObserver {
