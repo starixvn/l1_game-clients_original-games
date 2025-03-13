@@ -42,16 +42,7 @@ class LobbyComponent extends React.PureComponent<any, ILobbyState> {
 
     async componentDidMount() {
         const { token } = this.props;
-        const searchParams = new URLSearchParams(window.location.search);
-
-        // Check if token is in query params
-        const queryToken = searchParams.get('token');
-        
-        if (queryToken) {
-            this.sso({ token: queryToken });
-        } else {
-            this.sso({ token });
-        }
+        this.sso({ token });
     }
 
     @handle(gc.Auth.AuthHandlers.SSO)

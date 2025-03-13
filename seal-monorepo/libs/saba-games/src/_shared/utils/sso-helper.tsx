@@ -8,18 +8,22 @@ const appSettings = getEnvironmentConfig({
 
 const systemType = appSettings.systemType;
 
-export const requestSSO = async (gameId = 0) => {
-    const randomIntFromInterval = (min: number, max: number) => {
-        // min and max included
-        return Math.floor(Math.random() * (max - min + 1) + min);
-    };
+const randomIntFromInterval = (min: number, max: number) => {
+    // min and max included
+    return Math.floor(Math.random() * (max - min + 1) + min);
+};
 
-    const playerId = randomIntFromInterval(1000000, 9999999);
+export const requestSSO = async (gameId = 0) => {
+
+    const searchParams = new URLSearchParams(window.location.search);
+    const playerId = Number(searchParams.get('playerId')) || randomIntFromInterval(1000000, 9999999);
+    const currency = searchParams.get('currency');
+
     const appType = 6;
     const playerBalance = 10000;
 
     //temp hard code to get token
-    const currency = systemType === 'SG' ? '$US' : 'INH';
+    const currencyDefault = systemType === 'SG' ? '$US' : 'INH';
     const operatorId = appSettings.simulatorConfigs.operatorId;
     const operatorSecret = appSettings.simulatorConfigs.operatorSecret;
     const operatorToken = appSettings.simulatorConfigs.operatorToken;
@@ -28,7 +32,7 @@ export const requestSSO = async (gameId = 0) => {
         playerId: `${playerId}`,
         playerName: `username_${playerId}`,
         language: 'vi-VN',
-        currency,
+        currency: currency || currencyDefault,
         seq: 'd,y,lumi',
         siteId: '4100300',
         siteName: 'lumi',
@@ -87,3 +91,4 @@ const createCustomer = async (playerId: number, operator: string, siteId: string
         )}&operator=${operator}&systemType=${systemType}&siteId=${siteId}`,
     );
 };
+
