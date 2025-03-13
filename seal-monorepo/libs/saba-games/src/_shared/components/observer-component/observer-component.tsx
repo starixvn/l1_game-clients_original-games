@@ -3,6 +3,7 @@ import React from 'react';
 
 export interface IPropsObserver {
     namespace: string;
+    language?: string;
 }
 export interface IStateObserver {
     dispose: (() => void) | null;

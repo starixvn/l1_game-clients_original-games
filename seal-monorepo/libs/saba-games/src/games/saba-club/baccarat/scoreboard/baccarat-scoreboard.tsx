@@ -16,6 +16,7 @@ interface Props extends IPropsObserver {
     gameName: string;
     maxRows?: number;
     noRender?: boolean;
+    language: string;
 }
 
 interface ExtendedGridCell extends GridCell {
@@ -115,6 +116,7 @@ export class BaccaratScoreboard extends ObserverComponent<Props, IBaccaratScoreb
                             gameName={gameName}
                             settlements={settlements}
                             rounds={rounds}
+                            language={this.props.language}
                         />
                     </div>
                 </div>

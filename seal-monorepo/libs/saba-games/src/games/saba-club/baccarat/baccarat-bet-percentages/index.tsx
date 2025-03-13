@@ -32,6 +32,7 @@ interface Props {
     settlements: any[];
     rounds: gc.RoundHistories.RoundHistory[];
     translator?: (key: string) => string;
+    language?: string;
 }
 
 // Pure function for calculating bet statistics

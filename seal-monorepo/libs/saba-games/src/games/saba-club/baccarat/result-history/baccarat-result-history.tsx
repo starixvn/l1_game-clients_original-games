@@ -6,14 +6,18 @@ import { BaccaratSettlementResult } from "../type";
 import { ResultCardSection } from "./result-card-section";
 import { Result } from "../baccarat";
 
+export interface IBaccaratResultHistoryProps extends IPropsObserver {
+    language: string;
+}
+
 export interface IBaccaratResultHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
 }
 
 const numberOfResult = 102;
 
-export class BaccaratResultHistory extends ObserverComponent<IPropsObserver, IBaccaratResultHistoryState> {
-    constructor(props: IPropsObserver) {
+export class BaccaratResultHistory extends ObserverComponent<IBaccaratResultHistoryProps, IBaccaratResultHistoryState> {
+    constructor(props: IBaccaratResultHistoryProps) {
         super(props);
     }
 
@@ -77,6 +81,8 @@ export class BaccaratResultHistory extends ObserverComponent<IPropsObserver, IBa
 
     render() {
         const { rounds } = this.state;
+        const { language } = this.props;
+
         if (!rounds || rounds.length === 0) {
             return <div />;
         }

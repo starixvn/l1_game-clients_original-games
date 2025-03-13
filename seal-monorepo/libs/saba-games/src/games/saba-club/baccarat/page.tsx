@@ -67,7 +67,10 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratSt
     // }
 
     renderRoundHistory() {
-        return <BaccaratRoundHistory namespace={this.props.namespace} />;
+        return <BaccaratRoundHistory
+            namespace={this.props.namespace}
+            language={this.props.language}
+        />;
     }
 
     renderRoundIdSection() {
