@@ -15,3 +15,4 @@ export const BACCARAT_CHOICES = {
     PLAYER_PAIR: 'playerPair',
     BANKER_PAIR: 'bankerPair',
 };
+

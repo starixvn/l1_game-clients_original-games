@@ -280,7 +280,10 @@
         "beadboard_B": "B",
         "beadboard_T": "T",
         "glossary_B": "Banker",
-        "glossary_P": "Player"
+        "glossary_P": "Player",
+        "banker_player": "Banker/Player",
+        "banker_player_pair": "P.Pair/B.Pair",
+        "tie": "Tie"
     },
     "UnbalancedBigSmall4": {
         "game_vendor": "SABA.games",
