@@ -41,3 +41,4 @@ const BetPercentages: React.FunctionComponent<Props> = ({ gameName, settlements,
 };
 
 export { BetPercentages };
+

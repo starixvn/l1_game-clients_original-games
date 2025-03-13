@@ -30,9 +30,9 @@ $spacing-large: 10px;
   text-align: center;
   padding: $spacing-base;
   border-radius: $border-radius $border-radius 0 0;
-  background-color: var(--c-av-primary-color);
+  background: var(--scoreboard-header-bg);
   color: var(--c-av-white);
-  gap: 24px;
+  gap: 1.5rem;
 
   .left-percentage {
     flex: 1;

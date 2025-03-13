@@ -15,7 +15,7 @@
         justify-content: space-between; /* Distributes space between items */
         width: 100%; /* Make the parent container full width */
         color: white;
-        background: #274980;
+        background: var(--scoreboard-header-bg);
 
         .odd-percentage {
             flex: 1; /* Allows this to take available space on the left */
@@ -38,7 +38,7 @@
         overflow-y: hidden;
         display: grid;
         //grid-gap: 0.4rem;
-        background: var(--c-av-lv1-theme-bg-2);
+        background: var(--scoreboard-content-bg);
         scrollbar-width: thin; /* Set scrollbar width to thin */
         scrollbar-color: var(--scroll-bar-track) var(--c-av-lv1-theme-bg-2); /* Handle color and track color */
     }
