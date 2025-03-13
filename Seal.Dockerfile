@@ -1,5 +1,5 @@
 # Build stage
-FROM hub.lumigame.com/base/node:20.9.0-alpine-24h1.1 AS builder
+FROM hub.lumigame.com/base/node:18-16-alpine-24h1.1 AS builder
 
 # Set working directory
 WORKDIR /app
@@ -34,8 +34,7 @@ COPY --from=builder /app/seal-monorepo/dist/libs/saba-games /usr/share/nginx/htm
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Create necessary directories and set permissions
-RUN mkdir -p /usr/share/nginx/html/static/images/cards && \
-    chown -R nginx:nginx /usr/share/nginx/html
+RUN chown -R nginx:nginx /usr/share/nginx/html
 
 # Expose the port Nginx is running on
 EXPOSE $PORT
