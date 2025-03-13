@@ -36,7 +36,6 @@ export class BaccaratScoreboard extends ObserverComponent<Props, IBaccaratScoreb
         };
     }
 
-
     componentDidUpdate(prevProps: Props, prevState: IBaccaratScoreboardState) {
         if (prevState.rounds !== this.state.rounds) {
             this.processRounds(this.state.rounds);
@@ -109,7 +108,7 @@ export class BaccaratScoreboard extends ObserverComponent<Props, IBaccaratScoreb
 
         return (
             <div className={styles.scoreboard}>
-                <div className={styles["scoreboard-title"]}>ScoreBoard</div>
+                <div className={styles["scoreboard-title"]}>{gc.Translator.t('Common.scoreboard')}</div>
                 <div className={styles["scoreboard-percentage"]}>
                     <div className={styles["split-percentage"]}>
                         <BaccaratBetPercentages

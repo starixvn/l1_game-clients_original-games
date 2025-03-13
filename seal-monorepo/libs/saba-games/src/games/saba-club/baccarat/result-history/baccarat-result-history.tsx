@@ -68,7 +68,7 @@ export class BaccaratResultHistory extends ObserverComponent<IPropsObserver, IBa
                     <span className={Styles.divider} />
                     <ResultCardSection cards={result?.banker} />
                     <span className={`${Styles.winner} ${Styles[settlement.winner]}`}>
-                        {settlement.winner.charAt(0).toUpperCase() + settlement.winner.slice(1)}
+                        {gc.Translator.t(`Baccarat.glossary_${settlement.winner}`)}
                     </span>
                 </div>
             </div>
@@ -83,13 +83,13 @@ export class BaccaratResultHistory extends ObserverComponent<IPropsObserver, IBa
 
         return (
             <div className={Styles.resultHistoryContainer}>
-                <div className={Styles["result-title"]}>Result</div>
+                <div className={Styles["result-title"]}>{gc.Translator.t('Common.result')}</div>
                 <div className={Styles.resultHistory}>
                     <div className={Styles.header}>
-                        <span>Round</span>
-                        <span>Player</span>
+                        <span>{gc.Translator.t('Common.round')}</span>
+                        <span>{gc.Translator.t('Baccarat.glossary_player')}</span>
                         <span className={Styles.divider} />
-                        <span>Banker</span>
+                        <span>{gc.Translator.t('Baccarat.glossary_banker')}</span>
                         <span></span>
                     </div>
                     <div className={Styles.historyContent}>

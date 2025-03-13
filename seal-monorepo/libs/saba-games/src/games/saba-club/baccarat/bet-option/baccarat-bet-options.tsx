@@ -1,13 +1,10 @@
-import React from 'react';
 import { observer } from '@sg/sg-observer';
 import { setting } from '../game-settings';
 import styles from './baccarat-bet-options.module.scss';
 import { IBaccaratBet } from '../type';
-import BetOptions, { IBetOptionsState } from "../../../../_shared/components/bet-option";
+import BetOptions from "../../../../_shared/components/bet-option";
 import BettingBlock from "../../../../_shared/components/bet-option/betting-block";
 import Odds from "../../../../_shared/components/bet-option/odd-component";
-import OwnBet from "../../../../_shared/components/bet-option/own-bet";
-import TotalBet from "../../../../_shared/components/bet-option/total-bet";
 import { IPropsObserver } from "../../../../_shared/components/observer-component/observer-component";
 import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
 import * as gc from "@sg/sg-game-client";
