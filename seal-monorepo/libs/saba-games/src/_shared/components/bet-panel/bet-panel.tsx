@@ -1,20 +1,20 @@
 import * as gc from '@sg/sg-game-client';
 import { RoundStore } from '@sg/sg-game-client/dist/game/rounds';
 import { handle, render } from '@sg/sg-observer';
+import classNames from 'classnames';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { IPropsObserver, IStateObserver, ObserverComponent } from '../observer-component/observer-component';
-import { useGameBettingOptionsContext, useGameBettingZoneContext } from '../../react-contexts/game-betting-zone-context/game-betting-zone-context';
-import './bet-panel.scss';
-import { RoundDot } from '../dot';
+import { BACCARAT_GAME_NAMESPACE, SABA_GAMES, SE_DIE_GAME_NAMESPACE, UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE, VGAMING, VIP_SE_DIE_GAME_NAMESPACE, VIVA88_SITE_ID } from '../../../../constant/app';
+import { useAppContext } from '../../../appProvider';
+import { BACCARAT_CHOICES, SE_DIE_CHOICES } from '../../../games/constants/saba-club';
 import { ChoiceSeDieIconMapper, SeDieChoices } from '../../../games/saba-club/sedie/type';
+import { useGameBettingOptionsContext, useGameBettingZoneContext } from '../../react-contexts/game-betting-zone-context/game-betting-zone-context';
+import { checkValidAmount, parseInputValue, WarnMsgType } from '../../utils/betting-util';
 import { getChoicesType } from '../../utils/choice-type';
 import BettingChips from '../betting-chips';
-import { checkValidAmount, parseInputValue, WarnMsgType } from '../../utils/betting-util';
-import classNames from 'classnames';
-import { BACCARAT_CHOICES, SE_DIE_CHOICES } from '../../../games/constants/saba-club';
-import { useAppContext } from '../../../appProvider';
-import { SABA_GAMES, SE_DIE_GAME_NAMESPACE, UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE, VGAMING, VIP_SE_DIE_GAME_NAMESPACE, VIVA88_SITE_ID, BACCARAT_GAME_ID, BACCARAT_GAME_NAMESPACE } from '../../../../constant/app';
 import Dice from '../dice';
+import { RoundDot } from '../dot';
+import { IPropsObserver, IStateObserver, ObserverComponent } from '../observer-component/observer-component';
+import './bet-panel.scss';
 
 const WARNING_CLOSE_DELAY = 60000;
 
@@ -254,9 +254,10 @@ const BetPanel: React.FC<{
             <div className='c-ticket__header'>
                 <span className='c-text-bettype sg-bet-panel__header-flex'>
                     <div className={classNames('sg-bet-panel__game-icon', gameIconClass)}></div>
-                    <span>
-                        {t(`${namespace}.game_name`)}/ {t(getChoicesType(namespace, betChoice))}
-                    </span>
+                    <div>
+                        <div className='game-name'>{t(`${namespace}.game_name`)}</div>
+                        <div className='bet-option'>{t(getChoicesType(namespace, betChoice))}</div>
+                    </div>
                 </span>
 
                 <a
@@ -311,10 +312,7 @@ const BetPanel: React.FC<{
                         {vendorName}
                     </div>
                     <div className='c-ticket-match-info__row'>
-                        {game}
-                    </div>
-                    <div className='c-ticket-match-info__row'>
-                        {t(`Common.result_no`)} {clientRoundId}
+                        {game}  {t(`Common.result_no`)} {clientRoundId}
                     </div>
                 </div>
             </div>

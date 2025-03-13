@@ -4,11 +4,17 @@
 :root {
     --scoreboard-content-bg: #fff;
     --scoreboard-header-bg: #2D4976;
+    --ticket-info-text: #000;
 }
 
 [data-theme^="dark"]:root, [data-darkmode="true"]:root {
         --scoreboard-content-bg: var(--c-av-lv1-theme-bg-2);
         --scoreboard-header-bg: var(--c-av-primary-color);
+        
+}
+
+[data-theme^="dark"] .c-ticket, [data-darkmode="true"] .c-ticket {
+    --ticket-info-text: var(--c-av-ticket-info-text);
 }
 
 html,

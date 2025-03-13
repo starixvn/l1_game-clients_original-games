@@ -15,6 +15,7 @@
 
     // 籌碼 Betslip
     .c-quick-bet__panel {
+        font-family: "Segoe UI";
         .c-ng-ball-small {
             width: 26px;
             height: 26px;
@@ -23,6 +24,29 @@
                 font-size: 12px;
             }
         }
+    }
+    .c-betslip__content {
+        .c-betting-scroller {
+            height: 320px;
+        }
+        .c-ticket__header  {
+            font-size: 13px;
+            line-height: 15px;
+            .game-name {
+                font-weight: 700;
+            }
+            .bet-option {
+                font-weight: 600;
+            }
+        }
+        .c-ticket__info {
+            color: var(--ticket-info-text);
+            margin-top: 10px !important;
+        }
+        .c-betting-submit .c-btn--bet{
+            background-color: #B6403A;
+        }
+        
     }
     .sg-bet-panel {
         &__text-bold {
