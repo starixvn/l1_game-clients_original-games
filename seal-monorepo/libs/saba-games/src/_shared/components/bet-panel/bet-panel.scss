@@ -65,4 +65,9 @@
         @extend %game-icon-base;
         background-image: url("/static/images/game-icons/big-small.png");
     }
+
+    .baccarat-icon {
+        @extend %game-icon-base;
+        background-image: url("/static/images/game-icons/game-icon-10.png");
+    }
 }

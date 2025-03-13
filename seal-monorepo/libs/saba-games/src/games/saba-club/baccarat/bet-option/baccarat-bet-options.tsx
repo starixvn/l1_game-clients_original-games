@@ -132,7 +132,7 @@ export default class BaccaratBetOptions extends BetOptions {
                     setShow: this.setShowPanel
                 }}
             >
-                <div className={`${styles['bet-options-wrapper']} ${isDisabled ? styles['bet-options-disabled'] : ''}`}>
+                <div className={`${styles['bet-options-wrapper']}`}>
                     <div className={styles['main-bets-container']}>
                         <div className={`${styles['bet-option']} ${previousWinningBet === 'player' ? styles['winning-bet'] : ''}`}>
                             {this.renderBetOption({

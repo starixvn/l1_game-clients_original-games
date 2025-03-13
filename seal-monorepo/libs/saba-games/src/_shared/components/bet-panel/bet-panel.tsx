@@ -11,7 +11,7 @@ import { getChoicesType } from '../../utils/choice-type';
 import BettingChips from '../betting-chips';
 import { checkValidAmount, parseInputValue, WarnMsgType } from '../../utils/betting-util';
 import classNames from 'classnames';
-import { SE_DIE_CHOICES } from '../../../games/constants/saba-club';
+import { BACCARAT_CHOICES, SE_DIE_CHOICES } from '../../../games/constants/saba-club';
 import { useAppContext } from '../../../appProvider';
 import { SABA_GAMES, SE_DIE_GAME_NAMESPACE, UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE, VGAMING, VIP_SE_DIE_GAME_NAMESPACE, VIVA88_SITE_ID, BACCARAT_GAME_ID, BACCARAT_GAME_NAMESPACE } from '../../../../constant/app';
 import Dice from '../dice';
@@ -22,7 +22,8 @@ const WARNING_CLOSE_DELAY = 60000;
 const GAME_ICON_MAPPING = {
     [SE_DIE_GAME_NAMESPACE]: 'sedie-icon',
     [VIP_SE_DIE_GAME_NAMESPACE]: 'vip-sedie-icon',
-    [UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE]: 'bigsmall-icon'
+    [UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE]: 'bigsmall-icon',
+    [BACCARAT_GAME_NAMESPACE]: 'game-icon-10'
 } as const;
 
 export interface IBetPanel extends IStateObserver {
@@ -248,7 +249,7 @@ const BetPanel: React.FC<{
 
     const renderTicketHeader = () => {
         const gameIconClass = GAME_ICON_MAPPING[namespace] || '';
-        
+
         return (
             <div className='c-ticket__header'>
                 <span className='c-text-bettype sg-bet-panel__header-flex'>
@@ -374,7 +375,7 @@ const BetPanel: React.FC<{
             <div
                 ref={panelRef}
                 className={classNames('c-quick-bet__panel', {
-                    ['sg-bet-panel__left-dec-100']: SE_DIE_CHOICES.RED2 === betChoice
+                    ['sg-bet-panel__left-dec-100']: SE_DIE_CHOICES.RED2 === betChoice || BACCARAT_CHOICES.PLAYER_PAIR === betChoice || BACCARAT_CHOICES.BANKER_PAIR === betChoice
                 })}>
                 <div className='c-betslip'>
                     <div className='c-betslip__content'>
