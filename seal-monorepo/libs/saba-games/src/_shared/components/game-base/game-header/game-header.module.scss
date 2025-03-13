@@ -3,9 +3,42 @@
     display: grid;
     grid-template-columns: 1fr 10rem 30rem;
 
-
     .text-center {
         text-align: center;
+    }
+}
+
+.title-with-icon {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.collapse-btn {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: inherit;
+    width: 24px;
+    color: var(--c-av-oddstable-btn-collapse);
+    position: relative;
+    cursor: pointer;
+}
+
+.collapse-icon {
+    width: 18px;
+    height: 18px;
+    background-image: url("../../../../assets/caret.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: transform 0.3s ease;
+}
+
+[data-theme^="dark"], [data-darkmode="true"] {
+    .collapse-icon {
+        background-image: url("../../../../assets/caret-white.svg");
     }
 }
 
@@ -16,7 +49,7 @@
     .divider {
         border-left: 1px solid #ccc;
         height: 30px;
-        margin-left: 8px;
+        // margin-left: 8px;
     }
 
     .arrow-icon {
@@ -29,10 +62,11 @@
         padding: 0;
         cursor: pointer;
         transition: transform 0.2s ease;
-        transform: rotate(90deg);
+        margin-left:8px;
+        // transform: rotate(90deg);
 
         &.collapsed {
-            transform: rotate(0deg);
+            transform: rotate(-90deg);
         }
     }
 
@@ -45,7 +79,7 @@
         justify-content: center;
         padding: 0;
     }
-} 
+}
 
 .lucky-next-header {
     grid-template-columns: 1fr 10rem 10rem;
@@ -62,44 +96,6 @@
         grid-template-columns: 10rem 1fr 20rem;
     }
 } 
-
-.title-with-icon {
-    display: flex;
-    align-items: center;
-
-    .divider {
-        border-left: 1px solid #ccc;
-        height: 30px;
-        margin-left: 8px;
-    }
-
-    .arrow-icon {
-        object-fit: contain;
-        width: 18px !important;
-        height: 18px !important;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0;
-        cursor: pointer;
-        transition: transform 0.2s ease;
-        transform: rotate(90deg);
-
-        &.collapsed {
-            transform: rotate(0deg);
-        }
-    }
-
-    .game-icon {
-        object-fit: contain;
-        width: 24px !important;
-        height: 24px !important;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0;
-    }
-}
 
 
 

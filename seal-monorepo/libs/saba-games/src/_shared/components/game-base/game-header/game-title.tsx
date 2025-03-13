@@ -2,6 +2,7 @@ import * as gc from "@sg/sg-game-client";
 import React from "react";
 import styles from "./game-header.module.scss";
 import { getGameSetting } from "../../../app-settings";
+import classNames from "classnames";
 
 export interface GameTitleProps {
     gameId: number;
@@ -17,14 +18,12 @@ export const GameTitle: React.FC<GameTitleProps> = ({ gameId, arrowProps }) => {
 
     return (
         <div className={styles["title-with-icon"]}>
-            <img
-                src="/static/images/lobby/arrow.png"
-                alt="Arrow Icon"
-                width={24}
-                height={24}
-                className={styles["arrow-icon"]}
+            <div
+                className={classNames(styles["collapse-btn"])}
                 {...arrowProps}
-            />
+            >
+                <div className={styles["collapse-icon"]}></div>
+            </div>
             <span className={styles.divider} />
             <img
                 src={`/static/images/game-icons/game-icon-${gameId}.png`}
