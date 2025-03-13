@@ -1,10 +1,9 @@
 import * as gc from "@sg/sg-game-client";
 import { render } from "@sg/sg-observer";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
+import { BigSmallRoundDot } from "../dot";
 import { BigSmallChoices, BigSmallSettlementResult } from "../type";
 import Styles from "./big-small-round-history.module.scss";
-import classNames from 'classnames';
-import { BigSmallRoundDot } from "../dot";
 
 
 export interface IBigSmallRoundHistoryState extends IStateObserver {
@@ -73,14 +72,16 @@ export default class BigSmallRoundHistory extends ObserverComponent<IPropsObserv
         if (!roundHistory.settlementResult) {
             return <></>;
         }
+        
         const settlement = this.getSettlementResult(roundHistory.settlementResult);
+        const t = (key) => gc.Translator.translate(key, { languageId: gc.Translator.getCurrentLanguageId() });
 
         return (
             <div key={roundHistory.roundId} className={Styles["history-item"]}>
                 <BigSmallRoundDot
                     choice={settlement.winner}
                     size="large"
-                    value={settlement.winner.charAt(0).toUpperCase()}
+                    value={t(`UnbalancedBigSmall4.beadboard_${settlement.winner}`)}
                 />
                 <span className={Styles["arrow"]}></span>
             </div>

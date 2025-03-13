@@ -10,9 +10,9 @@ import GameContainer from '../game-container';
 import Loading from '../loading';
 import Notice from '../notices/notice';
 import Warning from '../notices/warning';
+import StatisticButton from '../statistic-button/statistic-button';
 import Styles from './game-base.module.scss';
 import { GameBaseProps } from './type';
-import StatisticButton from '../statistic-button/statistic-button';
 
 export interface IGameBaseState {
     isConnected: boolean;

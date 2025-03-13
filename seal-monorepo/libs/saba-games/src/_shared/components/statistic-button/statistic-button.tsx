@@ -17,7 +17,7 @@ const StatisticButton = ({ isOpenStatistic ,handleToggle }) => {
                     viewBox="0 0 24 24"
                     stroke="#2D4F8E"
                 >
-                    <path d={isOpenStatistic ? "M18 9l-6 6-6-6" : "M6 15l6-6 6 6"} />
+                    <path d={isOpenStatistic ?  "M6 15l6-6 6 6" :  "M18 9l-6 6-6-6"} />
                 </svg>
             </i>
         );

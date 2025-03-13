@@ -41,7 +41,6 @@
     }
 
     .info {
-        display: flex;
         align-items: center;
         gap: 0.4rem;
         min-width: 10rem;
@@ -61,6 +60,8 @@
 
 .count-down {
     position: relative;
+    left: -4px;
+    margin-top: 4px;
 
     .clock {
         width: 20px;
