@@ -229,8 +229,8 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         const reconnectText = gc.Translator.translate('Common.reconnect');
         return (
             <div className={`${Styles['block-wrapper']} ${this.props.overrideClasses}`}>
-                {/* <p>{gc.Translator.t('Common.connect_failed')}</p> */}
                 <div className={Styles['reconnect-btn-container']}>
+                    <p className={Styles['reconnect-text']}>{gc.Translator.t('Common.connect_failed')}</p>
                     <button
                         className={`${'c-btn'} ${'c-btn--bet'} ${Styles['reconnect-btn']}`}
                         data-disabled={false}

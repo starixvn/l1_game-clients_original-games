@@ -159,15 +159,25 @@
     justify-items: self-end;
 }
 
+
 .reconnect-btn-container {
     display: flex;
-    justify-content: center;
     align-items: center;
+    margin-left: 8px;
     width: 100%;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.reconnect-btn {
-    padding: 10px 20px;
-}
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .reconnect-btn {
+    margin-left: 8px;
+    padding: 8px 28px;
+  }
+  
+  .reconnect-text {
+    text-align: center;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+  }
