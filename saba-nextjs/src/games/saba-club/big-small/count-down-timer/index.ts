@@ -1,1 +1,0 @@
-export { default as BigSmallCountDownTimer } from "./big-small-count-down-timer";
