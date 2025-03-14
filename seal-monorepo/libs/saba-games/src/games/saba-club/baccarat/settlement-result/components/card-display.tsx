@@ -28,7 +28,6 @@ export const CardDisplay: React.FC<CardDisplayProps> = memo(({
             <PlayerBankerResultComponent
                 playResultAnimation={true}
                 result={result}
-                texts={texts}
                 isShowResult={isShowResult}
                 language={language}
             />

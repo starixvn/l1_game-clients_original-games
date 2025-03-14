@@ -8,7 +8,6 @@ import { CardOrderWithTiming } from "../../baccarat-helper";
 interface CardSectionProps {
     cards: CardOrderWithTiming[];
     label: string;
-    score: number;
     type: "player" | "banker";
     playResultAnimation: boolean;
     isShowResult: boolean;
@@ -17,7 +16,6 @@ interface CardSectionProps {
 export const CardSection: React.FC<CardSectionProps> = ({
     cards,
     label,
-    score,
     type,
     playResultAnimation,
     isShowResult,

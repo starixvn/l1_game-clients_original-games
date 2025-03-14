@@ -15,10 +15,10 @@ interface UseCardAnimationReturn {
 export const useCardAnimation = ({ result, isAnimationResult }: UseCardAnimationProps): UseCardAnimationReturn => {
     const animationClasses = useMemo(() => {
         const resultCount = CARD_DISPLAY.BASE_CARD_COUNT +
-            (!!result.player.card3 ? 1 : 0) +
-            (!!result.banker.card3 ? 1 : 0);
+            (!!result.player?.card3 ? 1 : 0) +
+            (!!result.banker?.card3 ? 1 : 0);
 
-        const suffix = !result.player.card3 && !!result.banker.card3
+        const suffix = !result.player?.card3 && !!result.banker?.card3
             ? CARD_DISPLAY.BANKER_SUFFIX
             : '';
 
