@@ -27,7 +27,8 @@
     }
     .c-betslip__content {
         .c-betting-scroller {
-            height: 330px;
+            height: 100%;
+            min-height: 330px;
         }
         .c-ticket__header  {
             font-size: 13px;
