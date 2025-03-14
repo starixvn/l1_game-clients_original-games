@@ -1,8 +1,9 @@
 import React from "react";
-import { MiniCard } from "./components/mini-card";
-import { convertRank, suffixNameMapping } from "./utils/card-utils";
-import { Props } from "./type";
+import cardFront from "../../../assets/cards/card-front.svg";
 import Styles from "./card.module.scss";
+import { MiniCard } from "./components/mini-card";
+import { Props } from "./type";
+import { convertRank, suffixNameMapping } from "./utils/card-utils";
 export const EmptyCardIndex = -1;
 
 const Card: React.FC<Props> = (props) => {
@@ -11,13 +12,19 @@ const Card: React.FC<Props> = (props) => {
     const isDisplayMiniCard = isSmall;
 
     const getCardsDefault = () => {
+        const srcPathCard = "../../../assets/cards/";
         const nameCard = `${convertRank(result?.card)}-${suffixNameMapping[result?.type]}.svg`;
         return (
-            <img
-                src={`/static/images/cards/${nameCard}#v1`}
-                className={Styles["card-suite"]}
-                alt={`${convertRank(result?.card)} of ${suffixNameMapping[result?.type]}`}
-            />
+            <div className={Styles["card-front-box"]}>
+                 <img
+                    src={`${cardFront}#v1`}
+                    className={Styles["card-front"]}
+                    alt="card-front"
+                />
+                <img src={`${srcPathCard}${convertRank(result?.card)}.png?v=2`} className={Styles["card-rank"]}/>
+                <div className={`${Styles["card-suit"]} ${Styles[`card-${suffixNameMapping[result?.type]}`]}`}></div>
+            </div>
+           
         );
     };
 
@@ -27,7 +34,6 @@ const Card: React.FC<Props> = (props) => {
 
     return (
         <div className={`${Styles[customClassName]} ${Styles["card"]} `}>
-            <div className={Styles["card-shadow"]}></div>
             <div className={Styles["result"]} data-testid="result-card">
                 {isDisplayMiniCard ? (
                     <MiniCard card={result.card} type={result.type} />
