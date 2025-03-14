@@ -24,6 +24,8 @@
 
 .bets-bg {
     background-color: var(--c-av-odds-in-play-bg);
+    border-width: var(--c-av-odds-button-border-width);
+    border-color: var(--c-av-odds-button-border);
     border-radius: var(--c-av-border-radius);
     height: 2rem;
 }
