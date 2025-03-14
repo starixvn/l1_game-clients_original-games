@@ -5,6 +5,7 @@ import Styles from "./baccarat-result-history.module.scss";
 import { BaccaratSettlementResult } from "../type";
 import { ResultCardSection } from "./result-card-section";
 import { Result } from "../baccarat";
+import { cardStateEmitter } from "../services/card-state-emitter";
 
 export interface IBaccaratResultHistoryProps extends IPropsObserver {
     language: string;
@@ -17,13 +18,38 @@ export interface IBaccaratResultHistoryState extends IStateObserver {
 const numberOfResult = 102;
 
 export class BaccaratResultHistory extends ObserverComponent<IBaccaratResultHistoryProps, IBaccaratResultHistoryState> {
+    private openedCardsHandler: (count: number) => void;
+
     constructor(props: IBaccaratResultHistoryProps) {
         super(props);
+        this.openedCardsHandler = this.handleOpenedCardsChange.bind(this);
+    }
+
+    componentDidMount() {
+        super.componentDidMount?.();
+        cardStateEmitter.onOpenedCardsChange(this.openedCardsHandler);
+    }
+
+    componentWillUnmount() {
+        super.componentWillUnmount?.();
+        cardStateEmitter.removeOpenedCardsListener(this.openedCardsHandler);
+    }
+
+    private handleOpenedCardsChange(count: number) {
+        if (count > 0) {
+            this.updateRoundHistory();
+        }
     }
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
-        this.setState({ rounds: rounds.slice(0, numberOfResult) });
+        this.updateRoundHistory(rounds);
+    }
+
+    private updateRoundHistory(rounds?: gc.RoundHistories.RoundHistory[]) {
+        if (rounds) {
+            this.setState({ rounds: rounds.slice(0, numberOfResult) });
+        }
     }
 
     private getSettlementResult(settlementResult: gc.GameServiceMessage.TSettlementResult): BaccaratSettlementResult {

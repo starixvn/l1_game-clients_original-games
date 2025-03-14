@@ -5,6 +5,7 @@ import Styles from "../styles/baccarat-animations.module.scss";
 import { CardSection } from "./card-section";
 import { determineWinner } from './score-utils';
 import { useEffect, useState } from "react";
+import { cardStateEmitter } from "../../services/card-state-emitter";
 
 interface PlayerBankerResultProps {
     playResultAnimation: boolean;
@@ -73,10 +74,12 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
 
         allCards.forEach((card, index) => {
             setTimeout(() => {
+                const showWinner = index === allCards.length - 1;
                 setState({
                     openedCards: index + 1,
-                    showWinner: index === allCards.length - 1
+                    showWinner: showWinner
                 });
+                cardStateEmitter.emitOpenedCardsChange(index + 1);
             }, card.animationDelay);
         });
     };
