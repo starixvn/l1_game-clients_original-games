@@ -11,6 +11,7 @@ interface CardDisplayProps {
         player: string;
         banker: string;
     };
+    language: string;
 }
 
 export const CardDisplay: React.FC<CardDisplayProps> = memo(({
@@ -18,6 +19,7 @@ export const CardDisplay: React.FC<CardDisplayProps> = memo(({
     isAnimationResult,
     isShowResult,
     texts,
+    language,
 }) => {
     const { animationClasses } = useCardAnimation({ result, isAnimationResult });
 
@@ -28,6 +30,7 @@ export const CardDisplay: React.FC<CardDisplayProps> = memo(({
                 result={result}
                 texts={texts}
                 isShowResult={isShowResult}
+                language={language}
             />
         </div>
     );

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import * as gc from "@sg/sg-game-client";
 import { Result } from "../../baccarat";
 import { GetBankerCardsResult, GetPlayerCardsResult } from "../../baccarat-helper";
 import Styles from "../styles/baccarat-animations.module.scss";
@@ -13,6 +14,7 @@ interface PlayerBankerResultProps {
         banker: string;
     };
     isShowResult: boolean;
+    language: string;
 }
 
 interface PlayerBankerResultState {
@@ -23,7 +25,7 @@ interface PlayerBankerResultState {
 }
 
 export default function PlayerBankerResultComponent(props: PlayerBankerResultProps) {
-    const { playResultAnimation, result, texts, isShowResult } = props;
+    const { playResultAnimation, result, texts, isShowResult, language } = props;
     const [state, setState] = useState<PlayerBankerResultState>({
         playerScore: 0,
         bankerScore: 0,
@@ -55,11 +57,11 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
         const { playerScore, bankerScore } = state;
 
         if (playerScore > bankerScore) {
-            return `${texts.player} WINS!`;
+            return `player_win`;
         } else if (bankerScore > playerScore) {
-            return `${texts.banker} WINS!`;
+            return `banker_win`;
         }
-        return "TIE";
+        return `tie_win`;
     }
 
     const startAnimation = () => {
@@ -109,7 +111,7 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
             <div className={Styles["animation-container"]}>
                 <CardSection
                     cards={playerCards}
-                    label={texts.player}
+                    label={gc.Translator.t(`Baccarat.glossary_player`, { lng: language })}
                     score={playerScore}
                     type="player"
                     playResultAnimation={playResultAnimation}
@@ -120,14 +122,14 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
                 {showWinner && isShowResult && (
                     <div className={Styles['winner-display']}>
                         <p className={Styles['winner-text']}>
-                            {getWinnerText()}
+                            {gc.Translator.t(`Baccarat.${getWinnerText()}`, { lng: language })}
                         </p>
                     </div>
                 )}
 
                 <CardSection
                     cards={bankerCards}
-                    label={texts.banker}
+                    label={gc.Translator.t(`Baccarat.glossary_banker`, { lng: language })}
                     score={bankerScore}
                     type="banker"
                     playResultAnimation={playResultAnimation}

@@ -95,6 +95,7 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
 
     private renderCardDisplay(): JSX.Element | null {
         const { result, isAnimationResult, roundState } = this.state;
+        const language = this.props.language || gc.Translator.getCurrentLanguageId();
 
         if (!result || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET) {
             return (
@@ -103,6 +104,7 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
                     isAnimationResult={false}
                     isShowResult={false}
                     texts={this.texts}
+                    language={language}
                 />
             );
         }
@@ -113,6 +115,7 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
                 isAnimationResult={isAnimationResult}
                 isShowResult={true}
                 texts={this.texts}
+                language={language}
             />
         );
     }
