@@ -20,6 +20,13 @@ interface PlayerBankerResultState {
 
 export default function PlayerBankerResultComponent(props: PlayerBankerResultProps) {
     const { playResultAnimation, result, isShowResult, language } = props;
+    console.log('PlayerBankerResultComponent rendered:', {
+        playResultAnimation,
+        isShowResult,
+        language,
+        hasResult: !!result
+    });
+
     const [state, setState] = useState<PlayerBankerResultState>({
         openedCards: 0,
         showWinner: false
@@ -28,56 +35,111 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
     const playerCards = result ? GetPlayerCardsResult(result) : [];
     const bankerCards = result ? GetBankerCardsResult(result) : [];
 
+    console.log('Initial cards state:', {
+        playerCardsCount: playerCards.length,
+        bankerCardsCount: bankerCards.length,
+        playerCards,
+        bankerCards
+    });
+
     useEffect(() => {
+        console.log('playResultAnimation effect triggered:', { playResultAnimation });
         if (playResultAnimation) {
             startAnimation();
         }
     }, [playResultAnimation]);
 
     useEffect(() => {
+        console.log('isShowResult effect triggered:', { isShowResult });
         if (isShowResult) {
             startAnimation();
         }
     }, [isShowResult]);
 
     const getWinnerText = (): string => {
-        if (!result) return '';
+        console.log('getWinnerText called with result:', result);
+
+        if (!result) {
+            console.log('No result available, returning empty string');
+            return '';
+        }
 
         try {
+            console.log('Calculating scores for result...');
             const scores = calculateScores(result);
-            if (!scores) return '';
 
-            return determineWinner(scores.playerScore, scores.bankerScore);
+            if (!scores) {
+                console.log('No scores calculated, returning empty string');
+                return '';
+            }
+
+            console.log('Scores calculated:', {
+                playerScore: scores.playerScore,
+                bankerScore: scores.bankerScore
+            });
+
+            const winner = determineWinner(scores.playerScore, scores.bankerScore);
+            console.log('Winner determined:', winner);
+            return winner;
         } catch (error) {
-            console.error('Error calculating winner:', error);
+            console.error('Error in getWinnerText:', {
+                error,
+                errorMessage: error instanceof Error ? error.message : 'Unknown error',
+                result: JSON.stringify(result)
+            });
             return '';
         }
     }
 
     const startAnimation = () => {
-        if (!result) return;
+        console.log('Starting animation sequence');
+        if (!result) {
+            console.log('No result available for animation');
+            return;
+        }
 
         const playerCards = GetPlayerCardsResult(result);
         const bankerCards = GetBankerCardsResult(result);
+
+        console.log('Animation cards:', {
+            playerCards,
+            bankerCards
+        });
 
         // Combine and sort cards by animation order
         const allCards = [...playerCards, ...bankerCards]
             .sort((a, b) => a.order - b.order)
             .filter(card => card.value);
 
+        console.log('Sorted animation cards:', {
+            totalCards: allCards.length,
+            cards: allCards
+        });
+
         allCards.forEach((card, index) => {
+            console.log(`Scheduling card animation ${index + 1}/${allCards.length}:`, {
+                card,
+                delay: card.animationDelay
+            });
+
             setTimeout(() => {
                 setState(prevState => {
-                    return {
+                    const newState = {
                         openedCards: index + 1,
                         showWinner: index === allCards.length - 1
                     };
+                    console.log('Updating animation state:', {
+                        previousState: prevState,
+                        newState
+                    });
+                    return newState;
                 });
             }, card.animationDelay);
         });
     };
 
     const { openedCards, showWinner } = state;
+    console.log('Current component state:', { openedCards, showWinner });
 
     const classOpenCards = `opened-cards-${openedCards}`;
 
