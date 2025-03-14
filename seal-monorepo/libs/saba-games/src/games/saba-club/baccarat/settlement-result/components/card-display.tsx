@@ -7,10 +7,6 @@ interface CardDisplayProps {
     result: Result;
     isAnimationResult: boolean;
     isShowResult: boolean;
-    texts: {
-        player: string;
-        banker: string;
-    };
     language: string;
 }
 
@@ -18,7 +14,6 @@ export const CardDisplay: React.FC<CardDisplayProps> = memo(({
     result,
     isAnimationResult,
     isShowResult,
-    texts,
     language,
 }) => {
     const { animationClasses } = useCardAnimation({ result, isAnimationResult });

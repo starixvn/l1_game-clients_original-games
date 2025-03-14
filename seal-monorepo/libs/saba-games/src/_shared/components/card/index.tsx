@@ -1,8 +1,9 @@
 import React from "react";
 import { MiniCard } from "./components/mini-card";
-import { getClassFollowCondition, convertRank, suffixNameMapping } from "./utils/card-utils";
+import { convertRank, suffixNameMapping } from "./utils/card-utils";
 import { Props } from "./type";
 import Styles from "./card.module.scss";
+export const EmptyCardIndex = -1;
 
 const Card: React.FC<Props> = (props) => {
     const { result, isSmall, viewMode = "" } = props;
@@ -19,6 +20,10 @@ const Card: React.FC<Props> = (props) => {
             />
         );
     };
+
+    if (result.card === EmptyCardIndex) {
+        return null;
+    }
 
     return (
         <div className={`${Styles[customClassName]} ${Styles["card"]} `}>

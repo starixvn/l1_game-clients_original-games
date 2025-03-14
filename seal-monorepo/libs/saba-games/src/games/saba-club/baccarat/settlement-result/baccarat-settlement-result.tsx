@@ -1,5 +1,4 @@
 import * as gc from "@sg/sg-game-client";
-import React from "react";
 import { RoundHistoryStore } from "@sg/sg-game-client/dist/game/round-histories";
 import { RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds";
 import { SettlementStore } from "@sg/sg-game-client/dist/game/settlements";
@@ -12,19 +11,19 @@ import { Loading } from "./components/loading";
 import type { IPropsObserver, IStateObserver } from "../../../../_shared/components/observer-component/observer-component";
 import { ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
 import { setting } from "../game-settings";
-import { TRANSLATIONS } from "./constants";
 import { gameStateService } from "./services/game-state.service";
 import Styles from "./styles/baccarat-animations.module.scss";
 import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
+import { EmptyCardIndex } from "../../../../_shared/components/card";
 
 const DEFAULT_RESULT: Result = {
     banker: {
-        card1: { card: 1, type: 0 },
-        card2: { card: 1, type: 0 }
+        card1: { card: EmptyCardIndex, type: 0 },
+        card2: { card: EmptyCardIndex, type: 0 }
     },
     player: {
-        card1: { card: 1, type: 1 },
-        card2: { card: 1, type: 1 }
+        card1: { card: EmptyCardIndex, type: 1 },
+        card2: { card: EmptyCardIndex, type: 1 }
     }
 };
 
@@ -39,11 +38,6 @@ interface IBaccaratSettlementResultState extends IStateObserver {
 
 @observer(setting.mainObserverNamespace)
 export default class BaccaratSettlementResult extends ObserverComponent<IPropsObserver, IBaccaratSettlementResultState> {
-    private readonly texts = {
-        player: gc.Translator.t(TRANSLATIONS.PLAYER),
-        banker: gc.Translator.t(TRANSLATIONS.BANKER),
-    };
-
     constructor(props: IPropsObserver) {
         super(props);
         this.state = {
@@ -103,7 +97,6 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
                     result={DEFAULT_RESULT}
                     isAnimationResult={false}
                     isShowResult={false}
-                    texts={this.texts}
                     language={language}
                 />
             );
@@ -114,7 +107,6 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
                 result={result}
                 isAnimationResult={isAnimationResult}
                 isShowResult={true}
-                texts={this.texts}
                 language={language}
             />
         );

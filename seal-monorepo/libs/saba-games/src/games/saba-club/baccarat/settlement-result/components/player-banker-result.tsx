@@ -45,7 +45,7 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
                 />
 
                 {/* Winner Display */}
-                {isShowResult && (
+                {isShowResult && playerCards.length > 2 && (
                     <div className={Styles['winner-display']}>
                         <p className={Styles['winner-text']}>
                             {gc.Translator.t(`Baccarat.${getWinnerText()}`, { lng: language })}

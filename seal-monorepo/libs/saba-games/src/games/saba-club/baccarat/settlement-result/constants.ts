@@ -20,4 +20,4 @@ export const CARD_TIMINGS = {
 export const TRANSLATIONS = {
     PLAYER: 'player',
     BANKER: 'banker',
-} as const; 
+} as const;
