@@ -3,7 +3,7 @@ import { Result } from "../../baccarat";
 import { GetBankerCardsResult, GetPlayerCardsResult } from "../../baccarat-helper";
 import Styles from "../styles/baccarat-animations.module.scss";
 import { CardSection } from "./card-section";
-import { determineWinner, calculateScores } from './score-utils';
+import { determineWinner } from './score-utils';
 import { useEffect, useState } from "react";
 
 interface PlayerBankerResultProps {
@@ -16,7 +16,6 @@ interface PlayerBankerResultState {
     openedCards: number;
     showWinner: boolean;
 }
-
 
 export default function PlayerBankerResultComponent(props: PlayerBankerResultProps) {
     const { playResultAnimation, result, isShowResult, language } = props;
@@ -65,20 +64,25 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
         }
 
         try {
-            console.log('Calculating scores for result...');
-            const scores = calculateScores(result);
+            const playerLastCard = playerCards[playerCards.length - 1];
+            const bankerLastCard = bankerCards[bankerCards.length - 1];
 
-            if (!scores) {
-                console.log('No scores calculated, returning empty string');
+            if (!playerLastCard || !bankerLastCard) {
+                console.log('Missing final cards for player or banker');
                 return '';
             }
 
-            console.log('Scores calculated:', {
-                playerScore: scores.playerScore,
-                bankerScore: scores.bankerScore
+            const playerScore = playerLastCard.accumulatedScore;
+            const bankerScore = bankerLastCard.accumulatedScore;
+
+            console.log('Final scores:', {
+                playerScore,
+                bankerScore,
+                playerLastCard,
+                bankerLastCard
             });
 
-            const winner = determineWinner(scores.playerScore, scores.bankerScore);
+            const winner = determineWinner(playerScore, bankerScore);
             console.log('Winner determined:', winner);
             return winner;
         } catch (error) {
@@ -97,9 +101,6 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
             console.log('No result available for animation');
             return;
         }
-
-        const playerCards = GetPlayerCardsResult(result);
-        const bankerCards = GetBankerCardsResult(result);
 
         console.log('Animation cards:', {
             playerCards,
