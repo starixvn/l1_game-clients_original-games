@@ -39,6 +39,9 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 RUN mkdir -p /usr/share/nginx/html/static/images/cards && \
     chown -R nginx:nginx /usr/share/nginx/html
 
+# Switch to nginx user
+USER nginx
+
 # Expose the port Nginx is running on
 EXPOSE $PORT
 
