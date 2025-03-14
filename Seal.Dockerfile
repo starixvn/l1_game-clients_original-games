@@ -27,7 +27,7 @@ RUN yarn install && \
     cp -r libs/saba-games/public/static/images/cards/* dist/libs/saba-games/static/images/cards/
 
 # Production stage
-FROM hub.lumigame.com/base/nginx:1.22-alpine-slim 
+FROM hub.lumigame.com/base/nginx:stable-alpine-slim
 
 # Copy the build output to the Nginx directory
 COPY --from=builder /app/seal-monorepo/dist/libs/saba-games /usr/share/nginx/html
