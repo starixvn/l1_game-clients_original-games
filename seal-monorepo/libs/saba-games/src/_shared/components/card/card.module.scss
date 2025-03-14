@@ -91,102 +91,6 @@
   }
 }
 
-%card-suit {
-    background-image: url("../../../assets/cards/card_sprites.png");
-    width: 47px; 
-    height: 63px;
-}
-
-%card-rank {
-    background-image: url("../../../assets/cards/card_sprites.png");
-    width: 22px;
-    height: 22px;
-}
-
-.card-2{
-    @extend %card-rank;
-    background-position: -52px -176px;
-}
-
-.card-3{
-    @extend %card-rank;
-    background-position: -10px -176px;
-}
-
-.card-4{
-    @extend %card-rank;
-    background-position: -253px -52px;
-}
-
-.card-5{
-    @extend %card-rank;
-    background-position: -136px -176px;
-}
-
-.card-6 {
-    @extend %card-rank;
-    background-position: -211px -94px;
-}
-
-.card-7 {
-    @extend %card-rank;
-    background-position: -253px -10px;
-}
-
-.card-8 {
-    @extend %card-rank;
-    background-position: -119px -93px;
-}
-
-.card-9 {
-    @extend %card-rank;
-    background-position: -211px -10px;
-}
-
-.card-10 {
-    @extend %card-rank;
-    background-position: -178px -176px;
-}
-
-.card-J {
-    @extend %card-rank;
-    background-position: -211px -52px;
-}
-
-.card-Q {
-    @extend %card-rank;
-    background-position: -161px -93px;
-}
-
-.card-K {
-    @extend %card-rank;
-    background-position:  -77px -93px;
-}
-
-.card-A {
-    @extend %card-rank;
-    background-position:  -94px -176px;
-}
-
-.card-heart {
-    @extend %card-suit;
-    background-position:  -77px -10px;
-}
-
-.card-club  {
-    @extend %card-suit;
-    background-position:  -10px -10px;
-}
-
-.card-diamond   {
-    @extend %card-suit;
-    background-position:  -10px -93px;
-}
-
-.card-spade    {
-    @extend %card-suit;
-    background-position:  -144px -10px;
-}
 
 
 
@@ -194,13 +98,15 @@
     position: relative;
     .card-rank {
         position: absolute;
-        top: 6px;
-        left: 6px;
+        top: 4px;
+        left: 2px;
+        width: unset;
     }
     .card-suit {
         position: absolute;
         top: 0;
         left: 0;
+        width: unset;
     }
 }
 
