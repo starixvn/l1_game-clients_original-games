@@ -49,7 +49,7 @@ module.exports = {
         process.env.NODE_ENV === 'development'
           ? ['./preview-template/styles.scss']
           : [],
-      outputHashing: process.env.NODE_ENV === 'production' ? 'all' : 'none',
+      outputHashing: 'all',
       optimization: process.env.NODE_ENV === 'production',
       sourceMap: false,
     }),
