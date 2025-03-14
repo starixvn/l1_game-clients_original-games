@@ -1,14 +1,14 @@
 import * as gc from '@sg/sg-game-client';
 import { render } from '@sg/sg-observer';
+import classNames from 'classnames';
+import { RoundDot } from '../../../../_shared/components/dot';
 import {
     IPropsObserver,
     IStateObserver,
     ObserverComponent,
 } from '../../../../_shared/components/observer-component/observer-component';
-import Styles from './result-history.module.scss';
-import { RoundDot } from '../../../../_shared/components/dot';
 import { SeDieChoices, SedieResult, SedieSettlementResult } from '../type';
-import classNames from 'classnames';
+import Styles from './result-history.module.scss';
 
 export interface ISiedieResultHistoryProps extends IPropsObserver {
     language: string;
@@ -85,9 +85,9 @@ export const SeDieRoundHistoryComponent: React.FC<ISeDieRoundHistoryComponentPro
         >
             <div className={Styles['left-content']}>
                 <RoundTitle roundId={roundHistory.roundId} />
-            </div>
-            <div className={Styles['right-content']}>
                 <DotGroup result={roundHistory.result as SedieResult} />
+            </div>
+            <div className={Styles['right-content']}>                
                 <BetModeText isOdd={isOdd} resultText={resultText} />
             </div>
         </div>
