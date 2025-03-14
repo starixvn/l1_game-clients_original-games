@@ -46,11 +46,6 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        backface-visibility: hidden;
-        transform-style: preserve-3d;
-        border-radius: 4px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-        background-color: white;
         overflow: hidden;
 
         .card-back {
