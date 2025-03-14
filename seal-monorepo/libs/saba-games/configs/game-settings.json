@@ -59,7 +59,7 @@
         "isVisible": true,
         "durations": {
             "wholeRound": 46,
-            "lockingBet": 5,
+            "lockingBet": 3,
             "placingBet": 30,
             "generatingResult": 1,
             "showingResult": 15,
