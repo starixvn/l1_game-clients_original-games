@@ -5,13 +5,16 @@ import { BigSmallRoundDot } from "../dot";
 import { BigSmallChoices, BigSmallSettlementResult } from "../type";
 import Styles from "./big-small-round-history.module.scss";
 
+export interface IBigSmallRoundHistoryProps extends IPropsObserver {
+    language: string;
+}
 
 export interface IBigSmallRoundHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
 }
 
-export default class BigSmallRoundHistory extends ObserverComponent<IPropsObserver, IBigSmallRoundHistoryState> {
-    constructor(props: IPropsObserver) {
+export default class BigSmallRoundHistory extends ObserverComponent<IBigSmallRoundHistoryProps, IBigSmallRoundHistoryState> {
+    constructor(props: IBigSmallRoundHistoryProps) {
         super(props);
     }
 

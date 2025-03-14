@@ -19,8 +19,10 @@ export interface IBigSmallResultHistoryState extends IStateObserver {
     roundState: string;
 }
 
+
 type Props = IPropsObserver & {
     gameName?: string;
+    language?: string;
 };
 
 export default class BigSmallScoreBoard extends ObserverComponent<Props, IBigSmallResultHistoryState> {

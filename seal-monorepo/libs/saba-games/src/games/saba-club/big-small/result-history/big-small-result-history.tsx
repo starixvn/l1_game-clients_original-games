@@ -8,13 +8,17 @@ import { calculateTotalDiceNumber } from "../../../../_shared/utils/number-helpe
 import Dice from "libs/saba-games/src/_shared/components/dice";
 import classNames from 'classnames';
 
+export interface IBigSmallResultHistoryProps extends IPropsObserver {
+    language: string;
+}
+
 export interface IBigSmallResultHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
 }
 
 const numberOfResult = 100;
-export default class BigSmallResultHistory extends ObserverComponent<IPropsObserver, IBigSmallResultHistoryState> {
-    constructor(props: IPropsObserver) {
+export default class BigSmallResultHistory extends ObserverComponent<IBigSmallResultHistoryProps, IBigSmallResultHistoryState> {
+    constructor(props: IBigSmallResultHistoryProps) {
         super(props);
     }
 

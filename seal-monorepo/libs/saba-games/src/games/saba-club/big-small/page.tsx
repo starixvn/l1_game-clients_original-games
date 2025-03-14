@@ -62,7 +62,7 @@ export default class BigSmallPage extends GatewayGameBase<IBigSmallPageProps, IB
     };
 
     renderRoundHistory() {
-        return <BigSmallRoundHistory namespace={this.props.namespace} />;
+        return <BigSmallRoundHistory namespace={this.props.namespace} language={this.props.language} />;
     }
 
     renderRoundIdSection() {
@@ -102,7 +102,7 @@ export default class BigSmallPage extends GatewayGameBase<IBigSmallPageProps, IB
     }
 
     renderStatistic() {
-        return <BigSmallStatistic namespace={this.props.namespace} gameName={setting.gameName} />;
+        return <BigSmallStatistic namespace={this.props.namespace} gameName={setting.gameName} language={this.props.language} />;
     }
 
     // @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
