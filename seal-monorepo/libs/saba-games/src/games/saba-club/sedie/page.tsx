@@ -1,5 +1,5 @@
 import * as gc from '@sg/sg-game-client';
-import { handle, observer } from '@sg/sg-observer';
+import { handle, observer, render } from '@sg/sg-observer';
 import CountDownTimer from '../../../_shared/components/count-down-timer';
 import RoundId from '../../../_shared/components/round-id';
 import { IGameBaseState } from '../../../_shared/components/game-base';
@@ -12,6 +12,7 @@ import { FunctionUtils } from '../../../_shared/utils/funtion-utils';
 import { SedieStatistic } from './statistic';
 import GatewayGameBase from '../../../_shared/components/game-base/gateway-gamebase';
 import { GameBettingOptionsContext } from '../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
+import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
 
 interface ISieDiePageState extends IGameBaseState {
     activePanelId: any;
@@ -44,6 +45,20 @@ export default class SieDiePage extends GatewayGameBase<{ namespace: string, lan
     setShowBetPanel = (show: boolean) => {
         this.setState({ showBetPanel: show });
     };
+
+    resetBettingPanel = () => {
+        this.setState({
+            activePanelId: null,
+            showBetPanel: false
+        });
+    };
+
+    @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
+    handleRoundStateChange(roundState: string) {
+        if (roundState === ROUND_STATE.LOCKING_BET) {
+            this.resetBettingPanel();
+        }
+    }
 
     renderRoundHistory() {
         return (

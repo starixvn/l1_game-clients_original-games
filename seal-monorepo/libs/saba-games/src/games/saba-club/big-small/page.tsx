@@ -61,6 +61,20 @@ export default class BigSmallPage extends GatewayGameBase<IBigSmallPageProps, IB
         this.setState({ showBetPanel: show });
     };
 
+    resetBettingPanel = () => {
+        this.setState({
+            activePanelId: null,
+            showBetPanel: false
+        });
+    };
+
+    @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
+    handleRoundStateChange(roundState: string) {
+        if (roundState === ROUND_STATE.LOCKING_BET) {
+            this.resetBettingPanel();
+        }
+    }
+
     renderRoundHistory() {
         return <BigSmallRoundHistory namespace={this.props.namespace} language={this.props.language} />;
     }
