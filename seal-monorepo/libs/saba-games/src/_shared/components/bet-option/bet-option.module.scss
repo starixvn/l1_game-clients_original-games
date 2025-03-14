@@ -39,7 +39,8 @@
 }
 
 .betting-block:hover {
-    background-color: var(--c-av-odds-hover-bg);
+    background-color: var(--c-av-odds-in-play-hover-bg);
+    background-image: var(--c-av-odds-in-play-hover-img);
 }
 
 .open-panel-background-color {
