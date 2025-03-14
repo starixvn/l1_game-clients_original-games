@@ -1,10 +1,9 @@
 import * as gc from "@sg/sg-game-client";
-import { Result, CardType } from "../../baccarat";
+import { Result } from "../../baccarat";
 import { GetBankerCardsResult, GetPlayerCardsResult } from "../../baccarat-helper";
 import Styles from "../styles/baccarat-animations.module.scss";
-import { calculateTotalScore } from "./score-utils";
 import { CardSection } from "./card-section";
-import { getCardValues, determineWinner, calculateScores } from './score-utils';
+import { determineWinner, calculateScores } from './score-utils';
 
 interface PlayerBankerResultProps {
     playResultAnimation: boolean;

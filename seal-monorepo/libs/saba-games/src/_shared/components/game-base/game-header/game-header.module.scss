@@ -70,16 +70,24 @@
         }
     }
 
-    .game-icon {
-        object-fit: contain;
+    %game-icon {
         width: 24px !important;
         height: 24px !important;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0;
+        display: block;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: var(--game-icon-url);
     }
+
+    .game-icon-10 {
+        @extend %game-icon;
+        background-image: url('../../../../assets/game-icons/game-icon-10.png');
+      }
+      
 }
+
+
 
 .lucky-next-header {
     grid-template-columns: 1fr 10rem 10rem;

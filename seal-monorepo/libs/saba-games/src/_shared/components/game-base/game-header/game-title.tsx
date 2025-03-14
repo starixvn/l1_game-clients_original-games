@@ -25,13 +25,7 @@ export const GameTitle: React.FC<GameTitleProps> = ({ gameId, arrowProps }) => {
                 <div className={styles["collapse-icon"]}></div>
             </div>
             <span className={styles.divider} />
-            <img
-                src={`/static/images/game-icons/game-icon-${gameId}.png`}
-                alt="Game Icon"
-                width={32}
-                height={32}
-                className={styles["game-icon"]}
-            />
+            <div className={styles[`game-icon-${gameId}`]} />
             <div>{gameName}</div>
         </div>
     );
