@@ -22,9 +22,7 @@ COPY . .
 WORKDIR /app/seal-monorepo
 RUN yarn install && \
     nx reset && \
-    cross-env NODE_ENV=development nx build saba-games --configuration=development && \
-    mkdir -p dist/libs/saba-games/static/images/cards && \
-    cp -r libs/saba-games/public/static/images/cards/* dist/libs/saba-games/static/images/cards/
+    cross-env NODE_ENV=development nx build saba-games --configuration=development 
 
 # Production stage
 FROM hub.lumigame.com/base/nginx:stable-alpine-slim
@@ -36,8 +34,7 @@ COPY --from=builder /app/seal-monorepo/dist/libs/saba-games /usr/share/nginx/htm
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Create necessary directories and set permissions
-RUN mkdir -p /usr/share/nginx/html/static/images/cards && \
-    chown -R nginx:nginx /usr/share/nginx/html
+RUN chown -R nginx:nginx /usr/share/nginx/html
 
 # Switch to nginx user
 USER nginx
