@@ -1,13 +1,19 @@
 
 .block-wrapper {
     .result {
-        width: 30%;
+        width: 40%;
         border-right: none;
+        @media screen and (min-width: 1102px) {
+            width: 50%;
+        }
        
     }
 
     .info {
         width: 30%;
+        @media screen and (min-width: 1102px) {
+            width: 20%;
+        }
        
     }
 
