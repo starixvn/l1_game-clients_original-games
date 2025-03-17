@@ -38,7 +38,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     componentDidMount() {
         document.addEventListener('visibilitychange', this.onVisibilityChange);
-        this.connectToService();
+        this.connectToServiceGateway();
     }
 
     componentWillUnmount() {
@@ -53,8 +53,11 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     abstract closeConnect(): void;
 
     onVisibilityChange = () => { };
+    @handle(gc.GatewayConnection.GatewayConnectionHandlers.ConnectHandler, (handler) => handler.handle())
+    connectToServiceGateway() { }
+
     @handle(gc.Connection.ConnectionHandlers.ConnectHandler, (handler) => handler.handleGateway())
-    connectToService() { }
+    connectLiveGateway() {}
 
     @render(gc.Connection.ConnectionStore, (store) => store.isSignedIn)
     handleConnected(isSignedIn: boolean) {
@@ -249,7 +252,8 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     handleReconnect = () => {
         document.addEventListener('visibilitychange', this.onVisibilityChange);
-        this.connectToService();
+        this.connectToServiceGateway();
+        this.connectLiveGateway();
     }
 
     private renderDisconnect() {
