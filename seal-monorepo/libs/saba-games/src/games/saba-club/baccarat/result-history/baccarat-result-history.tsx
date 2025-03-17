@@ -4,7 +4,6 @@ import { render } from "@sg/sg-observer";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
 import { Result } from "../baccarat";
 import { cardStateEmitter } from "../services/card-state-emitter";
-import { BaccaratSettlementResult } from "../type";
 import Styles from "./baccarat-result-history.module.scss";
 import { ResultCardSection } from "./result-card-section";
 
@@ -53,46 +52,12 @@ export class BaccaratResultHistory extends ObserverComponent<IBaccaratResultHist
         }
     }
 
-    private getSettlementResult(settlementResult: gc.GameServiceMessage.TSettlementResult): BaccaratSettlementResult {
-        const result: BaccaratSettlementResult = {
-            winner: 'player',
-            player: false,
-            banker: false,
-            tie: false,
-            playerPair: false,
-            bankerPair: false,
-        };
-
-        if (settlementResult && typeof settlementResult === 'object') {
-            result.player = !!settlementResult.player;
-            result.banker = !!settlementResult.banker;
-            result.tie = !!settlementResult.tie;
-
-            if (settlementResult.player) {
-                result.winner = 'player';
-            } else if (settlementResult.banker) {
-                result.winner = 'banker';
-            } else if (settlementResult.tie) {
-                result.winner = 'tie';
-            }
-
-            const gameData = settlementResult.gameData;
-            if (gameData && typeof gameData === 'object') {
-                const data = gameData as Record<string, unknown>;
-                result.playerPair = !!data.playerPair;
-                result.bankerPair = !!data.bankerPair;
-            }
-        }
-
-        return result;
-    }
-
     renderRoundResult(roundHistory: gc.RoundHistories.RoundHistory, index: number) {
         const result = roundHistory?.result as Result;
-        const settlement = this.getSettlementResult(roundHistory.settlementResult);
+        const settlement = roundHistory.settlementResult;
         let resultArray: string[] = [];
-        const settlementKeys = ['player', 'banker', 'tie', 'playerPair', 'bankerPair'];
 
+        const settlementKeys = ['player', 'banker', 'tie', 'playerPair', 'bankerPair'];
         settlementKeys.forEach((key) => {
             if (settlement[key]) {
                 resultArray.push(gc.Translator.t(`Baccarat.glossary_${key}`) || '');
