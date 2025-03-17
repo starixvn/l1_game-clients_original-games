@@ -3,6 +3,22 @@ import Styles from "./baccarat-bet-percentages.module.scss";
 import * as gc from "@sg/sg-game-client";
 import React from "react";
 
+// Image assets
+import playerBeadImage from '../../../../assets/baccarat/scoreboard/indicator/player-bead.png';
+import bankerBeadImage from '../../../../assets/baccarat/scoreboard/indicator/banker-bead.png';
+import tieBeadImage from '../../../../assets/baccarat/scoreboard/indicator/tie-bead.png';
+import playerPairBeadImage from '../../../../assets/baccarat/scoreboard/indicator/player-pair-bead.png';
+import bankerPairBeadImage from '../../../../assets/baccarat/scoreboard/indicator/banker-pair-bead.png';
+
+// Constants for image mapping
+const betPercentageImages: Record<string, string> = {
+    player: playerBeadImage,
+    banker: bankerBeadImage,
+    tie: tieBeadImage,
+    playerPair: playerPairBeadImage,
+    bankerPair: bankerPairBeadImage,
+};
+
 // Types and Interfaces
 interface BetResult {
     player: boolean;
@@ -24,7 +40,6 @@ interface BetDisplayConfig {
     key: keyof BetCounts;
     indicator: string;
     className: string;
-    imagePath: string;
 }
 
 interface Props {
@@ -61,11 +76,11 @@ const calculateBetStatistics = (data: gc.RoundHistories.RoundHistory[]): BetCoun
 
 // Configuration for bet display
 const BET_DISPLAY_CONFIG: BetDisplayConfig[] = [
-    { key: 'player', indicator: 'P', className: 'player', imagePath: '/static/images/baccarat/scoreboard/indicator/player-bead.png' },
-    { key: 'banker', indicator: 'B', className: 'banker', imagePath: '/static/images/baccarat/scoreboard/indicator/banker-bead.png' },
-    { key: 'tie', indicator: 'T', className: 'tie', imagePath: '/static/images/baccarat/scoreboard/indicator/tie-bead.png' },
-    { key: 'playerPair', indicator: 'P', className: 'player-pair', imagePath: '/static/images/baccarat/scoreboard/indicator/player-pair-bead.png' },
-    { key: 'bankerPair', indicator: 'B', className: 'banker-pair', imagePath: '/static/images/baccarat/scoreboard/indicator/banker-pair-bead.png' }
+    { key: 'player', indicator: 'P', className: 'player' },
+    { key: 'banker', indicator: 'B', className: 'banker' },
+    { key: 'tie', indicator: 'T', className: 'tie' },
+    { key: 'playerPair', indicator: 'P', className: 'player-pair' },
+    { key: 'bankerPair', indicator: 'B', className: 'banker-pair' }
 ];
 
 // Presentational component for a single bet percentage item
@@ -76,7 +91,7 @@ const BetPercentageItem: React.FC<{
 }> = ({ config, count, translateBetOption }) => (
     <div className={Styles["percentage-item"]}>
         <span className={`${Styles.indicator} ${Styles[config.className]}`}>
-            <img src={config.imagePath} alt={config.indicator} width="16" height="16" />
+            <img src={betPercentageImages[config.key]} alt={config.indicator} width="16" height="16" />
         </span>
         {translateBetOption(config.key)}
         <span className={Styles.count}>{count}</span>
