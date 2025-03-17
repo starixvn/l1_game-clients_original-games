@@ -1,103 +1,139 @@
-@use "sass:math" as math;
-@use "sass:map";
-@import "../settlement-result/styles/_variables";
-@import "../settlement-result/styles/_mixins";
+@use 'sass:math' as math;
+@use 'sass:map';
+@import '../settlement-result/styles/_variables';
+@import '../settlement-result/styles/_mixins';
 @import '../styles/_overrides';
 
 .animation-container {
-    // top: 0.3rem;
-    width: 100%;  
-    height: 100%;
-    pointer-events: none;
-    display: grid;
-    --gap-player-banker: map.get($layout, 'gap-player-banker', 'default');
-    // grid-column-gap: calc(var(--gap-player-banker)*2);
-    grid-template-columns: 1fr 1fr;
-    position: relative;
-    align-items: center;
+  // top: 0.3rem;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  display: grid;
+  --gap-player-banker: map.get($layout, 'gap-player-banker', 'default');
+  // grid-column-gap: calc(var(--gap-player-banker)*2);
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  align-items: center;
 }
 
 %player-banker-base {
-    display: flex;
-    flex: 1 1 8.9rem;
-    position: relative;
+  display: flex;
+  flex: 1 1 8.9rem;
+  position: relative;
 }
 
 .player {
-    @extend %player-banker-base;
-    justify-self: flex-end;
-
+  @extend %player-banker-base;
+  justify-self: flex-end;
 }
 
 .banker {
-    @extend %player-banker-base;
-    justify-self: flex-start;
-
+  @extend %player-banker-base;
+  justify-self: flex-start;
 }
 
 .open-cards {
-    --distance-first-second-card: map.get($layout, 'card-distances', 'first-second');
-    --distance-second-third-card: map.get($layout, 'card-distances', 'second-third');
-    height: 100%;
+  --distance-first-second-card: map.get(
+    $layout,
+    'card-distances',
+    'first-second'
+  );
+  --distance-second-third-card: map.get(
+    $layout,
+    'card-distances',
+    'second-third'
+  );
+  height: 100%;
 
-    &.card-4 {
-        .card1 { transform: translateX(var(--distance-first-second-card)); }
-        .card2 { transform: translateX(0); }
-        .card3 { transform: translateX(0); }
-        .card4 { transform: translateX(calc(var(--distance-first-second-card) * -1)); }
+  &.card-4 {
+    .card1 {
+      transform: translateX(var(--distance-first-second-card));
+    }
+    .card2 {
+      transform: translateX(0);
+    }
+    .card3 {
+      transform: translateX(0);
+    }
+    .card4 {
+      transform: translateX(calc(var(--distance-first-second-card) * -1));
+    }
+  }
+
+  &.card-5,
+  &.card-6 {
+    .card1 {
+      transform: translateX(var(--distance-second-third-card));
+    }
+    .card2 {
+      transform: translateX(0);
+    }
+    .card3 {
+      transform: translateX(
+        calc(
+          var(--distance-second-third-card) - var(--distance-first-second-card)
+        )
+      );
+    }
+    .card4 {
+      transform: translateX(calc(var(--distance-first-second-card) * -1));
     }
 
-    &.card-5, &.card-6 {
-        .card1 { transform: translateX(var(--distance-second-third-card)); }
-        .card2 { transform: translateX(0); }
-        .card3 { transform: translateX(calc(var(--distance-second-third-card) - var(--distance-first-second-card))); }
-        .card4 { transform: translateX(calc(var(--distance-first-second-card) * -1)); }
-
-        &.card-5 .card5, &.card-6 .card6 {
-            transform: translateX(calc(var(--distance-second-third-card) * -1));
-        }
+    &.card-5 .card5,
+    &.card-6 .card6 {
+      transform: translateX(calc(var(--distance-second-third-card) * -1));
     }
+  }
 }
 
 // Desktop layout
-@include respond-to('desktop') {    
-    .animation-container {
-        --gap-player-banker: map.get($layout, 'gap-player-banker', 'desktop');       
-    }
+@include respond-to('desktop') {
+  .animation-container {
+    --gap-player-banker: map.get($layout, 'gap-player-banker', 'desktop');
+  }
 
-    .open-cards {
-        --distance-first-second-card: map.get($layout, 'card-distances', 'first-second');
-        --distance-second-third-card: map.get($layout, 'card-distances', 'second-third');
-    }
+  .open-cards {
+    --distance-first-second-card: map.get(
+      $layout,
+      'card-distances',
+      'first-second'
+    );
+    --distance-second-third-card: map.get(
+      $layout,
+      'card-distances',
+      'second-third'
+    );
+  }
 }
 
 // Card section layout
 .cardSection {
-    height: 100%;
-    scale: 0.9;
+  height: 100%;
+  scale: 0.9;
 }
-
 
 // Result card section styles
 .resultCardSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  .cardContainer {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    
-    .cardContainer {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-    }
+    position: relative;
+  }
 
-    .cardWrapper {
-        position: relative;
-        margin-left: -1.5rem; // Create overlap effect
-        
-        &:first-child {
-            margin-left: 0; // No margin for first card
-        }
+  .cardWrapper {
+    position: relative;
+    margin-left: -2rem; // Create overlap effect
+    transform: scale(0.72);
+
+    &:first-child {
+      margin-left: 0; // No margin for first card
     }
+  }
 }

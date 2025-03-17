@@ -1,88 +1,100 @@
 @import '../styles/overrides';
 
 .variables {
-    --baccarat-player-bg: linear-gradient(0deg, #{$player-color-start} 0%, #{$player-color-end} 100%);
-    --baccarat-player-border: #{$player-color-end};
-    --baccarat-banker-bg: linear-gradient(0deg, #{$banker-color-start} 6.041653826832771%, #{$banker-color-end} 100%);
-    --baccarat-banker-border: #{$banker-color-end};
-    --baccarat-tie-bg: linear-gradient(0deg, #{$tie-color-start} 6.041653826832771%, #{$tie-color-end} 100%);
-    --baccarat-tie-border: #{$tie-color-end};
-    --baccarat-next-bg: #f0f0f0;
-    --baccarat-next-border: #ddd;
-    --baccarat-text-light: #fff;
-    --baccarat-text-dark: #212529;
+  --baccarat-player-bg: linear-gradient(
+    0deg,
+    #{$player-color-start} 0%,
+    #{$player-color-end} 100%
+  );
+  --baccarat-player-border: #{$player-color-end};
+  --baccarat-banker-bg: linear-gradient(
+    0deg,
+    #{$banker-color-start} 6.041653826832771%,
+    #{$banker-color-end} 100%
+  );
+  --baccarat-banker-border: #{$banker-color-end};
+  --baccarat-tie-bg: linear-gradient(
+    0deg,
+    #{$tie-color-start} 6.041653826832771%,
+    #{$tie-color-end} 100%
+  );
+  --baccarat-tie-border: #{$tie-color-end};
+  --baccarat-next-bg: #f0f0f0;
+  --baccarat-next-border: #ddd;
+  --baccarat-text-light: #fff;
+  --baccarat-text-dark: #212529;
 }
 
 .round-history {
-    composes: variables;
-    background-color: #fce0d7;
-    padding: 8px 12px;
-    border-radius: 4px;
+  composes: variables;
+  background-color: var(--c-av-match-live-bg);
+  padding: 8px 12px;
+  border-radius: 4px;
 
-    .hstack-round {
-        margin-top: 0 !important;
-        display: flex;
-        align-items: center;
-        gap: 4px !important;
+  .hstack-round {
+    margin-top: 0 !important;
+    display: flex;
+    align-items: center;
+    gap: 4px !important;
 
-        > span:first-child {
-            color: var(--baccarat-text-dark);
-            font-size: 13px;
-            margin-right: 8px;
-            font-weight: bold;
-        }
+    > span:first-child {
+      color: var(--baccarat-text-dark);
+      font-size: 13px;
+      margin-right: 8px;
+      font-weight: bold;
+    }
+  }
+
+  .history-item {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .arrow {
+    background-image: url('../../../../assets/arrow.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    height: 12px;
+    width: 12px;
+    opacity: 0.6;
+    margin: 0 2px;
+  }
+
+  .baccarat-dot {
+    width: 24px !important;
+    height: 24px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50%;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
 
-    .history-item {
-        display: flex;
-        align-items: center;
-        gap: 2px;
+    &.player {
+      background: var(--baccarat-player-bg);
+      border: 1px solid var(--baccarat-player-border);
     }
 
-    .arrow {
-        background-image: url("../../../../assets/arrow.svg");
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: contain;
-        height: 12px;
-        width: 12px;
-        opacity: 0.6;
-        margin: 0 2px;
+    &.banker {
+      background: var(--baccarat-banker-bg);
+      border: 1px solid var(--baccarat-banker-border);
     }
 
-    .baccarat-dot {
-        width: 24px !important;
-        height: 24px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        border-radius: 50%;
-        
-        img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        &.player {
-            background: var(--baccarat-player-bg);
-            border: 1px solid var(--baccarat-player-border);
-        }
-
-        &.banker {
-            background: var(--baccarat-banker-bg);
-            border: 1px solid var(--baccarat-banker-border);
-        }
-
-        &.tie {
-            background: var(--baccarat-tie-bg);
-            border: 1px solid var(--baccarat-tie-border);
-        }
-
-        &.next {
-            background: var(--baccarat-next-bg) !important;
-            border: 1px solid var(--baccarat-next-border) !important;
-            color: var(--baccarat-text-dark) !important;
-        }
+    &.tie {
+      background: var(--baccarat-tie-bg);
+      border: 1px solid var(--baccarat-tie-border);
     }
+
+    &.next {
+      background: var(--baccarat-next-bg) !important;
+      border: 1px solid var(--baccarat-next-border) !important;
+      color: var(--baccarat-text-dark) !important;
+    }
+  }
 }

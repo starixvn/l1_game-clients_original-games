@@ -6,7 +6,6 @@
   --border-radius: 4px;
   --scoreboard-bg: transparent;
   --content-bg: #274980;
-  --title-color: #212529;
   --player-color: #{$player-color};
   --banker-color: #{$banker-color};
   --tie-color: #{$tie-color};
@@ -31,7 +30,6 @@
     align-items: center;
     font-weight: bold;
     font-weight: bold;
-    color: var(--title-color);
   }
 
   &-percentage {
@@ -39,8 +37,8 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    color: white;
-    background: var(--percentage-bg);
+    color: var(--c-av-white);
+    background: var(--scoreboard-header-bg);
     padding: 5px 10px;
     border-radius: 5px 5px 0 0;
 
@@ -58,10 +56,9 @@
     overflow-x: auto;
     overflow-y: hidden;
     position: relative;
-    background: white;
+    background: var(--scoreboard-content-bg);
     scrollbar-width: thin;
-    scrollbar-color: #c9c4c4 #f1f1f1;
-    border: 1px solid #e0e0e0;
+    scrollbar-color: var(--scroll-bar-track) var(--c-av-lv1-theme-bg-2);
     width: 100%;
     min-width: 0;
 
@@ -92,7 +89,6 @@
   grid-template-rows: repeat(6, var(--cell-size));
   grid-auto-columns: var(--cell-size);
   gap: 0;
-  background: white;
   min-width: 100%;
 }
 
@@ -100,8 +96,8 @@
   composes: variables;
   width: var(--cell-size);
   height: var(--cell-size);
-  border-right: 1px solid #f0f0f0;
-  border-bottom: 1px solid #f0f0f0;
+  border-right: 1px solid var(--c-av-theme-border-1);
+  border-bottom: 1px solid var(--c-av-theme-border-1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -110,11 +106,6 @@
   pointer-events: none;
   box-sizing: border-box;
   padding: 0;
-  background: white;
-
-  &:empty {
-    background: white;
-  }
 }
 
 .dot-image {
