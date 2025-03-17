@@ -1,29 +1,4 @@
 {
-    "1": {
-        "id": 1,
-        "gameName": "BigSmall",
-        "name": "BigSmall",
-        "namespaces": [
-            "BigSmall"
-        ],
-        "isVisible": false,
-        "durations": {
-            "wholeRound": 61,
-            "lockingBet": 5,
-            "placingBet": 50,
-            "generatingResult": 1,
-            "showingResult": 6,
-            "startRound": 2
-        },
-        "numberOfRoundHistory": 100,
-        "websocket": {
-            "proxyPath": "",
-            "route": "livepagegateway"
-        },
-        "mainObserverNamespace": "BigSmall",
-        "order": 3,
-        "isSocketGateway": true
-    },
     "2": {
         "id": 2,
         "gameName": "SeDie",
@@ -46,7 +21,7 @@
             "route": "livepagegateway"
         },
         "mainObserverNamespace": "SeDie",
-        "order": 1,
+        "order": 2,
         "isSocketGateway": true
     },
     "10": {
@@ -59,7 +34,7 @@
         "isVisible": true,
         "durations": {
             "wholeRound": 46,
-            "lockingBet": 3,
+            "lockingBet": 5,
             "placingBet": 30,
             "generatingResult": 1,
             "showingResult": 15,
@@ -73,7 +48,7 @@
             "route": "livepagegateway"
         },
         "mainObserverNamespace": "Baccarat",
-        "order": 3,
+        "order": 4,
         "isSocketGateway": true
     },
     "22": {
@@ -98,62 +73,8 @@
             "route": "livepagegateway"
         },
         "mainObserverNamespace": "VipSeDie",
-        "order": 2,
+        "order": 1,
         "isSocketGateway": true
-    },
-    "1003": {
-        "id": 1003,
-        "gameName": "LuckyNext1",
-        "name": "LuckyNext1",
-        "namespaces": [
-            "LuckyNext1"
-        ],
-        "isVisible": true,
-        "durations": {
-            "wholeRound": 164,
-            "wholeTurn": 20,
-            "lockingBet": 3,
-            "placingBet": 15,
-            "generatingResult": 1,
-            "showingResult": 5,
-            "startRound": 0,
-            "switchRoundAnimation": 4
-        },
-        "totalTurns": 8,
-        "numberOfRoundHistory": 100,
-        "websocket": {
-            "proxyPath": "luckynext1",
-            "route": "luckynext1"
-        },
-        "mainObserverNamespace": "LuckyNext1",
-        "order": 1
-    },
-    "1007": {
-        "id": 1007,
-        "gameName": "SicBall",
-        "name": "SicBall",
-        "namespaces": [
-            "SicBall"
-        ],
-        "isVisible": true,
-        "durations": {
-            "wholeRound": 30,
-            "wholeTurn": 30,
-            "lockingBet": 3,
-            "placingBet": 20,
-            "generatingResult": 1,
-            "showingResult": 6,
-            "startRound": 0,
-            "switchRoundAnimation": 4
-        },
-        "totalTurns": 1,
-        "numberOfRoundHistory": 100,
-        "websocket": {
-            "proxyPath": "sicball",
-            "route": "sicball"
-        },
-        "mainObserverNamespace": "SicBall",
-        "order": 2
     },
     "55": {
         "id": 55,
@@ -178,7 +99,7 @@
             "route": "unbalancedbigsmall"
         },
         "mainObserverNamespace": "UnbalancedBigSmall4",
-        "order": 4,
+        "order": 3,
         "isSocketGateway": true
     }
 }
