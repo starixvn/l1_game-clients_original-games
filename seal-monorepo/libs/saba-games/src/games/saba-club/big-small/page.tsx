@@ -10,7 +10,7 @@ import { FunctionUtils } from "../../../_shared/utils/funtion-utils";
 import { containerOptions, setting } from "./game-settings";
 import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
 import { BigSmallSettlementResult } from "./settlement-result";
-import { GameBettingOptionsContext } from "libs/saba-games/src/_shared/react-contexts/game-betting-zone-context/game-betting-zone-context";
+import { GameBettingOptionsContext } from "../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context";
 import { BigSmallRoundHistory } from "./round-history";
 import { BigSmallBetOptions } from "./bet-option";
 import { BigSmallStatistic } from "./statistic";

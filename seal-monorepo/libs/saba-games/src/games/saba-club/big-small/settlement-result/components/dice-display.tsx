@@ -2,7 +2,7 @@ import React, { memo, useEffect, useMemo, useState } from "react";
 import styles from "../big-small-settlement-result.module.scss";
 import { BigSmallResult } from "../../type";
 import { calculateTotalDiceNumber, getRandomDiceNumbers } from "../../../../../_shared/utils/number-helper";
-import Dice from "libs/saba-games/src/_shared/components/dice";
+import Dice from "../../../../../_shared/components/dice";
 
 interface DiceListProps {
     diceNumbers: number[];

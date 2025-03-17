@@ -1,14 +1,13 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import styles from "./dice.module.scss";
-import { Size } from 'libs/saba-games/src/_shared/constants';
-
+import { Size } from '../../../_shared/constants';
+import diceQuestionMark from "../../../assets/big-small/dice-question-mark.svg";
 import dice1 from "../../../assets/big-small/dice-1.svg";
 import dice2 from "../../../assets/big-small/dice-2.svg";
 import dice3 from "../../../assets/big-small/dice-3.svg";
 import dice4 from "../../../assets/big-small/dice-4.svg";
 import dice5 from "../../../assets/big-small/dice-5.svg";
 import dice6 from "../../../assets/big-small/dice-6.svg";
-import diceQuestionMark from "../../../assets/big-small/dice-question-mark.svg";
 
 const diceImages: Record<number, string> = {
   0: diceQuestionMark,

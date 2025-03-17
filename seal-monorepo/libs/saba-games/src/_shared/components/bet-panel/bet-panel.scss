@@ -16,8 +16,6 @@
     // 籌碼 Betslip
     .c-quick-bet__panel {
         font-family: "Segoe UI";
-        min-width: 244px;
-        max-width: unset;
         .c-ng-ball-small {
             width: 26px;
             height: 26px;
@@ -30,7 +28,7 @@
     .c-betslip__content {
         .c-betting-scroller {
             height: 100%;
-            display: block;
+            min-height: 330px;
         }
         .c-ticket__header  {
             font-size: 13px;

@@ -5,7 +5,7 @@ import Styles from "./big-small-result-history.module.scss";
 import { BigSmallResult, BigSmallSettlementResult } from "../type";
 import { Size } from "../../../../_shared/constants";
 import { calculateTotalDiceNumber } from "../../../../_shared/utils/number-helper";
-import Dice from "libs/saba-games/src/_shared/components/dice";
+import Dice from "../../../../_shared/components/dice";
 import classNames from 'classnames';
 
 export interface IBigSmallResultHistoryProps extends IPropsObserver {

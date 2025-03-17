@@ -53,28 +53,28 @@
         &:before {
             border-radius: 100%;
             content: "";
-            top: 2px;
-            left: 2px;
-            bottom: 2px;
-            right: 2px;
+            top: 0.3rem;
+            left: 0.3rem;
+            bottom: 0.3rem;
+            right: 0.3rem;
             position: absolute;
             z-index: 1;
         }
     }
 
     %dot-red {
-        background: var(--dot-odd-border);
+        background: linear-gradient(180deg, #db4853 0%, #de4b56 100%);
 
         &:before {
-            background: var(--dot-odd-background);
+            background-image: linear-gradient(180deg, #de4b56 0%, #c73540 100%);
         }
     }
 
     %dot-white {
-        background: var(--dot-even-border);
+        background: linear-gradient(180deg, #ffffff 0%, #d0d0d0 100%);
 
         &:before {
-            background-image: var(--dot-even-background);
+            background-image: linear-gradient(180deg, #ffffff 0%, #ebebeb 100%);
         }
     }
 

@@ -1,6 +1,6 @@
 import { Converter } from "sc-scoreboards";
 import { choices } from "../../../types/settlement-result";
-import { BigSmallRoundHistory, BigSmallSettlementResult } from "libs/saba-games/src/games/saba-club/big-small/type";
+import { BigSmallRoundHistory, BigSmallSettlementResult } from "../../../../games/saba-club/big-small/type";
 
 export class BigSmallBigRoadConverter extends Converter<BigSmallRoundHistory> {
     static addBlinkNode(rounds: BigSmallRoundHistory[]) {

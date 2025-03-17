@@ -11,7 +11,7 @@ import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
 import { IPropsObserver } from '../../../../_shared/components/observer-component/observer-component';
 import { observer } from '@sg/sg-observer';
 import { setting } from '../game-settings';
-import OddsComponent from 'libs/saba-games/src/_shared/components/bet-option/odd-component';
+import OddsComponent from '../../../../_shared/components/bet-option/odd-component';
 
 interface BetOptionProps {
   odd: number;

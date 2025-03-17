@@ -5,8 +5,6 @@
 .container-bets {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    height: 100%;
 }
 
 .wrapper-dots {
@@ -25,13 +23,15 @@
 }
 
 .bets-bg {
-    background-color: var(--c-av-odds-in-play-bg);   
+    background-color: var(--c-av-odds-in-play-bg);
+    border-width: var(--c-av-odds-button-border-width);
+    border-color: var(--c-av-odds-button-border);
     border-radius: var(--c-av-border-radius);
     height: 2rem;
 }
 
 .padding-bet {
-    padding: 0 8px;
+    padding: 8px;
 }
 
 .margin-x-0 {
