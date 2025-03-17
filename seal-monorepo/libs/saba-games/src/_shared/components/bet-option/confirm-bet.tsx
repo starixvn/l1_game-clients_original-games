@@ -55,10 +55,8 @@ export class ConfirmBet extends ObserverComponent<IPropsObserver, IConfirmBet> {
     }
 
     if (isShowNotification) {
-      return (
-        <div className={styles['bet-result-container']}>
-          <BetModalSuccess />
-        </div>
+      return (        
+          <BetModalSuccess totalStake={totalStake} />
       );
     }
 

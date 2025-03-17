@@ -5,14 +5,15 @@ import React from 'react';
 // import { Button, Container } from 'react-bootstrap';
 import { GameContextProvider } from '../../react-contexts/game-context/game-context';
 import { Lobby } from '../../states';
+import AnimationBalance from '../anim-balance';
 import { ConfirmBet } from '../bet-option/confirm-bet';
 import GameContainer from '../game-container';
 import Loading from '../loading';
 import Notice from '../notices/notice';
 import Warning from '../notices/warning';
+import StatisticButton from '../statistic-button/statistic-button';
 import Styles from './game-base.module.scss';
 import { GameBaseProps } from './type';
-import StatisticButton from '../statistic-button/statistic-button';
 
 export interface IGameBaseState {
     isConnected: boolean;
@@ -20,6 +21,7 @@ export interface IGameBaseState {
     initialized: boolean;
     showDisabledPopup: boolean;
     isOpenStatistic: boolean;
+    statusSettlement?: gc.GameServiceMessage.Status;
 }
 interface GameStyleOverrides {
     [key: string]: string;
@@ -100,6 +102,13 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         return <></>;
     }
 
+    @render(Settlements.SettlementStatusStore, (store) => store.settlementStatus, {
+        fireImmediately: false,
+    })
+    assignStatus(settlementStatus: any) {
+        this.setState({ statusSettlement: settlementStatus });
+        console.log("status", settlementStatus)
+    }
 
     @render(Settlements.SettlementStore, (store) => store.currentFinish, {
         fireImmediately: false,
@@ -131,7 +140,13 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     @handle(Settlements.SettlementUIHandlers.FinishedShowResult)
     finishShowResult() {
-        //show result
+        const {statusSettlement} = this.state;
+        console.log('Settlement status:', statusSettlement);
+        console.log('Bet amount:', statusSettlement?.bet);
+        return (
+            <AnimationBalance winBet={statusSettlement?.bet} />
+        )
+        
     }
 
     @handle(Lobby.LobbyHandlers.TryToConnectHandler)
