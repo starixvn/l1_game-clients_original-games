@@ -23,7 +23,7 @@ const BaccaratHeader: React.FC<BaccaratHeaderProps> = ({ gameId, isExpanded, han
                 centerTextsComponent={<GameHeaderCenterTexts texts={[
                     gc.Translator.t('Baccarat.glossary_player') + '/' + gc.Translator.t('Baccarat.glossary_banker'),
                     gc.Translator.t('Baccarat.glossary_tie'),
-                    gc.Translator.t('Baccarat.glossary_playerPair') + '/' + gc.Translator.t('Baccarat.glossary_bankerPair')
+                    gc.Translator.t('Baccarat.banker_player_pair')
                 ]} />}
                 className={styles.baccaratGameTitle}
             />
