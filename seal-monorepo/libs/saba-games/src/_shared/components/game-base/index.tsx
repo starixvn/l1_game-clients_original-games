@@ -234,7 +234,6 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                     <button
                         className={`${'c-btn'} ${'c-btn--bet'} ${Styles['reconnect-btn']}`}
                         data-disabled={false}
-                        aria-hidden='true'
                         onClick={this.handleReconnect}
                     >
                         <span className='c-text'>{reconnectText}</span>
