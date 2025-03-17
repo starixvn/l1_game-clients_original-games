@@ -5,6 +5,18 @@ import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_
 import Styles from "./baccarat-round-history.module.scss";
 import { IBaccaratResult, BaccaratSettlementResult } from "../type";
 
+// Image assets
+import playerBeadImage from '../../../../assets/baccarat/scoreboard/indicator/player-bead.png';
+import bankerBeadImage from '../../../../assets/baccarat/scoreboard/indicator/banker-bead.png';
+import tieBeadImage from '../../../../assets/baccarat/scoreboard/indicator/tie-bead.png';
+
+// Constants for image mapping
+const roundHistoryImages: Record<string, string> = {
+    player: playerBeadImage,
+    banker: bankerBeadImage,
+    tie: tieBeadImage,
+};
+
 export interface IBaccaratRoundHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
 }
@@ -84,11 +96,11 @@ export default class BaccaratRoundHistory extends ObserverComponent<IPropsObserv
             return <></>;
         }
         const settlement = this.getSettlementResult(roundHistory.settlementResult);
-        const beadPath = `/static/images/baccarat/scoreboard/indicator/${settlement.winner}-bead.png`;
+        const beadImage = roundHistoryImages[settlement.winner];
         return (
             <div key={roundHistory.roundId} className={Styles["history-item"]}>
                 <div className={`${Styles["baccarat-dot"]} ${Styles[settlement.winner]}`}>
-                    <img src={beadPath} alt={settlement.winner} width="24" height="24" />
+                    <img src={beadImage} alt={settlement.winner} width="24" height="24" />
                 </div>
                 <span className={Styles["arrow"]}></span>
             </div>
