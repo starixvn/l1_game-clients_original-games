@@ -38,11 +38,6 @@ module.exports = {
           input: 'libs/saba-games/src/assets',
           output: '/assets',
         },
-        {
-          glob: '**/*',
-          input: 'libs/saba-games/public/static',
-          output: '/static',
-        },
       ],
 
       styles:
