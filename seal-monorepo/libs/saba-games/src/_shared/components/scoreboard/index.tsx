@@ -1,8 +1,18 @@
+import React from 'react';
 import { Translator } from '@sg/sg-game-client';
 import Styles from './scoreboard.module.scss';
 import { hasBlink } from './helper';
 import { OddEvenBigRoadConverter, OverUnderBigRoadConverter } from './converters';
 // import { ScoreboardItemContent } from './types';
+
+// Image assets can be imported here following the pattern:
+// import exampleImage from '../../../assets/scoreboard/example.png';
+
+// Constants for image mapping can be added here:
+// const scoreboardImages: Record<string, string> = {
+//     // Add image mappings here as needed
+// };
+
 type Props = {
     gameName: string | undefined;
     rows: any[];

@@ -69,7 +69,7 @@ const cardImages: Record<string, string> = {
     "spade": spade,
     "heart": heart,
 
-  };
+};
 
 
 const Card: React.FC<Props> = (props) => {
@@ -78,20 +78,20 @@ const Card: React.FC<Props> = (props) => {
     const isDisplayMiniCard = isSmall;
 
     const getCardsDefault = () => {
-        const rankRed = result?.type > 1 ? "": "Red";
+        const rankRed = result?.type > 1 ? "" : "Red";
         const rankImageUrl = cardImages[`${convertRank(result?.card)}${rankRed}`];
         const suitImageUrl = cardImages[`${suffixNameMapping[result?.type]}`];
         return (
             <div className={Styles["card-front-box"]}>
-                 <img
+                <img
                     src={`${cardFront}#v1`}
                     className={Styles["card-front"]}
                     alt="card-front"
                 />
-                <img src={rankImageUrl} className={Styles["card-rank"]} width="22px" height="22px"/>
-                <img src={suitImageUrl} className={Styles["card-suit"]} width="47px" height="63px"/>
+                <img src={rankImageUrl} className={Styles["card-rank"]} width="22px" height="22px" />
+                <img src={suitImageUrl} className={Styles["card-suit"]} width="47px" height="63px" />
             </div>
-           
+
         );
     };
 

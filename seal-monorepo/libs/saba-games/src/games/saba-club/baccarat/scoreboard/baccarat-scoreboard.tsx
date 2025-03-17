@@ -6,6 +6,27 @@ import styles from './baccarat-scoreboard.module.scss';
 import { BaccaratBetPercentages } from '../baccarat-bet-percentages';
 import { GridCell, organizeDataForBigRoad, getSettlementResult } from './baccarat-big-road-patterns';
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
+
+// Image assets
+// import blinkDotImage from '../../../../assets/baccarat/scoreboard/big-road/blink.png';
+import playerDotImage from '../../../../assets/baccarat/scoreboard/big-road/player.png';
+import bankerDotImage from '../../../../assets/baccarat/scoreboard/big-road/banker.png';
+import playerPairDotImage from '../../../../assets/baccarat/scoreboard/big-road/player-pair-dot.png';
+import bankerPairDotImage from '../../../../assets/baccarat/scoreboard/big-road/banker-pair-dot.png';
+import naturalImage from '../../../../assets/baccarat/scoreboard/big-road/natural.png';
+import tieImage from '../../../../assets/baccarat/scoreboard/big-road/tie.png';
+
+// Constants for image mapping
+const scoreboardImages: Record<string, string> = {
+    // blink: blinkDotImage,
+    player: playerDotImage,
+    banker: bankerDotImage,
+    playerPair: playerPairDotImage,
+    bankerPair: bankerPairDotImage,
+    natural: naturalImage,
+    tie: tieImage,
+};
+
 interface IBaccaratScoreboardState extends IStateObserver {
     gridData: (GridCell | null)[][];
     rounds: gc.RoundHistories.RoundHistory[];
@@ -66,28 +87,28 @@ export class BaccaratScoreboard extends ObserverComponent<Props, IBaccaratScoreb
 
     private getDotImage = (cell: GridCell): string => {
         if (cell.isBlink) {
-            return '/static/images/baccarat/scoreboard/big-road/Rectangle 9391.png';
+            return scoreboardImages.blink;
         }
-        return `/static/images/baccarat/scoreboard/big-road/${cell.status ? 'player' : 'banker'}.png`;
+        return cell.status ? scoreboardImages.player : scoreboardImages.banker;
     };
 
     private getPairDotImage = (cell: GridCell): string[] => {
         const pairDots: string[] = [];
         if (cell.playerPair) {
-            pairDots.push('/static/images/baccarat/scoreboard/big-road/player-pair-dot.png');
+            pairDots.push(scoreboardImages.playerPair);
         }
         if (cell.bankerPair) {
-            pairDots.push('/static/images/baccarat/scoreboard/big-road/banker-pair-dot.png');
+            pairDots.push(scoreboardImages.bankerPair);
         }
         return pairDots;
     };
 
     private getNaturalImage = (): string => {
-        return '/static/images/baccarat/scoreboard/big-road/natural.png';
+        return scoreboardImages.natural;
     };
 
     private getTieImage = (): string => {
-        return '/static/images/baccarat/scoreboard/big-road/tie.png';
+        return scoreboardImages.tie;
     };
 
     private processRounds = (rounds: gc.RoundHistories.RoundHistory[]) => {
