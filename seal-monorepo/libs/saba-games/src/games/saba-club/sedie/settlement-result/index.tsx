@@ -16,6 +16,7 @@ export interface ISeDieSettlementResultState extends IStateObserver {
     result: gc.GameServiceMessage.TResult;
     roundState: string;
     isAnimationResult: boolean;
+    win: number;
 }
 export default class SeDieSettlementResult extends ObserverComponent<IPropsObserver, ISeDieSettlementResultState> {
     constructor(props: IPropsObserver) {
@@ -25,6 +26,7 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
             result: {},
             roundState: '',
             isAnimationResult: false,
+            win: 0,
         };
     }
 
@@ -59,6 +61,14 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
         if (lastRound) {
             this.setState({ result: lastRound?.result });
         }
+    }
+
+    @render(gc.Settlements.SettlementStatusStore, (store) => store.settlementStatus, {
+        fireImmediately: false,
+    })
+    assignStatus(settlementStatus: any) {
+        this.setState({ win: settlementStatus.bet });
+        console.log("status", settlementStatus)
     }
 
     renderIcons = (result: gc.GameServiceMessage.TResult) => {

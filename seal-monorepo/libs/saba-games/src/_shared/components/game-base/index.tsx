@@ -183,7 +183,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     getRenderTemplate() {
-        const { isConnected, isConnectFailed, initialized: isGameConfigInitialized, showDisabledPopup } = this.state;
+        const { isConnected, isConnectFailed, initialized: isGameConfigInitialized, showDisabledPopup, statusSettlement } = this.state;
 
         if (isConnectFailed) {
             return this.renderDisconnect();
@@ -209,7 +209,11 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                         {this.renderBettingBlock()}
                         <ConfirmBet
                             namespace={this.props.namespace}
+                            
                         />
+                    </div>
+                    <div className={Styles["animation-balance"]}>
+                        {this.renderAminationBalance()}
                     </div>
                 </div>
 
@@ -225,6 +229,14 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                 {this.renderWarning()}
             </>
         );
+    }
+
+    private renderAminationBalance() {
+        const {statusSettlement} = this.state;
+        if(!statusSettlement || !statusSettlement.win) {
+            return<></>;
+        }
+        return <AnimationBalance winBet={statusSettlement?.bet}/>;
     }
 
     private renderLoading() {

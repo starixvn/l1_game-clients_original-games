@@ -1,10 +1,10 @@
-import style from './Success.module.scss';
+import style from './balance.module.scss';
 
 const AnimationBalance = ({winBet}) => {
     console.log("AnimationBalance", winBet);
     return (
-        <div className={style['stake']}>
-            {`-${winBet}`}
+        <div className={style['win-amount']}>
+            {`+${winBet}`}
         </div>
     );
 };
