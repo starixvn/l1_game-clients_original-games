@@ -276,7 +276,7 @@
         "glossary_B": "Banker",
         "glossary_P": "Player",
         "banker_player": "Banker/Player",
-        "banker_player_pair": "P.Pair/B.Pair"
+        "banker_player_pair": "Pair"
     },
     "UnbalancedBigSmall4": {
         "game_vendor": "SABA.games",

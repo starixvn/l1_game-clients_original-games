@@ -277,7 +277,7 @@
         "glossary_B": "庄家",
         "glossary_P": "闲家",
         "banker_player": "庄家/闲家",
-        "banker_player_pair": "闲家一对/庄家一对"
+        "banker_player_pair": "一对"
     },
     "UnbalancedBigSmall4": {
         "game_vendor": "SABA.games",

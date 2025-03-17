@@ -277,7 +277,7 @@
         "glossary_B": "เจ้ามือ",
         "glossary_P": "ผู้เล่น",
         "banker_player": "เจ้ามือ/ผู้เล่น",
-        "banker_player_pair": "คู่ผู้เล่น/คู่เจ้ามือ"
+        "banker_player_pair": "คู่"
     },
     "UnbalancedBigSmall4": {
         "game_vendor": "SABA.games",
