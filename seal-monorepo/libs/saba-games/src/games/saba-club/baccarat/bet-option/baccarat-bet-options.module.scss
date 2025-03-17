@@ -111,8 +111,10 @@
   width: 135px;
 
   &.winning-bet {
-    background-color: #ffedae;
-    box-shadow: 0 0 4px rgba(255, 251, 230, 0.4);
+    border-radius: 3px;
+    border: 1px solid #e0e023;
+    background: #fff6f3;
+    box-shadow: 0px 0px 8px 0px #ffae00 inset;
   }
 }
 
