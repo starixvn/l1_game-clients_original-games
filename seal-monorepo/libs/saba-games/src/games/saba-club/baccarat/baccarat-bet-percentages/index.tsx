@@ -2,19 +2,15 @@ import { Translator } from '@sg/sg-game-client';
 import * as gc from '@sg/sg-game-client';
 import React from 'react';
 
-import bankerBeadImage from '../../../../assets/baccarat/scoreboard/indicator/banker-bead.png';
 import bankerPairBeadImage from '../../../../assets/baccarat/scoreboard/indicator/banker-pair-bead.png';
-import playerBeadImage from '../../../../assets/baccarat/scoreboard/indicator/player-bead.png';
 import playerPairBeadImage from '../../../../assets/baccarat/scoreboard/indicator/player-pair-bead.png';
-import tieBeadImage from '../../../../assets/baccarat/scoreboard/indicator/tie-bead.png';
 import Styles from './baccarat-bet-percentages.module.scss';
+import { BaccaratDot } from '../dot/baccarat-dot';
+import { Choices } from '../baccarat-helper';
 
 // Image assets
 // Constants for image mapping
-const betPercentageImages: Record<string, string> = {
-    player: playerBeadImage,
-    banker: bankerBeadImage,
-    tie: tieBeadImage,
+const pairImages: Record<string, string> = {
     playerPair: playerPairBeadImage,
     bankerPair: bankerPairBeadImage,
 };
@@ -73,7 +69,6 @@ const calculateBetStatistics = (data: gc.RoundHistories.RoundHistory[]): BetCoun
     }, initialCounts);
 };
 
-// Configuration for bet display
 const BET_DISPLAY_CONFIG: BetDisplayConfig[] = [
     { key: 'player', indicator: 'P', className: 'player' },
     { key: 'banker', indicator: 'B', className: 'banker' },
@@ -82,16 +77,20 @@ const BET_DISPLAY_CONFIG: BetDisplayConfig[] = [
     { key: 'bankerPair', indicator: 'B', className: 'banker-pair' },
 ];
 
-// Presentational component for a single bet percentage item
 const BetPercentageItem: React.FC<{
     config: BetDisplayConfig;
     count: number;
     translateBetOption: (option: string) => string;
 }> = ({ config, count, translateBetOption }) => (
     <div className={Styles['percentage-item']}>
-        <span className={`${Styles.indicator} ${Styles[config.className]}`}>
-            <img src={betPercentageImages[config.key]} alt={config.indicator} width="16" height="16" />
-        </span>
+        {[Choices.player, Choices.banker, Choices.tie].includes(config.key) ? (
+            <BaccaratDot choice={config.key} value={config.indicator} />
+        ) : (
+            <span className={`${Styles.indicator} ${Styles[config.className]}`}>
+                <img src={pairImages[config.key]} alt={config.indicator} width="16" height="16" />
+            </span>
+        )}
+
         {translateBetOption(config.key)}
         <span className={Styles.count}>{count}</span>
     </div>
@@ -106,10 +105,8 @@ const BaccaratBetPercentages: React.FC<Props> = ({
 
     return (
         <div className={Styles['baccarat-percentages']}>
-            {BET_DISPLAY_CONFIG.map((config, index) => (
-                <React.Fragment key={config.key}>
-                    <BetPercentageItem config={config} count={betCounts[config.key]} translateBetOption={translator} />
-                </React.Fragment>
+            {BET_DISPLAY_CONFIG.map((config) => (
+                <BetPercentageItem key={config.key} config={config} count={betCounts[config.key]} translateBetOption={translator} />
             ))}
         </div>
     );

@@ -159,10 +159,10 @@
 
     .tie-image {
         position: absolute !important;
-        top: -1px;
-        right: 0px;
+        top: -2px;
+        right: -1px;
         width: 10px;
-        height: 9px;
+        height: 10px;
         object-fit: contain;
         z-index: 3;
     }

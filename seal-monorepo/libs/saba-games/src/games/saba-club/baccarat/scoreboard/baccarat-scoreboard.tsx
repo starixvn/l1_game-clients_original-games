@@ -4,7 +4,6 @@ import { render } from '@sg/sg-observer';
 import { IPropsObserver, IStateObserver, ObserverComponent } from '../../../../_shared/components/observer-component/observer-component';
 import styles from './baccarat-scoreboard.module.scss';
 import { BaccaratBetPercentages } from '../baccarat-bet-percentages';
-import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
 
 import { BigRoadScoreboard, Converter } from 'sc-scoreboards';
 import BaccaratBigRoad from './baccarat-big-road';
@@ -12,7 +11,7 @@ import { BaccaratSettlementResult } from '../type';
 
 interface IBaccaratScoreboardState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
-    roundState: string;
+    isLockingBet: boolean;
 }
 
 interface Props extends IPropsObserver {
@@ -32,7 +31,8 @@ export class BaccaratScoreboard extends ObserverComponent<Props, IBaccaratScoreb
         super(props);
         this.state = {
             rounds: [],
-            roundState: ROUND_STATE.NONE,
+
+            isLockingBet: false,
             dispose: () => {},
         };
         this.bigRoad = new BigRoadScoreboard({
@@ -43,20 +43,26 @@ export class BaccaratScoreboard extends ObserverComponent<Props, IBaccaratScoreb
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     private onRoundHistoryUpdate(rounds: gc.RoundHistories.RoundHistory[]) {
-        this.setState({ rounds });
+        this.setState({ rounds, isLockingBet: false });
+    }
+
+    @render(gc.Rounds.RoundTimeStore, (store) => store.isLocking)
+    private renderCountDownTimerState(isLocking: boolean) {
+        if (isLocking) {
+            this.setState({ isLockingBet: true });
+        }
     }
 
     render(): React.ReactElement {
         const { noRender, gameName, maxRows = this.DEFAULT_MAX_ROWS } = this.props;
-        const { rounds, roundState } = this.state;
+        const { rounds, isLockingBet } = this.state;
 
         if (noRender || !rounds?.length) {
             return <div />;
         }
-        const hasBlink = [ROUND_STATE.LOCKING_BET, ROUND_STATE.SHOW_ANIMATION_RESULT].includes(roundState);
 
         const input = [...rounds].map((round) => round.settlementResult as unknown as BaccaratSettlementResult).reverse();
-        this.bigRoad.initialize(input, hasBlink);
+        this.bigRoad.initialize(input, isLockingBet);
         const rows = this.bigRoad.rows();
 
         return (

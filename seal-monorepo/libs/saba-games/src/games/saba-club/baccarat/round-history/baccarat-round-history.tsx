@@ -1,21 +1,9 @@
-import * as gc from "@sg/sg-game-client";
-import { render } from "@sg/sg-observer";
-import { RoundDot } from "../../../../_shared/components/dot";
-import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
-import Styles from "./baccarat-round-history.module.scss";
-import { IBaccaratResult, BaccaratSettlementResult } from "../type";
-
-// Image assets
-import playerBeadImage from '../../../../assets/baccarat/scoreboard/indicator/player-bead.png';
-import bankerBeadImage from '../../../../assets/baccarat/scoreboard/indicator/banker-bead.png';
-import tieBeadImage from '../../../../assets/baccarat/scoreboard/indicator/tie-bead.png';
-
-// Constants for image mapping
-const roundHistoryImages: Record<string, string> = {
-    player: playerBeadImage,
-    banker: bankerBeadImage,
-    tie: tieBeadImage,
-};
+import * as gc from '@sg/sg-game-client';
+import { render } from '@sg/sg-observer';
+import { IPropsObserver, IStateObserver, ObserverComponent } from '../../../../_shared/components/observer-component/observer-component';
+import Styles from './baccarat-round-history.module.scss';
+import { BaccaratDot } from '../dot/baccarat-dot';
+import { Choices } from '../baccarat-helper';
 
 export interface IBaccaratRoundHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
@@ -31,103 +19,39 @@ export default class BaccaratRoundHistory extends ObserverComponent<IPropsObserv
         this.setState({ rounds: rounds.slice(0, 10) });
     }
 
-    render() {
-        const { rounds } = this.state;
-        if (!rounds || rounds.length === 0) {
-            return <></>;
-        }
-        const roundHistories = rounds as gc.RoundHistories.RoundHistory[];
-        const t = (key) => gc.Translator.translate(key, { languageId: gc.Translator.getCurrentLanguageId() });
-
-        return (
-            <div className={Styles["round-history"]}>
-                <div className={Styles["hstack-round"]}>
-                    <div className={Styles["hstack-text"]}>{t('Common.previous_round')}:</div>
-                    {roundHistories.toReversed().map((roundHistory) => {
-                        return this.RoundHistoryItem(roundHistory);
-                    })}
-                    <RoundDot
-                        highlight={true}
-                        value={"?"}
-                        choice="next"
-                        className={`${Styles["baccarat-dot"]} ${Styles["next"]}`}
-                    />
-                </div>
-            </div>
-        );
-    }
-
-    private getSettlementResult(settlementResult: gc.GameServiceMessage.TSettlementResult): BaccaratSettlementResult {
-        const result: BaccaratSettlementResult = {
-            winner: 'player',
-            player: false,
-            banker: false,
-            tie: false,
-            playerPair: false,
-            bankerPair: false
-        };
-
-        if (settlementResult && typeof settlementResult === "object") {
-            result.player = !!settlementResult.player;
-            result.banker = !!settlementResult.banker;
-            result.tie = !!settlementResult.tie;
-
-            if (settlementResult.player) {
-                result.winner = 'player';
-            } else if (settlementResult.banker) {
-                result.winner = 'banker';
-            } else if (settlementResult.tie) {
-                result.winner = 'tie';
-            }
-
-            const gameData = settlementResult.gameData;
-            if (gameData && typeof gameData === "object") {
-                const data = gameData as Record<string, unknown>;
-                result.playerPair = !!data.playerPair;
-                result.bankerPair = !!data.bankerPair;
-            }
-        }
-
-        return result;
+    private getWinningChoice(settlementResult: gc.GameServiceMessage.TSettlementResult): string {
+        return [Choices.player, Choices.banker, Choices.tie].find((choice) => settlementResult[choice]) ?? '';
     }
 
     private RoundHistoryItem(roundHistory: gc.RoundHistories.RoundHistory): JSX.Element {
         if (!roundHistory.settlementResult) {
             return <></>;
         }
-        const settlement = this.getSettlementResult(roundHistory.settlementResult);
-        const beadImage = roundHistoryImages[settlement.winner];
+        const winningChoice = this.getWinningChoice(roundHistory.settlementResult);
         return (
-            <div key={roundHistory.roundId} className={Styles["history-item"]}>
-                <div className={`${Styles["baccarat-dot"]} ${Styles[settlement.winner]}`}>
-                    <img src={beadImage} alt={settlement.winner} width="24" height="24" />
-                </div>
-                <span className={Styles["arrow"]}></span>
+            <div key={roundHistory.roundId} className={Styles['history-item']}>
+                <BaccaratDot choice={winningChoice} />
+                <span className={Styles['arrow']}></span>
             </div>
         );
     }
 
-    private getResult(settlementResult: gc.GameServiceMessage.TSettlementResult): IBaccaratResult {
-        const result: IBaccaratResult = {
-            playerValue: 0,
-            bankerValue: 0
-        };
-
-        if (settlementResult && typeof settlementResult === "object") {
-            // Extract scores if available in settlement data
-            const gameData = settlementResult.gameData;
-            if (gameData && typeof gameData === "object") {
-                const data = gameData as Record<string, unknown>;
-
-                if ("playerScore" in data) {
-                    result.playerValue = Number(data.playerScore) || 0;
-                }
-                if ("bankerScore" in data) {
-                    result.bankerValue = Number(data.bankerScore) || 0;
-                }
-            }
+    render() {
+        const { rounds } = this.state;
+        if (!rounds || rounds.length === 0) {
+            return <></>;
         }
-
-        return result;
+        const t = (key) => gc.Translator.translate(key, { languageId: gc.Translator.getCurrentLanguageId() });
+        return (
+            <div className={Styles['round-history']}>
+                <div className={Styles['round']}>
+                    <div className={Styles['text']}>{t('Common.previous_round')}:</div>
+                    {rounds.toReversed().map((roundHistory) => {
+                        return this.RoundHistoryItem(roundHistory);
+                    })}
+                    <BaccaratDot highlight={true} value={'?'} choice="next" />
+                </div>
+            </div>
+        );
     }
-} 
+}
