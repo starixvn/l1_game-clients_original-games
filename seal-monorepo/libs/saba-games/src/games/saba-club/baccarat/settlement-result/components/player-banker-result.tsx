@@ -97,12 +97,6 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
                     isShowResult={isShowResult}
                 />
 
-                {showWinner && isShowResult && (
-                    <div className={Styles['winner-display']}>
-                        <p className={Styles['winner-text']}>{gc.Translator.t(`Baccarat.${getWinnerText()}`, { lng: language })}</p>
-                    </div>
-                )}
-
                 <CardSection
                     cards={bankerCards}
                     label={gc.Translator.t(`Baccarat.glossary_banker`, { lng: language })}
@@ -110,6 +104,12 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
                     playResultAnimation={playResultAnimation}
                     isShowResult={isShowResult}
                 />
+
+                {showWinner && isShowResult && (
+                    <div className={Styles['winner-display']}>
+                        <p className={Styles['winner-text']}>{gc.Translator.t(`Baccarat.${getWinnerText()}`, { lng: language })}</p>
+                    </div>
+                )}
             </div>
         </div>
     );

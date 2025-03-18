@@ -386,7 +386,7 @@ $winner-delay-base: 1s; // Delay after last card before showing winner
     line-height: 22px;
     padding: 2px 18px;
     margin: 0 auto;
-    z-index: 100;
+    z-index: 101;
     background: linear-gradient(
         90deg,
         rgba(135, 56, 0, 0) 0%,
@@ -424,6 +424,7 @@ $winner-delay-base: 1s; // Delay after last card before showing winner
     width: 100%;
 
     .cardContainer {
+        position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
