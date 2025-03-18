@@ -11,15 +11,15 @@
 @keyframes fadeOutUp {
     0% {
         opacity: 1;
-        transform: translateY(0px);
+        transform: translateY(60px);
     }
     80% {
         opacity: 1;
-        transform: translateY(-45px);
+        transform: translateY(38px);
     }
 
     100% {
-        transform: translateY(-50px);
+        transform: translateY(0px);
         opacity: 0;
     }
 }
