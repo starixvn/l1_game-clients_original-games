@@ -77,6 +77,7 @@ export default class BaccaratBetOptions extends BetOptions {
                 namespace={this.props.namespace}
                 gameName={this.props.gameName}
                 settlementResult={this.state.settlementResult}
+                customizeClass={styles['highlight-result']}
             >
                 {this.renderBetOptionContent(props)}
             </BettingBlock>

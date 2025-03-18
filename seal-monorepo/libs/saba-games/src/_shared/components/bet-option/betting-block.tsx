@@ -10,7 +10,6 @@ import { IStateObserver, ObserverComponent } from '../observer-component/observe
 import classNames from 'classnames';
 import Styles from './bet-option.module.scss';
 
-
 interface BettingBlockProps {
     odd: number;
     betChoice: string;
@@ -18,6 +17,7 @@ interface BettingBlockProps {
     namespace: string;
     children: React.ReactNode;
     settlementResult?: gc.GameServiceMessage.TSettlementResult;
+    customizeClass?: string;
 }
 
 interface IBettingBlockState extends IStateObserver {
@@ -120,14 +120,13 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
     }
 
     @handle(Auth.AuthHandlers.Authorize, (handler) => handler.handleAutoGenerateName())
-    protected autoCreateNickname() { }
+    protected autoCreateNickname() {}
 
     @handle(Connection.ConnectionHandlers.SignInHandler)
-    protected signIn() { }
-
+    protected signIn() {}
 
     render() {
-        const { children, namespace, gameName, settlementResult, betChoice } = this.props;
+        const { children, namespace, gameName, settlementResult, betChoice, customizeClass } = this.props;
         const { odd } = this.state;
         const flashAnimationClass = settlementResult?.[betChoice];
         const bettingZoneState = {
@@ -141,13 +140,12 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
                     return (
                         <GameBettingZoneContext.Provider value={bettingZoneState}>
                             <div
-
                                 className={classNames(Styles['betting-block'], {
                                     [Styles['open-panel-background-color']]: panelId === betChoice,
                                     [Styles['flash-and-keep-background-color']]: flashAnimationClass,
+                                    [customizeClass || '']: flashAnimationClass,
                                 })}
                                 onClick={this.handleOnClick({ panelId, setPanelId, show, setShow })}
-
                             >
                                 {children}
                             </div>

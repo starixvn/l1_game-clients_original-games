@@ -116,6 +116,10 @@
         background: #fff6f3;
         box-shadow: 0px 0px 8px 0px #ffae00 inset;
     }
+
+    .highlight-result {
+        --highlight-result-delay: 5s;
+    }
 }
 
 .bet-container {
