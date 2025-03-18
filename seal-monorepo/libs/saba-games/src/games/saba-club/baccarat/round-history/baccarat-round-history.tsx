@@ -42,7 +42,7 @@ export default class BaccaratRoundHistory extends ObserverComponent<IPropsObserv
         return (
             <div className={Styles["round-history"]}>
                 <div className={Styles["hstack-round"]}>
-                    {t('Common.previous_round')}:
+                    <div className={Styles["hstack-text"]}>{t('Common.previous_round')}:</div>
                     {roundHistories.toReversed().map((roundHistory) => {
                         return this.RoundHistoryItem(roundHistory);
                     })}
