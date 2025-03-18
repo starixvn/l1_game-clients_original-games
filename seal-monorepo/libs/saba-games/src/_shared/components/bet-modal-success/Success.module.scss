@@ -12,7 +12,7 @@
     font-size: 18px;
     color: #727272;
     font-weight: 700;
-    animation: fadeOutUp 3s ease-out forwards;
+    animation: fadeOutUp 2.5s ease-in forwards;
     
 }
 
@@ -21,7 +21,7 @@
         opacity: 1;
         transform: translateY(10px);
     }
-    80% {
+    60% {
         opacity: 1;
         transform: translateY(-20px);
     }

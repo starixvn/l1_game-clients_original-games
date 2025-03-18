@@ -6,14 +6,14 @@
     font-size: 18px;
     font-weight: 700;
     color: #FF8800;
-    animation: fadeOutUp 3s ease-out forwards;
+    animation: fadeOutUp 2.5s ease-in forwards;
 }
 @keyframes fadeOutUp {
     0% {
         opacity: 1;
         transform: translateY(60px);
     }
-    80% {
+    60% {
         opacity: 1;
         transform: translateY(38px);
     }
