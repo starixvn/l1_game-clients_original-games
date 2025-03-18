@@ -23,6 +23,7 @@ export interface IGameBaseState {
     isOpenStatistic: boolean;
     statusSettlement?: gc.GameServiceMessage.Status;
     roundState: string;
+    isFinishShowResult: boolean;
 }
 interface GameStyleOverrides {
     [key: string]: string;
@@ -33,7 +34,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     constructor(props: P) {
         super(props);
-        this.state = { isConnectFailed: false, isOpenStatistic: false } as S;
+        this.state = { isConnectFailed: false, isOpenStatistic: false, isFinishShowResult: false } as S;
         this.toggleStatistic = this.toggleStatistic.bind(this);
     }
 
@@ -146,7 +147,9 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     @handle(Settlements.SettlementUIHandlers.FinishedShowResult)
-    finishShowResult() {}
+    finishShowResult() {
+        this.setState({ isFinishShowResult: true });
+    }
 
     @handle(Lobby.LobbyHandlers.TryToConnectHandler)
     tryToConnectHandler() {}
@@ -213,7 +216,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                         {this.renderBettingBlock()}
                         <ConfirmBet namespace={this.props.namespace} />
                     </div>
-                    <div className={Styles['animation-balance']}>{this.renderAminationBalance()}</div>
+                    <div className={Styles['animation-balance']}>{this.renderAnimationBalance()}</div>
                 </div>
 
                 <div className={Styles['history-block']}>
@@ -230,12 +233,12 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         );
     }
 
-    private renderAminationBalance() {
-        const { statusSettlement, roundState } = this.state;
+    private renderAnimationBalance() {
+        const { statusSettlement, isFinishShowResult } = this.state;
         if (!statusSettlement || !statusSettlement.win) {
             return <></>;
         }
-        if (roundState === gc.Rounds.ROUND_STATE.SHOW_RESULT) {
+        if (isFinishShowResult) {
             return <AnimationBalance winBet={statusSettlement?.bet} />;
         }
     }
