@@ -79,7 +79,7 @@ export default class BigSmallSettlementResult extends ObserverComponent<IPropsOb
     private renderDiceDisplay() {
         const { result, isAnimationResult, roundState } = this.state;
 
-        if (!result || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET) {
+        if (!result || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET || roundState === ROUND_STATE.SHOW_ANIMATION_RESULT) {
             return (
                 <div className={styles.settlementContainer}>
                     <DiceDisplay result={DEFAULT_RESULT} isAnimationResult={false} />
