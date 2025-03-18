@@ -58,7 +58,8 @@
         transform: rotateY(180deg);
     }
 
-    &.rotate-right {
+    &.rotate-right,
+    &.banker-third-card {
         transform: rotate(90deg);
         margin-right: 10px;
         &.flip {
@@ -71,14 +72,6 @@
         margin-left: 10px;
         &.flip {
             transform: rotateY(180deg) rotate(-90deg);
-        }
-    }
-
-    // Specific style for banker's third card when player has 2 cards
-    &.banker-third-card {
-        transform: rotate(90deg);
-        &.flip {
-            transform: rotateY(180deg) rotate(90deg);
         }
     }
 

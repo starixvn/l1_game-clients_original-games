@@ -1,15 +1,15 @@
-import * as gc from "@sg/sg-game-client";
-import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
-import { observer } from "@sg/sg-observer";
+import * as gc from '@sg/sg-game-client';
+import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
+import { observer } from '@sg/sg-observer';
 
-import BetOptions from "../../../../_shared/components/bet-option";
-import BettingBlock from "../../../../_shared/components/bet-option/betting-block";
-import Odds from "../../../../_shared/components/bet-option/odd-component";
-import { IPropsObserver } from "../../../../_shared/components/observer-component/observer-component";
-import { GameBettingOptionsContext } from "../../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context";
-import { setting } from "../game-settings";
-import { IBaccaratBet } from "../type";
-import styles from "./baccarat-bet-options.module.scss";
+import BetOptions from '../../../../_shared/components/bet-option';
+import BettingBlock from '../../../../_shared/components/bet-option/betting-block';
+import Odds from '../../../../_shared/components/bet-option/odd-component';
+import { IPropsObserver } from '../../../../_shared/components/observer-component/observer-component';
+import { GameBettingOptionsContext } from '../../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
+import { setting } from '../game-settings';
+import { IBaccaratBet } from '../type';
+import styles from './baccarat-bet-options.module.scss';
 
 interface IBaccaratBetOptionsProps extends IPropsObserver {
     previousWinningBet?: IBaccaratBet['type'];
@@ -68,16 +68,32 @@ export default class BaccaratBetOptions extends BetOptions {
         );
     }
 
+    private countValidCards(cards: { card: number; type: number }[]): number {
+        if (!cards) return 0;
+
+        let count = 0;
+        Object.keys(cards).map((card) => {
+            if (cards[card]) {
+                count++;
+            }
+        });
+
+        return count;
+    }
+
     private renderBetOption(props: BetOptionProps) {
         const { odd, betChoice } = props;
+        const { result, settlementResult } = this.state;
+        const cardNumber = this.countValidCards(result?.['player']) + this.countValidCards(result?.['banker']);
+
         return (
             <BettingBlock
                 odd={odd}
                 betChoice={betChoice}
                 namespace={this.props.namespace}
                 gameName={this.props.gameName}
-                settlementResult={this.state.settlementResult}
-                customizeClass={styles['highlight-result']}
+                settlementResult={settlementResult}
+                customizeClass={styles[`highlight-result-${cardNumber}-cards`]}
             >
                 {this.renderBetOptionContent(props)}
             </BettingBlock>
