@@ -41,7 +41,7 @@ export const CardSection: React.FC<CardSectionProps> = ({ cards, label, type, pl
         <div className={Styles.cardSection} style={{ height: '100%' }}>
             <div className={`${Styles.label} ${type === 'player' ? Styles['label-player'] : Styles['label-banker']}`}>{label}</div>
             <div className={`${Styles.cardContainer} ${Styles[type]} ${!playResultAnimation ? Styles['move-up-no-animation'] : ''}`}>
-                {(type === 'player' ? [...cards].reverse() : cards).map((card, index) => (
+                {cards.map((card, index) => (
                     <BaccaratCard key={card.order} card={card} isShowResult={isShowResult} onCardFlip={handleCardFlip} />
                 ))}
 

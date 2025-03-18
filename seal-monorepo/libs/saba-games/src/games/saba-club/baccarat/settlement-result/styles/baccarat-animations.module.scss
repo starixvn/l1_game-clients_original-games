@@ -379,11 +379,12 @@ $winner-delay-base: 1s; // Delay after last card before showing winner
     position: absolute;
     left: 50%;
     bottom: 4px;
+    min-width: 155px;
     width: fit-content;
     display: flex;
     align-items: center;
     line-height: 22px;
-    padding: 2px 48px;
+    padding: 2px 18px;
     margin: 0 auto;
     z-index: 100;
     background: linear-gradient(
