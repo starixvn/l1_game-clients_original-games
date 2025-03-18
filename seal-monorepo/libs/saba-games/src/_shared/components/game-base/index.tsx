@@ -22,6 +22,7 @@ export interface IGameBaseState {
     showDisabledPopup: boolean;
     isOpenStatistic: boolean;
     statusSettlement?: gc.GameServiceMessage.Status;
+    roundState: string;
 }
 interface GameStyleOverrides {
     [key: string]: string;
@@ -147,12 +148,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     @handle(Settlements.SettlementUIHandlers.FinishedShowResult)
     finishShowResult() {
-        const {statusSettlement} = this.state;
-        console.log('Settlement status:', statusSettlement);
-        console.log('Bet amount:', statusSettlement?.bet);
-        return (
-            <AnimationBalance winBet={statusSettlement?.bet} />
-        )
+    
         
     }
 
@@ -183,6 +179,12 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     @render(gc.DisabledGame.DisabledGameStore, (store) => store.showPopup)
     handleDisabledGame(showPopup: boolean) {
         this.setState({ showDisabledPopup: showPopup } as IGameBaseState);
+    }
+
+    @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
+    renderCountDownTimerState(roundState: string) {
+        this.setState({ roundState });
+       
     }
 
     toggleStatistic() {
@@ -239,11 +241,15 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     private renderAminationBalance() {
-        const {statusSettlement} = this.state;
+        const {statusSettlement, roundState} = this.state;
         if(!statusSettlement || !statusSettlement.win) {
             return<></>;
         }
-        return <AnimationBalance winBet={statusSettlement?.bet}/>;
+        if(roundState === gc.Rounds.ROUND_STATE.SHOW_RESULT) {
+            return <AnimationBalance winBet={statusSettlement?.bet} />
+            
+        }
+        
     }
 
     private renderLoading() {
