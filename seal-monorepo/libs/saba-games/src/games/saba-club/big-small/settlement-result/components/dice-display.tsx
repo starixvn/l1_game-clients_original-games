@@ -1,57 +1,84 @@
-import React, { memo, useEffect, useMemo, useState } from "react";
+import React, { memo, useEffect, useMemo, useState, useCallback } from "react";
 import styles from "../big-small-settlement-result.module.scss";
 import { BigSmallResult } from "../../type";
 import { calculateTotalDiceNumber, getRandomDiceNumbers } from "../../../../../_shared/utils/number-helper";
 import Dice from "../../../../../_shared/components/dice";
 
+const ANIMATION_INTERVAL = 150;
+const ANIMATION_DURATION = 2000;
+
 interface DiceListProps {
     diceNumbers: number[];
 }
 
-const DiceList: React.FC<DiceListProps> = ({ diceNumbers }) => {
+const DiceList = memo<DiceListProps>(({ diceNumbers }) => (
+    <div className={styles.diceList}>
+        {diceNumbers.map((number, index) => (
+            <Dice key={index} diceNumber={number} />
+        ))}
+    </div>
+));
+
+interface TotalDiceNumberProps {
+    total: number;
+}
+
+const TotalDiceNumber = memo<TotalDiceNumberProps>(({ total }) => {
+    if (total <= 0) return null;
+    
     return (
-        <div className={styles.diceList}>
-            {diceNumbers.map((number, index) => (
-                <Dice key={index} diceNumber={number} />
-            ))}
+        <div className={styles.diceResult}>
+            {total}
         </div>
     );
-};
+});
+
 
 interface DiceDisplayProps {
     result: BigSmallResult;
     isAnimationResult: boolean;
 }
 
-export const DiceDisplay: React.FC<DiceDisplayProps> = memo(({ result, isAnimationResult }) => {
-    const [diceNumbers, setDiceNumbers] = useState([0, 0, 0]);
+export const DiceDisplay = memo<DiceDisplayProps>(({ result, isAnimationResult }) => {
+    const [diceNumbers, setDiceNumbers] = useState(() => [0, 0, 0]);
     const [totalDiceNumber, setTotalDiceNumber] = useState(0);
 
-    useEffect(() => {
-        if (isAnimationResult) {
-            const intervalId = setInterval(() => {
-                setDiceNumbers(getRandomDiceNumbers());
-            }, 150);
+    const finalDiceNumbers = useMemo(() => (
+        [result.dice1, result.dice2, result.dice3]
+    ), [result.dice1, result.dice2, result.dice3]);
 
-            setTimeout(() => {
-                clearInterval(intervalId);
-                setDiceNumbers([result.dice1, result.dice2, result.dice3]);
-                setTotalDiceNumber(calculateTotalDiceNumber([result.dice1, result.dice2, result.dice3]));
-            }, 2000);
-        } else {
-            setDiceNumbers([result.dice1, result.dice2, result.dice3]);
-            setTotalDiceNumber(calculateTotalDiceNumber([result.dice1, result.dice2, result.dice3]));
+    const updateFinalResult = useCallback(() => {
+        setDiceNumbers(finalDiceNumbers);
+        setTotalDiceNumber(calculateTotalDiceNumber(finalDiceNumbers));
+    }, [finalDiceNumbers]);
+
+    useEffect(() => {
+        if (!isAnimationResult) {
+            updateFinalResult();
+            return;
         }
-    }, [isAnimationResult, result]);
+
+        const animationInterval = setInterval(() => {
+            setDiceNumbers(getRandomDiceNumbers());
+        }, ANIMATION_INTERVAL);
+
+        const animationTimeout = setTimeout(() => {
+            clearInterval(animationInterval);
+            updateFinalResult();
+        }, ANIMATION_DURATION);
+
+        return () => {
+            clearInterval(animationInterval);
+            clearTimeout(animationTimeout);
+        };
+    }, [isAnimationResult, updateFinalResult]);
 
     return (
         <div className={styles.diceContainer}>
             <DiceList diceNumbers={diceNumbers} />
-            {
-                totalDiceNumber > 0 && (
-                    <div className={styles.diceResult}>{totalDiceNumber}</div>
-                )
-            }
+            <TotalDiceNumber total={totalDiceNumber} />
         </div>
     );
 });
+
+DiceDisplay.displayName = 'DiceDisplay';
