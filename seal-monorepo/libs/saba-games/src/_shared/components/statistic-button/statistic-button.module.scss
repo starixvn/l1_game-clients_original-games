@@ -17,6 +17,13 @@
     .text {
         color: #2D4976;
     }
+    .c-btn-statistic {
+        width: 100%;
+        justify-content: flex-start;
+        &:hover {
+            background-color: #FFF6F3;
+        }
+    }
 }
 
 .arrow-icon {

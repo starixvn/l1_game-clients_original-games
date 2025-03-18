@@ -25,7 +25,7 @@ const StatisticButton = ({ isOpenStatistic ,handleToggle }) => {
     
     return (
         <div className={classNames(Styles["statistic-button"], "c-match__option")} onClick={handleToggle}>
-            <a className="c-btn c-btn--more c-is-close" title="Expand">
+            <a className={classNames(Styles["c-btn-statistic"], "c-btn c-btn--more c-is-close")} title="Expand">
                 <span className={Styles["text"]}>{statisticTitle}</span>
                 {renderArrow(isOpenStatistic)}
                 {/* <i className="c-icon c-icon--caret"></i> */}
