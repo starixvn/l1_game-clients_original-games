@@ -57,12 +57,12 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     abstract connectLiveGateway(): void;
 
-    onVisibilityChange = () => { };
+    onVisibilityChange = () => {};
     @handle(gc.GatewayConnection.GatewayConnectionHandlers.ConnectHandler, (handler) => handler.handle())
-    connectToServiceGateway() { }
+    connectToServiceGateway() {}
 
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handle())
-    terminateConnection() { }
+    terminateConnection() {}
 
     @render(gc.Connection.ConnectionStore, (store) => store.isSignedIn)
     handleConnected(isSignedIn: boolean) {
@@ -115,7 +115,6 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     })
     assignStatus(settlementStatus: any) {
         this.setState({ statusSettlement: settlementStatus });
-        console.log("status", settlementStatus)
     }
 
     @render(Settlements.SettlementStore, (store) => store.currentFinish, {
@@ -147,13 +146,10 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     @handle(Settlements.SettlementUIHandlers.FinishedShowResult)
-    finishShowResult() {
-    
-        
-    }
+    finishShowResult() {}
 
     @handle(Lobby.LobbyHandlers.TryToConnectHandler)
-    tryToConnectHandler() { }
+    tryToConnectHandler() {}
 
     @render(gc.Connection.ConnectionStore, (store) => store.isConnectFailed)
     handleConnectFail(isConnectFailed: boolean) {
@@ -184,7 +180,6 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
     renderCountDownTimerState(roundState: string) {
         this.setState({ roundState });
-       
     }
 
     toggleStatistic() {
@@ -216,19 +211,14 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                     <div className={`${Styles['result']} ${this.overrideClasses?.result}`}>{this.renderResultBlock()}</div>
                     <div className={`${Styles['bet-options']} ${this.overrideClasses?.betOptions}`}>
                         {this.renderBettingBlock()}
-                        <ConfirmBet
-                            namespace={this.props.namespace}
-                            
-                        />
+                        <ConfirmBet namespace={this.props.namespace} />
                     </div>
-                    <div className={Styles["animation-balance"]}>
-                        {this.renderAminationBalance()}
-                    </div>
+                    <div className={Styles['animation-balance']}>{this.renderAminationBalance()}</div>
                 </div>
 
-                <div className={Styles["history-block"]}>
-                    <div className={Styles["previous-round"]}>{this.renderRoundHistory()}</div>
-                    <div className={Styles["statistic-btn"]}>
+                <div className={Styles['history-block']}>
+                    <div className={Styles['previous-round']}>{this.renderRoundHistory()}</div>
+                    <div className={Styles['statistic-btn']}>
                         <StatisticButton isOpenStatistic={this.state.isOpenStatistic} handleToggle={this.toggleStatistic} />
                     </div>
                 </div>
@@ -241,20 +231,18 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     private renderAminationBalance() {
-        const {statusSettlement, roundState} = this.state;
-        if(!statusSettlement || !statusSettlement.win) {
-            return<></>;
+        const { statusSettlement, roundState } = this.state;
+        if (!statusSettlement || !statusSettlement.win) {
+            return <></>;
         }
-        if(roundState === gc.Rounds.ROUND_STATE.SHOW_RESULT) {
-            return <AnimationBalance winBet={statusSettlement?.bet} />
-            
+        if (roundState === gc.Rounds.ROUND_STATE.SHOW_RESULT) {
+            return <AnimationBalance winBet={statusSettlement?.bet} />;
         }
-        
     }
 
     private renderLoading() {
         return (
-            <div className='col-md-1 mx-auto mt-5'>
+            <div className="col-md-1 mx-auto mt-5">
                 <Loading />
             </div>
         );
@@ -270,7 +258,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         this.terminateConnection();
         this.createConnection();
         this.joinGame();
-    }
+    };
 
     private renderDisconnect() {
         const reconnectText = gc.Translator.translate('Common.reconnect');
@@ -283,7 +271,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                         data-disabled={false}
                         onClick={this.handleReconnect}
                     >
-                        <span className='c-text'>{reconnectText}</span>
+                        <span className="c-text">{reconnectText}</span>
                     </button>
                 </div>
             </div>

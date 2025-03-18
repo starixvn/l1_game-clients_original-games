@@ -1,30 +1,28 @@
-import * as gc from "@sg/sg-game-client";
-import { RoundHistoryStore } from "@sg/sg-game-client/dist/game/round-histories";
-import { RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds";
-import { SettlementStore } from "@sg/sg-game-client/dist/game/settlements";
-import { render } from "@sg/sg-observer";
-import { observer } from '@sg/sg-observer';
-import type { Result } from "../baccarat";
-import { CardDisplay } from "./components/card-display";
-import { ErrorBoundary } from "./components/error-boundary";
-import { Loading } from "./components/loading";
-import type { IPropsObserver, IStateObserver } from "../../../../_shared/components/observer-component/observer-component";
-import { ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
-import { setting } from "../game-settings";
-import { gameStateService } from "./services/game-state.service";
-import Styles from "./styles/baccarat-animations.module.scss";
-import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
-import { EmptyCardIndex } from "../../../../_shared/components/card";
+import * as gc from '@sg/sg-game-client';
+import { RoundHistoryStore } from '@sg/sg-game-client/dist/game/round-histories';
+import { RoundTimeStore, ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
+import { SettlementStore } from '@sg/sg-game-client/dist/game/settlements';
+import { render, observer } from '@sg/sg-observer';
+import type { Result } from '../baccarat';
+import { CardDisplay } from './components/card-display';
+import { ErrorBoundary } from './components/error-boundary';
+import { Loading } from './components/loading';
+import type { IPropsObserver, IStateObserver } from '../../../../_shared/components/observer-component/observer-component';
+import { ObserverComponent } from '../../../../_shared/components/observer-component/observer-component';
+import { setting } from '../game-settings';
+import { gameStateService } from './services/game-state.service';
+import Styles from './styles/baccarat-animations.module.scss';
+import { EmptyCardIndex } from '../../../../_shared/components/card';
 
 const DEFAULT_RESULT: Result = {
     banker: {
         card1: { card: EmptyCardIndex, type: 0 },
-        card2: { card: EmptyCardIndex, type: 0 }
+        card2: { card: EmptyCardIndex, type: 0 },
     },
     player: {
         card1: { card: EmptyCardIndex, type: 1 },
-        card2: { card: EmptyCardIndex, type: 1 }
-    }
+        card2: { card: EmptyCardIndex, type: 1 },
+    },
 };
 
 interface IBaccaratSettlementResultState extends IStateObserver {
@@ -34,6 +32,7 @@ interface IBaccaratSettlementResultState extends IStateObserver {
     isLoading: boolean;
     error?: Error;
     currentDemoIndex: number;
+    isFinish: boolean;
 }
 
 @observer(setting.mainObserverNamespace)
@@ -43,17 +42,25 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
         this.state = {
             dispose: null,
             result: undefined,
-            roundState: "",
+            roundState: '',
             isAnimationResult: false,
             isLoading: true,
             error: undefined,
             currentDemoIndex: 0,
+            isFinish: false,
         };
     }
 
     @render(RoundTimeStore, (store) => store.roundState)
     private handleRoundState(roundState: string): void {
         try {
+            if (
+                roundState === ROUND_STATE.STARTING_ROUND ||
+                roundState === ROUND_STATE.PLACING_BET ||
+                roundState === ROUND_STATE.LOCKING_BET
+            ) {
+                this.setState({ isFinish: false });
+            }
             gameStateService.handleRoundState(roundState);
             this.setState({ roundState, isLoading: false });
         } catch (error) {
@@ -68,7 +75,7 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
         try {
             const result = gameStateService.handleSettlement(currentFinish);
             if (result && gameStateService.validateResult(result)) {
-                this.setState({ result, isAnimationResult: true, isLoading: false });
+                this.setState({ result, isAnimationResult: true, isLoading: false, isFinish: true });
             }
         } catch (error) {
             this.setState({ error: error as Error });
@@ -80,7 +87,7 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
         try {
             const result = gameStateService.handleGameHistory(firstJoinGameHistory);
             if (result && gameStateService.validateResult(result)) {
-                this.setState({ result, isLoading: false });
+                this.setState({ result, isLoading: false, isFinish: true });
             }
         } catch (error) {
             this.setState({ error: error as Error });
@@ -88,28 +95,13 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
     }
 
     private renderCardDisplay(): JSX.Element | null {
-        const { result, isAnimationResult, roundState } = this.state;
+        const { result, isAnimationResult, isFinish, roundState } = this.state;
         const language = this.props.language || gc.Translator.getCurrentLanguageId();
 
-        if (!result || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET) {
-            return (
-                <CardDisplay
-                    result={DEFAULT_RESULT}
-                    isAnimationResult={false}
-                    isShowResult={false}
-                    language={language}
-                />
-            );
+        if (!result || !isFinish || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET) {
+            return <CardDisplay result={DEFAULT_RESULT} isAnimationResult={false} isShowResult={false} language={language} />;
         }
-
-        return (
-            <CardDisplay
-                result={result}
-                isAnimationResult={isAnimationResult}
-                isShowResult={true}
-                language={language}
-            />
-        );
+        return <CardDisplay result={result} isAnimationResult={isAnimationResult} isShowResult={true} language={language} />;
     }
 
     private renderContent(): JSX.Element {
@@ -123,18 +115,10 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
             return <Loading message="Loading game results..." />;
         }
 
-        return (
-            <div className={Styles['settlement-container']}>
-                {this.renderCardDisplay()}
-            </div>
-        );
+        return <div className={Styles['settlement-container']}>{this.renderCardDisplay()}</div>;
     }
 
     render(): JSX.Element {
-        return (
-            <ErrorBoundary>
-                {this.renderContent()}
-            </ErrorBoundary>
-        );
+        return <ErrorBoundary>{this.renderContent()}</ErrorBoundary>;
     }
-} 
+}

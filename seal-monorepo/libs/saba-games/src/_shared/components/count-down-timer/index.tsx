@@ -29,7 +29,6 @@ export default class CountDownTimer extends ObserverComponent<IPropsObserver, IC
     private getTimerContentConfig(roundState: string) {
         const { START_GAME_LOOP, STARTING_ROUND, PLACING_BET, LOCKING_BET, SHOW_ANIMATION_RESULT, SHOW_RESULT, STOP_GAME_LOOP } =
             ROUND_STATE;
-        console.log(roundState, [SHOW_ANIMATION_RESULT, STOP_GAME_LOOP, SHOW_RESULT, STARTING_ROUND, START_GAME_LOOP].includes(roundState));
         return {
             showTimer: [PLACING_BET].includes(roundState),
             showNoMoreBet: [LOCKING_BET].includes(roundState),

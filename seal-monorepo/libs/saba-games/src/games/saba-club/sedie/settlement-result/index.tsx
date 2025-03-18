@@ -5,11 +5,7 @@ import { SettlementStore } from '@sg/sg-game-client/dist/game/settlements';
 import { render } from '@sg/sg-observer';
 // import { Col, Row } from 'react-bootstrap';
 import { RoundDot } from '../../../../_shared/components/dot';
-import {
-    IPropsObserver,
-    IStateObserver,
-    ObserverComponent,
-} from '../../../../_shared/components/observer-component/observer-component';
+import { IPropsObserver, IStateObserver, ObserverComponent } from '../../../../_shared/components/observer-component/observer-component';
 import Styles from './sedie-animations.module.scss';
 
 export interface ISeDieSettlementResultState extends IStateObserver {
@@ -68,31 +64,24 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
     })
     assignStatus(settlementStatus: any) {
         this.setState({ win: settlementStatus.bet });
-        console.log("status", settlementStatus)
     }
 
     renderIcons = (result: gc.GameServiceMessage.TResult) => {
         return (
-            <div
-                className={`${Styles['container-bets']} ${this.state.isAnimationResult ? Styles['has-animation'] : ''}`}
-            >
+            <div className={`${Styles['container-bets']} ${this.state.isAnimationResult ? Styles['has-animation'] : ''}`}>
                 <div className={Styles['result-container']}>
                     {Object.values(result).map((value, index) => {
                         const resultClass = `dot-3d-${index + 1}`;
                         return (
                             <div className={Styles['result-item']} key={resultClass}>
-                                <div
-                                    className={`${Styles[resultClass]} ${index % 2 ? Styles['option1'] : Styles['option2']}`}
-                                >
+                                <div className={`${Styles[resultClass]} ${index % 2 ? Styles['option1'] : Styles['option2']}`}>
                                     <span className={Styles['dot-3d-front-inside']}></span>
                                     <span className={Styles['dot-3d-front']}></span>
                                     <span className={Styles['dot-3d-back_inside']}></span>
                                     <span className={Styles['dot-3d-back']}></span>
                                 </div>
                                 <div key={index} className={Styles[`result-sedie-dot${index + 1}`]}>
-                                    <div
-                                        className={`${value ? Styles['result-dot-red'] : Styles['result-dot-white']}`}
-                                    ></div>
+                                    <div className={`${value ? Styles['result-dot-red'] : Styles['result-dot-white']}`}></div>
                                 </div>
                             </div>
                         );
@@ -105,17 +94,17 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
     renderNoResultIcons = (): JSX.Element => {
         return (
             <div className={Styles['result-container']}>
-                <RoundDot highlight={true} size='large' value={'?'} />
-                <RoundDot highlight={true} size='large' value={'?'} />
-                <RoundDot highlight={true} size='large' value={'?'} />
-                <RoundDot highlight={true} size='large' value={'?'} />
+                <RoundDot highlight={true} size="large" value={'?'} />
+                <RoundDot highlight={true} size="large" value={'?'} />
+                <RoundDot highlight={true} size="large" value={'?'} />
+                <RoundDot highlight={true} size="large" value={'?'} />
             </div>
         );
     };
 
     render() {
         const isEmpty = (obj: object): boolean => {
-            return JSON.stringify(obj) === "{}";
+            return JSON.stringify(obj) === '{}';
         };
 
         const { result, roundState } = this.state;
