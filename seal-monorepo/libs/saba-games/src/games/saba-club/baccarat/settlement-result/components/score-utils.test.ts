@@ -1,4 +1,5 @@
-import { calculateTotalScore, sumScore } from './score-utils';
+import { calculateTotalScore, CardAnimationConfig, GetBankerCardsResult, GetPlayerCardsResult, sumScore } from './score-utils';
+import { Result } from '../../baccarat';
 
 describe('sumScore', () => {
     // Individual card rank tests
@@ -197,6 +198,147 @@ describe('calculateTotalScore', () => {
         it('should handle mixed boundary values', () => {
             expect(calculateTotalScore([0, 12])).toBe(1);  // Min + Max = 1 + 0 = 1
             expect(calculateTotalScore([12, 0, 12])).toBe(1);  // Max + Min + Max = 0 + 1 + 0 = 1
+        });
+    });
+});
+
+
+describe('Baccarat Helper Functions', () => {
+    // Mock data setup
+    const createMockCard = (card: number) => ({
+        card,
+        type: 0
+    });
+
+    const createMockResult = (playerCards: number[], bankerCards: number[]): Result => ({
+        player: {
+            card1: createMockCard(playerCards[0]),
+            card2: createMockCard(playerCards[1]),
+            card3: playerCards[2] !== undefined ? createMockCard(playerCards[2]) : undefined,
+        },
+        banker: {
+            card1: createMockCard(bankerCards[0]),
+            card2: createMockCard(bankerCards[1]),
+            card3: bankerCards[2] !== undefined ? createMockCard(bankerCards[2]) : undefined,
+        }
+    });
+
+    describe('GetPlayerCardsResult', () => {
+        it('should return correct card order and timing for two cards', () => {
+            // Arrange
+            const result = createMockResult([1, 2], [3, 4]);
+
+            // Act
+            const playerCards = GetPlayerCardsResult(result);
+
+            // Assert
+            expect(playerCards).toHaveLength(2);
+            expect(playerCards[0].value).toBe(result.player.card1);
+            expect(playerCards[1].value).toBe(result.player.card2);
+            expect(playerCards[0].order).toBe(CardAnimationConfig.orders.playerCard1);
+            expect(playerCards[1].order).toBe(CardAnimationConfig.orders.playerCard2);
+            expect(playerCards[0].playerHasThirdCard).toBe(false);
+        });
+
+        it('should handle third card correctly', () => {
+            // Arrange
+            const result = createMockResult([1, 2, 5], [3, 4]);
+
+            // Act
+            const playerCards = GetPlayerCardsResult(result);
+
+            // Assert
+            expect(playerCards).toHaveLength(3);
+            expect(playerCards[2].value).toBe(result.player.card3);
+            expect(playerCards[2].order).toBe(CardAnimationConfig.orders.playerCard3);
+            expect(playerCards[0].playerHasThirdCard).toBe(true);
+        });
+
+        it('should calculate accumulated scores correctly', () => {
+            // Arrange
+            const result = createMockResult([8, 9, 5], [3, 4]); // 9, 10(0), 6
+
+            // Act
+            const playerCards = GetPlayerCardsResult(result);
+
+            // Assert
+            expect(playerCards[0].accumulatedScore).toBe(9); // First card (8 + 1 = 9)
+            expect(playerCards[1].accumulatedScore).toBe(9); // Second card (9 + 0 = 9)
+            expect(playerCards[2].accumulatedScore).toBe(5); // Third card (9 + 6 = 15 % 10 = 5)
+        });
+
+        it('should handle face cards (value >= 9) correctly', () => {
+            // Arrange
+            const result = createMockResult([9, 10], [3, 4]); // 10(0), J(0)
+
+            // Act
+            const playerCards = GetPlayerCardsResult(result);
+
+            // Assert
+            expect(playerCards[1].accumulatedScore).toBe(0); // First card (10 = 0)
+            expect(playerCards[0].accumulatedScore).toBe(0); // Second card (0 + 0 = 0)
+        });
+    });
+
+    describe('GetBankerCardsResult', () => {
+        it('should return correct card order and timing for two cards', () => {
+            // Arrange
+            const result = createMockResult([1, 2], [3, 4]);
+
+            // Act
+            const bankerCards = GetBankerCardsResult(result);
+
+            // Assert
+            expect(bankerCards).toHaveLength(2);
+            expect(bankerCards[0].value).toBe(result.banker.card1);
+            expect(bankerCards[1].value).toBe(result.banker.card2);
+            expect(bankerCards[0].order).toBe(CardAnimationConfig.orders.bankerCard1);
+            expect(bankerCards[1].order).toBe(CardAnimationConfig.orders.bankerCard2);
+        });
+
+        it('should handle banker third card with player third card', () => {
+            // Arrange
+            const result = createMockResult([1, 2, 5], [3, 4, 6]);
+
+            // Act
+            const bankerCards = GetBankerCardsResult(result);
+
+            // Assert
+            expect(bankerCards).toHaveLength(3);
+            expect(bankerCards[2].value).toBe(result.banker.card3);
+            expect(bankerCards[2].order).toBe(CardAnimationConfig.orders.bankerCard3);
+            expect(bankerCards[0].playerHasThirdCard).toBe(true);
+        });
+
+        it('should handle banker third card without player third card', () => {
+            // Arrange
+            const result = createMockResult([1, 2], [3, 4, 6]);
+
+            // Act
+            const bankerCards = GetBankerCardsResult(result);
+
+            // Assert
+            expect(bankerCards).toHaveLength(3);
+            expect(bankerCards[2].value).toBe(result.banker.card3);
+            expect(bankerCards[2].order).toBe(CardAnimationConfig.orders.playerCard3);
+            expect(bankerCards[0].playerHasThirdCard).toBe(false);
+        });
+    });
+
+    describe('CardAnimationConfig.getAnimationTime', () => {
+        it('should calculate correct timing for first pair of cards', () => {
+            expect(CardAnimationConfig.getAnimationTime(1)).toBe(50); // First card
+            expect(CardAnimationConfig.getAnimationTime(2)).toBe(250); // Second card
+        });
+
+        it('should calculate correct timing for second pair of cards', () => {
+            expect(CardAnimationConfig.getAnimationTime(3)).toBe(350); // Third card
+            expect(CardAnimationConfig.getAnimationTime(4)).toBe(550); // Fourth card
+        });
+
+        it('should calculate correct timing for third cards with extra delay', () => {
+            expect(CardAnimationConfig.getAnimationTime(5)).toBe(950); // Fifth card
+            expect(CardAnimationConfig.getAnimationTime(6)).toBe(1150); // Sixth card
         });
     });
 });

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { CardOrder } from '../../baccarat';
-import { CardOrderWithTiming } from '../../baccarat-helper';
+import { CardOrderWithTiming } from './score-utils';
 import Styles from '../styles/baccarat-animations.module.scss';
 import { BaccaratCard } from './baccarat-card';
 import { ScoreDisplay } from './score-display';

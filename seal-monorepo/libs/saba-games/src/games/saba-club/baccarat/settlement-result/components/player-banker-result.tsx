@@ -2,7 +2,7 @@ import * as gc from '@sg/sg-game-client';
 import { useEffect, useState } from 'react';
 
 import { Result } from '../../baccarat';
-import { GetBankerCardsResult, GetPlayerCardsResult } from '../../baccarat-helper';
+import { GetBankerCardsResult, GetPlayerCardsResult } from './score-utils';
 import { cardStateEmitter } from '../../services/card-state-emitter';
 import Styles from '../styles/baccarat-animations.module.scss';
 import { CardSection } from './card-section';
