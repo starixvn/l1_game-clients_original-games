@@ -1,9 +1,4 @@
-.bet {
-    text-transform: capitalize;
-    padding: 0;
-    background-color: #fff6f3;
-    border-radius: 4px;
-}
+
 
 .container-bets {
     display: flex;
@@ -29,16 +24,6 @@
     line-height: normal;
 }
 
-.bets-bg {
-    background-color: var(--c-av-odds-in-play-bg);
-    border-width: var(--c-av-odds-button-border-width);
-    border-color: var(--c-av-odds-button-border);
-    border-radius: var(--c-av-border-radius);
-}
-
-.padding-bet {
-    padding: 8px;
-}
 
 .margin-x-0 {
     margin-right: 0;

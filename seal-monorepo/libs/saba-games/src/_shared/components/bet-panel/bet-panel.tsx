@@ -291,7 +291,7 @@ const BetPanel: React.FC<{
                     <span className='c-text-odds'>
                         @
                         <span className={`${'c-odds'} ${'sg-bet-panel__text-bold'}`} data-odds-status='default'>
-                            {odd || 0}
+                            {odd || ""}
                         </span>
                     </span>
                     <span className='c-text-oddstype'>({t('Common.decimal')})</span>
