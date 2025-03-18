@@ -20,19 +20,37 @@
     font-weight: 700;
     composes: variables;
     box-shadow: var(--baccarat-dot-shadow);
+
+    &::before {
+        height: calc(100% - 2px);
+        width: calc(100% - 2px);
+        position: absolute;
+    }
 }
 
 .dot-player {
     @extend %baccarat-dot;
-    background: var(--baccarat-player-bg);
+    background: var(--dot-player-border);
+
+    &:before {
+        background: var(--baccarat-player-bg);
+    }
 }
 
 .dot-banker {
     @extend %baccarat-dot;
-    background: var(--baccarat-banker-bg);
+    background: var(--dot-banker-border);
+
+    &:before {
+        background: var(--baccarat-banker-bg);
+    }
 }
 
 .dot-tie {
     @extend %baccarat-dot;
-    background: var(--baccarat-tie-bg);
+    background: var(--dot-tie-border);
+
+    &:before {
+        background: var(--baccarat-tie-bg);
+    }
 }
