@@ -1,11 +1,11 @@
 import styles from './baccarat-scoreboard.module.scss';
 // Image assets
-import playerDotImage from '../../../../assets/baccarat/scoreboard/big-road/player.png';
-import bankerDotImage from '../../../../assets/baccarat/scoreboard/big-road/banker.png';
-import playerPairDotImage from '../../../../assets/baccarat/scoreboard/big-road/player-pair-dot.png';
-import bankerPairDotImage from '../../../../assets/baccarat/scoreboard/big-road/banker-pair-dot.png';
-import naturalImage from '../../../../assets/baccarat/scoreboard/big-road/natural.png';
-import tieImage from '../../../../assets/baccarat/scoreboard/big-road/tie.png';
+import playerDotImage from '../../../../assets/baccarat/scoreboard/big-road/player.svg';
+import bankerDotImage from '../../../../assets/baccarat/scoreboard/big-road/banker.svg';
+import playerPairDotImage from '../../../../assets/baccarat/scoreboard/big-road/player-pair-dot.svg';
+import bankerPairDotImage from '../../../../assets/baccarat/scoreboard/big-road/banker-pair-dot.svg';
+import naturalImage from '../../../../assets/baccarat/scoreboard/big-road/natural.svg';
+import tieImage from '../../../../assets/baccarat/scoreboard/big-road/tie.svg';
 import { BigRoadScoreboardPoint } from 'sc-scoreboards';
 import { BaccaratSettlementResult } from '../type';
 

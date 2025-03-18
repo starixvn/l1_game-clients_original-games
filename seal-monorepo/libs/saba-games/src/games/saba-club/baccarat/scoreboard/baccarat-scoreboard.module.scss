@@ -132,15 +132,15 @@
         z-index: 2;
 
         &.player-pair {
-            bottom: 2px;
-            right: 2px;
+            bottom: 0px;
+            right: 0px;
             width: 10px;
             height: 10px;
         }
 
         &.banker-pair {
-            top: -2px;
-            left: -2px;
+            top: -1px;
+            left: -1px;
             width: 10px;
             height: 10px;
         }
@@ -159,10 +159,10 @@
 
     .tie-image {
         position: absolute !important;
-        top: -4px;
-        right: -4px;
-        width: 14px;
-        height: 14px;
+        top: -1px;
+        right: 0px;
+        width: 10px;
+        height: 9px;
         object-fit: contain;
         z-index: 3;
     }
