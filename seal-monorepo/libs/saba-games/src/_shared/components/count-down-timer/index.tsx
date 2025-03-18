@@ -21,36 +21,19 @@ export default class CountDownTimer extends ObserverComponent<IPropsObserver, IC
     private renderCountDownTimer(countdownTimer: number): void {
         this.setState({ countdownTimer });
     }
-    @render(RoundTimeStore, (store) => store.roundState)
+    @render(RoundTimeStore, (store) => store.roundState, { fireImmediately: false })
     private renderCountDownTimerState(roundState: string): void {
         this.setState({ roundState });
     }
 
-
     private getTimerContentConfig(roundState: string) {
-        const {
-            START_GAME_LOOP,
-            STARTING_ROUND,
-            PLACING_BET,
-            LOCKING_BET,
-            WAITING,
-            SHOW_ANIMATION_RESULT,
-            SHOW_RESULT,
-            CHANGE_REMAINING_TIME,
-            STOP_GAME_LOOP,
-            NONE,
-        } = ROUND_STATE;
-
+        const { START_GAME_LOOP, STARTING_ROUND, PLACING_BET, LOCKING_BET, SHOW_ANIMATION_RESULT, SHOW_RESULT, STOP_GAME_LOOP } =
+            ROUND_STATE;
+        console.log(roundState, [SHOW_ANIMATION_RESULT, STOP_GAME_LOOP, SHOW_RESULT, STARTING_ROUND, START_GAME_LOOP].includes(roundState));
         return {
             showTimer: [PLACING_BET].includes(roundState),
             showNoMoreBet: [LOCKING_BET].includes(roundState),
-            showResult: [
-                SHOW_ANIMATION_RESULT,
-                STOP_GAME_LOOP,
-                SHOW_RESULT,
-                STARTING_ROUND,
-                START_GAME_LOOP
-            ].includes(roundState)
+            showResult: [SHOW_ANIMATION_RESULT, STOP_GAME_LOOP, SHOW_RESULT, STARTING_ROUND, START_GAME_LOOP].includes(roundState),
         };
     }
 
@@ -68,23 +51,29 @@ export default class CountDownTimer extends ObserverComponent<IPropsObserver, IC
         const { countdownTimer, roundState } = this.state;
         const isBettingRound = roundState === ROUND_STATE.PLACING_BET;
 
+        if (roundState === ROUND_STATE.NONE) {
+            return <></>;
+        }
+
         return (
             <div className={Styles['count-down']}>
-                <div className={classnames(Styles['timer-wrapper'], {
-                    [Styles['placing-bet-state']]: roundState === ROUND_STATE.PLACING_BET,
-                    [Styles['no-more-bet-state']]: roundState !== ROUND_STATE.PLACING_BET
-                })}>
-                    {
-                        isBettingRound && (
-                            <div className={Styles['timer-badge']}>
-                                <Timer className={Styles.clock} />
-                            </div>
-                        )
-                    }
+                <div
+                    className={classnames(Styles['timer-wrapper'], {
+                        [Styles['placing-bet-state']]: roundState === ROUND_STATE.PLACING_BET,
+                        [Styles['no-more-bet-state']]: roundState !== ROUND_STATE.PLACING_BET,
+                    })}
+                >
+                    {isBettingRound && (
+                        <div className={Styles['timer-badge']}>
+                            <Timer className={Styles.clock} />
+                        </div>
+                    )}
                     <div className={Styles['counting-text']}>
-                        <span className={classnames({
-                            [Styles['no-more-bet-state']]: !isBettingRound,
-                        })}>
+                        <span
+                            className={classnames({
+                                [Styles['no-more-bet-state']]: !isBettingRound,
+                            })}
+                        >
                             {this.getTimerContent(countdownTimer, roundState)}
                         </span>
                     </div>
