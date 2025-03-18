@@ -1,11 +1,11 @@
-import * as gc from "@sg/sg-game-client";
-import { render } from "@sg/sg-observer";
+import * as gc from '@sg/sg-game-client';
+import { render } from '@sg/sg-observer';
 
-import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
-import { Result } from "../baccarat";
-import { cardStateEmitter } from "../services/card-state-emitter";
-import Styles from "./baccarat-result-history.module.scss";
-import { ResultCardSection } from "./result-card-section";
+import { IPropsObserver, IStateObserver, ObserverComponent } from '../../../../_shared/components/observer-component/observer-component';
+import { Result } from '../baccarat';
+import { cardStateEmitter } from '../services/card-state-emitter';
+import Styles from './baccarat-result-history.module.scss';
+import { ResultCardSection } from './result-card-section';
 
 export interface IBaccaratResultHistoryProps extends IPropsObserver {
     language: string;
@@ -90,7 +90,7 @@ export class BaccaratResultHistory extends ObserverComponent<IBaccaratResultHist
         return (
             <div className={Styles.resultHistoryContainer}>
                 <div className={Styles['result-title']}>{gc.Translator.t('Common.result')}</div>
-                <div className={Styles.resultHistory}>
+                <div className={`c-ng-result ${Styles.resultHistory}`}>
                     <div className={Styles.header}>
                         <span />
                         <span>{gc.Translator.t('Baccarat.glossary_player')}</span>
