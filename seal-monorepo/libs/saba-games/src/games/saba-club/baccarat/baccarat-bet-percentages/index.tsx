@@ -69,29 +69,22 @@ const calculateBetStatistics = (data: gc.RoundHistories.RoundHistory[]): BetCoun
     }, initialCounts);
 };
 
-const BET_DISPLAY_CONFIG: BetDisplayConfig[] = [
-    { key: 'player', indicator: 'P', className: 'player' },
-    { key: 'banker', indicator: 'B', className: 'banker' },
-    { key: 'tie', indicator: 'T', className: 'tie' },
-    { key: 'playerPair', indicator: 'P', className: 'player-pair' },
-    { key: 'bankerPair', indicator: 'B', className: 'banker-pair' },
-];
-
 const BetPercentageItem: React.FC<{
-    config: BetDisplayConfig;
+    gameName: string;
+    choice: string;
     count: number;
     translateBetOption: (option: string) => string;
-}> = ({ config, count, translateBetOption }) => (
+}> = ({ gameName, choice, count, translateBetOption }) => (
     <div className={Styles['percentage-item']}>
-        {[Choices.player, Choices.banker, Choices.tie].includes(config.key) ? (
-            <BaccaratDot choice={config.key} value={config.indicator} />
+        {[Choices.player, Choices.banker, Choices.tie].includes(choice) ? (
+            <BaccaratDot choice={choice} value={Translator.t(`${gameName}.short_${choice}`)} />
         ) : (
-            <span className={`${Styles.indicator} ${Styles[config.className]}`}>
-                <img src={pairImages[config.key]} alt={config.indicator} width="16" height="16" />
+            <span className={`${Styles.indicator}`}>
+                <img src={pairImages[choice]} alt={choice} width="16" height="16" />
             </span>
         )}
 
-        {translateBetOption(config.key)}
+        {translateBetOption(choice)}
         <span className={Styles.count}>{count}</span>
     </div>
 );
@@ -102,11 +95,17 @@ const BaccaratBetPercentages: React.FC<Props> = ({
     translator = (key: string) => Translator.t(`${gameName}.glossary_${key}`),
 }) => {
     const betCounts = calculateBetStatistics(rounds);
-
+    const choices = [Choices.player, Choices.banker, Choices.tie, Choices.playerPair, Choices.bankerPair];
     return (
         <div className={Styles['baccarat-percentages']}>
-            {BET_DISPLAY_CONFIG.map((config) => (
-                <BetPercentageItem key={config.key} config={config} count={betCounts[config.key]} translateBetOption={translator} />
+            {choices.map((choice) => (
+                <BetPercentageItem
+                    key={choice}
+                    gameName={gameName}
+                    count={betCounts[choice]}
+                    translateBetOption={translator}
+                    choice={choice}
+                />
             ))}
         </div>
     );

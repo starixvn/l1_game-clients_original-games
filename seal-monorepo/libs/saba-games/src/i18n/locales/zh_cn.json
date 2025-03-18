@@ -273,6 +273,7 @@
         "player_win": "闲家获胜",
         "short_banker": "庄",
         "short_player": "闲",
+        "short_tie": "和",
         "tie_win": "和",
         "glossary_B": "庄家",
         "glossary_P": "闲家",

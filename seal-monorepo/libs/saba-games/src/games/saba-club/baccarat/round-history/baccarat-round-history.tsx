@@ -4,6 +4,7 @@ import { IPropsObserver, IStateObserver, ObserverComponent } from '../../../../_
 import Styles from './baccarat-round-history.module.scss';
 import { BaccaratDot } from '../dot/baccarat-dot';
 import { Choices } from '../baccarat-helper';
+import { Translator } from '@sg/sg-game-client';
 
 export interface IBaccaratRoundHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
@@ -30,7 +31,7 @@ export default class BaccaratRoundHistory extends ObserverComponent<IPropsObserv
         const winningChoice = this.getWinningChoice(roundHistory.settlementResult);
         return (
             <div key={roundHistory.roundId} className={Styles['history-item']}>
-                <BaccaratDot choice={winningChoice} />
+                <BaccaratDot choice={winningChoice} value={Translator.t(`Baccarat.short_${winningChoice}`)} />
                 <span className={Styles['arrow']}></span>
             </div>
         );

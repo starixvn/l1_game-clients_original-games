@@ -9,16 +9,11 @@ type Props = {
     gameName?: string;
     classNameStyle?: string;
 };
-const dotValue = {
-    player: 'P',
-    banker: 'B',
-    tie: 'T',
-};
 export const BaccaratDot: React.FC<Props> = ({ choice, value, highlight, size, gameName, classNameStyle }) => {
     const classDotName = Styles[`dot-${choice}`];
     const props = {
         choice,
-        value: dotValue[choice ?? ''] || value,
+        value,
         highlight,
         size,
         gameName,

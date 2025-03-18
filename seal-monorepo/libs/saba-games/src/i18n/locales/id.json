@@ -272,6 +272,7 @@
         "player_win": "PLAYER MENANG",
         "short_banker": "B",
         "short_player": "P",
+        "short_tie": "S",
         "tie_win": "TIE",
         "glossary_B": "Banker",
         "glossary_P": "Player",

@@ -1,60 +1,41 @@
 @import '../styles/overrides';
 
 .baccarat-percentages {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    border-radius: 4px;
 }
 
 .percentage-item {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  color: white;
-  font-size: 14px;
-  font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 .split-percentage {
-  color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.3);
 }
 
 .indicator {
-  width: 24px;
-  height: 24px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-
-  &.player,
-  &.banker,
-  &.tie,
-  &.player-pair,
-  &.banker-pair {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: none;
     border: none;
-  }
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
 }
 
 .count {
-  margin-left: 4px;
-}
-
-.player-border {
-  border: 2px solid #{$player-color-end};
-}
-
-.banker-border {
-  border: 2px solid #{$banker-color-end};
-}
-
-.tie-border {
-  border: 2px solid #{$tie-color-end};
+    margin-left: 4px;
 }
