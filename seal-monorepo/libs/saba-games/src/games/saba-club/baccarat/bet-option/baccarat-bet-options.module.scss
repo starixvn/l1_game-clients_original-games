@@ -75,9 +75,11 @@
 @mixin bet-container-grid {
     display: grid;
     grid-template-rows: 1fr 1fr;
+    grid-template-columns: 100%;
     height: 80px;
     justify-content: center;
     align-items: center;
+    padding: 4px;
     // width: 143px;
 }
 
@@ -108,7 +110,8 @@
     cursor: pointer;
     transition: all 0.2s ease;
     height: 32px;
-    width: 135px;
+    min-width: 135px;
+    width: 100%;
 
     &.winning-bet {
         border-radius: 3px;

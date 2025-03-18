@@ -33,7 +33,7 @@
 
 .block-wrapper {
   display: grid;
-  grid-template-columns: 14rem 1fr 448px !important;
+  grid-template-columns: 14rem 1fr 40% !important;
   // height: 80px !important;
 }
 
@@ -53,7 +53,7 @@
 }
 
 .baccaratGameTitle {
-  grid-template-columns: 1fr 448px !important;
+  grid-template-columns: 1fr 40% !important;
 }
 
 .bet {
@@ -101,9 +101,11 @@
 }
 
 .baccarat-bet-options-block {
-  width: 448px !important;
+  // width: 448px !important;
+  width: auto !important;
   min-width: 448px !important;
 }
+
 
 .bet-options-wrapper {
   display: grid;
@@ -181,11 +183,9 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.92),
-      rgba(245, 245, 245, 0.95)
-    );
+    background: linear-gradient(to bottom,
+        rgba(255, 255, 255, 0.92),
+        rgba(245, 245, 245, 0.95));
     z-index: 10;
     border-radius: 4px;
     backdrop-filter: blur(2px);
@@ -198,9 +198,11 @@
     0% {
       opacity: 0.92;
     }
+
     50% {
       opacity: 0.95;
     }
+
     100% {
       opacity: 0.92;
     }

@@ -5,7 +5,7 @@
   flex-direction: column;
   align-items: center;
   position: absolute;
-  z-index: 2;
+  z-index: 9;
   background-color: var(--c-av-lv2-theme-bg-1);
   border-radius: var(--c-av-border-radius);
   box-shadow:
@@ -32,7 +32,6 @@
   }
 
   .bet-accepted {
-    color: var(--text-content, rgba(0, 0, 0, 0.87));
     text-align: center;
     font-weight: 400;
     margin: 14px 0;
