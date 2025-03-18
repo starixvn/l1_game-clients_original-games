@@ -42,7 +42,7 @@ export const CardSection: React.FC<CardSectionProps> = ({ cards, label, type, pl
             <div className={`${Styles.label} ${type === 'player' ? Styles['label-player'] : Styles['label-banker']}`}>{label}</div>
             <div className={`${Styles.cardContainer} ${Styles[type]} ${!playResultAnimation ? Styles['move-up-no-animation'] : ''}`}>
                 {cards.map((card, index) => (
-                    <BaccaratCard key={card.order} card={card} isShowResult={isShowResult} onCardFlip={handleCardFlip} />
+                    <BaccaratCard key={card.order} type={type} card={card} isShowResult={isShowResult} onCardFlip={handleCardFlip} />
                 ))}
 
                 {isShowResult &&

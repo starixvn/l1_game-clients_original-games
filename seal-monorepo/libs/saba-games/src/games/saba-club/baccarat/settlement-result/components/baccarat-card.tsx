@@ -1,23 +1,20 @@
-import React, { useEffect, useState } from "react";
-import Card from "../../../../../_shared/components/card";
-import { CardOrder } from "../../baccarat";
-import Styles from "../styles/baccarat-card.module.scss";
-import CardBack from "../../../../../_shared/components/card/card-back";
+import React, { useEffect, useState } from 'react';
+
+import Card from '../../../../../_shared/components/card';
+import CardBack from '../../../../../_shared/components/card/card-back';
+import { CardOrder } from '../../baccarat';
 import { CARD_TIMINGS } from '../constants';
+import Styles from '../styles/baccarat-card.module.scss';
 
 interface BaccaratCardProps {
     card: CardOrder;
     className?: string;
     isShowResult: boolean;
+    type: 'player' | 'banker';
     onCardFlip?: (card: CardOrder, accumulatedScore: number) => void;
 }
 
-export const BaccaratCard: React.FC<BaccaratCardProps> = ({
-    card,
-    className,
-    isShowResult,
-    onCardFlip
-}) => {
+export const BaccaratCard: React.FC<BaccaratCardProps> = ({ card, className, isShowResult, type, onCardFlip }) => {
     const [isFlipped, setIsFlipped] = useState(false);
 
     // Add rotation class based on card order
@@ -76,17 +73,19 @@ export const BaccaratCard: React.FC<BaccaratCardProps> = ({
     }, [isShowResult, card, onCardFlip]);
 
     return (
-        <div className={`${Styles.card} ${Styles[`card${card.order}`]} ${isFlipped ? Styles['flip'] : ''} ${getRotationClass(card.order)} ${getBankerThirdCardClass(card.order)} ${className || ''}`}>
-            <div className={Styles["rotate-card"]}>
+        <div
+            className={`${Styles.card} ${Styles[type]}  ${Styles[`card${card.order}`]} ${isFlipped ? Styles['flip'] : ''} ${getRotationClass(card.order)} ${getBankerThirdCardClass(card.order)} ${className || ''}`}
+        >
+            <div className={Styles['rotate-card']}>
                 <div className={Styles.cardFace}>
-                    <div className={Styles["card-back"]}>
+                    <div className={Styles['card-back']}>
                         <CardBack />
                     </div>
-                    <div className={Styles["card-front"]}>
-                        <Card result={card.value} customClassName={"card-baccarat"} />
+                    <div className={Styles['card-front']}>
+                        <Card result={card.value} customClassName={'card-baccarat'} />
                     </div>
                 </div>
             </div>
         </div>
     );
-}; 
+};

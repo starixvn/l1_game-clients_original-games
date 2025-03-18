@@ -42,6 +42,11 @@
         margin-right: 0;
     }
 
+    &.player.card5 {
+        position: absolute;
+        left: -55px;
+    }
+
     &.card5,
     &.card6 {
         &:not(.flip) {

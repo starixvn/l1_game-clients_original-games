@@ -297,7 +297,6 @@ $winner-delay-base: 1s; // Delay after last card before showing winner
 @include respond-to('desktop') {
     .animation-container {
         --gap-player-banker: map.get($layout, 'gap-player-banker', 'desktop');
-        padding: 0 calc(var(--gap-player-banker) * 1.5);
     }
 
     .open-cards {
