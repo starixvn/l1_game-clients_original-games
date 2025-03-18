@@ -52,12 +52,16 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     abstract closeConnect(): void;
 
+    abstract joinGame(): void;
+
+    abstract connectLiveGateway(): void;
+
     onVisibilityChange = () => { };
     @handle(gc.GatewayConnection.GatewayConnectionHandlers.ConnectHandler, (handler) => handler.handle())
     connectToServiceGateway() { }
 
-    @handle(gc.Connection.ConnectionHandlers.ConnectHandler, (handler) => handler.handleGateway())
-    connectLiveGateway() {}
+    @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handle())
+    terminateConnection() { }
 
     @render(gc.Connection.ConnectionStore, (store) => store.isSignedIn)
     handleConnected(isSignedIn: boolean) {
@@ -250,10 +254,16 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         );
     }
 
-    handleReconnect = () => {
+    createConnection() {
         document.addEventListener('visibilitychange', this.onVisibilityChange);
         this.connectToServiceGateway();
         this.connectLiveGateway();
+    }
+
+    handleReconnect = () => {
+        this.terminateConnection();
+        this.createConnection();
+        this.joinGame();
     }
 
     private renderDisconnect() {
