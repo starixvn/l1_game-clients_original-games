@@ -1,11 +1,12 @@
-import * as gc from "@sg/sg-game-client";
-import { Result } from "../../baccarat";
-import { GetBankerCardsResult, GetPlayerCardsResult } from "../../baccarat-helper";
-import Styles from "../styles/baccarat-animations.module.scss";
-import { CardSection } from "./card-section";
+import * as gc from '@sg/sg-game-client';
+import { useEffect, useState } from 'react';
+
+import { Result } from '../../baccarat';
+import { GetBankerCardsResult, GetPlayerCardsResult } from '../../baccarat-helper';
+import { cardStateEmitter } from '../../services/card-state-emitter';
+import Styles from '../styles/baccarat-animations.module.scss';
+import { CardSection } from './card-section';
 import { determineWinner } from './score-utils';
-import { useEffect, useState } from "react";
-import { cardStateEmitter } from "../../services/card-state-emitter";
 
 interface PlayerBankerResultProps {
     playResultAnimation: boolean;
@@ -23,7 +24,7 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
 
     const [state, setState] = useState<PlayerBankerResultState>({
         openedCards: 0,
-        showWinner: false
+        showWinner: false,
     });
 
     const playerCards = result ? GetPlayerCardsResult(result) : [];
@@ -61,23 +62,21 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
         } catch (error) {
             return '';
         }
-    }
+    };
 
     const startAnimation = () => {
         if (!result) {
             return;
         }
 
-        const allCards = [...playerCards, ...bankerCards]
-            .sort((a, b) => a.order - b.order)
-            .filter(card => card.value);
+        const allCards = [...playerCards, ...bankerCards].sort((a, b) => a.order - b.order).filter((card) => card.value);
 
         allCards.forEach((card, index) => {
             setTimeout(() => {
                 const showWinner = index === allCards.length - 1;
                 setState({
                     openedCards: index + 1,
-                    showWinner: showWinner
+                    showWinner: showWinner,
                 });
                 cardStateEmitter.emitOpenedCardsChange(index + 1);
             }, card.animationDelay);
@@ -89,7 +88,7 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
 
     return (
         <div className={`overlay-mask ${Styles[classOpenCards]}`}>
-            <div className={Styles["animation-container"]}>
+            <div className={Styles['animation-container']}>
                 <CardSection
                     cards={playerCards}
                     label={gc.Translator.t(`Baccarat.glossary_player`, { lng: language })}
@@ -100,9 +99,7 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
 
                 {showWinner && isShowResult && (
                     <div className={Styles['winner-display']}>
-                        <p className={Styles['winner-text']}>
-                            {gc.Translator.t(`Baccarat.${getWinnerText()}`, { lng: language })}
-                        </p>
+                        <p className={Styles['winner-text']}>{gc.Translator.t(`Baccarat.${getWinnerText()}`, { lng: language })}</p>
                     </div>
                 )}
 
@@ -116,4 +113,4 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
             </div>
         </div>
     );
-} 
+}

@@ -4,12 +4,12 @@
     --width-score: 53px;
     --height-score: 33px;
     --font-size-score: 20px;
-    --bottom-score: -5px;
-    position: absolute;           
+    --bottom-score: -2px;
+    position: absolute;
     width: var(--width-score);
     height: var(--height-score);
-    border-top-left-radius: 50px;
-    border-top-right-radius: 50px;
+    border-top-left-radius: 53px;
+    border-top-right-radius: 53px;
     color: #fff;
     display: flex;
     align-items: center;
@@ -63,4 +63,4 @@
     100% {
         transform: scale(1);
     }
-} 
+}

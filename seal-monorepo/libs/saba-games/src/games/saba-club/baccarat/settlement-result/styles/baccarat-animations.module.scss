@@ -1,8 +1,8 @@
-@use "sass:math" as math;
-@use "sass:map";
-@import "./_variables";
-@import "./_mixins";
-@import "./_animations";
+@use 'sass:math' as math;
+@use 'sass:map';
+@import './_variables';
+@import './_mixins';
+@import './_animations';
 
 $time-draw-card-animation: 0.8s;
 $time-open-card-animation: 1.2s;
@@ -16,12 +16,12 @@ $time-delay-open-card-4: $time-delay-open-card-2 + 0.2s;
 $time-delay-zoom-in-card-animation: 0.2s + $time-zoom-in-card-animation;
 
 // Sequential card timing variables
-$card-1-time: 0ms;      // First card immediate
-$card-2-time: 1000ms;   // Second to open
-$card-3-time: 2000ms;   // Third to open
-$card-4-time: 3000ms;   // Fourth to open
-$card-5-time: 4000ms;   // Fifth card (if present)
-$card-6-time: 5000ms;   // Sixth card (if present)
+$card-1-time: 0ms; // First card immediate
+$card-2-time: 1000ms; // Second to open
+$card-3-time: 2000ms; // Third to open
+$card-4-time: 3000ms; // Fourth to open
+$card-5-time: 4000ms; // Fifth card (if present)
+$card-6-time: 5000ms; // Sixth card (if present)
 
 // Animation timing for winner based on card count
 $winner-delay-base: 1s; // Delay after last card before showing winner
@@ -29,7 +29,7 @@ $winner-delay-base: 1s; // Delay after last card before showing winner
 // Layout container
 .animation-container {
     // top: 0.3rem;
-    width: 100%;  
+    width: 100%;
     height: 100%;
     pointer-events: none;
     display: grid;
@@ -38,8 +38,8 @@ $winner-delay-base: 1s; // Delay after last card before showing winner
     position: relative;
     align-items: center;
     justify-content: center;
-    gap: calc(var(--gap-player-banker) * 2);
-    padding: 0 var(--gap-player-banker);
+    gap: 70px;
+    padding-bottom: 4px;
 }
 
 // Player and banker base styles
@@ -54,15 +54,11 @@ $winner-delay-base: 1s; // Delay after last card before showing winner
 .player {
     @extend %player-banker-base;
     justify-self: flex-end;
-  
 
     .score {
         margin-left: 50%;
         left: -4.7rem;
-        @include score-gradient(
-            map.get($score, 'colors', 'player', 'start'),
-            map.get($score, 'colors', 'player', 'end')
-        );
+        @include score-gradient(map.get($score, 'colors', 'player', 'start'), map.get($score, 'colors', 'player', 'end'));
     }
 }
 
@@ -73,16 +69,13 @@ $winner-delay-base: 1s; // Delay after last card before showing winner
 
     .score {
         left: 7.8rem;
-        @include score-gradient(
-            map.get($score, 'colors', 'banker', 'start'),
-            map.get($score, 'colors', 'banker', 'end')
-        );
+        @include score-gradient(map.get($score, 'colors', 'banker', 'start'), map.get($score, 'colors', 'banker', 'end'));
     }
 }
 
 // Score display
 .score {
-    position: absolute;           
+    position: absolute;
     width: map.get($score, 'dimensions', 'width');
     height: map.get($score, 'dimensions', 'height');
     border-top-left-radius: 10px;
@@ -120,45 +113,53 @@ $winner-delay-base: 1s; // Delay after last card before showing winner
     // Update card count classes to set the appropriate last card time
     &.card-4 {
         --last-card-time: #{$card-4-time};
-        @include position-cards((
-            "1": var(--distance-first-second-card),
-            "2": 0,
-            "3": 0,
-            "4": calc(var(--distance-first-second-card) * -1)
-        ));
+        @include position-cards(
+            (
+                '1': var(--distance-first-second-card),
+                '2': 0,
+                '3': 0,
+                '4': calc(var(--distance-first-second-card) * -1),
+            )
+        );
     }
 
     &.card-5 {
         --last-card-time: #{$card-5-time};
-        @include position-cards((
-            "1": var(--distance-second-third-card),
-            "2": 0,
-            "3": calc(var(--distance-second-third-card) - var(--distance-first-second-card)),
-            "4": calc(var(--distance-first-second-card) * -1),
-            "5": 0
-        ));
+        @include position-cards(
+            (
+                '1': var(--distance-second-third-card),
+                '2': 0,
+                '3': calc(var(--distance-second-third-card) - var(--distance-first-second-card)),
+                '4': calc(var(--distance-first-second-card) * -1),
+                '5': 0,
+            )
+        );
 
         &-banker {
-            @include position-cards((
-                "1": var(--distance-first-second-card),
-                "2": 0,
-                "3": 0,
-                "4": calc(var(--distance-first-second-card) * -1),
-                "5": calc(var(--distance-second-third-card) * -1)
-            ));
+            @include position-cards(
+                (
+                    '1': var(--distance-first-second-card),
+                    '2': 0,
+                    '3': 0,
+                    '4': calc(var(--distance-first-second-card) * -1),
+                    '5': calc(var(--distance-second-third-card) * -1),
+                )
+            );
         }
     }
 
     &.card-6 {
         --last-card-time: #{$card-6-time};
-        @include position-cards((
-            "1": var(--distance-second-third-card),
-            "2": 0,
-            "3": calc(var(--distance-second-third-card) - var(--distance-first-second-card)),
-            "4": calc(var(--distance-first-second-card) * -1),
-            "5": 0,
-            "6": calc(var(--distance-second-third-card) * -1)
-        ));   
+        @include position-cards(
+            (
+                '1': var(--distance-second-third-card),
+                '2': 0,
+                '3': calc(var(--distance-second-third-card) - var(--distance-first-second-card)),
+                '4': calc(var(--distance-first-second-card) * -1),
+                '5': 0,
+                '6': calc(var(--distance-second-third-card) * -1),
+            )
+        );
     }
 
     // Animation states
@@ -175,8 +176,8 @@ $winner-delay-base: 1s; // Delay after last card before showing winner
         }
 
         .animation-container {
-            animation: 
-                zoom-in-animation $time-zoom-in-card-animation cubic-bezier(.17,.67,.83,.67) forwards,
+            animation:
+                zoom-in-animation $time-zoom-in-card-animation cubic-bezier(0.17, 0.67, 0.83, 0.67) forwards,
                 move-up-result-animation-cards 0.3s cubic-bezier(1, 0.01, 1, 0.01) forwards;
         }
 
@@ -200,12 +201,30 @@ $winner-delay-base: 1s; // Delay after last card before showing winner
         }
 
         // Update card timing to use sequential pattern
-        .card1 .card-back, .card1 .rotate-card { animation-delay: $card-1-time; }
-        .card2 .card-back, .card2 .rotate-card { animation-delay: $card-2-time; }
-        .card3 .card-back, .card3 .rotate-card { animation-delay: $card-3-time; }
-        .card4 .card-back, .card4 .rotate-card { animation-delay: $card-4-time; }
-        .card5 .card-back, .card5 .rotate-card { animation-delay: $card-5-time; }
-        .card6 .card-back, .card6 .rotate-card { animation-delay: $card-6-time; }
+        .card1 .card-back,
+        .card1 .rotate-card {
+            animation-delay: $card-1-time;
+        }
+        .card2 .card-back,
+        .card2 .rotate-card {
+            animation-delay: $card-2-time;
+        }
+        .card3 .card-back,
+        .card3 .rotate-card {
+            animation-delay: $card-3-time;
+        }
+        .card4 .card-back,
+        .card4 .rotate-card {
+            animation-delay: $card-4-time;
+        }
+        .card5 .card-back,
+        .card5 .rotate-card {
+            animation-delay: $card-5-time;
+        }
+        .card6 .card-back,
+        .card6 .rotate-card {
+            animation-delay: $card-6-time;
+        }
     }
 }
 
@@ -226,16 +245,11 @@ $winner-delay-base: 1s; // Delay after last card before showing winner
     @include flex-center;
     flex-direction: column;
     padding: 2rem;
-    
+
     .loading-spinner {
-        @include loading-spinner(
-            40px,
-            4px,
-            map.get($colors, 'loading', 'spinner'),
-            map.get($colors, 'loading', 'spinner-active')
-        );
+        @include loading-spinner(40px, 4px, map.get($colors, 'loading', 'spinner'), map.get($colors, 'loading', 'spinner-active'));
     }
-    
+
     p {
         margin-top: 1rem;
         color: map.get($colors, 'loading', 'text');
@@ -280,10 +294,10 @@ $winner-delay-base: 1s; // Delay after last card before showing winner
 }
 
 // Desktop layout
-@include respond-to('desktop') {    
+@include respond-to('desktop') {
     .animation-container {
         --gap-player-banker: map.get($layout, 'gap-player-banker', 'desktop');
-        padding: 0 calc(var(--gap-player-banker) * 1.5);       
+        padding: 0 calc(var(--gap-player-banker) * 1.5);
     }
 
     .open-cards {
@@ -291,8 +305,12 @@ $winner-delay-base: 1s; // Delay after last card before showing winner
         --distance-second-third-card: map.get($layout, 'card-distances', 'second-third');
 
         .animation-container {
-            .player .score { left: -2.6rem; }
-            .banker .score { left: 1rem; }
+            .player .score {
+                left: -2.6rem;
+            }
+            .banker .score {
+                left: 1rem;
+            }
         }
     }
 }
@@ -300,27 +318,36 @@ $winner-delay-base: 1s; // Delay after last card before showing winner
 // Card section layout
 .cardSection {
     height: 100%;
-    scale: 0.9;
+    max-width: 94px;
 }
 
 // Labels
 .label {
+    width: 100%;
+    white-space: nowrap;
     text-transform: uppercase;
     font-weight: bold;
     font-size: 16px;
     line-height: 700;
     line-height: 21px;
+    text-align: center;
 
-    &-player { color: map.get($colors, 'text', 'player');  text-align: right; margin-right: 2rem;}
-    &-banker { color: map.get($colors, 'text', 'banker'); text-align: left; margin-left: 2rem;}
+    &-player {
+        color: map.get($colors, 'text', 'player');
+    }
+    &-banker {
+        color: map.get($colors, 'text', 'banker');
+    }
 }
 
 // Score wrapper transitions
 .scoreWrapper {
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-    
+    transition:
+        opacity 0.3s ease-in-out,
+        visibility 0.3s ease-in-out;
+
     &.visible {
         opacity: 1;
         visibility: visible;
@@ -328,8 +355,12 @@ $winner-delay-base: 1s; // Delay after last card before showing winner
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 // Winner display animation
@@ -347,30 +378,31 @@ $winner-delay-base: 1s; // Delay after last card before showing winner
 .winner-display {
     position: absolute;
     left: 50%;
-    top: calc(50% - 1rem);
+    bottom: 4px;
     width: fit-content;
-    min-width: 160px;
+    display: flex;
+    align-items: center;
+    line-height: 22px;
+    padding: 2px 48px;
     margin: 0 auto;
     z-index: 100;
-    background: linear-gradient(to left, rgba(240, 198, 11, 0.9), rgba(255, 217, 0, 0.678)), 
-                linear-gradient(to right, rgba(240, 198, 11, 0.9), rgba(255, 217, 0, 0.678));
-    border-radius: 0.2rem;
-    padding: 0.3rem 0.5rem;
-    color: white;
-    font-size:0.8rem;
+    background: linear-gradient(
+        90deg,
+        rgba(135, 56, 0, 0) 0%,
+        rgba(242, 127, 11, 0.5) 14%,
+        #ffb107 50%,
+        rgba(242, 127, 11, 0.5) 84%,
+        rgba(135, 56, 0, 0) 100%
+    );
+    color: #fff;
+    font-size: 14px;
     font-weight: bold;
     text-align: center;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
     animation: floatIn 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     animation-delay: calc(var(--last-card-time, #{$card-4-time}) + #{$winner-delay-base}); // Dynamic delay based on last card
     opacity: 0;
     pointer-events: none;
-    box-shadow: 
-        0 0 20px rgba(255, 215, 0, 0.3),
-        0 0 40px rgba(255, 215, 0, 0.15);
-    grid-column: 1 / -1;
-    align-self: center;
-    justify-self: center;
-    border: 1px solid rgba(255, 215, 0, 0.4);
 }
 
 .winner-text {
@@ -389,10 +421,9 @@ $winner-delay-base: 1s; // Delay after last card before showing winner
     align-items: center;
     padding: 1rem;
     width: 100%;
-    
+
     .cardContainer {
         display: flex;
-        gap: 0.5rem;
         justify-content: center;
         align-items: center;
     }
