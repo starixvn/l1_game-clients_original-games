@@ -1,7 +1,7 @@
 import * as gc from "@sg/sg-game-client";
 import React from "react";
 import { RoundHistoryStore } from "@sg/sg-game-client/dist/game/round-histories";
-import { RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds";
+import { RoundStore, RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds";
 import { render } from "@sg/sg-observer";
 import {
     ObserverComponent,
@@ -26,6 +26,7 @@ export interface IBigSmallSettlementResultState extends IStateObserver {
     roundState: string;
     isAnimationResult: boolean;
     error?: Error;
+    isResultUpdated: boolean;
 }
 
 export default class BigSmallSettlementResult extends ObserverComponent<IPropsObserver, IBigSmallSettlementResultState> {
@@ -37,14 +38,16 @@ export default class BigSmallSettlementResult extends ObserverComponent<IPropsOb
             roundState: "",
             isAnimationResult: false,
             error: undefined,
+            isResultUpdated: false
         };
     }
-
     @render(RoundTimeStore, (store) => store.roundState)
     private handleRoundState(roundState: string): void {
         try {
+            if(roundState === ROUND_STATE.STARTING_ROUND) {
+                this.setState({ isResultUpdated: false });
+            }
             gameStateService.handleRoundState(roundState);
-            this.setState({ roundState});
         } catch (error) {
             this.setState({ error: error as Error });
         }
@@ -57,7 +60,11 @@ export default class BigSmallSettlementResult extends ObserverComponent<IPropsOb
         try {
             const result = gameStateService.handleSettlement(currentFinish);
             if (result && gameStateService.validateResult(result)) {
-                this.setState({ result, isAnimationResult: true});
+                this.setState({ 
+                    result, 
+                    isAnimationResult: true,
+                    isResultUpdated: true
+                });
             }
         } catch (error) {
             this.setState({ error: error as Error });
@@ -77,9 +84,9 @@ export default class BigSmallSettlementResult extends ObserverComponent<IPropsOb
     }
 
     private renderDiceDisplay() {
-        const { result, isAnimationResult, roundState } = this.state;
-
-        if (!result || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET || roundState === ROUND_STATE.SHOW_ANIMATION_RESULT) {
+        const { result, isAnimationResult, roundState, isResultUpdated } = this.state;
+        
+        if (!result || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET || !isResultUpdated) {
             return (
                 <div className={styles.settlementContainer}>
                     <DiceDisplay result={DEFAULT_RESULT} isAnimationResult={false} />
