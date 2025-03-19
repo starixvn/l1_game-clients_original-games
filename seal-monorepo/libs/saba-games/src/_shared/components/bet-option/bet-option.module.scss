@@ -62,7 +62,7 @@
 .flash-and-keep-background-color {
     animation: flash-background 1.5s ease-in-out 6;
     animation-fill-mode: forwards;
-    animation-delay: var(--highlight-result-delay);
+    animation-delay: 0;
     border: 1px solid transparent;
     border-radius: 3px;
 }
