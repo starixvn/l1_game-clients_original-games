@@ -26,6 +26,7 @@ interface IBettingBlockState extends IStateObserver {
     isAuthorized: boolean;
     isSignedIn: boolean;
     isFinishShowResult: boolean;
+    isPlacingBet: boolean;
 }
 
 class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockState> {
@@ -41,7 +42,8 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
             isAuthorized: false,
             isSignedIn: false,
             dispose: null,
-            isFinishShowResult: false
+            isFinishShowResult: false,
+            isPlacingBet: false,
         };
 
         this.handleOnClick = this.handleOnClick.bind(this);
@@ -67,19 +69,19 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
         }
     }
 
-    @handle(gc.Settlements.SettlementUIHandlers.FinishedShowResult)
-    finishShowResult() {
-        const {isFinishShowResult} = this.state
-        this.setState({ isFinishShowResult: true });
-        console.log(".......finishShowResult", isFinishShowResult)
+    @render(gc.Settlements.SettlementStore, store => store.isFinishedShowResult)
+    finishShowResult(isFinishedShowResult: boolean) {
+       
+        this.setState({ isFinishShowResult: isFinishedShowResult });
     }
 
-    @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
-    renderisFinishShowResult(roundState: string) {
-        if (roundState === gc.Rounds.ROUND_STATE.LOCKING_BET || gc.Rounds.ROUND_STATE.PLACING_BET) {
-            this.setState({ isFinishShowResult: false});
-        }
+    @render(gc.Rounds.RoundTimeStore, store => store.isPlacingBet)
+    handlePlacingBet(isPlacingBet: boolean) {
+        this.setState({isPlacingBet})
     }
+
+
+
 
 
     protected handleOnClick({ panelId, setPanelId, show, setShow }) {
@@ -144,7 +146,7 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
 
     render() {
         const { children, namespace, gameName, settlementResult, betChoice, customizeClass } = this.props;
-        const { odd , isFinishShowResult} = this.state;
+        const { odd , isFinishShowResult, isPlacingBet} = this.state;
         let flashAnimationClass = "";
         const bettingZoneState = {
             gameName,
@@ -154,11 +156,9 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
         if(isFinishShowResult && settlementResult?.[betChoice]) {
             flashAnimationClass = "flash-and-keep-background-color";
         } 
-        else if(settlementResult?.[betChoice]) {
+        else if(isPlacingBet && settlementResult?.[betChoice]) {
             flashAnimationClass = "highlight-static-bet-choice";
         }
-        console.log("flashAnimationClass", flashAnimationClass);
-        console.log("isFinishShowResult", isFinishShowResult);
         return (
             <GameBettingOptionsContext.Consumer>
                 {({ panelId, setPanelId, show, setShow }) => {
