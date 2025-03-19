@@ -48,6 +48,7 @@ export default class BigSmallSettlementResult extends ObserverComponent<IPropsOb
                 this.setState({ isResultUpdated: false });
             }
             gameStateService.handleRoundState(roundState);
+            this.setState({ roundState});
         } catch (error) {
             this.setState({ error: error as Error });
         }
