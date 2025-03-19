@@ -1,9 +1,9 @@
-import * as gc from '@sg/sg-game-client';
-import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
-import { render } from '@sg/sg-observer';
-import { isEmpty } from 'lodash';
+import * as gc from "@sg/sg-game-client";
+import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
+import { render } from "@sg/sg-observer";
+import { isEmpty } from "lodash";
 
-import { IPropsObserver, IStateObserver, ObserverComponent } from '../observer-component/observer-component';
+import { IPropsObserver, IStateObserver, ObserverComponent } from "../observer-component/observer-component";
 
 export interface IBetOptionsState extends IStateObserver {
     roundOdds: gc.Rounds.RoundOdds;
@@ -15,7 +15,6 @@ export interface IBetOptionsState extends IStateObserver {
     roundState?: string;
     boostedOdds?: gc.GameServiceMessage.BoostedOddsType | null;
     settlementResult?: gc.GameServiceMessage.TSettlementResult;
-    result?: gc.GameServiceMessage.TResult;
 }
 
 export interface IBetOptionsProps extends IPropsObserver {
@@ -37,7 +36,6 @@ export default class BetOptions extends ObserverComponent<IBetOptionsProps, IBet
             roundState: ROUND_STATE.NONE,
             boostedOdds: null,
             settlementResult: {},
-            result: {},
         } as IBetOptionsState;
     }
 
@@ -45,7 +43,7 @@ export default class BetOptions extends ObserverComponent<IBetOptionsProps, IBet
     renderCountDownTimerState(roundState: string) {
         this.setState({ roundState });
         if (roundState === ROUND_STATE.LOCKING_BET) {
-            this.setState({ settlementResult: {}, result: {} });
+            this.setState({ settlementResult: {} });
         }
     }
 
@@ -101,7 +99,6 @@ export default class BetOptions extends ObserverComponent<IBetOptionsProps, IBet
             return;
         }
         this.setState({ settlementResult });
-        this.setState({ result });
     }
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.firstJoinGameHistory)
@@ -136,7 +133,7 @@ export default class BetOptions extends ObserverComponent<IBetOptionsProps, IBet
     }
 
     protected showHighlightStatic(settlementResult: gc.GameServiceMessage.TSettlementResult) {
-        this.setState({settlementResult});
+        this.setState({ settlementResult });
     }
     protected showAnimationHighlight(settlementResult: gc.GameServiceMessage.TSettlementResult) {}
     protected clearHighlightStatic() {}

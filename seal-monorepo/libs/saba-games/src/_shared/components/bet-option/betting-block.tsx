@@ -17,7 +17,6 @@ interface BettingBlockProps {
     namespace: string;
     children: React.ReactNode;
     settlementResult?: gc.GameServiceMessage.TSettlementResult;
-    customizeClass?: string;
 }
 
 interface IBettingBlockState extends IStateObserver {
@@ -154,7 +153,7 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
     protected signIn() {}
 
     render() {
-        const { children, namespace, gameName, settlementResult, betChoice, customizeClass } = this.props;
+        const { children, namespace, gameName, settlementResult, betChoice } = this.props;
         const { odd, isFinishShowResult, isShowStaticHighlight } = this.state;
         let flashAnimationClass = '';
         const bettingZoneState = {
