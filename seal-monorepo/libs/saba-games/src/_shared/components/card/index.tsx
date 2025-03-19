@@ -1,40 +1,40 @@
-import React from 'react';
+import React from "react";
 
-import card10Red from '../../../assets/cards/10-red.png';
-import card10 from '../../../assets/cards/10.png';
-import card2Red from '../../../assets/cards/2-red.png';
-import card2 from '../../../assets/cards/2.png';
-import card3Red from '../../../assets/cards/3-red.png';
-import card3 from '../../../assets/cards/3.png';
-import card4Red from '../../../assets/cards/4-red.png';
-import card4 from '../../../assets/cards/4.png';
-import card5Red from '../../../assets/cards/5-red.png';
-import card5 from '../../../assets/cards/5.png';
-import card6Red from '../../../assets/cards/6-red.png';
-import card6 from '../../../assets/cards/6.png';
-import card7Red from '../../../assets/cards/7-red.png';
-import card7 from '../../../assets/cards/7.png';
-import card8Red from '../../../assets/cards/8-red.png';
-import card8 from '../../../assets/cards/8.png';
-import card9Red from '../../../assets/cards/9-red.png';
-import card9 from '../../../assets/cards/9.png';
-import cardARed from '../../../assets/cards/A-red.png';
-import cardA from '../../../assets/cards/A.png';
-import cardFront from '../../../assets/cards/card-front.svg';
-import club from '../../../assets/cards/club.png';
-import diamond from '../../../assets/cards/diamond.png';
-import heart from '../../../assets/cards/heart.png';
-import cardJRed from '../../../assets/cards/J-red.png';
-import cardJ from '../../../assets/cards/J.png';
-import cardKRed from '../../../assets/cards/K-red.png';
-import cardK from '../../../assets/cards/K.png';
-import cardQRed from '../../../assets/cards/Q-red.png';
-import cardQ from '../../../assets/cards/Q.png';
-import spade from '../../../assets/cards/spade.png';
-import Styles from './card.module.scss';
-import { MiniCard } from './components/mini-card';
-import { Props } from './type';
-import { convertRank, suffixNameMapping } from './utils/card-utils';
+import card10Red from "../../../assets/cards/10-red.png";
+import card10 from "../../../assets/cards/10.png";
+import card2Red from "../../../assets/cards/2-red.png";
+import card2 from "../../../assets/cards/2.png";
+import card3Red from "../../../assets/cards/3-red.png";
+import card3 from "../../../assets/cards/3.png";
+import card4Red from "../../../assets/cards/4-red.png";
+import card4 from "../../../assets/cards/4.png";
+import card5Red from "../../../assets/cards/5-red.png";
+import card5 from "../../../assets/cards/5.png";
+import card6Red from "../../../assets/cards/6-red.png";
+import card6 from "../../../assets/cards/6.png";
+import card7Red from "../../../assets/cards/7-red.png";
+import card7 from "../../../assets/cards/7.png";
+import card8Red from "../../../assets/cards/8-red.png";
+import card8 from "../../../assets/cards/8.png";
+import card9Red from "../../../assets/cards/9-red.png";
+import card9 from "../../../assets/cards/9.png";
+import cardARed from "../../../assets/cards/A-red.png";
+import cardA from "../../../assets/cards/A.png";
+import cardFront from "../../../assets/cards/card-front.svg";
+import club from "../../../assets/cards/club.png";
+import diamond from "../../../assets/cards/diamond.png";
+import heart from "../../../assets/cards/heart.png";
+import cardJRed from "../../../assets/cards/J-red.png";
+import cardJ from "../../../assets/cards/J.png";
+import cardKRed from "../../../assets/cards/K-red.png";
+import cardK from "../../../assets/cards/K.png";
+import cardQRed from "../../../assets/cards/Q-red.png";
+import cardQ from "../../../assets/cards/Q.png";
+import spade from "../../../assets/cards/spade.png";
+import Styles from "./card.module.scss";
+import { MiniCard } from "./components/mini-card";
+import { Props } from "./type";
+import { convertRank, suffixNameMapping } from "./utils/card-utils";
 
 export const EmptyCardIndex = -1;
 
@@ -89,6 +89,7 @@ const Card: React.FC<Props> = (props) => {
         );
     };
 
+    console.log('__________result.card', result.card);
     if (result.card === EmptyCardIndex) {
         return null;
     }

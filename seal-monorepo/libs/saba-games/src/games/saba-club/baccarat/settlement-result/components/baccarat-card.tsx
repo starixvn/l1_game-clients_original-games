@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import Card from '../../../../../_shared/components/card';
-import CardBack from '../../../../../_shared/components/card/card-back';
-import { CardOrder } from '../../baccarat';
-import { CARD_TIMINGS } from '../constants';
-import Styles from '../styles/baccarat-card.module.scss';
+import Card from "../../../../../_shared/components/card";
+import CardBack from "../../../../../_shared/components/card/card-back";
+import { CardOrder } from "../../baccarat";
+import { CARD_TIMINGS } from "../constants";
+import Styles from "../styles/baccarat-card.module.scss";
 
 interface BaccaratCardProps {
     card: CardOrder;
@@ -12,9 +12,10 @@ interface BaccaratCardProps {
     isShowResult: boolean;
     type: 'player' | 'banker';
     onCardFlip?: (card: CardOrder, accumulatedScore: number) => void;
+    playResultAnimation?: boolean;
 }
 
-export const BaccaratCard: React.FC<BaccaratCardProps> = ({ card, className, isShowResult, type, onCardFlip }) => {
+export const BaccaratCard: React.FC<BaccaratCardProps> = ({ card, className, isShowResult, type, onCardFlip, playResultAnimation }) => {
     const [isFlipped, setIsFlipped] = useState(false);
 
     // Add rotation class based on card order
@@ -38,22 +39,22 @@ export const BaccaratCard: React.FC<BaccaratCardProps> = ({ card, className, isS
             let delay;
             switch (card.order) {
                 case 1:
-                    delay = CARD_TIMINGS.CARD_1;
+                    delay = playResultAnimation ? CARD_TIMINGS.CARD_1 : 0;
                     break;
                 case 3:
-                    delay = CARD_TIMINGS.CARD_3;
+                    delay = playResultAnimation ? CARD_TIMINGS.CARD_3 : 0;
                     break;
                 case 2:
-                    delay = CARD_TIMINGS.CARD_2;
+                    delay = playResultAnimation ? CARD_TIMINGS.CARD_2 : 0;
                     break;
                 case 4:
-                    delay = CARD_TIMINGS.CARD_4;
+                    delay = playResultAnimation ? CARD_TIMINGS.CARD_4 : 0;
                     break;
                 case 5:
-                    delay = CARD_TIMINGS.CARD_5;
+                    delay = playResultAnimation ? CARD_TIMINGS.CARD_5 : 0;
                     break;
                 case 6:
-                    delay = CARD_TIMINGS.CARD_6;
+                    delay = playResultAnimation ? CARD_TIMINGS.CARD_6 : 0;
                     break;
                 default:
                     delay = 0;
@@ -72,9 +73,19 @@ export const BaccaratCard: React.FC<BaccaratCardProps> = ({ card, className, isS
         }
     }, [isShowResult, card, onCardFlip]);
 
+    let flipAnimationClass = '';
+
+    if (isFlipped && playResultAnimation) {
+        flipAnimationClass = 'flip';
+    } else if (isFlipped) {
+        flipAnimationClass = 'flip no-animation';
+    } else {
+        flipAnimationClass = '';
+    }
+    // console.log('--------card', card, '------isFlipped', isFlipped, '---flipAnimationClass', flipAnimationClass);
     return (
         <div
-            className={`${Styles.card} ${Styles[type]}  ${Styles[`card${card.order}`]} ${isFlipped ? Styles['flip'] : ''} ${getRotationClass(card.order)} ${getBankerThirdCardClass(card.order)} ${className || ''}`}
+            className={`${Styles.card} ${Styles[type]}  ${Styles[`card${card.order}`]} ${Styles[flipAnimationClass]} ${getRotationClass(card.order)} ${getBankerThirdCardClass(card.order)} ${className || ''}`}
         >
             <div className={Styles['rotate-card']}>
                 <div className={Styles.cardFace}>

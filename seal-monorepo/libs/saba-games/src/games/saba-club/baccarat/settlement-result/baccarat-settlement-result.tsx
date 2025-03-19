@@ -1,19 +1,20 @@
-import * as gc from '@sg/sg-game-client';
-import { RoundHistoryStore } from '@sg/sg-game-client/dist/game/round-histories';
-import { RoundTimeStore, ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
-import { SettlementStore } from '@sg/sg-game-client/dist/game/settlements';
-import { render, observer } from '@sg/sg-observer';
-import type { Result } from '../baccarat';
-import { CardDisplay } from './components/card-display';
-import { ErrorBoundary } from './components/error-boundary';
-import { Loading } from './components/loading';
-import type { IPropsObserver, IStateObserver } from '../../../../_shared/components/observer-component/observer-component';
-import { ObserverComponent } from '../../../../_shared/components/observer-component/observer-component';
-import { setting } from '../game-settings';
-import { gameStateService } from './services/game-state.service';
-import Styles from './styles/baccarat-animations.module.scss';
-import { EmptyCardIndex } from '../../../../_shared/components/card';
+import * as gc from "@sg/sg-game-client";
+import { RoundHistoryStore } from "@sg/sg-game-client/dist/game/round-histories";
+import { ROUND_STATE, RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds";
+import { SettlementStore } from "@sg/sg-game-client/dist/game/settlements";
+import { observer, render } from "@sg/sg-observer";
 
+import { EmptyCardIndex } from "../../../../_shared/components/card";
+import { ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
+import { setting } from "../game-settings";
+import { CardDisplay } from "./components/card-display";
+import { ErrorBoundary } from "./components/error-boundary";
+import { Loading } from "./components/loading";
+import { gameStateService } from "./services/game-state.service";
+import Styles from "./styles/baccarat-animations.module.scss";
+
+import type { Result } from '../baccarat';
+import type { IPropsObserver, IStateObserver } from '../../../../_shared/components/observer-component/observer-component';
 const DEFAULT_RESULT: Result = {
     banker: {
         card1: { card: EmptyCardIndex, type: 0 },
@@ -101,6 +102,7 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
         if (!result || !isFinish || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET) {
             return <CardDisplay result={DEFAULT_RESULT} isAnimationResult={false} isShowResult={false} language={language} />;
         }
+        console.log({ isAnimationResult });
         return <CardDisplay result={result} isAnimationResult={isAnimationResult} isShowResult={true} language={language} />;
     }
 

@@ -1,12 +1,11 @@
-import * as gc from '@sg/sg-game-client';
-import { useEffect, useState } from 'react';
+import * as gc from "@sg/sg-game-client";
+import { useEffect, useState } from "react";
 
-import { Result } from '../../baccarat';
-import { GetBankerCardsResult, GetPlayerCardsResult } from './score-utils';
-import { cardStateEmitter } from '../../services/card-state-emitter';
-import Styles from '../styles/baccarat-animations.module.scss';
-import { CardSection } from './card-section';
-import { determineWinner } from './score-utils';
+import { Result } from "../../baccarat";
+import { cardStateEmitter } from "../../services/card-state-emitter";
+import Styles from "../styles/baccarat-animations.module.scss";
+import { CardSection } from "./card-section";
+import { determineWinner, GetBankerCardsResult, GetPlayerCardsResult } from "./score-utils";
 
 interface PlayerBankerResultProps {
     playResultAnimation: boolean;
@@ -26,6 +25,7 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
         openedCards: 0,
         showWinner: false,
     });
+    console.log('--------result', result);
 
     const playerCards = result ? GetPlayerCardsResult(result) : [];
     const bankerCards = result ? GetBankerCardsResult(result) : [];

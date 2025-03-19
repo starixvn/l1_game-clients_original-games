@@ -1,25 +1,6 @@
 @use 'sass:math';
 @import './_variables';
 
-// Card flip animations
-@keyframes open-card-animation {
-    from {
-        transform: rotateY(0deg);
-    }
-    to {
-        transform: rotateY(180deg);
-    }
-}
-
-@keyframes hide-card-back-animation {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-
 // Base card styles
 .card {
     $card-dimensions: (
@@ -37,6 +18,10 @@
     perspective: 1000px;
     opacity: 1;
     transition: transform 0.6s ease-in-out;
+
+    &.no-animation {
+        transition: transform 0.1s ease-in-out;
+    }
 
     &:last-child {
         margin-right: 0;
@@ -99,13 +84,6 @@
             backface-visibility: hidden;
             transform: rotateY(180deg);
         }
-    }
-}
-
-// Card animation timing
-@for $i from 1 through 6 {
-    .card#{$i} {
-        --animation-delay: map-get($card-sequence, if($i <= 2, first-pair, if($i <= 4, second-pair, if($i == 5, third-card, fourth-card))));
     }
 }
 

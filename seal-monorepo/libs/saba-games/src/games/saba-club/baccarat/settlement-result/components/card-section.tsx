@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from "react";
 
-import { CardOrder } from '../../baccarat';
-import { CardOrderWithTiming } from './score-utils';
-import Styles from '../styles/baccarat-animations.module.scss';
-import { BaccaratCard } from './baccarat-card';
-import { ScoreDisplay } from './score-display';
+import { CardOrder } from "../../baccarat";
+import Styles from "../styles/baccarat-animations.module.scss";
+import { BaccaratCard } from "./baccarat-card";
+import { ScoreDisplay } from "./score-display";
+import { CardOrderWithTiming } from "./score-utils";
 
 interface CardSectionProps {
     cards: CardOrderWithTiming[];
@@ -40,9 +40,16 @@ export const CardSection: React.FC<CardSectionProps> = ({ cards, label, type, pl
     return (
         <div className={Styles.cardSection} style={{ height: '100%' }}>
             <div className={`${Styles.label} ${type === 'player' ? Styles['label-player'] : Styles['label-banker']}`}>{label}</div>
-            <div className={`${Styles.cardContainer} ${Styles[type]} ${!playResultAnimation ? Styles['move-up-no-animation'] : ''}`}>
+            <div className={`${Styles.cardContainer} ${Styles[type]}`}>
                 {cards.map((card, index) => (
-                    <BaccaratCard key={card.order} type={type} card={card} isShowResult={isShowResult} onCardFlip={handleCardFlip} />
+                    <BaccaratCard
+                        playResultAnimation={playResultAnimation}
+                        key={card.order}
+                        type={type}
+                        card={card}
+                        isShowResult={isShowResult}
+                        onCardFlip={handleCardFlip}
+                    />
                 ))}
 
                 {isShowResult &&
