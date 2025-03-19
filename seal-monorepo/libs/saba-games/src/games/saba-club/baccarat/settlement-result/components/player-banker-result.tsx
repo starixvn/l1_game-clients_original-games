@@ -1,43 +1,47 @@
-import React, { useEffect, useState } from "react";
+import * as gc from "@sg/sg-game-client";
+import { useEffect, useState } from "react";
+
 import { Result } from "../../baccarat";
-import { GetBankerCardsResult, GetPlayerCardsResult } from "../../baccarat-helper";
+import { cardStateEmitter } from "../../services/card-state-emitter";
 import Styles from "../styles/baccarat-animations.module.scss";
-import { calculateTotalScore } from "./score-utils";
 import { CardSection } from "./card-section";
+import { determineWinner, GetBankerCardsResult, GetPlayerCardsResult } from "./score-utils";
 
 interface PlayerBankerResultProps {
     playResultAnimation: boolean;
     result?: Result;
-    texts: {
-        player: string;
-        banker: string;
-    };
     isShowResult: boolean;
+    language: string;
+    isFinishShowResult: boolean;
 }
-
 interface PlayerBankerResultState {
-    playerScore: number;
-    bankerScore: number;
     openedCards: number;
     showWinner: boolean;
 }
 
 export default function PlayerBankerResultComponent(props: PlayerBankerResultProps) {
-    const { playResultAnimation, result, texts, isShowResult } = props;
+    const { playResultAnimation, result, isShowResult, language, isFinishShowResult } = props;
+
     const [state, setState] = useState<PlayerBankerResultState>({
-        playerScore: 0,
-        bankerScore: 0,
         openedCards: 0,
-        showWinner: false
+        showWinner: false,
     });
+
+    const playerCards = result ? GetPlayerCardsResult(result) : [];
+    const bankerCards = result ? GetBankerCardsResult(result) : [];
 
     useEffect(() => {
         if (playResultAnimation) {
             startAnimation();
-        } else {
-            updateScorePlayerBanker();
         }
-    }, [playResultAnimation]);
+
+        if (isShowResult && !playResultAnimation) {
+            setState({
+                openedCards: 0,
+                showWinner: true,
+            });
+        }
+    }, [playResultAnimation, isShowResult]);
 
     useEffect(() => {
         if (isShowResult) {
@@ -45,95 +49,72 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
         }
     }, [isShowResult]);
 
-    useEffect(() => {
-        if (result && !playResultAnimation) {
-            updateScorePlayerBanker();
+    const getWinnerText = (): string => {
+        if (!result) {
+            return '';
         }
-    }, [result, playResultAnimation]);
 
-    const getWinnerText = () => {
-        const { playerScore, bankerScore } = state;
+        try {
+            const playerLastCard = playerCards[playerCards.length - 1];
+            const bankerLastCard = bankerCards[bankerCards.length - 1];
 
-        if (playerScore > bankerScore) {
-            return `${texts.player} WINS!`;
-        } else if (bankerScore > playerScore) {
-            return `${texts.banker} WINS!`;
+            if (!playerLastCard || !bankerLastCard) {
+                return '';
+            }
+
+            const playerScore = playerLastCard.accumulatedScore;
+            const bankerScore = bankerLastCard.accumulatedScore;
+
+            return determineWinner(playerScore, bankerScore);
+        } catch (error) {
+            return '';
         }
-        return "TIE";
-    }
+    };
 
     const startAnimation = () => {
-        if (!result) return;
+        if (!result) {
+            return;
+        }
 
-        const playerCards = GetPlayerCardsResult(result);
-        const bankerCards = GetBankerCardsResult(result);
-
-        // Combine and sort cards by animation order
-        const allCards = [...playerCards, ...bankerCards]
-            .sort((a, b) => a.order - b.order)
-            .filter(card => card.value);
+        const allCards = [...playerCards, ...bankerCards].sort((a, b) => a.order - b.order).filter((card) => card.value);
 
         allCards.forEach((card, index) => {
             setTimeout(() => {
-                setState(prevState => {
-                    const isBanker = bankerCards.some(bc => bc.value === card.value);
-                    return {
-                        bankerScore: isBanker ? card.accumulatedScore : prevState.bankerScore,
-                        playerScore: !isBanker ? card.accumulatedScore : prevState.playerScore,
-                        openedCards: index + 1,
-                        showWinner: index === allCards.length - 1
-                    };
+                const showWinner = index === allCards.length - 1;
+                setState({
+                    openedCards: index + 1,
+                    showWinner: showWinner,
                 });
+                cardStateEmitter.emitOpenedCardsChange(index + 1);
             }, card.animationDelay);
         });
     };
 
-    const updateScorePlayerBanker = () => {
-        if (result) {
-            setState(prevState => ({
-                ...prevState,
-                playerScore: calculateTotalScore([result.player.card1, result.player.card2, result.player.card3]),
-                bankerScore: calculateTotalScore([result.banker.card1, result.banker.card2, result.banker.card3])
-            }));
-        }
-    };
-
-    const { openedCards, playerScore, bankerScore, showWinner } = state;
-
-    const playerCards = result ? GetPlayerCardsResult(result) : [];
-    const bankerCards = result ? GetBankerCardsResult(result) : [];
-    const classOpenCards = `opened-cards-${openedCards}`;
-
     return (
-        <div className={`overlay-mask ${Styles[classOpenCards]}`}>
-            <div className={Styles["animation-container"]}>
+        <div className={`overlay-mask`}>
+            <div className={Styles['animation-container']}>
                 <CardSection
                     cards={playerCards}
-                    label={texts.player}
-                    score={playerScore}
+                    label={gc.Translator.t(`Baccarat.glossary_player`, { lng: language })}
                     type="player"
                     playResultAnimation={playResultAnimation}
                     isShowResult={isShowResult}
                 />
 
-                {/* Winner Display */}
-                {showWinner && isShowResult && (
-                    <div className={Styles['winner-display']}>
-                        <p className={Styles['winner-text']}>
-                            {getWinnerText()}
-                        </p>
-                    </div>
-                )}
-
                 <CardSection
                     cards={bankerCards}
-                    label={texts.banker}
-                    score={bankerScore}
+                    label={gc.Translator.t(`Baccarat.glossary_banker`, { lng: language })}
                     type="banker"
                     playResultAnimation={playResultAnimation}
                     isShowResult={isShowResult}
                 />
+
+                {isShowResult && isFinishShowResult && (
+                    <div className={`${Styles['winner-display']} ${playResultAnimation ? Styles['play-animation'] : ''}`}>
+                        <p className={Styles['winner-text']}>{gc.Translator.t(`Baccarat.${getWinnerText()}`, { lng: language })}</p>
+                    </div>
+                )}
             </div>
         </div>
     );
-} 
+}

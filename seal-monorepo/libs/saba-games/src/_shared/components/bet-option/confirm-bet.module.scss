@@ -1,71 +1,71 @@
-.padding-top-10 {
-    padding-top: 10px;
-}
+.confirm-bet {
+  display: flex;
+  width: 396px;
+  padding-bottom: 24px;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  z-index: 9;
+  background-color: var(--c-av-lv2-theme-bg-1);
+  border-radius: var(--c-av-border-radius);
+  box-shadow:
+    0 24px 38px rgba(0, 0, 0, 0.14),
+    0 9px 46px rgba(0, 0, 0, 0.12),
+    0 11px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  font-size: 16px;
 
-.result-flex{
+  .heading {
     display: flex;
-    flex-direction: column;
-}
-
-.betting-row {
-    display: flex;
+    padding: 12px 16px;
     align-items: center;
-}
+    gap: 10px;
+    align-self: stretch;
+    width: 100%;
+    border-radius: var(--c-av-border-radius) var(--c-av-border-radius) 0 0;
+    color: var(--c-av-white-opacity-1);
+    background-color: var(--c-av-primary-500);
+    font-family: 'Segoe UI';
 
-.c-text-label {
-    min-width: 75px; /* 或根據需要調整寬度 */
-}
+    font-weight: 600;
+    text-transform: capitalize;
+  }
 
-.odd {
-    font-weight: 700;
-}
+  .bet-accepted {
+    text-align: center;
+    font-weight: 400;
+    margin: 14px 0;
+  }
 
-.boosted-odd {
-    background-color: rgba(199, 34, 99, 0.2);
-    border: 1px solid rgba(199, 34, 99);
-    border-radius: 0.3rem;
-    padding: 0 0.4rem;
-    animation: start-boosted-odds 2s forwards infinite;
-}
-
-.total-stakes {
-    font-weight: 500;
-    height: 1.5rem;
-}
-
-.own-bet {
-    font-weight: 700;
-    color: yellow;
-}
-.betting-block {
-    display: block;
-    height: 100%;
-}
-
-@keyframes start-boosted-odds {
-    0%,
-    100% {
-        box-shadow: none;
-    }
-
-    50% {
-        box-shadow: 0 0 5px #c01357, 0 0 8px #ff8dba inset;
-    }
-}
-
-.bet-result-container {
+  .betting-results {
     display: flex;
-    position: absolute;
-    z-index: 5;
-    top: 20px;
+    gap: 6px;
+    flex-direction: column;
+    font-weight: 600;
+    margin-bottom: 14px;
+    text-align: center;
+
+    .betting-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .confirm-btn {
+    width: 216px;
+    padding: 6px 66px;
+    margin-top: 24px;
+    font-size: 12px;
+  }
 }
 
 .noti-label {
-    padding-left: 0;
+  padding-left: 0;
 }
 
 .noti-input {
-    display: inline-block !important;
-    margin-top: 2px;
-    margin-right: 5px;
+  display: inline-block !important;
+  margin-top: 2px;
+  margin-right: 5px;
 }

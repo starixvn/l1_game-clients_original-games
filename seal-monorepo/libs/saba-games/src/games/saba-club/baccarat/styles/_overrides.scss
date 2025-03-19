@@ -6,12 +6,12 @@ $baccarat-header-bg: #e6e6e6;
 $baccarat-accent-color: #9c27b0;
 
 // Baccarat game-specific colors
-$banker-color: #cc1a27;
-$banker-color-start: #cc1a27;
-$banker-color-end: #8a0915;
-$player-color: #315dc5;
-$player-color-start: #315dc5;
-$player-color-end: #00428f;
+$banker-color: #fe1326;
+$banker-color-start: #ff2f3c;
+$banker-color-end: #d30514;
+$player-color: #1347fe;
+$player-color-start: #2489ff;
+$player-color-end: #055ec6;
 $tie-color: #06cd0e;
 $tie-color-start: #06cd0e;
 $tie-color-end: #00900e;
@@ -53,4 +53,4 @@ $tie-color-end: #00900e;
     tieColor: $tie-color;
     tieColorStart: $tie-color-start;
     tieColorEnd: $tie-color-end;
-} 
+}

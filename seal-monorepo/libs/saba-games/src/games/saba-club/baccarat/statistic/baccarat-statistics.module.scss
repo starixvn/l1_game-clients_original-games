@@ -1,12 +1,12 @@
 @import '../styles/overrides';
 
 .statistic {
-    display: flex;
-    justify-content: space-between;
-    padding: 3px;
-    background-color: #fce0d7;
-    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    padding: 3px 0 10px 0;
+    background-color: var(--c-av-match-live-bg);
     width: 100%;
+    gap: 16px;
 }
 
 .big-road-container {

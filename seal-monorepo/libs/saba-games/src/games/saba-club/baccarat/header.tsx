@@ -14,17 +14,16 @@ interface BaccaratHeaderProps {
 }
 
 const BaccaratHeader: React.FC<BaccaratHeaderProps> = ({ gameId, isExpanded, handleToggle: onToggleExpand, centerTextsComponent }) => {
-    console.log('BaccaratHeader', gameId, isExpanded, onToggleExpand, centerTextsComponent);
     return (
         <div className={classNames(styles.header, 'baccarat-header')}>
             <GameHeader
                 gameId={gameId}
                 isExpanded={isExpanded}
                 onToggleExpand={onToggleExpand}
-                centerTextsComponent={<GameHeaderCenterTexts texts={[
+                centerTextsComponent={isExpanded && <GameHeaderCenterTexts texts={[
                     gc.Translator.t('Baccarat.glossary_player') + '/' + gc.Translator.t('Baccarat.glossary_banker'),
                     gc.Translator.t('Baccarat.glossary_tie'),
-                    gc.Translator.t('Baccarat.glossary_playerPair') + '/' + gc.Translator.t('Baccarat.glossary_bankerPair')
+                    gc.Translator.t('Baccarat.banker_player_pair')
                 ]} />}
                 className={styles.baccaratGameTitle}
             />

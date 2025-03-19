@@ -56,7 +56,6 @@ export class SedieScoreBoard extends ObserverComponent<Props, ISeDieResultHistor
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
     renderCountDownTimerState(roundState: string) {
-        console.log('roundState', roundState);
         this.setState({ roundState });
     }
 
@@ -75,7 +74,7 @@ export class SedieScoreBoard extends ObserverComponent<Props, ISeDieResultHistor
         });
         const input = [...settlements].reverse();
         const hasBlink = roundState === ROUND_STATE.LOCKING_BET || roundState === ROUND_STATE.SHOW_ANIMATION_RESULT;
-        
+
         bigRoad.initialize(input, hasBlink);
         const rows = bigRoad.rows();
 

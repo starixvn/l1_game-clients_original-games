@@ -1,13 +1,13 @@
 import React from "react";
+import cardBack from "../../../assets/cards/card-back.svg";
 import Styles from "./card.module.scss";
 
 const CardBack: React.FC = () => {
     return (
         <div className={`${Styles["card-back"]} ${Styles["card"]}`}>
-            <div className={Styles["card-shadow"]}></div>
             <div className={Styles["result"]} data-testid="card-back">
                 <img
-                    src="/static/images/cards/card-back.svg?v=1fe9bf3fea"
+                    src={cardBack}
                     className={Styles["card-suite"]}
                     height={80}
                     width={56}

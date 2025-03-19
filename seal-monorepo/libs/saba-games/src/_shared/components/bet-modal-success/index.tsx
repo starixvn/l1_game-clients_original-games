@@ -1,11 +1,10 @@
-import * as gc from '@sg/sg-game-client';
+import * as gc from "@sg/sg-game-client";
 import style from './Success.module.scss';
 
-const BetModalSuccess = () => {
+const BetModalSuccess = ({totalStake}) => {
     return (
-        <div className={style['success-modal']}>
-            <div className={style['success-icon']}></div>
-            {gc.Translator.t('Common.sucbet')}
+        <div className={style['stake-container']}>
+            <span className={style['stake']}>{`-${gc.FormatUtils.numberWithCommas(totalStake)}`}</span>
         </div>
     );
 };

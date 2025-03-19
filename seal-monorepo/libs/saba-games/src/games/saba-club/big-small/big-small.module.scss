@@ -1,17 +1,28 @@
 
 .block-wrapper {
     .result {
-        width: 50%;
+        width: 40%;
         border-right: none;
+        @media screen and (min-width: 1102px) {
+            width: 50%;
+        }
+       
     }
 
     .info {
-        width: 20%;
+        width: 30%;
+        @media screen and (min-width: 1102px) {
+            width: 20%;
+        }
+       
     }
 
     .bet-options {
         width: 40%;
         border-left: 1px solid var(--c-av-theme-border-1);
+    }
+    .animation-balance {
+        width: 40%;
     }
 }
 

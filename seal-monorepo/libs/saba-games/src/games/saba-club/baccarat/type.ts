@@ -40,6 +40,7 @@ export interface IBaccaratState extends IGameBaseState {
 
 export interface IBaccaratProps {
     namespace: string;
+    language: string;
     isExpanded?: boolean;
     onToggleExpand?: () => void;
 } 

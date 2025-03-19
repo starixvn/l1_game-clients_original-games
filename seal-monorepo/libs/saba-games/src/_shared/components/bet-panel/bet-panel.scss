@@ -15,6 +15,9 @@
 
     // 籌碼 Betslip
     .c-quick-bet__panel {
+        font-family: "Segoe UI";
+        min-width: 244px;
+        max-width: unset;
         .c-ng-ball-small {
             width: 26px;
             height: 26px;
@@ -23,6 +26,30 @@
                 font-size: 12px;
             }
         }
+    }
+    .c-betslip__content {
+        .c-betting-scroller {
+            height: 100%;
+            display: block;
+        }
+        .c-ticket__header  {
+            font-size: 13px;
+            line-height: 15px;
+            .game-name {
+                font-weight: 700;
+            }
+            .bet-option {
+                font-weight: 600;
+            }
+        }
+        .c-ticket__info {
+            color: var(--ticket-info-text);
+            margin-top: 10px !important;
+        }
+        .c-betting-submit .c-btn--bet{
+            background-color: #B6403A;
+        }
+        
     }
     .sg-bet-panel {
         &__text-bold {
@@ -53,21 +80,21 @@
 
     .sedie-icon {
         @extend %game-icon-base;
-        background-image: url("/static/images/game-icons/sedie.png");
+        background-image: url("../../../assets/game-icons/sedie.png");
     }
 
     .vip-sedie-icon {
         @extend %game-icon-base;
-        background-image: url("/static/images/game-icons/vip-sedie.png");
+        background-image: url("../../../assets/game-icons/vip-sedie.png");
     }
 
     .bigsmall-icon {
         @extend %game-icon-base;
-        background-image: url("/static/images/game-icons/big-small.png");
+        background-image: url("../../../assets/game-icons/big-small.png");
     }
 
     .baccarat-icon {
         @extend %game-icon-base;
-        background-image: url("/static/images/game-icons/game-icon-10.png");
+        background-image: url("../../../assets/game-icons/game-icon-10.png");
     }
 }

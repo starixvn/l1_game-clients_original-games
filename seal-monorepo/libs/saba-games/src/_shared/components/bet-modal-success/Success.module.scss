@@ -1,48 +1,33 @@
-.success-icon {
-    width: 20px;
-    height: 20px;
-    background-image: url("../../../assets/success.svg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-}
 
-.success-modal {
+
+.stake-container {
     position: absolute;
-    top: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
-    background-color: var(--success-modal-bg, hsla(0, 0%, 100%));
-    // dark color
-    // background-color: var(--success-modal-bg, #272732);
-    border: 2px solid var(--success-modal-border, #28b5ad);
-    border-radius: 10px;
-    padding: 20px;
-    width: 200px;
-    height: 20px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    gap: 8px;
-    z-index: 5;
-    font-weight: bold;
-    color:#7AB44D;
-    animation: fadeOutUp 2.5s ease-out forwards;
+    right: 0;
+    left: 0;
+    z-index: 999;
+}
+.stake {
+    font-size: 18px;
+    color: #727272;
+    font-weight: 700;
+    animation: fadeOutUp 2.5s ease-in forwards;
+    
 }
 
 @keyframes fadeOutUp {
     0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    30% {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(10px);
     }
-    85% {
+    60% {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(-20px);
     }
+
     100% {
+        transform: translateY(-50px);
         opacity: 0;
     }
 }

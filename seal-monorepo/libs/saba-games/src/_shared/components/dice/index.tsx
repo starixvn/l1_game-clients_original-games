@@ -1,17 +1,23 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import styles from "./dice.module.scss";
-import { Size } from 'libs/saba-games/src/_shared/constants';
+import { Size } from '../../../_shared/constants';
+import diceQuestionMark from "../../../assets/big-small/dice-question-mark.svg";
+import dice1 from "../../../assets/big-small/dice-1.svg";
+import dice2 from "../../../assets/big-small/dice-2.svg";
+import dice3 from "../../../assets/big-small/dice-3.svg";
+import dice4 from "../../../assets/big-small/dice-4.svg";
+import dice5 from "../../../assets/big-small/dice-5.svg";
+import dice6 from "../../../assets/big-small/dice-6.svg";
 
 const diceImages: Record<number, string> = {
-  0: "/static/images/big-small/dice-question-mark.svg",
-  1: "/static/images/big-small/dice-1.svg",
-  2: "/static/images/big-small/dice-2.svg",
-  3: "/static/images/big-small/dice-3.svg",
-  4: "/static/images/big-small/dice-4.svg",
-  5: "/static/images/big-small/dice-5.svg",
-  6: "/static/images/big-small/dice-6.svg",
+  0: diceQuestionMark,
+  1: dice1,
+  2: dice2,
+  3: dice3,
+  4: dice4,
+  5: dice5,
+  6: dice6,
 };
-
 
 interface IDiceProps {
   diceNumber: number;

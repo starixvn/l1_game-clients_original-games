@@ -1,7 +1,19 @@
-import { Translator } from "@sg/sg-game-client";
-import Styles from "./baccarat-bet-percentages.module.scss";
-import * as gc from "@sg/sg-game-client";
-import React from "react";
+import { Translator } from '@sg/sg-game-client';
+import * as gc from '@sg/sg-game-client';
+import React from 'react';
+
+import bankerPairBeadImage from '../../../../assets/baccarat/scoreboard/indicator/banker-pair-bead.png';
+import playerPairBeadImage from '../../../../assets/baccarat/scoreboard/indicator/player-pair-bead.png';
+import Styles from './baccarat-bet-percentages.module.scss';
+import { BaccaratDot } from '../dot/baccarat-dot';
+import { Choices } from '../baccarat-helper';
+
+// Image assets
+// Constants for image mapping
+const pairImages: Record<string, string> = {
+    playerPair: playerPairBeadImage,
+    bankerPair: bankerPairBeadImage,
+};
 
 // Types and Interfaces
 interface BetResult {
@@ -24,14 +36,13 @@ interface BetDisplayConfig {
     key: keyof BetCounts;
     indicator: string;
     className: string;
-    imagePath: string;
 }
 
 interface Props {
     gameName: string;
-    settlements: any[];
     rounds: gc.RoundHistories.RoundHistory[];
     translator?: (key: string) => string;
+    language?: string;
 }
 
 // Pure function for calculating bet statistics
@@ -41,7 +52,7 @@ const calculateBetStatistics = (data: gc.RoundHistories.RoundHistory[]): BetCoun
         banker: 0,
         tie: 0,
         playerPair: 0,
-        bankerPair: 0
+        bankerPair: 0,
     };
 
     return data.reduce((counts, item) => {
@@ -53,31 +64,27 @@ const calculateBetStatistics = (data: gc.RoundHistories.RoundHistory[]): BetCoun
             banker: counts.banker + (result.banker ? 1 : 0),
             tie: counts.tie + (result.tie ? 1 : 0),
             playerPair: counts.playerPair + (result.playerPair ? 1 : 0),
-            bankerPair: counts.bankerPair + (result.bankerPair ? 1 : 0)
+            bankerPair: counts.bankerPair + (result.bankerPair ? 1 : 0),
         };
     }, initialCounts);
 };
 
-// Configuration for bet display
-const BET_DISPLAY_CONFIG: BetDisplayConfig[] = [
-    { key: 'player', indicator: 'P', className: 'player', imagePath: '/static/images/baccarat/scoreboard/indicator/player-bead.png' },
-    { key: 'banker', indicator: 'B', className: 'banker', imagePath: '/static/images/baccarat/scoreboard/indicator/banker-bead.png' },
-    { key: 'tie', indicator: 'T', className: 'tie', imagePath: '/static/images/baccarat/scoreboard/indicator/tie-bead.png' },
-    { key: 'playerPair', indicator: 'P', className: 'player-pair', imagePath: '/static/images/baccarat/scoreboard/indicator/player-pair-bead.png' },
-    { key: 'bankerPair', indicator: 'B', className: 'banker-pair', imagePath: '/static/images/baccarat/scoreboard/indicator/banker-pair-bead.png' }
-];
-
-// Presentational component for a single bet percentage item
 const BetPercentageItem: React.FC<{
-    config: BetDisplayConfig;
+    gameName: string;
+    choice: string;
     count: number;
     translateBetOption: (option: string) => string;
-}> = ({ config, count, translateBetOption }) => (
-    <div className={Styles["percentage-item"]}>
-        <span className={`${Styles.indicator} ${Styles[config.className]}`}>
-            <img src={config.imagePath} alt={config.indicator} width="16" height="16" />
-        </span>
-        {translateBetOption(config.key)}
+}> = ({ gameName, choice, count, translateBetOption }) => (
+    <div className={Styles['percentage-item']}>
+        {[Choices.player, Choices.banker, Choices.tie].includes(choice) ? (
+            <BaccaratDot choice={choice} value={Translator.t(`${gameName}.short_${choice}`)} />
+        ) : (
+            <span className={`${Styles.indicator}`}>
+                <img src={pairImages[choice]} alt={choice} width="16" height="16" />
+            </span>
+        )}
+
+        {translateBetOption(choice)}
         <span className={Styles.count}>{count}</span>
     </div>
 );
@@ -85,24 +92,23 @@ const BetPercentageItem: React.FC<{
 const BaccaratBetPercentages: React.FC<Props> = ({
     gameName,
     rounds,
-    translator = (key: string) => Translator.t(`${gameName}.glossary_${key}`)
+    translator = (key: string) => Translator.t(`${gameName}.glossary_${key}`),
 }) => {
     const betCounts = calculateBetStatistics(rounds);
-
+    const choices = [Choices.player, Choices.banker, Choices.tie, Choices.playerPair, Choices.bankerPair];
     return (
-        <div className={Styles["baccarat-percentages"]}>
-            {BET_DISPLAY_CONFIG.map((config, index) => (
-                <React.Fragment key={config.key}>
-                    {index > 0 && <div className={Styles["split-percentage"]}>|</div>}
-                    <BetPercentageItem
-                        config={config}
-                        count={betCounts[config.key]}
-                        translateBetOption={translator}
-                    />
-                </React.Fragment>
+        <div className={Styles['baccarat-percentages']}>
+            {choices.map((choice) => (
+                <BetPercentageItem
+                    key={choice}
+                    gameName={gameName}
+                    count={betCounts[choice]}
+                    translateBetOption={translator}
+                    choice={choice}
+                />
             ))}
         </div>
     );
 };
 
-export { BaccaratBetPercentages, calculateBetStatistics, type BetCounts, type BetResult }; 
+export { BaccaratBetPercentages, calculateBetStatistics, type BetCounts, type BetResult };

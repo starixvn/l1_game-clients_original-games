@@ -38,18 +38,13 @@ module.exports = {
           input: 'libs/saba-games/src/assets',
           output: '/assets',
         },
-        {
-          glob: '**/*',
-          input: 'libs/saba-games/public/static',
-          output: '/static',
-        },
       ],
 
       styles:
         process.env.NODE_ENV === 'development'
           ? ['./preview-template/styles.scss']
           : [],
-      outputHashing: process.env.NODE_ENV === 'production' ? 'all' : 'none',
+      outputHashing: 'all',
       optimization: process.env.NODE_ENV === 'production',
       sourceMap: false,
     }),

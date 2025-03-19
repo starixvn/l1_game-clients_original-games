@@ -1,8 +1,9 @@
-import * as gc from '@sg/sg-game-client';
-import { isEmpty } from 'lodash';
-import { render } from '@sg/sg-observer';
-import { IPropsObserver, IStateObserver, ObserverComponent } from '../observer-component/observer-component';
-import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
+import * as gc from "@sg/sg-game-client";
+import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
+import { render } from "@sg/sg-observer";
+import { isEmpty } from "lodash";
+
+import { IPropsObserver, IStateObserver, ObserverComponent } from "../observer-component/observer-component";
 
 export interface IBetOptionsState extends IStateObserver {
     roundOdds: gc.Rounds.RoundOdds;
@@ -11,7 +12,7 @@ export interface IBetOptionsState extends IStateObserver {
     userBetPercentage: gc.GameServiceMessage.UserBetPercentage;
     betPercentage: gc.GameServiceMessage.BetPercentage;
     isShowBetPanel: boolean;
-    roundState?: string; 
+    roundState?: string;
     boostedOdds?: gc.GameServiceMessage.BoostedOddsType | null;
     settlementResult?: gc.GameServiceMessage.TSettlementResult;
 }
@@ -32,7 +33,7 @@ export default class BetOptions extends ObserverComponent<IBetOptionsProps, IBet
             userBetPercentage: {},
             betPercentage: {},
             isShowBetPanel: false,
-            roundState: ROUND_STATE.NONE, 
+            roundState: ROUND_STATE.NONE,
             boostedOdds: null,
             settlementResult: {},
         } as IBetOptionsState;
@@ -53,17 +54,17 @@ export default class BetOptions extends ObserverComponent<IBetOptionsProps, IBet
 
     @render(gc.Rounds.RoundStore, (store) => store, { fireImmediately: true })
     setOdds(roundStore: any) {
-        this.setState({ 
-            roundOdds: roundStore.roundOdds, 
-            boostedOdds: roundStore.boostedOdds
+        this.setState({
+            roundOdds: roundStore.roundOdds,
+            boostedOdds: roundStore.boostedOdds,
         });
     }
 
     @render(gc.Rounds.RoundStore, (store) => store, { fireImmediately: true })
     setBoostedOdds(roundStore: any) {
-        this.setState({ 
-            roundOdds: roundStore.roundOdds, 
-            boostedOdds: roundStore.boostedOdds
+        this.setState({
+            roundOdds: roundStore.roundOdds,
+            boostedOdds: roundStore.boostedOdds,
         });
     }
 
@@ -100,7 +101,6 @@ export default class BetOptions extends ObserverComponent<IBetOptionsProps, IBet
         this.setState({ settlementResult });
     }
 
-
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.firstJoinGameHistory)
     renderStaticResult(firstJoinGameHistory: gc.RoundHistories.IFirstJoinGameHistory) {
         if (!firstJoinGameHistory) {
@@ -110,11 +110,7 @@ export default class BetOptions extends ObserverComponent<IBetOptionsProps, IBet
         roundHistory && this.setHighlightStatic(staticHighlight, animationHighlight, roundHistory);
     }
 
-    protected setHighlightStatic(
-        staticHighlight: boolean,
-        animationHighlight: boolean,
-        roundHistory: gc.RoundHistories.RoundHistory,
-    ) {
+    protected setHighlightStatic(staticHighlight: boolean, animationHighlight: boolean, roundHistory: gc.RoundHistories.RoundHistory) {
         if (staticHighlight || animationHighlight) {
             this.showHighlightStatic(roundHistory.settlementResult);
         }
@@ -136,7 +132,9 @@ export default class BetOptions extends ObserverComponent<IBetOptionsProps, IBet
         }
     }
 
-    protected showHighlightStatic(settlementResult: gc.GameServiceMessage.TSettlementResult) {}
+    protected showHighlightStatic(settlementResult: gc.GameServiceMessage.TSettlementResult) {
+        this.setState({ settlementResult });
+    }
     protected showAnimationHighlight(settlementResult: gc.GameServiceMessage.TSettlementResult) {}
     protected clearHighlightStatic() {}
     protected clearHighlightAnim() {}

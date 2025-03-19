@@ -1,5 +1,4 @@
 import * as gc from '@sg/sg-game-client';
-import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
 import BetOptions, { IBetOptionsState } from '../../../../_shared/components/bet-option';
 import BettingBlock from '../../../../_shared/components/bet-option/betting-block';
 import OddsComponent from '../../../../_shared/components/bet-option/odd-component';
@@ -86,8 +85,8 @@ export default class SeDieBetOptions extends BetOptions {
         const fractional = roundOdds?.fractional;
 
         const t = (key) => gc.Translator.translate(key, { languageId: gc.Translator.getCurrentLanguageId() });
-        const oddOptionName = t('SeDie.beadboard_odd');
-        const evenOptionName = t('SeDie.beadboard_even');
+        const oddOptionName = t('SeDie.glossary_odd');
+        const evenOptionName = t('SeDie.glossary_even');
 
 
         return (

@@ -1,5 +1,5 @@
 # Build stage
-FROM node:18-alpine AS builder
+FROM hub.lumigame.com/base/node:18-16-alpine-24h1.1 AS builder
 
 # Set working directory
 WORKDIR /app
@@ -13,7 +13,7 @@ COPY package*.json ./
 
 # Install dependencies and global packages
 RUN yarn install && \
-    yarn global add cross-env nx open@^8.4.0
+    yarn global add cross-env nx
 
 # Copy the rest of the application
 COPY . .
@@ -22,12 +22,10 @@ COPY . .
 WORKDIR /app/seal-monorepo
 RUN yarn install && \
     nx reset && \
-    cross-env NODE_ENV=development nx build saba-games --configuration=development && \
-    mkdir -p dist/libs/saba-games/static/images/cards && \
-    cp -r libs/saba-games/public/static/images/cards/* dist/libs/saba-games/static/images/cards/
+    cross-env NODE_ENV=development nx build saba-games --configuration=development
 
 # Production stage
-FROM nginx:alpine
+FROM hub.lumigame.com/base/nginx:stable-alpine-slim
 
 # Copy the build output to the Nginx directory
 COPY --from=builder /app/seal-monorepo/dist/libs/saba-games /usr/share/nginx/html
@@ -36,13 +34,13 @@ COPY --from=builder /app/seal-monorepo/dist/libs/saba-games /usr/share/nginx/htm
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Create necessary directories and set permissions
-RUN mkdir -p /usr/share/nginx/html/static/images/cards && \
+RUN mkdir -p /usr/share/nginx/html/assets && \
     chown -R nginx:nginx /usr/share/nginx/html
 
 # Expose the port Nginx is running on
 EXPOSE $PORT
 
-# Configure healthcheck
+# # Configure healthcheck
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
     CMD wget --no-verbose --tries=1 --spider http://localhost:${PORT}/ || exit 1
 

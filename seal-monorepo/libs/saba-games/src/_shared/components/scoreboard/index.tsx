@@ -1,15 +1,14 @@
+import React from 'react';
 import { Translator } from '@sg/sg-game-client';
 import Styles from './scoreboard.module.scss';
 import { hasBlink } from './helper';
 import { OddEvenBigRoadConverter, OverUnderBigRoadConverter } from './converters';
-// import { ScoreboardItemContent } from './types';
+
 type Props = {
     gameName: string | undefined;
     rows: any[];
     scoreboardCharacter: any;
     scoreboardDotClassName: any;
-    // scoreboardCharacter: ScoreboardItemContent;
-    // scoreboardDotClassName: ScoreboardItemContent;
 };
 
 const ScoreBoard: React.FunctionComponent<Props> = ({

@@ -1,62 +1,60 @@
 .tab-button-wrapper {
-    display: flex;
-    padding: 6px 0;
-    gap: 4px;
+  display: flex;
+  padding: 6px 0;
+  gap: 4px;
 }
 
 .tab-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 8px 12px;
-    margin: 0;
-    
-    font-family: Segoe UI;
-    font-weight: bold;
-    color: #333;
-    
-    background: url('../../../../assets/lobby/inactive-bg.png') no-repeat center center / cover;
-    border: none;
-    border-radius: 4px;
-    
-    filter: brightness(1.05);
-    cursor: pointer;
+  display: flex;
+  height: 32px;
+  min-width: 114px;
+  padding: 0px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+
+  color: #252b34;
+  text-align: center;
+  font-family: 'Segoe UI';
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: capitalize;
+  background: url('../../../../assets/lobby/inactive-bg.png') no-repeat center
+    center / cover;
+  border: none;
+  border-radius: var(--c-av-border-radius);
+  cursor: pointer;
 }
 
 .tab-button-active {
-    background: url('../../../../assets/lobby/active-bg.png') no-repeat center center / cover;
-    color: #fff;
+  background: url('../../../../assets/lobby/active-bg.png') no-repeat center
+    center / cover;
+  color: #fff;
+}
+
+%icon {
+  width: 22px;
+  height: 22px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .sedie-icon {
-    background: url('../../../../assets/game-icons/sedie.png') no-repeat center center / cover;
-    width: 22px;
-    height: 22px;
+  @extend %icon;
+  background-image: url('../../../../assets/game-icons/sedie.png');
 }
 
 .vip-sedie-icon {
-    background: url('../../../../assets/game-icons/vip-sedie.png') no-repeat center center / cover;
-    width: 22px;
-    height: 22px;
+  @extend %icon;
+  background-image: url('../../../../assets/game-icons/vip-sedie.png');
 }
-
-.tab-button-sedie {
-    width: 115px;
-}
-
-.tab-button-vip-sedie {
-    width: 129px;
-}
-
 .big-small-icon {
-    background: url('../../../../assets/game-icons/big-small.png') no-repeat center center / cover;
-    width: 24px;
-    height: 24px;
+  @extend %icon;
+  background-image: url('../../../../assets/game-icons/big-small.png');
 }
 
 .baccarat-icon {
-    background: url('../../../../assets/game-icons/game-icon-10.png') no-repeat center center / cover;
-    width: 24px;
-    height: 24px;
+  @extend %icon;
+  background-image: url('../../../../assets/game-icons/game-icon-10.png');
 }

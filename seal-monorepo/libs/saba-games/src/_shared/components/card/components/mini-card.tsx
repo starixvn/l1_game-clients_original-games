@@ -20,7 +20,7 @@ export const MiniCard: React.FC<MiniCardProps> = ({ card, type }) => {
                 {convertRank(card)}
             </div>
             <img
-                src={`/static/images/cards/mini/mini-${suffixNameMapping[type]}.svg`}
+                src={`../../../../../assets/cards/mini/mini-${suffixNameMapping[type]}.svg`}
                 className={Styles["card-suite-mini"]}
                 height={49.07}
                 width={34.5}

@@ -31,7 +31,7 @@ export const getChoicesType = (gameName: string, betChoice: string) => {
             case BACCARAT_CHOICES.BANKER_PAIR:
                 return `${gameName}.banker_player_pair`;
             case BACCARAT_CHOICES.TIE:
-                return `${gameName}.tie`;
+                return `${gameName}.glossary_tie`;
             default:
                 return '';
         }

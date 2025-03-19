@@ -1,14 +1,14 @@
 import * as gc from '@sg/sg-game-client';
 import { render } from '@sg/sg-observer';
+import classNames from 'classnames';
+import { RoundDot } from '../../../../_shared/components/dot';
 import {
     IPropsObserver,
     IStateObserver,
     ObserverComponent,
 } from '../../../../_shared/components/observer-component/observer-component';
-import Styles from './result-history.module.scss';
-import { RoundDot } from '../../../../_shared/components/dot';
 import { SeDieChoices, SedieResult, SedieSettlementResult } from '../type';
-import classNames from 'classnames';
+import Styles from './result-history.module.scss';
 
 export interface ISiedieResultHistoryProps extends IPropsObserver {
     language: string;
@@ -45,18 +45,20 @@ export class SedieResultHistory extends ObserverComponent<ISiedieResultHistoryPr
         const resultTitle = gc.Translator.translate('Common.result_title');
 
         return (
-            <div className={classNames('c-ng-result' , Styles['result-history'])}>
+            <div className={classNames('c-ng-result', Styles['result-history'])}>
                 <div className={Styles['result-title']}>{resultTitle}</div>
-                <div className={Styles['result-content']}>
-                    {roundHistories.map((roundHistory, index) => {
-                        return (
-                            <SeDieRoundHistoryComponent
-                                key={index}
-                                roundHistory={roundHistory}
-                                index={index}
-                            />
-                        )
-                    })}
+                <div className={Styles['result-wrapper-content']}>
+                    <div className={Styles['result-content']}>
+                        {roundHistories.map((roundHistory, index) => {
+                            return (
+                                <SeDieRoundHistoryComponent
+                                    key={index}
+                                    roundHistory={roundHistory}
+                                    index={index}
+                                />
+                            )
+                        })}
+                    </div>
                 </div>
             </div>
         );
@@ -79,15 +81,15 @@ export const SeDieRoundHistoryComponent: React.FC<ISeDieRoundHistoryComponentPro
 
         <div
             className={classNames(Styles['result-item'], {
-                [Styles['first-result-item']]: index === 0, 
+                [Styles['first-result-item']]: index === 0,
             })}
             key={index}
         >
             <div className={Styles['left-content']}>
                 <RoundTitle roundId={roundHistory.roundId} />
+                <DotGroup result={roundHistory.result as SedieResult} />
             </div>
             <div className={Styles['right-content']}>
-                <DotGroup result={roundHistory.result as SedieResult} />
                 <BetModeText isOdd={isOdd} resultText={resultText} />
             </div>
         </div>
@@ -115,7 +117,7 @@ export const DotGroup: React.FC<DotGroupProps> = (({ result }) => {
 });
 
 
-export const BetModeText: React.FC<{ isOdd: boolean ,resultText: string }> = ({ isOdd, resultText }) => {
+export const BetModeText: React.FC<{ isOdd: boolean, resultText: string }> = ({ isOdd, resultText }) => {
     return (
         <div className={Styles[isOdd ? 'odd' : 'even']}>
             {resultText}

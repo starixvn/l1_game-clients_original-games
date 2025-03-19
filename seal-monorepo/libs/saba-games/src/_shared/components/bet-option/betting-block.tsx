@@ -1,15 +1,14 @@
 import * as gc from '@sg/sg-game-client';
-import { Auth, Connection } from '@sg/sg-game-client';
+import { Auth, Connection, Rounds } from '@sg/sg-game-client';
 import { handle, render } from '@sg/sg-observer';
+import classNames from 'classnames';
 import {
     GameBettingOptionsContext,
     GameBettingZoneContext,
 } from '../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
 import BetPanelComponent from '../bet-panel/bet-panel';
 import { IStateObserver, ObserverComponent } from '../observer-component/observer-component';
-import classNames from 'classnames';
 import Styles from './bet-option.module.scss';
-
 
 interface BettingBlockProps {
     odd: number;
@@ -25,6 +24,8 @@ interface IBettingBlockState extends IStateObserver {
     odd: number;
     isAuthorized: boolean;
     isSignedIn: boolean;
+    isFinishShowResult: boolean;
+    isShowStaticHighlight?: boolean;
 }
 
 class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockState> {
@@ -40,6 +41,8 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
             isAuthorized: false,
             isSignedIn: false,
             dispose: null,
+            isFinishShowResult: false,
+            isShowStaticHighlight: undefined,
         };
 
         this.handleOnClick = this.handleOnClick.bind(this);
@@ -65,29 +68,42 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
         }
     }
 
+    @render(gc.Settlements.SettlementStore, (store) => store.isFinishedShowResult)
+    finishShowResult(isFinishedShowResult: boolean) {
+        this.setState({ isFinishShowResult: isFinishedShowResult });
+    }
+
+    @render(gc.Rounds.RoundTimeStore, (store) => store.roundState, { fireImmediately: false })
+    renderCountDownTimerState(roundState: string) {
+        if (roundState === Rounds.ROUND_STATE.SHOW_RESULT && this.state.isShowStaticHighlight === undefined) {
+            this.setState({ isShowStaticHighlight: true });
+            return;
+        }
+        switch (roundState) {
+            case Rounds.ROUND_STATE.PLACING_BET:
+            case Rounds.ROUND_STATE.STARTING_ROUND:
+                this.setState({ isShowStaticHighlight: true });
+                break;
+            case Rounds.ROUND_STATE.LOCKING_BET:
+                this.setState({ isShowStaticHighlight: false });
+                break;
+            default:
+                break;
+        }
+    }
+
     protected handleOnClick({ panelId, setPanelId, show, setShow }) {
         return () => {
             const { betChoice, odd } = this.props;
             const { isAuthorized } = this.state;
 
-            console.log('[BettingBlock] Click handler:', {
-                betChoice,
-                odd,
-                isAuthorized,
-                currentPanelId: panelId,
-                show
-            });
-
             if (!isAuthorized) {
-                console.log('[BettingBlock] Not authorized, creating nickname');
                 this.autoCreateNickname();
             }
 
             if (panelId !== betChoice) {
-                console.log('[BettingBlock] Opening panel for:', betChoice);
                 setPanelId(betChoice);
             } else {
-                console.log('[BettingBlock] Closing panel');
                 setPanelId(null);
             }
 
@@ -131,34 +147,35 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
     }
 
     @handle(Auth.AuthHandlers.Authorize, (handler) => handler.handleAutoGenerateName())
-    protected autoCreateNickname() { }
+    protected autoCreateNickname() {}
 
     @handle(Connection.ConnectionHandlers.SignInHandler)
-    protected signIn() { }
-
+    protected signIn() {}
 
     render() {
         const { children, namespace, gameName, settlementResult, betChoice } = this.props;
-        const { odd } = this.state;
-        const flashAnimationClass = settlementResult?.[betChoice];
+        const { odd, isFinishShowResult, isShowStaticHighlight } = this.state;
+        let flashAnimationClass = '';
         const bettingZoneState = {
             gameName,
             betChoice,
             odd,
         };
+        if (isFinishShowResult && settlementResult?.[betChoice]) {
+            flashAnimationClass = 'flash-and-keep-background-color';
+        } else if (isShowStaticHighlight && settlementResult?.[betChoice]) {
+            flashAnimationClass = 'highlight-static-bet-choice';
+        }
         return (
             <GameBettingOptionsContext.Consumer>
                 {({ panelId, setPanelId, show, setShow }) => {
                     return (
                         <GameBettingZoneContext.Provider value={bettingZoneState}>
                             <div
-
-                                className={classNames(Styles['betting-block'], {
+                                className={classNames(`${Styles['betting-block']} ${Styles[flashAnimationClass]}`, {
                                     [Styles['open-panel-background-color']]: panelId === betChoice,
-                                    [Styles['flash-and-keep-background-color']]: flashAnimationClass,
                                 })}
                                 onClick={this.handleOnClick({ panelId, setPanelId, show, setShow })}
-
                             >
                                 {children}
                             </div>
