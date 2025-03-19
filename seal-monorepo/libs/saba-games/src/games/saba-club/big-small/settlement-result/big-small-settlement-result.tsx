@@ -44,8 +44,11 @@ export default class BigSmallSettlementResult extends ObserverComponent<IPropsOb
     @render(RoundTimeStore, (store) => store.roundState)
     private handleRoundState(roundState: string): void {
         try {
-            if(roundState === ROUND_STATE.STARTING_ROUND) {
+            if(roundState === ROUND_STATE.PLACING_BET) {
                 this.setState({ isResultUpdated: false });
+            }
+            if(roundState === ROUND_STATE.SHOW_RESULT) {
+                this.setState({ isResultUpdated: true });
             }
             gameStateService.handleRoundState(roundState);
             this.setState({ roundState});
