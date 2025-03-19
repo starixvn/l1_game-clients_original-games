@@ -24,6 +24,7 @@ export interface IGameBaseState {
     statusSettlement?: gc.GameServiceMessage.Status;
     roundState: string;
     isFinishShowResult: boolean;
+    gameId: number;
 }
 interface GameStyleOverrides {
     [key: string]: string;
@@ -216,7 +217,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                         {this.renderBettingBlock()}
                         <ConfirmBet namespace={this.props.namespace} />
                     </div>
-                    <div className={Styles['animation-balance']}>{this.renderAnimationBalance()}</div>
+                    <div className={`${Styles['animation-balance']} ${Styles[`game-${this.state.gameId}`]}`}>{this.renderAnimationBalance()}</div>
                 </div>
 
                 <div className={Styles['history-block']}>

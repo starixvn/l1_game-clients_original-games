@@ -1,4 +1,5 @@
 import * as gc from "@sg/sg-game-client";
+import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
 import { handle, observer, render } from "@sg/sg-observer";
 import CountDownTimer from "../../../_shared/components/count-down-timer";
 import { IGameBaseState } from "../../../_shared/components/game-base";
@@ -6,19 +7,19 @@ import GatewayGameBase from "../../../_shared/components/game-base/gateway-gameb
 import { configGameContainer } from "../../../_shared/components/game-base/startup";
 import type { GameBaseProps } from "../../../_shared/components/game-base/type";
 import RoundId from "../../../_shared/components/round-id";
-import { FunctionUtils } from "../../../_shared/utils/funtion-utils";
-import { containerOptions, setting } from "./game-settings";
-import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
-import { BigSmallSettlementResult } from "./settlement-result";
 import { GameBettingOptionsContext } from "../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context";
-import { BigSmallRoundHistory } from "./round-history";
+import { FunctionUtils } from "../../../_shared/utils/funtion-utils";
 import { BigSmallBetOptions } from "./bet-option";
-import { BigSmallStatistic } from "./statistic";
 import styles from "./big-small.module.scss";
+import { containerOptions, setting } from "./game-settings";
+import { BigSmallRoundHistory } from "./round-history";
+import { BigSmallSettlementResult } from "./settlement-result";
+import { BigSmallStatistic } from "./statistic";
 
 interface IBigSmallPageState extends IGameBaseState {
     activePanelId: any;
     showBetPanel: boolean;
+    gameId: number;
 }
 
 interface IBigSmallPageProps extends GameBaseProps {
@@ -47,6 +48,7 @@ export default class BigSmallPage extends GatewayGameBase<IBigSmallPageProps, IB
             ...this.state,
             activePanelId: null,
             showBetPanel: false,
+            gameId: setting.id
         };
     }
 

@@ -63,6 +63,15 @@
         z-index: 9999;
         display: flex;
         justify-content: center;
+        &.game-10 {
+            width: 500px;
+            @media screen and (min-width: 1280px)  {
+                width: 768px;
+            }
+        }
+        &.game-55 {
+            width: 36%;
+        }
     }
 }
 

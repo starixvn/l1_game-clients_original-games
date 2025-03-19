@@ -1,22 +1,23 @@
 import * as gc from '@sg/sg-game-client';
+import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
 import { handle, observer, render } from '@sg/sg-observer';
 import CountDownTimer from '../../../_shared/components/count-down-timer';
-import RoundId from '../../../_shared/components/round-id';
 import { IGameBaseState } from '../../../_shared/components/game-base';
+import GatewayGameBase from '../../../_shared/components/game-base/gateway-gamebase';
 import { configGameContainer } from '../../../_shared/components/game-base/startup';
-import SeDieRoundHistory from './round-history';
+import RoundId from '../../../_shared/components/round-id';
+import { GameBettingOptionsContext } from '../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
+import { FunctionUtils } from '../../../_shared/utils/funtion-utils';
 import SeDieBetOptions from './bet-option/sedie-bet-options';
 import { containerOptions, setting } from './game-settings';
+import SeDieRoundHistory from './round-history';
 import SeDieSettlementResult from './settlement-result';
-import { FunctionUtils } from '../../../_shared/utils/funtion-utils';
 import { SedieStatistic } from './statistic';
-import GatewayGameBase from '../../../_shared/components/game-base/gateway-gamebase';
-import { GameBettingOptionsContext } from '../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
-import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
 
 interface ISieDiePageState extends IGameBaseState {
     activePanelId: any;
     showBetPanel: boolean;
+    gameId: number;
 }
 
 @observer(setting.mainObserverNamespace)
@@ -32,6 +33,7 @@ export default class SieDiePage extends GatewayGameBase<{ namespace: string, lan
             ...this.state,
             activePanelId: null,
             showBetPanel: false,
+            gameId: setting.id
         };
     }
 

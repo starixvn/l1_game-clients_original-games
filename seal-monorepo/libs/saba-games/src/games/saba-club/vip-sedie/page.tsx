@@ -1,22 +1,23 @@
 import * as gc from "@sg/sg-game-client";
+import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
 import { handle, observer, render } from "@sg/sg-observer";
 import CountDownTimer from "../../../_shared/components/count-down-timer";
 import { IGameBaseState } from "../../../_shared/components/game-base";
 import GatewayGameBase from "../../../_shared/components/game-base/gateway-gamebase";
 import { configGameContainer } from "../../../_shared/components/game-base/startup";
 import RoundId from "../../../_shared/components/round-id";
+import { GameBettingOptionsContext } from '../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
 import { FunctionUtils } from "../../../_shared/utils/funtion-utils";
-import VIPSeDieBetOptions from "./bet-option/vip-sedie-bet-options";
-import { containerOptions, setting } from "./game-settings";
 import SeDieRoundHistory from "../sedie/round-history";
 import SeDieSettlementResult from "../sedie/settlement-result";
 import { SedieStatistic } from "../sedie/statistic";
-import { GameBettingOptionsContext } from '../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
-import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
+import VIPSeDieBetOptions from "./bet-option/vip-sedie-bet-options";
+import { containerOptions, setting } from "./game-settings";
 
 interface ISieDiePageState extends IGameBaseState {
     activePanelId: any;
     showBetPanel: boolean;
+    gameId: number;
 }
 
 @observer(setting.mainObserverNamespace)
@@ -28,6 +29,7 @@ export default class VipSeDie extends GatewayGameBase<{ namespace: string, langu
             ...this.state,
             activePanelId: null,
             showBetPanel: false,
+            gameId: setting.id
         };
     }
 

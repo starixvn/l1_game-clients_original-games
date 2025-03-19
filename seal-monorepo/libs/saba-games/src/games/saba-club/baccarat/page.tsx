@@ -16,14 +16,15 @@ import BaccaratSettlementResult from './settlement-result/baccarat-settlement-re
 import { BaccaratStatistic } from './statistic/baccarat-statistics';
 import { IBaccaratBet } from './type';
 
-import type { GameBaseProps } from '../../../_shared/components/game-base/type';
 import { GameBettingOptionsContext } from 'libs/saba-games/src/_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
+import type { GameBaseProps } from '../../../_shared/components/game-base/type';
 interface IBaccaratState extends IGameBaseState {
     previousWinningBet?: IBaccaratBet['type'];
     roundState: string;
     isExpanded: boolean;
     activePanelId: any;
     showBetPanel: boolean;
+    gameId: number;
 }
 
 @observer(setting.mainObserverNamespace)
@@ -43,6 +44,7 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratSt
             isExpanded: false,
             activePanelId: null,
             showBetPanel: false,
+            gameId: setting.id
         };
 
         try {
