@@ -82,7 +82,7 @@ export const BaccaratCard: React.FC<BaccaratCardProps> = ({ card, className, isS
     } else {
         flipAnimationClass = '';
     }
-    // console.log('--------card', card, '------isFlipped', isFlipped, '---flipAnimationClass', flipAnimationClass);
+
     return (
         <div
             className={`${Styles.card} ${Styles[type]}  ${Styles[`card${card.order}`]} ${Styles[flipAnimationClass]} ${getRotationClass(card.order)} ${getBankerThirdCardClass(card.order)} ${className || ''}`}

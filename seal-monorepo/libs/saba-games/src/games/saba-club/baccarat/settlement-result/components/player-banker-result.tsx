@@ -25,7 +25,6 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
         openedCards: 0,
         showWinner: false,
     });
-    console.log('--------result', result);
 
     const playerCards = result ? GetPlayerCardsResult(result) : [];
     const bankerCards = result ? GetBankerCardsResult(result) : [];

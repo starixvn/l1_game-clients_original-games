@@ -89,7 +89,6 @@ const Card: React.FC<Props> = (props) => {
         );
     };
 
-    console.log('__________result.card', result.card);
     if (result.card === EmptyCardIndex) {
         return null;
     }

@@ -11,7 +11,6 @@ interface CardDisplayProps {
 }
 
 export const CardDisplay: React.FC<CardDisplayProps> = memo(({ result, isAnimationResult, isShowResult, language }) => {
-    console.log({ isAnimationResult, isShowResult });
     return (
         <PlayerBankerResultComponent
             playResultAnimation={isAnimationResult}

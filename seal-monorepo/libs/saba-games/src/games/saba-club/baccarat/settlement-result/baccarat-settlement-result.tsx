@@ -102,7 +102,7 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
         if (!result || !isFinish || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET) {
             return <CardDisplay result={DEFAULT_RESULT} isAnimationResult={false} isShowResult={false} language={language} />;
         }
-        console.log({ isAnimationResult });
+
         return <CardDisplay result={result} isAnimationResult={isAnimationResult} isShowResult={true} language={language} />;
     }
 
