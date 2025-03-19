@@ -19,10 +19,6 @@
     opacity: 1;
     transition: transform 0.6s ease-in-out;
 
-    &:last-child {
-        margin-right: 0;
-    }
-
     &.player.card5 {
         position: absolute;
         left: -55px;
