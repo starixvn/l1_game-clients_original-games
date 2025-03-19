@@ -70,7 +70,7 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
                 this.setState({ isFinish: false });
             }
             gameStateService.handleRoundState(roundState);
-            this.setState({ roundState, isLoading: false });
+            this.setState({ roundState, isLoading: false, isFinishShowResult: false });
         } catch (error) {
             this.setState({ error: error as Error });
         }

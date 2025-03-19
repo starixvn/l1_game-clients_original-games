@@ -90,8 +90,6 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
         });
     };
 
-    const { showWinner } = state;
-
     return (
         <div className={`overlay-mask`}>
             <div className={Styles['animation-container']}>
