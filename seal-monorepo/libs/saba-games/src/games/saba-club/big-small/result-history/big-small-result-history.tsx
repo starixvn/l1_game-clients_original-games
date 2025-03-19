@@ -82,12 +82,14 @@ export default class BigSmallResultHistory extends ObserverComponent<IBigSmallRe
         return (
             <div className={`c-ng-result ${Styles['result-history']}`}>
                 <div className={Styles['result-title']}>{resultTitle}</div>
-
-                <div className={Styles['result-content']}>
-                    {roundHistories.map((roundHistory, index) => {
-                        return this.renderRoundResult(roundHistory, index);
-                    })}
+                <div className={Styles['result-wrapper-content']}>
+                    <div className={Styles['result-content']}>
+                        {roundHistories.map((roundHistory, index) => {
+                            return this.renderRoundResult(roundHistory, index);
+                        })}
+                    </div>
                 </div>
+
             </div>
         );
     }

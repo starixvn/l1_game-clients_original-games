@@ -3,9 +3,10 @@
 .statistic {
     display: grid;
     grid-template-columns: 1fr 380px;
-    padding: 3px;
+    padding: 3px 0 10px 0;
     background-color: var(--c-av-match-live-bg);
     width: 100%;
+    gap: 16px;
 }
 
 .big-road-container {

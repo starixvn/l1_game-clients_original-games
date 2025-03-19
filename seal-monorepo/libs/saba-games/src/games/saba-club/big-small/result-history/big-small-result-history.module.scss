@@ -1,5 +1,5 @@
 .result-history {
-    padding: 10px;
+    padding: 10px 10px 0 0;
     width: 100%;
 
     .result-title {
@@ -7,14 +7,19 @@
         margin-bottom: 10px;
     }
 
+    .result-wrapper-content {
+        border-radius: 5px;
+        overflow: hidden;
+        border: 1px solid var(--c-av-theme-border-1);
+    }
+
     .result-content {
         background-color: var(--c-av-lv1-theme-bg-1);
         height: 15rem;
         overflow-y: auto;
         overflow-x: hidden;
-        scrollbar-width: thin; /* Set scrollbar width to thin */
-        scrollbar-color: var(--scroll-bar-track) var(--c-av-lv1-theme-bg-1); /* Handle color and track color */
-        border: 1px solid var(--c-av-theme-border-1);
+        scrollbar-width: thin;
+        scrollbar-color: var(--scroll-bar-track) var(--c-av-lv1-theme-bg-1);
 
         .result-item {
             display: flex;
@@ -31,7 +36,8 @@
                 background-color: var(--c-ng-result-highlight);
             }
 
-            .big, .small {
+            .big,
+            .small {
                 display: flex;
                 justify-content: flex-end;
                 min-width: 3rem;

@@ -4,7 +4,7 @@
 
 .result-history {
     padding: 10px 10px 0 0;
-    width: 21rem;
+    width: 100%;
 
     .result-title {
         display: flex;
@@ -13,13 +13,21 @@
         font-weight: bold;
     }
 
+    .result-wrapper-content {
+        border-radius: 5px;
+        overflow: hidden;
+        border: 1px solid var(--c-av-theme-border-1);
+    }
+
     .result-content {
         background-color: var(--c-av-lv1-theme-bg-1);
         height: 15rem;
         overflow-y: auto;
         overflow-x: hidden;
-        scrollbar-width: thin; /* Set scrollbar width to thin */
-        scrollbar-color: var(--scroll-bar-track) var(--c-av-lv1-theme-bg-1); /* Handle color and track color */
+        scrollbar-width: thin;
+        /* Set scrollbar width to thin */
+        scrollbar-color: var(--scroll-bar-track) var(--c-av-lv1-theme-bg-1);
+        /* Handle color and track color */
 
         .result-item {
             display: flex;
@@ -27,7 +35,7 @@
             align-items: center;
             border-bottom: solid 1px var(--c-av-theme-border-1);
             padding: 11px 5px;
-            
+
             .left-content {
                 flex: 0 0 auto;
                 display: flex;

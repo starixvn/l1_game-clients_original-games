@@ -1,5 +1,5 @@
 .scoreboard {
-    padding: 10px;
+    padding: 10px 0 0 10px;
     width: calc(100% - 360px);
     height: 100%;
 
@@ -10,25 +10,35 @@
 
     .scoreboard-percentage {
         display: flex;
-        align-items: center; /* Align items vertically centered */
-        justify-content: space-between; /* Distributes space between items */
-        width: 100%; /* Make the parent container full width */
+        align-items: center;
+        /* Align items vertically centered */
+        justify-content: space-between;
+        /* Distributes space between items */
+        width: 100%;
+        /* Make the parent container full width */
         color: white;
-        background: #2D4976;;
+        background: #2D4976;
+        ;
 
         .big-percentage {
-            flex: 1; /* Allows this to take available space on the left */
-            text-align: right; /* Align text to the left */
+            flex: 1;
+            /* Allows this to take available space on the left */
+            text-align: right;
+            /* Align text to the left */
         }
 
         .split-percentage {
-            margin: 0 10px; /* Optional: Add some horizontal margin for spacing */
-            text-align: center; /* Center the split indicator */
+            margin: 0 10px;
+            /* Optional: Add some horizontal margin for spacing */
+            text-align: center;
+            /* Center the split indicator */
         }
 
         .small-percentage {
-            flex: 1; /* Allows this to take available space on the right */
-            text-align: left; /* Align text to the right */
+            flex: 1;
+            /* Allows this to take available space on the right */
+            text-align: left;
+            /* Align text to the right */
         }
     }
 
@@ -38,12 +48,15 @@
         display: grid;
         //grid-gap: 0.4rem;
         background: var(--c-av-lv1-theme-bg-2);
-        scrollbar-width: thin; /* Set scrollbar width to thin */
+        scrollbar-width: thin;
+        /* Set scrollbar width to thin */
         scrollbar-color: var(--scroll-bar-track) var(--c-av-lv1-theme-bg-2);
 
         .dot-item {
-            border-right: 1px solid #ebe4e4; /* Border for each grid item */
-            border-bottom: 1px solid #ebe4e4; /* Border for each grid item */
+            border-right: 1px solid #ebe4e4;
+            /* Border for each grid item */
+            border-bottom: 1px solid #ebe4e4;
+            /* Border for each grid item */
             position: relative;
             display: -moz-box;
             display: flex;
