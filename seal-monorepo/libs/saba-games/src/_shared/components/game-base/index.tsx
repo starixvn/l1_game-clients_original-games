@@ -130,7 +130,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         if (!this.isValidResult(result, settlementResult)) {
             return;
         }
-
+        this.setState({ isFinishShowResult: false });
         this.showResult(true, result, settlementResult).then(() => {
             this.finishShowResult();
         });
