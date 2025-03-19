@@ -20,7 +20,7 @@ const BaccaratHeader: React.FC<BaccaratHeaderProps> = ({ gameId, isExpanded, han
                 gameId={gameId}
                 isExpanded={isExpanded}
                 onToggleExpand={onToggleExpand}
-                centerTextsComponent={<GameHeaderCenterTexts texts={[
+                centerTextsComponent={isExpanded && <GameHeaderCenterTexts texts={[
                     gc.Translator.t('Baccarat.glossary_player') + '/' + gc.Translator.t('Baccarat.glossary_banker'),
                     gc.Translator.t('Baccarat.glossary_tie'),
                     gc.Translator.t('Baccarat.banker_player_pair')
