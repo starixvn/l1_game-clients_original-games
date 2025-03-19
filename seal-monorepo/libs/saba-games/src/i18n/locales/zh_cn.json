@@ -277,7 +277,7 @@
         "tie_win": "和",
         "glossary_B": "庄家",
         "glossary_P": "闲家",
-        "banker_player": "庄家/闲家",
+        "banker_player": "闲家/庄家",
         "banker_player_pair": "一对"
     },
     "UnbalancedBigSmall4": {

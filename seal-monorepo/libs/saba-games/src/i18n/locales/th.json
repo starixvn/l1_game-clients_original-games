@@ -277,7 +277,7 @@
         "tie_win": "เสมอ",
         "glossary_B": "เจ้ามือ",
         "glossary_P": "ผู้เล่น",
-        "banker_player": "เจ้ามือ/ผู้เล่น",
+        "banker_player": "ผู้เล่น/เจ้ามือ",
         "banker_player_pair": "คู่"
     },
     "UnbalancedBigSmall4": {
