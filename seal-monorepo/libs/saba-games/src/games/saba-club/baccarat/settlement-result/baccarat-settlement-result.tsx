@@ -95,7 +95,7 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
         try {
             const result = gameStateService.handleGameHistory(firstJoinGameHistory);
             if (result && gameStateService.validateResult(result)) {
-                this.setState({ result, isLoading: false, isFinish: true });
+                this.setState({ result, isLoading: false, isFinish: true, isFinishShowResult: true });
             }
         } catch (error) {
             this.setState({ error: error as Error });

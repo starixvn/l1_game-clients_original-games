@@ -1,9 +1,3 @@
-export const ANIMATION_CLASSES = {
-    OPEN_CARDS: 'open-cards',
-    HAS_ANIMATION: 'has-animation',
-    NO_ANIMATION: 'no-animation',
-} as const;
-
 export const CARD_DISPLAY = {
     BANKER_SUFFIX: '-banker',
     BASE_CARD_COUNT: 4,

@@ -33,57 +33,10 @@
     justify-self: flex-start;
 }
 
-.open-cards {
-    --distance-first-second-card: map.get($layout, 'card-distances', 'first-second');
-    --distance-second-third-card: map.get($layout, 'card-distances', 'second-third');
-    height: 100%;
-
-    &.card-4 {
-        .card1 {
-            transform: translateX(var(--distance-first-second-card));
-        }
-        .card2 {
-            transform: translateX(0);
-        }
-        .card3 {
-            transform: translateX(0);
-        }
-        .card4 {
-            transform: translateX(calc(var(--distance-first-second-card) * -1));
-        }
-    }
-
-    &.card-5,
-    &.card-6 {
-        .card1 {
-            transform: translateX(var(--distance-second-third-card));
-        }
-        .card2 {
-            transform: translateX(0);
-        }
-        .card3 {
-            transform: translateX(calc(var(--distance-second-third-card) - var(--distance-first-second-card)));
-        }
-        .card4 {
-            transform: translateX(calc(var(--distance-first-second-card) * -1));
-        }
-
-        &.card-5 .card5,
-        &.card-6 .card6 {
-            transform: translateX(calc(var(--distance-second-third-card) * -1));
-        }
-    }
-}
-
 // Desktop layout
 @include respond-to('desktop') {
     .animation-container {
         --gap-player-banker: map.get($layout, 'gap-player-banker', 'desktop');
-    }
-
-    .open-cards {
-        --distance-first-second-card: map.get($layout, 'card-distances', 'first-second');
-        --distance-second-third-card: map.get($layout, 'card-distances', 'second-third');
     }
 }
 

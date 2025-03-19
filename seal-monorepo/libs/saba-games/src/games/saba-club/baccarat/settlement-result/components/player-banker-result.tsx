@@ -90,11 +90,10 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
         });
     };
 
-    const { openedCards, showWinner } = state;
-    const classOpenCards = `opened-cards-${openedCards}`;
+    const { showWinner } = state;
 
     return (
-        <div className={`overlay-mask ${Styles[classOpenCards]}`}>
+        <div className={`overlay-mask`}>
             <div className={Styles['animation-container']}>
                 <CardSection
                     cards={playerCards}
@@ -112,7 +111,7 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
                     isShowResult={isShowResult}
                 />
 
-                {showWinner && isShowResult && isFinishShowResult && (
+                {isShowResult && isFinishShowResult && (
                     <div className={`${Styles['winner-display']} ${playResultAnimation ? Styles['play-animation'] : ''}`}>
                         <p className={Styles['winner-text']}>{gc.Translator.t(`Baccarat.${getWinnerText()}`, { lng: language })}</p>
                     </div>
