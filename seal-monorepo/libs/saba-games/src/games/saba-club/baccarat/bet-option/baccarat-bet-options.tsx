@@ -57,12 +57,6 @@ export default class BaccaratBetOptions extends BetOptions {
         return disabled;
     }
 
-    resetBettingPanel = () => {
-        this.activePanelId = '';
-        this.showPanel = false;
-        this.forceUpdate();
-    };
-
     private renderBetOptionContent({ odd, name, fractional, isBoostedChoice }: BetOptionProps) {
         return (
             <div className={styles['bet-container']}>
@@ -125,10 +119,6 @@ export default class BaccaratBetOptions extends BetOptions {
         const boostedChoices = roundOdds?.boostedChoices;
         const fractional = roundOdds?.fractional;
         const isDisabled = this.isDisabled();
-
-        if (isDisabled) {
-            this.resetBettingPanel();
-        }
 
         return (
             <GameBettingOptionsContext.Provider
