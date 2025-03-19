@@ -10,8 +10,10 @@
     position: relative;
     min-height: 1.625rem;
 }
-.game-title > *:not(:last-child) {
-    border-right: 1px solid rgba(0, 0, 0, 0.08);
+
+.game-title>*:not(:last-child) {
+    border-right: 1px solid var(--c-av-theme-border-1);
+    height: 26px;
 }
 
 .collapse-btn {
@@ -43,7 +45,8 @@
     transition: transform 0.3s ease;
 }
 
-[data-theme^="dark"], [data-darkmode="true"] {
+[data-theme^="dark"],
+[data-darkmode="true"] {
     .collapse-icon {
         background-image: url("../../../assets/caret-white.svg");
     }

@@ -86,7 +86,7 @@
 // Base container class
 .base-container {
     @include bet-container-grid;
-    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-left: 1px solid var(--c-av-theme-border-1);
 }
 
 .main-bets-container {
@@ -100,7 +100,7 @@
 
 .pair-container {
     @include bet-container-grid;
-    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-left: 1px solid var(--c-av-theme-border-1);
 }
 
 .bet-option {
