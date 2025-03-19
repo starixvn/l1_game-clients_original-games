@@ -12,7 +12,6 @@
 .title-with-icon {
   display: flex;
   align-items: center;
-  gap: 4px;
 }
 
 .collapse-btn {
@@ -50,7 +49,7 @@
 
   .divider {
     border-left: 1px solid var(--c-av-theme-border-1);
-    height: 30px;
+    height: 24px;
     // margin-left: 8px;
   }
 
@@ -64,7 +63,7 @@
     padding: 0;
     cursor: pointer;
     transition: transform 0.2s ease;
-    margin-left: 8px;
+    margin-left: 4px;
     // transform: rotate(90deg);
 
     &.collapsed {
@@ -85,6 +84,7 @@
   .game-icon-10 {
     @extend %game-icon;
     background-image: url('../../../../assets/game-icons/game-icon-10.png');
+    margin: 0 4px;
   }
 }
 
