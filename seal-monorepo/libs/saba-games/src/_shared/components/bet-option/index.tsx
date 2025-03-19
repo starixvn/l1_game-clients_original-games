@@ -135,7 +135,9 @@ export default class BetOptions extends ObserverComponent<IBetOptionsProps, IBet
         }
     }
 
-    protected showHighlightStatic(settlementResult: gc.GameServiceMessage.TSettlementResult) {}
+    protected showHighlightStatic(settlementResult: gc.GameServiceMessage.TSettlementResult) {
+        this.setState({settlementResult});
+    }
     protected showAnimationHighlight(settlementResult: gc.GameServiceMessage.TSettlementResult) {}
     protected clearHighlightStatic() {}
     protected clearHighlightAnim() {}
