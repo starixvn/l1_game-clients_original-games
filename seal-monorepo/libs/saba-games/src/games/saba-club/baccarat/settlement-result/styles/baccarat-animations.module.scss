@@ -117,10 +117,13 @@ $winner-delay-base: 1s; // Delay after last card before showing winner
     font-weight: bold;
     text-align: center;
     text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
-    animation: floatIn 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    animation-delay: calc(var(--last-card-time, #{$card-4-time}) + #{$winner-delay-base}); // Dynamic delay based on last card
     opacity: 0;
     pointer-events: none;
+    animation: floatIn 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+
+    &.play-animation {
+        animation-delay: calc(var(--last-card-time, #{$card-4-time}) + #{$winner-delay-base});
+    }
 }
 
 .winner-text {

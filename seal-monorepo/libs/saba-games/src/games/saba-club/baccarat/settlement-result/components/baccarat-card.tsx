@@ -60,6 +60,7 @@ export const BaccaratCard: React.FC<BaccaratCardProps> = ({ card, className, isS
                     delay = 0;
             }
 
+            console.log(`Card ${card.order} flipping with delay: ${delay}, isShowResult: ${isShowResult}, playResultAnimation: ${playResultAnimation}`);
             const flipTimer = setTimeout(() => {
                 setIsFlipped(true);
                 if (onCardFlip) {
@@ -71,14 +72,14 @@ export const BaccaratCard: React.FC<BaccaratCardProps> = ({ card, className, isS
         } else {
             setIsFlipped(false);
         }
-    }, [isShowResult, card, onCardFlip]);
+    }, [isShowResult, card, onCardFlip, playResultAnimation]);
 
     let flipAnimationClass = '';
 
     if (isFlipped && playResultAnimation) {
         flipAnimationClass = 'flip';
     } else if (isFlipped) {
-        flipAnimationClass = 'flip no-animation';
+        flipAnimationClass = 'flip';
     } else {
         flipAnimationClass = '';
     }

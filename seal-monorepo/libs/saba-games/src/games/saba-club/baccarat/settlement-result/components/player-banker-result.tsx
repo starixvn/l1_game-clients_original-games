@@ -33,7 +33,14 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
         if (playResultAnimation) {
             startAnimation();
         }
-    }, [playResultAnimation]);
+
+        if (isShowResult && !playResultAnimation) {
+            setState({
+                openedCards: 0,
+                showWinner: true,
+            });
+        }
+    }, [playResultAnimation, isShowResult]);
 
     useEffect(() => {
         if (isShowResult) {
@@ -104,8 +111,9 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
                     isShowResult={isShowResult}
                 />
 
+
                 {showWinner && isShowResult && (
-                    <div className={Styles['winner-display']}>
+                    <div className={`${Styles['winner-display']} ${playResultAnimation ? Styles['play-animation'] : ''}`}>
                         <p className={Styles['winner-text']}>{gc.Translator.t(`Baccarat.${getWinnerText()}`, { lng: language })}</p>
                     </div>
                 )}
