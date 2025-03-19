@@ -13,7 +13,6 @@ import styles from './baccarat-bet-options.module.scss';
 
 interface IBaccaratBetOptionsProps extends IPropsObserver {
     previousWinningBet?: IBaccaratBet['type'];
-    roundState: string;
     language: string;
     gameName: string;
 }
@@ -30,8 +29,6 @@ interface BetOptionProps {
 @observer(setting.mainObserverNamespace)
 export default class BaccaratBetOptions extends BetOptions {
     props!: IBaccaratBetOptionsProps;
-    private activePanelId: string = '';
-    private showPanel: boolean = false;
 
     constructor(props: IBaccaratBetOptionsProps) {
         super(props);
@@ -39,22 +36,6 @@ export default class BaccaratBetOptions extends BetOptions {
 
     componentDidMount() {
         super.componentDidMount();
-    }
-
-    private setPanelId = (id: string) => {
-        this.activePanelId = id;
-        this.forceUpdate();
-    };
-
-    private setShowPanel = (show: boolean) => {
-        this.showPanel = show;
-        this.forceUpdate();
-    };
-
-    private isDisabled(): boolean {
-        const { roundState } = this.props;
-        const disabled = roundState === ROUND_STATE.SHOW_RESULT || roundState === ROUND_STATE.LOCKING_BET;
-        return disabled;
     }
 
     private renderBetOptionContent({ odd, name, fractional, isBoostedChoice }: BetOptionProps) {
@@ -118,81 +99,71 @@ export default class BaccaratBetOptions extends BetOptions {
         const odds = roundOdds?.odds || {};
         const boostedChoices = roundOdds?.boostedChoices;
         const fractional = roundOdds?.fractional;
-        const isDisabled = this.isDisabled();
 
         return (
-            <GameBettingOptionsContext.Provider
-                value={{
-                    panelId: this.activePanelId,
-                    setPanelId: this.setPanelId,
-                    show: this.showPanel,
-                    setShow: this.setShowPanel,
-                }}
-            >
-                <div className={`${styles['bet-options-wrapper']}`}>
-                    <div className={styles['main-bets-container']}>
-                        <div className={`${styles['bet-option']} `}>
-                            {this.renderBetOption({
-                                name: gc.Translator.t('Baccarat.glossary_player'),
-                                odd: odds?.player,
-                                betChoice: 'player',
-                                fractional: !!fractional,
-                                isBoostedChoice: this.isBoostedChoice('player', boostedChoices),
-                            })}
-                            {this.renderTotalBet('player')}
-                            {this.renderOwnBet('player')}
-                        </div>
-                        <div className={`${styles['bet-option']} `}>
-                            {this.renderBetOption({
-                                name: gc.Translator.t('Baccarat.glossary_banker'),
-                                odd: odds?.banker,
-                                betChoice: 'banker',
-                                fractional: !!fractional,
-                                isBoostedChoice: this.isBoostedChoice('banker', boostedChoices),
-                            })}
-                            {this.renderTotalBet('banker')}
-                            {this.renderOwnBet('banker')}
-                        </div>
+            <div className={`${styles['bet-options-wrapper']}`}>
+                <div className={styles['main-bets-container']}>
+                    <div className={`${styles['bet-option']} `}>
+                        {this.renderBetOption({
+                            name: gc.Translator.t('Baccarat.glossary_player'),
+                            odd: odds?.player,
+                            betChoice: 'player',
+                            fractional: !!fractional,
+                            isBoostedChoice: this.isBoostedChoice('player', boostedChoices),
+                        })}
+                        {this.renderTotalBet('player')}
+                        {this.renderOwnBet('player')}
                     </div>
-                    <div className={styles['tie-container']}>
-                        <div className={`${styles['bet-option']} `}>
-                            {this.renderBetOption({
-                                name: gc.Translator.t('Baccarat.glossary_tie'),
-                                odd: odds?.tie,
-                                betChoice: 'tie',
-                                fractional: !!fractional,
-                                isBoostedChoice: this.isBoostedChoice('tie', boostedChoices),
-                            })}
-                            {this.renderTotalBet('tie')}
-                            {this.renderOwnBet('tie')}
-                        </div>
-                    </div>
-                    <div className={styles['pair-container']}>
-                        <div className={`${styles['bet-option']} `}>
-                            {this.renderBetOption({
-                                name: gc.Translator.t('Baccarat.glossary_playerPair'),
-                                odd: odds?.playerPair,
-                                betChoice: 'playerPair',
-                                fractional: !!fractional,
-                                isBoostedChoice: this.isBoostedChoice('playerPair', boostedChoices),
-                            })}
-                            {this.renderTotalBet('playerPair')}
-                            {this.renderOwnBet('playerPair')}
-                        </div>
-                        <div className={`${styles['bet-option']} }`}>
-                            {this.renderBetOption({
-                                name: gc.Translator.t('Baccarat.glossary_bankerPair'),
-                                odd: odds?.bankerPair,
-                                betChoice: 'bankerPair',
-                                fractional: !!fractional,
-                                isBoostedChoice: this.isBoostedChoice('bankerPair', boostedChoices),
-                            })}
-                            {this.renderTotalBet('bankerPair')}
-                            {this.renderOwnBet('bankerPair')}
-                        </div>
+                    <div className={`${styles['bet-option']} `}>
+                        {this.renderBetOption({
+                            name: gc.Translator.t('Baccarat.glossary_banker'),
+                            odd: odds?.banker,
+                            betChoice: 'banker',
+                            fractional: !!fractional,
+                            isBoostedChoice: this.isBoostedChoice('banker', boostedChoices),
+                        })}
+                        {this.renderTotalBet('banker')}
+                        {this.renderOwnBet('banker')}
                     </div>
                 </div>
-            </GameBettingOptionsContext.Provider>
+                <div className={styles['tie-container']}>
+                    <div className={`${styles['bet-option']} `}>
+                        {this.renderBetOption({
+                            name: gc.Translator.t('Baccarat.glossary_tie'),
+                            odd: odds?.tie,
+                            betChoice: 'tie',
+                            fractional: !!fractional,
+                            isBoostedChoice: this.isBoostedChoice('tie', boostedChoices),
+                        })}
+                        {this.renderTotalBet('tie')}
+                        {this.renderOwnBet('tie')}
+                    </div>
+                </div>
+                <div className={styles['pair-container']}>
+                    <div className={`${styles['bet-option']} `}>
+                        {this.renderBetOption({
+                            name: gc.Translator.t('Baccarat.glossary_playerPair'),
+                            odd: odds?.playerPair,
+                            betChoice: 'playerPair',
+                            fractional: !!fractional,
+                            isBoostedChoice: this.isBoostedChoice('playerPair', boostedChoices),
+                        })}
+                        {this.renderTotalBet('playerPair')}
+                        {this.renderOwnBet('playerPair')}
+                    </div>
+                    <div className={`${styles['bet-option']} }`}>
+                        {this.renderBetOption({
+                            name: gc.Translator.t('Baccarat.glossary_bankerPair'),
+                            odd: odds?.bankerPair,
+                            betChoice: 'bankerPair',
+                            fractional: !!fractional,
+                            isBoostedChoice: this.isBoostedChoice('bankerPair', boostedChoices),
+                        })}
+                        {this.renderTotalBet('bankerPair')}
+                        {this.renderOwnBet('bankerPair')}
+                    </div>
+                </div>
+            </div>
         );
     }
 }

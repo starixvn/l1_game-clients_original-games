@@ -17,10 +17,13 @@ import { BaccaratStatistic } from './statistic/baccarat-statistics';
 import { IBaccaratBet } from './type';
 
 import type { GameBaseProps } from '../../../_shared/components/game-base/type';
+import { GameBettingOptionsContext } from 'libs/saba-games/src/_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
 interface IBaccaratState extends IGameBaseState {
     previousWinningBet?: IBaccaratBet['type'];
     roundState: string;
     isExpanded: boolean;
+    activePanelId: any;
+    showBetPanel: boolean;
 }
 
 @observer(setting.mainObserverNamespace)
@@ -38,6 +41,8 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratSt
             ...this.state,
             previousWinningBet: undefined,
             isExpanded: false,
+            activePanelId: null,
+            showBetPanel: false,
         };
 
         try {
@@ -53,6 +58,29 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratSt
 
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handleGateway())
     closeConnect() {}
+
+    setPanelId = (id: string) => {
+        this.setState({ activePanelId: id });
+    };
+
+    setShowBetPanel = (show: boolean) => {
+        this.setState({ showBetPanel: show });
+    };
+
+    resetBettingPanel = () => {
+        this.setState({
+            activePanelId: null,
+            showBetPanel: false
+        });
+    };
+
+    @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
+    handleRoundStateChange(roundState: string) {
+        if (roundState === ROUND_STATE.LOCKING_BET) {
+            this.resetBettingPanel();
+        }
+        this.setState({ roundState });
+    }
 
     // override renderHeader() {
     //     return (
@@ -79,13 +107,21 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratSt
 
     renderBettingBlock() {
         return (
-            <BaccaratBetOptions
-                namespace={this.props.namespace}
-                previousWinningBet={this.state.previousWinningBet}
-                roundState={this.state.roundState}
-                language={this.props.language}
-                gameName={setting.gameName}
-            />
+            <GameBettingOptionsContext.Provider 
+                value={{ 
+                    panelId: this.state.activePanelId, 
+                    setPanelId: this.setPanelId,
+                    show: this.state.showBetPanel,
+                    setShow: this.setShowBetPanel
+                }}
+            >
+                <BaccaratBetOptions
+                    namespace={this.props.namespace}
+                    previousWinningBet={this.state.previousWinningBet}
+                    language={this.props.language}
+                    gameName={setting.gameName}
+                />
+            </GameBettingOptionsContext.Provider>
         );
     }
 
@@ -97,10 +133,6 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratSt
         return <BaccaratStatistic namespace={this.props.namespace} gameName={setting.gameName} language={this.props.language} />;
     }
 
-    @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
-    renderCountDownTimerState(roundState: string) {
-        this.setState({ roundState });
-    }
 
     async showResult(
         hasAnimation: boolean,
