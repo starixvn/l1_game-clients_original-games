@@ -39,8 +39,7 @@
         transform: rotateY(180deg);
     }
 
-    &.rotate-right,
-    &.banker-third-card {
+    &.rotate-right {
         transform: rotate(90deg);
         margin-right: 10px;
         &.flip {
@@ -54,6 +53,12 @@
         &.flip {
             transform: rotateY(180deg) rotate(-90deg);
         }
+    }
+
+    &.banker-third-card {
+        @extend .rotate-right;
+        margin-right: 0;
+        margin-left: 10px;
     }
 
     // Card face components
