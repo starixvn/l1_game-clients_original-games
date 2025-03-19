@@ -34,6 +34,7 @@ interface IBaccaratSettlementResultState extends IStateObserver {
     error?: Error;
     currentDemoIndex: number;
     isFinish: boolean;
+    isFinishShowResult: boolean;
 }
 
 @observer(setting.mainObserverNamespace)
@@ -49,7 +50,13 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
             error: undefined,
             currentDemoIndex: 0,
             isFinish: false,
+            isFinishShowResult: false,
         };
+    }
+
+    @render(gc.Settlements.SettlementStore, (store) => store.isFinishedShowResult)
+    finishShowResult(isFinishedShowResult: boolean) {
+        this.setState({ isFinishShowResult: isFinishedShowResult });
     }
 
     @render(RoundTimeStore, (store) => store.roundState)
@@ -96,14 +103,30 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
     }
 
     private renderCardDisplay(): JSX.Element | null {
-        const { result, isAnimationResult, isFinish, roundState } = this.state;
+        const { result, isAnimationResult, isFinish, roundState, isFinishShowResult } = this.state;
         const language = this.props.language || gc.Translator.getCurrentLanguageId();
 
         if (!result || !isFinish || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET) {
-            return <CardDisplay result={DEFAULT_RESULT} isAnimationResult={false} isShowResult={false} language={language} />;
+            return (
+                <CardDisplay
+                    isFinishShowResult={isFinishShowResult}
+                    result={DEFAULT_RESULT}
+                    isAnimationResult={false}
+                    isShowResult={false}
+                    language={language}
+                />
+            );
         }
 
-        return <CardDisplay result={result} isAnimationResult={isAnimationResult} isShowResult={true} language={language} />;
+        return (
+            <CardDisplay
+                isFinishShowResult={isFinishShowResult}
+                result={result}
+                isAnimationResult={isAnimationResult}
+                isShowResult={true}
+                language={language}
+            />
+        );
     }
 
     private renderContent(): JSX.Element {

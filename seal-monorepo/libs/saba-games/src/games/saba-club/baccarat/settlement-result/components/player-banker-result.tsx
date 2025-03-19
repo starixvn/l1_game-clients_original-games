@@ -12,6 +12,7 @@ interface PlayerBankerResultProps {
     result?: Result;
     isShowResult: boolean;
     language: string;
+    isFinishShowResult: boolean;
 }
 interface PlayerBankerResultState {
     openedCards: number;
@@ -19,7 +20,7 @@ interface PlayerBankerResultState {
 }
 
 export default function PlayerBankerResultComponent(props: PlayerBankerResultProps) {
-    const { playResultAnimation, result, isShowResult, language } = props;
+    const { playResultAnimation, result, isShowResult, language, isFinishShowResult } = props;
 
     const [state, setState] = useState<PlayerBankerResultState>({
         openedCards: 0,
@@ -111,8 +112,7 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
                     isShowResult={isShowResult}
                 />
 
-
-                {showWinner && isShowResult && (
+                {showWinner && isShowResult && isFinishShowResult && (
                     <div className={`${Styles['winner-display']} ${playResultAnimation ? Styles['play-animation'] : ''}`}>
                         <p className={Styles['winner-text']}>{gc.Translator.t(`Baccarat.${getWinnerText()}`, { lng: language })}</p>
                     </div>

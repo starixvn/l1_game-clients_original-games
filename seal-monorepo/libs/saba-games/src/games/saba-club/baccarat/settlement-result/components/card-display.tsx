@@ -8,15 +8,17 @@ interface CardDisplayProps {
     isAnimationResult: boolean;
     isShowResult: boolean;
     language: string;
+    isFinishShowResult: boolean;
 }
 
-export const CardDisplay: React.FC<CardDisplayProps> = memo(({ result, isAnimationResult, isShowResult, language }) => {
+export const CardDisplay: React.FC<CardDisplayProps> = memo(({ result, isAnimationResult, isShowResult, language, isFinishShowResult }) => {
     return (
         <PlayerBankerResultComponent
             playResultAnimation={isAnimationResult}
             result={result}
             isShowResult={isShowResult}
             language={language}
+            isFinishShowResult={isFinishShowResult}
         />
     );
 });
