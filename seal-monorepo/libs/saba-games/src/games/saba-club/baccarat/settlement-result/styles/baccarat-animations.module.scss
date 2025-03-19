@@ -406,7 +406,7 @@ $winner-delay-base: 1s; // Delay after last card before showing winner
 }
 
 .winner-text {
-    margin: 0;
+    margin: 0 auto;
     text-transform: uppercase;
     letter-spacing: 2px;
     text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
