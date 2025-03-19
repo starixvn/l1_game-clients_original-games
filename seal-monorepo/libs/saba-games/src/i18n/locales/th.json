@@ -258,7 +258,7 @@
     },
     "Baccarat": {
         "game_tab_name": "Baccarat",
-        "banker_win": "เจ้ามือชนะ!",
+        "banker_win": "เจ้ามือชนะ",
         "game_icon_name": "Baccarat",
         "game_name": "Baccarat",
         "glossary_banker": "เจ้ามือ",

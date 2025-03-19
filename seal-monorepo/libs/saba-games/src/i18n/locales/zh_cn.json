@@ -258,7 +258,7 @@
     },
     "Baccarat": {
         "game_tab_name": "百家乐",
-        "banker_win": "庄家赢！",
+        "banker_win": "庄家赢",
         "game_icon_name": "百家乐",
         "game_name": "百家乐",
         "glossary_banker": "庄家",
