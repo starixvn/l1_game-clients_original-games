@@ -9,13 +9,6 @@
 
     // Extend base game styles with Baccarat-specific modifications
 
-    .block-wrapper {
-        background-color: $baccarat-primary-bg;
-        grid-template-columns: 9rem 460px auto !important;
-        padding: 1rem;
-        gap: 1rem;
-    }
-
     .game-title {
         background-color: $baccarat-header-bg;
     }
@@ -32,7 +25,7 @@
 
 .block-wrapper {
     display: grid;
-    grid-template-columns: 9rem 460px auto !important;
+    grid-template-columns: 144px 440px auto !important;
     // height: 80px !important;
 }
 
@@ -52,11 +45,7 @@
 }
 
 .baccaratGameTitle {
-    grid-template-columns: 602px auto !important;
-
-    @media (min-width: 1280px) {
-        grid-template-columns: 604px auto !important;
-    }
+    grid-template-columns: 583px auto !important;
 }
 
 .bet {
