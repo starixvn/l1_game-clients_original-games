@@ -1,6 +1,6 @@
 .block-wrapper {
     display: grid;
-    grid-template-columns: 130px 351px auto !important;
+    grid-template-columns: 130px 250px auto !important;
 
     @media (min-width: 1400px) {
         grid-template-columns: 130px 611px auto !important;
