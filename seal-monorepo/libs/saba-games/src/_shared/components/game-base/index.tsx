@@ -14,6 +14,8 @@ import Warning from '../notices/warning';
 import StatisticButton from '../statistic-button/statistic-button';
 import Styles from './game-base.module.scss';
 import { GameBaseProps } from './type';
+import RoundId from '../round-id';
+import CountDownTimer from '../count-down-timer';
 
 export interface IGameBaseState {
     isConnected: boolean;
@@ -77,7 +79,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     renderNotice(): JSX.Element {
-        return <Notice namespace={this.props.namespace}></Notice>;
+        return <Notice namespace={this.props.namespace} isDisableGame={this.state.showDisabledPopup}></Notice>;
     }
 
     renderWarning(): JSX.Element {
@@ -85,11 +87,11 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     renderRoundIdSection() {
-        return <></>;
+        return <RoundId namespace={this.props.namespace} language={this.props.language} />;
     }
 
     renderCountDownTimer() {
-        return <></>;
+        return <CountDownTimer namespace={this.props.namespace} />;
     }
 
     renderResultBlock() {
@@ -178,6 +180,9 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     @render(gc.DisabledGame.DisabledGameStore, (store) => store.showPopup)
     handleDisabledGame(showPopup: boolean) {
+        if (!showPopup && this.state.showDisabledPopup) {
+            this.joinGame();
+        }
         this.setState({ showDisabledPopup: showPopup } as IGameBaseState);
     }
 

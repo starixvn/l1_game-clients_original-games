@@ -1,11 +1,9 @@
 import * as gc from '@sg/sg-game-client';
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
 import { handle, observer, render } from '@sg/sg-observer';
-import CountDownTimer from '../../../_shared/components/count-down-timer';
 import { IGameBaseState } from '../../../_shared/components/game-base';
 import GatewayGameBase from '../../../_shared/components/game-base/gateway-gamebase';
 import { configGameContainer } from '../../../_shared/components/game-base/startup';
-import RoundId from '../../../_shared/components/round-id';
 import { GameBettingOptionsContext } from '../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
 import { FunctionUtils } from '../../../_shared/utils/funtion-utils';
 import SeDieBetOptions from './bet-option/sedie-bet-options';
@@ -21,8 +19,8 @@ interface ISieDiePageState extends IGameBaseState {
 }
 
 @observer(setting.mainObserverNamespace)
-export default class SieDiePage extends GatewayGameBase<{ namespace: string, language: string }, ISieDiePageState> {
-    constructor(props: { namespace: string, language: string }) {
+export default class SieDiePage extends GatewayGameBase<{ namespace: string; language: string }, ISieDiePageState> {
+    constructor(props: { namespace: string; language: string }) {
         super(props);
         try {
             configGameContainer(setting.name, containerOptions);
@@ -33,7 +31,7 @@ export default class SieDiePage extends GatewayGameBase<{ namespace: string, lan
             ...this.state,
             activePanelId: null,
             showBetPanel: false,
-            gameId: setting.id
+            gameId: setting.id,
         };
     }
 
@@ -51,7 +49,7 @@ export default class SieDiePage extends GatewayGameBase<{ namespace: string, lan
     resetBettingPanel = () => {
         this.setState({
             activePanelId: null,
-            showBetPanel: false
+            showBetPanel: false,
         });
     };
 
@@ -63,42 +61,20 @@ export default class SieDiePage extends GatewayGameBase<{ namespace: string, lan
     }
 
     renderRoundHistory() {
-        return (
-            <SeDieRoundHistory
-                namespace={this.props.namespace}
-                language={this.props.language}
-            />
-        )
-    }
-
-    renderRoundIdSection() {
-        return (
-            <RoundId
-                namespace={this.props.namespace}
-                language={this.props.language}
-            />
-        )
-    }
-
-    renderCountDownTimer() {
-        return <CountDownTimer namespace={this.props.namespace} />;
+        return <SeDieRoundHistory namespace={this.props.namespace} language={this.props.language} />;
     }
 
     renderBettingBlock() {
         return (
-            <GameBettingOptionsContext.Provider 
-                value={{ 
-                    panelId: this.state.activePanelId, 
+            <GameBettingOptionsContext.Provider
+                value={{
+                    panelId: this.state.activePanelId,
                     setPanelId: this.setPanelId,
                     show: this.state.showBetPanel,
-                    setShow: this.setShowBetPanel
+                    setShow: this.setShowBetPanel,
                 }}
             >
-                <SeDieBetOptions
-                    gameName={setting.gameName}
-                    namespace={this.props.namespace}
-                    language={this.props.language}
-                />
+                <SeDieBetOptions gameName={setting.gameName} namespace={this.props.namespace} language={this.props.language} />
             </GameBettingOptionsContext.Provider>
         );
     }
@@ -108,13 +84,7 @@ export default class SieDiePage extends GatewayGameBase<{ namespace: string, lan
     }
 
     renderStatistic() {
-        return (
-            <SedieStatistic
-                namespace={this.props.namespace}
-                gameName={setting.gameName}
-                language={this.props.language}
-            />
-        );
+        return <SedieStatistic namespace={this.props.namespace} gameName={setting.gameName} language={this.props.language} />;
     }
 
     async showResult(

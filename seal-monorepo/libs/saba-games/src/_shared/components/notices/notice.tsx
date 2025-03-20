@@ -9,7 +9,11 @@ export interface INoticeState extends IStateObserver {
     isShow: boolean;
 }
 
-export default class Notice extends ObserverComponent<IPropsObserver, INoticeState> {
+export interface INoticeProps extends IPropsObserver {
+    isDisableGame?: boolean;
+}
+
+export default class Notice extends ObserverComponent<INoticeProps, INoticeState> {
     private timer: NodeJS.Timeout | null = null;
     private readonly AUTO_CLOSE_DELAY = 3500;
 
@@ -37,7 +41,7 @@ export default class Notice extends ObserverComponent<IPropsObserver, INoticeSta
             }
 
             this.setState({ notice, isShow: true });
-            this.timer = setTimeout(this.closeNotice, this.AUTO_CLOSE_DELAY);
+            !this.props.isDisableGame && (this.timer = setTimeout(this.closeNotice, this.AUTO_CLOSE_DELAY));
         }
     }
 

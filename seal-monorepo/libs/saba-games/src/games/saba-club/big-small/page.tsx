@@ -1,20 +1,18 @@
-import * as gc from "@sg/sg-game-client";
-import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
-import { handle, observer, render } from "@sg/sg-observer";
-import CountDownTimer from "../../../_shared/components/count-down-timer";
-import { IGameBaseState } from "../../../_shared/components/game-base";
-import GatewayGameBase from "../../../_shared/components/game-base/gateway-gamebase";
-import { configGameContainer } from "../../../_shared/components/game-base/startup";
-import type { GameBaseProps } from "../../../_shared/components/game-base/type";
-import RoundId from "../../../_shared/components/round-id";
-import { GameBettingOptionsContext } from "../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context";
-import { FunctionUtils } from "../../../_shared/utils/funtion-utils";
-import { BigSmallBetOptions } from "./bet-option";
-import styles from "./big-small.module.scss";
-import { containerOptions, setting } from "./game-settings";
-import { BigSmallRoundHistory } from "./round-history";
-import { BigSmallSettlementResult } from "./settlement-result";
-import { BigSmallStatistic } from "./statistic";
+import * as gc from '@sg/sg-game-client';
+import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
+import { handle, observer, render } from '@sg/sg-observer';
+import { IGameBaseState } from '../../../_shared/components/game-base';
+import GatewayGameBase from '../../../_shared/components/game-base/gateway-gamebase';
+import { configGameContainer } from '../../../_shared/components/game-base/startup';
+import type { GameBaseProps } from '../../../_shared/components/game-base/type';
+import { GameBettingOptionsContext } from '../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
+import { FunctionUtils } from '../../../_shared/utils/funtion-utils';
+import { BigSmallBetOptions } from './bet-option';
+import styles from './big-small.module.scss';
+import { containerOptions, setting } from './game-settings';
+import { BigSmallRoundHistory } from './round-history';
+import { BigSmallSettlementResult } from './settlement-result';
+import { BigSmallStatistic } from './statistic';
 
 interface IBigSmallPageState extends IGameBaseState {
     activePanelId: any;
@@ -28,12 +26,11 @@ interface IBigSmallPageProps extends GameBaseProps {
 
 @observer(setting.mainObserverNamespace)
 export default class BigSmallPage extends GatewayGameBase<IBigSmallPageProps, IBigSmallPageState> {
-
     override overrideClasses = {
-        blockWrapper: styles["block-wrapper"],
-        info: styles["info"],
-        result: styles["result"],
-        betOptions: styles["bet-options"],
+        blockWrapper: styles['block-wrapper'],
+        info: styles['info'],
+        result: styles['result'],
+        betOptions: styles['bet-options'],
     };
 
     constructor(props: IBigSmallPageProps) {
@@ -48,7 +45,7 @@ export default class BigSmallPage extends GatewayGameBase<IBigSmallPageProps, IB
             ...this.state,
             activePanelId: null,
             showBetPanel: false,
-            gameId: setting.id
+            gameId: setting.id,
         };
     }
 
@@ -66,7 +63,7 @@ export default class BigSmallPage extends GatewayGameBase<IBigSmallPageProps, IB
     resetBettingPanel = () => {
         this.setState({
             activePanelId: null,
-            showBetPanel: false
+            showBetPanel: false,
         });
     };
 
@@ -81,34 +78,17 @@ export default class BigSmallPage extends GatewayGameBase<IBigSmallPageProps, IB
         return <BigSmallRoundHistory namespace={this.props.namespace} language={this.props.language} />;
     }
 
-    renderRoundIdSection() {
-        return (
-            <RoundId
-                namespace={this.props.namespace}
-                language={this.props.language}
-            />
-        )
-    }
-
-    renderCountDownTimer() {
-        return <CountDownTimer namespace={this.props.namespace} />;
-    }
-
     renderBettingBlock() {
         return (
-            <GameBettingOptionsContext.Provider 
-                value={{ 
-                    panelId: this.state.activePanelId, 
+            <GameBettingOptionsContext.Provider
+                value={{
+                    panelId: this.state.activePanelId,
                     setPanelId: this.setPanelId,
                     show: this.state.showBetPanel,
-                    setShow: this.setShowBetPanel
+                    setShow: this.setShowBetPanel,
                 }}
             >
-                <BigSmallBetOptions
-                    gameName={setting.gameName}
-                    namespace={this.props.namespace}
-                    language={this.props.language}
-                />
+                <BigSmallBetOptions gameName={setting.gameName} namespace={this.props.namespace} language={this.props.language} />
             </GameBettingOptionsContext.Provider>
         );
     }
@@ -129,7 +109,7 @@ export default class BigSmallPage extends GatewayGameBase<IBigSmallPageProps, IB
     async showResult(
         hasAnimation: boolean,
         result?: gc.GameServiceMessage.TResult,
-        settlementResult?: gc.GameServiceMessage.TSettlementResult
+        settlementResult?: gc.GameServiceMessage.TSettlementResult,
     ) {
         if (!this.isValidResult(result, settlementResult)) {
             return;

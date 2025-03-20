@@ -2,11 +2,9 @@ import * as gc from '@sg/sg-game-client';
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
 import { handle, observer, render } from '@sg/sg-observer';
 
-import CountDownTimer from '../../../_shared/components/count-down-timer';
 import { IGameBaseState } from '../../../_shared/components/game-base';
 import GatewayGameBase from '../../../_shared/components/game-base/gateway-gamebase';
 import { configGameContainer } from '../../../_shared/components/game-base/startup';
-import RoundId from '../../../_shared/components/round-id';
 import { FunctionUtils } from '../../../_shared/utils/funtion-utils';
 import Styles from './baccarat.module.scss';
 import BaccaratBetOptions from './bet-option/baccarat-bet-options';
@@ -44,7 +42,7 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratSt
             isExpanded: false,
             activePanelId: null,
             showBetPanel: false,
-            gameId: setting.id
+            gameId: setting.id,
         };
 
         try {
@@ -72,7 +70,7 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratSt
     resetBettingPanel = () => {
         this.setState({
             activePanelId: null,
-            showBetPanel: false
+            showBetPanel: false,
         });
     };
 
@@ -99,22 +97,14 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratSt
         return <BaccaratRoundHistory namespace={this.props.namespace} language={this.props.language} />;
     }
 
-    renderRoundIdSection() {
-        return <RoundId namespace={this.props.namespace} language={this.props.language} />;
-    }
-
-    renderCountDownTimer() {
-        return <CountDownTimer namespace={this.props.namespace} />;
-    }
-
     renderBettingBlock() {
         return (
-            <GameBettingOptionsContext.Provider 
-                value={{ 
-                    panelId: this.state.activePanelId, 
+            <GameBettingOptionsContext.Provider
+                value={{
+                    panelId: this.state.activePanelId,
                     setPanelId: this.setPanelId,
                     show: this.state.showBetPanel,
-                    setShow: this.setShowBetPanel
+                    setShow: this.setShowBetPanel,
                 }}
             >
                 <BaccaratBetOptions
@@ -134,7 +124,6 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratSt
     renderStatistic() {
         return <BaccaratStatistic namespace={this.props.namespace} gameName={setting.gameName} language={this.props.language} />;
     }
-
 
     async showResult(
         hasAnimation: boolean,
