@@ -8,22 +8,24 @@ export const BigSmallHeader = ({ isExpanded, handleToggle }) => {
 
     return (
         <div className={styles['game-title']} onClick={handleToggle}>
-            <div className={classNames(styles['collapse-btn'], {
-                [styles['collapsed']]: !isExpanded
-            })}>
-                <div className={styles['collapse-icon']}></div>
-            </div>
-            <div className={styles['game-header']}>
-                <div className={styles['game-icon']}>
+            <div className={styles['title-with-icon']}>
+                <div
+                    className={classNames(styles['collapse-btn'], {
+                        [styles['collapsed']]: !isExpanded,
+                    })}
+                >
+                    <div className={styles['collapse-icon']}></div>
                 </div>
-                <div className={styles['game-name']}>
-                    {gameName}
+                <div className={styles['game-header']}>
+                    <div className={styles['game-icon']}></div>
+                    <div className={styles['game-name']}>{gameName}</div>
                 </div>
             </div>
+
             {isExpanded && (
-                <>
+                <div className={styles['game-option-container']}>
                     <span className={styles['game-option']}>{bigSmall}</span>
-                </>
+                </div>
             )}
         </div>
     );

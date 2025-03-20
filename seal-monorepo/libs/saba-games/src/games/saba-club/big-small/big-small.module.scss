@@ -1,29 +1,38 @@
-
 .block-wrapper {
+    display: grid;
+    grid-template-columns: 130px 351px auto !important;
+
+    @media (min-width: 1400px) {
+        grid-template-columns: 130px 611px auto !important;
+    }
+
     .result {
         width: 40%;
         border-right: none;
+
         @media screen and (min-width: 1102px) {
             width: 50%;
         }
-       
+
     }
 
     .info {
         width: 30%;
+
         @media screen and (min-width: 1102px) {
             width: 20%;
         }
-       
+
     }
 
     .bet-options {
-        width: 40%;
+        // width: 40%;
+        min-width: auto;
+        width: auto;
         border-left: 1px solid var(--c-av-theme-border-1);
     }
+
     .animation-balance {
         width: 40%;
     }
 }
-
-

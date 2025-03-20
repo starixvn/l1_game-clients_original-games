@@ -89,6 +89,21 @@
 }
 
 
+.game-title {
+    background-color: var(--c-av-league-header-bg);
+    border-bottom: 1px solid var(--c-av-theme-border-1);
+    display: grid;
+    grid-template-columns: 480px auto !important;
+
+    @media (min-width: 1400px) {
+        grid-template-columns: 740px auto !important;
+    }
+
+    >div {
+        display: flex;
+    }
+}
+
 .dropdown-content {
     display: block;
 }
