@@ -3,6 +3,7 @@ import styles from './baccarat-scoreboard.module.scss';
 import { BigRoadScoreboardPoint } from 'sc-scoreboards';
 import { BaccaratSettlementResult } from '../type';
 import BaccaratBigRoadItem from './baccarat-big-road-item';
+import ScrollElement from 'libs/saba-games/src/_shared/components/scroll-element';
 
 const BaccaratBigRoad: React.FC<{
     maxRows: number;
@@ -21,7 +22,7 @@ const BaccaratBigRoad: React.FC<{
     }, [rows]);
 
     return (
-        <div className={`${styles['scoreboard-content']} baccarat-big-road`} ref={scrollDivRef}>
+        <ScrollElement className={`${styles['scoreboard-content']} baccarat-big-road`} refData={scrollDivRef}>
             <div
                 className={styles['grid-container']}
                 style={{
@@ -46,7 +47,7 @@ const BaccaratBigRoad: React.FC<{
                     )),
                 )}
             </div>
-        </div>
+        </ScrollElement>
     );
 };
 
