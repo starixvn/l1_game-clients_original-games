@@ -21,6 +21,7 @@ import {
 } from '../type';
 import { BigSmallBigRoadConverter } from '../../../../_shared/components/scoreboard/converters';
 import BigSmallScoreBoardBody from './components/big-small-scoreboard-body';
+import ScrollElement from 'libs/saba-games/src/_shared/components/scroll-element';
 
 export interface IBigSmallResultHistoryState extends IStateObserver {
   rounds: gc.RoundHistories.RoundHistory[];
@@ -123,8 +124,7 @@ export default class BigSmallScoreBoard extends ObserverComponent<
             settlements={settlements}
           />
         }
-
-        <div className={Styles['scoreboard-content']} ref={this.scrollDivRef}>
+        <ScrollElement className={Styles['scoreboard-content']} refData={this.scrollDivRef}>
           {
             <BigSmallScoreBoardBody
               gameName={this.props.gameName || ''}
@@ -133,7 +133,7 @@ export default class BigSmallScoreBoard extends ObserverComponent<
               scoreboardDotClassName={scoreboardDotClassName}
             />
           }
-        </div>
+        </ScrollElement>
       </div>
     );
   }
