@@ -3,19 +3,47 @@
 }
 
 .game-title {
+    display: grid;
+    grid-template-columns: 300px auto !important;
     background-color: var(--c-av-league-header-bg);
-    display: flex;
     text-align: center;
     align-items: center;
     position: relative;
     min-height: 1.625rem;
-    border: 1px solid var(--c-av-theme-border-1);
+    border-bottom: 1px solid var(--c-av-theme-border-1);
 
-    >* {
-        border-right: 1px solid var(--c-av-theme-border-1);
+    @media (min-width: 1400px) {
+        grid-template-columns: 430px auto !important;
+    }
 
-        &:last-child {
-            border-right: none;
+    .title-with-icon {
+        display: flex;
+    }
+
+    .game-option-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+
+        > * {
+            border-left: 1px solid var(--c-av-theme-border-1);
+        }
+    }
+
+    .game-option {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        min-height: 26px;
+
+        &.game-option-even {
+            grid-row: 1/1;
+            grid-column: 1/2;
+        }
+
+        &.game-option-red-white {
+            grid-row: 1/1;
+            grid-column: 2/5;
         }
     }
 }
@@ -42,17 +70,17 @@
     width: 18px;
     height: 18px;
     margin-left: 2px;
-    background-image: url("../../../assets/caret.svg");
+    background-image: url('../../../assets/caret.svg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
     transition: transform 0.3s ease;
 }
 
-[data-theme^="dark"],
-[data-darkmode="true"] {
+[data-theme^='dark'],
+[data-darkmode='true'] {
     .collapse-icon {
-        background-image: url("../../../assets/caret-white.svg");
+        background-image: url('../../../assets/caret-white.svg');
     }
 }
 
@@ -68,7 +96,7 @@
 .game-icon {
     width: 24px;
     height: 24px;
-    background-image: url("../../../assets/sedie/icon-se-die.svg");
+    background-image: url('../../../assets/sedie/icon-se-die.svg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -91,7 +119,6 @@
     position: relative;
 }
 
-
 .dropdown-content {
     display: block;
 }
@@ -102,19 +129,4 @@
 
 .collapsed .collapse-icon {
     transform: rotate(-90deg);
-}
-
-.game-option {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 6.5rem;
-    width: 15%;
-    height: 100%;
-    min-height: 26px;
-}
-
-.game-option:last-child {
-    min-width: 25.5rem;
-    width: 45%;
 }

@@ -1,8 +1,7 @@
-
-@import "../../../../styles/components/animation-container";
-@import "../../../../styles/components/animations/result-collapse-mode";
-@import "../../../../styles/components/result-label-collapse-mode";
-@import "../../../../styles/components/animations/common";
+@import '../../../../styles/components/animation-container';
+@import '../../../../styles/components/animations/result-collapse-mode';
+@import '../../../../styles/components/result-label-collapse-mode';
+@import '../../../../styles/components/animations/common';
 
 @keyframes show-result-animation {
     from {
@@ -13,21 +12,22 @@
     }
 }
 
-.container-bets{
+.container-bets {
     display: flex;
     justify-content: space-between;
-
-    
 }
 
 .result-container {
     display: grid;
     grid-template-columns: repeat(4, 2.5rem);
     grid-template-rows: 2.5rem;
-    grid-gap: 0.5rem;
+    grid-gap: 0;
     transform: scale(1);
-}
 
+    @media (min-width: 1400px) {
+        grid-gap: 0.5rem;
+    }
+}
 
 .container-bets {
     position: relative;
@@ -52,7 +52,7 @@
 
         &:before {
             border-radius: 100%;
-            content: "";
+            content: '';
             top: 2px;
             left: 2px;
             bottom: 2px;

@@ -1,16 +1,18 @@
-import * as gc from '@sg/sg-game-client';
-import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
-import { handle, observer, render } from '@sg/sg-observer';
-import { IGameBaseState } from '../../../_shared/components/game-base';
-import GatewayGameBase from '../../../_shared/components/game-base/gateway-gamebase';
-import { configGameContainer } from '../../../_shared/components/game-base/startup';
-import { GameBettingOptionsContext } from '../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
-import { FunctionUtils } from '../../../_shared/utils/funtion-utils';
-import SeDieBetOptions from './bet-option/sedie-bet-options';
-import { containerOptions, setting } from './game-settings';
-import SeDieRoundHistory from './round-history';
-import SeDieSettlementResult from './settlement-result';
-import { SedieStatistic } from './statistic';
+import * as gc from "@sg/sg-game-client";
+import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
+import { handle, observer, render } from "@sg/sg-observer";
+
+import { IGameBaseState } from "../../../_shared/components/game-base";
+import GatewayGameBase from "../../../_shared/components/game-base/gateway-gamebase";
+import { configGameContainer } from "../../../_shared/components/game-base/startup";
+import { GameBettingOptionsContext } from "../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context";
+import { FunctionUtils } from "../../../_shared/utils/funtion-utils";
+import SeDieBetOptions from "./bet-option/sedie-bet-options";
+import { containerOptions, setting } from "./game-settings";
+import SeDieRoundHistory from "./round-history";
+import Styles from "./sedie.module.scss";
+import SeDieSettlementResult from "./settlement-result";
+import { SedieStatistic } from "./statistic";
 
 interface ISieDiePageState extends IGameBaseState {
     activePanelId: any;
@@ -20,6 +22,13 @@ interface ISieDiePageState extends IGameBaseState {
 
 @observer(setting.mainObserverNamespace)
 export default class SieDiePage extends GatewayGameBase<{ namespace: string; language: string }, ISieDiePageState> {
+    override overrideClasses = {
+        blockWrapper: Styles['block-wrapper'],
+        betOptions: Styles['bet-options-block'],
+        info: Styles['info-block'],
+        result: Styles['result-block'],
+    };
+
     constructor(props: { namespace: string; language: string }) {
         super(props);
         try {
