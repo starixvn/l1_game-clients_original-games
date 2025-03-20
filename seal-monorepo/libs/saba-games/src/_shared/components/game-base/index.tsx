@@ -59,12 +59,12 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     abstract connectLiveGateway(): void;
 
-    onVisibilityChange = () => {};
+    onVisibilityChange = () => { };
     @handle(gc.GatewayConnection.GatewayConnectionHandlers.ConnectHandler, (handler) => handler.handle())
-    connectToServiceGateway() {}
+    connectToServiceGateway() { }
 
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handle())
-    terminateConnection() {}
+    terminateConnection() { }
 
     @render(gc.Connection.ConnectionStore, (store) => store.isSignedIn)
     handleConnected(isSignedIn: boolean) {
@@ -153,7 +153,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     @handle(Lobby.LobbyHandlers.TryToConnectHandler)
-    tryToConnectHandler() {}
+    tryToConnectHandler() { }
 
     @render(gc.Connection.ConnectionStore, (store) => store.isConnectFailed)
     handleConnectFail(isConnectFailed: boolean) {
@@ -216,8 +216,8 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                     <div className={`${Styles['bet-options']} ${this.overrideClasses?.betOptions}`}>
                         {this.renderBettingBlock()}
                         <ConfirmBet namespace={this.props.namespace} />
+                        <div className={`${Styles['animation-balance']} ${Styles[`game-${this.state.gameId}`]}`}>{this.renderAnimationBalance()}</div>
                     </div>
-                    <div className={`${Styles['animation-balance']} ${Styles[`game-${this.state.gameId}`]}`}>{this.renderAnimationBalance()}</div>
                 </div>
 
                 <div className={Styles['history-block']}>
