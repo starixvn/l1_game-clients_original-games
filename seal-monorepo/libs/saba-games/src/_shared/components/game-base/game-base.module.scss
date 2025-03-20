@@ -29,6 +29,7 @@
     }
 
     .round-id {
+        white-space: nowrap;
         font-weight: bold;
         font-size: 13px;
     }
@@ -55,7 +56,6 @@
         min-width: 32rem;
         width: 60%;
         position: relative;
-
     }
 
     .animation-balance {
@@ -129,7 +129,7 @@
 
     .placing-bet-state {
         --c-av-primary-h: 219;
-        --c-ng-count-text: #00FF00;
+        --c-ng-count-text: #00ff00;
         --c-ng-count-bg: HSL(calc(var(--c-av-primary-h) - 2), 49%, 27%);
 
         .clock {
@@ -137,7 +137,7 @@
         }
 
         .counting-text {
-            color: #00FF00;
+            color: #00ff00;
             background-color: var(--c-ng-count-bg);
         }
 
@@ -173,17 +173,16 @@
     border-top: 1px solid var(--c-av-theme-border-1);
 }
 
-.history-block>.previous-round {
+.history-block > .previous-round {
     flex: 7;
 }
 
-.history-block>.statistic-btn {
+.history-block > .statistic-btn {
     flex: 1;
     width: 100%;
     max-width: 15rem;
     justify-items: self-end;
 }
-
 
 .reconnect-btn-container {
     display: flex;

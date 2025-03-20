@@ -1,6 +1,6 @@
-@use "sass:math" as math;
-@use "sass:map";
-@import "./_variables";
+@use 'sass:math' as math;
+@use 'sass:map';
+@import './_variables';
 
 // Media query mixin
 @mixin respond-to($breakpoint) {
@@ -18,34 +18,9 @@
     justify-content: center;
 }
 
-// Position cards mixin
-@mixin position-cards($list-position) {
-    @each $num, $distance in $list-position {
-        .card#{$num} {
-            transform: translateX($distance);
-        }
-    }
-}
-
-// Card animation mixin
-@mixin card-animation($delay) {
-    .card-back, .rotate-card {
-        animation-delay: $delay;
-    }
-}
-
 // Score gradient mixin
 @mixin score-gradient($start-color, $end-color) {
     background: linear-gradient(180deg, $start-color 0%, $end-color 100%);
-}
-
-// Card timing mixin
-@mixin card-timing($pair, $cards) {
-    @each $card in $cards {
-        .card#{$card} {
-            @include card-animation(map.get($card-sequence, $pair));
-        }
-    }
 }
 
 // Button style mixin
@@ -56,7 +31,7 @@
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.2s;
-    
+
     &:hover {
         background-color: $hover-color;
     }
@@ -70,4 +45,4 @@
     border-top: $border-width solid $active-color;
     border-radius: 50%;
     animation: spin 1s linear infinite;
-} 
+}
