@@ -4,7 +4,7 @@ import style from './balance.module.scss';
 const AnimationBalance = ({ winBet }) => {
     return (
         <div className={style['win-amount']}>
-            {`+${gc.FormatUtils.numberWithCommas(winBet)}`}
+            {`+${gc.FormatUtils.numberWithCommas(winBet, 2)}`}
         </div>
     );
 };
