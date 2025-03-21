@@ -66,7 +66,6 @@
     display: flex;
     padding: 6px 4px;
     border-left: 1px solid var(--c-av-theme-border-1);
-    border-right: 1px solid var(--c-av-theme-border-1);
     flex-direction: column;
     gap: 4px;
 }
@@ -75,6 +74,7 @@
     grid-column: 2/5;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    border-left: 1px solid var(--c-av-theme-border-1);
     padding: 6px 4px;
     gap: 4px;
 }
