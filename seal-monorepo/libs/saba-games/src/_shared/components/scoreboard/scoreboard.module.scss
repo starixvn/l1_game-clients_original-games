@@ -1,4 +1,4 @@
-@import "./../dot/dot.module.scss";
+@import './../dot/dot.module.scss';
 .dot-item {
     border-right: 1px solid var(--c-av-theme-border-1); /* Border for each grid item */
     border-bottom: 1px solid var(--c-av-theme-border-1); /* Border for each grid item */
@@ -9,10 +9,9 @@
     pointer-events: none;
     color: var(--c-av-white);
     z-index: 1;
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
 }
-
 
 .dot-over,
 .dot-under,
@@ -26,13 +25,8 @@
     font-size: 1rem;
     color: var(--c-av-white);
     z-index: 1;
-    font-family: "Segoe UI";
-
+    font-family: 'Segoe UI';
 }
-
-
-
-
 
 .dot-blink {
     background: #8b8686;
@@ -45,5 +39,3 @@
         opacity: 0.3;
     }
 }
-
-
