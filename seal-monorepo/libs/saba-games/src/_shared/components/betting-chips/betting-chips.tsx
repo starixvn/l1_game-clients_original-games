@@ -19,6 +19,13 @@ const BettingChips: React.FC<BettingChipsProps> = ({
     t,
     addCommas
 }) => {
+    const formatNumber = (num: number): string => {
+        if (num >= 1000) {
+            return (num / 1000).toString() + 'K';
+        }
+        return num.toString();
+    };
+
     const chips = [
         {
             value: min,
@@ -27,13 +34,13 @@ const BettingChips: React.FC<BettingChipsProps> = ({
         },
         {
             value: min * 5,
-            label: `+${addCommas(min * 5)}`,
+            label: `+${formatNumber(min * 5)}`,
             onClick: () => onAmountChange(currentAmount + (min * 5)),
             disabled: currentAmount + (min * 5) > max
         },
         {
             value: min * 10,
-            label: `+${addCommas(min * 10)}`,
+            label: `+${formatNumber(min * 10)}`,
             onClick: () => onAmountChange(currentAmount + (min * 10)),
             disabled: currentAmount + (min * 10) > max
         },
