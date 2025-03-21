@@ -17,6 +17,17 @@ interface BaccaratCardProps {
 
 export const BaccaratCard: React.FC<BaccaratCardProps> = ({ card, className, isShowResult, type, onCardFlip, playResultAnimation }) => {
     const [isFlipped, setIsFlipped] = useState(false);
+    const [flipAnimationClass, setFlipAnimationClass] = useState('');
+
+    useEffect(() => {
+        if (isFlipped && playResultAnimation) {
+            setFlipAnimationClass(Styles['flip']);
+        } else if (isFlipped) {
+            setFlipAnimationClass(`${Styles['flip']} ${Styles['no-animation']}`);
+        } else {
+            setFlipAnimationClass('');
+        }
+    }, [isFlipped, playResultAnimation]);
 
     // Add rotation class based on card order
     const getRotationClass = (order: number) => {
@@ -72,16 +83,6 @@ export const BaccaratCard: React.FC<BaccaratCardProps> = ({ card, className, isS
             setIsFlipped(false);
         }
     }, [isShowResult, card, onCardFlip, playResultAnimation]);
-
-    let flipAnimationClass = '';
-
-    if (isFlipped && playResultAnimation) {
-        flipAnimationClass = Styles['flip'];
-    } else if (isFlipped) {
-        flipAnimationClass = `${Styles['flip']} ${Styles['no-animation']}`;
-    } else {
-        flipAnimationClass = '';
-    }
 
     return (
         <div

@@ -58,19 +58,26 @@
 // Card section layout
 .cardSection {
     height: 100%;
-    max-width: 100px;
     display: grid;
+    grid-template-columns: repeat(3, 48px);
     grid-template-rows: 21px 1fr;
     justify-content: start;
 }
 
 .cardContainer {
+    grid-column: 1/4;
+
     &.hide-all-cards {
         opacity: 0;
     }
 
     &.show-all-cards {
-        animation: showCards 0.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+        animation: showCards 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+
+        &.banker {
+            opacity: 0;
+            animation-delay: 0.2s;
+        }
     }
 
     @keyframes showCards {
@@ -104,9 +111,11 @@
 
     &-player {
         color: map.get($colors, 'text', 'player');
+        grid-column: 2/4;
     }
     &-banker {
         color: map.get($colors, 'text', 'banker');
+        grid-column: 1/3;
     }
 }
 

@@ -17,6 +17,7 @@ interface CardSectionProps {
 
 export const CardSection: React.FC<CardSectionProps> = ({ cards, label, type, playResultAnimation, isShowResult, isHideAllCards }) => {
     const [visibleScores, setVisibleScores] = useState<{ [key: number]: boolean }>({});
+    const [cardContainerAnimClass, setCardContainerAnimClass] = useState('');
 
     // Reset states when show result changes
     useEffect(() => {
@@ -24,6 +25,16 @@ export const CardSection: React.FC<CardSectionProps> = ({ cards, label, type, pl
             setVisibleScores({});
         }
     }, [isShowResult]);
+
+    useEffect(() => {
+        if (isHideAllCards) {
+            setCardContainerAnimClass(Styles['hide-all-cards']);
+        } else if (!isHideAllCards && !isShowResult && !playResultAnimation) {
+            setCardContainerAnimClass(Styles['show-all-cards']);
+        } else {
+            setCardContainerAnimClass('');
+        }
+    }, [isHideAllCards, isShowResult, playResultAnimation]);
 
     const handleCardFlip = useCallback(
         (card: CardOrder, accumulatedScore: number) => {
@@ -37,16 +48,6 @@ export const CardSection: React.FC<CardSectionProps> = ({ cards, label, type, pl
         },
         [type],
     );
-
-    let cardContainerAnimClass = '';
-
-    if (!isHideAllCards && !isShowResult && !playResultAnimation) {
-        cardContainerAnimClass = Styles['show-all-cards'];
-    } else if (isHideAllCards) {
-        cardContainerAnimClass = Styles['hide-all-cards'];
-    } else {
-        cardContainerAnimClass = '';
-    }
 
     return (
         <div className={`${Styles.cardSection}`}>
