@@ -77,7 +77,7 @@ const BetPercentageItem: React.FC<{
 }> = ({ gameName, choice, count, translateBetOption }) => (
     <div className={Styles['percentage-item']}>
         {[Choices.player, Choices.banker, Choices.tie].includes(choice) ? (
-            <BaccaratDot choice={choice} value={Translator.t(`${gameName}.short_${choice}`)} />
+            <BaccaratDot choice={choice} value={Translator.t(`${gameName}.short_${choice}`)} classNameStyle={Styles['baccarat-custom-dot']} />
         ) : (
             <span className={`${Styles.indicator}`}>
                 <img src={pairImages[choice]} alt={choice} width="16" height="16" />

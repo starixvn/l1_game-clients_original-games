@@ -25,7 +25,7 @@ interface TotalDiceNumberProps {
 
 const TotalDiceNumber = memo<TotalDiceNumberProps>(({ total }) => {
     if (total <= 0) return null;
-    
+
     return (
         <div className={styles.diceResult}>
             {total}
@@ -76,7 +76,9 @@ export const DiceDisplay = memo<DiceDisplayProps>(({ result, isAnimationResult }
     return (
         <div className={styles.diceContainer}>
             <DiceList diceNumbers={diceNumbers} />
-            <TotalDiceNumber total={totalDiceNumber} />
+            <div className={styles['wrapper-total-dice']}>
+                <TotalDiceNumber total={totalDiceNumber} />
+            </div>
         </div>
     );
 });
