@@ -12,9 +12,10 @@ interface CardSectionProps {
     type: 'player' | 'banker';
     playResultAnimation: boolean;
     isShowResult: boolean;
+    isHideAllCards: boolean;
 }
 
-export const CardSection: React.FC<CardSectionProps> = ({ cards, label, type, playResultAnimation, isShowResult }) => {
+export const CardSection: React.FC<CardSectionProps> = ({ cards, label, type, playResultAnimation, isShowResult, isHideAllCards }) => {
     const [visibleScores, setVisibleScores] = useState<{ [key: number]: boolean }>({});
 
     // Reset states when show result changes
@@ -37,10 +38,20 @@ export const CardSection: React.FC<CardSectionProps> = ({ cards, label, type, pl
         [type],
     );
 
+    let cardContainerAnimClass = '';
+
+    if (!isHideAllCards && !isShowResult && !playResultAnimation) {
+        cardContainerAnimClass = Styles['show-all-cards'];
+    } else if (isHideAllCards) {
+        cardContainerAnimClass = Styles['hide-all-cards'];
+    } else {
+        cardContainerAnimClass = '';
+    }
+
     return (
-        <div className={Styles.cardSection} style={{ height: '100%' }}>
+        <div className={`${Styles.cardSection}`}>
             <div className={`${Styles.label} ${type === 'player' ? Styles['label-player'] : Styles['label-banker']}`}>{label}</div>
-            <div className={`${Styles.cardContainer} ${Styles[type]}`}>
+            <div className={`${Styles.cardContainer} ${Styles[type]} ${cardContainerAnimClass}`}>
                 {cards.map((card, index) => (
                     <BaccaratCard
                         playResultAnimation={playResultAnimation}

@@ -35,6 +35,7 @@ interface IBaccaratSettlementResultState extends IStateObserver {
     currentDemoIndex: number;
     isFinish: boolean;
     isFinishShowResult: boolean;
+    isHideAllCards: boolean;
 }
 
 @observer(setting.mainObserverNamespace)
@@ -51,12 +52,18 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
             currentDemoIndex: 0,
             isFinish: false,
             isFinishShowResult: false,
+            isHideAllCards: false,
         };
     }
 
     @render(gc.Settlements.SettlementStore, (store) => store.isFinishedShowResult)
     finishShowResult(isFinishedShowResult: boolean) {
         this.setState({ isFinishShowResult: isFinishedShowResult });
+    }
+
+    @render(RoundTimeStore, (store) => store.isStartingRound)
+    private handleStartNewRound(isStartingRound: boolean): void {
+        this.setState({ isHideAllCards: isStartingRound });
     }
 
     @render(RoundTimeStore, (store) => store.roundState)
@@ -103,7 +110,7 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
     }
 
     private renderCardDisplay(): JSX.Element | null {
-        const { result, isAnimationResult, isFinish, roundState, isFinishShowResult } = this.state;
+        const { result, isAnimationResult, isFinish, roundState, isFinishShowResult, isHideAllCards } = this.state;
         const language = this.props.language || gc.Translator.getCurrentLanguageId();
 
         if (!result || !isFinish || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET) {
@@ -114,6 +121,7 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
                     isAnimationResult={false}
                     isShowResult={false}
                     language={language}
+                    isHideAllCards={isHideAllCards}
                 />
             );
         }
@@ -125,6 +133,7 @@ export default class BaccaratSettlementResult extends ObserverComponent<IPropsOb
                 isAnimationResult={isAnimationResult}
                 isShowResult={true}
                 language={language}
+                isHideAllCards={isHideAllCards}
             />
         );
     }

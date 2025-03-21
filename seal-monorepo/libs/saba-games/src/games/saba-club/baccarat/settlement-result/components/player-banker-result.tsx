@@ -13,6 +13,7 @@ interface PlayerBankerResultProps {
     isShowResult: boolean;
     language: string;
     isFinishShowResult: boolean;
+    isHideAllCards: boolean;
 }
 interface PlayerBankerResultState {
     openedCards: number;
@@ -20,12 +21,7 @@ interface PlayerBankerResultState {
 }
 
 export default function PlayerBankerResultComponent(props: PlayerBankerResultProps) {
-    const { playResultAnimation, result, isShowResult, language, isFinishShowResult } = props;
-
-    const [state, setState] = useState<PlayerBankerResultState>({
-        openedCards: 0,
-        showWinner: false,
-    });
+    const { playResultAnimation, result, isShowResult, language, isFinishShowResult, isHideAllCards } = props;
 
     const playerCards = result ? GetPlayerCardsResult(result) : [];
     const bankerCards = result ? GetBankerCardsResult(result) : [];
@@ -34,20 +30,7 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
         if (playResultAnimation) {
             startAnimation();
         }
-
-        if (isShowResult && !playResultAnimation) {
-            setState({
-                openedCards: 0,
-                showWinner: true,
-            });
-        }
     }, [playResultAnimation, isShowResult]);
-
-    useEffect(() => {
-        if (isShowResult) {
-            startAnimation();
-        }
-    }, [isShowResult]);
 
     const getWinnerText = (): string => {
         if (!result) {
@@ -80,11 +63,6 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
 
         allCards.forEach((card, index) => {
             setTimeout(() => {
-                const showWinner = index === allCards.length - 1;
-                setState({
-                    openedCards: index + 1,
-                    showWinner: showWinner,
-                });
                 cardStateEmitter.emitOpenedCardsChange(index + 1);
             }, card.animationDelay);
         });
@@ -92,13 +70,14 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
 
     return (
         <div className={`overlay-mask`}>
-            <div className={Styles['animation-container']}>
+            <div className={`${Styles['animation-container']}`}>
                 <CardSection
                     cards={playerCards}
                     label={gc.Translator.t(`Baccarat.glossary_player`, { lng: language })}
                     type="player"
                     playResultAnimation={playResultAnimation}
                     isShowResult={isShowResult}
+                    isHideAllCards={isHideAllCards}
                 />
 
                 <CardSection
@@ -107,9 +86,10 @@ export default function PlayerBankerResultComponent(props: PlayerBankerResultPro
                     type="banker"
                     playResultAnimation={playResultAnimation}
                     isShowResult={isShowResult}
+                    isHideAllCards={isHideAllCards}
                 />
 
-                {isShowResult && isFinishShowResult && (
+                {isShowResult && isFinishShowResult && !isHideAllCards && (
                     <div className={`${Styles['winner-display']} ${playResultAnimation ? Styles['play-animation'] : ''}`}>
                         <p className={Styles['winner-text']}>{gc.Translator.t(`Baccarat.${getWinnerText()}`, { lng: language })}</p>
                     </div>

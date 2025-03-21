@@ -9,18 +9,22 @@ interface CardDisplayProps {
     isShowResult: boolean;
     language: string;
     isFinishShowResult: boolean;
+    isHideAllCards: boolean;
 }
 
-export const CardDisplay: React.FC<CardDisplayProps> = memo(({ result, isAnimationResult, isShowResult, language, isFinishShowResult }) => {
-    return (
-        <PlayerBankerResultComponent
-            playResultAnimation={isAnimationResult}
-            result={result}
-            isShowResult={isShowResult}
-            language={language}
-            isFinishShowResult={isFinishShowResult}
-        />
-    );
-});
+export const CardDisplay: React.FC<CardDisplayProps> = memo(
+    ({ result, isAnimationResult, isShowResult, language, isFinishShowResult, isHideAllCards }) => {
+        return (
+            <PlayerBankerResultComponent
+                playResultAnimation={isAnimationResult}
+                result={result}
+                isShowResult={isShowResult}
+                language={language}
+                isFinishShowResult={isFinishShowResult}
+                isHideAllCards={isHideAllCards}
+            />
+        );
+    },
+);
 
 CardDisplay.displayName = 'CardDisplay';
