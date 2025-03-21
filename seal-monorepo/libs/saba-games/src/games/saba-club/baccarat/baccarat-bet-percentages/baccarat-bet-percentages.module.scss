@@ -3,8 +3,12 @@
 .baccarat-percentages {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 14px;
     border-radius: 4px;
+
+    @media (min-width: 1400px) {
+        gap: 24px;
+    }
 }
 
 .percentage-item {
@@ -12,8 +16,12 @@
     align-items: center;
     gap: 4px;
     color: white;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
+
+    @media (min-width: 1400px) {
+        font-size: 14px;
+    }
 }
 
 .split-percentage {
