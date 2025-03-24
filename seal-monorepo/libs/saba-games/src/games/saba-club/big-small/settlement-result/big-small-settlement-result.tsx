@@ -83,7 +83,10 @@ export default class BigSmallSettlementResult extends ObserverComponent<IPropsOb
         try {
             const result = gameStateService.handleGameHistory(firstJoinGameHistory);
             if (result && gameStateService.validateResult(result)) {
-                this.setState({ result });
+                this.setState({
+                    result,
+                    settlementResult: firstJoinGameHistory.roundHistory.settlementResult
+                });
             }
         } catch (error) {
             this.setState({ error: error as Error });
