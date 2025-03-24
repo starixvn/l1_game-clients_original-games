@@ -1,3 +1,4 @@
+import * as gc from "@sg/sg-game-client";
 import React, { memo, useEffect, useMemo, useState, useCallback } from "react";
 import styles from "../big-small-settlement-result.module.scss";
 import { BigSmallResult } from "../../type";
@@ -21,14 +22,27 @@ const DiceList = memo<DiceListProps>(({ diceNumbers }) => (
 
 interface TotalDiceNumberProps {
     total: number;
+    language?: string;
+    settlementResult: gc.GameServiceMessage.TSettlementResult | undefined;
 }
 
-const TotalDiceNumber = memo<TotalDiceNumberProps>(({ total }) => {
+const TotalDiceNumber = memo<TotalDiceNumberProps>(({ total, language, settlementResult }) => {
     if (total <= 0) return null;
-
+    const settlement = settlementResult ? settlementResult : {};
+    let resultText = '';
+    if (settlement.big) {
+        resultText = gc.Translator.t('UnbalancedBigSmall4.big', { lng: language || '' });
+    } else if (settlement.small) {
+        resultText = gc.Translator.t('UnbalancedBigSmall4.small', { lng: language || '' });
+    }
     return (
         <div className={styles.diceResult}>
-            {total}
+            <div className={`${styles['winner-display']} `}>
+                <p className={styles['winner-text']}>
+                    {total} - {resultText}
+                </p>
+            </div>
+
         </div>
     );
 });
@@ -37,9 +51,11 @@ const TotalDiceNumber = memo<TotalDiceNumberProps>(({ total }) => {
 interface DiceDisplayProps {
     result: BigSmallResult;
     isAnimationResult: boolean;
+    language?: string;
+    settlementResult: gc.GameServiceMessage.TSettlementResult | undefined;
 }
 
-export const DiceDisplay = memo<DiceDisplayProps>(({ result, isAnimationResult }) => {
+export const DiceDisplay = memo<DiceDisplayProps>(({ result, isAnimationResult, language, settlementResult }) => {
     const [diceNumbers, setDiceNumbers] = useState(() => [0, 0, 0]);
     const [totalDiceNumber, setTotalDiceNumber] = useState(0);
 
@@ -77,7 +93,7 @@ export const DiceDisplay = memo<DiceDisplayProps>(({ result, isAnimationResult }
         <div className={styles.diceContainer}>
             <DiceList diceNumbers={diceNumbers} />
             <div className={styles['wrapper-total-dice']}>
-                <TotalDiceNumber total={totalDiceNumber} />
+                <TotalDiceNumber total={totalDiceNumber} language={language} settlementResult={settlementResult} />
             </div>
         </div>
     );

@@ -50,7 +50,7 @@ export default class BigSmallPage extends GatewayGameBase<IBigSmallPageProps, IB
     }
 
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handleGateway())
-    closeConnect() {}
+    closeConnect() { }
 
     setPanelId = (id: string) => {
         this.setState({ activePanelId: id });
@@ -94,7 +94,7 @@ export default class BigSmallPage extends GatewayGameBase<IBigSmallPageProps, IB
     }
 
     renderResultBlock() {
-        return <BigSmallSettlementResult namespace={this.props.namespace} />;
+        return <BigSmallSettlementResult namespace={this.props.namespace} language={this.props.language} />;
     }
 
     renderStatistic() {

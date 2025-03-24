@@ -27,6 +27,7 @@ export interface IBigSmallSettlementResultState extends IStateObserver {
     isAnimationResult: boolean;
     error?: Error;
     isResultUpdated: boolean;
+    settlementResult: gc.GameServiceMessage.TSettlementResult | undefined;
 }
 
 export default class BigSmallSettlementResult extends ObserverComponent<IPropsObserver, IBigSmallSettlementResultState> {
@@ -38,20 +39,21 @@ export default class BigSmallSettlementResult extends ObserverComponent<IPropsOb
             roundState: "",
             isAnimationResult: false,
             error: undefined,
-            isResultUpdated: false
+            isResultUpdated: false,
+            settlementResult: undefined
         };
     }
     @render(RoundTimeStore, (store) => store.roundState)
     private handleRoundState(roundState: string): void {
         try {
-            if(roundState === ROUND_STATE.PLACING_BET) {
+            if (roundState === ROUND_STATE.PLACING_BET) {
                 this.setState({ isResultUpdated: false });
             }
-            if(roundState === ROUND_STATE.SHOW_RESULT) {
+            if (roundState === ROUND_STATE.SHOW_RESULT) {
                 this.setState({ isResultUpdated: true });
             }
             gameStateService.handleRoundState(roundState);
-            this.setState({ roundState});
+            this.setState({ roundState });
         } catch (error) {
             this.setState({ error: error as Error });
         }
@@ -64,10 +66,11 @@ export default class BigSmallSettlementResult extends ObserverComponent<IPropsOb
         try {
             const result = gameStateService.handleSettlement(currentFinish);
             if (result && gameStateService.validateResult(result)) {
-                this.setState({ 
-                    result, 
+                this.setState({
+                    result,
                     isAnimationResult: true,
-                    isResultUpdated: true
+                    isResultUpdated: true,
+                    settlementResult: currentFinish.settlementResult
                 });
             }
         } catch (error) {
@@ -80,7 +83,7 @@ export default class BigSmallSettlementResult extends ObserverComponent<IPropsOb
         try {
             const result = gameStateService.handleGameHistory(firstJoinGameHistory);
             if (result && gameStateService.validateResult(result)) {
-                this.setState({ result});
+                this.setState({ result });
             }
         } catch (error) {
             this.setState({ error: error as Error });
@@ -89,18 +92,18 @@ export default class BigSmallSettlementResult extends ObserverComponent<IPropsOb
 
     private renderDiceDisplay() {
         const { result, isAnimationResult, roundState, isResultUpdated } = this.state;
-        
+
         if (!result || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET || !isResultUpdated) {
             return (
                 <div className={styles.settlementContainer}>
-                    <DiceDisplay result={DEFAULT_RESULT} isAnimationResult={false} />
+                    <DiceDisplay result={DEFAULT_RESULT} isAnimationResult={false} language={this.props.language} settlementResult={this.state.settlementResult} />
                 </div>
             );
         }
 
         return (
             <div className={styles.settlementContainer}>
-                <DiceDisplay result={result} isAnimationResult={isAnimationResult} />
+                <DiceDisplay result={result} isAnimationResult={isAnimationResult} language={this.props.language} settlementResult={this.state.settlementResult} />
             </div>
         );
     }
