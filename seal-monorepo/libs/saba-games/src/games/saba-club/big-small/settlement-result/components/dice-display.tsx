@@ -4,6 +4,7 @@ import styles from "../big-small-settlement-result.module.scss";
 import { BigSmallResult } from "../../type";
 import { calculateTotalDiceNumber, getRandomDiceNumbers } from "../../../../../_shared/utils/number-helper";
 import Dice from "../../../../../_shared/components/dice";
+import { WinnerDisplay } from "libs/saba-games/src/_shared/components/winner-display/winner-display";
 
 const ANIMATION_INTERVAL = 150;
 const ANIMATION_DURATION = 2000;
@@ -37,12 +38,7 @@ const TotalDiceNumber = memo<TotalDiceNumberProps>(({ total, language, settlemen
     }
     return (
         <div className={styles.diceResult}>
-            <div className={`${styles['winner-display']} `}>
-                <p className={styles['winner-text']}>
-                    {total} - {resultText}
-                </p>
-            </div>
-
+            <WinnerDisplay result={total} resultText={resultText} className="big-small" />
         </div>
     );
 });

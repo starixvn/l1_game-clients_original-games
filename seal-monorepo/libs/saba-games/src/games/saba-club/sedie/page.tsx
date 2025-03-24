@@ -45,7 +45,7 @@ export default class SieDiePage extends GatewayGameBase<{ namespace: string; lan
     }
 
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handleGateway())
-    closeConnect() {}
+    closeConnect() { }
 
     setPanelId = (id: string) => {
         this.setState({ activePanelId: id });
@@ -89,7 +89,7 @@ export default class SieDiePage extends GatewayGameBase<{ namespace: string; lan
     }
 
     renderResultBlock() {
-        return <SeDieSettlementResult namespace={this.props.namespace} />;
+        return <SeDieSettlementResult namespace={this.props.namespace} language={this.props.language} />;
     }
 
     renderStatistic() {

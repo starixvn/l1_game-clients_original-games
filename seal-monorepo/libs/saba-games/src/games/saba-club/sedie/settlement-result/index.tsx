@@ -7,14 +7,19 @@ import { render } from '@sg/sg-observer';
 import { RoundDot } from '../../../../_shared/components/dot';
 import { IPropsObserver, IStateObserver, ObserverComponent } from '../../../../_shared/components/observer-component/observer-component';
 import Styles from './sedie-animations.module.scss';
+import { WinnerDisplay } from 'libs/saba-games/src/_shared/components/winner-display/winner-display';
 
 export interface ISeDieSettlementResultState extends IStateObserver {
     result: gc.GameServiceMessage.TResult;
     roundState: string;
     isAnimationResult: boolean;
     win: number;
+    isFinishShowResult: boolean;
+    settlementResult: gc.GameServiceMessage.TSettlementResult;
 }
+
 export default class SeDieSettlementResult extends ObserverComponent<IPropsObserver, ISeDieSettlementResultState> {
+
     constructor(props: IPropsObserver) {
         super(props);
         this.state = {
@@ -23,6 +28,8 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
             roundState: '',
             isAnimationResult: false,
             win: 0,
+            isFinishShowResult: false,
+            settlementResult: {}
         };
     }
 
@@ -38,13 +45,13 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
         if (!currentFinish) {
             return;
         }
-        const { result } = currentFinish;
+        const { result, settlementResult } = currentFinish;
 
-        if (!result) {
+        if (!result || !settlementResult) {
             return;
         }
 
-        this.setState({ result, isAnimationResult: true });
+        this.setState({ result, isAnimationResult: true, settlementResult });
     }
 
     @render(RoundHistoryStore, (store) => store.firstJoinGameHistory)
@@ -52,18 +59,37 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
         if (!firstJoinGameHistory) {
             return;
         }
+        this.setState({
+            result: firstJoinGameHistory.roundHistory.result,
+            settlementResult: firstJoinGameHistory.roundHistory.settlementResult,
+            isFinishShowResult: true
+        });
 
         const lastRound = firstJoinGameHistory?.roundHistory;
         if (lastRound) {
-            this.setState({ result: lastRound?.result });
+            this.setState({ result: lastRound?.result, settlementResult: lastRound?.settlementResult });
         }
     }
+
+    @render(gc.Settlements.SettlementStore, (store) => store.isFinishedShowResult)
+    finishShowResult(isFinishedShowResult: boolean) {
+        this.setState({ isFinishShowResult: isFinishedShowResult });
+    }
+
+
 
     @render(gc.Settlements.SettlementStatusStore, (store) => store.settlementStatus, {
         fireImmediately: false,
     })
     assignStatus(settlementStatus: any) {
         this.setState({ win: settlementStatus.bet });
+    }
+
+    renderWinnerDisplay = () => {
+        const { settlementResult, isFinishShowResult } = this.state;
+        const result = settlementResult.odd ? gc.Translator.t('SeDie.glossary_odd', { lng: this.props.language || '' }) : gc.Translator.t('SeDie.glossary_even', { lng: this.props.language || '' });
+        const resultText = gc.Translator.t('Common.win', { lng: this.props.language || '' });
+        return isFinishShowResult && <WinnerDisplay result={result} resultText={resultText} className={Styles['sedie-result']} />
     }
 
     renderIcons = (result: gc.GameServiceMessage.TResult) => {
@@ -87,6 +113,7 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
                         );
                     })}
                 </div>
+                {this.renderWinnerDisplay()}
             </div>
         );
     };
@@ -112,7 +139,6 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
         if (!result || isEmpty(result as object) || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET) {
             return this.renderNoResultIcons();
         }
-
         return (
             <div>
                 <div>{this.renderIcons(result)}</div>
