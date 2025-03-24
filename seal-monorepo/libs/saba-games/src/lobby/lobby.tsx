@@ -5,8 +5,7 @@ import { configSharedContainer } from '../_shared/components/game-base/startup';
 import { LobbyStore } from '../_shared/states/lobby';
 import * as lobbyUtils from './utils';
 import styles from './lobby.module.scss';
-import { DropdownType } from '../_shared/components/all-tab-components/league-tab-dropdown';
-import { LeagueTabDropdown } from "../_shared/components/all-tab-components/league-tab-dropdown";
+import { DropdownType, LeagueTabDropdown } from '../_shared/components/all-tab-components/league-tab-dropdown';
 import { AppContextConsumer } from '../appProvider';
 import Loading from '../_shared/components/loading';
 import { GameMatchTab } from '../_shared/components/all-tab-components/game-match-tab';
@@ -25,8 +24,7 @@ class LobbyComponent extends React.PureComponent<any, ILobbyState> {
             isRenderGame: true,
             leagueToogle: true,
             expandedGames: {},
-            isAuthorized: false,
-            selectedGameId: null
+            selectedGameId: null,
         };
     }
     clearReRenderGameTimeout = () => {
@@ -50,28 +48,27 @@ class LobbyComponent extends React.PureComponent<any, ILobbyState> {
         return ssoInfo;
     }
 
-    @render(gc.Auth.AuthStore, (store) => store)
-    handleAuthorized(store) {
-        const { isAuthenticated } = store;
-        this.setState({ isAuthorized: isAuthenticated });
-
-        if (!store.isAuthorized) {
+    @render(gc.Auth.AuthStore, (store) => store.isAuthenticated)
+    handleIsAuthenticated(isAuthenticated: boolean) {
+        if (isAuthenticated) {
             this.connectLiveGateway();
-            this.triggerRecheckIn();
         }
     }
 
     @handle(gc.GatewayConnection.GatewayConnectionHandlers.ConnectHandler)
-    connectLiveGateway() { }
+    connectLiveGateway() {}
 
     @render(gc.Player.MainPlayerStore, (store) => store.offerGames)
     handleOfferGames(offerGames: IOfferGame[]) {
         if (offerGames?.length > 0) {
             const filteredOfferGames = lobbyUtils.getFilteredGames(offerGames);
-            const expandedGames = filteredOfferGames.reduce((acc, game) => {
-                acc[game.gameId] = true;
-                return acc;
-            }, {} as { [key: number]: boolean });
+            const expandedGames = filteredOfferGames.reduce(
+                (acc, game) => {
+                    acc[game.gameId] = true;
+                    return acc;
+                },
+                {} as { [key: number]: boolean },
+            );
             this.setState({ offerGames: filteredOfferGames, expandedGames } as ILobbyState);
 
             if (!this.state.selectedGameId) {
@@ -79,10 +76,6 @@ class LobbyComponent extends React.PureComponent<any, ILobbyState> {
             }
         }
     }
-
-    @handle(gc.Auth.AuthHandlers.TriggerRecheckIn)
-    triggerRecheckIn() { }
-
 
     @render(LobbyStore, (store) => store.tryToConnectCount)
     updateTryToConnectCount(tryToConnectCount: number) {
@@ -97,7 +90,7 @@ class LobbyComponent extends React.PureComponent<any, ILobbyState> {
 
     updateLeagueToogle = (leagueToogle: boolean) => {
         this.setState({ leagueToogle });
-    }
+    };
 
     handleTabClick = (gameId: number) => {
         this.setState({ selectedGameId: gameId });
@@ -113,23 +106,15 @@ class LobbyComponent extends React.PureComponent<any, ILobbyState> {
                 return <Loading />;
             }
 
-            const selectedGame = offerGames.find(game => game.gameId === selectedGameId) || offerGames[0];
-            
+            const selectedGame = offerGames.find((game) => game.gameId === selectedGameId) || offerGames[0];
+
             return (
                 <>
-                    <GameListTab
-                        offerGames={offerGames}
-                        selectedGameId={selectedGameId}
-                        onTabClick={this.handleTabClick}
-                    />
-                    <GameMatchTab
-                        gameId={selectedGame.gameId}
-                        className={styles['lobby-tabs']}
-                        leagueToogle={leagueToogle}
-                    />
+                    <GameListTab offerGames={offerGames} selectedGameId={selectedGameId} onTabClick={this.handleTabClick} />
+                    <GameMatchTab gameId={selectedGame.gameId} className={styles['lobby-tabs']} leagueToogle={leagueToogle} />
                 </>
             );
-        }
+        };
 
         return (
             <>
@@ -144,12 +129,9 @@ class LobbyComponent extends React.PureComponent<any, ILobbyState> {
     }
 
     render() {
-
         return (
             <div className={styles['lobby']}>
-                <AppContextConsumer>
-                    {(context) => this.renderGames(context)}
-                </AppContextConsumer>
+                <AppContextConsumer>{(context) => this.renderGames(context)}</AppContextConsumer>
             </div>
         );
     }

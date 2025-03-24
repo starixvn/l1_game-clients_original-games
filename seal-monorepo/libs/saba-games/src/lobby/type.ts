@@ -10,6 +10,5 @@ export interface ILobbyState {
     isRenderGame: boolean;
     leagueToogle: boolean;
     expandedGames: { [key: string]: boolean };
-    isAuthorized: boolean;
     selectedGameId: number | null;
 }
