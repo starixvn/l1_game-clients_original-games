@@ -59,12 +59,6 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
         if (!firstJoinGameHistory) {
             return;
         }
-        this.setState({
-            result: firstJoinGameHistory.roundHistory.result,
-            settlementResult: firstJoinGameHistory.roundHistory.settlementResult,
-            isFinishShowResult: true
-        });
-
         const lastRound = firstJoinGameHistory?.roundHistory;
         if (lastRound) {
             this.setState({ result: lastRound?.result, settlementResult: lastRound?.settlementResult });
@@ -75,8 +69,6 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
     finishShowResult(isFinishedShowResult: boolean) {
         this.setState({ isFinishShowResult: isFinishedShowResult });
     }
-
-
 
     @render(gc.Settlements.SettlementStatusStore, (store) => store.settlementStatus, {
         fireImmediately: false,
