@@ -4,6 +4,7 @@ import { render } from "@sg/sg-observer";
 import BetModalSuccess from "../bet-modal-success";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../observer-component/observer-component";
 import styles from "./confirm-bet.module.scss";
+import { RoundHistoryStore } from "@sg/sg-game-client/dist/game/round-histories";
 
 export interface IConfirmBet extends IStateObserver {
   totalStake: number;
@@ -16,6 +17,8 @@ export interface IConfirmBet extends IStateObserver {
 const NOTIF_KEY = 'turnOffNotification';
 
 export class ConfirmBet extends ObserverComponent<IPropsObserver, IConfirmBet> {
+  private isJoiningGame = false;
+
   constructor(props: IPropsObserver) {
     super(props);
     this.state = {
@@ -33,18 +36,32 @@ export class ConfirmBet extends ObserverComponent<IPropsObserver, IConfirmBet> {
     lastReceivedBet && this.setState({ totalStake: lastReceivedBet.value });
   }
   @render(gc.Bet.BetStore, (store) => store.betChoice)
-  setBetChoice(betChoice: string) {
+  setBetChoice(betChoice: string) {    
     betChoice && this.setState({ betChoice });
+  }
+
+  @render(gc.Connection.ConnectionStore, (store) => store.joinGame)
+  handleJoinedGame() {
+    this.isJoiningGame = true;
+    this.handleClose();
   }
 
   @render(gc.Bet.BetStore, (store) => store.validBet)
   setIsValidBet(validBet: gc.Bet.IValidBet) {
+    if (this.isJoiningGame) {
+      return;
+    }
     this.setState({ validBet });
   }
 
   handleClose = () => {
-    this.setState({ validBet: { value: false } });
+    this.setState({ validBet: { value: false } }, () => {
+      setTimeout(() => {
+        this.isJoiningGame = false;
+      }, 0);
+    });
   };
+  
 
   render() {
     const { totalStake, validBet, betChoice, namespace } = this.state;
@@ -55,7 +72,7 @@ export class ConfirmBet extends ObserverComponent<IPropsObserver, IConfirmBet> {
     }
 
     if (isShowNotification) {
-      return (        
+      return (       
           <BetModalSuccess totalStake={totalStake} />
       );
     }
