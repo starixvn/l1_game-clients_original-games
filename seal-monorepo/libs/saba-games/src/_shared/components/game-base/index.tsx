@@ -16,6 +16,7 @@ import Styles from './game-base.module.scss';
 import { GameBaseProps } from './type';
 import RoundId from '../round-id';
 import CountDownTimer from '../count-down-timer';
+import { useGameBettingOptionsContext } from '../../react-contexts/game-betting-zone-context/game-betting-zone-context';
 
 export interface IGameBaseState {
     isConnected: boolean;
@@ -220,7 +221,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                     <div className={`${Styles['result']} ${this.overrideClasses?.result}`}>{this.renderResultBlock()}</div>
                     <div className={`${Styles['bet-options']} ${this.overrideClasses?.betOptions}`}>
                         {this.renderBettingBlock()}
-                        <ConfirmBet namespace={this.props.namespace} />
+                        <ConfirmBet namespace={this.props.namespace}/>
                         <div className={`${Styles['animation-balance']} ${Styles[`game-${this.state.gameId}`]}`}>{this.renderAnimationBalance()}</div>
                     </div>
                 </div>
@@ -256,6 +257,12 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
             </div>
         );
     }
+    
+    resetBettingPanel = () => {
+        const { setPanelId, setShow } = useGameBettingOptionsContext();
+        setPanelId(null);
+        setShow(false);
+    }
 
     createConnection() {
         document.addEventListener('visibilitychange', this.onVisibilityChange);
@@ -267,6 +274,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         this.terminateConnection();
         this.createConnection();
         this.joinGame();
+        this.resetBettingPanel();
     };
 
     private renderDisconnect() {
