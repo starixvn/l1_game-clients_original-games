@@ -43,36 +43,12 @@ export default class BigSmallPage extends GatewayGameBase<IBigSmallPageProps, IB
 
         this.state = {
             ...this.state,
-            activePanelId: null,
-            showBetPanel: false,
             gameId: setting.id,
         };
     }
 
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handleGateway())
-    closeConnect() { }
-
-    setPanelId = (id: string) => {
-        this.setState({ activePanelId: id });
-    };
-
-    setShowBetPanel = (show: boolean) => {
-        this.setState({ showBetPanel: show });
-    };
-
-    resetBettingPanel = () => {
-        this.setState({
-            activePanelId: null,
-            showBetPanel: false,
-        });
-    };
-
-    @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
-    handleRoundStateChange(roundState: string) {
-        if (roundState === ROUND_STATE.LOCKING_BET) {
-            this.resetBettingPanel();
-        }
-    }
+    closeConnect() {}
 
     renderRoundHistory() {
         return <BigSmallRoundHistory namespace={this.props.namespace} language={this.props.language} />;
@@ -88,7 +64,12 @@ export default class BigSmallPage extends GatewayGameBase<IBigSmallPageProps, IB
                     setShow: this.setShowBetPanel,
                 }}
             >
-                <BigSmallBetOptions gameName={setting.gameName} namespace={this.props.namespace} language={this.props.language} />
+                <BigSmallBetOptions
+                    gameName={setting.gameName}
+                    namespace={this.props.namespace}
+                    language={this.props.language}
+                    onBet={this.handleBetOption}
+                />
             </GameBettingOptionsContext.Provider>
         );
     }

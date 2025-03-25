@@ -1,27 +1,21 @@
-import * as gc from "@sg/sg-game-client";
-import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
-import { handle, observer, render } from "@sg/sg-observer";
+import * as gc from '@sg/sg-game-client';
+import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
+import { handle, observer, render } from '@sg/sg-observer';
 
-import { IGameBaseState } from "../../../_shared/components/game-base";
-import GatewayGameBase from "../../../_shared/components/game-base/gateway-gamebase";
-import { configGameContainer } from "../../../_shared/components/game-base/startup";
-import { GameBettingOptionsContext } from "../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context";
-import { FunctionUtils } from "../../../_shared/utils/funtion-utils";
-import SeDieBetOptions from "./bet-option/sedie-bet-options";
-import { containerOptions, setting } from "./game-settings";
-import SeDieRoundHistory from "./round-history";
-import Styles from "./sedie.module.scss";
-import SeDieSettlementResult from "./settlement-result";
-import { SedieStatistic } from "./statistic";
-
-interface ISieDiePageState extends IGameBaseState {
-    activePanelId: any;
-    showBetPanel: boolean;
-    gameId: number;
-}
+import { IGameBaseState } from '../../../_shared/components/game-base';
+import GatewayGameBase from '../../../_shared/components/game-base/gateway-gamebase';
+import { configGameContainer } from '../../../_shared/components/game-base/startup';
+import { GameBettingOptionsContext } from '../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
+import { FunctionUtils } from '../../../_shared/utils/funtion-utils';
+import SeDieBetOptions from './bet-option/sedie-bet-options';
+import { containerOptions, setting } from './game-settings';
+import SeDieRoundHistory from './round-history';
+import Styles from './sedie.module.scss';
+import SeDieSettlementResult from './settlement-result';
+import { SedieStatistic } from './statistic';
 
 @observer(setting.mainObserverNamespace)
-export default class SieDiePage extends GatewayGameBase<{ namespace: string; language: string }, ISieDiePageState> {
+export default class SieDiePage extends GatewayGameBase<{ namespace: string; language: string }, IGameBaseState> {
     override overrideClasses = {
         blockWrapper: Styles['block-wrapper'],
         betOptions: Styles['bet-options-block'],
@@ -38,36 +32,12 @@ export default class SieDiePage extends GatewayGameBase<{ namespace: string; lan
         }
         this.state = {
             ...this.state,
-            activePanelId: null,
-            showBetPanel: false,
             gameId: setting.id,
         };
     }
 
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handleGateway())
-    closeConnect() { }
-
-    setPanelId = (id: string) => {
-        this.setState({ activePanelId: id });
-    };
-
-    setShowBetPanel = (show: boolean) => {
-        this.setState({ showBetPanel: show });
-    };
-
-    resetBettingPanel = () => {
-        this.setState({
-            activePanelId: null,
-            showBetPanel: false,
-        });
-    };
-
-    @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
-    handleRoundStateChange(roundState: string) {
-        if (roundState === ROUND_STATE.LOCKING_BET) {
-            this.resetBettingPanel();
-        }
-    }
+    closeConnect() {}
 
     renderRoundHistory() {
         return <SeDieRoundHistory namespace={this.props.namespace} language={this.props.language} />;
@@ -83,7 +53,12 @@ export default class SieDiePage extends GatewayGameBase<{ namespace: string; lan
                     setShow: this.setShowBetPanel,
                 }}
             >
-                <SeDieBetOptions gameName={setting.gameName} namespace={this.props.namespace} language={this.props.language} />
+                <SeDieBetOptions
+                    gameName={setting.gameName}
+                    namespace={this.props.namespace}
+                    language={this.props.language}
+                    onBet={this.handleBetOption}
+                />
             </GameBettingOptionsContext.Provider>
         );
     }

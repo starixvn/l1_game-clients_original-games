@@ -17,6 +17,7 @@ import { GameBaseProps } from './type';
 import RoundId from '../round-id';
 import CountDownTimer from '../count-down-timer';
 import { useGameBettingOptionsContext } from '../../react-contexts/game-betting-zone-context/game-betting-zone-context';
+import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds/round-time-store';
 
 export interface IGameBaseState {
     isConnected: boolean;
@@ -28,6 +29,9 @@ export interface IGameBaseState {
     roundState: string;
     isFinishShowResult: boolean;
     gameId: number;
+    activePanelId: any;
+    showBetPanel: boolean;
+    isShowNextRoundMessage: boolean;
 }
 interface GameStyleOverrides {
     [key: string]: string;
@@ -38,7 +42,14 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     constructor(props: P) {
         super(props);
-        this.state = { isConnectFailed: false, isOpenStatistic: false, isFinishShowResult: false } as S;
+        this.state = {
+            isConnectFailed: false,
+            isOpenStatistic: false,
+            isFinishShowResult: false,
+            activePanelId: null,
+            showBetPanel: false,
+            isShowNextRoundMessage: false,
+        } as S;
         this.toggleStatistic = this.toggleStatistic.bind(this);
     }
 
@@ -62,12 +73,12 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     abstract connectLiveGateway(): void;
 
-    onVisibilityChange = () => { };
+    onVisibilityChange = () => {};
     @handle(gc.GatewayConnection.GatewayConnectionHandlers.ConnectHandler, (handler) => handler.handle())
-    connectToServiceGateway() { }
+    connectToServiceGateway() {}
 
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handle())
-    terminateConnection() { }
+    terminateConnection() {}
 
     @render(gc.Connection.ConnectionStore, (store) => store.isSignedIn)
     handleConnected(isSignedIn: boolean) {
@@ -115,6 +126,14 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         return <></>;
     }
 
+    setPanelId = (id: string) => {
+        this.setState({ activePanelId: id });
+    };
+
+    setShowBetPanel = (show: boolean) => {
+        this.setState({ showBetPanel: show });
+    };
+
     @render(Settlements.SettlementStatusStore, (store) => store.settlementStatus, {
         fireImmediately: false,
     })
@@ -156,7 +175,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     @handle(Lobby.LobbyHandlers.TryToConnectHandler)
-    tryToConnectHandler() { }
+    tryToConnectHandler() {}
 
     @render(gc.Connection.ConnectionStore, (store) => store.isConnectFailed)
     handleConnectFail(isConnectFailed: boolean) {
@@ -190,11 +209,39 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
     renderCountDownTimerState(roundState: string) {
         this.setState({ roundState });
+        if (roundState === ROUND_STATE.LOCKING_BET || roundState === ROUND_STATE.SHOW_RESULT) {
+            this.resetBettingPanel();
+        }
     }
 
     toggleStatistic() {
         this.setState({ isOpenStatistic: !this.state.isOpenStatistic });
     }
+
+    renderWaitingForNextRound() {
+        if (!this.state.isShowNextRoundMessage) {
+            return <></>;
+        }
+        return <div className={Styles['waiting-for-next-round']}>Please wait for the next round</div>;
+    }
+
+    resetBettingPanel = () => {
+        this.setState({
+            activePanelId: null,
+            showBetPanel: false,
+        });
+    };
+
+    handleBetOption = (betChoice: string, odd: number) => {
+        // Handle the bet action here
+        console.log(`Bet placed: ${betChoice} with odd ${odd}`);
+        // You might want to call an API or dispatch an action here
+        this.resetBettingPanel();
+        this.setState({ isShowNextRoundMessage: true });
+        setTimeout(() => {
+            this.setState({ isShowNextRoundMessage: false });
+        }, 3000);
+    };
 
     getRenderTemplate() {
         const { isConnected, isConnectFailed, initialized: isGameConfigInitialized, showDisabledPopup, statusSettlement } = this.state;
@@ -222,7 +269,9 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                     <div className={`${Styles['bet-options']} ${this.overrideClasses?.betOptions}`}>
                         {this.renderBettingBlock()}
                         <ConfirmBet namespace={this.props.namespace} />
-                        <div className={`${Styles['animation-balance']} ${Styles[`game-${this.state.gameId}`]}`}>{this.renderAnimationBalance()}</div>
+                        <div className={`${Styles['animation-balance']} ${Styles[`game-${this.state.gameId}`]}`}>
+                            {this.renderAnimationBalance()}
+                        </div>
                     </div>
                 </div>
 
@@ -233,6 +282,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                     </div>
                     {this.renderNotice()}
                     {this.renderWarning()}
+                    {this.renderWaitingForNextRound()}
                 </div>
                 {this.state.isOpenStatistic && this.renderStatistic()}
             </>

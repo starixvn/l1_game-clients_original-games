@@ -1,9 +1,9 @@
-import * as gc from "@sg/sg-game-client";
-import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
-import { render } from "@sg/sg-observer";
-import { isEmpty } from "lodash";
+import * as gc from '@sg/sg-game-client';
+import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
+import { render } from '@sg/sg-observer';
+import { isEmpty } from 'lodash';
 
-import { IPropsObserver, IStateObserver, ObserverComponent } from "../observer-component/observer-component";
+import { IPropsObserver, IStateObserver, ObserverComponent } from '../observer-component/observer-component';
 
 export interface IBetOptionsState extends IStateObserver {
     roundOdds: gc.Rounds.RoundOdds;
@@ -20,6 +20,7 @@ export interface IBetOptionsState extends IStateObserver {
 export interface IBetOptionsProps extends IPropsObserver {
     language: string;
     gameName: string;
+    onBet: (betChoice: string, odd: number) => void;
 }
 
 export default class BetOptions extends ObserverComponent<IBetOptionsProps, IBetOptionsState> {

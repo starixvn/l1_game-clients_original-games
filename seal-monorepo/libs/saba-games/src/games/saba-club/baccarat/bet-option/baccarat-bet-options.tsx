@@ -1,18 +1,19 @@
-import * as gc from "@sg/sg-game-client";
-import { observer } from "@sg/sg-observer";
+import * as gc from '@sg/sg-game-client';
+import { observer } from '@sg/sg-observer';
 
-import BetOptions from "../../../../_shared/components/bet-option";
-import BettingBlock from "../../../../_shared/components/bet-option/betting-block";
-import Odds from "../../../../_shared/components/bet-option/odd-component";
-import { IPropsObserver } from "../../../../_shared/components/observer-component/observer-component";
-import { setting } from "../game-settings";
-import { IBaccaratBet } from "../type";
-import styles from "./baccarat-bet-options.module.scss";
+import BetOptions from '../../../../_shared/components/bet-option';
+import BettingBlock from '../../../../_shared/components/bet-option/betting-block';
+import Odds from '../../../../_shared/components/bet-option/odd-component';
+import { IPropsObserver } from '../../../../_shared/components/observer-component/observer-component';
+import { setting } from '../game-settings';
+import { IBaccaratBet } from '../type';
+import styles from './baccarat-bet-options.module.scss';
 
 interface IBaccaratBetOptionsProps extends IPropsObserver {
     previousWinningBet?: IBaccaratBet['type'];
     language: string;
     gameName: string;
+    onBet: (betChoice: string, odd: number) => void;
 }
 
 interface BetOptionProps {
@@ -58,6 +59,7 @@ export default class BaccaratBetOptions extends BetOptions {
                 namespace={this.props.namespace}
                 gameName={this.props.gameName}
                 settlementResult={settlementResult}
+                onBet={this.props.onBet}
             >
                 {this.renderBetOptionContent(props)}
             </BettingBlock>
@@ -78,7 +80,6 @@ export default class BaccaratBetOptions extends BetOptions {
 
     render() {
         const { roundOdds, boostedOdds } = this.state;
-        const { previousWinningBet } = this.props;
         const odds = roundOdds?.odds || {};
         const boostedChoices = roundOdds?.boostedChoices;
         const fractional = roundOdds?.fractional;

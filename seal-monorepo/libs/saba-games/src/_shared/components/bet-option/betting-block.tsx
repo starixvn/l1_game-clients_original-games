@@ -17,6 +17,7 @@ interface BettingBlockProps {
     namespace: string;
     children: React.ReactNode;
     settlementResult?: gc.GameServiceMessage.TSettlementResult;
+    onBet: (betChoice: string, odd: number) => void;
 }
 
 interface IBettingBlockState extends IStateObserver {
@@ -25,6 +26,7 @@ interface IBettingBlockState extends IStateObserver {
     isAuthorized: boolean;
     isSignedIn: boolean;
     isFinishShowResult: boolean;
+    isShowBetSlip: boolean;
     isShowStaticHighlight?: boolean;
 }
 
@@ -43,6 +45,7 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
             dispose: null,
             isFinishShowResult: false,
             isShowStaticHighlight: undefined,
+            isShowBetSlip: false,
         };
 
         this.handleOnClick = this.handleOnClick.bind(this);
@@ -76,16 +79,19 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundState, { fireImmediately: false })
     renderCountDownTimerState(roundState: string) {
         if (roundState === Rounds.ROUND_STATE.SHOW_RESULT && this.state.isShowStaticHighlight === undefined) {
-            this.setState({ isShowStaticHighlight: true });
+            this.setState({ isShowStaticHighlight: true, isShowBetSlip: false });
             return;
         }
+
         switch (roundState) {
-            case Rounds.ROUND_STATE.PLACING_BET:
             case Rounds.ROUND_STATE.STARTING_ROUND:
-                this.setState({ isShowStaticHighlight: true });
+                this.setState({ isShowStaticHighlight: true, isShowBetSlip: false });
+                break;
+            case Rounds.ROUND_STATE.PLACING_BET:
+                this.setState({ isShowStaticHighlight: true, isShowBetSlip: true });
                 break;
             case Rounds.ROUND_STATE.LOCKING_BET:
-                this.setState({ isShowStaticHighlight: false });
+                this.setState({ isShowStaticHighlight: false, isShowBetSlip: false });
                 break;
             default:
                 break;
@@ -96,6 +102,10 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
         return () => {
             const { betChoice, odd } = this.props;
             const { isAuthorized } = this.state;
+
+            if (!this.state.isShowBetSlip) {
+                this.props.onBet(betChoice, odd);
+            }
 
             if (!isAuthorized) {
                 this.autoCreateNickname();
@@ -147,25 +157,27 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
     }
 
     @handle(Auth.AuthHandlers.Authorize, (handler) => handler.handleAutoGenerateName())
-    protected autoCreateNickname() { }
+    protected autoCreateNickname() {}
 
     @handle(Connection.ConnectionHandlers.SignInHandler)
-    protected signIn() { }
+    protected signIn() {}
 
     render() {
         const { children, namespace, gameName, settlementResult, betChoice } = this.props;
-        const { odd, isFinishShowResult, isShowStaticHighlight } = this.state;
+        const { odd, isFinishShowResult, isShowStaticHighlight, isShowBetSlip } = this.state;
         let flashAnimationClass = '';
         const bettingZoneState = {
             gameName,
             betChoice,
             odd,
         };
+
         if (isFinishShowResult && settlementResult?.[betChoice]) {
             flashAnimationClass = 'flash-and-keep-background-color';
         } else if (isShowStaticHighlight && settlementResult?.[betChoice]) {
             flashAnimationClass = 'highlight-static-bet-choice';
         }
+
         return (
             <GameBettingOptionsContext.Consumer>
                 {({ panelId, setPanelId, show, setShow }) => {
@@ -179,7 +191,7 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
                             >
                                 {children}
                             </div>
-                            <BetPanelComponent namespace={namespace} />
+                            {isShowBetSlip && <BetPanelComponent namespace={namespace} />}
                         </GameBettingZoneContext.Provider>
                     );
                 }}

@@ -20,9 +20,6 @@ interface IBaccaratState extends IGameBaseState {
     previousWinningBet?: IBaccaratBet['type'];
     roundState: string;
     isExpanded: boolean;
-    activePanelId: any;
-    showBetPanel: boolean;
-    gameId: number;
 }
 
 @observer(setting.mainObserverNamespace)
@@ -40,8 +37,6 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratSt
             ...this.state,
             previousWinningBet: undefined,
             isExpanded: false,
-            activePanelId: null,
-            showBetPanel: false,
             gameId: setting.id,
         };
 
@@ -59,39 +54,10 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratSt
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handleGateway())
     closeConnect() {}
 
-    setPanelId = (id: string) => {
-        this.setState({ activePanelId: id });
-    };
-
-    setShowBetPanel = (show: boolean) => {
-        this.setState({ showBetPanel: show });
-    };
-
-    resetBettingPanel = () => {
-        this.setState({
-            activePanelId: null,
-            showBetPanel: false,
-        });
-    };
-
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
     handleRoundStateChange(roundState: string) {
-        if (roundState === ROUND_STATE.LOCKING_BET) {
-            this.resetBettingPanel();
-        }
         this.setState({ roundState });
     }
-
-    // override renderHeader() {
-    //     return (
-    //         <Header
-    //             namespace={this.props.namespace}
-    //             isExpanded={this.state.isExpanded}
-    //             handleToggle={this.handleToggleExpand}
-    //             gameId={setting.id}
-    //         />
-    //     );
-    // }
 
     renderRoundHistory() {
         return <BaccaratRoundHistory namespace={this.props.namespace} language={this.props.language} />;
@@ -112,6 +78,7 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratSt
                     previousWinningBet={this.state.previousWinningBet}
                     language={this.props.language}
                     gameName={setting.gameName}
+                    onBet={this.handleBetOption}
                 />
             </GameBettingOptionsContext.Provider>
         );
