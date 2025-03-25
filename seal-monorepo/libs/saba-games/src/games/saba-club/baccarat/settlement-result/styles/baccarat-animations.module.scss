@@ -136,7 +136,7 @@
 .winner-display {
     position: absolute;
     left: 50%;
-    bottom: 4px;
+    bottom: -20px;
     min-width: 155px;
     width: fit-content;
     display: flex;
@@ -164,7 +164,6 @@
 .winner-text {
     margin: 0 auto;
     text-transform: uppercase;
-    letter-spacing: 2px;
     text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
     white-space: nowrap;
     line-height: 1.2;
