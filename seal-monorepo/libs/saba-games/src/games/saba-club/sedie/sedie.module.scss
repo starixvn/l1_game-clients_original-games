@@ -87,7 +87,7 @@
 
 .round-history {
     background-color: var(--c-av-match-live-bg);
-    padding: 8px 4px;
+    padding: 12px 4px;
 }
 
 .hstack-round {
@@ -97,9 +97,11 @@
     margin-top: 0;
     font-family: 'Segoe UI';
     font-size: 0.8125rem;
+
     .hstack-text {
         padding: 0 1.5rem 0 0.625rem;
     }
+
     .hstack-box {
         width: 1.5rem;
         height: 1.5rem;
@@ -111,16 +113,19 @@
 
         margin-left: 0.185rem;
         display: none;
+
         &.live {
             background-color: #fff6f3;
             margin-left: 0.625rem;
         }
     }
+
     .hstack-live-icon {
         background: url('../../../assets/round-history/icon-live.svg') no-repeat;
         height: 11px;
         width: 10px;
     }
+
     .hstack-history-icon {
         background: url('../../../assets/round-history/icon-history.svg') no-repeat;
         height: 16px;

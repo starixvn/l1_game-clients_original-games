@@ -14,7 +14,9 @@ export const WinnerDisplay: React.FC<IWinnerDisplayProps> = (props) => {
     return (
         <div className={`${Style['winner-display']} ${className}`}>
             <p className={Style['winner-text']}>
-                {result} - {resultText}
+                {result}
+                <span className={Style['winner-text-separator']}>-</span>
+                {resultText}
             </p>
         </div>
     );

@@ -1,9 +1,8 @@
-
 // Move variables to a local class
 .round-history {
     // bigsmall-specific variables
 
-    padding: 8px 12px;
+    padding: 12px;
     border-radius: 4px;
     color: inherit;
 
@@ -14,8 +13,8 @@
         gap: 4px;
         margin-top: 0;
 
-        > span:first-child {
-            color: var(--bigsmall-text-dark)!important;
+        >span:first-child {
+            color: var(--bigsmall-text-dark) !important;
             font-size: 14px;
             margin-right: 8px;
         }
@@ -38,5 +37,3 @@
         opacity: 0.6;
     }
 }
-
-

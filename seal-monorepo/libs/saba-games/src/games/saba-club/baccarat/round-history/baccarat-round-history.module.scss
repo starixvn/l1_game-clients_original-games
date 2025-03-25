@@ -2,7 +2,7 @@
 
 .round-history {
     background-color: var(--c-av-match-live-bg);
-    padding: 8px 12px;
+    padding: 12px;
     border-radius: 4px;
 
     .round {
@@ -11,7 +11,7 @@
         align-items: center;
         gap: 4px !important;
 
-        > span:first-child {
+        >span:first-child {
             color: var(--baccarat-text-dark);
             font-size: 13px;
             margin-right: 8px;
