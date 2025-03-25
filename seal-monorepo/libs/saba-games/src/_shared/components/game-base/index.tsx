@@ -18,6 +18,7 @@ import RoundId from '../round-id';
 import CountDownTimer from '../count-down-timer';
 import { useGameBettingOptionsContext } from '../../react-contexts/game-betting-zone-context/game-betting-zone-context';
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds/round-time-store';
+import WarningDialog from '../notices/warning-dialog';
 
 export interface IGameBaseState {
     isConnected: boolean;
@@ -222,7 +223,11 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         if (!this.state.isShowNextRoundMessage) {
             return <></>;
         }
-        return <div className={Styles['waiting-for-next-round']}>Please wait for the next round</div>;
+        return (
+            <WarningDialog key={`warning-bet`}>
+                <div className={Styles['title-white']}>Please wait for the next round</div>
+            </WarningDialog>
+        );
     }
 
     resetBettingPanel = () => {
@@ -232,10 +237,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         });
     };
 
-    handleBetOption = (betChoice: string, odd: number) => {
-        // Handle the bet action here
-        console.log(`Bet placed: ${betChoice} with odd ${odd}`);
-        // You might want to call an API or dispatch an action here
+    handleBetOption = () => {
         this.resetBettingPanel();
         this.setState({ isShowNextRoundMessage: true });
         setTimeout(() => {

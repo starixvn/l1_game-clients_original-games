@@ -20,7 +20,7 @@ export interface IBetOptionsState extends IStateObserver {
 export interface IBetOptionsProps extends IPropsObserver {
     language: string;
     gameName: string;
-    onBet: (betChoice: string, odd: number) => void;
+    onBet: () => void;
 }
 
 export default class BetOptions extends ObserverComponent<IBetOptionsProps, IBetOptionsState> {

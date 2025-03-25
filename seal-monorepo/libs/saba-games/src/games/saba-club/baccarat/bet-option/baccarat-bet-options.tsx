@@ -13,7 +13,7 @@ interface IBaccaratBetOptionsProps extends IPropsObserver {
     previousWinningBet?: IBaccaratBet['type'];
     language: string;
     gameName: string;
-    onBet: (betChoice: string, odd: number) => void;
+    onBet: () => void;
 }
 
 interface BetOptionProps {

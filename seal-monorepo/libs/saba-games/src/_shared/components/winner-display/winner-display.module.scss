@@ -13,7 +13,6 @@
 .winner-display {
     position: absolute;
     bottom: -35px;
-    left: -10px;
     width: 100%;
     min-width: 155px;
     width: fit-content;
@@ -23,12 +22,14 @@
     padding: 7px 18px;
     margin: 0 auto;
     z-index: 101;
-    background: linear-gradient(90deg,
-            rgba(135, 56, 0, 0) 0%,
-            rgba(242, 127, 11, 0.5) 14%,
-            #ffb107 50%,
-            rgba(242, 127, 11, 0.5) 84%,
-            rgba(135, 56, 0, 0) 100%);
+    background: linear-gradient(
+        90deg,
+        rgba(135, 56, 0, 0) 0%,
+        rgba(242, 127, 11, 0.5) 14%,
+        #ffb107 50%,
+        rgba(242, 127, 11, 0.5) 84%,
+        rgba(135, 56, 0, 0) 100%
+    );
     color: #fff;
     font-size: 14px;
     font-weight: bold;
@@ -47,7 +48,7 @@
     white-space: nowrap;
     line-height: 1.2;
     text-align: center;
-    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.30);
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .winner-text-separator {

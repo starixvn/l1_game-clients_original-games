@@ -17,7 +17,7 @@ interface BetOptionProps {
     name?: string;
     fractional: boolean;
     isBoostedChoice: boolean;
-    onBet: (betChoice: string, odd: number) => void;
+    onBet: () => void;
 }
 
 @observer(setting.mainObserverNamespace)

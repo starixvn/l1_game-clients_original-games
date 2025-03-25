@@ -17,7 +17,7 @@ interface BettingBlockProps {
     namespace: string;
     children: React.ReactNode;
     settlementResult?: gc.GameServiceMessage.TSettlementResult;
-    onBet: (betChoice: string, odd: number) => void;
+    onBet: () => void;
 }
 
 interface IBettingBlockState extends IStateObserver {
@@ -104,7 +104,7 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
             const { isAuthorized } = this.state;
 
             if (!this.state.isShowBetSlip) {
-                this.props.onBet(betChoice, odd);
+                this.props.onBet();
             }
 
             if (!isAuthorized) {
