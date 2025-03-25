@@ -8,6 +8,8 @@ import { RoundDot } from '../../../../_shared/components/dot';
 import { IPropsObserver, IStateObserver, ObserverComponent } from '../../../../_shared/components/observer-component/observer-component';
 import Styles from './sedie-animations.module.scss';
 import { WinnerDisplay } from 'libs/saba-games/src/_shared/components/winner-display/winner-display';
+import { gameStateService } from './services/game-state.service';
+import { SedieResult } from '../type';
 
 export interface ISeDieSettlementResultState extends IStateObserver {
     result: gc.GameServiceMessage.TResult;
@@ -59,6 +61,13 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
         if (!firstJoinGameHistory) {
             return;
         }
+        const result = gameStateService.handleGameHistory(firstJoinGameHistory);
+        if (result && gameStateService.validateResult(result as SedieResult)) {
+            this.setState({
+                result,
+                isFinishShowResult: true
+            });
+        }
         const lastRound = firstJoinGameHistory?.roundHistory;
         if (lastRound) {
             this.setState({ result: lastRound?.result, settlementResult: lastRound?.settlementResult });
@@ -69,6 +78,8 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
     finishShowResult(isFinishedShowResult: boolean) {
         this.setState({ isFinishShowResult: isFinishedShowResult });
     }
+
+
 
     @render(gc.Settlements.SettlementStatusStore, (store) => store.settlementStatus, {
         fireImmediately: false,
