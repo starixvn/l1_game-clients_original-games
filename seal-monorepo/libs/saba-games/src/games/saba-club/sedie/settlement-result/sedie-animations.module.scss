@@ -262,6 +262,8 @@
 .sedie-result {
     bottom: -30px !important;
     left: 0 !important;
+    width: 100%;
+    min-width: none;
 }
 
 @keyframes coins-item-right-animation {
