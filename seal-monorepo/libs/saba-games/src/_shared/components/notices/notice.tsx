@@ -3,6 +3,7 @@ import { render } from '@sg/sg-observer';
 import { IPropsObserver, IStateObserver, ObserverComponent } from '../observer-component/observer-component';
 import NoticeDialog from './notice-dialog';
 import { FunctionUtils } from '../../utils/funtion-utils';
+import { NoticeInfo } from '@sg/sg-game-client/dist/game/notices';
 
 export interface INoticeState extends IStateObserver {
     notice: gc.Notices.Notice;
@@ -16,6 +17,7 @@ export interface INoticeProps extends IPropsObserver {
 export default class Notice extends ObserverComponent<INoticeProps, INoticeState> {
     private timer: NodeJS.Timeout | null = null;
     private readonly AUTO_CLOSE_DELAY = 3500;
+    private isJoiningGame = false;
 
     constructor(props: IPropsObserver) {
         super(props);
@@ -33,8 +35,17 @@ export default class Notice extends ObserverComponent<INoticeProps, INoticeState
         }
     }
 
+    @render(gc.Connection.ConnectionStore, (store) => store.joinGame)
+    handleJoinedGame() {
+        this.isJoiningGame = true;
+        this.closeNotice();
+    }
+
     @render(gc.Notices.NoticeStore, (store) => store.notice, { fireImmediately: true })
     private setNotice(notice: gc.Notices.Notice) {
+        if (notice && notice?.noticeInfo === NoticeInfo.LostGameConnection && this.isJoiningGame) {
+            return;
+        }
 
         if (notice) {
             if (this.timer) {
@@ -58,7 +69,12 @@ export default class Notice extends ObserverComponent<INoticeProps, INoticeState
             clearTimeout(this.timer);
             this.timer = null;
         }
-        this.setState({ isShow: false });
+        
+        this.setState({ isShow: false }, () => {
+            setTimeout(() => {
+                this.isJoiningGame = false;
+            }, 0);
+        });
     }
 
     render() {
