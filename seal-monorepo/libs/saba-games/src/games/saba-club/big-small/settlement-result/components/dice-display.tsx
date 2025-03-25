@@ -37,9 +37,7 @@ const TotalDiceNumber = memo<TotalDiceNumberProps>(({ total, language, settlemen
         resultText = gc.Translator.t('UnbalancedBigSmall4.small', { lng: language || '' });
     }
     return (
-        <div className={styles.diceResult}>
-            <WinnerDisplay result={total} resultText={resultText} className="big-small" />
-        </div>
+        <WinnerDisplay result={total} resultText={resultText} className="big-small" />
     );
 });
 
@@ -88,9 +86,7 @@ export const DiceDisplay = memo<DiceDisplayProps>(({ result, isAnimationResult, 
     return (
         <div className={styles.diceContainer}>
             <DiceList diceNumbers={diceNumbers} />
-            <div className={styles['wrapper-total-dice']}>
-                <TotalDiceNumber total={totalDiceNumber} language={language} settlementResult={settlementResult} />
-            </div>
+            <TotalDiceNumber total={totalDiceNumber} language={language} settlementResult={settlementResult} />
         </div>
     );
 });
