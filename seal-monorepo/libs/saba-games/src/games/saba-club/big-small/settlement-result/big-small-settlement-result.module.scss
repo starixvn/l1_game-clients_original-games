@@ -11,6 +11,7 @@
 .diceContainer {
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -20,10 +21,11 @@
     justify-content: flex-end;
     align-items: center;
     gap: 10px;
-    margin-right: 14px;
 }
 
 .diceResult {
+    display: flex;
+    justify-content: center;
     color: inherit;
     font-size: 24px;
     font-weight: 700;

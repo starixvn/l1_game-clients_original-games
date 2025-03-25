@@ -1,5 +1,6 @@
-import * as gc from "@sg/sg-game-client";
-import { BigSmallResult } from "../../type"
+import * as gc from '@sg/sg-game-client';
+
+import { BigSmallResult } from '../../type';
 
 export interface GameState {
     result?: BigSmallResult;
@@ -29,12 +30,13 @@ class GameStateService {
     }
 
     public validateResult(result: BigSmallResult): boolean {
-        return !!(
-            result?.dice1 &&
-            result?.dice2 &&
-            result?.dice3
-        );
+        Object.keys(result).forEach((key) => {
+            if ((key as keyof BigSmallResult) === undefined) {
+                return false;
+            }
+        });
+        return true;
     }
 }
 
-export const gameStateService = new GameStateService(); 
+export const gameStateService = new GameStateService();

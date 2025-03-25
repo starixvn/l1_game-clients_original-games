@@ -1,10 +1,11 @@
-import * as gc from "@sg/sg-game-client";
-import React, { memo, useEffect, useMemo, useState, useCallback } from "react";
-import styles from "../big-small-settlement-result.module.scss";
-import { BigSmallResult } from "../../type";
-import { calculateTotalDiceNumber, getRandomDiceNumbers } from "../../../../../_shared/utils/number-helper";
-import Dice from "../../../../../_shared/components/dice";
-import { WinnerDisplay } from "libs/saba-games/src/_shared/components/winner-display/winner-display";
+import * as gc from '@sg/sg-game-client';
+import { WinnerDisplay } from 'libs/saba-games/src/_shared/components/winner-display/winner-display';
+import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
+
+import Dice from '../../../../../_shared/components/dice';
+import { calculateTotalDiceNumber, getRandomDiceNumbers } from '../../../../../_shared/utils/number-helper';
+import { BigSmallResult } from '../../type';
+import styles from '../big-small-settlement-result.module.scss';
 
 const ANIMATION_INTERVAL = 150;
 const ANIMATION_DURATION = 2000;
@@ -41,7 +42,6 @@ const TotalDiceNumber = memo<TotalDiceNumberProps>(({ total, language, settlemen
     );
 });
 
-
 interface DiceDisplayProps {
     result: BigSmallResult;
     isAnimationResult: boolean;
@@ -53,9 +53,7 @@ export const DiceDisplay = memo<DiceDisplayProps>(({ result, isAnimationResult, 
     const [diceNumbers, setDiceNumbers] = useState(() => [0, 0, 0]);
     const [totalDiceNumber, setTotalDiceNumber] = useState(0);
 
-    const finalDiceNumbers = useMemo(() => (
-        [result.dice1, result.dice2, result.dice3]
-    ), [result.dice1, result.dice2, result.dice3]);
+    const finalDiceNumbers = useMemo(() => [result.dice1, result.dice2, result.dice3], [result.dice1, result.dice2, result.dice3]);
 
     const updateFinalResult = useCallback(() => {
         setDiceNumbers(finalDiceNumbers);
