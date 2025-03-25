@@ -258,10 +258,10 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         );
     }
     
-    resetBettingPanel = () => {
-        const { setPanelId, setShow } = useGameBettingOptionsContext();
-        setPanelId(null);
-        setShow(false);
+    resetStateWhenReconnect() {
+        this.setState({
+            isOpenStatistic: false,
+        });
     }
 
     createConnection() {
@@ -274,7 +274,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         this.terminateConnection();
         this.createConnection();
         this.joinGame();
-        this.resetBettingPanel();
+        this.resetStateWhenReconnect();
     };
 
     private renderDisconnect() {

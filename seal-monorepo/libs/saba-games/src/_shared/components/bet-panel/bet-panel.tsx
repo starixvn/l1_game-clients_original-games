@@ -3,11 +3,22 @@ import { RoundStore } from '@sg/sg-game-client/dist/game/rounds';
 import { handle, render } from '@sg/sg-observer';
 import classNames from 'classnames';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { BACCARAT_GAME_NAMESPACE, SABA_GAMES, SE_DIE_GAME_NAMESPACE, UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE, VGAMING, VIP_SE_DIE_GAME_NAMESPACE, VIVA88_SITE_ID } from '../../../../constant/app';
+import {
+    BACCARAT_GAME_NAMESPACE,
+    SABA_GAMES,
+    SE_DIE_GAME_NAMESPACE,
+    UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE,
+    VGAMING,
+    VIP_SE_DIE_GAME_NAMESPACE,
+    VIVA88_SITE_ID,
+} from '../../../../constant/app';
 import { useAppContext } from '../../../appProvider';
 import { BACCARAT_CHOICES, SE_DIE_CHOICES } from '../../../games/constants/saba-club';
 import { ChoiceSeDieIconMapper, SeDieChoices } from '../../../games/saba-club/sedie/type';
-import { useGameBettingOptionsContext, useGameBettingZoneContext } from '../../react-contexts/game-betting-zone-context/game-betting-zone-context';
+import {
+    useGameBettingOptionsContext,
+    useGameBettingZoneContext,
+} from '../../react-contexts/game-betting-zone-context/game-betting-zone-context';
 import { checkValidAmount, parseInputValue, WarnMsgType } from '../../utils/betting-util';
 import { getChoicesType } from '../../utils/choice-type';
 import BettingChips from '../betting-chips';
@@ -23,7 +34,7 @@ const GAME_ICON_MAPPING = {
     [SE_DIE_GAME_NAMESPACE]: 'sedie-icon',
     [VIP_SE_DIE_GAME_NAMESPACE]: 'vip-sedie-icon',
     [UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE]: 'bigsmall-icon',
-    [BACCARAT_GAME_NAMESPACE]: 'baccarat-icon'
+    [BACCARAT_GAME_NAMESPACE]: 'baccarat-icon',
 } as const;
 
 export interface IBetPanel extends IStateObserver {
@@ -35,10 +46,9 @@ export interface IBetPanel extends IStateObserver {
     maxBetPerChoices: gc.GameServiceMessage.MaxBetPerChoices;
 }
 
-class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends ObserverComponent<
-    IPropsObserver,
-    IStateObserver
-> {
+class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends ObserverComponent<IPropsObserver, IStateObserver> {
+    private isJoiningGame = false;
+
     constructor(props: P) {
         super(props);
         this.state = {
@@ -91,6 +101,11 @@ class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends O
         return { amount, betChoice };
     }
 
+    @render(gc.Connection.ConnectionStore, (store) => store.joinGame)
+    handleJoinedGame() {
+        this.isJoiningGame = true;
+    }
+
     render() {
         const { clientRoundId, currency, minBet, maxBet, maxBetPerChoices, stakeLevel } = this.state as S;
 
@@ -104,6 +119,7 @@ class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends O
                 maxBetPerChoices={maxBetPerChoices}
                 stakeLevel={stakeLevel}
                 handleBet={this.handleBet.bind(this)}
+                isJoiningGame={this.isJoiningGame}
             ></BetPanel>
         );
     }
@@ -118,7 +134,8 @@ const BetPanel: React.FC<{
     maxBetPerChoices: gc.GameServiceMessage.MaxBetPerChoices;
     stakeLevel: gc.Player.IStakeLevel;
     handleBet: (amount: number, betChoice: string) => void;
-}> = ({ namespace, clientRoundId, currency, minBet, maxBet, maxBetPerChoices, stakeLevel, handleBet }) => {
+    isJoiningGame: boolean;
+}> = ({ namespace, clientRoundId, currency, minBet, maxBet, maxBetPerChoices, stakeLevel, handleBet, isJoiningGame }) => {
     const { panelId, setPanelId, setShow } = useGameBettingOptionsContext();
     const { gameName, betChoice, odd = 0 } = useGameBettingZoneContext();
     const { siteId } = useAppContext();
@@ -139,6 +156,9 @@ const BetPanel: React.FC<{
     const vendorName = siteId === VIVA88_SITE_ID ? SABA_GAMES : VGAMING;
     const panelRef = useRef<HTMLDivElement>(null);
 
+
+    
+
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (panelRef.current && !panelRef.current.contains(event.target as Node)) {
@@ -158,7 +178,7 @@ const BetPanel: React.FC<{
         if (!betChoice) return;
         const newMin = Math.max(minBet, stakeLevelMinBet);
 
-        let newMax = 0
+        let newMax = 0;
         if (Object.keys(maxBetPerChoices).length <= 0 && namespace === UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE) {
             newMax = Math.min(maxBet, stakeLevel.maxBet);
         } else {
@@ -168,12 +188,23 @@ const BetPanel: React.FC<{
         setMin(newMin);
         setMax(newMax);
 
-        setAmount(prev => {
+        setAmount((prev) => {
             if (prev < newMin) return newMin;
             if (prev > newMax) return newMax;
             return prev;
         });
     }, [betChoice, minBet, maxBet, stakeLevelMinBet, betChoiceMax, stakeLevel.maxBet]);
+
+    useEffect(() => {
+        if (isJoiningGame) {
+            handleClose();
+        }
+    }, [isJoiningGame]);
+
+    const handleClose = () => {
+        setPanelId(null);
+        setShow(false);
+    };
 
     const setWarningWithTimeout = (message: string) => {
         if (warningTimeoutRef.current) {
@@ -190,7 +221,7 @@ const BetPanel: React.FC<{
     const onHide = () => {
         setPanelId(null);
         setWarnMsg('');
-    }
+    };
 
     const handleInputChange = (event: any) => {
         const numericValue = parseInputValue(event.target.value);
@@ -237,68 +268,61 @@ const BetPanel: React.FC<{
         }
     };
 
-    const handleChipAmountChange = useCallback((addAmount: number) => {
-        const { newAmount, msg } = checkValidAmount(addAmount, min, max);
+    const handleChipAmountChange = useCallback(
+        (addAmount: number) => {
+            const { newAmount, msg } = checkValidAmount(addAmount, min, max);
 
-        if (!msg) {
-            setWarnMsg('');
-        }
-        setAmount(newAmount);
-    }, [min, max]);
-
+            if (!msg) {
+                setWarnMsg('');
+            }
+            setAmount(newAmount);
+        },
+        [min, max],
+    );
 
     const renderTicketHeader = () => {
         const gameIconClass = GAME_ICON_MAPPING[namespace] || '';
 
         return (
-            <div className='c-ticket__header'>
-                <span className='c-text-bettype sg-bet-panel__header-flex'>
+            <div className="c-ticket__header">
+                <span className="c-text-bettype sg-bet-panel__header-flex">
                     <div className={classNames('sg-bet-panel__game-icon', gameIconClass)}></div>
                     <div>
-                        <div className='game-name'>{t(`${namespace}.game_name`)}</div>
-                        <div className='bet-option'>{t(getChoicesType(namespace, betChoice))}</div>
+                        <div className="game-name">{t(`${namespace}.game_name`)}</div>
+                        <div className="bet-option">{t(getChoicesType(namespace, betChoice))}</div>
                     </div>
                 </span>
 
-                <a
-                    className='c-btn c-btn--caret'
-                    aria-hidden='true'
-                >
-                    <i className='c-icon c-icon--caret'></i>
+                <a className="c-btn c-btn--caret" aria-hidden="true">
+                    <i className="c-icon c-icon--caret"></i>
                 </a>
-                <a
-                    className='c-btn c-btn--clear'
-                    aria-hidden='true'
-                    onClick={() => onHide()}
-                >
-                    <i className='c-icon c-icon--clear'></i>
+                <a className="c-btn c-btn--clear" aria-hidden="true" onClick={() => onHide()}>
+                    <i className="c-icon c-icon--clear"></i>
                 </a>
             </div>
-        )
-    }
+        );
+    };
 
     const renderTicketMain = () => {
         const t = (key) => gc.Translator.translate(key, { languageId: gc.Translator.getCurrentLanguageId() });
         return (
-            <div className='c-ticket__main'>
-                <div className='c-ticket__choice'>
-                    <span className='c-text-betchoice'>
-                        {t(`${gameName}.glossary_${betChoice}`)}
-                    </span>
+            <div className="c-ticket__main">
+                <div className="c-ticket__choice">
+                    <span className="c-text-betchoice">{t(`${gameName}.glossary_${betChoice}`)}</span>
                 </div>
-                <div className='c-ticket__odds'>
-                    <span className='c-text-balls'>{renderGameElements(gameName)}</span>
-                    <span className='c-text-odds'>
+                <div className="c-ticket__odds">
+                    <span className="c-text-balls">{renderGameElements(gameName)}</span>
+                    <span className="c-text-odds">
                         @
-                        <span className={`${'c-odds'} ${'sg-bet-panel__text-bold'}`} data-odds-status='default'>
-                            {odd || ""}
+                        <span className={`${'c-odds'} ${'sg-bet-panel__text-bold'}`} data-odds-status="default">
+                            {odd || ''}
                         </span>
                     </span>
-                    <span className='c-text-oddstype'>({t('Common.decimal')})</span>
+                    <span className="c-text-oddstype">({t('Common.decimal')})</span>
                 </div>
             </div>
-        )
-    }
+        );
+    };
 
     const renderTicektInfo = () => {
         const t = (key) => gc.Translator.translate(key, { languageId: gc.Translator.getCurrentLanguageId() });
@@ -306,21 +330,17 @@ const BetPanel: React.FC<{
         const game = t(`${namespace}.game_name`);
 
         return (
-            <div className='c-ticket__info'>
-                <div className='c-ticket-match-info'>
-                    <div className='c-ticket-match-info__row'>
-                        {vendorName}
-                    </div>
-                    <div className='c-ticket-match-info__row'>
-                        {game}  
-                    </div>
-                    <div className='c-ticket-match-info__row'>
+            <div className="c-ticket__info">
+                <div className="c-ticket-match-info">
+                    <div className="c-ticket-match-info__row">{vendorName}</div>
+                    <div className="c-ticket-match-info__row">{game}</div>
+                    <div className="c-ticket-match-info__row">
                         {t(`Common.result_no`)} {clientRoundId}
                     </div>
                 </div>
             </div>
-        )
-    }
+        );
+    };
 
     const renderDots = () => {
         const hasDots: boolean = betChoice ? Object.keys(ChoiceSeDieIconMapper).includes(betChoice) : false;
@@ -330,19 +350,21 @@ const BetPanel: React.FC<{
                 key={index}
                 highlight={!hasDots}
                 choice={isRed ? SeDieChoices.odd : SeDieChoices.even}
-                size='small'
+                size="small"
                 value={hasDots ? '' : '?'}
             />
         ));
     };
 
     const renderDices = () => {
-        return <>
-            <Dice diceNumber={0} size='small' />
-            <Dice diceNumber={0} size='small' />
-            <Dice diceNumber={0} size='small' />
-        </>
-    }
+        return (
+            <>
+                <Dice diceNumber={0} size="small" />
+                <Dice diceNumber={0} size="small" />
+                <Dice diceNumber={0} size="small" />
+            </>
+        );
+    };
 
     const renderGameElements = (gameName: string) => {
         switch (gameName) {
@@ -354,81 +376,68 @@ const BetPanel: React.FC<{
             default:
                 return null;
         }
-    }
+    };
 
     const renderWarnMessage = ({ warnMsg }) => {
         if (!warnMsg) return;
         return (
-            <div className='c-ticket__status'>
+            <div className="c-ticket__status">
                 <WarnMessage warnMsg={warnMsg} />
             </div>
-        )
-    }
+        );
+    };
 
-    if ((panelId !== betChoice)) {
+    if (panelId !== betChoice) {
         return <></>;
     }
 
     // TODO: 街上memberSite時，className不用style，直接接上memberSite class
     return (
-        <div className='c-quick-bet c-quick-bet--bottom-left'>
-            <div className='c-quick-bet__btn'></div>
+        <div className="c-quick-bet c-quick-bet--bottom-left">
+            <div className="c-quick-bet__btn"></div>
             <div
                 ref={panelRef}
                 className={classNames('c-quick-bet__panel', {
-                    ['sg-bet-panel__left-dec-100']: SE_DIE_CHOICES.RED2 === betChoice || BACCARAT_CHOICES.PLAYER_PAIR === betChoice || BACCARAT_CHOICES.BANKER_PAIR === betChoice
-                })}>
-                <div className='c-betslip'>
-                    <div className='c-betslip__content'>
-                        <div className='c-betting-scroller'>
-                            <div className='c-betting-group' data-status='default'>
-                                <div className='c-betting' data-open='true'>
-                                    <div className='c-ticket' data-status='default' data-open='true'>
-                                        {
-                                            renderTicketHeader()
-                                        }
+                    ['sg-bet-panel__left-dec-100']:
+                        SE_DIE_CHOICES.RED2 === betChoice ||
+                        BACCARAT_CHOICES.PLAYER_PAIR === betChoice ||
+                        BACCARAT_CHOICES.BANKER_PAIR === betChoice,
+                })}
+            >
+                <div className="c-betslip">
+                    <div className="c-betslip__content">
+                        <div className="c-betting-scroller">
+                            <div className="c-betting-group" data-status="default">
+                                <div className="c-betting" data-open="true">
+                                    <div className="c-ticket" data-status="default" data-open="true">
+                                        {renderTicketHeader()}
 
-                                        {
-                                            renderTicketMain()
-                                        }
+                                        {renderTicketMain()}
 
-                                        {
-                                            renderTicektInfo()
-                                        }
-                                        {
-                                            renderWarnMessage({ warnMsg })
-                                        }
+                                        {renderTicektInfo()}
+                                        {renderWarnMessage({ warnMsg })}
                                     </div>
-                                    <div className='c-betting-stake-group'>
-                                        <div className='c-betting-stake'>
-                                            <div
-                                                className={`${'c-textfield'} ${'c-textfield--stake'}`}
-                                                data-focus='true'
-                                            >
+                                    <div className="c-betting-stake-group">
+                                        <div className="c-betting-stake">
+                                            <div className={`${'c-textfield'} ${'c-textfield--stake'}`} data-focus="true">
                                                 <input
-                                                    type='text'
-                                                    className='c-textfield__input'
+                                                    type="text"
+                                                    className="c-textfield__input"
                                                     placeholder={`${addCommas(min)} - ${addCommas(max)}`}
                                                     value={displayAmount}
                                                     onChange={handleInputChange}
                                                 />
-                                                <span className='c-textfield__currency'>{currency}</span>
-                                                <span className='c-textfield__bg'></span>
-                                                <a
-                                                    className={`${'c-btn'} ${'c-btn--clear'}`}
-                                                    aria-hidden='true'
-                                                    onClick={handleClear}
-                                                >
-                                                    <i
-                                                        className={`${'c-icon'} ${'c-icon--clear-solid'}`}
-                                                    ></i>
+                                                <span className="c-textfield__currency">{currency}</span>
+                                                <span className="c-textfield__bg"></span>
+                                                <a className={`${'c-btn'} ${'c-btn--clear'}`} aria-hidden="true" onClick={handleClear}>
+                                                    <i className={`${'c-icon'} ${'c-icon--clear-solid'}`}></i>
                                                 </a>
                                             </div>
                                         </div>
-                                        <div className='c-betting-stake-info'>
-                                            <span className='c-text-group'>
-                                                <span className='c-text-label'>{t('Common.payout')} : </span>
-                                                <span className='c-text-value'>{payout}</span>
+                                        <div className="c-betting-stake-info">
+                                            <span className="c-text-group">
+                                                <span className="c-text-label">{t('Common.payout')} : </span>
+                                                <span className="c-text-value">{payout}</span>
                                             </span>
                                         </div>
                                     </div>
@@ -441,21 +450,17 @@ const BetPanel: React.FC<{
                                         addCommas={addCommas}
                                     />
                                 </div>
-                                <div className='c-betting-submit'>
+                                <div className="c-betting-submit">
                                     <button
                                         className={`${'c-btn'} ${'c-btn--bet'}`}
                                         data-disabled={false}
-                                        aria-hidden='true'
+                                        aria-hidden="true"
                                         onClick={handleClickBet}
                                     >
-                                        <span className='c-text'>{t('Common.btn_bet')}</span>
+                                        <span className="c-text">{t('Common.btn_bet')}</span>
                                     </button>
-                                    <button
-                                        className={`${'c-btn'} ${'c-btn--default'}`}
-                                        aria-hidden='true'
-                                        onClick={() => onHide()}
-                                    >
-                                        <span className='c-text'>{t('Common.btn_cancel')}</span>
+                                    <button className={`${'c-btn'} ${'c-btn--default'}`} aria-hidden="true" onClick={() => onHide()}>
+                                        <span className="c-text">{t('Common.btn_cancel')}</span>
                                     </button>
                                 </div>
                             </div>
@@ -471,11 +476,11 @@ const WarnMessage = ({ warnMsg }) => {
     if (!warnMsg) return null;
 
     return (
-        <div className='c-betting-msg sg-bet-panel__betting-msg'>
-            <i className='c-icon c-icon--warning' data-icon="warning" />
-            <span className='c-text'>{warnMsg}</span>
+        <div className="c-betting-msg sg-bet-panel__betting-msg">
+            <i className="c-icon c-icon--warning" data-icon="warning" />
+            <span className="c-text">{warnMsg}</span>
         </div>
     );
-}
+};
 
 export default BetPanelComponent;
