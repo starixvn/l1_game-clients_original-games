@@ -38,7 +38,7 @@ const TotalDiceNumber = memo<TotalDiceNumberProps>(({ total, language, settlemen
         resultText = gc.Translator.t('UnbalancedBigSmall4.small', { lng: language || '' });
     }
     return (
-        <WinnerDisplay result={total} resultText={resultText} className="big-small" />
+        <WinnerDisplay result={total} resultText={resultText} className="big-small" isShowSeparator={true} />
     );
 });
 

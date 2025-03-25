@@ -221,7 +221,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                     <div className={`${Styles['result']} ${this.overrideClasses?.result}`}>{this.renderResultBlock()}</div>
                     <div className={`${Styles['bet-options']} ${this.overrideClasses?.betOptions}`}>
                         {this.renderBettingBlock()}
-                        <ConfirmBet namespace={this.props.namespace}/>
+                        <ConfirmBet namespace={this.props.namespace} />
                         <div className={`${Styles['animation-balance']} ${Styles[`game-${this.state.gameId}`]}`}>{this.renderAnimationBalance()}</div>
                     </div>
                 </div>
@@ -231,11 +231,10 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                     <div className={Styles['statistic-btn']}>
                         <StatisticButton isOpenStatistic={this.state.isOpenStatistic} handleToggle={this.toggleStatistic} />
                     </div>
+                    {this.renderNotice()}
+                    {this.renderWarning()}
                 </div>
                 {this.state.isOpenStatistic && this.renderStatistic()}
-
-                {this.renderNotice()}
-                {this.renderWarning()}
             </>
         );
     }
@@ -257,7 +256,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
             </div>
         );
     }
-    
+
     resetStateWhenReconnect() {
         this.setState({
             isOpenStatistic: false,
