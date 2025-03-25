@@ -36,7 +36,7 @@ export class ConfirmBet extends ObserverComponent<IPropsObserver, IConfirmBet> {
     lastReceivedBet && this.setState({ totalStake: lastReceivedBet.value });
   }
   @render(gc.Bet.BetStore, (store) => store.betChoice)
-  setBetChoice(betChoice: string) {    
+  setBetChoice(betChoice: string) {
     betChoice && this.setState({ betChoice });
   }
 
@@ -61,7 +61,7 @@ export class ConfirmBet extends ObserverComponent<IPropsObserver, IConfirmBet> {
       }, 0);
     });
   };
-  
+
 
   render() {
     const { totalStake, validBet, betChoice, namespace } = this.state;
@@ -72,8 +72,8 @@ export class ConfirmBet extends ObserverComponent<IPropsObserver, IConfirmBet> {
     }
 
     if (isShowNotification) {
-      return (       
-          <BetModalSuccess totalStake={totalStake} />
+      return (
+        <BetModalSuccess totalStake={totalStake} />
       );
     }
 
@@ -135,7 +135,6 @@ const Overlay = ({ totalStake, betChoice, handleClose, namespace }) => {
                 </div>
               </div>
               <label
-                title="Turn off this notification"
                 className={styles['noti-label']}
               >
                 <input
