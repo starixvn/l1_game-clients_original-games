@@ -20,15 +20,16 @@
     align-items: center;
     line-height: 22px;
     padding: 2px 18px;
-    left: -10px;
     margin: 0 auto;
     z-index: 101;
-    background: linear-gradient(90deg,
-            rgba(135, 56, 0, 0) 0%,
-            rgba(242, 127, 11, 0.5) 14%,
-            #ffb107 50%,
-            rgba(242, 127, 11, 0.5) 84%,
-            rgba(135, 56, 0, 0) 100%);
+    background: linear-gradient(
+        90deg,
+        rgba(135, 56, 0, 0) 0%,
+        rgba(242, 127, 11, 0.5) 14%,
+        #ffb107 50%,
+        rgba(242, 127, 11, 0.5) 84%,
+        rgba(135, 56, 0, 0) 100%
+    );
     color: #fff;
     font-size: 14px;
     font-weight: bold;

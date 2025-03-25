@@ -3,14 +3,15 @@ import { RoundHistoryStore } from '@sg/sg-game-client/dist/game/round-histories'
 import { ROUND_STATE, RoundTimeStore } from '@sg/sg-game-client/dist/game/rounds';
 import { SettlementStore } from '@sg/sg-game-client/dist/game/settlements';
 import { render } from '@sg/sg-observer';
-// import { Col, Row } from 'react-bootstrap';
+import { WinnerDisplay } from 'libs/saba-games/src/_shared/components/winner-display/winner-display';
+
 import { RoundDot } from '../../../../_shared/components/dot';
 import { IPropsObserver, IStateObserver, ObserverComponent } from '../../../../_shared/components/observer-component/observer-component';
-import Styles from './sedie-animations.module.scss';
-import { WinnerDisplay } from 'libs/saba-games/src/_shared/components/winner-display/winner-display';
-import { gameStateService } from './services/game-state.service';
 import { SedieResult } from '../type';
+import Styles from './sedie-animations.module.scss';
+import { gameStateService } from './services/game-state.service';
 
+// import { Col, Row } from 'react-bootstrap';
 export interface ISeDieSettlementResultState extends IStateObserver {
     result: gc.GameServiceMessage.TResult;
     roundState: string;
@@ -21,7 +22,6 @@ export interface ISeDieSettlementResultState extends IStateObserver {
 }
 
 export default class SeDieSettlementResult extends ObserverComponent<IPropsObserver, ISeDieSettlementResultState> {
-
     constructor(props: IPropsObserver) {
         super(props);
         this.state = {
@@ -31,19 +31,22 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
             isAnimationResult: false,
             win: 0,
             isFinishShowResult: false,
-            settlementResult: {}
+            settlementResult: {},
         };
     }
 
     @render(RoundTimeStore, (store) => store.roundState)
-    handleRoundState(roundState: string) {
+    private handleRoundState(roundState: string) {
+        if (roundState === ROUND_STATE.STARTING_ROUND || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET) {
+            this.setState({ isFinishShowResult: false, result: {}, settlementResult: {} });
+        }
         this.setState({ roundState });
     }
 
     @render(SettlementStore, (store) => store.currentFinish, {
         fireImmediately: false,
     })
-    renderCurrentFinish(currentFinish: gc.GameServiceMessage.Finish) {
+    private renderCurrentFinish(currentFinish: gc.GameServiceMessage.Finish) {
         if (!currentFinish) {
             return;
         }
@@ -53,19 +56,25 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
             return;
         }
 
-        this.setState({ result, isAnimationResult: true, settlementResult });
+        this.setState({ result, isAnimationResult: true, isFinishShowResult: false, settlementResult });
     }
 
     @render(RoundHistoryStore, (store) => store.firstJoinGameHistory)
-    handleJoinGameAndShowResult(firstJoinGameHistory: gc.RoundHistories.IFirstJoinGameHistory) {
+    private handleJoinGameAndShowResult(firstJoinGameHistory: gc.RoundHistories.IFirstJoinGameHistory) {
+        this.setState({
+            result: {},
+            isFinishShowResult: false,
+        });
+
         if (!firstJoinGameHistory) {
             return;
         }
+
         const result = gameStateService.handleGameHistory(firstJoinGameHistory);
         if (result && gameStateService.validateResult(result as SedieResult)) {
             this.setState({
                 result,
-                isFinishShowResult: true
+                isFinishShowResult: true,
             });
         }
         const lastRound = firstJoinGameHistory?.roundHistory;
@@ -79,8 +88,6 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
         this.setState({ isFinishShowResult: isFinishedShowResult });
     }
 
-
-
     @render(gc.Settlements.SettlementStatusStore, (store) => store.settlementStatus, {
         fireImmediately: false,
     })
@@ -90,10 +97,12 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
 
     renderWinnerDisplay = () => {
         const { settlementResult, isFinishShowResult } = this.state;
-        const result = settlementResult.odd ? gc.Translator.t('SeDie.glossary_odd', { lng: this.props.language || '' }) : gc.Translator.t('SeDie.glossary_even', { lng: this.props.language || '' });
+        const result = settlementResult.odd
+            ? gc.Translator.t('SeDie.glossary_odd', { lng: this.props.language || '' })
+            : gc.Translator.t('SeDie.glossary_even', { lng: this.props.language || '' });
         const resultText = gc.Translator.t('Common.win', { lng: this.props.language || '' });
-        return isFinishShowResult && <WinnerDisplay result={result} resultText={resultText} className={Styles['sedie-result']} />
-    }
+        return isFinishShowResult && <WinnerDisplay result={result} resultText={resultText} className={Styles['sedie-result']} />;
+    };
 
     renderIcons = (result: gc.GameServiceMessage.TResult) => {
         return (

@@ -1,13 +1,12 @@
-import * as gc from "@sg/sg-game-client";
-import { SedieResult } from "../../type";
+import * as gc from '@sg/sg-game-client';
 
+import { SedieResult } from '../../type';
 
 export interface GameState {
     result?: SedieResult;
     roundState: string;
     isAnimationResult: boolean;
 }
-
 
 class GameStateService {
     public handleRoundState(roundState: string): void {
@@ -31,13 +30,13 @@ class GameStateService {
     }
 
     public validateResult(result: SedieResult): boolean {
-        return !!(
-            result?.red1 &&
-            result?.red2 &&
-            result?.red3 &&
-            result?.red4
-        );
+        Object.keys(result).forEach((key) => {
+            if ((key as keyof SedieResult) === undefined) {
+                return false;
+            }
+        });
+        return true;
     }
 }
 
-export const gameStateService = new GameStateService(); 
+export const gameStateService = new GameStateService();

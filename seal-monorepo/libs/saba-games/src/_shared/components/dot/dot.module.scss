@@ -10,14 +10,13 @@
     pointer-events: none;
     color: #fff;
     z-index: 1;
-    font-family: "Segoe UI";
+    font-family: 'Segoe UI';
     font-weight: 600;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     line-height: 1.5rem;
 
-
     &:before {
-        content: "";
+        content: '';
         position: absolute;
         top: 0.0625rem;
         left: 0.0625rem;
@@ -26,8 +25,6 @@
         border-radius: 100%;
         z-index: -1;
     }
-
-
 
     &.large {
         height: 2rem;
@@ -72,8 +69,6 @@
     }
 }
 
-
-
 .blink {
     animation: blinker 2s linear infinite;
 }
@@ -91,28 +86,6 @@
         width: calc(100% - 2px);
         position: absolute;
     }
-
-    &.kenopromax,
-    &.kenomatch1,
-    &.kenomatch2,
-    &.kenopower1,
-    &.kenopower2,
-    &.megakeno,
-    &.megakeno2,
-    &.kenomini,
-    &.kenomini2,
-    &.kenosouth,
-    &.kenoeast,
-    &.kenowest,
-    &.kenonorth {
-        color: #fff;
-        background: var(--bigSmall-dot-big-border);
-        box-shadow: var(--bigSmall-dot-big-shadow);
-
-        &:before {
-            background: var(--bigSmall-dot-big-background);
-        }
-    }
 }
 
 .dot-grid-even {
@@ -124,27 +97,6 @@
 
     &:before {
         background: linear-gradient(180deg, #eeeeee 0%, #cccccc 100%);
-    }
-
-    &.kenopromax,
-    &.kenomatch1,
-    &.kenomatch2,
-    &.kenopower1,
-    &.kenopower2,
-    &.megakeno,
-    &.megakeno2,
-    &.kenomini,
-    &.kenomini2,
-    &.kenosouth,
-    &.kenoeast,
-    &.kenowest,
-    &.kenonorth {
-        color: #fff;
-        background: linear-gradient(180deg, #569ce9 -6.58%, #1f5e9f 100%);
-
-        &:before {
-            background: linear-gradient(180deg, #4c91e2 0%, #306ca6 100%);
-        }
     }
 }
 
@@ -159,21 +111,6 @@
         height: calc(100% - 2px);
         width: calc(100% - 2px);
         position: absolute;
-    }
-
-
-    &.kenopromax,
-    &.kenomatch1,
-    &.kenomatch2,
-    &.kenopower1,
-    &.kenopower2 {
-        color: #fff;
-        background: var(--bigSmall-dot-small-border);
-        box-shadow: var(--bigSmall-dot-small-shadow);
-
-        &:before {
-            background: var(--bigSmall-dot-small-background);
-        }
     }
 }
 
