@@ -1,21 +1,19 @@
 :root {
-  --bigsmall-big-bg: linear-gradient(
-    180deg,
-    hsla(0, 0%, 45%, 1) 0%,
-    hsla(0, 0%, 18%, 1) 100%
-  );
+  --bigsmall-big-bg: linear-gradient(180deg,
+      hsla(0, 0%, 48%, 1) 0%,
+      hsla(0, 0%, 23%, 1) 100%);
   --bigsmall-big-border: none;
-  --bigsmall-small-bg: linear-gradient(
-    180deg,
-    hsla(0, 0%, 100%, 1) 0%,
-    hsla(0, 0%, 51%, 1) 100%
-  );
+  --bigsmall-small-bg: linear-gradient(180deg,
+      hsla(0, 0%, 100%, 1) 0%,
+      hsla(0, 0%, 51%, 1) 100%);
   --bigsmall-small-border: none;
   --bigsmall-next-bg: #ccc;
   --bigsmall-next-border: #ddd;
   --bigsmall-text-light: #fff;
   --bigsmall-text-dark: #000000;
   --bigsmall-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  --small-bg: linear-gradient(180deg, hsla(0, 0%, 100%, 1) 0%, hsla(0, 0%, 45%, 1) 100%);
+  --big-bg: linear-gradient(180deg, hsla(0, 0%, 45%, 1) 0%, hsla(0, 0%, 18%, 1) 100%);
 }
 
 %dot {
@@ -77,11 +75,12 @@
   background: var(--dot-even-border);
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
   color: var(--dot-even-text-color);
+
   &:before {
-      background: var(--dot-current-highlight) !important;
-      height: calc(100% - 2px);
-      width: calc(100% - 2px);
-      position: absolute;
+    background: var(--dot-current-highlight) !important;
+    height: calc(100% - 2px);
+    width: calc(100% - 2px);
+    position: absolute;
   }
 }
 
@@ -96,7 +95,7 @@
 // Big-Small
 .dot-big {
   @extend %dot;
-  background: var(--bigsmall-big-border);
+  background: var(--big-bg);
   box-shadow: var(--bigsmall-box-shadow);
 
   &:before {
@@ -106,7 +105,7 @@
 
 .dot-small {
   @extend %dot;
-  background: var(--bigsmall-small-border);
+  background: var(--small-bg);
   box-shadow: var(--bigsmall-box-shadow);
   color: var(--bigsmall-text-dark);
 
