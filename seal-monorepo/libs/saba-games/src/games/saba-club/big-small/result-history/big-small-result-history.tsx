@@ -1,6 +1,5 @@
 import * as gc from '@sg/sg-game-client';
 import { render } from '@sg/sg-observer';
-import classNames from 'classnames';
 
 import Dice from '../../../../_shared/components/dice';
 import { IPropsObserver, IStateObserver, ObserverComponent } from '../../../../_shared/components/observer-component/observer-component';
@@ -46,16 +45,7 @@ export default class BigSmallResultHistory extends ObserverComponent<IBigSmallRe
 
         const resultText = big ? gc.Translator.t('UnbalancedBigSmall4.big') : gc.Translator.t('UnbalancedBigSmall4.small');
 
-        return (
-            <div
-                className={classNames({
-                    [Styles.big]: big,
-                    [Styles.small]: !big,
-                })}
-            >
-                {resultText}
-            </div>
-        );
+        return <div className={`${Styles['result-text']}`}>{resultText}</div>;
     }
 
     renderRoundResult(roundHistory: gc.RoundHistories.RoundHistory, index: number) {
@@ -89,7 +79,6 @@ export default class BigSmallResultHistory extends ObserverComponent<IBigSmallRe
                         })}
                     </div>
                 </div>
-
             </div>
         );
     }

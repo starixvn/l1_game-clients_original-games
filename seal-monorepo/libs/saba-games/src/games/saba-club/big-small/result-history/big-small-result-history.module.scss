@@ -37,10 +37,9 @@
                 background-color: var(--c-ng-result-highlight);
             }
 
-            .big,
-            .small {
+            .result-text {
                 display: flex;
-                justify-content: flex-end;
+                justify-content: center;
                 min-width: 3rem;
                 font-weight: bold;
                 color: inherit;

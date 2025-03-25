@@ -1,12 +1,9 @@
 import * as gc from '@sg/sg-game-client';
 import { render } from '@sg/sg-observer';
 import classNames from 'classnames';
+
 import { RoundDot } from '../../../../_shared/components/dot';
-import {
-    IPropsObserver,
-    IStateObserver,
-    ObserverComponent,
-} from '../../../../_shared/components/observer-component/observer-component';
+import { IPropsObserver, IStateObserver, ObserverComponent } from '../../../../_shared/components/observer-component/observer-component';
 import { SeDieChoices, SedieResult, SedieSettlementResult } from '../type';
 import Styles from './result-history.module.scss';
 
@@ -50,13 +47,7 @@ export class SedieResultHistory extends ObserverComponent<ISiedieResultHistoryPr
                 <div className={Styles['result-wrapper-content']}>
                     <div className={Styles['result-content']}>
                         {roundHistories.map((roundHistory, index) => {
-                            return (
-                                <SeDieRoundHistoryComponent
-                                    key={index}
-                                    roundHistory={roundHistory}
-                                    index={index}
-                                />
-                            )
+                            return <SeDieRoundHistoryComponent key={index} roundHistory={roundHistory} index={index} />;
                         })}
                     </div>
                 </div>
@@ -65,20 +56,15 @@ export class SedieResultHistory extends ObserverComponent<ISiedieResultHistoryPr
     }
 }
 
-export const SeDieRoundHistoryComponent: React.FC<ISeDieRoundHistoryComponentProps> = ({
-    roundHistory,
-    index
-}) => {
+export const SeDieRoundHistoryComponent: React.FC<ISeDieRoundHistoryComponentProps> = ({ roundHistory, index }) => {
     const settlement = roundHistory.settlementResult as SedieSettlementResult;
-    const trueKey = Object.keys(settlement).find((key) => settlement[key] && !["odd", "even"].includes(key));
+    const trueKey = Object.keys(settlement).find((key) => settlement[key] && !['odd', 'even'].includes(key));
     // TODO: move to constant
     const gameName = 'SeDie';
-    const oddEven = settlement.odd ? "odd" : "even";
-    const isOdd = settlement.odd;
+    const oddEven = settlement.odd ? 'odd' : 'even';
     const resultText = `${gc.Translator.t(`${gameName}.glossary_${oddEven}`)}, ${gc.Translator.t(`${gameName}.glossary_${trueKey}`)}`;
 
     return (
-
         <div
             className={classNames(Styles['result-item'], {
                 [Styles['first-result-item']]: index === 0,
@@ -90,7 +76,7 @@ export const SeDieRoundHistoryComponent: React.FC<ISeDieRoundHistoryComponentPro
                 <DotGroup result={roundHistory.result as SedieResult} />
             </div>
             <div className={Styles['right-content']}>
-                <BetModeText isOdd={isOdd} resultText={resultText} />
+                <BetModeText resultText={resultText} />
             </div>
         </div>
     );
@@ -100,34 +86,24 @@ interface DotGroupProps {
     result: SedieResult;
 }
 
-export const DotGroup: React.FC<DotGroupProps> = (({ result }) => {
+export const DotGroup: React.FC<DotGroupProps> = ({ result }) => {
     const dots = [result.red1, result.red2, result.red3, result.red4];
 
     return (
         <div className={Styles['item-dot']}>
             {dots.map((isRed, index) => (
-                <RoundDot
-                    key={index}
-                    choice={isRed ? SeDieChoices.odd : SeDieChoices.even}
-                    size="medium"
-                />
+                <RoundDot key={index} choice={isRed ? SeDieChoices.odd : SeDieChoices.even} size="medium" />
             ))}
         </div>
     );
-});
+};
 
-
-export const BetModeText: React.FC<{ isOdd: boolean, resultText: string }> = ({ isOdd, resultText }) => {
-    return (
-        <div className={Styles[isOdd ? 'odd' : 'even']}>
-            {resultText}
-        </div>
-    )
+export const BetModeText: React.FC<{ resultText: string }> = ({ resultText }) => {
+    return <div className={Styles['result-text']}>{resultText}</div>;
 };
 BetModeText.displayName = 'BetModeText';
 
-
-export const RoundTitle: React.FC<{ roundId: number }> = (({ roundId }) => (
+export const RoundTitle: React.FC<{ roundId: number }> = ({ roundId }) => (
     <div>{`${gc.Translator.translate('Common.result_no')} ${roundId}`}</div>
-));
+);
 RoundTitle.displayName = 'RoundTitle';

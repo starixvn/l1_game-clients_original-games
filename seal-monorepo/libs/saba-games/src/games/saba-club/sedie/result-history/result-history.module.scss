@@ -40,13 +40,14 @@
                 flex: 0 0 auto;
                 display: flex;
                 align-items: center;
-                padding-right: 10px;
             }
 
             .right-content {
-                flex: 0 0 auto;
                 display: flex;
+                justify-content: center;
                 align-items: center;
+                width: 100%;
+
                 gap: 10px;
                 color: var(--base-color);
             }
@@ -54,18 +55,11 @@
             .item-dot {
                 display: flex;
                 gap: 2px;
-                margin-left: 16px;
+                margin: 0 16px;
             }
 
-            .odd {
+            .result-text {
                 font-weight: bold;
-                min-width: 40px;
-                text-align: center;
-            }
-
-            .even {
-                font-weight: bold;
-                min-width: 40px;
                 text-align: center;
             }
         }
