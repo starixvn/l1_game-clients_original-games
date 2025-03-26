@@ -9,6 +9,7 @@ import {
 import BetPanelComponent from '../bet-panel/bet-panel';
 import { IStateObserver, ObserverComponent } from '../observer-component/observer-component';
 import Styles from './bet-option.module.scss';
+import AuthorizationHandler from '../../handlers/authorization-handler';
 
 interface BettingBlockProps {
     odd: number;
@@ -32,7 +33,7 @@ interface IBettingBlockState extends IStateObserver {
 
 class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockState> {
     private timeoutId: NodeJS.Timeout | null = null;
-    private readonly maxTimeoutDuration = 10000;
+    private authHandler: AuthorizationHandler;
 
     constructor(props: BettingBlockProps) {
         super(props);
@@ -49,6 +50,12 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
         };
 
         this.handleOnClick = this.handleOnClick.bind(this);
+        this.authHandler = new AuthorizationHandler(
+            this.state.isAuthorized,
+            this.state.isSignedIn,
+            () => this.signIn(),
+            () => this.autoCreateNickname()
+        );
     }
 
     componentWillUnmount() {
@@ -56,6 +63,7 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
             clearTimeout(this.timeoutId);
         }
 
+        this.authHandler.clearTimeout();
         super.componentWillUnmount();
     }
 
@@ -126,34 +134,14 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
     }
 
     protected waitForAuthorization(betChoice: string, odd: number) {
-        const interval = 100;
-        const startTime = Date.now();
-        this.clearTimeout();
-
-        const checkAuthorization = () => {
-            if (this.state.isAuthorized) {
-                this.handleUserSignIn();
-                this.updateBettingState(betChoice, odd);
-                this.clearTimeout();
-            } else if (Date.now() - startTime < this.maxTimeoutDuration) {
-                this.timeoutId = setTimeout(checkAuthorization, interval);
-            }
-        };
-
-        this.timeoutId = setTimeout(checkAuthorization, interval);
-    }
-
-    protected handleUserSignIn() {
-        if (!this.state.isSignedIn) {
-            this.signIn();
-        }
-    }
-
-    protected clearTimeout() {
-        if (this.timeoutId) {
-            clearTimeout(this.timeoutId);
-            this.timeoutId = null;
-        }
+        this.authHandler = new AuthorizationHandler(
+            this.state.isAuthorized,
+            this.state.isSignedIn,
+            () => this.signIn(),
+            () => this.autoCreateNickname()
+        );
+        this.authHandler.waitForAuthorization();
+        this.updateBettingState(betChoice, odd);
     }
 
     @handle(Auth.AuthHandlers.Authorize, (handler) => handler.handleAutoGenerateName())

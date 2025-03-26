@@ -26,6 +26,7 @@ import Dice from '../dice';
 import { RoundDot } from '../dot';
 import { IPropsObserver, IStateObserver, ObserverComponent } from '../observer-component/observer-component';
 import './bet-panel.scss';
+import { localStorageKeys, StorageManager } from '../../utils/storage-manager';
 
 const WARNING_CLOSE_DELAY = 60000;
 
@@ -44,6 +45,11 @@ export interface IBetPanel extends IStateObserver {
     minBet: number;
     maxBet: number;
     maxBetPerChoices: gc.GameServiceMessage.MaxBetPerChoices;
+}
+
+export interface ILatestBetRecord {
+    namespace: string;
+    roundId: number;
 }
 
 class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends ObserverComponent<IPropsObserver, IStateObserver> {
@@ -247,8 +253,23 @@ const BetPanel: React.FC<{
         setAmount(0);
     };
 
+    const updateLatestBetToStorage = (namespace: string, clientRoundId: number) => {
+        const existingHistory = StorageManager.get(localStorageKeys.betHistory) as ILatestBetRecord[];
+        let betHistory = Array.isArray(existingHistory) ? existingHistory : [];
+    
+        const newBet = { namespace, roundId: clientRoundId };
+        const existingNamespaceIndex = betHistory.findIndex(bet => bet.namespace === namespace);
+    
+        if (existingNamespaceIndex !== -1) {
+            betHistory[existingNamespaceIndex].roundId = clientRoundId;
+        } else {
+            betHistory.push(newBet);
+        }
+    
+        StorageManager.set(localStorageKeys.betHistory, betHistory);
+    };
+
     const handleClickBet = () => {
-        // TODO: 確認跟memberSite的betting api連動？或是照@sg api就好
         const { newAmount: validatedAmount, msg } = checkValidAmount(amount, min, max);
 
         if (msg) {
@@ -265,6 +286,7 @@ const BetPanel: React.FC<{
         if (betChoice) {
             handleBet?.(validatedAmount, betChoice);
             onHide?.();
+            updateLatestBetToStorage(namespace, clientRoundId);
         }
     };
 

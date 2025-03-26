@@ -3,7 +3,7 @@ import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
 import { handle, observer, render } from '@sg/sg-observer';
 
 import { IGameBaseState } from '../../../_shared/components/game-base';
-import GatewayGameBase from '../../../_shared/components/game-base/gateway-gamebase';
+import GatewayGameBase, { IGatewayGameBaseState } from '../../../_shared/components/game-base/gateway-gamebase';
 import { configGameContainer } from '../../../_shared/components/game-base/startup';
 import { GameBettingOptionsContext } from '../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
 import { FunctionUtils } from '../../../_shared/utils/funtion-utils';
@@ -15,7 +15,7 @@ import VIPSeDieBetOptions from './bet-option/vip-sedie-bet-options';
 import { containerOptions, setting } from './game-settings';
 
 @observer(setting.mainObserverNamespace)
-export default class VipSeDie extends GatewayGameBase<{ namespace: string; language: string }, IGameBaseState> {
+export default class VipSeDie extends GatewayGameBase<{ namespace: string; language: string }, IGatewayGameBaseState> {
     override overrideClasses = {
         blockWrapper: Styles['block-wrapper'],
         betOptions: Styles['bet-options-block'],

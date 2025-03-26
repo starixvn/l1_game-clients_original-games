@@ -3,7 +3,7 @@ import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
 import { handle, observer, render } from '@sg/sg-observer';
 
 import { IGameBaseState } from '../../../_shared/components/game-base';
-import GatewayGameBase from '../../../_shared/components/game-base/gateway-gamebase';
+import GatewayGameBase, { IGatewayGameBaseState } from '../../../_shared/components/game-base/gateway-gamebase';
 import { configGameContainer } from '../../../_shared/components/game-base/startup';
 import { FunctionUtils } from '../../../_shared/utils/funtion-utils';
 import Styles from './baccarat.module.scss';
@@ -16,7 +16,7 @@ import { IBaccaratBet } from './type';
 
 import { GameBettingOptionsContext } from 'libs/saba-games/src/_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
 import type { GameBaseProps } from '../../../_shared/components/game-base/type';
-interface IBaccaratState extends IGameBaseState {
+interface IBaccaratState extends IGatewayGameBaseState {
     previousWinningBet?: IBaccaratBet['type'];
     roundState: string;
     isExpanded: boolean;

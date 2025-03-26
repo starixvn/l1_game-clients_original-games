@@ -109,4 +109,5 @@ export class StorageManager {
 
 export const localStorageKeys = {
     isAuthorized: 'isAuthorized',
+    betHistory: 'betHistory',
 };

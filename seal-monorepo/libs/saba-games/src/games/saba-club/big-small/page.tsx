@@ -2,7 +2,7 @@ import * as gc from '@sg/sg-game-client';
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
 import { handle, observer, render } from '@sg/sg-observer';
 import { IGameBaseState } from '../../../_shared/components/game-base';
-import GatewayGameBase from '../../../_shared/components/game-base/gateway-gamebase';
+import GatewayGameBase, { IGatewayGameBaseState } from '../../../_shared/components/game-base/gateway-gamebase';
 import { configGameContainer } from '../../../_shared/components/game-base/startup';
 import type { GameBaseProps } from '../../../_shared/components/game-base/type';
 import { GameBettingOptionsContext } from '../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
@@ -14,7 +14,7 @@ import { BigSmallRoundHistory } from './round-history';
 import { BigSmallSettlementResult } from './settlement-result';
 import { BigSmallStatistic } from './statistic';
 
-interface IBigSmallPageState extends IGameBaseState {
+interface IBigSmallPageState extends IGatewayGameBaseState {
     activePanelId: any;
     showBetPanel: boolean;
     gameId: number;
