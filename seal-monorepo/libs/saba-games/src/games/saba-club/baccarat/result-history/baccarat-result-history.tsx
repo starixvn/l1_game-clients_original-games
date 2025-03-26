@@ -53,31 +53,33 @@ export class BaccaratResultHistory extends ObserverComponent<IBaccaratResultHist
         }
     }
 
+    private renderResultWithBreaks(texts: string[]) {
+        return texts.map((text, index) => (
+            <React.Fragment key={index}>
+                {text}
+                {index < texts.length - 1 && (
+                    <>
+                        ,{' '}
+                        <br />
+                    </>
+                )}
+            </React.Fragment>
+        ));
+    }
+
     renderRoundResult(roundHistory: gc.RoundHistories.RoundHistory, index: number) {
         const result = roundHistory?.result as Result;
         const settlement = roundHistory.settlementResult;
         let resultArray: string[] = [];
 
         const settlementKeys = ['player', 'banker', 'tie', 'playerPair', 'bankerPair'];
+        const langTh = this.props.language === 'th'
         settlementKeys.forEach((key) => {
             if (settlement[key]) {
                 resultArray.push(gc.Translator.t(`Baccarat.glossary_${key}`) || '');
             }
         });
-
-        const resultString = this.props.language === 'th'
-            ? resultArray.map((text, index) => (
-                <React.Fragment key={index}>
-                    {text}
-                    {index < resultArray.length - 1 && (
-                        <>
-                            ,{' '}
-                            <br />
-                        </>
-                    )}
-                </React.Fragment>
-            ))
-            : resultArray.join(', ');
+        const resultString = langTh ? this.renderResultWithBreaks(resultArray) : resultArray.join(', ');
         return (
             <div className={Styles.historyRow} key={index}>
                 <div className={Styles.contentWrapper}>
