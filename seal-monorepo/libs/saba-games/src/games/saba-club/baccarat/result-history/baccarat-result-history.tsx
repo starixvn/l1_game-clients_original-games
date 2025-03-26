@@ -6,6 +6,7 @@ import { Result } from '../baccarat';
 import { cardStateEmitter } from '../services/card-state-emitter';
 import Styles from './baccarat-result-history.module.scss';
 import { ResultCardSection } from './result-card-section';
+import React from 'react';
 
 export interface IBaccaratResultHistoryProps extends IPropsObserver {
     language: string;
@@ -64,8 +65,19 @@ export class BaccaratResultHistory extends ObserverComponent<IBaccaratResultHist
             }
         });
 
-        const resultString = resultArray.join(', ');
-
+        const resultString = this.props.language === 'th' || this.props.language === 'vi'
+            ? resultArray.map((text, index) => (
+                <React.Fragment key={index}>
+                    {text}
+                    {index < resultArray.length - 1 && (
+                        <>
+                            ,{' '}
+                            <br />
+                        </>
+                    )}
+                </React.Fragment>
+            ))
+            : resultArray.join(', ');
         return (
             <div className={Styles.historyRow} key={index}>
                 <div className={Styles.contentWrapper}>
@@ -73,7 +85,9 @@ export class BaccaratResultHistory extends ObserverComponent<IBaccaratResultHist
                     <ResultCardSection cards={result?.player} />
                     <span className={Styles.divider} />
                     <ResultCardSection cards={result?.banker} />
-                    <span className={`${Styles.winner}`}>{resultString}</span>
+                    <span className={`${Styles.winner}`}>
+                        {resultString}
+                    </span>
                 </div>
             </div>
         );
