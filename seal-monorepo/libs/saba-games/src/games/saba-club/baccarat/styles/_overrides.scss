@@ -16,15 +16,6 @@ $tie-color: #06cd0e;
 $tie-color-start: #06cd0e;
 $tie-color-end: #00900e;
 
-// Game-specific mixins
-@mixin banker-gradient {
-    background: linear-gradient(0deg, $banker-color-start 6.041653826832771%, $banker-color-end 100%);
-}
-
-@mixin player-gradient {
-    background: linear-gradient(0deg, $player-color-start 0%, $player-color-end 100%);
-}
-
 @mixin baccarat-header {
     background-color: $baccarat-header-bg;
     padding: $spacing-md;

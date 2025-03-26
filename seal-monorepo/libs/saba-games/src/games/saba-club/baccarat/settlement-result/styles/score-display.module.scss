@@ -33,12 +33,12 @@
 
     &.player-score {
         right: 20px;
-        background: #{$player-color};
+        background: linear-gradient(0deg, $player-color-start 0%, $player-color-end 100%);
     }
 
     &.banker-score {
-        background: #{$banker-color};
         left: 20px;
+        background: linear-gradient(0deg, $banker-color-start 6.041653826832771%, $banker-color-end 100%);
     }
 }
 

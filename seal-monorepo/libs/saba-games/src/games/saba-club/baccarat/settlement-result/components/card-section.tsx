@@ -67,12 +67,7 @@ export const CardSection: React.FC<CardSectionProps> = ({ cards, label, type, pl
                 {isShowResult &&
                     cards.map((card, index) => (
                         <div key={card.order}>
-                            <ScoreDisplay
-                                score={card.accumulatedScore}
-                                cardsCount={index + 1}
-                                type={type}
-                                visible={visibleScores[card.order]}
-                            />
+                            <ScoreDisplay score={card.accumulatedScore} type={type} visible={visibleScores[card.order]} />
                         </div>
                     ))}
             </div>
