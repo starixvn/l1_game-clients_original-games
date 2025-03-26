@@ -74,12 +74,12 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     abstract connectLiveGateway(): void;
 
-    onVisibilityChange = () => {};
+    onVisibilityChange = () => { };
     @handle(gc.GatewayConnection.GatewayConnectionHandlers.ConnectHandler, (handler) => handler.handle())
-    connectToServiceGateway() {}
+    connectToServiceGateway() { }
 
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handle())
-    terminateConnection() {}
+    terminateConnection() { }
 
     @render(gc.Connection.ConnectionStore, (store) => store.isSignedIn)
     handleConnected(isSignedIn: boolean) {
@@ -176,7 +176,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     @handle(Lobby.LobbyHandlers.TryToConnectHandler)
-    tryToConnectHandler() {}
+    tryToConnectHandler() { }
 
     @render(gc.Connection.ConnectionStore, (store) => store.isConnectFailed)
     handleConnectFail(isConnectFailed: boolean) {
