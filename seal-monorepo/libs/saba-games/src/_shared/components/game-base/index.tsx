@@ -92,7 +92,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     renderNotice(): JSX.Element {
-        return <Notice namespace={this.props.namespace} isDisableGame={this.state.showDisabledPopup}></Notice>;
+        return <Notice namespace={this.props.namespace} isDisableGame={this.state.showDisabledPopup} language={this.props.language}></Notice>;
     }
 
     renderWarning(): JSX.Element {

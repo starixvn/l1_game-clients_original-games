@@ -8,10 +8,12 @@ import { NoticeInfo } from '@sg/sg-game-client/dist/game/notices';
 export interface INoticeState extends IStateObserver {
     notice: gc.Notices.Notice;
     isShow: boolean;
+    language?: string;
 }
 
 export interface INoticeProps extends IPropsObserver {
     isDisableGame?: boolean;
+    language?: string;
 }
 
 export default class Notice extends ObserverComponent<INoticeProps, INoticeState> {
@@ -69,7 +71,7 @@ export default class Notice extends ObserverComponent<INoticeProps, INoticeState
             clearTimeout(this.timer);
             this.timer = null;
         }
-        
+
         this.setState({ isShow: false }, () => {
             setTimeout(() => {
                 this.isJoiningGame = false;
@@ -79,7 +81,6 @@ export default class Notice extends ObserverComponent<INoticeProps, INoticeState
 
     render() {
         const { notice, isShow } = this.state;
-
         if (!isShow) {
             return <></>;
         }
@@ -93,7 +94,7 @@ export default class Notice extends ObserverComponent<INoticeProps, INoticeState
 
         return (
             <NoticeDialog {...notice} onClose={handleOnClose}>
-                <div>{notice?.message}</div>
+                <div>{gc.Translator.t('Common.message_disabled_game', { lng: this.props.language || '' })}</div>
             </NoticeDialog>
         );
     }
