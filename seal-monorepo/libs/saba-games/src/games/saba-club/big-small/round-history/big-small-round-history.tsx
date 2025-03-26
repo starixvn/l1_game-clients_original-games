@@ -4,6 +4,13 @@ import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_
 import { BigSmallRoundDot } from "../dot";
 import { BigSmallChoices, BigSmallSettlementResult } from "../type";
 import Styles from "./big-small-round-history.module.scss";
+import { BigSmallRoundHistoryTooltip } from "./tooltip";
+
+interface BigSmallResult {
+    dice1: number;
+    dice2: number;
+    dice3: number;
+}
 
 export interface IBigSmallRoundHistoryProps extends IPropsObserver {
     language: string;
@@ -57,26 +64,28 @@ export default class BigSmallRoundHistory extends ObserverComponent<IBigSmallRou
         };
 
         if (settlementResult && typeof settlementResult === "object") {
-                const data = settlementResult as Record<string, unknown>;
-                result.big = !!data.big;
-                result.small = !!data.small;
+            const data = settlementResult as Record<string, unknown>;
+            result.big = !!data.big;
+            result.small = !!data.small;
 
-                if (result.big) {
-                    result.winner = BigSmallChoices.big;
-                } else if (result.small) {
-                    result.winner = BigSmallChoices.small;
-                }
+            if (result.big) {
+                result.winner = BigSmallChoices.big;
+            } else if (result.small) {
+                result.winner = BigSmallChoices.small;
+            }
         }
 
         return result;
     }
 
     private RoundHistoryItem(roundHistory: gc.RoundHistories.RoundHistory): JSX.Element {
-        if (!roundHistory.settlementResult) {
+        if (!roundHistory.settlementResult || !roundHistory.result) {
             return <></>;
         }
-        
+
         const settlement = this.getSettlementResult(roundHistory.settlementResult);
+        const result = roundHistory.result as unknown as BigSmallResult;
+        const diceValues = [result.dice1, result.dice2, result.dice3];
         const t = (key) => gc.Translator.translate(key, { languageId: gc.Translator.getCurrentLanguageId() });
 
         return (
@@ -87,6 +96,11 @@ export default class BigSmallRoundHistory extends ObserverComponent<IBigSmallRou
                     value={t(`UnbalancedBigSmall4.beadboard_${settlement.winner}`)}
                 />
                 <span className={Styles["arrow"]}></span>
+                <BigSmallRoundHistoryTooltip
+                    roundId={roundHistory.roundId}
+                    winner={settlement.winner}
+                    diceValues={diceValues}
+                />
             </div>
         );
     }
