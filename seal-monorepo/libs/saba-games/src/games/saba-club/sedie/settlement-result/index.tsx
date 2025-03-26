@@ -1,15 +1,15 @@
-import * as gc from '@sg/sg-game-client';
-import { RoundHistoryStore } from '@sg/sg-game-client/dist/game/round-histories';
-import { ROUND_STATE, RoundTimeStore } from '@sg/sg-game-client/dist/game/rounds';
-import { SettlementStore } from '@sg/sg-game-client/dist/game/settlements';
-import { render } from '@sg/sg-observer';
-import { WinnerDisplay } from 'libs/saba-games/src/_shared/components/winner-display/winner-display';
+import * as gc from "@sg/sg-game-client";
+import { RoundHistoryStore } from "@sg/sg-game-client/dist/game/round-histories";
+import { ROUND_STATE, RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds";
+import { SettlementStore } from "@sg/sg-game-client/dist/game/settlements";
+import { render } from "@sg/sg-observer";
+import { WinnerDisplay } from "libs/saba-games/src/_shared/components/winner-display/winner-display";
 
-import { RoundDot } from '../../../../_shared/components/dot';
-import { IPropsObserver, IStateObserver, ObserverComponent } from '../../../../_shared/components/observer-component/observer-component';
-import { SedieResult } from '../type';
-import Styles from './sedie-animations.module.scss';
-import { gameStateService } from './services/game-state.service';
+import { RoundDot } from "../../../../_shared/components/dot";
+import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
+import { SedieResult } from "../type";
+import Styles from "./sedie-animations.module.scss";
+import { gameStateService } from "./services/game-state.service";
 
 // import { Col, Row } from 'react-bootstrap';
 export interface ISeDieSettlementResultState extends IStateObserver {
@@ -61,10 +61,11 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
 
     @render(RoundHistoryStore, (store) => store.firstJoinGameHistory)
     private handleJoinGameAndShowResult(firstJoinGameHistory: gc.RoundHistories.IFirstJoinGameHistory) {
-        this.setState({
-            result: {},
-            isFinishShowResult: false,
-        });
+        const { roundState } = this.state;
+
+        if (roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET) {
+            return;
+        }
 
         if (!firstJoinGameHistory) {
             return;

@@ -1,19 +1,15 @@
 import * as gc from "@sg/sg-game-client";
-import React from "react";
 import { RoundHistoryStore } from "@sg/sg-game-client/dist/game/round-histories";
-import { RoundStore, RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds";
-import { render } from "@sg/sg-observer";
-import {
-    ObserverComponent,
-    type IPropsObserver,
-    type IStateObserver,
-} from "../../../../_shared/components/observer-component/observer-component";
-import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
-import { BigSmallResult } from "../type";
+import { ROUND_STATE, RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds";
 import { SettlementStore } from "@sg/sg-game-client/dist/game/settlements";
-import { gameStateService } from "./services/game-state.service";
+import { render } from "@sg/sg-observer";
+import React from "react";
+
+import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
+import { BigSmallResult } from "../type";
 import styles from "./big-small-settlement-result.module.scss";
 import { DiceDisplay } from "./components/dice-display";
+import { gameStateService } from "./services/game-state.service";
 
 const DEFAULT_RESULT: BigSmallResult = {
     dice1: 0,
@@ -36,11 +32,11 @@ export default class BigSmallSettlementResult extends ObserverComponent<IPropsOb
         this.state = {
             dispose: null,
             result: DEFAULT_RESULT,
-            roundState: "",
+            roundState: '',
             isAnimationResult: false,
             error: undefined,
             isResultUpdated: false,
-            settlementResult: undefined
+            settlementResult: undefined,
         };
     }
     @render(RoundTimeStore, (store) => store.roundState)
@@ -70,7 +66,7 @@ export default class BigSmallSettlementResult extends ObserverComponent<IPropsOb
                     result,
                     isAnimationResult: true,
                     isResultUpdated: true,
-                    settlementResult: currentFinish.settlementResult
+                    settlementResult: currentFinish.settlementResult,
                 });
             }
         } catch (error) {
@@ -80,12 +76,18 @@ export default class BigSmallSettlementResult extends ObserverComponent<IPropsOb
 
     @render(RoundHistoryStore, (store) => store.firstJoinGameHistory)
     private handleJoinGameAndShowResult(firstJoinGameHistory: gc.RoundHistories.IFirstJoinGameHistory): void {
+        const { roundState } = this.state;
+
+        if (roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET) {
+            return;
+        }
+
         try {
             const result = gameStateService.handleGameHistory(firstJoinGameHistory);
             if (result && gameStateService.validateResult(result)) {
                 this.setState({
                     result,
-                    settlementResult: firstJoinGameHistory.roundHistory.settlementResult
+                    settlementResult: firstJoinGameHistory.roundHistory.settlementResult,
                 });
             }
         } catch (error) {
@@ -99,14 +101,24 @@ export default class BigSmallSettlementResult extends ObserverComponent<IPropsOb
         if (!result || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET || !isResultUpdated) {
             return (
                 <div className={styles.settlementContainer}>
-                    <DiceDisplay result={DEFAULT_RESULT} isAnimationResult={false} language={this.props.language} settlementResult={this.state.settlementResult} />
+                    <DiceDisplay
+                        result={DEFAULT_RESULT}
+                        isAnimationResult={false}
+                        language={this.props.language}
+                        settlementResult={this.state.settlementResult}
+                    />
                 </div>
             );
         }
 
         return (
             <div className={styles.settlementContainer}>
-                <DiceDisplay result={result} isAnimationResult={isAnimationResult} language={this.props.language} settlementResult={this.state.settlementResult} />
+                <DiceDisplay
+                    result={result}
+                    isAnimationResult={isAnimationResult}
+                    language={this.props.language}
+                    settlementResult={this.state.settlementResult}
+                />
             </div>
         );
     }
