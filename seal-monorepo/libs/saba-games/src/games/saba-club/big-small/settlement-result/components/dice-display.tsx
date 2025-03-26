@@ -37,7 +37,7 @@ const TotalDiceNumber = memo<TotalDiceNumberProps>(({ total, language, settlemen
     if (settlement.big) {
         resultText += gc.Translator.t('UnbalancedBigSmall4.big', { lng: language || '' });
     } else if (settlement.small) {
-        resultText += `${gc.Translator.t('UnbalancedBigSmall4.small', { lng: language || '' })} - ${total}`;
+        resultText += gc.Translator.t('UnbalancedBigSmall4.small', { lng: language || '' });
     }
     return <WinnerDisplay resultText={resultText} className="big-small" />;
 });
