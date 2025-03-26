@@ -225,7 +225,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         }
         return (
             <WarningDialog key={`warning-bet`}>
-                <div className={Styles['title-white']}>Please wait for the next round</div>
+                <div className={Styles['title-white']}>{gc.Translator.t('Common.message_placebet_next_round')}</div>
             </WarningDialog>
         );
     }
