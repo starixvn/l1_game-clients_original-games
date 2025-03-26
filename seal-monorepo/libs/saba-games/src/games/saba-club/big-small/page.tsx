@@ -1,7 +1,6 @@
+import React, { Suspense } from 'react';
 import * as gc from '@sg/sg-game-client';
-import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
-import { handle, observer, render } from '@sg/sg-observer';
-import { IGameBaseState } from '../../../_shared/components/game-base';
+import { handle, observer } from '@sg/sg-observer';
 import GatewayGameBase, { IGatewayGameBaseState } from '../../../_shared/components/game-base/gateway-gamebase';
 import { configGameContainer } from '../../../_shared/components/game-base/startup';
 import type { GameBaseProps } from '../../../_shared/components/game-base/type';
@@ -10,9 +9,10 @@ import { FunctionUtils } from '../../../_shared/utils/funtion-utils';
 import { BigSmallBetOptions } from './bet-option';
 import styles from './big-small.module.scss';
 import { containerOptions, setting } from './game-settings';
-import { BigSmallRoundHistory } from './round-history';
 import { BigSmallSettlementResult } from './settlement-result';
-import { BigSmallStatistic } from './statistic';
+
+const BigSmallStatistic = React.lazy(() => import('./statistic/big-small-statistic'));
+const BigSmallRoundHistory = React.lazy(() => import('./round-history/big-small-round-history'));
 
 interface IBigSmallPageState extends IGatewayGameBaseState {
     activePanelId: any;
@@ -51,7 +51,11 @@ export default class BigSmallPage extends GatewayGameBase<IBigSmallPageProps, IB
     closeConnect() {}
 
     renderRoundHistory() {
-        return <BigSmallRoundHistory namespace={this.props.namespace} language={this.props.language} />;
+        return (
+            <Suspense>
+                <BigSmallRoundHistory namespace={this.props.namespace} language={this.props.language} />
+            </Suspense>
+        );
     }
 
     renderBettingBlock() {
@@ -79,13 +83,12 @@ export default class BigSmallPage extends GatewayGameBase<IBigSmallPageProps, IB
     }
 
     renderStatistic() {
-        return <BigSmallStatistic namespace={this.props.namespace} gameName={setting.gameName} language={this.props.language} />;
+        return (
+            <Suspense>
+                <BigSmallStatistic namespace={this.props.namespace} gameName={setting.gameName} language={this.props.language} />
+            </Suspense>
+        );
     }
-
-    // @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
-    // renderCountDownTimerState(roundState: string) {
-    //     this.setState({ roundState });
-    // }
 
     async showResult(
         hasAnimation: boolean,

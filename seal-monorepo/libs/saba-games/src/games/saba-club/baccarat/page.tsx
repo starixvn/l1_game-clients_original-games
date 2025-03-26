@@ -1,21 +1,21 @@
+import React, { Suspense } from 'react';
 import * as gc from '@sg/sg-game-client';
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
 import { handle, observer, render } from '@sg/sg-observer';
-
-import { IGameBaseState } from '../../../_shared/components/game-base';
 import GatewayGameBase, { IGatewayGameBaseState } from '../../../_shared/components/game-base/gateway-gamebase';
 import { configGameContainer } from '../../../_shared/components/game-base/startup';
 import { FunctionUtils } from '../../../_shared/utils/funtion-utils';
 import Styles from './baccarat.module.scss';
 import BaccaratBetOptions from './bet-option/baccarat-bet-options';
 import { containerOptions, setting } from './game-settings';
-import BaccaratRoundHistory from './round-history/baccarat-round-history';
 import BaccaratSettlementResult from './settlement-result/baccarat-settlement-result';
-import { BaccaratStatistic } from './statistic/baccarat-statistics';
 import { IBaccaratBet } from './type';
-
 import { GameBettingOptionsContext } from 'libs/saba-games/src/_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
 import type { GameBaseProps } from '../../../_shared/components/game-base/type';
+
+const BaccaratStatistic = React.lazy(() => import('./statistic/baccarat-statistics'));
+const BaccaratRoundHistory = React.lazy(() => import('./round-history/baccarat-round-history'));
+
 interface IBaccaratState extends IGatewayGameBaseState {
     previousWinningBet?: IBaccaratBet['type'];
     roundState: string;
@@ -60,7 +60,11 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratSt
     }
 
     renderRoundHistory() {
-        return <BaccaratRoundHistory namespace={this.props.namespace} language={this.props.language} />;
+        return (
+            <Suspense>
+                <BaccaratRoundHistory namespace={this.props.namespace} language={this.props.language} />
+            </Suspense>
+        );
     }
 
     renderBettingBlock() {
@@ -89,7 +93,11 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratSt
     }
 
     renderStatistic() {
-        return <BaccaratStatistic namespace={this.props.namespace} gameName={setting.gameName} language={this.props.language} />;
+        return (
+            <Suspense>
+                <BaccaratStatistic namespace={this.props.namespace} gameName={setting.gameName} language={this.props.language} />
+            </Suspense>
+        );
     }
 
     async showResult(

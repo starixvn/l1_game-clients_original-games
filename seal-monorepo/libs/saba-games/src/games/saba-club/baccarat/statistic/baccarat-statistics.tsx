@@ -18,3 +18,5 @@ export class BaccaratStatistic extends ObserverComponent<Props, IStateObserver> 
         );
     }
 }
+
+export default BaccaratStatistic;

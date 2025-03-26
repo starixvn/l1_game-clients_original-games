@@ -1,18 +1,17 @@
+import React, { Suspense } from 'react';
 import * as gc from '@sg/sg-game-client';
-import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
-import { handle, observer, render } from '@sg/sg-observer';
-
-import { IGameBaseState } from '../../../_shared/components/game-base';
+import { handle, observer } from '@sg/sg-observer';
 import GatewayGameBase, { IGatewayGameBaseState } from '../../../_shared/components/game-base/gateway-gamebase';
 import { configGameContainer } from '../../../_shared/components/game-base/startup';
 import { GameBettingOptionsContext } from '../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
 import { FunctionUtils } from '../../../_shared/utils/funtion-utils';
-import SeDieRoundHistory from '../sedie/round-history';
 import Styles from '../sedie/sedie.module.scss';
 import SeDieSettlementResult from '../sedie/settlement-result';
-import { SedieStatistic } from '../sedie/statistic';
 import VIPSeDieBetOptions from './bet-option/vip-sedie-bet-options';
 import { containerOptions, setting } from './game-settings';
+
+const SedieStatistic = React.lazy(() => import('../sedie/statistic'));
+const SeDieRoundHistory = React.lazy(() => import('../sedie/round-history'));
 
 @observer(setting.mainObserverNamespace)
 export default class VipSeDie extends GatewayGameBase<{ namespace: string; language: string }, IGatewayGameBaseState> {
@@ -36,7 +35,11 @@ export default class VipSeDie extends GatewayGameBase<{ namespace: string; langu
     closeConnect() {}
 
     renderRoundHistory() {
-        return <SeDieRoundHistory namespace={this.props.namespace} language={this.props.language} />;
+        return (
+            <Suspense>
+                <SeDieRoundHistory namespace={this.props.namespace} language={this.props.language} />
+            </Suspense>
+        );
     }
 
     renderBettingBlock() {
@@ -64,7 +67,11 @@ export default class VipSeDie extends GatewayGameBase<{ namespace: string; langu
     }
 
     renderStatistic() {
-        return <SedieStatistic namespace={this.props.namespace} gameName={setting.gameName} language={this.props.language} />;
+        return (
+            <Suspense>
+                <SedieStatistic namespace={this.props.namespace} gameName={setting.gameName} language={this.props.language} />
+            </Suspense>
+        );
     }
 
     async showResult(
