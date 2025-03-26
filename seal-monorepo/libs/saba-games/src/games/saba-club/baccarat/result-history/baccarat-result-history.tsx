@@ -65,7 +65,7 @@ export class BaccaratResultHistory extends ObserverComponent<IBaccaratResultHist
             }
         });
 
-        const resultString = this.props.language === 'th' || this.props.language === 'vi'
+        const resultString = this.props.language === 'th'
             ? resultArray.map((text, index) => (
                 <React.Fragment key={index}>
                     {text}
