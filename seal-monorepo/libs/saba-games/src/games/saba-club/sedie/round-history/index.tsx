@@ -8,6 +8,7 @@ import {
 } from '../../../../_shared/components/observer-component/observer-component';
 import Styles from '../sedie.module.scss';
 import { SeDieChoices } from '../type';
+import { RoundHistoryTooltip } from './tooltip';
 
 export interface ISeDieRoundHistoryProps extends IPropsObserver {
     language: string;
@@ -33,17 +34,17 @@ export default class SeDieRoundHistory extends ObserverComponent<ISeDieRoundHist
         }
         const roundHistories = rounds as gc.RoundHistories.RoundHistory[];
         const t = (key) => gc.Translator.translate(key, { languageId: gc.Translator.getCurrentLanguageId() });
-        
+
         return (
-                <div className={Styles['round-history']}>
-                    <div className={Styles['hstack-round']}>
+            <div className={Styles['round-history']}>
+                <div className={Styles['hstack-round']}>
                     <span className={`${Styles['hstack-box']} ${Styles['live']}`}><span className={Styles['hstack-live-icon']}></span></span>
                     <span className={Styles['hstack-box']}><span className={Styles['hstack-history-icon']}></span></span>
                     <span className={Styles['hstack-text']}>{t('Common.previous_round')}:</span>
                     {roundHistories.toReversed().map((roundHistory) => {
                         return this.RoundHistoryItem(roundHistory);
                     })}
-                    <RoundDot highlight={true}  value={'?'} />
+                    <RoundDot highlight={true} value={'?'} />
                 </div>
             </div>
         );
@@ -59,10 +60,24 @@ export default class SeDieRoundHistory extends ObserverComponent<ISeDieRoundHist
         const dotValue = t(`SeDie.beadboard_${choice}`);
         const isOdd = value === 'O';
 
+        let countRed = 0;
+        const dotsTotal = 4;
+        Object.values(roundHistory.result).forEach((value) => {
+            if (value) {
+                countRed++;
+            }
+        });
+
         return (
             <div className={Styles['hstack']} key={roundHistory.roundId}>
                 <RoundDot choice={isOdd ? SeDieChoices.odd : SeDieChoices.even} value={dotValue} />
                 <span className={Styles['arrow']}></span>
+                <RoundHistoryTooltip
+                    roundId={roundHistory.roundId}
+                    choice={choice}
+                    countRed={countRed}
+                    dotsTotal={dotsTotal}
+                />
             </div>
         );
     }
