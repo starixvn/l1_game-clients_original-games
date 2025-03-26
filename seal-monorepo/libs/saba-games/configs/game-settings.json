@@ -10,8 +10,8 @@
             "lockingBet": 5,
             "placingBet": 30,
             "generatingResult": 1,
-            "showingResult": 6,
-            "startRound": 2
+            "showingResult": 8,
+            "startRound": 0
         },
         "numberOfRoundHistory": 100,
         "websocket": {
@@ -58,8 +58,8 @@
             "lockingBet": 5,
             "placingBet": 30,
             "generatingResult": 1,
-            "showingResult": 6,
-            "startRound": 2
+            "showingResult": 8,
+            "startRound": 0
         },
         "numberOfRoundHistory": 100,
         "websocket": {

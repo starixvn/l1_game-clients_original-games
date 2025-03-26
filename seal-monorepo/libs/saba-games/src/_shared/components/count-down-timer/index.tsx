@@ -1,10 +1,11 @@
-import * as gc from '@sg/sg-game-client';
-import { ROUND_STATE, RoundTimeStore } from '@sg/sg-game-client/dist/game/rounds';
-import { render } from '@sg/sg-observer';
-import Styles from '../game-base/game-base.module.scss';
-import { IPropsObserver, IStateObserver, ObserverComponent } from '../observer-component/observer-component';
-import Timer from './timer';
-import classnames from 'classnames';
+import * as gc from "@sg/sg-game-client";
+import { ROUND_STATE, RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds";
+import { render } from "@sg/sg-observer";
+import classnames from "classnames";
+
+import Styles from "../game-base/game-base.module.scss";
+import { IPropsObserver, IStateObserver, ObserverComponent } from "../observer-component/observer-component";
+import Timer from "./timer";
 
 export interface ICountDownTimerState extends IStateObserver {
     countdownTimer: number;
@@ -27,12 +28,11 @@ export default class CountDownTimer extends ObserverComponent<IPropsObserver, IC
     }
 
     private getTimerContentConfig(roundState: string) {
-        const { START_GAME_LOOP, STARTING_ROUND, PLACING_BET, LOCKING_BET, SHOW_ANIMATION_RESULT, SHOW_RESULT, STOP_GAME_LOOP } =
-            ROUND_STATE;
+        const { PLACING_BET, LOCKING_BET, SHOW_ANIMATION_RESULT, SHOW_RESULT, STOP_GAME_LOOP } = ROUND_STATE;
         return {
             showTimer: [PLACING_BET].includes(roundState),
             showNoMoreBet: [LOCKING_BET].includes(roundState),
-            showResult: [SHOW_ANIMATION_RESULT, STOP_GAME_LOOP, SHOW_RESULT, STARTING_ROUND, START_GAME_LOOP].includes(roundState),
+            showResult: [SHOW_ANIMATION_RESULT, STOP_GAME_LOOP, SHOW_RESULT].includes(roundState),
         };
     }
 
@@ -50,7 +50,7 @@ export default class CountDownTimer extends ObserverComponent<IPropsObserver, IC
         const { countdownTimer, roundState } = this.state;
         const isBettingRound = roundState === ROUND_STATE.PLACING_BET;
 
-        if (roundState === ROUND_STATE.NONE) {
+        if (roundState === ROUND_STATE.NONE || roundState === ROUND_STATE.STARTING_ROUND) {
             return <></>;
         }
 
