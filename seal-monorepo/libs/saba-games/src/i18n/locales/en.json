@@ -204,7 +204,9 @@
         "glossary_white4": "4 White",
         "glossary_white3": "1 Red",
         "beadboard_even": "E",
-        "beadboard_odd": "O"
+        "beadboard_odd": "O",
+        "odd_win": "ODD WINS",
+        "even_win": "EVEN WINS"
     },
     "VipSeDie": {
         "game_vendor": "SABA.games",
@@ -219,7 +221,9 @@
         "glossary_white4": "4 White",
         "glossary_white3": "1 Red",
         "beadboard_even": "E",
-        "beadboard_odd": "O"
+        "beadboard_odd": "O",
+        "odd_win": "ODD WINS",
+        "even_win": "EVEN WINS"
     },
     "BigSmall": {
         "game_vendor": "SABA.games",
@@ -261,7 +265,7 @@
     },
     "Baccarat": {
         "game_tab_name": "Baccarat",
-        "banker_win": "BANKER WIN",
+        "banker_win": "Banker Wins",
         "game_icon_name": "Baccarat",
         "game_name": "Baccarat",
         "glossary_banker": "Banker",
@@ -272,7 +276,7 @@
         "glossary_bankerPair": "B.Pair",
         "glossary_small": "Small",
         "glossary_tie": "Tie",
-        "player_win": "PLAYER WIN",
+        "player_win": "Player Wins",
         "short_banker": "B",
         "short_player": "P",
         "short_tie": "T",

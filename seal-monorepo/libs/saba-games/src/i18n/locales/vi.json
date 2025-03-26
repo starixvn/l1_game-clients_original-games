@@ -204,7 +204,9 @@
         "glossary_white4": "4 Trắng",
         "glossary_white3": "1 Đỏ",
         "beadboard_even": "C",
-        "beadboard_odd": "L"
+        "beadboard_odd": "L",
+        "odd_win": "LẺ THẮNG",
+        "even_win": "CHẴN THẮNG"
     },
     "VipSeDie": {
         "game_vendor": "SABA.games",
@@ -219,7 +221,9 @@
         "glossary_white4": "4 Trắng",
         "glossary_white3": "1 Đỏ",
         "beadboard_even": "C",
-        "beadboard_odd": "L"
+        "beadboard_odd": "L",
+        "odd_win": "LẺ THẮNG",
+        "even_win": "CHẴN THẮNG"
     },
     "BigSmall": {
         "game_name": "Tài Xỉu"
@@ -270,7 +274,7 @@
         "glossary_bankerPair": "Cái Đôi",
         "glossary_small": "Xỉu",
         "glossary_tie": "Hòa",
-        "player_win": "NHÀ CON THẮNG",
+        "player_win": "Nhà Con Thắng",
         "short_banker": "B",
         "short_player": "P",
         "short_tie": "T",

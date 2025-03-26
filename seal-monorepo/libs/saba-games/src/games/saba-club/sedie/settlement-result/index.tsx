@@ -99,10 +99,9 @@ export default class SeDieSettlementResult extends ObserverComponent<IPropsObser
     renderWinnerDisplay = () => {
         const { settlementResult, isFinishShowResult } = this.state;
         const result = settlementResult.odd
-            ? gc.Translator.t('SeDie.glossary_odd', { lng: this.props.language || '' })
-            : gc.Translator.t('SeDie.glossary_even', { lng: this.props.language || '' });
-        const resultText = gc.Translator.t('Common.win', { lng: this.props.language || '' });
-        return isFinishShowResult && <WinnerDisplay result={result} resultText={resultText} className={Styles['sedie-result']} />;
+            ? gc.Translator.t('SeDie.odd_win', { lng: this.props.language || '' })
+            : gc.Translator.t('SeDie.even_win', { lng: this.props.language || '' });
+        return isFinishShowResult && <WinnerDisplay resultText={result} className={Styles['sedie-result']} />;
     };
 
     renderIcons = (result: gc.GameServiceMessage.TResult) => {

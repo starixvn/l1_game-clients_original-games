@@ -1,11 +1,11 @@
-import * as gc from '@sg/sg-game-client';
-import { WinnerDisplay } from 'libs/saba-games/src/_shared/components/winner-display/winner-display';
-import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import * as gc from "@sg/sg-game-client";
+import { WinnerDisplay } from "libs/saba-games/src/_shared/components/winner-display/winner-display";
+import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 
-import Dice from '../../../../../_shared/components/dice';
-import { calculateTotalDiceNumber, getRandomDiceNumbers } from '../../../../../_shared/utils/number-helper';
-import { BigSmallResult } from '../../type';
-import styles from '../big-small-settlement-result.module.scss';
+import Dice from "../../../../../_shared/components/dice";
+import { calculateTotalDiceNumber, getRandomDiceNumbers } from "../../../../../_shared/utils/number-helper";
+import { BigSmallResult } from "../../type";
+import styles from "../big-small-settlement-result.module.scss";
 
 const ANIMATION_INTERVAL = 150;
 const ANIMATION_DURATION = 2000;
@@ -30,16 +30,16 @@ interface TotalDiceNumberProps {
 
 const TotalDiceNumber = memo<TotalDiceNumberProps>(({ total, language, settlementResult }) => {
     if (total <= 0) return null;
+
     const settlement = settlementResult ? settlementResult : {};
-    let resultText = '';
+    let resultText = `${total} - `;
+
     if (settlement.big) {
-        resultText = gc.Translator.t('UnbalancedBigSmall4.big', { lng: language || '' });
+        resultText += gc.Translator.t('UnbalancedBigSmall4.big', { lng: language || '' });
     } else if (settlement.small) {
-        resultText = gc.Translator.t('UnbalancedBigSmall4.small', { lng: language || '' });
+        resultText += `${gc.Translator.t('UnbalancedBigSmall4.small', { lng: language || '' })} - ${total}`;
     }
-    return (
-        <WinnerDisplay result={total} resultText={resultText} className="big-small" isShowSeparator={true} />
-    );
+    return <WinnerDisplay resultText={resultText} className="big-small" />;
 });
 
 interface DiceDisplayProps {

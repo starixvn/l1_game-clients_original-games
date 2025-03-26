@@ -204,7 +204,9 @@
         "glossary_white4": "4 ขาว",
         "glossary_white3": "1 แดง",
         "beadboard_even": "คู่",
-        "beadboard_odd": "คี่"
+        "beadboard_odd": "คี่",
+        "odd_win": "คี่ชนะ",
+        "even_win": "คู่ชนะ"
     },
     "VipSeDie": {
         "game_vendor": "SABA.games",
@@ -219,7 +221,9 @@
         "glossary_white4": "4 ขาว",
         "glossary_white3": "1 แดง",
         "beadboard_even": "คู่",
-        "beadboard_odd": "คี่"
+        "beadboard_odd": "คี่",
+        "odd_win": "คี่ชนะ",
+        "even_win": "คู่ชนะ"
     },
     "BigSmall": {
         "game_name": "Big Small"
@@ -258,7 +262,7 @@
     },
     "Baccarat": {
         "game_tab_name": "บาคาร่า",
-        "banker_win": "เจ้ามือชนะ",
+        "banker_win": "แบงค์เกอร์ชนะ",
         "game_icon_name": "บาคาร่า",
         "game_name": "บาคาร่า",
         "glossary_banker": "เจ้ามือ",
@@ -270,7 +274,7 @@
         "glossary_bankerPair": "เจ้ามือคู่",
         "glossary_small": "เล็ก",
         "glossary_tie": "เสมอ",
-        "player_win": "ผู้้เล่นชนะ",
+        "player_win": "ผู้เล่นชนะ",
         "short_banker": "B",
         "short_player": "P",
         "short_tie": "T",
