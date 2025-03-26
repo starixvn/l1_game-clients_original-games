@@ -56,18 +56,8 @@ export default abstract class GatewayGameBase<P extends GameBaseProps, S extends
             return currentRoundId === storedGame.roundId;
     }
 
-    @render(RoundStore, (store) => store.clientRoundId)
-    handleRoundIdChange(roundId: number) {
-        if (this.isMatchingRoundId(roundId)) {
-            this.authHandler = new AuthorizationHandler(
-                this.state.isAuthorized,
-                this.state.isSignedIn,
-                () => this.signIn(),
-                () => this.autoCreateNickname()
-            );
-            this.authHandler.handleWaitForAuthorize();
-        }
-    }
+
+
 
     @render(gc.Auth.AuthStore, (store) => store.isAuthorized)
     protected handleAuthorized(isAuthorized: boolean) {
@@ -84,6 +74,16 @@ export default abstract class GatewayGameBase<P extends GameBaseProps, S extends
     handleJoinGame(isConnected: boolean) {
         if (isConnected) {
             !this.isJoinGame && this.joinGame();
+            
+            if (this.isMatchingRoundId(this.state.roundId)) {
+                this.authHandler = new AuthorizationHandler(
+                    this.state.isAuthorized,
+                    this.state.isSignedIn,
+                    () => this.signIn(),
+                    () => this.autoCreateNickname()
+                );
+                this.authHandler.handleWaitForAuthorize();
+            }
         }
     }
 

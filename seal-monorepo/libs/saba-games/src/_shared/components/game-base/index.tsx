@@ -19,6 +19,7 @@ import CountDownTimer from '../count-down-timer';
 import { useGameBettingOptionsContext } from '../../react-contexts/game-betting-zone-context/game-betting-zone-context';
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds/round-time-store';
 import WarningDialog from '../notices/warning-dialog';
+import { RoundStore } from '@sg/sg-game-client/dist/game/rounds';
 
 export interface IGameBaseState {
     isConnected: boolean;
@@ -33,6 +34,7 @@ export interface IGameBaseState {
     activePanelId: any;
     showBetPanel: boolean;
     isShowNextRoundMessage: boolean;
+    roundId: number;
 }
 interface GameStyleOverrides {
     [key: string]: string;
@@ -50,6 +52,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
             activePanelId: null,
             showBetPanel: false,
             isShowNextRoundMessage: false,
+            roundId: 0
         } as S;
         this.toggleStatistic = this.toggleStatistic.bind(this);
     }
@@ -213,6 +216,11 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         if (roundState === ROUND_STATE.LOCKING_BET || roundState === ROUND_STATE.SHOW_RESULT) {
             this.resetBettingPanel();
         }
+    }
+
+    @render(RoundStore, (store) => store.clientRoundId)
+    handleRoundIdChange(roundId: number) {
+        this.setState({ roundId });
     }
 
     toggleStatistic() {
