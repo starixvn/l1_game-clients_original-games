@@ -7,32 +7,30 @@ import { AppProvider, useAppContext } from './appProvider';
 interface AppProps extends AppContentProps {
     appEnv: string;
     siteId: string;
-    language : string;
+    language: string;
+    renewToken?: Function;
 }
 
 interface AppContentProps {
     token: string;
+    renewToken?: Function;
 }
 
-const App = ({ appEnv, token, language, siteId }: AppProps) => {
-
+const App = ({ appEnv, token, language, siteId, renewToken }: AppProps) => {
     return (
         <AppProvider appEnv={appEnv} language={language} siteId={siteId}>
-            <AppContent token={token} />
+            <AppContent token={token} renewToken={renewToken} />
         </AppProvider>
     );
 };
 
-const AppContent = ({ token }: AppContentProps) => {
+const AppContent = ({ token, renewToken }: AppContentProps) => {
     const { language } = useAppContext();
 
     loadI18n(language);
     return (
-        <div 
-            data-react="true"
-            style={{ width: '100%' }}
-        >
-            {token && <Lobby token={token}/>}
+        <div data-react="true" style={{ width: '100%' }}>
+            {token && <Lobby token={token} language={language} renewToken={renewToken} />}
         </div>
     );
 };

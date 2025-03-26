@@ -3,7 +3,7 @@ import { getEnvironmentConfig, requestSSO_SITE_ID, reuqestSSO_APP_ENV } from '..
 
 const appSettings = getEnvironmentConfig({
     appEnv: reuqestSSO_APP_ENV,
-    siteId: requestSSO_SITE_ID
+    siteId: requestSSO_SITE_ID,
 });
 
 const systemType = appSettings.systemType;
@@ -13,10 +13,11 @@ const randomIntFromInterval = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
-export const requestSSO = async (gameId = 0) => {
+const randomPlayerId = randomIntFromInterval(1000000, 9999999);
 
+export const requestSSO = async (gameId = 0) => {
     const searchParams = new URLSearchParams(window.location.search);
-    const playerId = Number(searchParams.get('playerId')) || randomIntFromInterval(1000000, 9999999);
+    const playerId = Number(searchParams.get('playerId')) || randomPlayerId;
     const currency = searchParams.get('currency');
 
     const appType = 6;
@@ -43,27 +44,11 @@ export const requestSSO = async (gameId = 0) => {
             operatorSecret,
         },
         operatorToken,
-        token: null,
-        redirectUrl: '#',
-        verifyResult: null,
         gameId,
         domain: 'example.com',
-        localhost: null,
-        isOpenOnIframe: false,
         appType,
         isCash: true,
         partner: '1W',
-        disableJackpotGames: false,
-        expandAdvanceSetting: false,
-        instantMode: 1,
-        devIp: null,
-        setDefaultBalance: false,
-        ref: '',
-        deeplink: 'https://4qwcm.test-app.link/pPv9z8d27ub/?uri=https://gn-connectsite.lumigame.com/login',
-        isApp: false,
-        returnUrl: '',
-        local: 0,
-        resource: null,
     };
 
     const gameLobbySimulatorUrl = appSettings.simulatorConfigs.gameLobbySimulatorUrl;
@@ -91,4 +76,3 @@ const createCustomer = async (playerId: number, operator: string, siteId: string
         )}&operator=${operator}&systemType=${systemType}&siteId=${siteId}`,
     );
 };
-

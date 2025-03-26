@@ -11,5 +11,7 @@ export interface ILobbyState {
     leagueToogle: boolean;
     expandedGames: { [key: string]: boolean };
     selectedGameId: number | null;
+    isSessionTimeout: boolean;
     isAuthenticated: boolean;
+    username: string;
 }

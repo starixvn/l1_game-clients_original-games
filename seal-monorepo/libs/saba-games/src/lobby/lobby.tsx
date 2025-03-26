@@ -11,6 +11,7 @@ import Loading from '../_shared/components/loading';
 import { GameMatchTab } from '../_shared/components/all-tab-components/game-match-tab';
 import { IOfferGame, ILobbyState } from './type';
 import { GameListTab } from '../_shared/components/all-tab-components/game-list-tab';
+import SessionTimeout from '../_shared/components/timeout';
 
 @observer
 class LobbyComponent extends React.PureComponent<any, ILobbyState> {
@@ -25,7 +26,9 @@ class LobbyComponent extends React.PureComponent<any, ILobbyState> {
             leagueToogle: true,
             expandedGames: {},
             selectedGameId: null,
+            isSessionTimeout: false,
             isAuthenticated: false,
+            username: '',
         };
     }
     clearReRenderGameTimeout = () => {
@@ -39,14 +42,26 @@ class LobbyComponent extends React.PureComponent<any, ILobbyState> {
         this.clearReRenderGameTimeout();
     }
 
-    async componentDidMount() {
+    componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<ILobbyState>, snapshot?: any): void {
+        if (prevProps.token !== this.props.token) {
+            this.sso({ token: this.props.token });
+        }
+    }
+
+    componentDidMount() {
         const { token } = this.props;
         this.sso({ token });
     }
 
     @handle(gc.Auth.AuthHandlers.SSO)
     sso(ssoInfo: gc.Auth.ISSOInfo) {
+        this.setState({ isSessionTimeout: false });
         return ssoInfo;
+    }
+
+    @render(gc.App.AppStore, (store) => store.isSessionTimeout)
+    redirectToSessionTimeoutPage(isSessionTimeout: boolean) {
+        this.setState({ isSessionTimeout });
     }
 
     @render(gc.Auth.AuthStore, (store) => store.isAuthenticated)
@@ -90,6 +105,11 @@ class LobbyComponent extends React.PureComponent<any, ILobbyState> {
         }
     }
 
+    @render(gc.Auth.AuthStore, (store) => store.username)
+    private handleUsername(username: string) {
+        username && this.setState({ username });
+    }
+
     updateLeagueToogle = (leagueToogle: boolean) => {
         this.setState({ leagueToogle });
     };
@@ -99,11 +119,21 @@ class LobbyComponent extends React.PureComponent<any, ILobbyState> {
     };
 
     private renderGames(context) {
-        const { offerGames, leagueToogle, selectedGameId, isAuthenticated } = this.state;
+        const { offerGames, leagueToogle, selectedGameId, isSessionTimeout, isAuthenticated, username } = this.state;
 
         const renderGameContent = () => {
-            const hasGames = offerGames.length > 0;
+            if (isSessionTimeout) {
+                return (
+                    <SessionTimeout
+                        token={this.props.token}
+                        renewToken={this.props.renewToken}
+                        language={this.props.language}
+                        username={username}
+                    />
+                );
+            }
 
+            const hasGames = offerGames.length > 0;
             if (!hasGames || !isAuthenticated) {
                 return <Loading />;
             }

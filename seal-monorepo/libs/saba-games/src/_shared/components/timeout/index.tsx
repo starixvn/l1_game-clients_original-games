@@ -1,33 +1,76 @@
 import * as gc from '@sg/sg-game-client';
-import { handle, observer, render } from '@sg/sg-observer';
+import { handle, observer } from '@sg/sg-observer';
 import { PureComponent } from 'react';
+import Styles from './timeout.module.scss';
+import Loading from '../loading';
 
-// interface TimeOutContainerProps {
-//     router: Router;
-// }
+interface SessionTimeoutProps {
+    token: string;
+    renewToken: Function;
+    username: string;
+    language: string;
+}
+
+interface SessionTimeoutState {
+    retryCount: number;
+}
 
 @observer
-class TimeOutContainer extends PureComponent<any> {
-    constructor(props: any) {
+class SessionTimeout extends PureComponent<SessionTimeoutProps, SessionTimeoutState> {
+    private retryInterval?: NodeJS.Timeout;
+    constructor(props: SessionTimeoutProps) {
         super(props);
+        this.state = {
+            retryCount: 0,
+        };
     }
 
-    @render(gc.App.AppStore, (store) => store.isSessionTimeout)
-    redirectToSessionTimeoutPage(isSessionTimeout: boolean) {
-        const { router } = this.props;
-        if (isSessionTimeout) {
-            this.clearRecheckInInterval();
-            router.push('timeout');
-        }
+    componentDidMount(): void {
+        this.clearRecheckInInterval();
+        this.tryToRenewToken();
+    }
+
+    componentWillUnmount(): void {
+        this.clearRenewTokenInterval();
     }
 
     @handle(gc.Auth.AuthHandlers.ClearRecheckInInterval)
     clearRecheckInInterval() {}
 
+    clearRenewTokenInterval() {
+        this.retryInterval && clearInterval(this.retryInterval);
+    }
+
+    renewToken() {
+        const { retryCount } = this.state;
+        if (retryCount > 3) {
+            this.clearRenewTokenInterval();
+            gc.sentryLogger.logError(`Live Page: Can not renew token for user: ${this.props.username}, expired token:${this.props.token}`);
+            return;
+        }
+        this.props.renewToken();
+        this.setState({ retryCount: retryCount + 1 });
+    }
+
+    tryToRenewToken() {
+        this.retryInterval = setInterval(() => {
+            this.renewToken();
+        }, 1000 * 60);
+        this.renewToken();
+    }
+
     render() {
-        return <></>;
+        const { retryCount } = this.state;
+        return (
+            <div className={Styles['container']}>
+                {retryCount <= 3 ? (
+                    <Loading />
+                ) : (
+                    <div className={Styles['text']}>{gc.Translator.commonTranslate('message_session_expired')}</div>
+                )}
+            </div>
+        );
     }
 }
 
-export default TimeOutContainer;
-// export default withRouter(TimeOutContainer);
+export default SessionTimeout;
