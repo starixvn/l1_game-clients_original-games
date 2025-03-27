@@ -12,10 +12,7 @@ export interface IGatewayGameBaseState extends IGameBaseState {
     isSignedIn: boolean;
 }
 
-export default abstract class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> extends GameBase<
-    P,
-    S
-> {
+export default abstract class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> extends GameBase<P, S> {
     protected isJoinGame = false;
     private authHandler: AuthorizationHandler;
 
@@ -40,24 +37,25 @@ export default abstract class GatewayGameBase<P extends GameBaseProps, S extends
         this.connectLiveGateway();
     }
 
-    /**
-     * Check if current round ID matches with stored round ID for this game
-     * @param currentRoundId The current round ID of the game
-     * @returns true if round IDs match for the current game namespace
-     */
-    private isMatchingRoundId(currentRoundId: number): boolean {
-            const betHistory = StorageManager.get(localStorageKeys.betHistory) as ILatestBetRecord[];
-            if (!betHistory || !Array.isArray(betHistory)) return false;
-            const currentNamespace = this.props.namespace;
-            if (!currentNamespace) return false;
-
-            const storedGame = betHistory.find(bet => bet.namespace === currentNamespace);
-            if (!storedGame) return false;
-            return currentRoundId === storedGame.roundId;
+    private isRoundIdMatching(currentRoundId: number): boolean {
+        const betHistory = StorageManager.get(localStorageKeys.betHistory) as ILatestBetRecord[] | null;
+        if (!betHistory || !Array.isArray(betHistory)) return false;
+        const storedGame = betHistory.find((bet) => bet.namespace === this.props.namespace);
+        return storedGame ? currentRoundId === storedGame.roundId : false;
     }
 
-
-
+    processAuthorizationIfRoundMatches(roundId: number) {
+        if (!this.isRoundIdMatching(roundId)) {
+            return;
+        }
+        this.authHandler = new AuthorizationHandler(
+            this.state.isAuthorized,
+            this.state.isSignedIn,
+            () => this.signIn(),
+            () => this.autoCreateNickname(),
+        );
+        this.authHandler.handleWaitForAuthorize();
+    }
 
     @render(gc.Auth.AuthStore, (store) => store.isAuthorized)
     protected handleAuthorized(isAuthorized: boolean) {
@@ -74,27 +72,17 @@ export default abstract class GatewayGameBase<P extends GameBaseProps, S extends
     handleJoinGame(isConnected: boolean) {
         if (isConnected) {
             !this.isJoinGame && this.joinGame();
-            
-            if (this.isMatchingRoundId(this.state.roundId)) {
-                this.authHandler = new AuthorizationHandler(
-                    this.state.isAuthorized,
-                    this.state.isSignedIn,
-                    () => this.signIn(),
-                    () => this.autoCreateNickname()
-                );
-                this.authHandler.handleWaitForAuthorize();
-            }
         }
     }
 
     @handle(gc.Connection.ConnectionHandlers.JoinGameHandler)
     joinGame() {
         this.isJoinGame = true;
+        this.processAuthorizationIfRoundMatches(this.state.roundId);
     }
 
     @handle(gc.Connection.ConnectionHandlers.SignInHandler)
-    signIn() {
-    }
+    signIn() {}
 
     override handleConnected(signedIn: boolean) {
         signedIn && this.inGameLiveGateway();

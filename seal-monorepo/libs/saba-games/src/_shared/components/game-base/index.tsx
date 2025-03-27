@@ -84,6 +84,8 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     abstract connectLiveGateway(): void;
 
+    abstract processAuthorizationIfRoundMatches(roundId: number): void;
+
     onVisibilityChange = () => { };
     @handle(gc.GatewayConnection.GatewayConnectionHandlers.ConnectHandler, (handler) => handler.handle())
     connectToServiceGateway() { }
@@ -228,6 +230,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     @render(RoundStore, (store) => store.clientRoundId)
     handleRoundIdChange(roundId: number) {
         this.setState({ roundId });
+        this.processAuthorizationIfRoundMatches(roundId);
     }
 
     toggleStatistic() {
