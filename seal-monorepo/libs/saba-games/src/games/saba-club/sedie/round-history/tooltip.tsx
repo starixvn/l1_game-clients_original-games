@@ -2,6 +2,7 @@ import * as gc from '@sg/sg-game-client';
 import { RoundDot } from '../../../../_shared/components/dot';
 import Styles from '../sedie.module.scss';
 import { SeDieChoices } from '../type';
+import Tooltip from 'libs/saba-games/src/_shared/components/tooltip/tooltip';
 
 interface TooltipProps {
     roundId: number;
@@ -14,20 +15,13 @@ export const RoundHistoryTooltip: React.FC<TooltipProps> = ({ roundId, choice, c
     const t = (key) => gc.Translator.translate(key, { languageId: gc.Translator.getCurrentLanguageId() });
 
     return (
-        <div className={Styles['tooltip']}>
-            <div className={Styles['tooltip-content']}>
-                <div className={Styles['tooltip-title']}>#{roundId}</div>
-                <div className={Styles['tooltip-body']}>
-                    <div className={Styles['tooltip-item']}>
-                        {t(`SeDie.glossary_${choice.toLowerCase()}`).toUpperCase()}
-                        {' '}
-                        <RoundDot choice={SeDieChoices.odd} size="small" />
-                        {countRed}
-                        <RoundDot choice={SeDieChoices.even} size="small" />
-                        {dotsTotal - countRed}
-                    </div>
-                </div>
-            </div>
-        </div>
+        <Tooltip className={Styles['tooltip']} roundId={roundId}>
+            {t(`SeDie.glossary_${choice.toLowerCase()}`).toUpperCase()}
+            {' '}
+            <RoundDot choice={SeDieChoices.odd} size="small" />
+            {countRed}
+            <RoundDot choice={SeDieChoices.even} size="small" />
+            {dotsTotal - countRed}
+        </Tooltip>
     );
 }; 

@@ -1,5 +1,6 @@
 import * as gc from '@sg/sg-game-client';
 import Styles from './big-small-round-history.module.scss';
+import Tooltip from 'libs/saba-games/src/_shared/components/tooltip/tooltip';
 
 interface TooltipProps {
     roundId: number;
@@ -16,18 +17,8 @@ export const BigSmallRoundHistoryTooltip: React.FC<TooltipProps> = ({
     const total = diceValues.reduce((sum, value) => sum + value, 0);
 
     return (
-        <div className={Styles['tooltip']}>
-            <div className={Styles['tooltip-content']}>
-                <div className={Styles['tooltip-title']}>#{roundId}</div>
-                <div className={Styles['tooltip-body']}>
-                    <div className={Styles['tooltip-item']}>
-                        <div className={Styles['tooltip-points']}>
-                            <span>{t(`UnbalancedBigSmall4.${winner}`).toUpperCase()} ({diceValues.join('-')})</span>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <Tooltip className={Styles['tooltip']} roundId={roundId}>
+            <span>{t(`UnbalancedBigSmall4.${winner}`).toUpperCase()} ({diceValues.join('-')})</span>
+        </Tooltip>
     );
 }; 
