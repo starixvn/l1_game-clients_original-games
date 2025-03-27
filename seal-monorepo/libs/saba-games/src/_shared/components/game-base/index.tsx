@@ -16,10 +16,10 @@ import Styles from './game-base.module.scss';
 import { GameBaseProps } from './type';
 import RoundId from '../round-id';
 import CountDownTimer from '../count-down-timer';
-import { useGameBettingOptionsContext } from '../../react-contexts/game-betting-zone-context/game-betting-zone-context';
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds/round-time-store';
 import WarningDialog from '../notices/warning-dialog';
 import { RoundStore } from '@sg/sg-game-client/dist/game/rounds';
+import classNames from 'classnames';
 
 export interface IGameBaseState {
     isConnected: boolean;
@@ -41,6 +41,7 @@ interface GameStyleOverrides {
 }
 
 abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> extends React.PureComponent<P, S> {
+    private timerCounter: number = 0;
     protected overrideClasses?: GameStyleOverrides;
 
     constructor(props: P) {
@@ -65,6 +66,12 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     componentWillUnmount() {
         this.onDestroy();
         document.removeEventListener('visibilitychange', this.onVisibilityChange);
+    }
+
+    componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot?: any): void {
+        if (this.state.roundState === ROUND_STATE.STOP_GAME_LOOP) {
+            this.timerCounter++;
+        }
     }
 
     onDestroy() {
@@ -265,6 +272,8 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
             return showDisabledPopup ? this.renderNotice() : this.renderLoading();
         }
 
+        const isDisabledBetOptions = this.state.roundState === ROUND_STATE.STOP_GAME_LOOP && this.timerCounter === 0;
+
         return !isConnected ? (
             this.renderDisconnect()
         ) : (
@@ -276,7 +285,14 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                         {this.renderCountDownTimer()}
                     </div>
                     <div className={`${Styles['result']} ${this.overrideClasses?.result}`}>{this.renderResultBlock()}</div>
-                    <div className={`${Styles['bet-options']} ${this.overrideClasses?.betOptions}`}>
+                    <div className={classNames(
+                        Styles['bet-options'],
+                        {
+                            [Styles['disabled']]: isDisabledBetOptions
+                        },
+                        this.overrideClasses?.betOptions
+                    )}
+                    >
                         {this.renderBettingBlock()}
                         <ConfirmBet namespace={this.props.namespace} />
                         <div className={`${Styles['animation-balance']} ${Styles[`game-${this.state.gameId}`]}`}>
