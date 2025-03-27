@@ -94,6 +94,7 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
                 this.setState({ isShowStaticHighlight: false, isShowBetSlip: false });
                 break;
             default:
+                this.setState({ isShowBetSlip: false });
                 break;
         }
     }
@@ -157,10 +158,10 @@ class BettingBlock extends ObserverComponent<BettingBlockProps, IBettingBlockSta
     }
 
     @handle(Auth.AuthHandlers.Authorize, (handler) => handler.handleAutoGenerateName())
-    protected autoCreateNickname() {}
+    protected autoCreateNickname() { }
 
     @handle(Connection.ConnectionHandlers.SignInHandler)
-    protected signIn() {}
+    protected signIn() { }
 
     render() {
         const { children, namespace, gameName, settlementResult, betChoice } = this.props;

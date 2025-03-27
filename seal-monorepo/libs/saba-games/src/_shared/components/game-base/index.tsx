@@ -34,6 +34,7 @@ export interface IGameBaseState {
     showBetPanel: boolean;
     isShowNextRoundMessage: boolean;
     roundId: number;
+    isAllowedBet: boolean;
 }
 interface GameStyleOverrides {
     [key: string]: string;
@@ -51,7 +52,8 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
             activePanelId: null,
             showBetPanel: false,
             isShowNextRoundMessage: false,
-            roundId: 0
+            roundId: 0,
+            isAllowedBet: false
         } as S;
         this.toggleStatistic = this.toggleStatistic.bind(this);
     }
@@ -108,7 +110,9 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     renderCountDownTimer() {
-        return <CountDownTimer namespace={this.props.namespace} />;
+        return <CountDownTimer namespace={this.props.namespace} onComplete={() => {
+            this.setState({ isAllowedBet: true });
+        }} />;
     }
 
     renderResultBlock() {
@@ -213,7 +217,10 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
     renderCountDownTimerState(roundState: string) {
-        this.setState({ roundState });
+        if (roundState === ROUND_STATE.PLACING_BET) {
+            this.setState({ isShowNextRoundMessage: false });
+        }
+
         if (roundState === ROUND_STATE.LOCKING_BET || roundState === ROUND_STATE.SHOW_RESULT) {
             this.resetBettingPanel();
         }
@@ -230,6 +237,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     renderWaitingForNextRound() {
+        console.log('renderWaitingForNextRound isShowNextRoundMessage', this.state.isShowNextRoundMessage);
         if (!this.state.isShowNextRoundMessage) {
             return <></>;
         }
@@ -256,7 +264,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     };
 
     getRenderTemplate() {
-        const { isConnected, isConnectFailed, initialized: isGameConfigInitialized, showDisabledPopup, statusSettlement } = this.state;
+        const { isConnected, isConnectFailed, initialized: isGameConfigInitialized, showDisabledPopup, isAllowedBet } = this.state;
 
         if (isConnectFailed) {
             return this.renderDisconnect();
@@ -266,8 +274,6 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         if (isFirstInit || showDisabledPopup) {
             return showDisabledPopup ? this.renderNotice() : this.renderLoading();
         }
-
-        const isDisabledBetOptions = this.state.roundState === ROUND_STATE.STOP_GAME_LOOP;
 
         return !isConnected ? (
             this.renderDisconnect()
@@ -283,7 +289,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                     <div className={classNames(
                         Styles['bet-options'],
                         {
-                            [Styles['disabled']]: isDisabledBetOptions
+                            [Styles['disabled']]: !isAllowedBet
                         },
                         this.overrideClasses?.betOptions
                     )}

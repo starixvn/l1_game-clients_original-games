@@ -7,13 +7,17 @@ import Styles from "../game-base/game-base.module.scss";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../observer-component/observer-component";
 import Timer from "./timer";
 
+export interface ICountDownTimerProps extends IPropsObserver {
+    onComplete?: () => void;
+}
+
 export interface ICountDownTimerState extends IStateObserver {
     countdownTimer: number;
     roundState: string;
 }
 
-export default class CountDownTimer extends ObserverComponent<IPropsObserver, ICountDownTimerState> {
-    constructor(props: IPropsObserver) {
+export default class CountDownTimer extends ObserverComponent<ICountDownTimerProps, ICountDownTimerState> {
+    constructor(props: ICountDownTimerProps) {
         super(props);
         this.state = { dispose: null, countdownTimer: 0, roundState: ROUND_STATE.NONE };
     }
@@ -39,12 +43,18 @@ export default class CountDownTimer extends ObserverComponent<IPropsObserver, IC
     private getTimerContent(countdownTimer: number, roundState: string) {
         const config = this.getTimerContentConfig(roundState);
 
+        const shouldTriggerComplete = config.showTimer || config.showNoMoreBet || config.showResult;
+        if (shouldTriggerComplete) {
+            this.props.onComplete?.();
+        }
+
         if (config.showTimer) return countdownTimer;
         if (config.showNoMoreBet) return gc.Translator.t('Common.message_stop_bet');
         if (config.showResult) return gc.Translator.t('Common.open_result');
 
         return null;
     }
+
 
     render() {
         const { countdownTimer, roundState } = this.state;
