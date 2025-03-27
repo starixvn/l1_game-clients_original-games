@@ -2,7 +2,7 @@ import * as gc from '@sg/sg-game-client';
 import { BaccaratDot } from '../dot/baccarat-dot';
 import Styles from './baccarat-round-history.module.scss';
 import { Choices } from '../baccarat-helper';
-import Tooltip from 'libs/saba-games/src/_shared/components/tooltip/tooltip';
+import Tooltip from '../../../../_shared/components/tooltip/tooltip';
 
 interface TooltipProps {
     roundId: number;
