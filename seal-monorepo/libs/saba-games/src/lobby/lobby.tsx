@@ -25,6 +25,7 @@ class LobbyComponent extends React.PureComponent<any, ILobbyState> {
             leagueToogle: true,
             expandedGames: {},
             selectedGameId: null,
+            isAuthenticated: false,
         };
     }
     clearReRenderGameTimeout = () => {
@@ -50,6 +51,7 @@ class LobbyComponent extends React.PureComponent<any, ILobbyState> {
 
     @render(gc.Auth.AuthStore, (store) => store.isAuthenticated)
     handleIsAuthenticated(isAuthenticated: boolean) {
+        this.setState({ isAuthenticated });
         if (isAuthenticated) {
             this.connectLiveGateway();
         }
@@ -97,12 +99,12 @@ class LobbyComponent extends React.PureComponent<any, ILobbyState> {
     };
 
     private renderGames(context) {
-        const { offerGames, leagueToogle, selectedGameId } = this.state;
+        const { offerGames, leagueToogle, selectedGameId, isAuthenticated } = this.state;
 
         const renderGameContent = () => {
             const hasGames = offerGames.length > 0;
 
-            if (!hasGames) {
+            if (!hasGames || !isAuthenticated) {
                 return <Loading />;
             }
 
