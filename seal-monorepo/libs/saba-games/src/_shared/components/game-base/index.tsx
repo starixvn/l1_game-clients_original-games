@@ -2,7 +2,6 @@ import * as gc from '@sg/sg-game-client';
 import { Settlements } from '@sg/sg-game-client';
 import { handle, render } from '@sg/sg-observer';
 import React from 'react';
-// import { Button, Container } from 'react-bootstrap';
 import { GameContextProvider } from '../../react-contexts/game-context/game-context';
 import { Lobby } from '../../states';
 import AnimationBalance from '../anim-balance';
@@ -41,7 +40,6 @@ interface GameStyleOverrides {
 }
 
 abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> extends React.PureComponent<P, S> {
-    private timerCounter: number = 0;
     protected overrideClasses?: GameStyleOverrides;
 
     constructor(props: P) {
@@ -66,12 +64,6 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     componentWillUnmount() {
         this.onDestroy();
         document.removeEventListener('visibilitychange', this.onVisibilityChange);
-    }
-
-    componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot?: any): void {
-        if (this.state.roundState === ROUND_STATE.STOP_GAME_LOOP) {
-            this.timerCounter++;
-        }
     }
 
     onDestroy() {
@@ -275,7 +267,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
             return showDisabledPopup ? this.renderNotice() : this.renderLoading();
         }
 
-        const isDisabledBetOptions = this.state.roundState === ROUND_STATE.STOP_GAME_LOOP && this.timerCounter === 0;
+        const isDisabledBetOptions = this.state.roundState === ROUND_STATE.STOP_GAME_LOOP;
 
         return !isConnected ? (
             this.renderDisconnect()
