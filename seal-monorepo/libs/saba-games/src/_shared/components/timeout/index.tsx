@@ -43,9 +43,9 @@ class SessionTimeout extends PureComponent<SessionTimeoutProps, SessionTimeoutSt
 
     renewToken() {
         const { retryCount } = this.state;
-        if (retryCount > 3) {
+        if (retryCount >= 3) {
             this.clearRenewTokenInterval();
-            gc.sentryLogger.logError(`Live Page: Can not renew token for user: ${this.props.username}, expired token:${this.props.token}`);
+            gc.sentryLogger.logError(`Live Page: Can not renew token for user: ${this.props.username}, expired token: ${this.props.token}`);
             return;
         }
         this.props.renewToken();

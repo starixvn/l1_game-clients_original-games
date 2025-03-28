@@ -10,11 +10,7 @@ export const useSentryInit = () => {
     useEffect(() => {
         try {
             const settings = appSettings;
-            gc.sentryLogger.start(
-                settings.sentry.dsn, 
-                settings.sentry.environment, 
-                'game-client-direct'
-            );
+            gc.sentryLogger.start(settings.sentry.dsn, settings.sentry.environment, 'live-page-client');
         } catch (error) {
             console.error('Failed to initialize Sentry:', error);
         }
@@ -22,9 +18,10 @@ export const useSentryInit = () => {
 };
 
 const SabaGamesGroup = ({
-    isDarkMode = false, 
-    platformType = PLATFORM_TYPE_NUMBER.DESKTOP, 
+    isDarkMode = false,
+    platformType = PLATFORM_TYPE_NUMBER.DESKTOP,
     token = '',
+    renewToken = () => {},
     appEnv = '',
     siteId = '',
     language = 'en',
@@ -33,19 +30,10 @@ const SabaGamesGroup = ({
     useSentryInit();
 
     return (
-        <div 
-            data-platform={platform}
-            data-version={process.env.TAG_VERSION} 
-            className={'seal-vg-sg-index'}
-        >
-            <App
-                appEnv={appEnv}
-                token={token}
-                language={language}
-                siteId={siteId}
-            />
+        <div data-platform={platform} data-version={process.env.TAG_VERSION} className={'seal-vg-sg-index'}>
+            <App appEnv={appEnv} token={token} language={language} siteId={siteId} renewToken={renewToken} />
         </div>
     );
-}
+};
 
 export default SabaGamesGroup;

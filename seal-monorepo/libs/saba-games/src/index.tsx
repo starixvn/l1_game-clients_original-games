@@ -10,7 +10,7 @@ export const useSentryInit = ({ siteId, appEnv }) => {
     useEffect(() => {
         try {
             const settings = appSettings;
-            gc.sentryLogger.start(settings.sentry.dsn, settings.sentry.environment, 'game-client-direct');
+            gc.sentryLogger.start(settings.sentry.dsn, settings.sentry.environment, 'live-page-client');
         } catch (error) {
             console.error('Failed to initialize Sentry:', error);
         }
