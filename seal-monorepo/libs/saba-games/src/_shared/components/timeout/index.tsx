@@ -63,7 +63,7 @@ class SessionTimeout extends PureComponent<SessionTimeoutProps, SessionTimeoutSt
         const { retryCount } = this.state;
         return (
             <div className={Styles['container']}>
-                {retryCount <= 3 ? (
+                {retryCount < 3 ? (
                     <Loading />
                 ) : (
                     <div className={Styles['text']}>{gc.Translator.commonTranslate('message_session_expired')}</div>

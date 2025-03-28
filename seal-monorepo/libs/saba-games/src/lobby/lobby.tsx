@@ -55,7 +55,6 @@ class LobbyComponent extends React.PureComponent<any, ILobbyState> {
 
     @handle(gc.Auth.AuthHandlers.SSO)
     sso(ssoInfo: gc.Auth.ISSOInfo) {
-        this.setState({ isSessionTimeout: false });
         return ssoInfo;
     }
 
