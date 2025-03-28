@@ -79,6 +79,7 @@ export default class Notice extends ObserverComponent<INoticeProps, INoticeState
         });
     }
 
+
     render() {
         const { notice, isShow } = this.state;
         if (!isShow) {
@@ -92,9 +93,23 @@ export default class Notice extends ObserverComponent<INoticeProps, INoticeState
             }
         };
 
+        const handleNoticeInfo = () => {
+            if (notice?.noticeInfo === NoticeInfo.DisabledGame) {
+                return gc.Translator.t('Common.message_disabled_game', { lng: this.props.language || '' });
+            }
+            if (notice?.noticeInfo === NoticeInfo.LostGameConnection) {
+                return gc.Translator.t('Common.message_lost_game_connection', { lng: this.props.language || '' });
+            }
+            if (notice?.noticeInfo === NoticeInfo.ExcludedGame || notice?.noticeInfo === NoticeInfo.DisabledAccount) {
+                return gc.Translator.t('Common.message_no_game_offer', { lng: this.props.language || '' });
+            }
+            return notice?.message;
+        }
         return (
-            <NoticeDialog {...notice} onClose={handleOnClose}>
-                <div>{gc.Translator.t('Common.message_disabled_game', { lng: this.props.language || '' })}</div>
+            <NoticeDialog {...notice} onClose={handleOnClose} language={this.props.language || ''}>
+                <div>
+                    {handleNoticeInfo()}
+                </div>
             </NoticeDialog>
         );
     }
