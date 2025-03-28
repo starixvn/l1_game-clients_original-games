@@ -21,7 +21,12 @@ include:
         echo "Invalid STACK_NAME value"
         exit 1
       fi
-    - cp ./seal-monorepo/libs/saba-games/configs/$STACK_VALUE/configs.$DEPLOY_ENV.json ./seal-monorepo/libs/saba-games/configs/sg/configs.LOCAL_1.json
+    - |
+      if [ "$STACK_VALUE" != "sg" ]; then
+        cp ./seal-monorepo/libs/saba-games/configs/$STACK_VALUE/configs.$DEPLOY_ENV.json ./seal-monorepo/libs/saba-games/configs/sg/configs.LOCAL_1.json
+      else
+        cp ./seal-monorepo/libs/saba-games/configs/sg/configs.$DEPLOY_ENV.json ./seal-monorepo/libs/saba-games/configs/sg/configs.LOCAL_1.json.tmp && mv ./seal-monorepo/libs/saba-games/configs/sg/configs.LOCAL_1.json.tmp ./seal-monorepo/libs/saba-games/configs/sg/configs.LOCAL_1.json
+      fi
     - cat ./seal-monorepo/libs/saba-games/configs/sg/configs.LOCAL_1.json
 
   artifacts:
