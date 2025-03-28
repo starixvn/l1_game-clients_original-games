@@ -112,7 +112,7 @@ export default class Notice extends ObserverComponent<INoticeProps, INoticeState
         }
 
         return (
-            <NoticeDialog {...notice} onClose={this.closeNotice} language={this.props.language || ''}>
+            <NoticeDialog {...notice} onClose={this.closeNotice} >
                 <div>{this.handleNoticeInfo()}</div>
             </NoticeDialog>
         );
