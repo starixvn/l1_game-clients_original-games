@@ -53,7 +53,6 @@ export interface ILatestBetRecord {
 }
 
 class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends ObserverComponent<IPropsObserver, IStateObserver> {
-    private isJoiningGame = false;
 
     constructor(props: P) {
         super(props);
@@ -107,11 +106,6 @@ class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends O
         return { amount, betChoice };
     }
 
-    @render(gc.Connection.ConnectionStore, (store) => store.joinGame)
-    handleJoinedGame() {
-        this.isJoiningGame = true;
-    }
-
     render() {
         const { clientRoundId, currency, minBet, maxBet, maxBetPerChoices, stakeLevel } = this.state as S;
 
@@ -125,7 +119,6 @@ class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends O
                 maxBetPerChoices={maxBetPerChoices}
                 stakeLevel={stakeLevel}
                 handleBet={this.handleBet.bind(this)}
-                isJoiningGame={this.isJoiningGame}
             ></BetPanel>
         );
     }
@@ -140,8 +133,7 @@ const BetPanel: React.FC<{
     maxBetPerChoices: gc.GameServiceMessage.MaxBetPerChoices;
     stakeLevel: gc.Player.IStakeLevel;
     handleBet: (amount: number, betChoice: string) => void;
-    isJoiningGame: boolean;
-}> = ({ namespace, clientRoundId, currency, minBet, maxBet, maxBetPerChoices, stakeLevel, handleBet, isJoiningGame }) => {
+}> = ({ namespace, clientRoundId, currency, minBet, maxBet, maxBetPerChoices, stakeLevel, handleBet }) => {
     const { panelId, setPanelId, setShow } = useGameBettingOptionsContext();
     const { gameName, betChoice, odd = 0 } = useGameBettingZoneContext();
     const { siteId } = useAppContext();
@@ -200,17 +192,6 @@ const BetPanel: React.FC<{
             return prev;
         });
     }, [betChoice, minBet, maxBet, stakeLevelMinBet, betChoiceMax, stakeLevel.maxBet]);
-
-    useEffect(() => {
-        if (isJoiningGame) {
-            handleClose();
-        }
-    }, [isJoiningGame]);
-
-    const handleClose = () => {
-        setPanelId(null);
-        setShow(false);
-    };
 
     const setWarningWithTimeout = (message: string) => {
         if (warningTimeoutRef.current) {

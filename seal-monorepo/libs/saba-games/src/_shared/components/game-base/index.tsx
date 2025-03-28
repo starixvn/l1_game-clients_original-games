@@ -338,6 +338,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         this.setState({
             isOpenStatistic: false,
         });
+        this.resetBettingPanel();
     }
 
     createConnection() {
