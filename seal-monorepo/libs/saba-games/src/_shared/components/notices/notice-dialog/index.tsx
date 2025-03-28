@@ -27,7 +27,11 @@ const NoticeDialog: React.FC<Props> = ({ title, children, onClose, type, showBtn
                     {/* <div className={`justify-content-between ${bgInfoClass}`}>
                         <strong className={Styles['d-title']}> {title}</strong>
                     </div> */}
-                    <div className={Styles['d-title']}>{gc.Translator.t('Common.notice', { lng: language || '' })}</div>
+                    <div className={Styles['d-title']}>
+                        {
+                            disabledGame ? gc.Translator.t('Common.notice', { lng: language || '' }) : title
+                        }
+                    </div>
                     {children}
                     {/* {showBtnConfirmButton && (7
 
