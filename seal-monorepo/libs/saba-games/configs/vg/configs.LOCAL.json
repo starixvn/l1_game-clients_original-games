@@ -1,13 +1,13 @@
 {
     "sentry": {
         "dsn": "https://b015ef787273452c8fce4af733e62d59@sentry.lumigame.com/29",
-        "environment": "LOCAL1"
+        "environment": "LOCAL"
     },
     "systemType": "VG",
     "serverDomain": "lumigame.com",
     "ssl": true,
-    "subDomain": "l2-proxy1",
-    "env": "LOCAL1",
+    "subDomain": "l2-proxy",
+    "env": "LOCAL",
     "enableMsgpackParserAllGames": false,
     "enableMsgpackParserOnNotification": false,
     "simulatorConfigs": {
