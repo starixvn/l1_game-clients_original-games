@@ -88,6 +88,7 @@
         "message_server_error": "服务器遇到错误。",
         "message_server_not_found": "找不到服务器。",
         "message_session_expired": "您的会话已过期。请重新加载页面",
+        "message_session_timeout": "您的会话已过期。请等待重新加载。",
         "message_stop_bet": "投注停止",
         "message_sys_maintenance": "游戏正在维护中。",
         "message_sys_maintenance_place_bet": "%{gameName} 游戏 (#%{gameRoundId})\n\n下注失败！ 游戏正在维护中。",

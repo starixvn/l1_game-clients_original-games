@@ -88,6 +88,7 @@
         "message_server_error": "Máy chủ gặp sự cố.",
         "message_server_not_found": "Không tìm thấy máy chủ.",
         "message_session_expired": "Đã hết phiên đăng nhập. Vui lòng tải lại trang.",
+        "message_session_timeout": "Phiên đăng nhập của bạn đã hết. Vui lòng đợi để tải lại trang.",
         "message_stop_bet": "Dừng Đặt Cược",
         "message_sys_maintenance": "Hệ thống đang được bảo trì.",
         "message_sys_maintenance_place_bet": "Game %{gameName} (#%{gameRoundId})\n\nHệ thống đang được bảo trì.",

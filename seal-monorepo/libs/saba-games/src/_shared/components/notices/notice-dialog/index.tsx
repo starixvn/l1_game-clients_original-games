@@ -8,11 +8,10 @@ export type Props = {
     children: React.ReactNode;
     type?: gc.Notices.NoticeType;
     showBtnConfirmButton?: boolean;
-    language?: string;
     noticeInfo?: gc.Notices.NoticeInfo;
 };
 
-const NoticeDialog: React.FC<Props> = ({ title, children, onClose, type, showBtnConfirmButton, language, noticeInfo }: Props) => {
+const NoticeDialog: React.FC<Props> = ({ title, children, onClose, type, showBtnConfirmButton, noticeInfo }: Props) => {
     const wrapperRef = useRef<HTMLDivElement>(null);
     const isError = type === gc.Notices.NoticeType.Error;
     const isInfo = type === gc.Notices.NoticeType.Info;
@@ -22,18 +21,16 @@ const NoticeDialog: React.FC<Props> = ({ title, children, onClose, type, showBtn
     const disabledGameClass = disabledGame ? Styles['disabled-game'] : '';
     return (
         <div ref={wrapperRef}>
-            <div className={`${Styles['notice-container']} ${classType ? classType : ''} ${bgInfoClass ? bgInfoClass : ''} ${disabledGameClass ? disabledGameClass : ''}`}>
-                <>
-                    {/* <div className={`justify-content-between ${bgInfoClass}`}>
+            <div className={Styles['wrapper-dialog']}>
+                <div className={`${Styles['notice-container']} ${classType ? classType : ''} ${bgInfoClass ? bgInfoClass : ''} ${disabledGameClass ? disabledGameClass : ''}`}>
+                    <>
+                        {/* <div className={`justify-content-between ${bgInfoClass}`}>
                         <strong className={Styles['d-title']}> {title}</strong>
                     </div> */}
-                    <div className={Styles['d-title']}>
-                        {
-                            disabledGame ? gc.Translator.t('Common.notice', { lng: language || '' }) : title
-                        }
-                    </div>
-                    {children}
-                    {/* {showBtnConfirmButton && (7
+                        <div className={Styles['notice-info']}>
+                            {children}
+                        </div>
+                        {/* {showBtnConfirmButton && (7
 
                         <div className='text-center'>
                             <div className='btn-warning' onClick={onClose}>
@@ -41,7 +38,8 @@ const NoticeDialog: React.FC<Props> = ({ title, children, onClose, type, showBtn
                             </div>
                         </div>
                     )} */}
-                </>
+                    </>
+                </div>
             </div>
         </div>
     );

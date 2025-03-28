@@ -88,6 +88,7 @@
         "message_server_error": "The server has encountered an error.",
         "message_server_not_found": "The server is not found.",
         "message_session_expired": "Your session has expired. Please reload the page.",
+        "message_session_timeout": "Your session has expired. Please wait for reloading.",
         "message_stop_bet": "No More Bets",
         "message_sys_maintenance": "The game is under maintenance.",
         "message_sys_maintenance_place_bet": "Game %{gameName} (#%{gameRoundId})\n\nFailed to place bet! The game is under maintenance.",

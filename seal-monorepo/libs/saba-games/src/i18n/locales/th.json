@@ -88,6 +88,7 @@
         "message_server_error": "เซิร์ฟเวอร์พบข้อผิดพลาด",
         "message_server_not_found": "ไม่พบเซิร์ฟเวอร์",
         "message_session_expired": "เซสชันของคุณหมดอายุแล้ว กรุณาโหลดใหม่อีกครั้ง",
+        "message_session_timeout": "เซสชั่นของคุณหมดอายุแล้ว กรุณารอโหลดใหม่อีกครั้ง",
         "message_stop_bet": "หยุดการพนัน",
         "message_sys_maintenance": "เกมอยู่ระหว่างการบำรุงรักษา",
         "message_sys_maintenance_place_bet": "เกม %{gameName} (#%{gameRoundId})\n\nการวางเดิมพันล้มเหลว! เกมอยู่ระหว่างการบำรุงรักษา ",

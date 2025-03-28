@@ -11,7 +11,7 @@ const WarningDialog: React.FC<Props> = ({ children }: Props) => {
     const wrapperRef = useRef<HTMLDivElement>(null);
 
     return (
-        <div ref={wrapperRef}>
+        <div className={Styles['wrapper-dialog']} ref={wrapperRef}>
             <div className={Styles['warning-container']}>
                 <div>{children}</div>
             </div>

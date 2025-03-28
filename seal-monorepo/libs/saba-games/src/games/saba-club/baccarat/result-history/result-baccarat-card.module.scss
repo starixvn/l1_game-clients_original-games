@@ -17,6 +17,7 @@ outline: 1px solid #b1abab;
 transform-style: preserve-3d;
 perspective: 1000px;
 opacity: 1;
+overflow: hidden;
 transition:
     transform 0.3s ease,
     opacity 0.2s ease;
