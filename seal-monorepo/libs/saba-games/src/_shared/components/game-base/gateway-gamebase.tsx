@@ -13,7 +13,6 @@ export interface IGatewayGameBaseState extends IGameBaseState {
 }
 
 export default abstract class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> extends GameBase<P, S> {
-    protected isJoinGame = false;
     private authHandler: AuthorizationHandler;
 
     constructor(props: P) {
@@ -21,20 +20,15 @@ export default abstract class GatewayGameBase<P extends GameBaseProps, S extends
         this.state = {
             ...this.state,
             isAuthorized: false,
-            isSignedIn: false
+            isSignedIn: false,
         } as S;
 
         this.authHandler = new AuthorizationHandler(
             this.state.isAuthorized,
             this.state.isSignedIn,
             () => this.signIn(),
-            () => this.autoCreateNickname()
+            () => this.autoCreateNickname(),
         );
-    }
-
-    componentDidMount() {
-        document.addEventListener('visibilitychange', this.onVisibilityChange);
-        this.connectLiveGateway();
     }
 
     private isRoundIdMatching(currentRoundId: number): boolean {
@@ -65,19 +59,25 @@ export default abstract class GatewayGameBase<P extends GameBaseProps, S extends
     @handle(gc.Auth.AuthHandlers.Authorize, (handler) => handler.handleAutoGenerateName())
     protected autoCreateNickname() {}
 
+    @render(gc.GatewayConnection.GatewayConnectionStore, (store) => store.isConnected)
+    handleConnectLiveGatewayForGame(isConnected: boolean) {
+        if (isConnected) {
+            this.connectLiveGateway();
+        }
+    }
+
     @handle(gc.Connection.ConnectionHandlers.ConnectHandler, (handler) => handler.handleGateway())
     connectLiveGateway() {}
 
     @render(gc.Connection.ConnectionStore, (store) => store.isConnected)
     handleJoinGame(isConnected: boolean) {
         if (isConnected) {
-            !this.isJoinGame && this.joinGame();
+            this.joinGame();
         }
     }
 
     @handle(gc.Connection.ConnectionHandlers.JoinGameHandler)
     joinGame() {
-        this.isJoinGame = true;
         this.processAuthorizationIfRoundMatches(this.state.roundId);
     }
 

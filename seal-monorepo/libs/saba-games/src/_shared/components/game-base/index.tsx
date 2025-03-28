@@ -53,14 +53,13 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
             showBetPanel: false,
             isShowNextRoundMessage: false,
             roundId: 0,
-            isAllowedBet: false
+            isAllowedBet: false,
         } as S;
         this.toggleStatistic = this.toggleStatistic.bind(this);
     }
 
     componentDidMount() {
         document.addEventListener('visibilitychange', this.onVisibilityChange);
-        this.connectToServiceGateway();
     }
 
     componentWillUnmount() {
@@ -80,12 +79,12 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     abstract processAuthorizationIfRoundMatches(roundId: number): void;
 
-    onVisibilityChange = () => { };
+    onVisibilityChange = () => {};
     @handle(gc.GatewayConnection.GatewayConnectionHandlers.ConnectHandler, (handler) => handler.handle())
-    connectToServiceGateway() { }
+    connectToServiceGateway() {}
 
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handle())
-    terminateConnection() { }
+    terminateConnection() {}
 
     @render(gc.Connection.ConnectionStore, (store) => store.isSignedIn)
     handleConnected(isSignedIn: boolean) {
@@ -98,7 +97,9 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     renderNotice(): JSX.Element {
-        return <Notice namespace={this.props.namespace} isDisableGame={this.state.showDisabledPopup} language={this.props.language}></Notice>;
+        return (
+            <Notice namespace={this.props.namespace} isDisableGame={this.state.showDisabledPopup} language={this.props.language}></Notice>
+        );
     }
 
     renderWarning(): JSX.Element {
@@ -110,9 +111,14 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     renderCountDownTimer() {
-        return <CountDownTimer namespace={this.props.namespace} onComplete={() => {
-            this.setState({ isAllowedBet: true });
-        }} />;
+        return (
+            <CountDownTimer
+                namespace={this.props.namespace}
+                onComplete={() => {
+                    this.setState({ isAllowedBet: true });
+                }}
+            />
+        );
     }
 
     renderResultBlock() {
@@ -184,7 +190,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     @handle(Lobby.LobbyHandlers.TryToConnectHandler)
-    tryToConnectHandler() { }
+    tryToConnectHandler() {}
 
     @render(gc.Connection.ConnectionStore, (store) => store.isConnectFailed)
     handleConnectFail(isConnectFailed: boolean) {
@@ -237,7 +243,6 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     renderWaitingForNextRound() {
-        console.log('renderWaitingForNextRound isShowNextRoundMessage', this.state.isShowNextRoundMessage);
         if (!this.state.isShowNextRoundMessage) {
             return <></>;
         }
@@ -286,13 +291,14 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                         {this.renderCountDownTimer()}
                     </div>
                     <div className={`${Styles['result']} ${this.overrideClasses?.result}`}>{this.renderResultBlock()}</div>
-                    <div className={classNames(
-                        Styles['bet-options'],
-                        {
-                            [Styles['disabled']]: !isAllowedBet
-                        },
-                        this.overrideClasses?.betOptions
-                    )}
+                    <div
+                        className={classNames(
+                            Styles['bet-options'],
+                            {
+                                [Styles['disabled']]: !isAllowedBet,
+                            },
+                            this.overrideClasses?.betOptions,
+                        )}
                     >
                         {this.renderBettingBlock()}
                         <ConfirmBet namespace={this.props.namespace} />
@@ -344,13 +350,11 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     createConnection() {
         document.addEventListener('visibilitychange', this.onVisibilityChange);
         this.connectToServiceGateway();
-        this.connectLiveGateway();
     }
 
     handleReconnect = () => {
         this.terminateConnection();
         this.createConnection();
-        this.joinGame();
         this.resetStateWhenReconnect();
     };
 
