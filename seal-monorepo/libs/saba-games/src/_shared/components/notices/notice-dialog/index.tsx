@@ -19,7 +19,7 @@ const NoticeDialog: React.FC<Props> = ({ title, children, onClose, type, showBtn
 
     return (
         <div ref={wrapperRef}>
-            <div className={`${Styles['warning-container']} ${classType}`}>
+            <div className={`${Styles['notice-container']} ${classType}`}>
                 <div className={bgInfoClass}>
                     {/* <div className={`justify-content-between ${bgInfoClass}`}>
                         <strong className={Styles['d-title']}> {title}</strong>
