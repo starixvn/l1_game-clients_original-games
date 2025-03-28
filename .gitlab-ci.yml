@@ -21,11 +21,11 @@ include:
         echo "Invalid STACK_NAME value"
         exit 1
       fi
-    - cp ./seal-monorepo/libs/saba-games/configs/$STACK_VALUE/configs.$DEPLOY_ENV.json ./seal-monorepo/libs/saba-games/configs/$STACK_VALUE/configs.LOCAL_1.json
-    - cat ./seal-monorepo/libs/saba-games/configs/$STACK_VALUE/configs.LOCAL_1.json
+    - cp ./seal-monorepo/libs/saba-games/configs/$STACK_VALUE/configs.$DEPLOY_ENV.json ./seal-monorepo/libs/saba-games/configs/sg/configs.LOCAL_1.json
+    - cat ./seal-monorepo/libs/saba-games/configs/sg/configs.LOCAL_1.json
 
   artifacts:
     paths:
-      - ./seal-monorepo/libs/saba-games/configs/$STACK_VALUE/configs.LOCAL_1.json
+      - ./seal-monorepo/libs/saba-games/configs/sg/configs.LOCAL_1.json
     expire_in: 1 day
 
