@@ -18,7 +18,7 @@ export interface INoticeProps extends IPropsObserver {
 
 export default class Notice extends ObserverComponent<INoticeProps, INoticeState> {
     private timer: NodeJS.Timeout | null = null;
-    private readonly AUTO_CLOSE_DELAY = 3500;
+    private readonly AUTO_CLOSE_DELAY = 5000;
     private isJoiningGame = false;
 
     constructor(props: IPropsObserver) {
