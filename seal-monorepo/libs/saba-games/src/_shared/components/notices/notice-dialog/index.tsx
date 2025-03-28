@@ -1,5 +1,5 @@
 import * as gc from '@sg/sg-game-client';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Styles from './notice-dialog.module.scss';
 
 export type Props = {
@@ -19,6 +19,25 @@ const NoticeDialog: React.FC<Props> = ({ title, children, onClose, type, showBtn
     const classType = isError ? Styles['error'] : Styles['warning'];
     const bgInfoClass = isInfo ? Styles['bg-info'] : Styles['bg-error'];
     const disabledGameClass = disabledGame ? Styles['disabled-game'] : '';
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (disabledGame) {
+                return;
+            }
+
+            if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+                onClose?.();
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [onClose]);
+
     return (
         <div ref={wrapperRef}>
             <div className={Styles['wrapper-dialog']}>
