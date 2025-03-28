@@ -77,6 +77,8 @@ export default class Notice extends ObserverComponent<INoticeProps, INoticeState
                 this.isJoiningGame = false;
             }, 0);
         });
+        const { notice } = this.state;
+        notice?.onClose?.();
     }
 
     private handleNoticeInfo(): string {
@@ -103,24 +105,15 @@ export default class Notice extends ObserverComponent<INoticeProps, INoticeState
         }
     }
 
-
     render() {
         const { notice, isShow } = this.state;
         if (!isShow) {
             return <></>;
         }
 
-        const handleOnClose = () => {
-            this.closeNotice();
-            if (notice.onClose) {
-                notice.onClose();
-            }
-        };
         return (
-            <NoticeDialog {...notice} onClose={handleOnClose} language={this.props.language || ''}>
-                <div>
-                    {this.handleNoticeInfo()}
-                </div>
+            <NoticeDialog {...notice} onClose={this.closeNotice} language={this.props.language || ''}>
+                <div>{this.handleNoticeInfo()}</div>
             </NoticeDialog>
         );
     }
