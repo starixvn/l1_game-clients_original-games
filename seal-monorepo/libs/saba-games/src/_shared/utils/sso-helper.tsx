@@ -30,7 +30,7 @@ export const requestSSO = async (gameId = 0) => {
     const operatorToken = appSettings.simulatorConfigs.operatorToken;
 
     const request = {
-        playerId: `${playerId}`,
+        playerId: playerId,
         playerName: `username_${playerId}`,
         language: 'vi-VN',
         currency: currency || currencyDefault,
