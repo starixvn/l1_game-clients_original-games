@@ -16,7 +16,7 @@ import { choices } from '../../../../_shared/types/settlement-result';
 import { BetPercentages } from '../../../../_shared/components/bet-percentages';
 import { OddEvenBigRoadConverter, ScoreBoard } from '../../../../_shared/components/scoreboard';
 import classNames from 'classnames';
-import ScrollElement from 'libs/saba-games/src/_shared/components/scroll-element';
+import ScrollElement from '../../../../_shared/components/scroll-element';
 
 export interface ISeDieResultHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];

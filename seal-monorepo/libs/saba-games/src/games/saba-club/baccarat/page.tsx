@@ -10,7 +10,7 @@ import BaccaratBetOptions from './bet-option/baccarat-bet-options';
 import { containerOptions, setting } from './game-settings';
 import BaccaratSettlementResult from './settlement-result/baccarat-settlement-result';
 import { IBaccaratBet } from './type';
-import { GameBettingOptionsContext } from 'libs/saba-games/src/_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
+import { GameBettingOptionsContext } from '../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
 import type { GameBaseProps } from '../../../_shared/components/game-base/type';
 
 const BaccaratStatistic = React.lazy(() => import('./statistic/baccarat-statistics'));
@@ -52,7 +52,7 @@ export default class Baccarat extends GatewayGameBase<GameBaseProps, IBaccaratSt
     };
 
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handleGateway())
-    closeConnect() {}
+    closeConnect() { }
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
     handleRoundStateChange(roundState: string) {

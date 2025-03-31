@@ -1,5 +1,5 @@
 import * as gc from "@sg/sg-game-client";
-import { WinnerDisplay } from "libs/saba-games/src/_shared/components/winner-display/winner-display";
+import { WinnerDisplay } from "../../../../../_shared/components/winner-display/winner-display";
 import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 
 import Dice from "../../../../../_shared/components/dice";

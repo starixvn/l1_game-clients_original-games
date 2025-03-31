@@ -21,7 +21,7 @@ import {
 } from '../type';
 import { BigSmallBigRoadConverter } from '../../../../_shared/components/scoreboard/converters';
 import BigSmallScoreBoardBody from './components/big-small-scoreboard-body';
-import ScrollElement from 'libs/saba-games/src/_shared/components/scroll-element';
+import ScrollElement from '../../../../_shared/components/scroll-element';
 
 export interface IBigSmallResultHistoryState extends IStateObserver {
   rounds: gc.RoundHistories.RoundHistory[];
