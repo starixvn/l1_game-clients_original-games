@@ -3,7 +3,7 @@ import { RoundHistoryStore } from "@sg/sg-game-client/dist/game/round-histories"
 import { ROUND_STATE, RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds";
 import { SettlementStore } from "@sg/sg-game-client/dist/game/settlements";
 import { render } from "@sg/sg-observer";
-import { WinnerDisplay } from "libs/saba-games/src/_shared/components/winner-display/winner-display";
+import { WinnerDisplay } from "../../../../_shared/components/winner-display/winner-display";
 
 import { RoundDot } from "../../../../_shared/components/dot";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
