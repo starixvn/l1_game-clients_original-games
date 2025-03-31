@@ -9,7 +9,9 @@ import VG_SIT_CONFIG from '../../../configs/vg/configs.SIT.json';
 import VG_UAT_CONFIG from '../../../configs/vg/configs.UAT.json';
 import VG_PROD_CONFIG from '../../../configs/vg/configs.PROD.json';
 
-import gameSettings from '../../../configs/game-settings.json';
+// custom game settings (order)
+import SG_GAME_SETTINGS from '../../../configs/saba-game-settings.json';
+import VG_GAME_SETTINGS from '../../../configs/vg-game-settings.json';
 import { NOVA88_SITE_ID, VIVA88_SITE_ID } from '../../../constant/app';
 
 // LOCAL development
@@ -38,6 +40,12 @@ export const getEnvironmentConfig = ({ appEnv, siteId }) => {
         }
     }
     const environmentsConfig = configMaps[siteId][appEnv];
+
+    const gameSettingsMap = {
+        [NOVA88_SITE_ID]: VG_GAME_SETTINGS,
+        [VIVA88_SITE_ID]: SG_GAME_SETTINGS
+    }
+    const gameSettings = gameSettingsMap[siteId];
 
     return {
         ...environmentsConfig,
