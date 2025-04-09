@@ -8,4 +8,14 @@ export default {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/libs/saba-games',
+  collectCoverage: true,
+  coverageReporters: ['text', 'lcov', 'text-summary'],
+  collectCoverageFrom: [
+    'src/**/*.{js,jsx,ts,tsx}',
+    '!src/**/*.d.ts',
+    '!src/**/*.stories.{js,jsx,ts,tsx}',
+    '!src/**/*.test.{js,jsx,ts,tsx}',
+    '!src/**/index.{js,jsx,ts,tsx}',
+    '!src/**/types.{js,jsx,ts,tsx}',
+  ],
 };
