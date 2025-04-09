@@ -43,6 +43,13 @@ export const sharedContainer = getSharedContainer(getSiteConfig(appSettings.defa
 
 export function configSharedContainer() {
     Observer.configure({ default: { mobx, container: gc.buildObserverContainer(sharedContainer) } });
+    console.log('[HotLeagueWall-Startup] Configuring shared container with Observer');
+    console.log('[HotLeagueWall-Startup] Container:', sharedContainer);
+    console.log('[HotLeagueWall-Startup] Observer container:', gc.buildObserverContainer(sharedContainer));
+
+    Observer.configure({ default: { mobx, container: gc.buildObserverContainer(sharedContainer) } });
+    console.log('[HotLeagueWall-Startup] Shared container configured successfully');
+    console.log('[HotLeagueWall-Startup] Observer configuration complete');
     return sharedContainer;
 }
 
