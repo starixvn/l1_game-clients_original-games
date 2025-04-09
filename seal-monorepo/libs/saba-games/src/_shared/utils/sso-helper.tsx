@@ -8,12 +8,12 @@ const appSettings = getEnvironmentConfig({
 
 const systemType = appSettings.systemType;
 
-const randomIntFromInterval = (min: number, max: number) => {
+export const randomIntFromInterval = (min: number, max: number) => {
     // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
-const randomPlayerId = randomIntFromInterval(1000000, 9999999);
+export const randomPlayerId = randomIntFromInterval(1000000, 9999999);
 
 export const requestSSO = async (gameId = 0) => {
     const searchParams = new URLSearchParams(window.location.search);
