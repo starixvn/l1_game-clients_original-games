@@ -33,4 +33,3 @@ include:
     paths:
       - ./seal-monorepo/libs/saba-games/configs/sg/configs.LOCAL_1.json
     expire_in: 1 day
-
