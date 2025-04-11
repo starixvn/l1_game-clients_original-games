@@ -1,13 +1,19 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import Timer from "../Timer"; 
+import Timer from "../timer";
 import "@testing-library/jest-dom";
 
 describe("Timer component", () => {
+    it("should render correctly", () => {
+        const { container } = render(<Timer className="test-class" />);
+        expect(container).toBeInTheDocument();
+    });
+
     it("should render an SVG element", () => {
         const { container } = render(<Timer className="custom-class" />);
         const svg = container.querySelector("svg");
         expect(svg).toBeInTheDocument();
+        expect(svg).toHaveClass("custom-class");
     });
 
     it("should contain a <path> inside the SVG", () => {
