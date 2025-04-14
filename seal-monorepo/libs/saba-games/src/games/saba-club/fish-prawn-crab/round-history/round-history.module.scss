@@ -1,0 +1,48 @@
+.roundHistory {
+    padding: 1rem;
+    border-radius: 8px;
+
+    .title {
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: #888;
+    }
+
+    .historyList {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .roundItem {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem;
+        background-color: #2a2a2a;
+        border-radius: 4px;
+
+        .roundId {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .result {
+            display: flex;
+            gap: 0.5rem;
+
+            .symbol {
+                background-color: #333;
+                padding: 0.25rem 0.5rem;
+                border-radius: 4px;
+                font-size: 0.9rem;
+            }
+        }
+
+        .timestamp {
+            color: #888;
+            font-size: 0.9rem;
+        }
+    }
+} 

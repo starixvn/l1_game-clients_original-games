@@ -58,3 +58,24 @@
   @extend %icon;
   background-image: url('../../../../assets/game-icons/game-icon-10.png');
 }
+
+.fish-prawn-crab-icon {
+  @extend %icon;
+  background-image: url('../../../../assets/game-icons/fish-prawn-crab.png');
+}
+
+.color-game-icon {
+  @extend %icon;
+  background-image: url('../../../../assets/game-icons/color-game.png');
+  // Fallback if icon doesn't exist
+  background-color: #ff0000;
+  border-radius: 50%;
+}
+
+.coin-toss-icon {
+  @extend %icon;
+  background-image: url('../../../../assets/game-icons/coin-toss.png');
+  // Fallback if icon doesn't exist
+  background-color: #ffd700;
+  border-radius: 50%;
+}

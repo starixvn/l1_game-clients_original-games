@@ -25,6 +25,37 @@
         "order": 4,
         "isSocketGateway": true
     },
+    "3": {
+        "id": 3,
+        "gameName": "FishPrawnCrab",
+        "name": "FishPrawnCrab",
+        "namespaces": [
+            "fishprawncrab"
+        ],
+        "isVisible": true,
+        "supportMD5": false,
+        "socketInfo": {
+            "namespace": "fishprawncrab",
+            "path": "fishprawncrab"
+        },
+        "durations": {
+            "wholeRound": 41,
+            "placingBets": 30,
+            "lockingBet": 5,
+            "showResult": 8,
+            "resultAnimation": 2,
+            "beforeStartRound": 2
+        },
+        "numberOfRoundHistory": 100,
+        "websocket": {
+            "proxyPath": "",
+            "route": "livepagegateway"
+        },
+        "serviceName": "fishprawncrab",
+        "mainObserverNamespace": "fishprawncrab",
+        "order": 5,
+        "isSocketGateway": true
+    },
     "10": {
         "id": 10,
         "gameName": "Baccarat",

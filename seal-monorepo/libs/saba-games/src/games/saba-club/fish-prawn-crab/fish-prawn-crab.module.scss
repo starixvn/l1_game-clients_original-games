@@ -1,0 +1,113 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #0a0a0a;
+    color: #ffffff;
+}
+
+.mainContent {
+    display: flex;
+    flex: 1;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.leftPanel {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.rightPanel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.block-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.bet-options-block {
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.info-block {
+    background: #fff;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.result-block {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+}
+
+.bet-options-wrapper {
+    display: flex;
+    gap: 20px;
+}
+
+.bet-options-container-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.bet-options-container-right {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.bet {
+    width: 100%;
+}
+
+.bets-bg {
+    background: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: #f0f0f0;
+    }
+}
+
+.container-bets {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.padding-bet {
+    padding: 10px;
+}
+
+.wrapper-dots {
+    display: flex;
+    gap: 5px;
+}
+
+.wrapper-dots-small {
+    transform: scale(0.8);
+}
+
+.main-option {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+} 
