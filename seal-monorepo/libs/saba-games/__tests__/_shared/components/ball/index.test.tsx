@@ -1,11 +1,12 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import '@testing-library/jest-dom';
-import Ball, { BallStatus } from '../../../../../src/_shared/components/ball';
-import { getBallColor } from '../../../../../src/_shared/components/ball/ball-color-helper';
+import Ball, { BallStatus } from '../../../../src/_shared/components/ball';
+import { getBallColor } from '../../../../src/_shared/components/ball/ball-color-helper';
 
 // Mock the ball-color-helper
-jest.mock('../../../../../src/_shared/components/ball/ball-color-helper', () => ({
+jest.mock('../../../../src/_shared/components/ball/ball-color-helper', () => ({
     getBallColor: jest.fn((num) => num % 2 === 0 ? 'red' : 'blue')
 }));
 

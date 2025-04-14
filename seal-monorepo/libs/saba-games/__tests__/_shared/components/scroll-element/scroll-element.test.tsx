@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import ScrollElement from '../../../../../src/_shared/components/scroll-element';
+import ScrollElement from '../../../../src/_shared/components/scroll-element';
 
 describe('ScrollElement', () => {
     const mockRef = React.createRef<HTMLDivElement>();

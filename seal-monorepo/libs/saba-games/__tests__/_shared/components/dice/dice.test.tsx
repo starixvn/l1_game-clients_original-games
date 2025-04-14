@@ -12,13 +12,13 @@ jest.mock("libs/saba-games/src/_shared/components/dice/dice.module.scss", () => 
 }));
 
 // Mock dice images
-jest.mock("../../../../../src/assets/big-small/dice-1.png", () => "dice-1.png");
-jest.mock("../../../../../src/assets/big-small/dice-2.png", () => "dice-2.png");
-jest.mock("../../../../../src/assets/big-small/dice-3.png", () => "dice-3.png");
-jest.mock("../../../../../src/assets/big-small/dice-4.png", () => "dice-4.png");
-jest.mock("../../../../../src/assets/big-small/dice-5.png", () => "dice-5.png");
-jest.mock("../../../../../src/assets/big-small/dice-6.png", () => "dice-6.png");
-jest.mock("../../../../../src/assets/big-small/dice-question-mark.png", () => "dice-question-mark.png");
+jest.mock("../../../../src/assets/big-small/dice-1.png", () => "dice-1.png");
+jest.mock("../../../../src/assets/big-small/dice-2.png", () => "dice-2.png");
+jest.mock("../../../../src/assets/big-small/dice-3.png", () => "dice-3.png");
+jest.mock("../../../../src/assets/big-small/dice-4.png", () => "dice-4.png");
+jest.mock("../../../../src/assets/big-small/dice-5.png", () => "dice-5.png");
+jest.mock("../../../../src/assets/big-small/dice-6.png", () => "dice-6.png");
+jest.mock("../../../../src/assets/big-small/dice-question-mark.png", () => "dice-question-mark.png");
 
 describe("Dice Component", () => {
     it("renders the correct dice image based on dice number", () => {
