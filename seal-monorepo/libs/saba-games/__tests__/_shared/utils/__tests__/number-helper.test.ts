@@ -1,4 +1,4 @@
-import { formatOdds, getRandomDiceNumbers, calculateTotalDiceNumber } from '../number-helper';
+import { formatOdds, getRandomDiceNumbers, calculateTotalDiceNumber } from 'libs/saba-games/src/_shared/utils/number-helper';
 
 describe('number-helper', () => {
     describe('formatOdds', () => {

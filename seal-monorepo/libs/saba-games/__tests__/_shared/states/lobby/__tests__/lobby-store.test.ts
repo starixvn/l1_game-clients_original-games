@@ -1,4 +1,4 @@
-import { LobbyStore } from '../lobby-store';
+import { LobbyStore } from 'libs/saba-games/src/_shared/states/lobby/lobby-store';
 import { makeAutoObservable } from 'mobx';
 
 // Mock mobx

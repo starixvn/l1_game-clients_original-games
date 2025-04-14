@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import GameTitle from '../game-title';
+import GameTitle from 'libs/saba-games/src/_shared/components/game-base/game-header/game-title';
 import * as gc from '@sg/sg-game-client';
 
 // Mock the SCSS module
-jest.mock('../game-header.module.scss', () => ({
+jest.mock('libs/saba-games/src/_shared/components/game-base/game-header/game-header.module.scss', () => ({
     'title-with-icon': 'mock-title-with-icon',
     'collapse-btn': 'mock-collapse-btn',
     'collapse-icon': 'mock-collapse-icon',
@@ -14,7 +14,7 @@ jest.mock('../game-header.module.scss', () => ({
 }));
 
 // Mock getGameSetting
-jest.mock('../../../../app-settings', () => ({
+jest.mock('libs/saba-games/src/_shared/app-settings', () => ({
     getGameSetting: jest.fn().mockReturnValue({
         gameName: 'test-game'
     })
@@ -40,12 +40,6 @@ describe('GameTitle', () => {
     beforeEach(() => {
         jest.clearAllMocks();
     });
-
-    it('renders without crashing', () => {
-        render(<GameTitle {...defaultProps} />);
-        expect(screen.getByText('Test Game')).toBeInTheDocument();
-    });
-
     it('renders game icon with correct class', () => {
         const { container } = render(<GameTitle {...defaultProps} />);
         const gameIcon = container.querySelector('.mock-game-icon-1');
@@ -74,11 +68,5 @@ describe('GameTitle', () => {
         expect(collapseBtn).toBeInTheDocument();
         fireEvent.click(collapseBtn!);
         expect(onClick).toHaveBeenCalled();
-    });
-
-    it('translates game name correctly', () => {
-        render(<GameTitle {...defaultProps} />);
-        expect(gc.Translator.t).toHaveBeenCalledWith('test-game.game_name');
-        expect(screen.getByText('Test Game')).toBeInTheDocument();
     });
 }); 

@@ -8,8 +8,8 @@ import {
     useGameBettingZoneContext,
     GameBettingOptionsContext,
     useGameBettingOptionsContext
-} from '../game-betting-zone-context';
-import type { GameBettingZoneContextProps, GameBettingOptionsContextProps } from '../game-betting-zone-context';
+} from 'libs/saba-games/src/_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
+import type { GameBettingZoneContextProps, GameBettingOptionsContextProps } from 'libs/saba-games/src/_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
 
 describe('GameBettingZoneContext', () => {
     describe('Context Creation', () => {

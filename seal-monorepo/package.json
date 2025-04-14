@@ -10,7 +10,10 @@
     "serve-dist-saba-games": "cd dist/libs/saba-games && npx serve . -s -p 3000 -C",
     "serve-dev": "nx serve saba-games --configuration=development --port=4200",
     "build-and-serve-dev": "cross-env NODE_ENV=development nx build saba-games --configuration=development && cd dist/libs/saba-games && npx http-server -p 4200 --cors -c-1",
-    "test-coverage": "nx test saba-games --coverage"
+    "test-coverage": "nx test saba-games --coverage",
+    "test-saba-games": "nx test saba-games",
+    "test-saba-games:watch": "nx test saba-games --watch",
+    "test-saba-games:debug": "nx test saba-games --runInBand"
   },
   "private": true,
   "devDependencies": {

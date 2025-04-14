@@ -1,4 +1,4 @@
-import { FunctionUtils } from '../funtion-utils';
+import { FunctionUtils } from 'libs/saba-games/src/_shared/utils/funtion-utils';
 
 describe('FunctionUtils', () => {
     describe('delay', () => {
@@ -74,7 +74,7 @@ describe('FunctionUtils', () => {
 
         it('should return true for empty function', () => {
             // Arrange
-            const func = () => {};
+            const func = () => { };
 
             // Act
             const result = FunctionUtils.isFunctionNotExistedOrEmpty(func);
@@ -85,7 +85,7 @@ describe('FunctionUtils', () => {
 
         it('should return true for function with only whitespace', () => {
             // Arrange
-            const func = () => {    };
+            const func = () => { };
 
             // Act
             const result = FunctionUtils.isFunctionNotExistedOrEmpty(func);
@@ -118,7 +118,7 @@ describe('FunctionUtils', () => {
 
         it('should handle arrow functions', () => {
             // Arrange
-            const emptyArrow = () => {};
+            const emptyArrow = () => { };
             const nonEmptyArrow = () => { return 'test'; };
 
             // Act & Assert
@@ -128,7 +128,7 @@ describe('FunctionUtils', () => {
 
         it('should handle regular functions', () => {
             // Arrange
-            function emptyRegular() {}
+            function emptyRegular() { }
             function nonEmptyRegular() { return 'test'; }
 
             // Act & Assert

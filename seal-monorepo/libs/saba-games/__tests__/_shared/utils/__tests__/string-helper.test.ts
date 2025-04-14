@@ -1,4 +1,4 @@
-import '../string-helper';
+import 'libs/saba-games/src/_shared/utils/string-helper';
 
 describe('string-helper', () => {
     describe('replaceTolgeeFormat', () => {

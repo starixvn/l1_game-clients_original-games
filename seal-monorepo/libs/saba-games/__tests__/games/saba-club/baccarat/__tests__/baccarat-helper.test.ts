@@ -1,5 +1,5 @@
 import * as gc from "@sg/sg-game-client";
-import { Choices, BaccaratConfigs, StatisticRuleEntriesBankerPlayer, StatisticRuleMapping, GetTranslateChoiceMapping, ChoiceForTabActive } from '../baccarat-helper';
+import { Choices, BaccaratConfigs, StatisticRuleEntriesBankerPlayer, StatisticRuleMapping, GetTranslateChoiceMapping, ChoiceForTabActive } from 'libs/saba-games/src/games/saba-club/baccarat/baccarat-helper';
 
 // Mock the Translator
 jest.mock('@sg/sg-game-client', () => ({

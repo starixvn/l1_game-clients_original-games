@@ -1,10 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import GameHeaderCenterTexts from '../game-header-center-texts';
+import GameHeaderCenterTexts from 'libs/saba-games/src/_shared/components/game-base/game-header/game-header-center-texts';
 
 // Mock the SCSS module
-jest.mock('../game-header-center-texts.module.scss', () => ({
+jest.mock('libs/saba-games/src/_shared/components/game-base/game-header/game-header-center-texts.module.scss', () => ({
     'game-title-text-center-container': 'mock-container',
     'game-title-text-center': 'mock-text-center'
 }));
@@ -46,10 +46,10 @@ describe('GameHeaderCenterTexts', () => {
     it('applies correct classes to container and text elements', () => {
         const texts = ['Test Text'];
         const { container } = render(<GameHeaderCenterTexts texts={texts} />);
-        
+
         const containerElement = container.firstChild;
         expect(containerElement).toHaveClass('mock-container');
-        
+
         const textElement = container.querySelector('.mock-text-center');
         expect(textElement).toBeInTheDocument();
     });

@@ -1,5 +1,5 @@
-import { calculateTotalScore, CardAnimationConfig, GetBankerCardsResult, GetPlayerCardsResult, sumScore } from './score-utils';
-import { Result } from '../../baccarat';
+import { Result } from 'libs/saba-games/src/games/saba-club/baccarat/baccarat';
+import { calculateTotalScore, CardAnimationConfig, GetBankerCardsResult, GetPlayerCardsResult, sumScore } from 'libs/saba-games/src/games/saba-club/baccarat/settlement-result/components/score-utils';
 
 describe('sumScore', () => {
     // Individual card rank tests

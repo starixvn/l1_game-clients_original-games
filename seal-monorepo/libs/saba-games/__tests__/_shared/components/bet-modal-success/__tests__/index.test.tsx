@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import BetModalSuccess from '../index';
+import BetModalSuccess from 'libs/saba-games/src/_shared/components/bet-modal-success';
 import * as gc from '@sg/sg-game-client';
 
 // Mock the FormatUtils from sg-game-client

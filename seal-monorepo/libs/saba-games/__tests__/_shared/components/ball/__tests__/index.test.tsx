@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import '@testing-library/jest-dom';
-import Ball, { BallStatus } from '../index';
-import { getBallColor } from '../ball-color-helper';
+import Ball, { BallStatus } from '../../../../../src/_shared/components/ball';
+import { getBallColor } from '../../../../../src/_shared/components/ball/ball-color-helper';
 
 // Mock the ball-color-helper
-jest.mock('../ball-color-helper', () => ({
+jest.mock('../../../../../src/_shared/components/ball/ball-color-helper', () => ({
     getBallColor: jest.fn((num) => num % 2 === 0 ? 'red' : 'blue')
 }));
 
@@ -32,7 +32,7 @@ describe('Ball Component', () => {
 
     it('should render with default props', () => {
         render(<Ball {...defaultProps} />);
-        
+
         const ballElement = document.querySelector('.ball');
         expect(ballElement).toBeInTheDocument();
         expect(ballElement).toHaveClass('active');
@@ -63,12 +63,12 @@ describe('Ball Component', () => {
 
         rerender(<Ball {...defaultProps} status={BallStatus.SHOW} />);
         expect(ballElement).toHaveClass('active');
-        
+
         // Fast-forward time to show the ball content
         act(() => {
             jest.advanceTimersByTime(1000);
         });
-        
+
         const ballContent = screen.getByText('5').parentElement;
         expect(ballContent).toHaveClass('display-right-now');
     });
@@ -136,9 +136,9 @@ describe('Ball Component', () => {
 
     it('should cleanup timeout on unmount', () => {
         const { unmount } = render(<Ball {...defaultProps} />);
-        
+
         unmount();
-        
+
         // Fast-forward time
         act(() => {
             jest.advanceTimersByTime(1000);
@@ -148,14 +148,21 @@ describe('Ball Component', () => {
     });
 
     it('should apply correct ball color based on number', () => {
+        // Clear any previous mock calls
+        (getBallColor as jest.Mock).mockClear();
+
+        // Render with number 4 which should get a "red" color
         render(<Ball {...defaultProps} number={4} />);
 
-        // Fast-forward time
+        // Fast-forward time to ensure component fully renders
         act(() => {
             jest.advanceTimersByTime(1000);
         });
 
+        // Verify the getBallColor function was called with number 4
         expect(getBallColor).toHaveBeenCalledWith(4);
+
+        // Get the ball content and verify it has the "red" class
         const ballContent = screen.getByText('4').parentElement;
         expect(ballContent).toHaveClass('red');
     });

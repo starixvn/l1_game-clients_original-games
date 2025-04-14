@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import ScrollElement from '../index';
+import ScrollElement from '../../../../../src/_shared/components/scroll-element';
 
 describe('ScrollElement', () => {
     const mockRef = React.createRef<HTMLDivElement>();
@@ -19,7 +19,7 @@ describe('ScrollElement', () => {
             right: 0,
             x: 0,
             y: 0,
-            toJSON: () => {}
+            toJSON: () => { }
         }));
     });
 
@@ -53,7 +53,7 @@ describe('ScrollElement', () => {
         Object.defineProperty(mockRef.current, 'offsetLeft', { value: 50, writable: true });
 
         fireEvent.mouseDown(container.firstChild!, { pageX: 100 });
-        
+
         // Check if cursor style changed
         expect(container.firstChild).toHaveStyle({ cursor: 'grabbing' });
     });
@@ -69,7 +69,7 @@ describe('ScrollElement', () => {
         fireEvent.mouseDown(container.firstChild!, { pageX: 100 });
         // Then trigger mouse leave
         fireEvent.mouseLeave(container.firstChild!);
-        
+
         // Check if cursor style changed back
         expect(container.firstChild).toHaveStyle({ cursor: 'grab' });
     });
@@ -85,7 +85,7 @@ describe('ScrollElement', () => {
         fireEvent.mouseDown(container.firstChild!, { pageX: 100 });
         // Then trigger mouse up
         fireEvent.mouseUp(container.firstChild!);
-        
+
         // Check if cursor style changed back
         expect(container.firstChild).toHaveStyle({ cursor: 'grab' });
     });

@@ -1,10 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { WinnerDisplay } from '../winner-display';
+import { WinnerDisplay } from 'libs/saba-games/src/_shared/components/winner-display/winner-display';
 
 // Mock the SCSS module
-jest.mock('../winner-display.module.scss', () => ({
+jest.mock('libs/saba-games/src/_shared/components/winner-display/winner-display.module.scss', () => ({
     'winner-display': 'mock-winner-display',
     'winner-text': 'mock-winner-text'
 }));
@@ -41,11 +41,11 @@ describe('WinnerDisplay', () => {
 
     it('renders with correct structure', () => {
         const { container } = render(<WinnerDisplay {...defaultProps} />);
-        
+
         // Check wrapper div
         const wrapper = container.firstChild;
         expect(wrapper).toHaveClass('mock-winner-display');
-        
+
         // Check paragraph
         const paragraph = wrapper?.firstChild;
         expect(paragraph).toHaveClass('mock-winner-text');

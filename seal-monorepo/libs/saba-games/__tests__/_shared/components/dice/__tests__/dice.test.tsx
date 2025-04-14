@@ -1,24 +1,24 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import Dice from "../index";
-import { Size } from "../../../../_shared/constants";
+import Dice from "libs/saba-games/src/_shared/components/dice";
+import { Size } from "libs/saba-games/src/_shared/constants";
 import "@testing-library/jest-dom";
 
 // Mock SCSS module
-jest.mock("../dice.module.scss", () => ({
+jest.mock("libs/saba-games/src/_shared/components/dice/dice.module.scss", () => ({
     "dice-large": "dice-large",
     "dice-medium": "dice-medium",
     "dice-small": "dice-small",
 }));
 
 // Mock dice images
-jest.mock("../../../../assets/big-small/dice-1.png", () => "dice-1.png");
-jest.mock("../../../../assets/big-small/dice-2.png", () => "dice-2.png");
-jest.mock("../../../../assets/big-small/dice-3.png", () => "dice-3.png");
-jest.mock("../../../../assets/big-small/dice-4.png", () => "dice-4.png");
-jest.mock("../../../../assets/big-small/dice-5.png", () => "dice-5.png");
-jest.mock("../../../../assets/big-small/dice-6.png", () => "dice-6.png");
-jest.mock("../../../../assets/big-small/dice-question-mark.png", () => "dice-question-mark.png");
+jest.mock("../../../../../src/assets/big-small/dice-1.png", () => "dice-1.png");
+jest.mock("../../../../../src/assets/big-small/dice-2.png", () => "dice-2.png");
+jest.mock("../../../../../src/assets/big-small/dice-3.png", () => "dice-3.png");
+jest.mock("../../../../../src/assets/big-small/dice-4.png", () => "dice-4.png");
+jest.mock("../../../../../src/assets/big-small/dice-5.png", () => "dice-5.png");
+jest.mock("../../../../../src/assets/big-small/dice-6.png", () => "dice-6.png");
+jest.mock("../../../../../src/assets/big-small/dice-question-mark.png", () => "dice-question-mark.png");
 
 describe("Dice Component", () => {
     it("renders the correct dice image based on dice number", () => {

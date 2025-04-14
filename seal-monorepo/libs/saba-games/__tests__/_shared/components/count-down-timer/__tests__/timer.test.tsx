@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import Timer from "../timer";
+import Timer from "libs/saba-games/src/_shared/components/count-down-timer/timer";
 import "@testing-library/jest-dom";
 
 describe("Timer component", () => {

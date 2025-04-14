@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { BetPercentages } from '../index';
+import { BetPercentages } from 'libs/saba-games/src/_shared/components/bet-percentages';
 import { Translator } from '@sg/sg-game-client';
 
 // Mock the Translator
@@ -26,7 +26,7 @@ describe('BetPercentages Component', () => {
 
     it('should render with empty settlements', () => {
         render(<BetPercentages {...defaultProps} />);
-        
+
         expect(screen.getByText('test-game.glossary_player 0%')).toBeInTheDocument();
         expect(screen.getByText('test-game.glossary_banker 0%')).toBeInTheDocument();
     });
@@ -40,12 +40,12 @@ describe('BetPercentages Component', () => {
         ];
 
         render(
-            <BetPercentages 
-                {...defaultProps} 
+            <BetPercentages
+                {...defaultProps}
                 settlements={settlements}
             />
         );
-        
+
         expect(screen.getByText('test-game.glossary_player 75%')).toBeInTheDocument();
         expect(screen.getByText('test-game.glossary_banker 25%')).toBeInTheDocument();
     });
@@ -59,12 +59,12 @@ describe('BetPercentages Component', () => {
         ];
 
         render(
-            <BetPercentages 
-                {...defaultProps} 
+            <BetPercentages
+                {...defaultProps}
                 settlements={settlements}
             />
         );
-        
+
         expect(screen.getByText('test-game.glossary_player 25%')).toBeInTheDocument();
         expect(screen.getByText('test-game.glossary_banker 75%')).toBeInTheDocument();
     });
@@ -78,12 +78,12 @@ describe('BetPercentages Component', () => {
         ];
 
         render(
-            <BetPercentages 
-                {...defaultProps} 
+            <BetPercentages
+                {...defaultProps}
                 settlements={settlements}
             />
         );
-        
+
         expect(screen.getByText('test-game.glossary_player 50%')).toBeInTheDocument();
         expect(screen.getByText('test-game.glossary_banker 50%')).toBeInTheDocument();
     });
@@ -103,7 +103,7 @@ describe('BetPercentages Component', () => {
         };
 
         render(<BetPercentages {...customProps} />);
-        
+
         expect(screen.getByText('test-game.glossary_red 66.67%')).toBeInTheDocument();
         expect(screen.getByText('test-game.glossary_black 33.33%')).toBeInTheDocument();
     });
@@ -113,12 +113,12 @@ describe('BetPercentages Component', () => {
         settlements[0] = { player: false, banker: true }; // One banker win
 
         render(
-            <BetPercentages 
-                {...defaultProps} 
+            <BetPercentages
+                {...defaultProps}
                 settlements={settlements}
             />
         );
-        
+
         expect(screen.getByText('test-game.glossary_player 99.9%')).toBeInTheDocument();
         expect(screen.getByText('test-game.glossary_banker 0.1%')).toBeInTheDocument();
     });
@@ -134,12 +134,12 @@ describe('BetPercentages Component', () => {
         ];
 
         render(
-            <BetPercentages 
-                {...defaultProps} 
+            <BetPercentages
+                {...defaultProps}
                 settlements={settlements}
             />
         );
-        
+
         expect(screen.getByText('test-game.glossary_player 83.33%')).toBeInTheDocument();
         expect(screen.getByText('test-game.glossary_banker 16.67%')).toBeInTheDocument();
     });
@@ -155,7 +155,7 @@ describe('BetPercentages Component', () => {
         };
 
         render(<BetPercentages {...customProps} />);
-        
+
         expect(screen.getByText('baccarat.glossary_player 50%')).toBeInTheDocument();
         expect(screen.getByText('baccarat.glossary_banker 50%')).toBeInTheDocument();
     });

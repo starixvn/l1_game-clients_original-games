@@ -1,18 +1,42 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import GameHeader from '../game-header';
-import GameHeaderCenterTexts from '../game-header-center-texts';
+import GameHeaderCenterTexts from 'libs/saba-games/src/_shared/components/game-base/game-header/game-header-center-texts';
+import GameHeader from 'libs/saba-games/src/_shared/components/game-base/game-header/game-header';
 
 // Mock the SCSS module
-jest.mock('../game-header.module.scss', () => ({
+jest.mock('libs/saba-games/src/_shared/components/game-base/game-header/game-header.module.scss', () => ({
     'game-title': 'mock-game-title',
     'arrow-icon': 'mock-arrow-icon',
-    'collapsed': 'mock-collapsed'
+    'collapsed': 'mock-collapsed',
+    'title-with-icon': 'mock-title-with-icon',
+    'collapse-btn': 'mock-collapse-btn',
+    'collapse-icon': 'mock-collapse-icon',
+    'divider': 'mock-divider',
+    'game-icon-1': 'mock-game-icon-1'
 }));
 
-// Mock child components
-jest.mock('../game-title', () => ({
+// Mock getGameSetting
+jest.mock('libs/saba-games/src/_shared/app-settings', () => ({
+    getGameSetting: jest.fn().mockReturnValue({
+        gameName: 'test-game'
+    })
+}));
+
+// Mock Translator
+jest.mock('@sg/sg-game-client', () => ({
+    Translator: {
+        t: jest.fn().mockImplementation((key) => {
+            if (key === 'test-game.game_name') {
+                return 'Test Game';
+            }
+            return key;
+        })
+    }
+}));
+
+// Mock child components - no longer needed as we're mocking the dependencies
+jest.mock('libs/saba-games/src/_shared/components/game-base/game-header/game-title', () => ({
     __esModule: true,
     default: () => <div data-testid="game-title">Game Title</div>
 }));
@@ -23,8 +47,8 @@ describe('GameHeader', () => {
     };
 
     it('renders without crashing', () => {
-        render(<GameHeader {...defaultProps} />);
-        expect(screen.getByTestId('game-title')).toBeInTheDocument();
+        const { container } = render(<GameHeader {...defaultProps} />);
+        expect(container.firstChild).toHaveClass('mock-game-title');
     });
 
     it('applies correct classes when expanded', () => {
@@ -42,9 +66,9 @@ describe('GameHeader', () => {
     it('renders center texts component when provided', () => {
         const centerTexts = ['Text 1', 'Text 2'];
         render(
-            <GameHeader 
-                {...defaultProps} 
-                centerTextsComponent={<GameHeaderCenterTexts texts={centerTexts} />} 
+            <GameHeader
+                {...defaultProps}
+                centerTextsComponent={<GameHeaderCenterTexts texts={centerTexts} />}
             />
         );
         expect(screen.getByText('Text 1')).toBeInTheDocument();

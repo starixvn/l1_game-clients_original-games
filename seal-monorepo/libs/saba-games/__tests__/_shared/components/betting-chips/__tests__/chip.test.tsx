@@ -1,6 +1,7 @@
+import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Chip from '../chip';
+import Chip from 'libs/saba-games/src/_shared/components/betting-chips/chip';
 
 describe('Chip Component', () => {
     const defaultProps = {
@@ -14,7 +15,7 @@ describe('Chip Component', () => {
 
     it('should render with default props', () => {
         render(<Chip {...defaultProps} />);
-        
+
         const chip = screen.getByText('Test Chip');
         expect(chip).toBeInTheDocument();
         expect(chip.closest('a')).toHaveStyle({ opacity: 1 });
@@ -22,16 +23,16 @@ describe('Chip Component', () => {
 
     it('should call onClick when clicked', () => {
         render(<Chip {...defaultProps} />);
-        
+
         const chip = screen.getByText('Test Chip').closest('a');
         fireEvent.click(chip!);
-        
+
         expect(defaultProps.onClick).toHaveBeenCalledTimes(1);
     });
 
     it('should render with disabled state', () => {
         render(<Chip {...defaultProps} disabled={true} />);
-        
+
         const chip = screen.getByText('Test Chip').closest('a');
         expect(chip).toHaveStyle({ opacity: 0.5 });
     });
@@ -39,7 +40,7 @@ describe('Chip Component', () => {
     it('should render with custom label', () => {
         const customLabel = 'Custom Chip Label';
         render(<Chip {...defaultProps} label={customLabel} />);
-        
+
         expect(screen.getByText(customLabel)).toBeInTheDocument();
     });
 }); 

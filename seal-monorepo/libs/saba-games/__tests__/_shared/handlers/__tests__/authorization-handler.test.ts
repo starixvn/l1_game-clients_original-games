@@ -1,4 +1,4 @@
-import AuthorizationHandler from '../authorization-handler';
+import AuthorizationHandler from 'libs/saba-games/src/_shared/handlers/authorization-handler';
 
 jest.useFakeTimers();
 
@@ -72,7 +72,7 @@ describe('AuthorizationHandler', () => {
             );
 
             handler.waitForAuthorization();
-            
+
             // Advance timers to just before max timeout
             jest.advanceTimersByTime(9900);
             expect(handleSignInMock).not.toHaveBeenCalled();

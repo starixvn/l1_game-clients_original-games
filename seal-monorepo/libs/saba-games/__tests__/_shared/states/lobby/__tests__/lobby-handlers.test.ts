@@ -1,8 +1,8 @@
-import { LobbyHandlers } from '../lobby-handlers';
-import { LobbyStore } from '../lobby-store';
+import { LobbyHandlers } from 'libs/saba-games/src/_shared/states/lobby/lobby-handlers';
+import { LobbyStore } from 'libs/saba-games/src/_shared/states/lobby/lobby-store';
 
 // Mock LobbyStore
-jest.mock('../lobby-store', () => {
+jest.mock('libs/saba-games/src/_shared/states/lobby/lobby-store', () => {
     return {
         LobbyStore: jest.fn().mockImplementation(() => ({
             handleTryToConnect: jest.fn()

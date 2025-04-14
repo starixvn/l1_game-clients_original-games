@@ -1,6 +1,6 @@
-import { getChoicesType } from '../choice-type';
-import { BACCARAT_GAME_NAMESPACE, SE_DIE_GAME_NAMESPACE, UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE, VIP_SE_DIE_GAME_NAMESPACE } from '../../../../constant/app';
-import { SE_DIE_CHOICES, BACCARAT_CHOICES } from '../../../games/constants/saba-club';
+import { BACCARAT_GAME_NAMESPACE, SE_DIE_GAME_NAMESPACE, UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE, VIP_SE_DIE_GAME_NAMESPACE } from 'libs/saba-games/constant/app';
+import { getChoicesType } from 'libs/saba-games/src/_shared/utils/choice-type';
+import { BACCARAT_CHOICES, SE_DIE_CHOICES } from 'libs/saba-games/src/games/constants/saba-club';
 
 describe('choice-type', () => {
     describe('getChoicesType', () => {

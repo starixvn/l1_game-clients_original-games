@@ -1,10 +1,10 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { RoundDot } from "../index";
+import { RoundDot } from "libs/saba-games/src/_shared/components/dot";
 import "@testing-library/jest-dom";
 
 // Mock SCSS module
-jest.mock("../dot.module.scss", () => ({
+jest.mock("libs/saba-games/src/_shared/components/dot/dot.module.scss", () => ({
     "dot-even": "dot-even",
     "dot-odd": "dot-odd",
     "highlight-current-result": "highlight-current-result",

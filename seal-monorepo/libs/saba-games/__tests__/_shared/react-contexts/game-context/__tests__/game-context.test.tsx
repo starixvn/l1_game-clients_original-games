@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { GameContext, GameContextProvider, GameContextConsumer, useGameContext } from '../game-context';
-import type { GamePropsContext } from '../../../components/game-base/type';
+import { GameContext, GameContextProvider, GameContextConsumer, useGameContext } from 'libs/saba-games/src/_shared/react-contexts/game-context/game-context';
+import type { GamePropsContext } from 'libs/saba-games/src/_shared/components/game-base/type';
 
 describe('GameContext', () => {
     describe('Context Creation', () => {

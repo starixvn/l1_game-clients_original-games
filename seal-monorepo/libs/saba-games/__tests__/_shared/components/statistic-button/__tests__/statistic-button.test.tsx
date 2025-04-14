@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import StatisticButton from '../statistic-button';
+import StatisticButton from 'libs/saba-games/src/_shared/components/statistic-button/statistic-button';
 import * as gc from '@sg/sg-game-client';
 
 // Mock dependencies
@@ -12,7 +12,7 @@ jest.mock('@sg/sg-game-client', () => ({
 }));
 
 // Mock CSS modules
-jest.mock('../statistic-button.module.scss', () => ({
+jest.mock('libs/saba-games/src/_shared/components/statistic-button/statistic-button.module.scss', () => ({
   'statistic-button': 'mock-statistic-button',
   'c-btn-statistic': 'mock-c-btn-statistic',
   'text': 'mock-text',
@@ -34,7 +34,7 @@ describe('StatisticButton', () => {
 
     // Check if the button is rendered with correct title
     expect(screen.getByText(mockStatisticTitle)).toBeInTheDocument();
-    
+
     // Check if the button has correct classes
     const link = screen.getByTitle('Expand');
     expect(link).toHaveClass('mock-c-btn-statistic');

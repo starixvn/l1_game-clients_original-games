@@ -1,4 +1,4 @@
-import { LocalStorage, Memory, StorageManager, localStorageKeys } from '../storage-manager';
+import { LocalStorage, Memory, StorageManager, localStorageKeys } from 'libs/saba-games/src/_shared/utils/storage-manager';
 
 // Mock localStorage
 const mockLocalStorage = {
@@ -49,7 +49,7 @@ describe('storage-manager', () => {
         it('should handle invalid JSON when getting items', () => {
             const testKey = 'testKey';
             mockLocalStorage.getItem.mockReturnValueOnce('invalid json');
-            
+
             const result = localStorage.get(testKey);
             expect(result).toBeNull();
         });

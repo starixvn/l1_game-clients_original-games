@@ -1,10 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import GameContainer from '../index';
+import GameContainer from 'libs/saba-games/src/_shared/components/game-container';
 
 // Mock SCSS module
-jest.mock('./game-container.module.scss', () => ({
+jest.mock('libs/saba-games/src/_shared/components/game-container/game-container.module.scss', () => ({
     'game-container': 'mock-game-container',
 }));
 

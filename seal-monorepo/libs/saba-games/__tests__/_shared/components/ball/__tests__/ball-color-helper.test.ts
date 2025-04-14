@@ -1,4 +1,4 @@
-import { getBallColor } from '../ball-color-helper';
+import { getBallColor } from "libs/saba-games/src/_shared/components/ball/ball-color-helper";
 
 describe('ball-color-helper', () => {
     describe('getBallColor', () => {

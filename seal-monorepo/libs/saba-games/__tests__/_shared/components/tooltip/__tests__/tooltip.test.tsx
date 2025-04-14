@@ -1,10 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Tooltip from '../tooltip';
+import Tooltip from 'libs/saba-games/src/_shared/components/tooltip/tooltip';
 
 // Mock the SCSS module
-jest.mock('../tooltip.module.scss', () => ({
+jest.mock('libs/saba-games/src/_shared/components/tooltip/tooltip.module.scss', () => ({
     'tooltip': 'mock-tooltip',
     'tooltip-content': 'mock-tooltip-content',
     'tooltip-title': 'mock-tooltip-title',

@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import NoticeDialog from '../index';
+import NoticeDialog from 'libs/saba-games/src/_shared/components/notices/notice-dialog';
 import * as gc from '@sg/sg-game-client';
 
 // Mock the SCSS module
-jest.mock('../notice-dialog.module.scss', () => ({
+jest.mock('libs/saba-games/src/_shared/components/notices/notice-dialog/notice-dialog.module.scss', () => ({
     'wrapper-dialog': 'mock-wrapper-dialog',
     'notice-container': 'mock-notice-container',
     'notice-info': 'mock-notice-info',
@@ -69,8 +69,8 @@ describe('NoticeDialog', () => {
 
     it('applies disabled game class when noticeInfo is DisabledGame', () => {
         const { container } = render(
-            <NoticeDialog 
-                noticeInfo={gc.Notices.NoticeInfo.DisabledGame} 
+            <NoticeDialog
+                noticeInfo={gc.Notices.NoticeInfo.DisabledGame}
                 onClose={mockOnClose}
             >
                 {mockChildren}
@@ -92,8 +92,8 @@ describe('NoticeDialog', () => {
 
     it('does not call onClose when clicking outside and disabled', () => {
         render(
-            <NoticeDialog 
-                noticeInfo={gc.Notices.NoticeInfo.DisabledGame} 
+            <NoticeDialog
+                noticeInfo={gc.Notices.NoticeInfo.DisabledGame}
                 onClose={mockOnClose}
             >
                 {mockChildren}

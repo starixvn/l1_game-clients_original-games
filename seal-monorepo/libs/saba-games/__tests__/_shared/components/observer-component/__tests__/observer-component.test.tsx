@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, act } from '@testing-library/react';
-import { ObserverComponent, IPropsObserver, IStateObserver } from '../observer-component';
 import { useObserver } from '@sg/sg-observer';
+import { IPropsObserver, IStateObserver } from 'libs/saba-games/src/_shared/components/observer-component/observer-component';
+import { ObserverComponent } from 'libs/saba-games/src/_shared/components/observer-component/observer-component';
 
 jest.mock('@sg/sg-observer', () => ({
     useObserver: jest.fn(),

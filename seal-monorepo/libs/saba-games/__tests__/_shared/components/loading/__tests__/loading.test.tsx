@@ -1,10 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Loading from '../index';
+import Loading from 'libs/saba-games/src/_shared/components/loading';
 
 // Mock the SCSS module
-jest.mock('../reconnecting.module.scss', () => ({
+jest.mock('libs/saba-games/src/_shared/components/loading/reconnecting.module.scss', () => ({
   'reconnecting-container': 'mock-reconnecting-container',
   'dot-elastic': 'mock-dot-elastic',
 }));

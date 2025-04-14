@@ -1,4 +1,4 @@
-import { checkValidAmount, parseInputValue, WarnMsgType } from '../betting-util';
+import { checkValidAmount, parseInputValue, WarnMsgType } from 'libs/saba-games/src/_shared/utils/betting-util';
 
 describe('betting-util', () => {
     describe('checkValidAmount', () => {

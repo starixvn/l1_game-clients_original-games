@@ -1,10 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import WarningDialog from '../index';
+import WarningDialog from 'libs/saba-games/src/_shared/components/notices/warning-dialog';
 
 // Mock the SCSS module
-jest.mock('../warning.module.scss', () => ({
+jest.mock('libs/saba-games/src/_shared/components/notices/warning-dialog/warning.module.scss', () => ({
     'wrapper-dialog': 'mock-wrapper-dialog',
     'warning-container': 'mock-warning-container'
 }));
