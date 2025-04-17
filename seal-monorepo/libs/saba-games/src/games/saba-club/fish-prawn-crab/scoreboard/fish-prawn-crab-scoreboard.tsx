@@ -56,7 +56,7 @@ export default class FishPrawnCrabScoreBoard extends ObserverComponent<Props, IF
 
     render() {
         const { rounds, roundState } = this.state;
-
+        return <></>;
         if (!rounds || rounds.length === 0) {
             return <></>;
         }

@@ -2,7 +2,8 @@ import * as gc from "@sg/sg-game-client";
 import { render } from "@sg/sg-observer";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
 import { FishPrawnCrabChoices, FishPrawnCrabSettlementResult } from "../type";
-import FishPrawnCrabDot from "../dot/fish-prawn-crab-dot";
+import FishPrawnCrabDice, { FishPrawnCrabSymbol } from "../../../../_shared/components/fish-prawn-crab-dice";
+import { Size } from "../../../../_shared/constants";
 import styles from "./fish-prawn-crab-round-history.module.scss";
 import { FishPrawnCrabRoundHistoryTooltip } from "./tooltip";
 
@@ -20,6 +21,16 @@ export interface IFishPrawnCrabRoundHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
 }
 
+// Map FishPrawnCrabChoices to FishPrawnCrabSymbol
+const choiceToSymbol: Record<FishPrawnCrabChoices, FishPrawnCrabSymbol> = {
+    [FishPrawnCrabChoices.fish]: FishPrawnCrabSymbol.FISH,
+    [FishPrawnCrabChoices.prawn]: FishPrawnCrabSymbol.PRAWN,
+    [FishPrawnCrabChoices.crab]: FishPrawnCrabSymbol.CRAB,
+    [FishPrawnCrabChoices.rooster]: FishPrawnCrabSymbol.ROOSTER,
+    [FishPrawnCrabChoices.gourd]: FishPrawnCrabSymbol.GOURD,
+    [FishPrawnCrabChoices.stag]: FishPrawnCrabSymbol.STAG, // Mapping 'coin' to 'stag' based on context
+};
+
 export default class FishPrawnCrabRoundHistory extends ObserverComponent<IFishPrawnCrabRoundHistoryProps, IFishPrawnCrabRoundHistoryState> {
     constructor(props: IFishPrawnCrabRoundHistoryProps) {
         super(props);
@@ -27,7 +38,7 @@ export default class FishPrawnCrabRoundHistory extends ObserverComponent<IFishPr
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
-        this.setState({ rounds: rounds.slice(0, 10) });
+        this.setState({ rounds: rounds.slice(0, 3) });
     }
 
     render() {
@@ -45,9 +56,17 @@ export default class FishPrawnCrabRoundHistory extends ObserverComponent<IFishPr
                     {roundHistories.toReversed().map((roundHistory) => {
                         return this.RoundHistoryItem(roundHistory);
                     })}
-                    <FishPrawnCrabDot
-                        choice={FishPrawnCrabChoices.fish}
-                        size="large"
+                    <FishPrawnCrabDice
+                        symbol={FishPrawnCrabSymbol.EMPTY}
+                        size={Size.medium}
+                    />
+                    <FishPrawnCrabDice
+                        symbol={FishPrawnCrabSymbol.EMPTY}
+                        size={Size.medium}
+                    />
+                    <FishPrawnCrabDice
+                        symbol={FishPrawnCrabSymbol.EMPTY}
+                        size={Size.medium}
                     />
                 </div>
             </div>
@@ -62,7 +81,7 @@ export default class FishPrawnCrabRoundHistory extends ObserverComponent<IFishPr
             [FishPrawnCrabChoices.crab]: false,
             [FishPrawnCrabChoices.rooster]: false,
             [FishPrawnCrabChoices.gourd]: false,
-            [FishPrawnCrabChoices.coin]: false
+            [FishPrawnCrabChoices.stag]: false
         };
 
         if (settlementResult && typeof settlementResult === "object") {
@@ -81,22 +100,6 @@ export default class FishPrawnCrabRoundHistory extends ObserverComponent<IFishPr
     }
 
     private RoundHistoryItem(roundHistory: gc.RoundHistories.RoundHistory): JSX.Element {
-        const test = {
-            "roundId": 2786845,
-            "result": {
-                "dice1": 1,
-                "dice2": 1,
-                "dice3": 2
-            },
-            "settlementResult": {
-                "stag": false,
-                "gourd": true,
-                "rooster": true,
-                "fish": false,
-                "crab": false,
-                "prawn": false
-            }
-        };
 
         if (!roundHistory.settlementResult || !roundHistory.result) {
             return <></>;
@@ -109,9 +112,17 @@ export default class FishPrawnCrabRoundHistory extends ObserverComponent<IFishPr
 
         return (
             <div key={roundHistory.roundId} className={styles["history-item"]}>
-                <FishPrawnCrabDot
-                    choice={settlement.winner}
-                    size="large"
+                <FishPrawnCrabDice
+                    symbol={roundHistory.result["dice1"]}
+                    size={Size.medium}
+                />
+                <FishPrawnCrabDice
+                    symbol={roundHistory.result["dice2"]}
+                    size={Size.medium}
+                />
+                <FishPrawnCrabDice
+                    symbol={roundHistory.result["dice3"]}
+                    size={Size.medium}
                 />
                 <span className={styles["arrow"]}></span>
                 <FishPrawnCrabRoundHistoryTooltip

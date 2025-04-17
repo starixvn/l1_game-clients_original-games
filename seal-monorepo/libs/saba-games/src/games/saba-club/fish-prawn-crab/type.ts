@@ -4,7 +4,7 @@ export enum FishPrawnCrabChoices {
     crab = 'crab',
     rooster = 'rooster',
     gourd = 'gourd',
-    coin = 'coin'
+    stag = 'stag'
 }
 
 export type FishPrawnCrabSymbol = keyof typeof FishPrawnCrabChoices;
@@ -21,7 +21,7 @@ export const topChoices = [
 ];
 
 export const bottomChoices = [
-    FishPrawnCrabChoices.coin
+    FishPrawnCrabChoices.stag
 ];
 
 export type FishPrawnCrabResult = {
@@ -39,7 +39,7 @@ export const ChoiceFishPrawnCrabIconMapper: { [key: string]: boolean[] } = {
     [FishPrawnCrabChoices.crab]: [true, true, true],
     [FishPrawnCrabChoices.rooster]: [true, false, false],
     [FishPrawnCrabChoices.gourd]: [false, true, true],
-    [FishPrawnCrabChoices.coin]: [false, false, true]
+    [FishPrawnCrabChoices.stag]: [false, false, true]
 };
 
 export interface FishPrawnCrabBet {

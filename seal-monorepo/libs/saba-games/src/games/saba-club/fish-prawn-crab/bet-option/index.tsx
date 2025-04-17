@@ -11,7 +11,7 @@ import { RoundDot } from '../../../../_shared/components/dot';
 import Styles from '../fish-prawn-crab.module.scss';
 import { bottomChoices, ChoiceFishPrawnCrabIconMapper, FishPrawnCrabChoices, mainChoices, topChoices } from '../type';
 
-const symbols: FishPrawnCrabSymbol[] = ['fish', 'prawn', 'crab', 'rooster', 'gourd', 'coin'];
+const symbols: FishPrawnCrabSymbol[] = ['fish', 'prawn', 'crab', 'rooster', 'gourd', 'stag'];
 
 export function BetOption() {
     return (
