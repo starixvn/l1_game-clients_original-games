@@ -3,26 +3,37 @@ import * as gc from '@sg/sg-game-client';
 import { handle, observer } from '@sg/sg-observer';
 import GatewayGameBase, { IGatewayGameBaseState } from '../../../_shared/components/game-base/gateway-gamebase';
 import { configGameContainer } from '../../../_shared/components/game-base/startup';
+import type { GameBaseProps } from '../../../_shared/components/game-base/type';
 import { GameBettingOptionsContext } from '../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
 import { FunctionUtils } from '../../../_shared/utils/funtion-utils';
 import FishPrawnCrabBetOptions from './bet-option';
+import styles from './fish-prawn-crab.module.scss';
 import { containerOptions, setting } from './game-settings';
-import Styles from './fish-prawn-crab.module.scss';
 import FishPrawnCrabSettlementResult from './settlement-result';
 
-const FishPrawnCrabStatistic = React.lazy(() => import('./statistic'));
-const FishPrawnCrabRoundHistory = React.lazy(() => import('./round-history'));
+const FishPrawnCrabStatistic = React.lazy(() => import('./statistic/fish-prawn-crab-statistic'));
+const FishPrawnCrabRoundHistory = React.lazy(() => import('./round-history/fish-prawn-crab-round-history'));
+
+interface IFishPrawnCrabPageState extends IGatewayGameBaseState {
+    activePanelId: any;
+    showBetPanel: boolean;
+    gameId: number;
+}
+
+interface IFishPrawnCrabPageProps extends GameBaseProps {
+    language: string;
+}
 
 @observer(setting.mainObserverNamespace)
-export default class FishPrawnCrabPage extends GatewayGameBase<{ namespace: string; language: string }, IGatewayGameBaseState> {
+export default class FishPrawnCrabPage extends GatewayGameBase<IFishPrawnCrabPageProps, IFishPrawnCrabPageState> {
     override overrideClasses = {
-        blockWrapper: Styles['block-wrapper'],
-        betOptions: Styles['bet-options-block'],
-        info: Styles['info-block'],
-        result: Styles['result-block'],
+        blockWrapper: styles['block-wrapper'],
+        betOptions: styles['bet-options-block'],
+        info: styles['info-block'],
+        result: styles['result-block'],
     };
 
-    constructor(props: { namespace: string; language: string }) {
+    constructor(props: IFishPrawnCrabPageProps) {
         super(props);
         try {
             configGameContainer(setting.name, containerOptions);
@@ -83,6 +94,11 @@ export default class FishPrawnCrabPage extends GatewayGameBase<{ namespace: stri
         result?: gc.GameServiceMessage.TResult,
         settlementResult?: gc.GameServiceMessage.TSettlementResult,
     ) {
+        if (!this.isValidResult(result, settlementResult)) {
+            return;
+        }
+
         await FunctionUtils.delay(2000);
+        this.finishShowResult();
     }
 } 
