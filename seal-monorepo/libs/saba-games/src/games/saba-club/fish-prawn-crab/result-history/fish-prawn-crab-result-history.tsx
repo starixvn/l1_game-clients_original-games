@@ -102,7 +102,7 @@ export class FishPrawnCrabResultHistory extends ObserverComponent<IFishPrawnCrab
 
     renderTableRow(roundHistory: gc.RoundHistories.RoundHistory, index: number) {
         return (
-            <tr key={index} className={index % 2 === 0 ? styles['row-even'] : styles['row-odd']}>
+            <tr key={index}>
                 <td className={styles['round-cell']}>
                     {`Round ${roundHistory.roundId}`}
                 </td>
@@ -125,16 +125,18 @@ export class FishPrawnCrabResultHistory extends ObserverComponent<IFishPrawnCrab
         const resultTitle = gc.Translator.translate('Common.result_title');
 
         return (
-            <div className={styles['result-history']}>
+            <div className={styles['resultHistoryContainer']}>
                 <div className={styles['result-title']}>{resultTitle}</div>
-                <div className={styles['result-wrapper-content']}>
-                    <table className={styles['result-table']}>
-                        <tbody>
-                            {roundHistories.map((roundHistory, index) => {
-                                return this.renderTableRow(roundHistory, index);
-                            })}
-                        </tbody>
-                    </table>
+                <div className={styles['resultHistory']}>
+                    <div className={styles['result-wrapper-content']}>
+                        <table className={styles['result-table']}>
+                            <tbody>
+                                {roundHistories.map((roundHistory, index) => {
+                                    return this.renderTableRow(roundHistory, index);
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         );

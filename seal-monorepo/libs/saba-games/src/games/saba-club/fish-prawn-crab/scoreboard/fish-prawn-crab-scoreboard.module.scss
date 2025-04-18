@@ -29,7 +29,8 @@
         background: var(--c-av-lv1-theme-bg-2);
         scrollbar-width: thin;
         scrollbar-color: var(--scroll-bar-track) var(--c-av-lv1-theme-bg-2);
-
+        height: calc(100% - 45px); /* Adjust for title and percentage display */
+        max-height: 236px;
         .dot-item {
             border-right: 1px solid #ebe4e4;
             border-bottom: 1px solid #ebe4e4;
