@@ -1,10 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useSentryInit } from './saba-games-index';
 import { PLATFORM_TYPE_MAPPING, PLATFORM_TYPE_NUMBER, VIVA88_SITE_ID } from '../constant/app';
 import App from './app';
 import { PreviewProvider, usePreviewContext } from './previewProvider';
 import ProviderSetDropDown from './_shared/components/provider-set-dropdown';
 import { requestSSO } from './_shared/utils/sso-helper';
+import Demos from './demos';
+import FishPrawnCrabAnimationDemo from './demos/fish-prawn-crab-animation/fish-prawn-crab-animation-demo';
 
 const Preview = () => {
     const [token, setToken] = useState('');
@@ -50,8 +53,14 @@ const PreviewContext = ({ token, renewToken }) => {
 
     return (
         <div data-platform={platform} data-version={process.env.TAG_VERSION} className={'seal-vg-sg-index'}>
-            <ProviderSetDropDown />
-            <App appEnv={appEnv} token={token} language={language} siteId={siteId} renewToken={renewToken} />
+            <Router>
+                <ProviderSetDropDown />
+                <Routes>
+                    <Route path="/fpc-animation" element={<FishPrawnCrabAnimationDemo />} />
+                    <Route path="/demos/*" element={<Demos />} />
+                    <Route path="/*" element={<App appEnv={appEnv} token={token} language={language} siteId={siteId} renewToken={renewToken} />} />
+                </Routes>
+            </Router>
         </div>
     );
 };

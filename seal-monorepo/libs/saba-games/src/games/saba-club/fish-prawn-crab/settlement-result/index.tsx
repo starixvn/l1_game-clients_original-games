@@ -12,6 +12,7 @@ import FishPrawnCrabDice, { FishPrawnCrabSymbol, diceValueToSymbol } from "../..
 import { Size } from "../../../../_shared/constants";
 import { constants } from "../constants";
 import { convertValueToSymbol, resultMapper } from "../fish-prawn-crab-utils";
+import { AnimatedDiceSet } from '../../../../_shared/components/fish-prawn-crab-dice/animated-dice';
 
 // Define default result to show when no actual result is available
 const DEFAULT_RESULT = {};
@@ -25,6 +26,7 @@ export interface IFishPrawnCrabSettlementResultState extends IStateObserver {
     settlementResult: gc.GameServiceMessage.TSettlementResult;
     winningSymbols: string[];
     isResultUpdated: boolean;
+    isAnimationComplete: boolean;
 }
 
 export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPropsObserver, IFishPrawnCrabSettlementResultState> {
@@ -40,6 +42,7 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
             settlementResult: {},
             winningSymbols: [],
             isResultUpdated: false,
+            isAnimationComplete: false,
         };
         console.log('[FPC Settlement] Component initialized with props:', props);
     }
@@ -54,13 +57,24 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
                 result: DEFAULT_RESULT,
                 settlementResult: {},
                 winningSymbols: [],
-                isResultUpdated: false
+                isResultUpdated: false,
+                isAnimationResult: false,
+                isAnimationComplete: false
             });
         }
 
         if (roundState === ROUND_STATE.SHOW_RESULT) {
             console.log('[FPC Settlement] Setting isResultUpdated to true');
             this.setState({ isResultUpdated: true });
+        }
+
+        if (roundState === ROUND_STATE.SHOW_ANIMATION_RESULT) {
+            // When animation result begins, reset animation state
+            this.setState({
+                roundState,
+                isAnimationResult: true,
+                isAnimationComplete: false
+            });
         }
 
         this.setState({ roundState });
@@ -212,51 +226,60 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
     };
 
     renderIcons = (result: gc.GameServiceMessage.TResult) => {
-        const { isAnimationResult } = this.state;
+        const { isAnimationResult, isAnimationComplete } = this.state;
         console.log('[FPC Settlement] Rendering icons with result:', result, 'isAnimationResult:', isAnimationResult);
 
+        // Convert result to array of symbols for the animated dice
+        const resultSymbols = Object.entries(result).map(([key, value]) => {
+            return convertValueToSymbol(value);
+        });
+
+        // Handle animation completion
+        const handleAnimationComplete = () => {
+            this.setState({ isAnimationComplete: true });
+        };
+
         return (
-            <div className={`${Styles['container-bets']} ${isAnimationResult ? Styles['has-animation'] : ''}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div className={`${Styles['container-bets']} ${Styles['has-animation']} ${isAnimationResult ? Styles['has-animation'] : ''}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <div className={Styles['result-container']} style={{ display: 'flex', justifyContent: 'center', gap: '10px', margin: '10px 0' }}>
-                    {Object.entries(result).map(([key, value], index) => {
-                        // Get the symbol directly from the value
-                        const symbol = convertValueToSymbol(value);
-                        // Pass the numeric value to isWinningSymbol
-                        const isWinning = this.isWinningSymbol(value);
 
-                        console.log('[FPC Settlement] Rendering dice:', key, value, 'symbol:', symbol, 'isWinning:', isWinning);
+                    <AnimatedDiceSet
+                        finalSymbols={resultSymbols}
+                        size={Size.large}
+                        animationDuration={3000}
+                        onAllAnimationsComplete={handleAnimationComplete}
+                        staggerDelay={150}
+                    />
+                    {/* {isAnimationResult && !isAnimationComplete ? (
+                        <AnimatedDiceSet
+                            finalSymbols={resultSymbols}
+                            size={Size.large}
+                            animationDuration={3000}
+                            onAllAnimationsComplete={handleAnimationComplete}
+                            staggerDelay={150}
+                        />
+                    ) : (
+                        Object.entries(result).map(([key, value], index) => {
+                            // Get the symbol directly from the value
+                            const symbol = convertValueToSymbol(value);
+                            // Pass the numeric value to isWinningSymbol
+                            const isWinning = this.isWinningSymbol(value);
 
-                        return (
-                            <div
-                                className={`${Styles['result-item']} ${isWinning ? Styles['winning-symbol'] : ''}`}
-                                key={index}
-                                style={{
-                                    position: 'relative',
-                                    border: isWinning ? '2px solid gold' : '1px solid #ccc',
-                                    borderRadius: '8px',
-                                    padding: '5px',
-                                    backgroundColor: isWinning ? 'rgba(255, 215, 0, 0.2)' : '#fff',
-                                    boxShadow: isWinning ? '0 0 10px gold' : '0 0 5px rgba(0,0,0,0.1)',
-                                    transform: 'scale(1)',
-                                    opacity: 1,
-                                    margin: '0 5px',
-                                    width: 'auto',
-                                    height: 'auto',
-                                    minWidth: '60px',
-                                    minHeight: '60px',
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    zIndex: 5
-                                }}
-                            >
-                                <FishPrawnCrabDice
-                                    symbol={symbol}
-                                    size={Size.large}
-                                />
-                            </div>
-                        );
-                    })}
+                            console.log('[FPC Settlement] Rendering dice:', key, value, 'symbol:', symbol, 'isWinning:', isWinning);
+
+                            return (
+                                <div
+                                    className={`${Styles['result-item']} ${isWinning ? Styles['winning-symbol'] : ''}`}
+                                    key={index}
+                                >
+                                    <FishPrawnCrabDice
+                                        symbol={symbol}
+                                        size={Size.large}
+                                    />
+                                </div>
+                            );
+                        })
+                    )} */}
                 </div>
                 {this.renderWinnerDisplay()}
             </div>
