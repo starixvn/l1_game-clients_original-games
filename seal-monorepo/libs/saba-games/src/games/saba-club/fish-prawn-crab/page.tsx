@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import * as gc from '@sg/sg-game-client';
-import { handle, observer } from '@sg/sg-observer';
+import { handle, observer, render } from '@sg/sg-observer';
 import GatewayGameBase, { IGatewayGameBaseState } from '../../../_shared/components/game-base/gateway-gamebase';
 import { configGameContainer } from '../../../_shared/components/game-base/startup';
 import type { GameBaseProps } from '../../../_shared/components/game-base/type';
@@ -16,6 +16,7 @@ const FishPrawnCrabRoundHistory = React.lazy(() => import('./round-history/fish-
 
 interface IFishPrawnCrabPageState extends IGatewayGameBaseState {
     activePanelId: any;
+    roundState: string;
     showBetPanel: boolean;
     gameId: number;
 }
@@ -48,6 +49,11 @@ export default class FishPrawnCrabPage extends GatewayGameBase<IFishPrawnCrabPag
 
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handleGateway())
     closeConnect() { }
+
+    @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
+    handleRoundStateChange(roundState: string) {
+        this.setState({ roundState });
+    }
 
     renderRoundHistory() {
         return (

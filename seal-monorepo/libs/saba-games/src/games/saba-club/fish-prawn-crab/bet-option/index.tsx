@@ -1,4 +1,4 @@
-import { FishPrawnCrabSymbolType } from '../type';
+import { FishPrawnCrabSymbolType, FishPrawnOddsType } from '../type';
 import styles from './bet-option.module.scss';
 import * as gc from '@sg/sg-game-client';
 import BetOptions, { IBetOptionsState } from '../../../../_shared/components/bet-option';
@@ -74,7 +74,7 @@ export default class FishPrawnCrabBetOptions extends BetOptions {
 
     render() {
         const { roundOdds, boostedOdds } = this.state as IBetOptionsState;
-        const odds = boostedOdds ? boostedOdds.values : roundOdds?.odds;
+        const odds = roundOdds?.odds || {};
         const boostedChoices = boostedOdds ? boostedOdds.boostedChoices : roundOdds?.boostedChoices;
         const fractional = roundOdds?.fractional;
 
@@ -84,7 +84,7 @@ export default class FishPrawnCrabBetOptions extends BetOptions {
             <div className={Styles['bet-options-wrapper']}>
                 <div className={Styles['bet-options-container']}>
                     {topChoices.map((choice) => {
-                        const odd = odds?.[choice] || 0;
+                        const odd = odds?.[FishPrawnOddsType.single] || 0;
                         return (
                             <div className={`${Styles['bets-bg']}`} key={choice}>
                                 {this.renderBetOptions(
@@ -98,7 +98,7 @@ export default class FishPrawnCrabBetOptions extends BetOptions {
                         );
                     })}
                     {bottomChoices.map((choice) => {
-                        const odd = odds?.[choice] || 0;
+                        const odd = odds?.[FishPrawnOddsType.single] || 0;
                         return (
                             <div className={`${Styles['bets-bg']}`} key={choice}>
                                 {this.renderBetOptions(

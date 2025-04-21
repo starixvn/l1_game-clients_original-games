@@ -1,5 +1,11 @@
 import { FishPrawnCrabSymbol } from "../../../_shared/components/fish-prawn-crab-dice";
 
+export enum FishPrawnOddsType {
+    single = 'single',
+    double = 'double',
+    triple = 'triple'
+}
+
 export enum FishPrawnCrabChoices {
     fish = 'fish',
     prawn = 'prawn',
