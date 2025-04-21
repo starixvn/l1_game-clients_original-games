@@ -4,11 +4,13 @@ import { ROUND_STATE, RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds
 import { SettlementStore } from "@sg/sg-game-client/dist/game/settlements";
 import { render } from "@sg/sg-observer";
 import { WinnerDisplay } from "../../../../_shared/components/winner-display/winner-display";
-import { RoundDot } from "../../../../_shared/components/dot";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
 import { FishPrawnCrabResult } from "../type";
 import Styles from "./fish-prawn-crab-animations.module.scss";
 import { gameStateService } from "./services/game-state.service";
+import FishPrawnCrabDice, { FishPrawnCrabSymbol, diceValueToSymbol } from "../../../../_shared/components/fish-prawn-crab-dice";
+import { Size } from "../../../../_shared/constants";
+import { constants } from "../constants";
 
 export interface IFishPrawnCrabSettlementResultState extends IStateObserver {
     result: gc.GameServiceMessage.TResult;
@@ -113,13 +115,13 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
             <div className={`${Styles['container-bets']} ${this.state.isAnimationResult ? Styles['has-animation'] : ''}`}>
                 <div className={Styles['result-container']}>
                     {Object.entries(result).map(([key, value], index) => {
-                        const resultClass = `symbol-3d-${index + 1}`;
+                        const symbol = this.convertValueToSymbol(value);
                         return (
-                            <div className={Styles['result-item']} key={resultClass}>
-                                <div className={`${Styles[resultClass]} ${value ? Styles['active'] : ''}`}>
-                                    <span className={Styles['symbol-3d-front']}></span>
-                                    <span className={Styles['symbol-3d-back']}></span>
-                                </div>
+                            <div className={Styles['result-item']} key={index}>
+                                <FishPrawnCrabDice
+                                    symbol={symbol}
+                                    size={Size.large}
+                                />
                             </div>
                         );
                     })}
@@ -132,11 +134,25 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
     renderNoResultIcons = (): JSX.Element => {
         return (
             <div className={Styles['result-container']}>
-                <RoundDot highlight={true} size="large" value={'?'} />
-                <RoundDot highlight={true} size="large" value={'?'} />
-                <RoundDot highlight={true} size="large" value={'?'} />
+                <FishPrawnCrabDice symbol={FishPrawnCrabSymbol.EMPTY} size={Size.large} />
+                <FishPrawnCrabDice symbol={FishPrawnCrabSymbol.EMPTY} size={Size.large} />
+                <FishPrawnCrabDice symbol={FishPrawnCrabSymbol.EMPTY} size={Size.large} />
             </div>
         );
+    };
+
+    // Helper method to convert result values to FishPrawnCrabSymbol
+    convertValueToSymbol = (value: any): FishPrawnCrabSymbol => {
+        // Use the mapping from constants.ts
+        switch (value) {
+            case constants.resultMapper.stag: return FishPrawnCrabSymbol.STAG;
+            case constants.resultMapper.gourd: return FishPrawnCrabSymbol.GOURD;
+            case constants.resultMapper.rooster: return FishPrawnCrabSymbol.ROOSTER;
+            case constants.resultMapper.fish: return FishPrawnCrabSymbol.FISH;
+            case constants.resultMapper.crab: return FishPrawnCrabSymbol.CRAB;
+            case constants.resultMapper.prawn: return FishPrawnCrabSymbol.PRAWN;
+            default: return FishPrawnCrabSymbol.EMPTY;
+        }
     };
 
     render() {
