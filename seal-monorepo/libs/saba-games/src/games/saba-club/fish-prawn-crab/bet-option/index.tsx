@@ -1,5 +1,4 @@
-import React from 'react';
-import { FishPrawnCrabSymbol } from '../type';
+import { FishPrawnCrabSymbolType } from '../type';
 import styles from './bet-option.module.scss';
 import * as gc from '@sg/sg-game-client';
 import BetOptions, { IBetOptionsState } from '../../../../_shared/components/bet-option';
@@ -7,11 +6,12 @@ import BettingBlock from '../../../../_shared/components/bet-option/betting-bloc
 import OddsComponent from '../../../../_shared/components/bet-option/odd-component';
 import OwnBet from '../../../../_shared/components/bet-option/own-bet';
 import TotalBet from '../../../../_shared/components/bet-option/total-bet';
-import { RoundDot } from '../../../../_shared/components/dot';
 import Styles from '../fish-prawn-crab.module.scss';
-import { bottomChoices, ChoiceFishPrawnCrabIconMapper, FishPrawnCrabChoices, mainChoices, topChoices } from '../type';
+import { bottomChoices, ChoiceFishPrawnCrabIconMapper, topChoices } from '../type';
+import { Size } from '../../../../_shared/constants';
+import FishPrawnCrabDice from '../../../../_shared/components/fish-prawn-crab-dice';
 
-const symbols: FishPrawnCrabSymbol[] = ['fish', 'prawn', 'crab', 'rooster', 'gourd', 'stag'];
+const symbols: FishPrawnCrabSymbolType[] = ['fish', 'prawn', 'crab', 'rooster', 'gourd', 'stag'];
 
 export function BetOption() {
     return (
@@ -36,14 +36,10 @@ export function BetOption() {
 }
 
 export default class FishPrawnCrabBetOptions extends BetOptions {
-    protected renderDots(dots: boolean[]) {
-        return dots.map((isActive, index) => (
-            <RoundDot key={index} choice={isActive ? FishPrawnCrabChoices.fish : FishPrawnCrabChoices.prawn} size="small" />
-        ));
-    }
 
-    renderSubOptions(betChoice: string, odd: number, fractional: boolean, name: string = '', isBoostedChoice: boolean = false) {
+    renderBetOptions(betChoice: string, odd: number, fractional: boolean, name: string = '', isBoostedChoice: boolean = false) {
         const { settlementResult } = this.state;
+
         return (
             <BettingBlock
                 odd={odd}
@@ -54,33 +50,8 @@ export default class FishPrawnCrabBetOptions extends BetOptions {
                 onBet={this.props.onBet}
             >
                 <div className={`${Styles['container-bets']} ${Styles['padding-bet']}`}>
-                    <div className={`${Styles['wrapper-dots']} ${Styles['wrapper-dots-small']}`}>
-                        {this.renderDots(ChoiceFishPrawnCrabIconMapper[betChoice])}
-                    </div>
+                    <FishPrawnCrabDice symbol={ChoiceFishPrawnCrabIconMapper[betChoice]} size={Size.medium} />
                     <OddsComponent value={odd} fractional={false} isBoostedChoice={isBoostedChoice} />
-                </div>
-            </BettingBlock>
-        );
-    }
-
-    renderMainOption(name: string, odd: number, betChoice: string, fractional: boolean, isBoostedChoice: boolean = false) {
-        const { settlementResult } = this.state;
-        return (
-            <BettingBlock
-                odd={odd}
-                betChoice={betChoice}
-                gameName={this.props.gameName}
-                namespace={this.props.namespace}
-                settlementResult={settlementResult}
-                onBet={this.props.onBet}
-            >
-                <div className={`${Styles['container-bets']} ${Styles['padding-bet']}`}>
-                    <div>
-                        <div className={Styles['main-option']}>{name}</div>
-                    </div>
-                    <div>
-                        <OddsComponent value={odd} fractional={false} isBoostedChoice={isBoostedChoice} />
-                    </div>
                 </div>
             </BettingBlock>
         );
@@ -111,29 +82,12 @@ export default class FishPrawnCrabBetOptions extends BetOptions {
 
         return (
             <div className={Styles['bet-options-wrapper']}>
-                <div className={Styles['bet-options-container-left']}>
-                    {mainChoices.map((choice) => {
-                        const choiceName = t(`FishPrawnCrab.glossary_${choice}`);
-                        const odd = odds?.[choice] || 0;
-                        return (
-                            <div className={`${Styles['bet']} ${Styles['bets-bg']}`} key={choice}>
-                                {this.renderMainOption(
-                                    choiceName,
-                                    odd,
-                                    choice,
-                                    fractional,
-                                    this.isBoostedChoice(choice, boostedChoices)
-                                )}
-                            </div>
-                        );
-                    })}
-                </div>
-                <div className={Styles['bet-options-container-right']}>
+                <div className={Styles['bet-options-container']}>
                     {topChoices.map((choice) => {
                         const odd = odds?.[choice] || 0;
                         return (
                             <div className={`${Styles['bets-bg']}`} key={choice}>
-                                {this.renderSubOptions(
+                                {this.renderBetOptions(
                                     choice,
                                     odd,
                                     fractional,
@@ -147,7 +101,7 @@ export default class FishPrawnCrabBetOptions extends BetOptions {
                         const odd = odds?.[choice] || 0;
                         return (
                             <div className={`${Styles['bets-bg']}`} key={choice}>
-                                {this.renderSubOptions(
+                                {this.renderBetOptions(
                                     choice,
                                     odd,
                                     fractional,

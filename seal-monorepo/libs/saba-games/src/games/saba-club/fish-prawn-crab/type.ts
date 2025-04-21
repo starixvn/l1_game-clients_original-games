@@ -1,3 +1,5 @@
+import { FishPrawnCrabSymbol } from "../../../_shared/components/fish-prawn-crab-dice";
+
 export enum FishPrawnCrabChoices {
     fish = 'fish',
     prawn = 'prawn',
@@ -7,43 +9,40 @@ export enum FishPrawnCrabChoices {
     stag = 'stag'
 }
 
-export type FishPrawnCrabSymbol = keyof typeof FishPrawnCrabChoices;
-
-export const mainChoices = [
-    FishPrawnCrabChoices.fish,
-    FishPrawnCrabChoices.prawn,
-    FishPrawnCrabChoices.crab
-];
+export type FishPrawnCrabSymbolType = keyof typeof FishPrawnCrabChoices;
 
 export const topChoices = [
-    FishPrawnCrabChoices.rooster,
-    FishPrawnCrabChoices.gourd
+    FishPrawnCrabChoices.stag,
+    FishPrawnCrabChoices.gourd,
+    FishPrawnCrabChoices.prawn
 ];
 
 export const bottomChoices = [
-    FishPrawnCrabChoices.stag
+    FishPrawnCrabChoices.fish,
+    FishPrawnCrabChoices.crab,
+    FishPrawnCrabChoices.rooster
 ];
 
 export type FishPrawnCrabResult = {
-    [key in FishPrawnCrabSymbol]?: boolean;
+    [key in FishPrawnCrabSymbolType]?: boolean;
 };
 
 export type FishPrawnCrabSettlementResult = {
-    [key in FishPrawnCrabChoices]?: boolean;
+    [key in FishPrawnCrabSymbolType]?: boolean;
 };
 
 // Map choices to their display icons/patterns
-export const ChoiceFishPrawnCrabIconMapper: { [key: string]: boolean[] } = {
-    [FishPrawnCrabChoices.fish]: [true, false, true],
-    [FishPrawnCrabChoices.prawn]: [false, true, false],
-    [FishPrawnCrabChoices.crab]: [true, true, true],
-    [FishPrawnCrabChoices.rooster]: [true, false, false],
-    [FishPrawnCrabChoices.gourd]: [false, true, true],
-    [FishPrawnCrabChoices.stag]: [false, false, true]
+export const ChoiceFishPrawnCrabIconMapper: { [key: string]: FishPrawnCrabSymbol } = {
+    [FishPrawnCrabChoices.fish]: FishPrawnCrabSymbol.FISH,
+    [FishPrawnCrabChoices.prawn]: FishPrawnCrabSymbol.PRAWN,
+    [FishPrawnCrabChoices.crab]: FishPrawnCrabSymbol.CRAB,
+    [FishPrawnCrabChoices.rooster]: FishPrawnCrabSymbol.ROOSTER,
+    [FishPrawnCrabChoices.gourd]: FishPrawnCrabSymbol.GOURD,
+    [FishPrawnCrabChoices.stag]: FishPrawnCrabSymbol.STAG
 };
 
 export interface FishPrawnCrabBet {
-    symbol: FishPrawnCrabSymbol;
+    symbol: FishPrawnCrabSymbolType;
     amount: number;
 }
 
