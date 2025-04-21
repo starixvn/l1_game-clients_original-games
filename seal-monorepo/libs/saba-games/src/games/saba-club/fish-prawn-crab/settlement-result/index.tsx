@@ -11,6 +11,7 @@ import { gameStateService } from "./services/game-state.service";
 import FishPrawnCrabDice, { FishPrawnCrabSymbol, diceValueToSymbol } from "../../../../_shared/components/fish-prawn-crab-dice";
 import { Size } from "../../../../_shared/constants";
 import { constants } from "../constants";
+import { convertValueToSymbol } from "../fish-prawn-crab-utils";
 
 export interface IFishPrawnCrabSettlementResultState extends IStateObserver {
     result: gc.GameServiceMessage.TResult;
@@ -115,7 +116,7 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
             <div className={`${Styles['container-bets']} ${this.state.isAnimationResult ? Styles['has-animation'] : ''}`}>
                 <div className={Styles['result-container']}>
                     {Object.entries(result).map(([key, value], index) => {
-                        const symbol = this.convertValueToSymbol(value);
+                        const symbol = convertValueToSymbol(value);
                         return (
                             <div className={Styles['result-item']} key={index}>
                                 <FishPrawnCrabDice
@@ -139,20 +140,6 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
                 <FishPrawnCrabDice symbol={FishPrawnCrabSymbol.EMPTY} size={Size.large} />
             </div>
         );
-    };
-
-    // Helper method to convert result values to FishPrawnCrabSymbol
-    convertValueToSymbol = (value: any): FishPrawnCrabSymbol => {
-        // Use the mapping from constants.ts
-        switch (value) {
-            case constants.resultMapper.stag: return FishPrawnCrabSymbol.STAG;
-            case constants.resultMapper.gourd: return FishPrawnCrabSymbol.GOURD;
-            case constants.resultMapper.rooster: return FishPrawnCrabSymbol.ROOSTER;
-            case constants.resultMapper.fish: return FishPrawnCrabSymbol.FISH;
-            case constants.resultMapper.crab: return FishPrawnCrabSymbol.CRAB;
-            case constants.resultMapper.prawn: return FishPrawnCrabSymbol.PRAWN;
-            default: return FishPrawnCrabSymbol.EMPTY;
-        }
     };
 
     render() {

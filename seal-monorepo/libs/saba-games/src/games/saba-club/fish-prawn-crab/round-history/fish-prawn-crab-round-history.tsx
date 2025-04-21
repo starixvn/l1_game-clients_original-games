@@ -5,7 +5,7 @@ import { FishPrawnCrabChoices, FishPrawnCrabSettlementResult } from "../type";
 import FishPrawnCrabDice, { FishPrawnCrabSymbol } from "../../../../_shared/components/fish-prawn-crab-dice";
 import { Size } from "../../../../_shared/constants";
 import styles from "./fish-prawn-crab-round-history.module.scss";
-import { FishPrawnCrabRoundHistoryTooltip } from "./tooltip";
+// import { FishPrawnCrabRoundHistoryTooltip } from "./tooltip";
 
 interface FishPrawnCrabResult {
     symbols: {
@@ -125,11 +125,11 @@ export default class FishPrawnCrabRoundHistory extends ObserverComponent<IFishPr
                     size={Size.medium}
                 />
                 <span className={styles["arrow"]}></span>
-                <FishPrawnCrabRoundHistoryTooltip
+                {/* <FishPrawnCrabRoundHistoryTooltip
                     roundId={roundHistory.roundId}
                     winner={settlement.winner}
                     symbols={symbols}
-                />
+                /> */}
             </div>
         );
     }

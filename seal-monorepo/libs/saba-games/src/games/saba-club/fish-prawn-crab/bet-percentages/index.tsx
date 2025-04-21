@@ -7,6 +7,7 @@ import FishPrawnCrabDot from '../dot/fish-prawn-crab-dot';
 import { FishPrawnCrabChoices } from '../type';
 import FishPrawnCrabDice, { FishPrawnCrabSymbol } from '../../../../_shared/components/fish-prawn-crab-dice';
 import { Size } from '../../../../_shared/constants';
+import { convertValueToSymbol, resultMapper } from '../fish-prawn-crab-utils';
 
 // Types and Interfaces
 interface BetResult {
@@ -33,16 +34,6 @@ interface Props {
     translator?: (key: string) => string;
     language?: string;
 }
-
-// Mapping of choices to dice symbols
-const choiceToSymbolMap: Record<FishPrawnCrabChoices, number> = {
-    [FishPrawnCrabChoices.fish]: 3,   // Mapping to dice value
-    [FishPrawnCrabChoices.prawn]: 5,  // Mapping to dice value
-    [FishPrawnCrabChoices.crab]: 4,   // Mapping to dice value
-    [FishPrawnCrabChoices.rooster]: 2, // Mapping to dice value
-    [FishPrawnCrabChoices.gourd]: 1,  // Mapping to dice value
-    [FishPrawnCrabChoices.stag]: 0,   // Mapping to dice value
-};
 
 const countResult = (roundHistory: gc.RoundHistories.RoundHistory[]) => {
     return roundHistory.reduce((resultCount, { result }) => {
@@ -88,7 +79,7 @@ const BetPercentageItem: React.FC<{
 }> = ({ gameName, choice, count, translateBetOption }) => (
     <div className={Styles['percentage-item']}>
         <FishPrawnCrabDice
-            symbol={choiceToSymbolMap[choice]}
+            symbol={convertValueToSymbol(resultMapper[choice])}
             size={Size.small}
         />
         {/* {translateBetOption(choice)} */}

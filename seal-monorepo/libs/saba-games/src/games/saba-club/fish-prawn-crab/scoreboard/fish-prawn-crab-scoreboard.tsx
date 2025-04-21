@@ -10,6 +10,7 @@ import ScrollElement from '../../../../_shared/components/scroll-element';
 import { FishPrawnCrabBetPercentages } from '../bet-percentages';
 import FishPrawnCrabDice, { FishPrawnCrabSymbol } from '../../../../_shared/components/fish-prawn-crab-dice';
 import { Size } from '../../../../_shared/constants';
+import { resultMapper } from '../fish-prawn-crab-utils';
 
 export interface IFishPrawnCrabResultHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
@@ -62,24 +63,22 @@ export default class FishPrawnCrabScoreBoard extends ObserverComponent<Props, IF
         this.setState({ roundState });
     }
 
+    // Map from the result value to CSS class names
+    private symbolValueToClassMap: Record<number, string> = {
+        [resultMapper.fish]: 'symbol-fish',
+        [resultMapper.prawn]: 'symbol-prawn',
+        [resultMapper.crab]: 'symbol-crab',
+        [resultMapper.rooster]: 'symbol-chicken',
+        [resultMapper.gourd]: 'symbol-calabash',
+        [resultMapper.stag]: 'symbol-coin'
+    };
+
     getSymbolClass(symbol: string): string {
-        switch (symbol) {
-            case FishPrawnCrabChoices.fish:
-                return 'symbol-fish';
-            case FishPrawnCrabChoices.prawn:
-                return 'symbol-prawn';
-            case FishPrawnCrabChoices.crab:
-                return 'symbol-crab';
-            case FishPrawnCrabChoices.rooster:
-                return 'symbol-chicken';
-            case FishPrawnCrabChoices.gourd:
-                return 'symbol-calabash';
-            case FishPrawnCrabChoices.stag:
-                return 'symbol-coin';
-            default:
-                console.log('[FPC Scoreboard] Unknown symbol class', { symbol });
-                return 'symbol-blink';
-        }
+        // Use resultMapper to get the numeric value from the choice
+        const symbolValue = resultMapper[symbol as keyof typeof resultMapper];
+
+        // Get the corresponding CSS class from the map
+        return this.symbolValueToClassMap[symbolValue] || 'symbol-blink';
     }
 
     renderDice(result: FishPrawnCrabResult | null, hasBlink: boolean = false): React.ReactNode {
@@ -119,21 +118,6 @@ export default class FishPrawnCrabScoreBoard extends ObserverComponent<Props, IF
                 ))}
             </div>
         );
-    }
-
-    getSymbolFromDiceValue(diceValue: number): string {
-        console.log('[FPC Scoreboard] getSymbolFromDiceValue', { diceValue });
-        switch (diceValue) {
-            case 0: return FishPrawnCrabChoices.stag;
-            case 1: return FishPrawnCrabChoices.gourd;
-            case 2: return FishPrawnCrabChoices.rooster;
-            case 3: return FishPrawnCrabChoices.fish;
-            case 4: return FishPrawnCrabChoices.crab;
-            case 5: return FishPrawnCrabChoices.prawn;
-            default:
-                console.log('[FPC Scoreboard] Unknown dice value', { diceValue });
-                return FishPrawnCrabChoices.fish;
-        }
     }
 
     render() {

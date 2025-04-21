@@ -1,5 +1,7 @@
+import { resultMapper } from './fish-prawn-crab-utils';
+
 export const constants = {
-    resultMapper: { stag: 0, gourd: 1, rooster: 2, fish: 3, crab: 4, prawn: 5 },
+    resultMapper,
     oddMapper: { 1: "single", 2: "double", 3: "triple" },
 };
 
