@@ -269,20 +269,17 @@
     },
     "FishPrawnCrab": {
         "game_vendor": "SABA.games",
-        "game_name": "Fish Prawn Crab",
-        "game_tab_name": "Fish Prawn Crab",
-        "choices_type": "Fish/Prawn/Crab",
-        "glossary_fish": "Fish",
-        "glossary_prawn": "Prawn",
-        "glossary_crab": "Crab",
-        "glossary_stag": "Stag",
-        "glossary_gourd": "Gourd",
-        "glossary_rooster": "Rooster",
-        "beadboard_fish": "F",
-        "beadboard_prawn": "P",
-        "beadboard_crab": "C",
-        "beadboard_stag": "S",
-        "beadboard_gourd": "G",
-        "beadboard_rooster": "R"
+        "game_name": "Bầu Cua",
+        "game_tab_name": "Bầu Cua",
+        "choices_type": "",
+        "glossary_fish": "Cá",
+        "glossary_prawn": "Tôm",
+        "glossary_crab": "Cua",
+        "glossary_stag": "Nai",
+        "glossary_gourd": "Bầu",
+        "glossary_rooster": "Gà",
+        "single": "Đơn",
+        "double": "Đôi",
+        "triple": "Bộ Ba"
     }
 }

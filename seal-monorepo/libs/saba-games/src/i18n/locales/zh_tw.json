@@ -269,20 +269,17 @@
     },
     "FishPrawnCrab": {
         "game_vendor": "SABA.games",
-        "game_name": "Fish Prawn Crab",
-        "game_tab_name": "Fish Prawn Crab",
-        "choices_type": "Fish/Prawn/Crab",
-        "glossary_fish": "Fish",
-        "glossary_prawn": "Prawn",
-        "glossary_crab": "Crab",
-        "glossary_stag": "Stag",
-        "glossary_gourd": "Gourd",
-        "glossary_rooster": "Rooster",
-        "beadboard_fish": "F",
-        "beadboard_prawn": "P",
-        "beadboard_crab": "C",
-        "beadboard_stag": "S",
-        "beadboard_gourd": "G",
-        "beadboard_rooster": "R"
+        "game_name": "魚蝦蟹",
+        "game_tab_name": "魚蝦蟹",
+        "choices_type": "",
+        "glossary_fish": "魚",
+        "glossary_prawn": "蝦",
+        "glossary_crab": "螃蟹",
+        "glossary_stag": "麈",
+        "glossary_gourd": "葫蘆",
+        "glossary_rooster": "公雞",
+        "single": "單",
+        "double": "雙倍",
+        "triple": "三倍"
     }
 }
