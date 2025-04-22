@@ -23,6 +23,7 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
 
     // Animation state
     const [isAnimating, setIsAnimating] = useState<boolean>(false);
+    const [shakeFrequency, setShakeFrequency] = useState<number>(0.2); // Initial shake duration (faster)
 
     // Used to track animation timing
     const animationTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -55,6 +56,7 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
         clearTimers(); // Clear any existing timers
 
         setIsAnimating(true);
+        setShakeFrequency(0.2); // Start with fast shaking
         animationStartTimeRef.current = Date.now();
 
         // Set initial interval for changing symbols
@@ -67,11 +69,15 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
             if (progress < 0.4) {
                 // Start at 200ms and decrease to 50ms (speed up)
                 speedRef.current = 200 - (150 * (progress / 0.4));
+                // Fast shaking during speed up
+                setShakeFrequency(Math.max(0.2, 0.2 + (0.1 * (progress / 0.4))));
             }
             // Second phase (40-100%): Slow down
             else {
                 // Start at 50ms and increase to 500ms (slow down)
                 speedRef.current = 50 + (450 * ((progress - 0.4) / 0.6));
+                // Gradually slow down the shaking (0.3 to 1.0 seconds)
+                setShakeFrequency(Math.min(1.0, 0.3 + (0.7 * ((progress - 0.4) / 0.6))));
             }
 
             // Update the interval timing
@@ -132,7 +138,7 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
     return (
         <div style={{
             display: 'inline-block',
-            animation: isAnimating ? 'shake 0.5s infinite' : 'none'
+            animation: isAnimating ? `shake ${shakeFrequency}s infinite` : 'none'
         }}>
             <FishPrawnCrabDice
                 symbol={currentSymbol}
