@@ -5,13 +5,12 @@ import { SettlementStore } from "@sg/sg-game-client/dist/game/settlements";
 import { render } from "@sg/sg-observer";
 import { WinnerDisplay } from "../../../../_shared/components/winner-display/winner-display";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
-import { FishPrawnCrabResult, FishPrawnCrabChoices } from "../type";
+import { FishPrawnCrabResult } from "../type";
 import Styles from "./fish-prawn-crab-animations.module.scss";
 import { gameStateService } from "./services/game-state.service";
-import FishPrawnCrabDice, { FishPrawnCrabSymbol, diceValueToSymbol } from "../../../../_shared/components/fish-prawn-crab-dice";
+import FishPrawnCrabDice, { FishPrawnCrabSymbol } from "../../../../_shared/components/fish-prawn-crab-dice";
 import { Size } from "../../../../_shared/constants";
-import { constants } from "../constants";
-import { convertValueToSymbol, resultMapper } from "../fish-prawn-crab-utils";
+import { convertValueToSymbol } from "../fish-prawn-crab-utils";
 import { AnimatedDiceSet } from '../../../../_shared/components/fish-prawn-crab-dice/animated-dice';
 
 // Define default result to show when no actual result is available
@@ -242,15 +241,7 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
         return (
             <div className={`${Styles['container-bets']} ${Styles['has-animation']} ${isAnimationResult ? Styles['has-animation'] : ''}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <div className={Styles['result-container']} style={{ display: 'flex', justifyContent: 'center', gap: '10px', margin: '10px 0' }}>
-
-                    <AnimatedDiceSet
-                        finalSymbols={resultSymbols}
-                        size={Size.large}
-                        animationDuration={3000}
-                        onAllAnimationsComplete={handleAnimationComplete}
-                        staggerDelay={150}
-                    />
-                    {/* {isAnimationResult && !isAnimationComplete ? (
+                    {isAnimationResult ? (
                         <AnimatedDiceSet
                             finalSymbols={resultSymbols}
                             size={Size.large}
@@ -279,7 +270,8 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
                                 </div>
                             );
                         })
-                    )} */}
+                    )}
+
                 </div>
                 {this.renderWinnerDisplay()}
             </div>
@@ -294,25 +286,25 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
                     <div
                         className={Styles['result-item']}
                         key={index}
-                        style={{
-                            position: 'relative',
-                            border: '1px solid #ccc',
-                            borderRadius: '8px',
-                            padding: '5px',
-                            backgroundColor: '#fff',
-                            boxShadow: '0 0 5px rgba(0,0,0,0.1)',
-                            transform: 'scale(1)',
-                            opacity: 1,
-                            margin: '0 5px',
-                            width: 'auto',
-                            height: 'auto',
-                            minWidth: '60px',
-                            minHeight: '60px',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            zIndex: 5
-                        }}
+                    // style={{
+                    //     position: 'relative',
+                    //     border: '1px solid #ccc',
+                    //     borderRadius: '8px',
+                    //     padding: '5px',
+                    //     backgroundColor: '#fff',
+                    //     boxShadow: '0 0 5px rgba(0,0,0,0.1)',
+                    //     transform: 'scale(1)',
+                    //     opacity: 1,
+                    //     margin: '0 5px',
+                    //     width: 'auto',
+                    //     height: 'auto',
+                    //     minWidth: '60px',
+                    //     minHeight: '60px',
+                    //     display: 'flex',
+                    //     justifyContent: 'center',
+                    //     alignItems: 'center',
+                    //     zIndex: 5
+                    // }}
                     >
                         <FishPrawnCrabDice symbol={FishPrawnCrabSymbol.EMPTY} size={Size.large} />
                     </div>
