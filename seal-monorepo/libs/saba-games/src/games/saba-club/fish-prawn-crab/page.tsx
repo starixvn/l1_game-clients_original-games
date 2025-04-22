@@ -6,7 +6,7 @@ import { configGameContainer } from '../../../_shared/components/game-base/start
 import type { GameBaseProps } from '../../../_shared/components/game-base/type';
 import { GameBettingOptionsContext } from '../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
 import { FunctionUtils } from '../../../_shared/utils/funtion-utils';
-import FishPrawnCrabBetOptions from './bet-option';
+import FishPrawnCrabBetOptions from './bet-option/fish-prawn-crab-bet-options';
 import styles from './fish-prawn-crab.module.scss';
 import { containerOptions, setting } from './game-settings';
 import FishPrawnCrabSettlementResult from './settlement-result';

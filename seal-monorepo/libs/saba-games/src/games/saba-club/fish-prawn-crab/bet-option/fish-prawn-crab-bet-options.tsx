@@ -1,5 +1,5 @@
 import { FishPrawnCrabSymbolType, FishPrawnOddsType } from '../type';
-import styles from './bet-option.module.scss';
+import styles from './fish-prawn-crab-bet-options.module.scss';
 import * as gc from '@sg/sg-game-client';
 import BetOptions, { IBetOptionsState } from '../../../../_shared/components/bet-option';
 import BettingBlock from '../../../../_shared/components/bet-option/betting-block';
@@ -39,7 +39,7 @@ export default class FishPrawnCrabBetOptions extends BetOptions {
 
     renderBetOptions(betChoice: string, odd: number, fractional: boolean, name: string = '', isBoostedChoice: boolean = false) {
         const { settlementResult } = this.state;
-
+        
         return (
             <BettingBlock
                 odd={odd}

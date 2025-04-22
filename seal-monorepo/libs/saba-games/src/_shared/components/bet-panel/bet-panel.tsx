@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
     BACCARAT_GAME_NAMESPACE,
+    FISH_PRAWN_CRAB_GAME_NAMESPACE,
     SABA_GAMES,
     SE_DIE_GAME_NAMESPACE,
     UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE,
@@ -27,6 +28,9 @@ import { RoundDot } from '../dot';
 import { IPropsObserver, IStateObserver, ObserverComponent } from '../observer-component/observer-component';
 import './bet-panel.scss';
 import { localStorageKeys, StorageManager } from '../../utils/storage-manager';
+import { ChoiceFishPrawnCrabIconMapper } from '../../../games/saba-club/fish-prawn-crab/type';
+import { Size } from '../../constants';
+import FishPrawnCrabDice from '../fish-prawn-crab-dice';
 
 const WARNING_CLOSE_DELAY = 60000;
 
@@ -369,6 +373,13 @@ const BetPanel: React.FC<{
         );
     };
 
+    const renderFishPrawnCrabDice = () => {
+        const symbol = ChoiceFishPrawnCrabIconMapper[betChoice];
+        return (
+            <FishPrawnCrabDice symbol={symbol} size={Size.small} />
+        );
+    };
+
     const renderGameElements = (gameName: string) => {
         switch (gameName) {
             case SE_DIE_GAME_NAMESPACE:
@@ -376,6 +387,8 @@ const BetPanel: React.FC<{
                 return renderDots();
             case UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE:
                 return renderDices();
+            case FISH_PRAWN_CRAB_GAME_NAMESPACE:
+                return renderFishPrawnCrabDice();
             default:
                 return null;
         }
