@@ -8,6 +8,7 @@ import gourdImage from "../../../assets/fish-prawn-crab/gourd.png";
 import roosterImage from "../../../assets/fish-prawn-crab/rooster.png";
 import stagImage from "../../../assets/fish-prawn-crab/stag.png";
 import emptyImage from "../../../assets/fish-prawn-crab/empty.png";
+import resultImage from "../../../assets/fish-prawn-crab/result.png";
 import styles from "./fish-prawn-crab-dice.module.scss";
 
 export enum FishPrawnCrabSymbol {
@@ -17,7 +18,8 @@ export enum FishPrawnCrabSymbol {
     ROOSTER = 2, // Updated to match resultMapper
     FISH = 3,   // Updated to match resultMapper
     CRAB = 4,   // Updated to match resultMapper
-    PRAWN = 5   // Updated to match resultMapper
+    PRAWN = 5,   // Updated to match resultMapper
+    RESULT = 6, // Updated to match resultMapper
 }
 
 const diceImages: Record<number, string> = {
@@ -28,6 +30,7 @@ const diceImages: Record<number, string> = {
     [FishPrawnCrabSymbol.FISH]: fishImage,
     [FishPrawnCrabSymbol.CRAB]: crabImage,
     [FishPrawnCrabSymbol.PRAWN]: prawnImage,
+    [FishPrawnCrabSymbol.RESULT]: resultImage,
 };
 
 // Function to convert dice value (1-6) to symbol based on game rules

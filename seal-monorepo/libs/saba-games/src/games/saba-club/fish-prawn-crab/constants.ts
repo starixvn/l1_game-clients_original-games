@@ -1,3 +1,4 @@
+import { FishPrawnCrabSymbol } from 'libs/saba-games/src/_shared/components/fish-prawn-crab-dice';
 import { resultMapper } from './fish-prawn-crab-utils';
 
 export const constants = {
@@ -21,3 +22,10 @@ export const MockRoundHistoryItem = {
         "prawn": false
     }
 };
+
+export const blinkRoundItem = {
+    "dice1": FishPrawnCrabSymbol.RESULT,
+    "dice2": FishPrawnCrabSymbol.RESULT,
+    "dice3": FishPrawnCrabSymbol.RESULT
+}
+

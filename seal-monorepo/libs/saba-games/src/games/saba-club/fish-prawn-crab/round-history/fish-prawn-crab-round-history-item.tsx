@@ -6,9 +6,13 @@ import styles from "./fish-prawn-crab-round-history.module.scss";
 
 interface IFishPrawnCrabRoundHistoryItemProps {
     roundHistory: gc.RoundHistories.RoundHistory;
+    showArrow?: boolean;
 }
 
-export const FishPrawnCrabRoundHistoryItem: React.FC<IFishPrawnCrabRoundHistoryItemProps> = ({ roundHistory }) => {
+export const FishPrawnCrabRoundHistoryItem: React.FC<IFishPrawnCrabRoundHistoryItemProps> = ({
+    roundHistory,
+    showArrow = true
+}) => {
     if (!roundHistory.settlementResult || !roundHistory.result) {
         return <React.Fragment />;
     }
@@ -27,9 +31,9 @@ export const FishPrawnCrabRoundHistoryItem: React.FC<IFishPrawnCrabRoundHistoryI
                 symbol={roundHistory.result["dice3"]}
                 size={Size.medium}
             />
-            <span className={styles["arrow"]}></span>
+            {showArrow && <span className={styles["arrow"]}></span>}
         </div>
     );
 };
 
-export default FishPrawnCrabRoundHistoryItem; 
+export default FishPrawnCrabRoundHistoryItem;

@@ -154,17 +154,16 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
     }
 
     renderWinnerDisplay = () => {
-        const { settlementResult, isFinishShowResult, winningSymbols, result } = this.state;
+        const { settlementResult, result } = this.state;
 
-        if (!settlementResult || Object.keys(settlementResult).length === 0) {
+        if (!settlementResult || Object.keys(settlementResult).length === 0 && result) {
             return null;
         }
 
-        return <ResultDisplay
+        return this.state.isFinishShowResult ? <ResultDisplay
             settlementResult={settlementResult}
-            result={result}
             language={this.props.language}
-        />;
+        /> : null;
     };
 
     isWinningSymbol = (symbol: string | number): boolean => {
