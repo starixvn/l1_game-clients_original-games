@@ -115,7 +115,7 @@
     }
     
     .fish-prawn-crab-result {
-        animation: bounce 1s ease-in-out 1.4s;
+        // animation: bounce 1s ease-in-out 1.4s;
     }
 }
 
@@ -163,27 +163,29 @@
 }
 
 .fish-prawn-crab-result {
-    position: relative;
-    width: 100%;
-    margin-top: 20px;
-    font-size: 20px;
-    font-weight: bold;
-    color: #FFFFFF;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-    background: linear-gradient(90deg,
-        rgba(241, 173, 105, 0.9) 0%,
-        rgba(242, 127, 11, 0.95) 14%,
-        rgba(255, 177, 7, 0.98) 50%,
-        rgba(242, 127, 11, 0.95) 84%,
-        rgba(241, 173, 105, 0.9) 100%);
-    padding: 10px 20px;
-    border-radius: 4px;
-    text-align: center;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
-    opacity: 1 !important; /* Ensure visibility */
-    transform: none !important; /* Reset transforms */
-    animation: fadeIn 0.5s ease-in-out forwards;
-    left: auto; /* Override absolute positioning */
+    // position: absolute;
+    // width: 100%;
+     bottom: -22px;
+    // left: 0;
+    // right: 0;
+    // margin: 0 auto;
+    // font-size: 20px;
+    // font-weight: bold;
+    // color: #FFFFFF;
+    // text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    // background: linear-gradient(90deg,
+    //     rgba(241, 173, 105, 0.9) 0%,
+    //     rgba(242, 127, 11, 0.95) 14%,
+    //     rgba(255, 177, 7, 0.98) 50%,
+    //     rgba(242, 127, 11, 0.95) 84%,
+    //     rgba(241, 173, 105, 0.9) 100%);
+    // padding: 10px 20px;
+    // border-radius: 4px;
+    // text-align: center;
+    // box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
+    // opacity: 1 !important; /* Ensure visibility */
+    // z-index: 10; /* Ensure it appears above other elements */
+    // animation: fadeIn 0.5s ease-in-out forwards;
 }
 
 @keyframes fadeIn {

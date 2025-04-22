@@ -3,7 +3,6 @@ import { RoundHistoryStore } from "@sg/sg-game-client/dist/game/round-histories"
 import { ROUND_STATE, RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds";
 import { SettlementStore } from "@sg/sg-game-client/dist/game/settlements";
 import { render } from "@sg/sg-observer";
-import { WinnerDisplay } from "../../../../_shared/components/winner-display/winner-display";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
 import { FishPrawnCrabResult } from "../type";
 import Styles from "./fish-prawn-crab-animations.module.scss";
@@ -12,6 +11,7 @@ import FishPrawnCrabDice, { FishPrawnCrabSymbol } from "../../../../_shared/comp
 import { Size } from "../../../../_shared/constants";
 import { convertValueToSymbol } from "../fish-prawn-crab-utils";
 import { AnimatedDiceSet } from '../../../../_shared/components/fish-prawn-crab-dice/animated-dice';
+import { ResultDisplay } from "./result-display";
 
 // Define default result to show when no actual result is available
 const DEFAULT_RESULT = {};
@@ -174,8 +174,6 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
 
     renderWinnerDisplay = () => {
         const { settlementResult, isFinishShowResult, winningSymbols, result } = this.state;
-        const t = (key) => gc.Translator.t(key, { lng: this.props.language || '' });
-
         console.log('[FPC Settlement] Rendering winner display. isFinishShowResult:', isFinishShowResult,
             'winningSymbols:', winningSymbols,
             'settlementResult:', settlementResult,
@@ -187,22 +185,11 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
             return null;
         }
 
-        let resultText = '';
-
-        // If we have result but no translated text, create a simple fallback text from the dice values
-        if (!resultText && result && Object.keys(result).length > 0) {
-            console.log('[FPC Settlement] Creating result text from dice values');
-            const symbolNames = Object.values(result).map(value => {
-                const symbol = convertValueToSymbol(value);
-                console.log('[FPC Settlement] Mapped value:', value, 'to symbol:', symbol);
-                return t(`FishPrawnCrab.glossary_${symbol}`);
-            });
-            resultText = symbolNames.join(' - ');
-            console.log('[FPC Settlement] Generated result text:', resultText);
-        }
-
-        console.log('[FPC Settlement] Winner display result text:', resultText);
-        return <WinnerDisplay resultText={resultText} className={Styles['fish-prawn-crab-result']} />;
+        return <ResultDisplay
+            settlementResult={settlementResult}
+            result={result}
+            language={this.props.language}
+        />;
     };
 
     isWinningSymbol = (symbol: string | number): boolean => {
@@ -249,8 +236,8 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
         };
 
         return (
-            <div className={`${Styles['container-bets']} ${Styles['has-animation']} ${isAnimationResult ? Styles['has-animation'] : ''}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <div className={Styles['result-container']} style={{ display: 'flex', justifyContent: 'center', gap: '10px', margin: '10px 0' }}>
+            <div className={`${Styles['container-bets']} ${Styles['has-animation']} ${isAnimationResult ? Styles['has-animation'] : ''}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
+                <div className={Styles['result-container']} style={{ display: 'flex', justifyContent: 'center', gap: '10px', margin: '10px 0', position: 'relative' }}>
                     {isAnimationResult ? (
                         <AnimatedDiceSet
                             finalSymbols={resultSymbols}
@@ -282,7 +269,6 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
                         })
                     )}
                 </div>
-                {/* Always render the winner display component here */}
                 {this.renderWinnerDisplay()}
             </div>
         );
@@ -291,30 +277,11 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
     renderNoResultIcons = (): JSX.Element => {
         console.log('[FPC Settlement] Rendering empty dice (no result)');
         return (
-            <div className={Styles['result-container']} style={{ display: 'flex', justifyContent: 'center', gap: '10px', margin: '10px 0' }}>
+            <div className={Styles['result-container']} style={{ display: 'flex', justifyContent: 'center', gap: '10px', margin: '10px 0', position: 'relative' }}>
                 {[0, 1, 2].map((index) => (
                     <div
                         className={Styles['result-item']}
                         key={index}
-                    // style={{
-                    //     position: 'relative',
-                    //     border: '1px solid #ccc',
-                    //     borderRadius: '8px',
-                    //     padding: '5px',
-                    //     backgroundColor: '#fff',
-                    //     boxShadow: '0 0 5px rgba(0,0,0,0.1)',
-                    //     transform: 'scale(1)',
-                    //     opacity: 1,
-                    //     margin: '0 5px',
-                    //     width: 'auto',
-                    //     height: 'auto',
-                    //     minWidth: '60px',
-                    //     minHeight: '60px',
-                    //     display: 'flex',
-                    //     justifyContent: 'center',
-                    //     alignItems: 'center',
-                    //     zIndex: 5
-                    // }}
                     >
                         <FishPrawnCrabDice symbol={FishPrawnCrabSymbol.EMPTY} size={Size.large} />
                     </div>
@@ -337,13 +304,17 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
 
         if (!result || isEmpty(result as object) || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET || !isResultUpdated) {
             console.log('[FPC Settlement] Rendering empty state');
-            return this.renderNoResultIcons();
+            return (
+                <div className={Styles.settlementContainer} style={{ width: '100%', display: 'flex', justifyContent: 'center', position: 'relative' }}>
+                    {this.renderNoResultIcons()}
+                </div>
+            );
         }
 
         console.log('[FPC Settlement] Rendering settlement result');
         return (
-            <div className={Styles.settlementContainer} style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                <div style={{ maxWidth: '500px', width: '100%' }}>{this.renderIcons(result)}</div>
+            <div className={Styles.settlementContainer} style={{ width: '100%', display: 'flex', justifyContent: 'center', position: 'relative' }}>
+                <div style={{ maxWidth: '500px', width: '100%', position: 'relative' }}>{this.renderIcons(result)}</div>
             </div>
         );
     }
