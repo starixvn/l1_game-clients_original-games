@@ -6,9 +6,6 @@ export interface IWinningResult extends FishPrawnCrabSettlementResult {
 }
 
 export class SettlementService {
-    /**
-     * Processes the settlement result to determine winning choices
-     */
     public static getSettlementResult(settlementResult: gc.GameServiceMessage.TSettlementResult): IWinningResult {
         const result = {
             winner: FishPrawnCrabChoices.fish,
@@ -23,7 +20,6 @@ export class SettlementService {
         if (settlementResult && typeof settlementResult === "object") {
             const data = settlementResult as Record<string, unknown>;
 
-            // Process each choice
             Object.values(FishPrawnCrabChoices).forEach(choice => {
                 result[choice] = !!data[choice];
                 if (result[choice]) {
@@ -35,12 +31,9 @@ export class SettlementService {
         return result;
     }
 
-    /**
-     * Extracts the winning symbols from a settlement result
-     */
     public static getWinningSymbols(settlement: IWinningResult): FishPrawnCrabChoices[] {
         return Object.entries(settlement)
             .filter(([key, value]) => key !== 'winner' && value === true)
             .map(([key]) => key as FishPrawnCrabChoices);
     }
-} 
+}

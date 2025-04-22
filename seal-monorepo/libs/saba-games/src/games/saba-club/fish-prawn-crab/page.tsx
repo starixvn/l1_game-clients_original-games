@@ -39,7 +39,6 @@ export default class FishPrawnCrabPage extends GatewayGameBase<IFishPrawnCrabPag
         try {
             configGameContainer(setting.name, containerOptions);
         } catch (error) {
-            // Silent fail on initialization error
         }
         this.state = {
             ...this.state,

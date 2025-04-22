@@ -11,7 +11,6 @@ import Styles from './fish-prawn-crab-bet-percentages.module.scss';
 const BetPercentageItem: React.FC<BetPercentageItemProps> = ({
     choice,
     count,
-    // Other props are included for clarity but not currently used
     gameName,
     translateBetOption
 }) => (
@@ -20,7 +19,6 @@ const BetPercentageItem: React.FC<BetPercentageItemProps> = ({
             symbol={convertValueToSymbol(resultMapper[choice])}
             size={Size.small}
         />
-        {/* {translateBetOption(choice)} */}
         <span className={Styles.count}>{count}</span>
     </div>
 );

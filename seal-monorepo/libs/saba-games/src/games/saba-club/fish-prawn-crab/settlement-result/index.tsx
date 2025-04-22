@@ -13,7 +13,6 @@ import { convertValueToSymbol } from "../fish-prawn-crab-utils";
 import { AnimatedDiceSet } from '../../../../_shared/components/fish-prawn-crab-dice/animated-dice';
 import { ResultDisplay } from "./result-display";
 
-// Define default result to show when no actual result is available
 const DEFAULT_RESULT = {};
 
 export interface IFishPrawnCrabSettlementResultState extends IStateObserver {
@@ -43,14 +42,11 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
             isResultUpdated: false,
             isAnimationComplete: false,
         };
-        console.log('[FPC Settlement] Component initialized with props:', props);
     }
 
     @render(RoundTimeStore, (store) => store.roundState)
     private handleRoundState(roundState: string) {
-        console.log('[FPC Settlement] Round state changed:', roundState);
         if (roundState === ROUND_STATE.STARTING_ROUND || roundState === ROUND_STATE.PLACING_BET) {
-            console.log('[FPC Settlement] Resetting state due to new round');
             this.setState({
                 isFinishShowResult: false,
                 result: DEFAULT_RESULT,
@@ -63,12 +59,10 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
         }
 
         if (roundState === ROUND_STATE.SHOW_RESULT) {
-            console.log('[FPC Settlement] Setting isResultUpdated to true');
             this.setState({ isResultUpdated: true });
         }
 
         if (roundState === ROUND_STATE.SHOW_ANIMATION_RESULT) {
-            // When animation result begins, reset animation state
             this.setState({
                 roundState,
                 isAnimationResult: true,
@@ -83,20 +77,16 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
         fireImmediately: false,
     })
     private renderCurrentFinish(currentFinish: gc.GameServiceMessage.Finish) {
-        console.log('[FPC Settlement] Current finish received:', currentFinish);
         if (!currentFinish) {
-            console.log('[FPC Settlement] No current finish data available');
             return;
         }
         const { result, settlementResult } = currentFinish;
 
         if (!result || !settlementResult) {
-            console.log('[FPC Settlement] Missing result or settlementResult in currentFinish');
             return;
         }
 
         const winningSymbols = this.getWinningSymbols(settlementResult);
-        console.log('[FPC Settlement] Winning symbols:', winningSymbols);
         this.setState({
             result,
             isAnimationResult: true,
@@ -116,29 +106,23 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
             }
         });
 
-        console.log('[FPC Settlement] Extracted winning symbols:', winningSymbols);
         return winningSymbols;
     }
 
     @render(RoundHistoryStore, (store) => store.firstJoinGameHistory)
     private handleJoinGameAndShowResult(firstJoinGameHistory: gc.RoundHistories.IFirstJoinGameHistory) {
-        console.log('[FPC Settlement] First join game history:', firstJoinGameHistory);
         const { roundState } = this.state;
 
         if (roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET) {
-            console.log('[FPC Settlement] Skipping history processing during betting phase');
             return;
         }
 
         if (!firstJoinGameHistory) {
-            console.log('[FPC Settlement] No game history available');
             return;
         }
 
         const result = gameStateService.handleGameHistory(firstJoinGameHistory);
-        console.log('[FPC Settlement] Game history result:', result);
         if (result && gameStateService.validateResult(result as FishPrawnCrabResult)) {
-            console.log('[FPC Settlement] Valid result from game history');
             this.setState({
                 result,
                 isFinishShowResult: true,
@@ -147,7 +131,6 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
         }
         const lastRound = firstJoinGameHistory?.roundHistory;
         if (lastRound) {
-            console.log('[FPC Settlement] Processing last round history:', lastRound);
             const winningSymbols = this.getWinningSymbols(lastRound?.settlementResult);
             this.setState({
                 result: lastRound?.result,
@@ -160,7 +143,6 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
 
     @render(gc.Settlements.SettlementStore, (store) => store.isFinishedShowResult)
     finishShowResult(isFinishedShowResult: boolean) {
-        console.log('[FPC Settlement] Finished show result:', isFinishedShowResult);
         this.setState({ isFinishShowResult: isFinishedShowResult });
     }
 
@@ -168,20 +150,13 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
         fireImmediately: false,
     })
     assignStatus(settlementStatus: any) {
-        console.log('[FPC Settlement] Settlement status received:', settlementStatus);
         this.setState({ win: settlementStatus.bet });
     }
 
     renderWinnerDisplay = () => {
         const { settlementResult, isFinishShowResult, winningSymbols, result } = this.state;
-        console.log('[FPC Settlement] Rendering winner display. isFinishShowResult:', isFinishShowResult,
-            'winningSymbols:', winningSymbols,
-            'settlementResult:', settlementResult,
-            'result:', result);
 
-        // Simplified condition - show if we have winning symbols regardless of isFinishShowResult
         if (!settlementResult || Object.keys(settlementResult).length === 0) {
-            console.log('[FPC Settlement] Cannot render winner display - missing data');
             return null;
         }
 
@@ -193,15 +168,10 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
     };
 
     isWinningSymbol = (symbol: string | number): boolean => {
-        console.log('[FPC Settlement] DEBUG - Symbol input type:', typeof symbol, 'value:', symbol, 'winningSymbols:', this.state.winningSymbols);
-
-        // First try direct match with the winning symbols array
         if (typeof symbol === 'string' && this.state.winningSymbols.includes(symbol)) {
-            console.log('[FPC Settlement] Symbol matched directly:', symbol);
             return true;
         }
 
-        // Direct mapping from enum values to string names that match the winningSymbols array
         const enumToStringMap = {
             [FishPrawnCrabSymbol.STAG]: 'stag',
             [FishPrawnCrabSymbol.GOURD]: 'gourd',
@@ -211,26 +181,20 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
             [FishPrawnCrabSymbol.PRAWN]: 'prawn',
         };
 
-        // Get the string representation for comparison
         const stringSymbol = enumToStringMap[symbol as number];
-        console.log('[FPC Settlement] Mapped symbol:', symbol, 'to string:', stringSymbol);
 
         const isWinning = stringSymbol && this.state.winningSymbols.includes(stringSymbol);
-        console.log('[FPC Settlement] Final result - Symbol:', symbol, 'is winning:', isWinning);
 
         return isWinning;
     };
 
     renderIcons = (result: gc.GameServiceMessage.TResult) => {
         const { isAnimationResult, isAnimationComplete } = this.state;
-        console.log('[FPC Settlement] Rendering icons with result:', result, 'isAnimationResult:', isAnimationResult);
 
-        // Convert result to array of symbols for the animated dice
         const resultSymbols = Object.entries(result).map(([key, value]) => {
             return convertValueToSymbol(value);
         });
 
-        // Handle animation completion
         const handleAnimationComplete = () => {
             this.setState({ isAnimationComplete: true });
         };
@@ -248,18 +212,10 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
                         />
                     ) : (
                         Object.entries(result).map(([key, value], index) => {
-                            // Get the symbol directly from the value
                             const symbol = convertValueToSymbol(value);
-                            // Pass the numeric value to isWinningSymbol
-                            const isWinning = this.isWinningSymbol(value);
-
-                            console.log('[FPC Settlement] Rendering dice:', key, value, 'symbol:', symbol, 'isWinning:', isWinning);
-
+                            const isWinning = this.isWinningSymbol(symbol);
                             return (
-                                <div
-                                    className={`${Styles['result-item']} ${isWinning ? Styles['winning-symbol'] : ''}`}
-                                    key={index}
-                                >
+                                <div key={index} className={`${Styles['result-item']} ${isWinning ? Styles['winning-symbol'] : ''}`} style={{ transition: 'all 0.3s ease' }}>
                                     <FishPrawnCrabDice
                                         symbol={symbol}
                                         size={Size.large}
@@ -275,46 +231,41 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
     };
 
     renderNoResultIcons = (): JSX.Element => {
-        console.log('[FPC Settlement] Rendering empty dice (no result)');
         return (
-            <div className={Styles['result-container']} style={{ display: 'flex', justifyContent: 'center', gap: '10px', margin: '10px 0', position: 'relative' }}>
-                {[0, 1, 2].map((index) => (
-                    <div
-                        className={Styles['result-item']}
-                        key={index}
-                    >
+            <div className={Styles['container-bets']} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
+                <div className={Styles['result-container']} style={{ display: 'flex', justifyContent: 'center', gap: '10px', margin: '10px 0' }}>
+                    <div className={Styles['result-item']}>
                         <FishPrawnCrabDice symbol={FishPrawnCrabSymbol.EMPTY} size={Size.large} />
                     </div>
-                ))}
+                    <div className={Styles['result-item']}>
+                        <FishPrawnCrabDice symbol={FishPrawnCrabSymbol.EMPTY} size={Size.large} />
+                    </div>
+                    <div className={Styles['result-item']}>
+                        <FishPrawnCrabDice symbol={FishPrawnCrabSymbol.EMPTY} size={Size.large} />
+                    </div>
+                </div>
             </div>
         );
     };
 
     render() {
         const isEmpty = (obj: object): boolean => {
-            return JSON.stringify(obj) === '{}';
+            return !obj || Object.keys(obj).length === 0;
         };
 
-        const { result, roundState, isResultUpdated } = this.state;
-        console.log('[FPC Settlement] Render called with state:', {
-            resultEmpty: isEmpty(result as object),
-            roundState,
-            isResultUpdated
-        });
+        const { result, isResultUpdated } = this.state;
 
-        if (!result || isEmpty(result as object) || roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET || !isResultUpdated) {
-            console.log('[FPC Settlement] Rendering empty state');
+        if (!isResultUpdated || isEmpty(result as object)) {
             return (
-                <div className={Styles.settlementContainer} style={{ width: '100%', display: 'flex', justifyContent: 'center', position: 'relative' }}>
+                <div className={Styles.settlementContainer}>
                     {this.renderNoResultIcons()}
                 </div>
             );
         }
 
-        console.log('[FPC Settlement] Rendering settlement result');
         return (
-            <div className={Styles.settlementContainer} style={{ width: '100%', display: 'flex', justifyContent: 'center', position: 'relative' }}>
-                <div style={{ maxWidth: '500px', width: '100%', position: 'relative' }}>{this.renderIcons(result)}</div>
+            <div className={Styles.settlementContainer}>
+                {this.renderIcons(result)}
             </div>
         );
     }

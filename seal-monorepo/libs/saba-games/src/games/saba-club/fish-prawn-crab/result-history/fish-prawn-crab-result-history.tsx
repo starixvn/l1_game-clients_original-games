@@ -8,8 +8,8 @@ import styles from './fish-prawn-crab-result-history.module.scss';
 
 export interface IFishPrawnCrabResultHistoryProps extends IPropsObserver {
     language: string;
-    settlementService?: ISettlementResultService; // Dependency Injection
-    translationService?: ITranslationService; // Dependency Injection
+    settlementService?: ISettlementResultService;
+    translationService?: ITranslationService;
 }
 
 export interface IFishPrawnCrabResultHistoryState extends IStateObserver {
@@ -25,7 +25,6 @@ export class FishPrawnCrabResultHistory extends ObserverComponent<IFishPrawnCrab
     constructor(props: IFishPrawnCrabResultHistoryProps) {
         super(props);
 
-        // Dependency Injection - services can be injected or use defaults
         this.settlementService = props.settlementService || new SettlementResultService();
         this.translationService = props.translationService || new TranslationService();
     }

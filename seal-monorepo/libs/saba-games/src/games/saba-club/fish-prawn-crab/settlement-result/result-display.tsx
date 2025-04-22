@@ -24,14 +24,10 @@ export const ResultDisplay: React.FC<ResultDisplayProps> = ({
 
     let resultText = '';
 
-    // Use SettlementService to get winning symbols
     if (settlementResult && Object.keys(settlementResult).length > 0) {
-        // First convert settlementResult to IWinningResult format
         const winningResult = SettlementService.getSettlementResult(settlementResult);
-        // Then get the winning symbols
         const winningSymbols = SettlementService.getWinningSymbols(winningResult);
 
-        // Map symbols to their translated names
         const symbolNames = winningSymbols.map(symbol => {
             return t(`FishPrawnCrab.glossary_${symbol}`);
         });
@@ -39,7 +35,6 @@ export const ResultDisplay: React.FC<ResultDisplayProps> = ({
         resultText = symbolNames.join(' - ');
     }
 
-    // Fallback to previous implementation if no resultText was generated
     if (!resultText && result && Object.keys(result).length > 0) {
         const { convertValueToSymbol } = require("../fish-prawn-crab-utils");
         const symbolNames = Object.values(result).map(value => {

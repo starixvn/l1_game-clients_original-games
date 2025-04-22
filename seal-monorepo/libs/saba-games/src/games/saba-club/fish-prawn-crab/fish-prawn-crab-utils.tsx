@@ -1,6 +1,5 @@
 import { FishPrawnCrabSymbol } from "../../../_shared/components/fish-prawn-crab-dice";
 
-// Result mapper for Fish Prawn Crab game
 export const resultMapper = {
     stag: 0,
     gourd: 1,
@@ -10,9 +9,6 @@ export const resultMapper = {
     prawn: 5
 };
 
-/**
- * Converts a result value to the corresponding FishPrawnCrabSymbol
- */
 export const convertValueToSymbol = (value: number): FishPrawnCrabSymbol => {
     switch (value) {
         case resultMapper.stag: return FishPrawnCrabSymbol.STAG;

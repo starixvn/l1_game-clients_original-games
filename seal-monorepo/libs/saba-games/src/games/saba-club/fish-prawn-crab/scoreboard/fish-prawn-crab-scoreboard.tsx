@@ -8,7 +8,6 @@ import { FishPrawnCrabBetPercentages } from '../bet-percentages';
 import { ResultHistory } from './components';
 import { getScoreboardTitle, shouldShowBlinkingDice } from './utils/scoreboard-utils';
 
-// Interfaces
 export interface IFishPrawnCrabResultHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
     roundState: string;
@@ -19,7 +18,6 @@ interface ScoreBoardProps extends IPropsObserver {
     language: string;
 }
 
-// Main Component
 export default class FishPrawnCrabScoreBoard extends ObserverComponent<ScoreBoardProps, IFishPrawnCrabResultHistoryState> {
     private scrollDivRef: RefObject<HTMLDivElement>;
 
@@ -34,7 +32,6 @@ export default class FishPrawnCrabScoreBoard extends ObserverComponent<ScoreBoar
     }
 
     componentDidUpdate(prevProps: ScoreBoardProps, prevState: IFishPrawnCrabResultHistoryState) {
-        // Scroll to right if items have changed
         if (prevState.rounds !== this.state.rounds) {
             this.scrollToRight();
         }
@@ -81,4 +78,4 @@ export default class FishPrawnCrabScoreBoard extends ObserverComponent<ScoreBoar
             </div>
         );
     }
-} 
+}

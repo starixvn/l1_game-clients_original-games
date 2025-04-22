@@ -22,7 +22,6 @@ export class SettlementResultService implements ISettlementResultService {
         if (settlementResult && typeof settlementResult === "object") {
             const data = settlementResult as Record<string, unknown>;
 
-            // Process each choice
             Object.values(FishPrawnCrabChoices).forEach(choice => {
                 result[choice] = !!data[choice];
                 if (result[choice]) {
