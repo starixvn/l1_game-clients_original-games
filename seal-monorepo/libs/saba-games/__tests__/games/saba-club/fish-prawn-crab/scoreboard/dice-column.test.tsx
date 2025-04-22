@@ -2,19 +2,35 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import DiceColumn from '../../../../../src/games/saba-club/fish-prawn-crab/scoreboard/components/dice-column';
-import { FishPrawnCrabChoices, FishPrawnCrabSymbol } from '../../../../../src/games/saba-club/fish-prawn-crab/type';
+import { FishPrawnCrabChoices } from '../../../../../src/games/saba-club/fish-prawn-crab/type';
 
-// Mock the shared components
-jest.mock('../../../../../src/_shared/components/fish-prawn-crab-dice', () => {
-    return {
-        __esModule: true,
-        default: jest.fn().mockImplementation(({ symbol, size }) => (
-            <div data-testid={`mock-dice-${symbol}`} data-size={size}>
-                Mock Dice {symbol}
-            </div>
-        ))
-    };
-});
+// Define FishPrawnCrabSymbol locally
+export enum FishPrawnCrabSymbol {
+    FISH = 'FISH',
+    PRAWN = 'PRAWN',
+    CRAB = 'CRAB',
+    ROOSTER = 'ROOSTER',
+    GOURD = 'GOURD',
+    STAG = 'STAG'
+}
+
+// Mock the dice component - use the same path that DiceColumn would use
+jest.mock('../../../../../src/_shared/components/fish-prawn-crab-dice', () => ({
+    FishPrawnCrabSymbol: {
+        FISH: 'FISH',
+        PRAWN: 'PRAWN',
+        CRAB: 'CRAB',
+        ROOSTER: 'ROOSTER',
+        GOURD: 'GOURD',
+        STAG: 'STAG'
+    },
+    __esModule: true,
+    default: jest.fn().mockImplementation(({ symbol, size }) => (
+        <div data-testid={`mock-dice-${symbol}`} data-size={size}>
+            Mock Dice {symbol}
+        </div>
+    ))
+}));
 
 describe('DiceColumn', () => {
     afterEach(() => {
@@ -46,9 +62,9 @@ describe('DiceColumn', () => {
         it('should render dice for each valid dice value in the result', () => {
             // Arrange
             const mockResult = {
-                dice1: FishPrawnCrabChoices.fish as FishPrawnCrabSymbol,
-                dice2: FishPrawnCrabChoices.prawn as FishPrawnCrabSymbol,
-                dice3: FishPrawnCrabChoices.crab as FishPrawnCrabSymbol
+                dice1: FishPrawnCrabChoices.fish as unknown as FishPrawnCrabSymbol,
+                dice2: FishPrawnCrabChoices.prawn as unknown as FishPrawnCrabSymbol,
+                dice3: FishPrawnCrabChoices.crab as unknown as FishPrawnCrabSymbol
             } as any;
 
             // Act
@@ -64,8 +80,8 @@ describe('DiceColumn', () => {
         it('should handle partial dice values in the result', () => {
             // Arrange
             const mockResult = {
-                dice1: FishPrawnCrabChoices.rooster as FishPrawnCrabSymbol,
-                dice2: FishPrawnCrabChoices.gourd as FishPrawnCrabSymbol
+                dice1: FishPrawnCrabChoices.rooster as unknown as FishPrawnCrabSymbol,
+                dice2: FishPrawnCrabChoices.gourd as unknown as FishPrawnCrabSymbol
                 // dice3 is missing
             } as any;
 

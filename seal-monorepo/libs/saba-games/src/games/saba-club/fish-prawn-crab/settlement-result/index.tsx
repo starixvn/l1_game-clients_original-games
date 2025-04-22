@@ -173,26 +173,36 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
     }
 
     renderWinnerDisplay = () => {
-        const { settlementResult, isFinishShowResult, winningSymbols } = this.state;
+        const { settlementResult, isFinishShowResult, winningSymbols, result } = this.state;
         const t = (key) => gc.Translator.t(key, { lng: this.props.language || '' });
 
-        console.log('[FPC Settlement] Rendering winner display. isFinishShowResult:', isFinishShowResult, 'winningSymbols:', winningSymbols);
+        console.log('[FPC Settlement] Rendering winner display. isFinishShowResult:', isFinishShowResult,
+            'winningSymbols:', winningSymbols,
+            'settlementResult:', settlementResult,
+            'result:', result);
 
-        if (!isFinishShowResult || !settlementResult || Object.keys(settlementResult).length === 0) {
+        // Simplified condition - show if we have winning symbols regardless of isFinishShowResult
+        if (!settlementResult || Object.keys(settlementResult).length === 0) {
             console.log('[FPC Settlement] Cannot render winner display - missing data');
             return null;
         }
 
-        let result = '';
+        let resultText = '';
 
-        Object.entries(settlementResult).forEach(([key, value]) => {
-            if (value) {
-                result = t(`FishPrawnCrab.${key}_win`);
-            }
-        });
+        // If we have result but no translated text, create a simple fallback text from the dice values
+        if (!resultText && result && Object.keys(result).length > 0) {
+            console.log('[FPC Settlement] Creating result text from dice values');
+            const symbolNames = Object.values(result).map(value => {
+                const symbol = convertValueToSymbol(value);
+                console.log('[FPC Settlement] Mapped value:', value, 'to symbol:', symbol);
+                return t(`FishPrawnCrab.glossary_${symbol}`);
+            });
+            resultText = symbolNames.join(' - ');
+            console.log('[FPC Settlement] Generated result text:', resultText);
+        }
 
-        console.log('[FPC Settlement] Winner display result text:', result);
-        return <WinnerDisplay resultText={result} className={Styles['fish-prawn-crab-result']} />;
+        console.log('[FPC Settlement] Winner display result text:', resultText);
+        return <WinnerDisplay resultText={resultText} className={Styles['fish-prawn-crab-result']} />;
     };
 
     isWinningSymbol = (symbol: string | number): boolean => {
@@ -271,8 +281,8 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
                             );
                         })
                     )}
-
                 </div>
+                {/* Always render the winner display component here */}
                 {this.renderWinnerDisplay()}
             </div>
         );
