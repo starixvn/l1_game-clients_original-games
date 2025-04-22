@@ -270,7 +270,7 @@
         "game_vendor": "SABA.games",
         "game_name": "Ikan Udang Kepiting",
         "game_tab_name": "Ikan Udang Kepiting",
-        "choices_type": "",
+        "choices_type": "Symbol - Double: {odds_double} Triple: {odds_triple}",
         "glossary_fish": "Ikan",
         "glossary_prawn": "Udang",
         "glossary_crab": "Kepiting",

@@ -271,7 +271,7 @@
         "game_vendor": "SABA.games",
         "game_name": "鱼虾蟹",
         "game_tab_name": "鱼虾蟹",
-        "choices_type": "",
+        "choices_type": "Symbol - Double: {odds_double} Triple: {odds_triple}",
         "glossary_fish": "鱼",
         "glossary_prawn": "虾",
         "glossary_crab": "螃蟹",

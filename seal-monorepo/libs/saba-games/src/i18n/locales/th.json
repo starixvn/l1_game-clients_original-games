@@ -271,7 +271,7 @@
         "game_vendor": "SABA.games",
         "game_name": "น้ำเต้าปูปลา",
         "game_tab_name": "น้ำเต้าปูปลา",
-        "choices_type": "",
+        "choices_type": "Symbol - Double: {odds_double} Triple: {odds_triple}",
         "glossary_fish": "ปลา",
         "glossary_prawn": "กุ้ง",
         "glossary_crab": "ปู",
