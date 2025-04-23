@@ -128,8 +128,7 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
         if (result && gameStateService.validateResult(result as FishPrawnCrabResult)) {
             this.setState({
                 result,
-                isFinishShowResult: true,
-                isResultUpdated: true
+                isFinishShowResult: true
             });
         }
         const lastRound = firstJoinGameHistory?.roundHistory;
@@ -138,8 +137,7 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
             this.setState({
                 result: lastRound?.result,
                 settlementResult: lastRound?.settlementResult,
-                winningSymbols,
-                isResultUpdated: true
+                winningSymbols
             });
         }
     }
@@ -212,6 +210,8 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
         // Log animation time for debugging
         if (isAnimationResult) {
             console.log(`Total dice animation time: ${totalAnimationTime}ms for ${resultSymbols.length} dice`);
+        } else {
+            this.setState({ isAnimationComplete: true });
         }
 
         return (
