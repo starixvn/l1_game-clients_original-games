@@ -29,3 +29,10 @@ export const blinkRoundItem = {
     "dice3": FishPrawnCrabSymbol.RESULT
 }
 
+
+export const emptyRoundItem = {
+    "dice1": FishPrawnCrabSymbol.EMPTY,
+    "dice2": FishPrawnCrabSymbol.EMPTY,
+    "dice3": FishPrawnCrabSymbol.EMPTY
+}
+

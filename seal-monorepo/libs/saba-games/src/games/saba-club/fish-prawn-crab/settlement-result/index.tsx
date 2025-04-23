@@ -209,9 +209,11 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
 
         // Log animation time for debugging
         if (isAnimationResult) {
+
             console.log(`Total dice animation time: ${totalAnimationTime}ms for ${resultSymbols.length} dice`);
         } else {
             this.setState({ isAnimationComplete: true });
+            animationStateTransmitter.setAnimationComplete(true);
         }
 
         return (
@@ -249,13 +251,13 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
         return (
             <div className={Styles['container-bets']} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
                 <div className={Styles['result-container']} style={{ display: 'flex', justifyContent: 'center', gap: '10px', margin: '10px 0' }}>
-                    <div className={`${Styles['result-item']} ${Styles['has-animation']}`} style={{ animation: `${Styles.popIn} 0.5s ease-out 0.2s forwards, ${Styles.bounce} 2s ease-in-out 1s infinite` }}>
+                    <div className={`${Styles['result-item']} ${Styles['has-animation']}`} style={{ animation: `${Styles.popIn} 0.5s ease-out 0.3s forwards` }}>
                         <FishPrawnCrabDice symbol={FishPrawnCrabSymbol.EMPTY} size={Size.large} />
                     </div>
-                    <div className={`${Styles['result-item']} ${Styles['has-animation']}`} style={{ animation: `${Styles.popIn} 0.5s ease-out 0.4s forwards, ${Styles.bounce} 2s ease-in-out 1.2s infinite` }}>
+                    <div className={`${Styles['result-item']} ${Styles['has-animation']}`} style={{ animation: `${Styles.popIn} 0.5s ease-out 0.3s forwards` }}>
                         <FishPrawnCrabDice symbol={FishPrawnCrabSymbol.EMPTY} size={Size.large} />
                     </div>
-                    <div className={`${Styles['result-item']} ${Styles['has-animation']}`} style={{ animation: `${Styles.popIn} 0.5s ease-out 0.6s forwards, ${Styles.bounce} 2s ease-in-out 1.4s infinite` }}>
+                    <div className={`${Styles['result-item']} ${Styles['has-animation']}`} style={{ animation: `${Styles.popIn} 0.5s ease-out 0.3s forwards` }}>
                         <FishPrawnCrabDice symbol={FishPrawnCrabSymbol.EMPTY} size={Size.large} />
                     </div>
                 </div>
