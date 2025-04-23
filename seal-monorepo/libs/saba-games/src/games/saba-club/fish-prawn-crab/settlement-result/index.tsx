@@ -12,6 +12,7 @@ import { Size } from "../../../../_shared/constants";
 import { convertValueToSymbol } from "../fish-prawn-crab-utils";
 import { AnimatedDiceSet } from '../../../../_shared/components/fish-prawn-crab-dice/animated-dice';
 import { ResultDisplay } from "./result-display";
+import { animationStateTransmitter } from '../transmitters/animation-state.transmitter';
 
 const DEFAULT_RESULT = {};
 
@@ -56,6 +57,7 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
                 isAnimationResult: false,
                 isAnimationComplete: false
             });
+            animationStateTransmitter.setAnimationComplete(false);
         }
 
         if (roundState === ROUND_STATE.SHOW_RESULT) {
@@ -68,6 +70,7 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
                 isAnimationResult: true,
                 isAnimationComplete: false
             });
+            animationStateTransmitter.setAnimationComplete(false);
         }
 
         this.setState({ roundState });
@@ -196,7 +199,7 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
 
         const handleAnimationComplete = () => {
             this.setState({ isAnimationComplete: true });
-
+            animationStateTransmitter.setAnimationComplete(true);
         };
 
         // Calculate total animation time if isAnimationResult is true

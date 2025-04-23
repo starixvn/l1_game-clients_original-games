@@ -8,6 +8,7 @@ import EmptyDiceRow from "./empty-dice-row";
 import { MAX_DISPLAYED_ROUNDS } from "../constants/fish-prawn-crab-constants";
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
 import { blinkRoundItem } from "../constants";
+import { animationStateTransmitter } from '../transmitters/animation-state.transmitter';
 
 const blinkDefaultRoundItem = {
     roundId: -1,
@@ -26,6 +27,8 @@ export interface IFishPrawnCrabRoundHistoryState extends IStateObserver {
     roundState: string;
     isFinishedShowResult: boolean;
     hasBlink: boolean;
+    isAnimationComplete: boolean;
+    pendingRounds: gc.RoundHistories.RoundHistory[] | null;
 }
 
 export default class FishPrawnCrabRoundHistory extends ObserverComponent<IFishPrawnCrabRoundHistoryProps, IFishPrawnCrabRoundHistoryState> {
@@ -36,13 +39,22 @@ export default class FishPrawnCrabRoundHistory extends ObserverComponent<IFishPr
             rounds: [],
             roundState: '',
             isFinishedShowResult: false,
-            hasBlink: false
+            hasBlink: false,
+            isAnimationComplete: false,
+            pendingRounds: []
         };
     }
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
-        this.setState({ rounds: rounds.slice(0, MAX_DISPLAYED_ROUNDS) });
+        if (rounds.length > 0) {
+            this.setState({ rounds: rounds.slice(0, MAX_DISPLAYED_ROUNDS) });
+        }
+        else {
+            setTimeout(() => {
+                this.setState({ rounds: rounds.slice(0, MAX_DISPLAYED_ROUNDS) });
+            }, 1000);
+        }
     }
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
@@ -54,6 +66,20 @@ export default class FishPrawnCrabRoundHistory extends ObserverComponent<IFishPr
     @render(gc.Settlements.SettlementStore, (store) => store.isFinishedShowResult)
     finishShowResult(isFinishedShowResult: boolean) {
         this.setState({ isFinishedShowResult });
+    }
+
+    private handleAnimationComplete = (isComplete: boolean) => {
+        this.setState({ isAnimationComplete: isComplete });
+    };
+
+    componentDidMount() {
+        super.componentDidMount?.();
+        animationStateTransmitter.onAnimationComplete(this.handleAnimationComplete);
+    }
+
+    componentWillUnmount() {
+        super.componentWillUnmount?.();
+        animationStateTransmitter.removeAnimationCompleteListener(this.handleAnimationComplete);
     }
 
     componentDidUpdate(prevProps: Readonly<IFishPrawnCrabRoundHistoryProps>, prevState: Readonly<IFishPrawnCrabRoundHistoryState>, snapshot?: any): void {
