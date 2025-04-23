@@ -40,6 +40,7 @@ const GAME_ICON_MAPPING = {
     [VIP_SE_DIE_GAME_NAMESPACE]: 'vip-sedie-icon',
     [UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE]: 'bigsmall-icon',
     [BACCARAT_GAME_NAMESPACE]: 'baccarat-icon',
+    [FISH_PRAWN_CRAB_GAME_NAMESPACE]: 'fish-prawn-crab-icon',
 } as const;
 
 export interface IBetPanel extends IStateObserver {

@@ -270,6 +270,7 @@
         "game_vendor": "SABA.games",
         "game_name": "Ikan Udang Kepiting",
         "game_tab_name": "Ikan Udang Kepiting",
+        "bet_choices_type": "Simbol",
         "choices_type": "Simbol - Dobel: {odds_double} Tripel: {odds_triple}",
         "glossary_fish": "Ikan",
         "glossary_prawn": "Udang",

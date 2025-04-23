@@ -97,4 +97,9 @@
         @extend %game-icon-base;
         background-image: url("../../../assets/game-icons/game-icon-10.png");
     }
+
+    .fish-prawn-crab-icon {
+        @extend %game-icon-base;
+        background-image: url("../../../assets/game-icons/fish-prawn-crab.png");
+    }
 }

@@ -271,6 +271,7 @@
         "game_vendor": "SABA.games",
         "game_name": "魚蝦蟹",
         "game_tab_name": "魚蝦蟹",
+        "bet_choices_type": "象徵",
         "choices_type": "象徵 - 雙倍: {odds_double} 三倍: {odds_triple}",
         "glossary_fish": "魚",
         "glossary_prawn": "蝦",
