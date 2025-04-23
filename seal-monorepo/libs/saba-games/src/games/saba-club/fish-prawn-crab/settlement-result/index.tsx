@@ -154,13 +154,13 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
     }
 
     renderWinnerDisplay = () => {
-        const { settlementResult, result } = this.state;
+        const { settlementResult, result, isAnimationComplete } = this.state;
 
         if (!settlementResult || Object.keys(settlementResult).length === 0 && result) {
             return null;
         }
 
-        return this.state.isFinishShowResult ? <ResultDisplay
+        return this.state.isAnimationComplete ? <ResultDisplay
             settlementResult={settlementResult}
             language={this.props.language}
         /> : null;
@@ -196,7 +196,20 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
 
         const handleAnimationComplete = () => {
             this.setState({ isAnimationComplete: true });
+
         };
+
+        // Calculate total animation time if isAnimationResult is true
+        const animationDuration = 3000; // ms
+        const staggerDelay = 150; // ms
+        const totalAnimationTime = isAnimationResult
+            ? animationDuration + (staggerDelay * (resultSymbols.length - 1))
+            : 0;
+
+        // Log animation time for debugging
+        if (isAnimationResult) {
+            console.log(`Total dice animation time: ${totalAnimationTime}ms for ${resultSymbols.length} dice`);
+        }
 
         return (
             <div className={`${Styles['container-bets']} ${Styles['has-animation']} ${isAnimationResult ? Styles['has-animation'] : ''}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
@@ -205,9 +218,9 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
                         <AnimatedDiceSet
                             finalSymbols={resultSymbols}
                             size={Size.large}
-                            animationDuration={3000}
+                            animationDuration={animationDuration}
                             onAllAnimationsComplete={handleAnimationComplete}
-                            staggerDelay={150}
+                            staggerDelay={staggerDelay}
                         />
                     ) : (
                         Object.entries(result).map(([key, value], index) => {
@@ -233,13 +246,13 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
         return (
             <div className={Styles['container-bets']} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
                 <div className={Styles['result-container']} style={{ display: 'flex', justifyContent: 'center', gap: '10px', margin: '10px 0' }}>
-                    <div className={Styles['result-item']}>
+                    <div className={`${Styles['result-item']} ${Styles['has-animation']}`} style={{ animation: `${Styles.popIn} 0.5s ease-out 0.2s forwards, ${Styles.bounce} 2s ease-in-out 1s infinite` }}>
                         <FishPrawnCrabDice symbol={FishPrawnCrabSymbol.EMPTY} size={Size.large} />
                     </div>
-                    <div className={Styles['result-item']}>
+                    <div className={`${Styles['result-item']} ${Styles['has-animation']}`} style={{ animation: `${Styles.popIn} 0.5s ease-out 0.4s forwards, ${Styles.bounce} 2s ease-in-out 1.2s infinite` }}>
                         <FishPrawnCrabDice symbol={FishPrawnCrabSymbol.EMPTY} size={Size.large} />
                     </div>
-                    <div className={Styles['result-item']}>
+                    <div className={`${Styles['result-item']} ${Styles['has-animation']}`} style={{ animation: `${Styles.popIn} 0.5s ease-out 0.6s forwards, ${Styles.bounce} 2s ease-in-out 1.4s infinite` }}>
                         <FishPrawnCrabDice symbol={FishPrawnCrabSymbol.EMPTY} size={Size.large} />
                     </div>
                 </div>
