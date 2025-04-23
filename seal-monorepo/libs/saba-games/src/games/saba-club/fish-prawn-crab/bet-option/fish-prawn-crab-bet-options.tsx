@@ -2,7 +2,6 @@ import { FishPrawnCrabSymbolType, FishPrawnOddsType } from '../type';
 import styles from './fish-prawn-crab-bet-options.module.scss';
 import * as gc from '@sg/sg-game-client';
 import BetOptions, { IBetOptionsState } from '../../../../_shared/components/bet-option';
-import BettingBlock from '../../../../_shared/components/bet-option/betting-block';
 import OddsComponent from '../../../../_shared/components/bet-option/odd-component';
 import OwnBet from '../../../../_shared/components/bet-option/own-bet';
 import TotalBet from '../../../../_shared/components/bet-option/total-bet';
@@ -10,6 +9,7 @@ import Styles from '../fish-prawn-crab.module.scss';
 import { bottomChoices, ChoiceFishPrawnCrabIconMapper, topChoices } from '../type';
 import { Size } from '../../../../_shared/constants';
 import FishPrawnCrabDice from '../../../../_shared/components/fish-prawn-crab-dice';
+import FishPrawnCrabBettingBlock from './component/fish-prawn-crab-betting-block';
 
 const symbols: FishPrawnCrabSymbolType[] = ['fish', 'prawn', 'crab', 'rooster', 'gourd', 'stag'];
 
@@ -41,7 +41,7 @@ export default class FishPrawnCrabBetOptions extends BetOptions {
         const { settlementResult } = this.state;
         
         return (
-            <BettingBlock
+            <FishPrawnCrabBettingBlock
                 odd={odd}
                 betChoice={betChoice}
                 gameName={this.props.gameName}
@@ -53,7 +53,7 @@ export default class FishPrawnCrabBetOptions extends BetOptions {
                     <FishPrawnCrabDice symbol={ChoiceFishPrawnCrabIconMapper[betChoice]} size={Size.medium} />
                     <OddsComponent value={odd} fractional={false} isBoostedChoice={isBoostedChoice} />
                 </div>
-            </BettingBlock>
+            </FishPrawnCrabBettingBlock>
         );
     }
 
