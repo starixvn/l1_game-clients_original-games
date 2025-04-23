@@ -8,6 +8,7 @@ import { FishPrawnOddsType } from './type';
 interface IFishPrawnCrabHeaderProps extends IPropsObserver {
     isExpanded: boolean;
     handleToggle: () => void;
+    language: string;
 }
 
 interface IFishPrawnCrabHeaderState extends IStateObserver {
