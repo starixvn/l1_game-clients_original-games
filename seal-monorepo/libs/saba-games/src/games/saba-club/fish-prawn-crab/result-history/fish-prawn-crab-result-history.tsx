@@ -24,6 +24,10 @@ export class FishPrawnCrabResultHistory extends ObserverComponent<IFishPrawnCrab
 
     constructor(props: IFishPrawnCrabResultHistoryProps) {
         super(props);
+        this.state = {
+            dispose: null,
+            rounds: [],
+        };
 
         this.settlementService = props.settlementService || new SettlementResultService();
         this.translationService = props.translationService || new TranslationService();
@@ -31,7 +35,14 @@ export class FishPrawnCrabResultHistory extends ObserverComponent<IFishPrawnCrab
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
-        this.setState({ rounds: rounds.slice(0, numberOfResult) });
+        if (this.state.rounds.length === 0) {
+            this.setState({ rounds });
+        }
+        else {
+            setTimeout(() => {
+                this.setState({ rounds });
+            }, 1000);
+        }
     }
 
     render() {

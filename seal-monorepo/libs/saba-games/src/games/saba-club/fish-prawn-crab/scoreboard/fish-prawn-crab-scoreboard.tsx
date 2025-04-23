@@ -45,7 +45,14 @@ export default class FishPrawnCrabScoreBoard extends ObserverComponent<ScoreBoar
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
-        this.setState({ rounds });
+        if (this.state.rounds.length === 0) {
+            this.setState({ rounds });
+        }
+        else {
+            setTimeout(() => {
+                this.setState({ rounds });
+            }, 1000);
+        }
     }
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)

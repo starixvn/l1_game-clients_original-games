@@ -47,7 +47,7 @@ export default class FishPrawnCrabRoundHistory extends ObserverComponent<IFishPr
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
-        if (rounds.length > 0) {
+        if (this.state.rounds.length === 0) {
             this.setState({ rounds: rounds.slice(0, MAX_DISPLAYED_ROUNDS) });
         }
         else {
