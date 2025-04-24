@@ -6,7 +6,6 @@ export interface ISettlementResultService {
     getWinningChoices(settlementResult: gc.GameServiceMessage.TSettlementResult): FishPrawnCrabChoices[];
     getWinningTextList(settlementResult: gc.GameServiceMessage.TSettlementResult): string[];
     getWinningTextListByResult(result: gc.GameServiceMessage.TResult): string[];
-    getDiceSymbolTextList(result: gc.GameServiceMessage.TResult): string[];
 }
 
 export class SettlementResultService implements ISettlementResultService {
@@ -57,17 +56,15 @@ export class SettlementResultService implements ISettlementResultService {
 
         const diceResult = result as Record<string, number>;
 
-        // Get all dice values in order
         const diceValues = [
             diceResult.dice1,
             diceResult.dice2,
             diceResult.dice3
         ];
 
-        // Map each dice value to its translated symbol name
         return diceValues
             .map(value => this.diceValueToSymbolName(value))
-            .filter(Boolean) // Remove null values
+            .filter(Boolean)
             .map(choice => gc.Translator.translate(`FishPrawnCrab.glossary_${choice}`));
     }
 
@@ -81,24 +78,5 @@ export class SettlementResultService implements ISettlementResultService {
             case 5: return FishPrawnCrabChoices.prawn;
             default: return null;
         }
-    }
-
-    getDiceSymbolTextList(result: gc.GameServiceMessage.TResult): string[] {
-        if (!result || typeof result !== 'object' || Object.keys(result).length === 0) return [];
-
-        const diceResult = result as Record<string, number>;
-
-        // Get all dice values in order
-        const diceValues = [
-            diceResult.dice1,
-            diceResult.dice2,
-            diceResult.dice3
-        ];
-
-        // Map each dice value to its translated symbol name
-        return diceValues
-            .map(value => this.diceValueToSymbolName(value))
-            .filter(Boolean) // Remove null values
-            .map(choice => gc.Translator.translate(`FishPrawnCrab.glossary_${choice}`));
     }
 } 
