@@ -1,9 +1,9 @@
 import { FishPrawnCrabSymbol } from 'libs/saba-games/src/_shared/components/fish-prawn-crab-dice';
-import { resultMapper } from './fish-prawn-crab-utils';
+import { resultMapper, oddMapper } from './fish-prawn-crab-utils';
 
 export const constants = {
     resultMapper,
-    oddMapper: { 1: "single", 2: "double", 3: "triple" },
+    oddMapper
 };
 
 export const MockRoundHistoryItem = {

@@ -1,5 +1,7 @@
 import { FishPrawnCrabSymbol } from "../../../_shared/components/fish-prawn-crab-dice";
+import { FishPrawnCrabChoices } from "./type";
 
+// Map string keys to numeric values
 export const resultMapper = {
     stag: 0,
     gourd: 1,
@@ -9,6 +11,7 @@ export const resultMapper = {
     prawn: 5
 };
 
+// Map numeric values to FishPrawnCrabSymbol enum values
 export const convertValueToSymbol = (value: number): FishPrawnCrabSymbol => {
     switch (value) {
         case resultMapper.stag: return FishPrawnCrabSymbol.STAG;
@@ -20,3 +23,37 @@ export const convertValueToSymbol = (value: number): FishPrawnCrabSymbol => {
         default: return FishPrawnCrabSymbol.EMPTY;
     }
 };
+
+// Map FishPrawnCrabSymbol enum values to string values
+export const symbolToStringMap = {
+    [FishPrawnCrabSymbol.STAG]: 'stag',
+    [FishPrawnCrabSymbol.GOURD]: 'gourd',
+    [FishPrawnCrabSymbol.ROOSTER]: 'rooster',
+    [FishPrawnCrabSymbol.FISH]: 'fish',
+    [FishPrawnCrabSymbol.CRAB]: 'crab',
+    [FishPrawnCrabSymbol.PRAWN]: 'prawn',
+};
+
+// Map choices to their display icons/patterns
+export const choiceToSymbolMap: Record<FishPrawnCrabChoices, FishPrawnCrabSymbol> = {
+    [FishPrawnCrabChoices.fish]: FishPrawnCrabSymbol.FISH,
+    [FishPrawnCrabChoices.prawn]: FishPrawnCrabSymbol.PRAWN,
+    [FishPrawnCrabChoices.crab]: FishPrawnCrabSymbol.CRAB,
+    [FishPrawnCrabChoices.rooster]: FishPrawnCrabSymbol.ROOSTER,
+    [FishPrawnCrabChoices.gourd]: FishPrawnCrabSymbol.GOURD,
+    [FishPrawnCrabChoices.stag]: FishPrawnCrabSymbol.STAG,
+};
+
+// Create empty settlement result template
+export const createEmptySettlementResult = () => ({
+    winner: FishPrawnCrabChoices.fish,
+    [FishPrawnCrabChoices.fish]: false,
+    [FishPrawnCrabChoices.prawn]: false,
+    [FishPrawnCrabChoices.crab]: false,
+    [FishPrawnCrabChoices.rooster]: false,
+    [FishPrawnCrabChoices.gourd]: false,
+    [FishPrawnCrabChoices.stag]: false
+});
+
+// Mapping for odds
+export const oddMapper = { 1: "single", 2: "double", 3: "triple" };

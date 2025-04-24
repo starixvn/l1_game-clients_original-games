@@ -1,7 +1,7 @@
 import React from 'react';
 import { Size } from '../../../../_shared/constants';
 import FishPrawnCrabDice from '../../../../_shared/components/fish-prawn-crab-dice';
-import { convertValueToSymbol, resultMapper } from '../fish-prawn-crab-utils';
+import { choiceToSymbolMap } from '../fish-prawn-crab-utils';
 import { BetPercentageItemProps } from './types';
 import Styles from './fish-prawn-crab-bet-percentages.module.scss';
 
@@ -16,7 +16,7 @@ const BetPercentageItem: React.FC<BetPercentageItemProps> = ({
 }) => (
     <div className={Styles['percentage-item']}>
         <FishPrawnCrabDice
-            symbol={convertValueToSymbol(resultMapper[choice])}
+            symbol={choiceToSymbolMap[choice]}
             size={Size.small}
         />
         <span className={Styles.count}>{count}</span>

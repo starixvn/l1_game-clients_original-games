@@ -6,10 +6,11 @@ import OddsComponent from '../../../../_shared/components/bet-option/odd-compone
 import OwnBet from '../../../../_shared/components/bet-option/own-bet';
 import TotalBet from '../../../../_shared/components/bet-option/total-bet';
 import Styles from '../fish-prawn-crab.module.scss';
-import { bottomChoices, ChoiceFishPrawnCrabIconMapper, topChoices } from '../type';
+import { bottomChoices, topChoices } from '../type';
 import { Size } from '../../../../_shared/constants';
 import FishPrawnCrabDice from '../../../../_shared/components/fish-prawn-crab-dice';
 import FishPrawnCrabBettingBlock from './component/fish-prawn-crab-betting-block';
+import { choiceToSymbolMap } from '../fish-prawn-crab-utils';
 
 const symbols: FishPrawnCrabSymbolType[] = ['fish', 'prawn', 'crab', 'rooster', 'gourd', 'stag'];
 
@@ -39,7 +40,7 @@ export default class FishPrawnCrabBetOptions extends BetOptions {
 
     renderBetOptions(betChoice: string, odd: number, fractional: boolean, name: string = '', isBoostedChoice: boolean = false) {
         const { settlementResult } = this.state;
-        
+
         return (
             <FishPrawnCrabBettingBlock
                 odd={odd}
@@ -50,7 +51,7 @@ export default class FishPrawnCrabBetOptions extends BetOptions {
                 onBet={this.props.onBet}
             >
                 <div className={`${Styles['container-bets']} ${Styles['padding-bet']}`}>
-                    <FishPrawnCrabDice symbol={ChoiceFishPrawnCrabIconMapper[betChoice]} size={Size.medium} />
+                    <FishPrawnCrabDice symbol={choiceToSymbolMap[betChoice]} size={Size.medium} />
                     <OddsComponent value={odd} fractional={false} isBoostedChoice={isBoostedChoice} />
                 </div>
             </FishPrawnCrabBettingBlock>

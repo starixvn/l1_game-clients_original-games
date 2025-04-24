@@ -28,7 +28,7 @@ import { RoundDot } from '../dot';
 import { IPropsObserver, IStateObserver, ObserverComponent } from '../observer-component/observer-component';
 import './bet-panel.scss';
 import { localStorageKeys, StorageManager } from '../../utils/storage-manager';
-import { ChoiceFishPrawnCrabIconMapper } from '../../../games/saba-club/fish-prawn-crab/type';
+import { choiceToSymbolMap } from '../../../games/saba-club/fish-prawn-crab/fish-prawn-crab-utils';
 import { Size } from '../../constants';
 import FishPrawnCrabDice from '../fish-prawn-crab-dice';
 
@@ -160,7 +160,7 @@ const BetPanel: React.FC<{
     const panelRef = useRef<HTMLDivElement>(null);
 
 
-    
+
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -242,16 +242,16 @@ const BetPanel: React.FC<{
     const updateLatestBetToStorage = (namespace: string, clientRoundId: number) => {
         const existingHistory = StorageManager.get(localStorageKeys.betHistory) as ILatestBetRecord[];
         let betHistory = Array.isArray(existingHistory) ? existingHistory : [];
-    
+
         const newBet = { namespace, roundId: clientRoundId };
         const existingNamespaceIndex = betHistory.findIndex(bet => bet.namespace === namespace);
-    
+
         if (existingNamespaceIndex !== -1) {
             betHistory[existingNamespaceIndex].roundId = clientRoundId;
         } else {
             betHistory.push(newBet);
         }
-    
+
         StorageManager.set(localStorageKeys.betHistory, betHistory);
     };
 
@@ -375,7 +375,7 @@ const BetPanel: React.FC<{
     };
 
     const renderFishPrawnCrabDice = () => {
-        const symbol = ChoiceFishPrawnCrabIconMapper[betChoice];
+        const symbol = choiceToSymbolMap[betChoice];
         return (
             <FishPrawnCrabDice symbol={symbol} size={Size.small} />
         );

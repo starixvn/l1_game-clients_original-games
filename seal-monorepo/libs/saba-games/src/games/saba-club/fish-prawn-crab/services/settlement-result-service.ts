@@ -1,5 +1,6 @@
 import * as gc from '@sg/sg-game-client';
 import { FishPrawnCrabChoices, FishPrawnCrabSettlementResult } from '../type';
+import { createEmptySettlementResult } from '../fish-prawn-crab-utils';
 
 export interface ISettlementResultService {
     getSettlementResult(settlementResult: gc.GameServiceMessage.TSettlementResult): FishPrawnCrabSettlementResult & { winner: FishPrawnCrabChoices };
@@ -10,15 +11,7 @@ export interface ISettlementResultService {
 
 export class SettlementResultService implements ISettlementResultService {
     getSettlementResult(settlementResult: gc.GameServiceMessage.TSettlementResult): FishPrawnCrabSettlementResult & { winner: FishPrawnCrabChoices } {
-        const result = {
-            winner: FishPrawnCrabChoices.fish,
-            [FishPrawnCrabChoices.fish]: false,
-            [FishPrawnCrabChoices.prawn]: false,
-            [FishPrawnCrabChoices.crab]: false,
-            [FishPrawnCrabChoices.rooster]: false,
-            [FishPrawnCrabChoices.gourd]: false,
-            [FishPrawnCrabChoices.stag]: false
-        };
+        const result = createEmptySettlementResult();
 
         if (settlementResult && typeof settlementResult === "object") {
             const data = settlementResult as Record<string, unknown>;

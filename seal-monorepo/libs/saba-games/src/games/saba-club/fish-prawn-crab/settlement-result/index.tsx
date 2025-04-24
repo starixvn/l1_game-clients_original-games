@@ -10,7 +10,7 @@ import Styles from "./fish-prawn-crab-animations.module.scss";
 import { gameStateService } from "./services/game-state.service";
 import FishPrawnCrabDice, { FishPrawnCrabSymbol } from "../../../../_shared/components/fish-prawn-crab-dice";
 import { Size } from "../../../../_shared/constants";
-import { convertValueToSymbol } from "../fish-prawn-crab-utils";
+import { convertValueToSymbol, symbolToStringMap } from "../fish-prawn-crab-utils";
 import { AnimatedDiceSet } from '../../../../_shared/components/fish-prawn-crab-dice/animated-dice';
 import { ResultDisplay } from "./result-display";
 import { animationStateTransmitter } from '../transmitters/animation-state.transmitter';
@@ -185,16 +185,7 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
             return true;
         }
 
-        const enumToStringMap = {
-            [FishPrawnCrabSymbol.STAG]: 'stag',
-            [FishPrawnCrabSymbol.GOURD]: 'gourd',
-            [FishPrawnCrabSymbol.ROOSTER]: 'rooster',
-            [FishPrawnCrabSymbol.FISH]: 'fish',
-            [FishPrawnCrabSymbol.CRAB]: 'crab',
-            [FishPrawnCrabSymbol.PRAWN]: 'prawn',
-        };
-
-        const stringSymbol = enumToStringMap[symbol as number];
+        const stringSymbol = symbolToStringMap[symbol as number];
 
         const isWinning = stringSymbol && this.state.winningSymbols.includes(stringSymbol);
 

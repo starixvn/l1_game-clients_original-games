@@ -15,8 +15,6 @@ export enum FishPrawnCrabChoices {
     stag = 'stag'
 }
 
-export type FishPrawnCrabSymbolType = keyof typeof FishPrawnCrabChoices;
-
 export const topChoices = [
     FishPrawnCrabChoices.stag,
     FishPrawnCrabChoices.gourd,
@@ -29,6 +27,8 @@ export const bottomChoices = [
     FishPrawnCrabChoices.rooster
 ];
 
+export type FishPrawnCrabSymbolType = keyof typeof FishPrawnCrabChoices;
+
 export type FishPrawnCrabResult = {
     [key in FishPrawnCrabSymbolType]?: boolean;
 };
@@ -37,15 +37,19 @@ export type FishPrawnCrabSettlementResult = {
     [key in FishPrawnCrabSymbolType]?: boolean;
 };
 
-// Map choices to their display icons/patterns
-export const ChoiceFishPrawnCrabIconMapper: { [key: string]: FishPrawnCrabSymbol } = {
-    [FishPrawnCrabChoices.fish]: FishPrawnCrabSymbol.FISH,
-    [FishPrawnCrabChoices.prawn]: FishPrawnCrabSymbol.PRAWN,
-    [FishPrawnCrabChoices.crab]: FishPrawnCrabSymbol.CRAB,
-    [FishPrawnCrabChoices.rooster]: FishPrawnCrabSymbol.ROOSTER,
-    [FishPrawnCrabChoices.gourd]: FishPrawnCrabSymbol.GOURD,
-    [FishPrawnCrabChoices.stag]: FishPrawnCrabSymbol.STAG
-};
+export type BetChoices = {
+    [key in FishPrawnCrabChoices]?: number
+}
+
+export interface FishPrawnCrabDice {
+    index: number;
+    symbol: FishPrawnCrabSymbol;
+}
+
+export interface FishPrawnCrabDiceRolled {
+    dice: FishPrawnCrabDice[];
+    isFinishedRolling: boolean;
+}
 
 export interface FishPrawnCrabBet {
     symbol: FishPrawnCrabSymbolType;
