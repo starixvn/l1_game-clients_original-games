@@ -1,37 +1,28 @@
 import * as gc from "@sg/sg-game-client";
 import { WinnerDisplay } from "../../../../_shared/components/winner-display/winner-display";
-import { SettlementService } from "../services/settlement-service";
 import Styles from "./fish-prawn-crab-animations.module.scss";
+import { SettlementResultService } from "../services/settlement-result-service";
 
 interface ResultDisplayProps {
-    settlementResult: gc.GameServiceMessage.TSettlementResult;
+    result: gc.GameServiceMessage.TResult;
     language?: string;
     className?: string;
 }
 
 export const ResultDisplay: React.FC<ResultDisplayProps> = ({
-    settlementResult,
+    result,
     language,
     className
 }) => {
     const t = (key) => gc.Translator.t(key, { lng: language || '' });
+    const settlementService = new SettlementResultService();
 
-    if (!settlementResult || Object.keys(settlementResult).length === 0) {
+    if (!result || Object.keys(result).length === 0) {
         return null;
     }
 
-    let resultText = '';
+    const diceSymbols = settlementService.getWinningTextListByResult(result);
 
-    if (settlementResult && Object.keys(settlementResult).length > 0) {
-        const winningResult = SettlementService.getSettlementResult(settlementResult);
-        const winningSymbols = SettlementService.getWinningSymbols(winningResult);
-
-        const symbolNames = winningSymbols.map(symbol => {
-            return t(`FishPrawnCrab.glossary_${symbol}`);
-        });
-
-        resultText = symbolNames.join(' - ');
-    }
-
+    const resultText = diceSymbols.join(' - ');
     return <WinnerDisplay resultText={resultText} className={className || Styles['fish-prawn-crab-result']} />;
 }; 

@@ -175,7 +175,7 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
         }
 
         return this.state.isAnimationComplete ? <ResultDisplay
-            settlementResult={settlementResult}
+            result={result}
             language={this.props.language}
         /> : null;
     };

@@ -4,7 +4,9 @@ import { FishPrawnCrabChoices, FishPrawnCrabSettlementResult } from '../type';
 export interface ISettlementResultService {
     getSettlementResult(settlementResult: gc.GameServiceMessage.TSettlementResult): FishPrawnCrabSettlementResult & { winner: FishPrawnCrabChoices };
     getWinningChoices(settlementResult: gc.GameServiceMessage.TSettlementResult): FishPrawnCrabChoices[];
-    getWinningTextList(settlementResult: gc.GameServiceMessage.TSettlementResult): string;
+    getWinningTextList(settlementResult: gc.GameServiceMessage.TSettlementResult): string[];
+    getWinningTextListByResult(result: gc.GameServiceMessage.TResult): string[];
+    getDiceSymbolTextList(result: gc.GameServiceMessage.TResult): string[];
 }
 
 export class SettlementResultService implements ISettlementResultService {
@@ -42,12 +44,61 @@ export class SettlementResultService implements ISettlementResultService {
             .map(([key]) => key as FishPrawnCrabChoices);
     }
 
-    getWinningTextList(settlementResult: gc.GameServiceMessage.TSettlementResult): string {
-        if (!settlementResult) return "";
+    getWinningTextList(settlementResult: gc.GameServiceMessage.TSettlementResult): string[] {
+        if (!settlementResult) return [];
 
         const winningSymbols = this.getWinningChoices(settlementResult)
             .map(choice => gc.Translator.translate(`FishPrawnCrab.glossary_${choice}`));
+        return winningSymbols;
+    }
 
-        return winningSymbols.join(', ');
+    getWinningTextListByResult(result: gc.GameServiceMessage.TResult): string[] {
+        if (!result || typeof result !== 'object' || Object.keys(result).length === 0) return [];
+
+        const diceResult = result as Record<string, number>;
+
+        // Get all dice values in order
+        const diceValues = [
+            diceResult.dice1,
+            diceResult.dice2,
+            diceResult.dice3
+        ];
+
+        // Map each dice value to its translated symbol name
+        return diceValues
+            .map(value => this.diceValueToSymbolName(value))
+            .filter(Boolean) // Remove null values
+            .map(choice => gc.Translator.translate(`FishPrawnCrab.glossary_${choice}`));
+    }
+
+    private diceValueToSymbolName(value: number): FishPrawnCrabChoices | null {
+        switch (value) {
+            case 0: return FishPrawnCrabChoices.stag;
+            case 1: return FishPrawnCrabChoices.gourd;
+            case 2: return FishPrawnCrabChoices.rooster;
+            case 3: return FishPrawnCrabChoices.fish;
+            case 4: return FishPrawnCrabChoices.crab;
+            case 5: return FishPrawnCrabChoices.prawn;
+            default: return null;
+        }
+    }
+
+    getDiceSymbolTextList(result: gc.GameServiceMessage.TResult): string[] {
+        if (!result || typeof result !== 'object' || Object.keys(result).length === 0) return [];
+
+        const diceResult = result as Record<string, number>;
+
+        // Get all dice values in order
+        const diceValues = [
+            diceResult.dice1,
+            diceResult.dice2,
+            diceResult.dice3
+        ];
+
+        // Map each dice value to its translated symbol name
+        return diceValues
+            .map(value => this.diceValueToSymbolName(value))
+            .filter(Boolean) // Remove null values
+            .map(choice => gc.Translator.translate(`FishPrawnCrab.glossary_${choice}`));
     }
 } 

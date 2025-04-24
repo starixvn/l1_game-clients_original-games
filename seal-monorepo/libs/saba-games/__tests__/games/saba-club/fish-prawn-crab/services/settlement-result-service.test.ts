@@ -117,7 +117,7 @@ describe('SettlementResultService', () => {
             const result = service.getWinningTextList(nullInput);
 
             // Assert
-            expect(result).toBe('');
+            expect(result).toEqual([]);
         });
 
         test('should return translated comma-separated list of winners', () => {
@@ -133,7 +133,168 @@ describe('SettlementResultService', () => {
             // Assert
             expect(gc.Translator.translate).toHaveBeenCalledWith(`FishPrawnCrab.glossary_${FishPrawnCrabChoices.fish}`);
             expect(gc.Translator.translate).toHaveBeenCalledWith(`FishPrawnCrab.glossary_${FishPrawnCrabChoices.crab}`);
-            expect(result).toBe('translated_FishPrawnCrab.glossary_fish, translated_FishPrawnCrab.glossary_crab');
+            expect(result).toEqual([
+                'translated_FishPrawnCrab.glossary_fish',
+                'translated_FishPrawnCrab.glossary_crab'
+            ]);
+        });
+    });
+
+    describe('getWinningTextListByResult', () => {
+        test('should return empty array when input is null', () => {
+            // Arrange
+            const nullInput = null as unknown as gc.GameServiceMessage.TResult;
+
+            // Act
+            const result = service.getWinningTextListByResult(nullInput);
+
+            // Assert
+            expect(result).toEqual([]);
+        });
+
+        test('should return empty array when input is not an object', () => {
+            // Arrange
+            const nonObjectInput = 42 as gc.GameServiceMessage.TResult;
+
+            // Act
+            const result = service.getWinningTextListByResult(nonObjectInput);
+
+            // Assert
+            expect(result).toEqual([]);
+        });
+
+        test('should return empty array when input object is empty', () => {
+            // Arrange
+            const emptyInput = {} as gc.GameServiceMessage.TResult;
+
+            // Act
+            const result = service.getWinningTextListByResult(emptyInput);
+
+            // Assert
+            expect(result).toEqual([]);
+        });
+
+        test('should return translated symbols for all three dice in order', () => {
+            // Arrange
+            const mockResult = {
+                dice1: 3, // fish (value 3 in resultMapper)
+                dice2: 4, // crab (value 4 in resultMapper)
+                dice3: 5  // prawn (value 5 in resultMapper)
+            } as gc.GameServiceMessage.TResult;
+
+            // Act
+            const result = service.getWinningTextListByResult(mockResult);
+
+            // Assert
+            expect(gc.Translator.translate).toHaveBeenCalledWith('FishPrawnCrab.glossary_fish');
+            expect(gc.Translator.translate).toHaveBeenCalledWith('FishPrawnCrab.glossary_crab');
+            expect(gc.Translator.translate).toHaveBeenCalledWith('FishPrawnCrab.glossary_prawn');
+            expect(result).toHaveLength(3);
+            expect(result).toEqual([
+                'translated_FishPrawnCrab.glossary_fish',
+                'translated_FishPrawnCrab.glossary_crab',
+                'translated_FishPrawnCrab.glossary_prawn'
+            ]);
+        });
+
+        test('should skip invalid dice values', () => {
+            // Arrange
+            const mockResult = {
+                dice1: 3,    // fish (value 3 in resultMapper)
+                dice2: 999,  // invalid
+                dice3: 5     // prawn (value 5 in resultMapper)
+            } as gc.GameServiceMessage.TResult;
+
+            // Act
+            const result = service.getWinningTextListByResult(mockResult);
+
+            // Assert
+            expect(gc.Translator.translate).toHaveBeenCalledWith('FishPrawnCrab.glossary_fish');
+            expect(gc.Translator.translate).toHaveBeenCalledWith('FishPrawnCrab.glossary_prawn');
+            expect(result).toHaveLength(2);
+            expect(result).toEqual([
+                'translated_FishPrawnCrab.glossary_fish',
+                'translated_FishPrawnCrab.glossary_prawn'
+            ]);
+        });
+    });
+
+    describe('getDiceSymbolTextList', () => {
+        test('should return empty array when input is null', () => {
+            // Arrange
+            const nullInput = null as unknown as gc.GameServiceMessage.TResult;
+
+            // Act
+            const result = service.getDiceSymbolTextList(nullInput);
+
+            // Assert
+            expect(result).toEqual([]);
+        });
+
+        test('should return empty array when input is not an object', () => {
+            // Arrange
+            const nonObjectInput = 42 as gc.GameServiceMessage.TResult;
+
+            // Act
+            const result = service.getDiceSymbolTextList(nonObjectInput);
+
+            // Assert
+            expect(result).toEqual([]);
+        });
+
+        test('should return empty array when input object is empty', () => {
+            // Arrange
+            const emptyInput = {} as gc.GameServiceMessage.TResult;
+
+            // Act
+            const result = service.getDiceSymbolTextList(emptyInput);
+
+            // Assert
+            expect(result).toEqual([]);
+        });
+
+        test('should return translated symbol names for all three dice', () => {
+            // Arrange
+            const mockResult = {
+                dice1: 1, // fish
+                dice2: 2, // crab
+                dice3: 3  // prawn
+            } as gc.GameServiceMessage.TResult;
+
+            // Act
+            const result = service.getDiceSymbolTextList(mockResult);
+
+            // Assert
+            expect(gc.Translator.translate).toHaveBeenCalledWith('FishPrawnCrab.glossary_fish');
+            expect(gc.Translator.translate).toHaveBeenCalledWith('FishPrawnCrab.glossary_crab');
+            expect(gc.Translator.translate).toHaveBeenCalledWith('FishPrawnCrab.glossary_prawn');
+            expect(result).toHaveLength(3);
+            expect(result).toEqual([
+                'translated_FishPrawnCrab.glossary_fish',
+                'translated_FishPrawnCrab.glossary_crab',
+                'translated_FishPrawnCrab.glossary_prawn'
+            ]);
+        });
+
+        test('should skip invalid dice values', () => {
+            // Arrange
+            const mockResult = {
+                dice1: 1,    // fish
+                dice2: 999,  // invalid
+                dice3: 3     // prawn
+            } as gc.GameServiceMessage.TResult;
+
+            // Act
+            const result = service.getDiceSymbolTextList(mockResult);
+
+            // Assert
+            expect(gc.Translator.translate).toHaveBeenCalledWith('FishPrawnCrab.glossary_fish');
+            expect(gc.Translator.translate).toHaveBeenCalledWith('FishPrawnCrab.glossary_prawn');
+            expect(result).toHaveLength(2);
+            expect(result).toEqual([
+                'translated_FishPrawnCrab.glossary_fish',
+                'translated_FishPrawnCrab.glossary_prawn'
+            ]);
         });
     });
 }); 
