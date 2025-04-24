@@ -7,12 +7,15 @@ export const VIP_SE_DIE_GAME_ID = 22;
 export const UNBALANCED_BIG_SMALL_4_GAME_ID = 55;
 export const BACCARAT_GAME_ID = 10;
 export const FISH_PRAWN_CRAB_GAME_ID = 3;
+export const COLOR_GAME_ID = 71;
 
 export const SE_DIE_GAME_NAMESPACE = 'SeDie';
 export const VIP_SE_DIE_GAME_NAMESPACE = 'VipSeDie';
 export const UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE = 'UnbalancedBigSmall4';
 export const BACCARAT_GAME_NAMESPACE = 'Baccarat';
 export const FISH_PRAWN_CRAB_GAME_NAMESPACE = 'FishPrawnCrab';
+export const COLOR_GAME_NAMESPACE = 'ColorGame';
+
 // SiteId
 // nova Vgaming , viva (SabaGames/SabaClub)
 export const NOVA88_SITE_ID = '4120';
