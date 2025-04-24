@@ -5,7 +5,8 @@ export const GameIds = {
     SeDie: 2,
     Baccarat: 10,
     VipSeDie: 22,
-    FishPrawnCrab: 3
+    FishPrawnCrab: 3,
+    ColorGame: 71
 };
 
 export const GameNames = {
@@ -13,7 +14,8 @@ export const GameNames = {
     SeDie: "SeDie",
     Baccarat: "Baccarat",
     VipSeDie: "VipSeDie",
-    FishPrawnCrab: "FishPrawnCrab"
+    FishPrawnCrab: "FishPrawnCrab",
+    ColorGame: "ColorGame"
 };
 
 export const Size = {

@@ -127,5 +127,29 @@
         "mainObserverNamespace": "UnbalancedBigSmall4",
         "order": 3,
         "isSocketGateway": true
+    },
+    "71": {
+        "id": 71,
+        "gameName": "ColorGame",
+        "name": "ColorGame",
+        "serviceName": "color-game",
+        "namespaces": ["ColorGame"],
+        "isVisible": true,
+        "durations": {
+            "wholeRound": 40,
+            "lockingBet": 3,
+            "placingBet": 30,
+            "generatingResult": 1,
+            "showingResult": 2,
+            "startRound": 0
+        },
+        "numberOfRoundHistory": 100,
+        "websocket": {
+            "proxyPath": "",
+            "route": "livepagegateway"
+        },
+        "mainObserverNamespace": "ColorGame",
+        "order": 7,
+        "isSocketGateway": true
     }
 }
