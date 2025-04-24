@@ -260,13 +260,13 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
         return (
             <div className={Styles['container-bets']} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
                 <div className={Styles['result-container']} style={{ display: 'flex', justifyContent: 'center', gap: '10px', margin: '10px 0' }}>
-                    <div className={`${Styles['result-item']} ${Styles['has-animation']}`} style={{ animation: `${Styles.popIn} 0.5s ease-out 0.3s forwards` }}>
+                    <div className={`${Styles['dice-empty']}`}>
                         <FishPrawnCrabDice symbol={FishPrawnCrabSymbol.EMPTY} size={Size.large} />
                     </div>
-                    <div className={`${Styles['result-item']} ${Styles['has-animation']}`} style={{ animation: `${Styles.popIn} 0.5s ease-out 0.3s forwards` }}>
+                    <div className={`${Styles['dice-empty']}`}>
                         <FishPrawnCrabDice symbol={FishPrawnCrabSymbol.EMPTY} size={Size.large} />
                     </div>
-                    <div className={`${Styles['result-item']} ${Styles['has-animation']}`} style={{ animation: `${Styles.popIn} 0.5s ease-out 0.3s forwards` }}>
+                    <div className={`${Styles['dice-empty']}`}>
                         <FishPrawnCrabDice symbol={FishPrawnCrabSymbol.EMPTY} size={Size.large} />
                     </div>
                 </div>
