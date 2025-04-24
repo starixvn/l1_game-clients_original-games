@@ -153,5 +153,29 @@
         "mainObserverNamespace": "ColorGame",
         "order": 7,
         "isSocketGateway": true
+    },
+    "80": {
+        "id": 80,
+        "gameName": "CoinToss",
+        "name": "CoinToss",
+        "serviceName": "coin-toss",
+        "namespaces": ["CoinToss"],
+        "isVisible": true,
+        "durations": {
+            "wholeRound": 29,
+            "lockingBet": 3,
+            "placingBet": 20,
+            "generatingResult": 1,
+            "showingResult": 3,
+            "startRound": 0
+        },
+        "numberOfRoundHistory": 100,
+        "websocket": {
+            "proxyPath": "",
+            "route": "livepagegateway"
+        },
+        "mainObserverNamespace": "CoinToss",
+        "order": 6,
+        "isSocketGateway": true
     }
 }
