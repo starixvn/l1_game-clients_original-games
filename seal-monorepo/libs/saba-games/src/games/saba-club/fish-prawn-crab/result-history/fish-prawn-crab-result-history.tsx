@@ -37,8 +37,6 @@ export class FishPrawnCrabResultHistory extends ObserverComponent<IFishPrawnCrab
     finishPlayAnimation(isFinishedPlayAnimation: boolean) {
         const now = new Date();
         const timeWithMs = `${now.toISOString().split('.')[0]}.${now.getMilliseconds().toString().padStart(3, '0')}`;
-        console.log(`[FishPrawnCrabRoundHistory] finishPlayAnimation: ${timeWithMs}`);
-        console.log(`[FishPrawnCrabRoundHistory] isFinishedPlayAnimation: ${isFinishedPlayAnimation}`);
         isFinishedPlayAnimation && this.setState({ rounds: [...this.state.fullRoundHistory] });
     }
 

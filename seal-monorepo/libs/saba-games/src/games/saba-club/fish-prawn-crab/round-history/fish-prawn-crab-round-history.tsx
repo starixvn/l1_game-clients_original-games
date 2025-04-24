@@ -50,7 +50,6 @@ export default class FishPrawnCrabRoundHistory extends ObserverComponent<IFishPr
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
-        console.log('[FishPrawnCrabRoundHistory] rounds length: ', this.state.rounds.length);
         this.setState({ fullRoundHistory: rounds });
         if (this.state.rounds.length === 0) {
             this.setState({ rounds: [emptyDefaultRoundItem, ...rounds.slice(0, MAX_DISPLAYED_ROUNDS)] });
@@ -68,8 +67,6 @@ export default class FishPrawnCrabRoundHistory extends ObserverComponent<IFishPr
     finishPlayAnimation(isFinishedPlayAnimation: boolean) {
         const now = new Date();
         const timeWithMs = `${now.toISOString().split('.')[0]}.${now.getMilliseconds().toString().padStart(3, '0')}`;
-        console.log(`[FishPrawnCrabRoundHistory] finishPlayAnimation: ${timeWithMs}`);
-        console.log(`[FishPrawnCrabRoundHistory] isFinishedPlayAnimation: ${isFinishedPlayAnimation}`);
         isFinishedPlayAnimation && this.setState({ rounds: [emptyDefaultRoundItem, ...this.state.fullRoundHistory.slice(0, MAX_DISPLAYED_ROUNDS)] });
     }
 

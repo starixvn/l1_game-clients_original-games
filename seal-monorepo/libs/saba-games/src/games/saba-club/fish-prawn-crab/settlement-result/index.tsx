@@ -50,14 +50,12 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
     protected handleFinishedShowResult() {
         const now = new Date();
         const timeWithMs = `${now.toISOString().split('.')[0]}.${now.getMilliseconds().toString().padStart(3, '0')}`;
-        console.log(`[FishPrawnCrabSettlementResult] handleFinishedShowResult: ${timeWithMs}`);
     }
 
-    @handle(Settlements.SettlementUIHandlers.FinishedPlayAnimation, (handler) => handler.handleFinishedPlayAnimation())
+    @handle(Settlements.SettlementUIHandlers.FinishedPlayAnimation, (handler) => handler.handle())
     protected handleFinishedPlayAnimation() {
         const now = new Date();
         const timeWithMs = `${now.toISOString().split('.')[0]}.${now.getMilliseconds().toString().padStart(3, '0')}`;
-        console.log(`[FishPrawnCrabSettlementResult] handleFinishedPlayAnimation: ${timeWithMs}`);
     }
 
     @render(RoundTimeStore, (store) => store.roundState)
@@ -211,7 +209,6 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
         });
 
         const handleAnimationComplete = () => {
-            console.log('[FishPrawnCrabSettlementResult]  handleAnimationComplete');
             this.setState({ isAnimationComplete: true });
             animationStateTransmitter.setAnimationComplete(true);
             this.handleFinishedShowResult();
@@ -232,8 +229,6 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
         if (isAnimationResult) {
             const now = new Date();
             const timeWithMs = `${now.toISOString().split('.')[0]}.${now.getMilliseconds().toString().padStart(3, '0')}`;
-            console.log(`Total dice animation time: ${totalAnimationTime}ms for ${resultSymbols.length} dice: ${timeWithMs}`);
-
         } else {
             this.setState({ isAnimationComplete: true });
             animationStateTransmitter.setAnimationComplete(true);
