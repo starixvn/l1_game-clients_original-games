@@ -14,9 +14,8 @@ export interface IFishPrawnCrabResultHistoryProps extends IPropsObserver {
 
 export interface IFishPrawnCrabResultHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
+    fullRoundHistory: gc.RoundHistories.RoundHistory[];
 }
-
-const numberOfResult = 100;
 
 export class FishPrawnCrabResultHistory extends ObserverComponent<IFishPrawnCrabResultHistoryProps, IFishPrawnCrabResultHistoryState> {
     private settlementService: ISettlementResultService;
@@ -27,21 +26,27 @@ export class FishPrawnCrabResultHistory extends ObserverComponent<IFishPrawnCrab
         this.state = {
             dispose: null,
             rounds: [],
+            fullRoundHistory: [],
         };
 
         this.settlementService = props.settlementService || new SettlementResultService();
         this.translationService = props.translationService || new TranslationService();
     }
 
+    @render(gc.Settlements.SettlementStore, (store) => store.isFinishedPlayAnimation)
+    finishPlayAnimation(isFinishedPlayAnimation: boolean) {
+        const now = new Date();
+        const timeWithMs = `${now.toISOString().split('.')[0]}.${now.getMilliseconds().toString().padStart(3, '0')}`;
+        console.log(`[FishPrawnCrabRoundHistory] finishPlayAnimation: ${timeWithMs}`);
+        console.log(`[FishPrawnCrabRoundHistory] isFinishedPlayAnimation: ${isFinishedPlayAnimation}`);
+        isFinishedPlayAnimation && this.setState({ rounds: [...this.state.fullRoundHistory] });
+    }
+
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
+        this.setState({ fullRoundHistory: rounds });
         if (this.state.rounds.length === 0) {
             this.setState({ rounds });
-        }
-        else {
-            setTimeout(() => {
-                this.setState({ rounds });
-            }, 1000);
         }
     }
 

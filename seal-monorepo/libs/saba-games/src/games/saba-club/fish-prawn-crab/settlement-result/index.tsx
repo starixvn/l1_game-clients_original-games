@@ -1,8 +1,9 @@
 import * as gc from "@sg/sg-game-client";
+import { Settlements } from '@sg/sg-game-client';
 import { RoundHistoryStore } from "@sg/sg-game-client/dist/game/round-histories";
 import { ROUND_STATE, RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds";
 import { SettlementStore } from "@sg/sg-game-client/dist/game/settlements";
-import { render } from "@sg/sg-observer";
+import { render, handle } from "@sg/sg-observer";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
 import { FishPrawnCrabResult } from "../type";
 import Styles from "./fish-prawn-crab-animations.module.scss";
@@ -43,6 +44,20 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
             isResultUpdated: false,
             isAnimationComplete: false,
         };
+    }
+
+    @handle(Settlements.SettlementUIHandlers.FinishedShowResult, (handler) => handler.handleFinishedShowResult())
+    protected handleFinishedShowResult() {
+        const now = new Date();
+        const timeWithMs = `${now.toISOString().split('.')[0]}.${now.getMilliseconds().toString().padStart(3, '0')}`;
+        console.log(`[FishPrawnCrabSettlementResult] handleFinishedShowResult: ${timeWithMs}`);
+    }
+
+    @handle(Settlements.SettlementUIHandlers.FinishedPlayAnimation, (handler) => handler.handleFinishedPlayAnimation())
+    protected handleFinishedPlayAnimation() {
+        const now = new Date();
+        const timeWithMs = `${now.toISOString().split('.')[0]}.${now.getMilliseconds().toString().padStart(3, '0')}`;
+        console.log(`[FishPrawnCrabSettlementResult] handleFinishedPlayAnimation: ${timeWithMs}`);
     }
 
     @render(RoundTimeStore, (store) => store.roundState)
@@ -196,8 +211,14 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
         });
 
         const handleAnimationComplete = () => {
+            console.log('[FishPrawnCrabSettlementResult]  handleAnimationComplete');
             this.setState({ isAnimationComplete: true });
             animationStateTransmitter.setAnimationComplete(true);
+            this.handleFinishedShowResult();
+
+            setTimeout(() => {
+                this.handleFinishedPlayAnimation();
+            }, 500);
         };
 
         // Calculate total animation time if isAnimationResult is true
@@ -209,8 +230,10 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
 
         // Log animation time for debugging
         if (isAnimationResult) {
+            const now = new Date();
+            const timeWithMs = `${now.toISOString().split('.')[0]}.${now.getMilliseconds().toString().padStart(3, '0')}`;
+            console.log(`Total dice animation time: ${totalAnimationTime}ms for ${resultSymbols.length} dice: ${timeWithMs}`);
 
-            console.log(`Total dice animation time: ${totalAnimationTime}ms for ${resultSymbols.length} dice`);
         } else {
             this.setState({ isAnimationComplete: true });
             animationStateTransmitter.setAnimationComplete(true);

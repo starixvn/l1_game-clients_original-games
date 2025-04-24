@@ -8,7 +8,6 @@ import EmptyDiceRow from "./empty-dice-row";
 import { MAX_DISPLAYED_ROUNDS } from "../constants/fish-prawn-crab-constants";
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
 import { blinkRoundItem, emptyRoundItem } from "../constants";
-import { animationStateTransmitter } from '../transmitters/animation-state.transmitter';
 
 const blinkDefaultRoundItem = {
     roundId: -1,
@@ -26,7 +25,6 @@ const emptyDefaultRoundItem = {
     date: new Date().toISOString(),
 } as gc.RoundHistories.RoundHistory;
 
-
 export interface IFishPrawnCrabRoundHistoryProps extends IPropsObserver {
     language: string;
 }
@@ -34,9 +32,7 @@ export interface IFishPrawnCrabRoundHistoryProps extends IPropsObserver {
 export interface IFishPrawnCrabRoundHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
     roundState: string;
-    isFinishedShowResult: boolean;
     hasBlink: boolean;
-    isAnimationComplete: boolean;
     fullRoundHistory: gc.RoundHistories.RoundHistory[];
 }
 
@@ -47,23 +43,17 @@ export default class FishPrawnCrabRoundHistory extends ObserverComponent<IFishPr
             dispose: null,
             rounds: [],
             roundState: '',
-            isFinishedShowResult: false,
             hasBlink: false,
-            isAnimationComplete: false,
             fullRoundHistory: [],
         };
     }
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
+        console.log('[FishPrawnCrabRoundHistory] rounds length: ', this.state.rounds.length);
         this.setState({ fullRoundHistory: rounds });
-        if (rounds.length > 0) {
+        if (this.state.rounds.length === 0) {
             this.setState({ rounds: [emptyDefaultRoundItem, ...rounds.slice(0, MAX_DISPLAYED_ROUNDS)] });
-        }
-        else {
-            // setTimeout(() => {
-            //     this.setState({ rounds: [emptyDefaultRoundItem, ...rounds.slice(0, MAX_DISPLAYED_ROUNDS)] });
-            // }, 1000);
         }
     }
 
@@ -73,25 +63,16 @@ export default class FishPrawnCrabRoundHistory extends ObserverComponent<IFishPr
         this.setState({ roundState, hasBlink });
     }
 
-    @render(gc.Settlements.SettlementStore, (store) => store.isFinishedShowResult)
-    finishShowResult(isFinishedShowResult: boolean) {
-        this.setState({ isFinishedShowResult });
+
+    @render(gc.Settlements.SettlementStore, (store) => store.isFinishedPlayAnimation)
+    finishPlayAnimation(isFinishedPlayAnimation: boolean) {
+        const now = new Date();
+        const timeWithMs = `${now.toISOString().split('.')[0]}.${now.getMilliseconds().toString().padStart(3, '0')}`;
+        console.log(`[FishPrawnCrabRoundHistory] finishPlayAnimation: ${timeWithMs}`);
+        console.log(`[FishPrawnCrabRoundHistory] isFinishedPlayAnimation: ${isFinishedPlayAnimation}`);
+        isFinishedPlayAnimation && this.setState({ rounds: [emptyDefaultRoundItem, ...this.state.fullRoundHistory.slice(0, MAX_DISPLAYED_ROUNDS)] });
     }
 
-    private handleAnimationComplete = (isComplete: boolean) => {
-        // this.setState({ isAnimationComplete: isComplete });
-        this.setState({ rounds: [emptyDefaultRoundItem, ...this.state.fullRoundHistory.slice(0, MAX_DISPLAYED_ROUNDS)] });
-    };
-
-    componentDidMount() {
-        super.componentDidMount?.();
-        animationStateTransmitter.onAnimationComplete(this.handleAnimationComplete);
-    }
-
-    componentWillUnmount() {
-        super.componentWillUnmount?.();
-        animationStateTransmitter.removeAnimationCompleteListener(this.handleAnimationComplete);
-    }
 
     componentDidUpdate(prevProps: Readonly<IFishPrawnCrabRoundHistoryProps>, prevState: Readonly<IFishPrawnCrabRoundHistoryState>, snapshot?: any): void {
         if (this.state.roundState !== prevState.roundState) {
@@ -102,14 +83,10 @@ export default class FishPrawnCrabRoundHistory extends ObserverComponent<IFishPr
                 this.setState({ rounds: [blinkDefaultRoundItem, ...this.state.fullRoundHistory.slice(0, MAX_DISPLAYED_ROUNDS)] });
             }
         }
-
-        // if (this.state.isAnimationComplete && this.state.isAnimationComplete !== prevState.isAnimationComplete) {
-        //     this.setState({ rounds: [emptyDefaultRoundItem, ...this.state.fullRoundHistory.slice(0, MAX_DISPLAYED_ROUNDS)] });
-        // }
     }
 
     render(): React.ReactElement {
-        const { rounds, isFinishedShowResult, hasBlink } = this.state;
+        const { rounds, hasBlink } = this.state;
         if (!rounds || rounds.length === 0) {
             return <React.Fragment />;
         }
@@ -124,7 +101,7 @@ export default class FishPrawnCrabRoundHistory extends ObserverComponent<IFishPr
                         roundHistory.roundId === blinkDefaultRoundItem.roundId ?
                             <EmptyDiceRow
                                 key={MAX_DISPLAYED_ROUNDS}
-                                isFinishedShowResult={isFinishedShowResult}
+                                isFinishedShowResult={false}
                                 blinking={hasBlink}
                             />
                             :
@@ -134,7 +111,7 @@ export default class FishPrawnCrabRoundHistory extends ObserverComponent<IFishPr
                                 showArrow={index < MAX_DISPLAYED_ROUNDS}
                             />
                     ))}
-                    {/* {showEmptyDiceRow && <EmptyDiceRow isFinishedShowResult={isFinishedShowResult} blinking={hasBlink} />} */}
+
                 </div>
             </div>
         );

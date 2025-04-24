@@ -1,12 +1,10 @@
 import * as gc from '@sg/sg-game-client';
-import { Rounds } from '@sg/sg-game-client';
 import { render } from '@sg/sg-observer';
 import classNames from 'classnames';
 import BettingBlock from '../../../../../_shared/components/bet-option/betting-block';
 import Styles from '../../../../../_shared/components/bet-option/bet-option.module.scss';
 import { GameBettingOptionsContext, GameBettingZoneContext } from '../../../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
 import BetPanelComponent from '../../../../../_shared/components/bet-panel/bet-panel';
-import { animationStateTransmitter } from '../../transmitters/animation-state.transmitter';
 import { BettingBlockProps, IBettingBlockState } from '../../../../../_shared/components/bet-option/betting-block';
 
 interface IFishPrawnCrabBettingBlockState extends IBettingBlockState {
@@ -31,32 +29,18 @@ class FishPrawnCrabBettingBlock extends BettingBlock {
             };
       }
 
-      @render(gc.Rounds.RoundTimeStore, (store) => store.roundState, { fireImmediately: false })
-      renderCountDownTimerState(roundState: string) {
-            super.renderCountDownTimerState(roundState);
-            if (roundState === Rounds.ROUND_STATE.STARTING_ROUND) {
-                  this.setState((prevState) => ({
-                        ...prevState,
-                        isAnimationComplete: false
-                  }));
-            }
-      }
-      private handleAnimationComplete = (isComplete: boolean) => {
+      @render(gc.Settlements.SettlementStore, (store) => store.isFinishedPlayAnimation)
+      finishPlayAnimation(isFinishedPlayAnimation: boolean) {
+            const now = new Date();
+            const timeWithMs = `${now.toISOString().split('.')[0]}.${now.getMilliseconds().toString().padStart(3, '0')}`;
+            console.log(`[FishPrawnCrabRoundHistory] finishPlayAnimation: ${timeWithMs}`);
+            console.log(`[FishPrawnCrabRoundHistory] isFinishedPlayAnimation: ${isFinishedPlayAnimation}`);
             this.setState((prevState) => ({
                   ...prevState,
-                  isAnimationComplete: isComplete
+                  isAnimationComplete: isFinishedPlayAnimation
             }));
-      };
-
-      componentDidMount() {
-            super.componentDidMount?.();
-            animationStateTransmitter.onAnimationComplete(this.handleAnimationComplete);
       }
 
-      componentWillUnmount() {
-            super.componentWillUnmount?.();
-            animationStateTransmitter.removeAnimationCompleteListener(this.handleAnimationComplete);
-      }
 
       render() {
             const { children, namespace, gameName, settlementResult, betChoice } = this.props;
