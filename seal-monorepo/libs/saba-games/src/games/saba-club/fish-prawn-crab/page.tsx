@@ -19,6 +19,7 @@ interface IFishPrawnCrabPageState extends IGatewayGameBaseState {
     roundState: string;
     showBetPanel: boolean;
     gameId: number;
+    isFinishedPlayAnimation: boolean;
 }
 
 interface IFishPrawnCrabPageProps extends GameBaseProps {
@@ -43,6 +44,7 @@ export default class FishPrawnCrabPage extends GatewayGameBase<IFishPrawnCrabPag
         this.state = {
             ...this.state,
             gameId: setting.id,
+            isFinishedPlayAnimation: false,
         };
     }
 
@@ -80,6 +82,15 @@ export default class FishPrawnCrabPage extends GatewayGameBase<IFishPrawnCrabPag
                 />
             </GameBettingOptionsContext.Provider>
         );
+    }
+
+    @render(gc.Settlements.SettlementStore, (store) => store.isFinishedPlayAnimation)
+    finishPlayAnimation(isFinishedPlayAnimation: boolean) {
+        this.setState({ isFinishedPlayAnimation });
+    }
+
+    override renderAnimationBalance() {
+        return this.state.isFinishedPlayAnimation ? super.renderAnimationBalance() : <></>;
     }
 
     renderResultBlock() {
