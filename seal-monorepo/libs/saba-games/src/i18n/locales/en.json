@@ -284,5 +284,21 @@
         "double": "Double",
         "triple": "Triple",
         "symbol": "Symbol"
+    },
+    "ColorGame": {
+        "game_vendor": "SABA.games",
+        "game_name": "Color Game",
+        "game_tab_name": "Color Game",
+        "bet_choices_type": "Symbol",
+        "choices_type": "Symbol - Double: {odds_double} Triple: {odds_triple}",
+        "glossary_yellow": "Yellow",
+        "glossary_red": "Red",
+        "glossary_pink": "Pink",
+        "glossary_white": "White",
+        "glossary_blue": "Blue",
+        "glossary_green": "Green",
+        "single": "Single",
+        "double": "Double",
+        "triple": "Triple"
     }
 }

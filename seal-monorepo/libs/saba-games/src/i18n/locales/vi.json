@@ -284,5 +284,21 @@
         "double": "Đôi",
         "triple": "Bộ Ba",
         "symbol": "Biểu Tượng"
+    },
+    "ColorGame": {
+        "game_vendor": "SABA.games",
+        "game_name": "Nước Đá",
+        "game_tab_name": "Nước Đá",
+        "bet_choices_type": "Biểu Tượng",
+        "choices_type": "Biểu Tượng - Đôi: {odds_double} Bộ Ba: {odds_triple}",
+        "glossary_yellow": "Vàng",
+        "glossary_red": "Đỏ",
+        "glossary_pink": "Hồng",
+        "glossary_white": "Trắng",
+        "glossary_blue": "Xanh",
+        "glossary_green": "Xanh Lá",
+        "single": "Đơn",
+        "double": "Đôi",
+        "triple": "Bộ Ba"
     }
 }

@@ -18,15 +18,15 @@ export enum ColorGameChoices {
 export type ColorGameSymbolType = keyof typeof ColorGameChoices;
 
 export const topChoices = [
-    ColorGameChoices.green,
+    ColorGameChoices.yellow,
     ColorGameChoices.white,
     ColorGameChoices.pink
 ];
 
 export const bottomChoices = [
-    ColorGameChoices.yellow,
+    ColorGameChoices.blue,
     ColorGameChoices.red,
-    ColorGameChoices.blue
+    ColorGameChoices.green
 ];
 
 export type ColorGameResult = {

@@ -284,5 +284,21 @@
         "double": "สองเท่า",
         "triple": "สามเท่า",
         "symbol": "เครื่องหมาย"
+    },
+    "ColorGame": {
+        "game_vendor": "SABA.games",
+        "game_name": "น้ำเต้าปูปลา",
+        "game_tab_name": "น้ำเต้าปูปลา",
+        "bet_choices_type": "เครื่องหมาย",
+        "choices_type": "เครื่องหมาย - สองเท่า: {odds_double} สามเท่า: {odds_triple}",
+        "glossary_yellow": "เหี้ยว",
+        "glossary_red": "สีแดง",
+        "glossary_pink": "สีชมพู",
+        "glossary_white": "สีขาว",
+        "glossary_blue": "สีน้ำเงิน",
+        "glossary_green": "สีเขียว",
+        "single": "เดี่ยว",
+        "double": "สองเท่า",
+        "triple": "สามเท่า"
     }
 }
