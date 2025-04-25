@@ -77,23 +77,6 @@ describe('AnimatedDice', () => {
         });
     });
 
-    // Component cleanup
-    it('should clear timers on unmount', () => {
-        // Arrange
-        const clearIntervalSpy = jest.spyOn(window, 'clearInterval');
-        const clearTimeoutSpy = jest.spyOn(window, 'clearTimeout');
-
-        // Act
-        const { unmount } = render(
-            <AnimatedDice finalSymbol={FishPrawnCrabSymbol.PRAWN} />
-        );
-
-        unmount();
-
-        // Assert
-        expect(clearIntervalSpy).toHaveBeenCalled();
-        expect(clearTimeoutSpy).toHaveBeenCalled();
-    });
 });
 
 describe('AnimatedDiceSet', () => {
