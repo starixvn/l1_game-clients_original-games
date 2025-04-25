@@ -45,12 +45,12 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
 
     @handle(Settlements.SettlementUIHandlers.FinishedShowResult, (handler) => handler.handleFinishedShowResult())
     protected handleFinishedShowResult() {
-        // Removed unused timestamp code
+        // Placeholder for handling finished show result
     }
 
     @handle(Settlements.SettlementUIHandlers.FinishedPlayAnimation, (handler) => handler.handle())
     protected handleFinishedPlayAnimation() {
-        // Removed unused timestamp code
+        // Placeholder for handling finished animation
     }
 
     @render(RoundTimeStore, (store) => store.roundState)
@@ -172,10 +172,7 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
         }
 
         const stringSymbol = symbolToStringMap[symbol as number];
-
-        const isWinning = stringSymbol && this.state.winningSymbols.includes(stringSymbol);
-
-        return isWinning;
+        return stringSymbol && this.state.winningSymbols.includes(stringSymbol);
     };
 
     renderIcons = (result: gc.GameServiceMessage.TResult) => {
@@ -194,18 +191,16 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
             }, 500);
         };
 
-        // Calculate animation parameters
-        const animationDuration = 3000; // ms
-        const staggerDelay = 150; // ms
+        const animationDuration = 3000;
+        const staggerDelay = 150;
 
-        // Removed unused timestamp logging
         if (!isAnimationResult) {
             this.setState({ isAnimationComplete: true });
         }
 
         return (
-            <div className={`${Styles['container-bets']} ${isAnimationResult ? Styles['has-animation'] : ''}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
-                <div className={Styles['result-container']} style={{ display: 'flex', justifyContent: 'center', gap: '10px', margin: '10px 0', position: 'relative' }}>
+            <div className={`${Styles['container-bets']} ${isAnimationResult ? Styles['has-animation'] : ''}`}>
+                <div className={Styles['result-container']}>
                     {isAnimationResult ? (
                         <AnimatedDiceSet
                             finalSymbols={resultSymbols}
@@ -219,7 +214,7 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
                             const symbol = convertValueToSymbol(value);
                             const isWinning = this.isWinningSymbol(symbol);
                             return (
-                                <div key={index} className={`${Styles['result-item']} ${isWinning ? Styles['winning-symbol'] : ''}`} style={{ transition: 'all 0.3s ease' }}>
+                                <div key={index} className={`${Styles['result-item']} ${isWinning ? Styles['winning-symbol'] : ''}`}>
                                     <FishPrawnCrabDice
                                         symbol={symbol}
                                         size={Size.large}
@@ -236,15 +231,15 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
 
     renderNoResultIcons = (): JSX.Element => {
         return (
-            <div className={Styles['container-bets']} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
-                <div className={Styles['result-container']} style={{ display: 'flex', justifyContent: 'center', gap: '10px', margin: '10px 0' }}>
-                    <div className={`${Styles['dice-empty']}`}>
+            <div className={Styles['container-bets']}>
+                <div className={Styles['result-container']}>
+                    <div className={Styles['dice-empty']}>
                         <FishPrawnCrabDice symbol={FishPrawnCrabSymbol.EMPTY} size={Size.large} />
                     </div>
-                    <div className={`${Styles['dice-empty']}`}>
+                    <div className={Styles['dice-empty']}>
                         <FishPrawnCrabDice symbol={FishPrawnCrabSymbol.EMPTY} size={Size.large} />
                     </div>
-                    <div className={`${Styles['dice-empty']}`}>
+                    <div className={Styles['dice-empty']}>
                         <FishPrawnCrabDice symbol={FishPrawnCrabSymbol.EMPTY} size={Size.large} />
                     </div>
                 </div>
@@ -260,17 +255,9 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
         const { result, isResultUpdated } = this.state;
 
         if (!isResultUpdated || isEmpty(result as object)) {
-            return (
-                <div className={Styles.settlementContainer}>
-                    {this.renderNoResultIcons()}
-                </div>
-            );
+            return this.renderNoResultIcons();
         }
 
-        return (
-            <div className={Styles.settlementContainer}>
-                {this.renderIcons(result)}
-            </div>
-        );
+        return this.renderIcons(result);
     }
 } 

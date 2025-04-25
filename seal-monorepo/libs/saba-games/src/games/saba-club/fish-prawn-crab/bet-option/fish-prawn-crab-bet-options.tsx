@@ -50,8 +50,8 @@ export default class FishPrawnCrabBetOptions extends BetOptions {
                 settlementResult={settlementResult}
                 onBet={this.props.onBet}
             >
-                <div className={`${Styles['container-bets']} ${Styles['padding-bet']}`}>
-                    <FishPrawnCrabDice symbol={choiceToSymbolMap[betChoice]} size={Size.medium} />
+                <div className={`${Styles['container-bets']} ${Styles['padding-bet']}`} >
+                    <FishPrawnCrabDice symbol={choiceToSymbolMap[betChoice]} size={Size.small} />
                     <OddsComponent value={odd} fractional={false} isBoostedChoice={isBoostedChoice} />
                 </div>
             </FishPrawnCrabBettingBlock>

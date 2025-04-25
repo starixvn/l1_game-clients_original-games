@@ -22,7 +22,7 @@ export const ResultDisplay: React.FC<ResultDisplayProps> = ({
     }
 
     const diceSymbols = settlementService.getWinningTextListByResult(result);
-
     const resultText = diceSymbols.join(' - ');
+
     return <WinnerDisplay resultText={resultText} className={className || Styles['fish-prawn-crab-result']} />;
 }; 
