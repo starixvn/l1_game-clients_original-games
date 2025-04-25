@@ -20,7 +20,6 @@ export interface IFishPrawnCrabSettlementResultState extends IStateObserver {
     result: gc.GameServiceMessage.TResult;
     roundState: string;
     isAnimationResult: boolean;
-    win: number;
     isFinishShowResult: boolean;
     settlementResult: gc.GameServiceMessage.TSettlementResult;
     winningSymbols: string[];
@@ -36,7 +35,6 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
             result: DEFAULT_RESULT,
             roundState: '',
             isAnimationResult: false,
-            win: 0,
             isFinishShowResult: false,
             settlementResult: {},
             winningSymbols: [],
@@ -47,14 +45,12 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
 
     @handle(Settlements.SettlementUIHandlers.FinishedShowResult, (handler) => handler.handleFinishedShowResult())
     protected handleFinishedShowResult() {
-        const now = new Date();
-        const timeWithMs = `${now.toISOString().split('.')[0]}.${now.getMilliseconds().toString().padStart(3, '0')}`;
+        // Removed unused timestamp code
     }
 
     @handle(Settlements.SettlementUIHandlers.FinishedPlayAnimation, (handler) => handler.handle())
     protected handleFinishedPlayAnimation() {
-        const now = new Date();
-        const timeWithMs = `${now.toISOString().split('.')[0]}.${now.getMilliseconds().toString().padStart(3, '0')}`;
+        // Removed unused timestamp code
     }
 
     @render(RoundTimeStore, (store) => store.roundState)
@@ -157,13 +153,6 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
         this.setState({ isFinishShowResult: isFinishedShowResult });
     }
 
-    @render(gc.Settlements.SettlementStatusStore, (store) => store.settlementStatus, {
-        fireImmediately: false,
-    })
-    assignStatus(settlementStatus: any) {
-        this.setState({ win: settlementStatus.bet });
-    }
-
     renderWinnerDisplay = () => {
         const { settlementResult, result, isAnimationComplete } = this.state;
 
@@ -205,23 +194,17 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
             }, 500);
         };
 
-        // Calculate total animation time if isAnimationResult is true
+        // Calculate animation parameters
         const animationDuration = 3000; // ms
         const staggerDelay = 150; // ms
-        const totalAnimationTime = isAnimationResult
-            ? animationDuration + (staggerDelay * (resultSymbols.length - 1))
-            : 0;
 
-        // Log animation time for debugging
-        if (isAnimationResult) {
-            const now = new Date();
-            const timeWithMs = `${now.toISOString().split('.')[0]}.${now.getMilliseconds().toString().padStart(3, '0')}`;
-        } else {
+        // Removed unused timestamp logging
+        if (!isAnimationResult) {
             this.setState({ isAnimationComplete: true });
         }
 
         return (
-            <div className={`${Styles['container-bets']} ${Styles['has-animation']} ${isAnimationResult ? Styles['has-animation'] : ''}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
+            <div className={`${Styles['container-bets']} ${isAnimationResult ? Styles['has-animation'] : ''}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
                 <div className={Styles['result-container']} style={{ display: 'flex', justifyContent: 'center', gap: '10px', margin: '10px 0', position: 'relative' }}>
                     {isAnimationResult ? (
                         <AnimatedDiceSet

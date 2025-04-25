@@ -133,7 +133,7 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
         return () => {
             clearTimers();
         };
-    }, [finalSymbol, animationDuration]); // Re-run if these props change
+    }, [finalSymbol, animationDuration, delayStart]); // Added delayStart as a dependency
 
     return (
         <div style={{
@@ -170,7 +170,7 @@ export const AnimatedDiceSet: React.FC<AnimatedDiceSetProps> = ({
         if (completedAnimations === finalSymbols.length && onAllAnimationsComplete) {
             onAllAnimationsComplete();
         }
-    }, [completedAnimations, finalSymbols.length]);
+    }, [completedAnimations, finalSymbols.length, onAllAnimationsComplete]);
 
     const handleAnimationComplete = () => {
         setCompletedAnimations(prev => prev + 1);

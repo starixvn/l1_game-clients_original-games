@@ -65,7 +65,7 @@ const FishPrawnCrabDice: React.FC<IFishPrawnCrabDiceProps> = ({
     const diceImageUrl = diceImages[symbol];
     return (
         <img
-            className={`${styles[`dice-${size}`]} `}
+            className={styles[`dice-${size}`]}
             src={diceImageUrl}
             alt={`fish-prawn-crab-${FishPrawnCrabSymbol[symbol]?.toLowerCase() || 'empty'}`}
         />
