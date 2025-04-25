@@ -1,6 +1,7 @@
 import emptyImage from "../../../assets/coin/empty.png"
 import headImage from "../../../assets/coin/head.png"
 import tailImage from "../../../assets/coin/tail.png"
+import styles from "./coin.module.scss"
 
 export enum CoinSymbol {
   EMPTY = -1,
@@ -21,7 +22,7 @@ interface ICoinProps {
 const Coin: React.FC<ICoinProps> = ({ coinType }) => {
   const coinImageUrl = coinImages[coinType];
 
-  return <img src={coinImageUrl} alt={`coin-${coinType}`} />
+  return <img className={styles.container} src={coinImageUrl} alt={`coin-${coinType}`} />
 }
 
 export default Coin;

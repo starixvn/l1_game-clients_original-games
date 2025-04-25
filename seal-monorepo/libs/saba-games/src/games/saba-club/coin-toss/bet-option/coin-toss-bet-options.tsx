@@ -1,37 +1,14 @@
-import { CoinTossSymbolType, CoinTossOddsType, coinChoices } from '../type';
-import styles from './coin-toss-bet-options.module.scss';
+import { CoinTossOddsType, ChoiceCoinTossIconMapper, CoinTossChoices } from '../type';
+import styles from '../coin-toss.module.scss';
+import coinTossStyles from './coin-toss-bet-options.module.scss'
 import * as gc from '@sg/sg-game-client';
 import BetOptions, { IBetOptionsState } from '../../../../_shared/components/bet-option';
 import OddsComponent from '../../../../_shared/components/bet-option/odd-component';
 import OwnBet from '../../../../_shared/components/bet-option/own-bet';
 import TotalBet from '../../../../_shared/components/bet-option/total-bet';
-import { ChoiceCoinTossIconMapper } from '../type';
 import Coin from '../../../../_shared/components/coin';
-// import CoinTossBettingBlock from './component/coin-toss-betting-block';
 
-const symbols: CoinTossSymbolType[] = ['head', 'tail'];
-
-export function BetOption() {
-    return (
-        <div className={styles.betOption}>
-            <div className={styles.title}>Place Your Bets</div>
-            <div className={styles.symbolsGrid}>
-                {symbols.map((symbol) => (
-                    <div key={symbol} className={styles.symbolCard}>
-                        <div className={styles.symbolIcon}>{symbol}</div>
-                        <div className={styles.betInput}>
-                            <input type="number" placeholder="0" min="0" />
-                        </div>
-                    </div>
-                ))}
-            </div>
-            <div className={styles.actions}>
-                <button className={styles.clearButton}>Clear</button>
-                <button className={styles.confirmButton}>Confirm</button>
-            </div>
-        </div>
-    );
-}
+import CoinTossBettingBlock from './component/coin-toss-betting-block';
 
 export default class CoinTossBetOptions extends BetOptions {
 
@@ -39,20 +16,21 @@ export default class CoinTossBetOptions extends BetOptions {
         const { settlementResult } = this.state;
         
         return (
-            <div>CoinTossBetOptions</div>
-            // <CoinTossBettingBlock
-            //     odd={odd}
-            //     betChoice={betChoice}
-            //     gameName={this.props.gameName}
-            //     namespace={this.props.namespace}
-            //     settlementResult={settlementResult}
-            //     onBet={this.props.onBet}
-            // >
-            //     <div className={`${Styles['container-bets']} ${Styles['padding-bet']}`}>
-            //         <Coin coinType={ChoiceCoinTossIconMapper[betChoice]} />
-            //         <OddsComponent value={odd} fractional={false} isBoostedChoice={isBoostedChoice} />
-            //     </div>
-            // </CoinTossBettingBlock>
+            <CoinTossBettingBlock
+                odd={odd}
+                betChoice={betChoice}
+                gameName={this.props.gameName}
+                namespace={this.props.namespace}
+                settlementResult={settlementResult}
+                onBet={this.props.onBet}
+            >
+                <div className={`${styles['container-bets']} ${coinTossStyles['padding-bet']}`}>
+                    <div className={styles['main-option']}>
+                        <Coin coinType={ChoiceCoinTossIconMapper[betChoice]} />
+                    </div>
+                    <OddsComponent value={odd} fractional={false} isBoostedChoice={isBoostedChoice} />
+                </div>
+            </CoinTossBettingBlock>
         );
     }
 
@@ -76,26 +54,32 @@ export default class CoinTossBetOptions extends BetOptions {
         const odds = roundOdds?.odds || {};
         const boostedChoices = boostedOdds ? boostedOdds.boostedChoices : roundOdds?.boostedChoices;
         const fractional = roundOdds?.fractional;
-
+        
         const t = (key) => gc.Translator.translate(key, { languageId: gc.Translator.getCurrentLanguageId() });
 
+        const headChoice = CoinTossChoices.head;
+        const tailChoice = CoinTossChoices.tail;
         return (
-            <div className={styles['bet-options-wrapper']}>
-                <div className={styles['bet-options-container']}>
-                    {coinChoices.map((choice) => {
-                        const odd = odds?.[CoinTossOddsType.single] || 0;
-                        return (
-                            <div className={`${styles['bets-bg']}`} key={choice}>
-                                {this.renderBetOptions(
-                                    choice,
-                                    odd,
-                                    fractional,
-                                    '',
-                                    this.isBoostedChoice(choice, boostedChoices)
-                                )}
-                            </div>
-                        );
-                    })}
+            <div className={coinTossStyles['bet-options-wrapper']}>
+                <div className={coinTossStyles['bet-options-container']}>
+                    <div className={`${coinTossStyles['bets-bg']}`} key={headChoice}>
+                        {this.renderBetOptions(
+                            headChoice,
+                            odds?.[CoinTossOddsType.head] || 0,
+                            fractional,
+                            '',
+                            this.isBoostedChoice(headChoice, boostedChoices)
+                        )}
+                    </div>
+                    <div className={`${coinTossStyles['bets-bg']}`} key={tailChoice}>
+                        {this.renderBetOptions(
+                            tailChoice,
+                            odds?.[CoinTossOddsType.tail] || 0,
+                            fractional,
+                            '',
+                            this.isBoostedChoice(tailChoice, boostedChoices)
+                        )}
+                    </div>
                 </div>
             </div>
         );

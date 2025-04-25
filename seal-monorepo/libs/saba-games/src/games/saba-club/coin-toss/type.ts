@@ -2,9 +2,8 @@ import { CoinSymbol } from "../../../_shared/components/coin";
 
 // TODO: 待確認
 export enum CoinTossOddsType {
-    single = 'single',
-    double = 'double',
-    triple = 'triple'
+    head = 'head',
+    tail = 'tail'
 }
 
 export enum CoinTossChoices {
