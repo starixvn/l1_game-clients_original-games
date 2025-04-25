@@ -56,8 +56,6 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
         // - 2 next rolls with 0.2s between them
         // - Next roll with 0.3s delay
         // - Last roll with 0.4s delay
-        // Total: 8 rolls
-
         const rollTimes = [
             0,           // First roll immediately
             100,         // +0.1s
@@ -70,30 +68,89 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
             1500         // +0.4s (final reveal)
         ];
 
-        // Schedule each roll
-        for (let i = 0; i < rollTimes.length - 1; i++) {
-            const timer = setTimeout(() => {
-                setCurrentSymbol(getRandomSymbol());
+        // Total animation duration
+        const totalDuration = animationDuration;
 
-                // Adjust shake frequency based on progress
-                const progress = rollTimes[i] / animationDuration;
-                if (progress < 0.4) {
-                    // Fast shaking at the beginning
-                    setShakeFrequency(0.2);
-                } else if (progress < 0.7) {
-                    // Medium shaking in the middle
-                    setShakeFrequency(0.5);
-                } else {
-                    // Slower shaking near the end
-                    setShakeFrequency(0.8);
+        // Keep track of which main roll we're currently in
+        let currentRollIndex = 0;
+
+        // Number of symbol changes per roll (mini-physics simulation within each roll)
+        const symbolsPerRoll = 6;
+
+        // Schedule physics-based symbol changes within each roll window
+        for (let i = 0; i < rollTimes.length - 1; i++) {
+            const rollStartTime = rollTimes[i];
+            const nextRollTime = rollTimes[i + 1];
+            const rollDuration = nextRollTime - rollStartTime;
+
+            // Calculate how far into the animation this roll is (for proper physics feel)
+            const rollProgress = rollStartTime / totalDuration;
+
+            // Apply different physics behavior based on which phase we're in
+            // Early rolls: faster changes (acceleration)
+            // Middle rolls: peak speed
+            // Later rolls: slower changes (deceleration)
+
+            for (let j = 0; j < symbolsPerRoll; j++) {
+                let symbolTime: number;
+
+                if (i < 4) {
+                    // First 4 rolls: acceleration phase - non-linear distribution
+                    // Earlier symbols change slower, later symbols change faster
+                    const adjustedProgress = Math.pow(j / symbolsPerRoll, 1.5);
+                    symbolTime = rollStartTime + Math.floor(adjustedProgress * rollDuration);
                 }
-            }, rollTimes[i]);
+                else if (i < 6) {
+                    // Middle 2 rolls: peak speed - evenly distributed
+                    symbolTime = rollStartTime + Math.floor(j * (rollDuration / symbolsPerRoll));
+                }
+                else {
+                    // Last 2 rolls: deceleration phase - non-linear distribution
+                    // Earlier symbols change faster, later symbols change slower
+                    const adjustedProgress = 1 - Math.pow(1 - (j / symbolsPerRoll), 1.5);
+                    symbolTime = rollStartTime + Math.floor(adjustedProgress * rollDuration);
+                }
+
+                const timer = setTimeout(() => {
+                    setCurrentSymbol(getRandomSymbol());
+                }, symbolTime);
+
+                rollTimersRef.current.push(timer);
+            }
+
+            // Set shake frequency for this roll
+            const timer = setTimeout(() => {
+                if (i < 2) {
+                    // First 2 rolls: Fast shaking (initial toss)
+                    setShakeFrequency(0.2);
+                }
+                else if (i < 5) {
+                    // Next 3 rolls: Medium shaking
+                    setShakeFrequency(0.4);
+                }
+                else {
+                    // Last rolls: Slow shaking (settling)
+                    setShakeFrequency(0.7);
+                }
+            }, rollStartTime);
 
             rollTimersRef.current.push(timer);
         }
 
-        // Final roll (show the final symbol)
-        const finalRollTimer = setTimeout(() => {
+        // Add highlight symbols at exact roll times
+        rollTimes.forEach((time, index) => {
+            if (index < rollTimes.length - 1) { // Skip the last time (final reveal)
+                const timer = setTimeout(() => {
+                    // Highlight roll point with a new symbol
+                    setCurrentSymbol(getRandomSymbol());
+                }, time);
+
+                rollTimersRef.current.push(timer);
+            }
+        });
+
+        // Final reveal (show the final symbol)
+        const finalRevealTimer = setTimeout(() => {
             setCurrentSymbol(finalSymbol);
             setIsAnimating(false);
             if (onAnimationComplete) {
@@ -101,9 +158,9 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
             }
         }, rollTimes[rollTimes.length - 1]);
 
-        rollTimersRef.current.push(finalRollTimer);
+        rollTimersRef.current.push(finalRevealTimer);
 
-        // Set timeout to end animation if something goes wrong
+        // Set a backup timeout to ensure animation always completes
         animationTimerRef.current = setTimeout(() => {
             clearTimers();
             setCurrentSymbol(finalSymbol);
@@ -111,7 +168,7 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
             if (onAnimationComplete) {
                 onAnimationComplete();
             }
-        }, animationDuration);
+        }, totalDuration + 100); // Add a small buffer
     };
 
     // Handle component mount/unmount and props changes
