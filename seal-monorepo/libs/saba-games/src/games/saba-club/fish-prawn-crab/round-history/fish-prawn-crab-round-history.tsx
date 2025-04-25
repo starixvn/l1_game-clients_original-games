@@ -50,9 +50,7 @@ export default class FishPrawnCrabRoundHistory extends ObserverComponent<IFishPr
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
         this.setState({ fullRoundHistory: rounds });
-        if (this.state.rounds.length === 0) {
-            this.setState({ rounds: [emptyDefaultRoundItem, ...rounds.slice(0, MAX_DISPLAYED_ROUNDS)] });
-        }
+        this.setState({ rounds: [emptyDefaultRoundItem, ...rounds.slice(0, MAX_DISPLAYED_ROUNDS)] });
     }
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
@@ -61,10 +59,6 @@ export default class FishPrawnCrabRoundHistory extends ObserverComponent<IFishPr
         this.setState({ roundState, hasBlink });
     }
 
-    @render(gc.Settlements.SettlementStore, (store) => store.isFinishedPlayAnimation)
-    finishPlayAnimation(isFinishedPlayAnimation: boolean) {
-        isFinishedPlayAnimation && this.setState({ rounds: [emptyDefaultRoundItem, ...this.state.fullRoundHistory.slice(0, MAX_DISPLAYED_ROUNDS)] });
-    }
 
     componentDidUpdate(prevProps: Readonly<IFishPrawnCrabRoundHistoryProps>, prevState: Readonly<IFishPrawnCrabRoundHistoryState>, snapshot?: any): void {
         if (this.state.roundState !== prevState.roundState) {

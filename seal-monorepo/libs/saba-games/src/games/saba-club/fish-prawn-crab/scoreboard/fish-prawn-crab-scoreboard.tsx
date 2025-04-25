@@ -1,7 +1,7 @@
 import * as gc from '@sg/sg-game-client';
 import { render } from '@sg/sg-observer';
 import styles from './fish-prawn-crab-scoreboard.module.scss';
-import React, { createRef, RefObject } from 'react';
+import { createRef, RefObject } from 'react';
 import { IPropsObserver, IStateObserver, ObserverComponent } from '../../../../_shared/components/observer-component/observer-component';
 import ScrollElement from '../../../../_shared/components/scroll-element';
 import { FishPrawnCrabBetPercentages } from '../bet-percentages';
@@ -11,7 +11,6 @@ import { getScoreboardTitle, shouldShowBlinkingDice } from './utils/scoreboard-u
 export interface IFishPrawnCrabResultHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
     roundState: string;
-    fullRoundHistory: gc.RoundHistories.RoundHistory[];
 }
 
 interface ScoreBoardProps extends IPropsObserver {
@@ -28,8 +27,7 @@ export default class FishPrawnCrabScoreBoard extends ObserverComponent<ScoreBoar
         this.state = {
             rounds: [],
             roundState: '',
-            dispose: null,
-            fullRoundHistory: [],
+            dispose: null
         };
     }
 
@@ -45,19 +43,10 @@ export default class FishPrawnCrabScoreBoard extends ObserverComponent<ScoreBoar
         }
     };
 
-    @render(gc.Settlements.SettlementStore, (store) => store.isFinishedPlayAnimation)
-    finishPlayAnimation(isFinishedPlayAnimation: boolean) {
-        const now = new Date();
-        const timeWithMs = `${now.toISOString().split('.')[0]}.${now.getMilliseconds().toString().padStart(3, '0')}`;
-        isFinishedPlayAnimation && this.setState({ rounds: [...this.state.fullRoundHistory] });
-    }
 
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
-        this.setState({ fullRoundHistory: rounds });
-        if (this.state.rounds.length === 0) {
-            this.setState({ rounds });
-        }
+        this.setState({ rounds });
     }
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)

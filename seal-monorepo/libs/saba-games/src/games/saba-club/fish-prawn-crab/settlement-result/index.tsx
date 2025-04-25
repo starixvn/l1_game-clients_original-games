@@ -24,7 +24,6 @@ export interface IFishPrawnCrabSettlementResultState extends IStateObserver {
     settlementResult: gc.GameServiceMessage.TSettlementResult;
     winningSymbols: string[];
     isResultUpdated: boolean;
-    isAnimationComplete: boolean;
 }
 
 export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPropsObserver, IFishPrawnCrabSettlementResultState> {
@@ -39,18 +38,12 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
             settlementResult: {},
             winningSymbols: [],
             isResultUpdated: false,
-            isAnimationComplete: false,
         };
     }
 
-    @handle(Settlements.SettlementUIHandlers.FinishedShowResult, (handler) => handler.handleFinishedShowResult())
+    @handle(Settlements.SettlementUIHandlers.FinishedShowResult)
     protected handleFinishedShowResult() {
-        // Placeholder for handling finished show result
-    }
-
-    @handle(Settlements.SettlementUIHandlers.FinishedPlayAnimation, (handler) => handler.handle())
-    protected handleFinishedPlayAnimation() {
-        // Placeholder for handling finished animation
+        this.setState({ isFinishShowResult: true });
     }
 
     @render(RoundTimeStore, (store) => store.roundState)
@@ -62,8 +55,7 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
                 settlementResult: {},
                 winningSymbols: [],
                 isResultUpdated: false,
-                isAnimationResult: false,
-                isAnimationComplete: false
+                isAnimationResult: false
             });
         }
 
@@ -74,8 +66,7 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
         if (roundState === ROUND_STATE.SHOW_ANIMATION_RESULT) {
             this.setState({
                 roundState,
-                isAnimationResult: true,
-                isAnimationComplete: false
+                isAnimationResult: true
             });
         }
 
@@ -154,13 +145,13 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
     }
 
     renderWinnerDisplay = () => {
-        const { settlementResult, result, isAnimationComplete } = this.state;
+        const { settlementResult, result } = this.state;
 
         if (!settlementResult || Object.keys(settlementResult).length === 0 && result) {
             return null;
         }
 
-        return this.state.isAnimationComplete ? <ResultDisplay
+        return this.state.isFinishShowResult ? <ResultDisplay
             result={result}
             language={this.props.language}
         /> : null;
@@ -176,18 +167,18 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
     };
 
     renderIcons = (result: gc.GameServiceMessage.TResult) => {
-        const { isAnimationResult, isAnimationComplete } = this.state;
+        const { isAnimationResult } = this.state;
 
         const resultSymbols = Object.entries(result).map(([key, value]) => {
             return convertValueToSymbol(value);
         });
 
         const handleAnimationComplete = () => {
-            this.setState({ isAnimationComplete: true });
-            this.handleFinishedShowResult();
+            this.setState({ isFinishShowResult: true });
 
             setTimeout(() => {
-                this.handleFinishedPlayAnimation();
+                this.handleFinishedShowResult();
+                // this.handleFinishedPlayAnimation();
             }, 500);
         };
 
@@ -195,7 +186,7 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
         const staggerDelay = 150;
 
         if (!isAnimationResult) {
-            this.setState({ isAnimationComplete: true });
+            this.setState({ isFinishShowResult: true });
         }
 
         return (

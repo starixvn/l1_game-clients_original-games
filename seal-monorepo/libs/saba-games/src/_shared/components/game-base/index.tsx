@@ -324,12 +324,20 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
 
     protected renderAnimationBalance() {
         const { statusSettlement, isFinishShowResult } = this.state;
+        console.log('renderAnimationBalance', { statusSettlement, isFinishShowResult });
+
         if (!statusSettlement || !statusSettlement.win) {
+            console.log('No animation balance: no settlement or no win');
             return <></>;
         }
+
         if (isFinishShowResult) {
+            console.log('Showing animation balance with bet:', statusSettlement?.bet);
             return <AnimationBalance winBet={statusSettlement?.bet} />;
         }
+
+        console.log('Animation balance not shown: finish show result is false');
+        return null;
     }
 
     private renderLoading() {

@@ -2,6 +2,7 @@ import { FishPrawnCrabSymbolType, FishPrawnOddsType } from '../type';
 import styles from './fish-prawn-crab-bet-options.module.scss';
 import * as gc from '@sg/sg-game-client';
 import BetOptions, { IBetOptionsState } from '../../../../_shared/components/bet-option';
+import BettingBlock from '../../../../_shared/components/bet-option/betting-block';
 import OddsComponent from '../../../../_shared/components/bet-option/odd-component';
 import OwnBet from '../../../../_shared/components/bet-option/own-bet';
 import TotalBet from '../../../../_shared/components/bet-option/total-bet';
@@ -9,7 +10,6 @@ import Styles from '../fish-prawn-crab.module.scss';
 import { bottomChoices, topChoices } from '../type';
 import { Size } from '../../../../_shared/constants';
 import FishPrawnCrabDice from '../../../../_shared/components/fish-prawn-crab-dice';
-import FishPrawnCrabBettingBlock from './component/fish-prawn-crab-betting-block';
 import { choiceToSymbolMap } from '../fish-prawn-crab-utils';
 
 const symbols: FishPrawnCrabSymbolType[] = ['fish', 'prawn', 'crab', 'rooster', 'gourd', 'stag'];
@@ -42,7 +42,7 @@ export default class FishPrawnCrabBetOptions extends BetOptions {
         const { settlementResult } = this.state;
 
         return (
-            <FishPrawnCrabBettingBlock
+            <BettingBlock
                 odd={odd}
                 betChoice={betChoice}
                 gameName={this.props.gameName}
@@ -50,11 +50,11 @@ export default class FishPrawnCrabBetOptions extends BetOptions {
                 settlementResult={settlementResult}
                 onBet={this.props.onBet}
             >
-                <div className={`${Styles['container-bets']} ${Styles['padding-bet']}`} >
+                <div className={`${Styles['container-bets']} ${Styles['padding-bet']}`}>
                     <FishPrawnCrabDice symbol={choiceToSymbolMap[betChoice]} size={Size.small} />
                     <OddsComponent value={odd} fractional={false} isBoostedChoice={isBoostedChoice} />
                 </div>
-            </FishPrawnCrabBettingBlock>
+            </BettingBlock>
         );
     }
 

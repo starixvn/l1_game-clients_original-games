@@ -1,6 +1,5 @@
 import * as gc from '@sg/sg-game-client';
 import { render } from '@sg/sg-observer';
-import React from 'react';
 import { IPropsObserver, IStateObserver, ObserverComponent } from '../../../../_shared/components/observer-component/observer-component';
 import { ISettlementResultService, SettlementResultService, ITranslationService, TranslationService } from '../services';
 import { ResultRow } from './components';
@@ -14,7 +13,6 @@ export interface IFishPrawnCrabResultHistoryProps extends IPropsObserver {
 
 export interface IFishPrawnCrabResultHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
-    fullRoundHistory: gc.RoundHistories.RoundHistory[];
 }
 
 export class FishPrawnCrabResultHistory extends ObserverComponent<IFishPrawnCrabResultHistoryProps, IFishPrawnCrabResultHistoryState> {
@@ -26,26 +24,15 @@ export class FishPrawnCrabResultHistory extends ObserverComponent<IFishPrawnCrab
         this.state = {
             dispose: null,
             rounds: [],
-            fullRoundHistory: [],
         };
 
         this.settlementService = props.settlementService || new SettlementResultService();
         this.translationService = props.translationService || new TranslationService();
     }
 
-    @render(gc.Settlements.SettlementStore, (store) => store.isFinishedPlayAnimation)
-    finishPlayAnimation(isFinishedPlayAnimation: boolean) {
-        const now = new Date();
-        const timeWithMs = `${now.toISOString().split('.')[0]}.${now.getMilliseconds().toString().padStart(3, '0')}`;
-        isFinishedPlayAnimation && this.setState({ rounds: [...this.state.fullRoundHistory] });
-    }
-
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
-        this.setState({ fullRoundHistory: rounds });
-        if (this.state.rounds.length === 0) {
-            this.setState({ rounds });
-        }
+        this.setState({ rounds });
     }
 
     render() {
@@ -78,4 +65,4 @@ export class FishPrawnCrabResultHistory extends ObserverComponent<IFishPrawnCrab
             </div>
         );
     }
-} 
+}

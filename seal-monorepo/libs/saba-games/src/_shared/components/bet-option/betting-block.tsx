@@ -10,7 +10,7 @@ import BetPanelComponent from '../bet-panel/bet-panel';
 import { IStateObserver, ObserverComponent } from '../observer-component/observer-component';
 import Styles from './bet-option.module.scss';
 
-export interface BettingBlockProps {
+interface BettingBlockProps {
     odd: number;
     betChoice: string;
     gameName: string;
@@ -20,7 +20,7 @@ export interface BettingBlockProps {
     onBet: () => void;
 }
 
-export interface IBettingBlockState extends IStateObserver {
+interface IBettingBlockState extends IStateObserver {
     betChoice: string;
     odd: number;
     isAuthorized: boolean;
