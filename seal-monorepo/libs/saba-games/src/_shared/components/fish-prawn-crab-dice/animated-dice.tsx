@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FishPrawnCrabSymbol, diceValueToSymbol } from './index';
 import FishPrawnCrabDice from './index';
 import { Size } from "../../constants";
+import styles from './fish-prawn-crab-dice.module.scss';
 
 interface AnimatedDiceProps {
     finalSymbol: FishPrawnCrabSymbol;
@@ -24,6 +25,7 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
     // Animation state
     const [isAnimating, setIsAnimating] = useState<boolean>(false);
     const [shakeFrequency, setShakeFrequency] = useState<number>(0.2); // Initial shake duration (faster)
+    const [rollSpeed, setRollSpeed] = useState<string>(''); // Roll animation class
 
     // Used to track animation timing
     const animationTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -112,7 +114,26 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
                 }
 
                 const timer = setTimeout(() => {
+                    // Apply 3D roll animation for each symbol change
                     setCurrentSymbol(getRandomSymbol());
+                    // Trigger a new roll animation
+                    if (i < 4) {
+                        // Fast rolling for early phase
+                        setRollSpeed(styles['dice-rolling-fast']);
+                    } else if (i < 6) {
+                        // Medium rolling for middle phase
+                        setRollSpeed(styles['dice-rolling-medium']);
+                    } else {
+                        // Slow rolling for final phase
+                        setRollSpeed(styles['dice-rolling-slow']);
+                    }
+
+                    // Clear the animation class after it finishes
+                    const animDuration = i < 4 ? 300 : i < 6 ? 500 : 700;
+                    const clearTimer = setTimeout(() => {
+                        setRollSpeed('');
+                    }, animDuration);
+                    rollTimersRef.current.push(clearTimer);
                 }, symbolTime);
 
                 rollTimersRef.current.push(timer);
@@ -143,6 +164,21 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
                 const timer = setTimeout(() => {
                     // Highlight roll point with a new symbol
                     setCurrentSymbol(getRandomSymbol());
+                    // Apply appropriate rolling animation
+                    if (index < 4) {
+                        setRollSpeed(styles['dice-rolling-fast']);
+                    } else if (index < 6) {
+                        setRollSpeed(styles['dice-rolling-medium']);
+                    } else {
+                        setRollSpeed(styles['dice-rolling-slow']);
+                    }
+
+                    // Clear the animation class after it finishes
+                    const animDuration = index < 4 ? 300 : index < 6 ? 500 : 700;
+                    const clearTimer = setTimeout(() => {
+                        setRollSpeed('');
+                    }, animDuration);
+                    rollTimersRef.current.push(clearTimer);
                 }, time);
 
                 rollTimersRef.current.push(timer);
@@ -153,9 +189,16 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
         const finalRevealTimer = setTimeout(() => {
             setCurrentSymbol(finalSymbol);
             setIsAnimating(false);
-            if (onAnimationComplete) {
-                onAnimationComplete();
-            }
+            // One last slow roll animation for the final reveal
+            setRollSpeed(styles['dice-rolling-slow']);
+
+            const clearTimer = setTimeout(() => {
+                setRollSpeed('');
+                if (onAnimationComplete) {
+                    onAnimationComplete();
+                }
+            }, 700);
+            rollTimersRef.current.push(clearTimer);
         }, rollTimes[rollTimes.length - 1]);
 
         rollTimersRef.current.push(finalRevealTimer);
@@ -165,6 +208,7 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
             clearTimers();
             setCurrentSymbol(finalSymbol);
             setIsAnimating(false);
+            setRollSpeed('');
             if (onAnimationComplete) {
                 onAnimationComplete();
             }
@@ -189,14 +233,19 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
     }, [finalSymbol, animationDuration, delayStart]); // Added delayStart as a dependency
 
     return (
-        <div style={{
-            display: 'inline-block',
-            animation: isAnimating ? `shake ${shakeFrequency}s infinite` : 'none'
-        }}>
-            <FishPrawnCrabDice
-                symbol={currentSymbol}
-                size={size}
-            />
+        <div className={styles['dice-container']}>
+            <div
+                className={`${styles['dice-rolling']} ${rollSpeed}`}
+                style={{
+                    display: 'inline-block',
+                    animation: isAnimating ? `${styles.shake} ${shakeFrequency}s infinite` : 'none'
+                }}
+            >
+                <FishPrawnCrabDice
+                    symbol={currentSymbol}
+                    size={size}
+                />
+            </div>
         </div>
     );
 };
@@ -230,7 +279,7 @@ export const AnimatedDiceSet: React.FC<AnimatedDiceSetProps> = ({
     };
 
     return (
-        <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
+        <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', perspective: '600px' }}>
             {finalSymbols.map((symbol, index) => (
                 <AnimatedDice
                     key={index}
