@@ -1,4 +1,4 @@
-import { SE_DIE_GAME_ID, SE_DIE_GAME_NAMESPACE, BACCARAT_GAME_ID, BACCARAT_GAME_NAMESPACE, UNBALANCED_BIG_SMALL_4_GAME_ID, UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE, VIP_SE_DIE_GAME_ID, VIP_SE_DIE_GAME_NAMESPACE, FISH_PRAWN_CRAB_GAME_ID, FISH_PRAWN_CRAB_GAME_NAMESPACE, COLOR_GAME_NAMESPACE, COLOR_GAME_ID } from "../../../constant/app";
+import { SE_DIE_GAME_ID, SE_DIE_GAME_NAMESPACE, BACCARAT_GAME_ID, BACCARAT_GAME_NAMESPACE, UNBALANCED_BIG_SMALL_4_GAME_ID, UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE, VIP_SE_DIE_GAME_ID, VIP_SE_DIE_GAME_NAMESPACE, FISH_PRAWN_CRAB_GAME_ID, FISH_PRAWN_CRAB_GAME_NAMESPACE, COLOR_GAME_NAMESPACE, COLOR_GAME_ID, COIN_TOSS_GAME_ID, COIN_TOSS_GAME_NAMESPACE } from "../../../constant/app";
 import SieDiePage from "../../games/saba-club/sedie/page";
 import VipSeDiePage from "../../games/saba-club/vip-sedie/page";
 import { SieDieHeader } from "../../games/saba-club/sedie/header";
@@ -11,6 +11,8 @@ import FishPrawnCrabPage from "../../games/saba-club/fish-prawn-crab/page";
 import { Header as FishPrawnCrabHeader } from "../../games/saba-club/fish-prawn-crab/header";
 import ColorGamePage from "../../games/saba-club/color-game/page";
 import { ColorGameHeader } from "../../games/saba-club/color-game/header";
+import CoinTossHeader from "../../games/saba-club/coin-toss/header"
+import CoinTossPage from "../../games/saba-club/coin-toss/page"
 
 
 export const gamePageMap = {
@@ -20,6 +22,7 @@ export const gamePageMap = {
     [BACCARAT_GAME_ID]: { component: BaccaratPage, namespace: BACCARAT_GAME_NAMESPACE },
     [FISH_PRAWN_CRAB_GAME_ID]: { component: FishPrawnCrabPage, namespace: FISH_PRAWN_CRAB_GAME_NAMESPACE },
     [COLOR_GAME_ID]: { component: ColorGamePage, namespace: COLOR_GAME_NAMESPACE },
+    [COIN_TOSS_GAME_ID]: { component: CoinTossPage, namespace: COIN_TOSS_GAME_NAMESPACE },
 };
 
 export const gameHeaderMap = {
@@ -28,5 +31,6 @@ export const gameHeaderMap = {
     [UNBALANCED_BIG_SMALL_4_GAME_ID]: BigSmallHeader,
     [BACCARAT_GAME_ID]: BaccaratHeader,
     [FISH_PRAWN_CRAB_GAME_ID]: FishPrawnCrabHeader,
-    [COLOR_GAME_ID]: ColorGameHeader
+    [COLOR_GAME_ID]: ColorGameHeader,
+    [COIN_TOSS_GAME_ID]: CoinTossHeader
 };

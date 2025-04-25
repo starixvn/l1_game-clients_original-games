@@ -6,7 +6,8 @@ export const GameIds = {
     Baccarat: 10,
     VipSeDie: 22,
     FishPrawnCrab: 3,
-    ColorGame: 71
+    ColorGame: 71,
+    CoinToss: 80
 };
 
 export const GameNames = {
@@ -15,7 +16,8 @@ export const GameNames = {
     Baccarat: "Baccarat",
     VipSeDie: "VipSeDie",
     FishPrawnCrab: "FishPrawnCrab",
-    ColorGame: "ColorGame"
+    ColorGame: "ColorGame",
+    CoinToss: "CoinToss"
 };
 
 export const Size = {

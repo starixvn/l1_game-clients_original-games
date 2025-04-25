@@ -7,6 +7,7 @@ import {
     BACCARAT_GAME_NAMESPACE,
     COLOR_GAME_NAMESPACE,
     FISH_PRAWN_CRAB_GAME_NAMESPACE,
+    COIN_TOSS_GAME_NAMESPACE,
     SABA_GAMES,
     SE_DIE_GAME_NAMESPACE,
     UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE,
@@ -45,6 +46,7 @@ const GAME_ICON_MAPPING = {
     [BACCARAT_GAME_NAMESPACE]: 'baccarat-icon',
     [FISH_PRAWN_CRAB_GAME_NAMESPACE]: 'fish-prawn-crab-icon',
     [COLOR_GAME_NAMESPACE]: 'color-game-icon',
+    [COIN_TOSS_GAME_NAMESPACE]: 'coin-toss-icon',
 } as const;
 
 export interface IBetPanel extends IStateObserver {
