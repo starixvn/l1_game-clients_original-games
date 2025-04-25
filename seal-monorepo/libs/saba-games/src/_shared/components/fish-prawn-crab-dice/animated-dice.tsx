@@ -27,11 +27,7 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
 
     // Used to track animation timing
     const animationTimerRef = useRef<NodeJS.Timeout | null>(null);
-    const intervalRef = useRef<NodeJS.Timeout | null>(null);
-
-    // Track current animation speed
-    const speedRef = useRef<number>(200); // Ms between symbol changes
-    const animationStartTimeRef = useRef<number>(0);
+    const rollTimersRef = useRef<NodeJS.Timeout[]>([]);
 
     // Generate random symbol (1-6)
     const getRandomSymbol = (): FishPrawnCrabSymbol => {
@@ -41,10 +37,9 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
 
     // Cleanup function
     const clearTimers = () => {
-        if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-            intervalRef.current = null;
-        }
+        rollTimersRef.current.forEach(timer => clearTimeout(timer));
+        rollTimersRef.current = [];
+
         if (animationTimerRef.current) {
             clearTimeout(animationTimerRef.current);
             animationTimerRef.current = null;
@@ -54,60 +49,61 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
     // Start animation
     const startAnimation = () => {
         clearTimers(); // Clear any existing timers
-
         setIsAnimating(true);
-        setShakeFrequency(0.2); // Start with fast shaking
-        animationStartTimeRef.current = Date.now();
 
-        // Set initial interval for changing symbols
-        intervalRef.current = setInterval(() => {
-            // Calculate elapsed time since animation started
-            const elapsedTime = Date.now() - animationStartTimeRef.current;
-            const progress = elapsedTime / animationDuration;
+        // Define roll timings based on requirements:
+        // - 4 first rolls with 0.1s between them
+        // - 2 next rolls with 0.2s between them
+        // - Next roll with 0.3s delay
+        // - Last roll with 0.4s delay
+        // Total: 8 rolls
 
-            // First phase (0-40%): Speed up
-            if (progress < 0.4) {
-                // Start at 200ms and decrease to 50ms (speed up)
-                speedRef.current = 200 - (150 * (progress / 0.4));
-                // Fast shaking during speed up
-                setShakeFrequency(Math.max(0.2, 0.2 + (0.1 * (progress / 0.4))));
-            }
-            // Second phase (40-100%): Slow down
-            else {
-                // Start at 50ms and increase to 500ms (slow down)
-                speedRef.current = 50 + (450 * ((progress - 0.4) / 0.6));
-                // Gradually slow down the shaking (0.3 to 1.0 seconds)
-                setShakeFrequency(Math.min(1.0, 0.3 + (0.7 * ((progress - 0.4) / 0.6))));
-            }
+        const rollTimes = [
+            0,           // First roll immediately
+            100,         // +0.1s
+            200,         // +0.1s
+            300,         // +0.1s
+            400,         // +0.1s
+            600,         // +0.2s
+            800,         // +0.2s
+            1100,        // +0.3s
+            1500         // +0.4s (final reveal)
+        ];
 
-            // Update the interval timing
-            clearInterval(intervalRef.current!);
-
-            // If we're close to the end and speed is very slow
-            if (progress > 0.9 && speedRef.current > 400) {
-                // Show the final result soon
-                if (progress > 0.95) {
-                    setCurrentSymbol(finalSymbol);
-                    clearTimers();
-                    setIsAnimating(false);
-                    if (onAnimationComplete) {
-                        onAnimationComplete();
-                    }
-                    return;
-                }
-            }
-
-            // Continue with random symbols until the very end
-            setCurrentSymbol(getRandomSymbol());
-
-            // Update interval with new speed
-            intervalRef.current = setInterval(() => {
+        // Schedule each roll
+        for (let i = 0; i < rollTimes.length - 1; i++) {
+            const timer = setTimeout(() => {
                 setCurrentSymbol(getRandomSymbol());
-            }, Math.round(speedRef.current));
 
-        }, Math.round(speedRef.current));
+                // Adjust shake frequency based on progress
+                const progress = rollTimes[i] / animationDuration;
+                if (progress < 0.4) {
+                    // Fast shaking at the beginning
+                    setShakeFrequency(0.2);
+                } else if (progress < 0.7) {
+                    // Medium shaking in the middle
+                    setShakeFrequency(0.5);
+                } else {
+                    // Slower shaking near the end
+                    setShakeFrequency(0.8);
+                }
+            }, rollTimes[i]);
 
-        // Set timeout to end animation
+            rollTimersRef.current.push(timer);
+        }
+
+        // Final roll (show the final symbol)
+        const finalRollTimer = setTimeout(() => {
+            setCurrentSymbol(finalSymbol);
+            setIsAnimating(false);
+            if (onAnimationComplete) {
+                onAnimationComplete();
+            }
+        }, rollTimes[rollTimes.length - 1]);
+
+        rollTimersRef.current.push(finalRollTimer);
+
+        // Set timeout to end animation if something goes wrong
         animationTimerRef.current = setTimeout(() => {
             clearTimers();
             setCurrentSymbol(finalSymbol);
