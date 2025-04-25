@@ -234,14 +234,21 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
         };
     }, [finalSymbol, animationDuration, delayStart, finalRollDelay]); // Added finalRollDelay as a dependency
 
+    // Get CSS class based on shake frequency
+    const getShakeFrequencyClass = () => {
+        if (!isAnimating) return styles['no-animation'];
+
+        if (shakeFrequency === 0.2) return styles['shake-frequency-0-2'];
+        if (shakeFrequency === 0.4) return styles['shake-frequency-0-4'];
+        if (shakeFrequency === 0.7) return styles['shake-frequency-0-7'];
+
+        return styles['shake-frequency-0-2']; // Default
+    };
+
     return (
         <div className={styles['dice-container']}>
             <div
-                className={`${styles['dice-rolling']} ${rollSpeed}`}
-                style={{
-                    display: 'inline-block',
-                    animation: isAnimating ? `${styles.shake} ${shakeFrequency}s infinite` : 'none'
-                }}
+                className={`${styles['dice-rolling']} ${rollSpeed} ${styles['animated-dice-wrapper']} ${isAnimating ? styles['animated-dice-wrapper-shaking'] : ''} ${getShakeFrequencyClass()}`}
             >
                 <FishPrawnCrabDice
                     symbol={currentSymbol}
@@ -283,7 +290,7 @@ export const AnimatedDiceSet: React.FC<AnimatedDiceSetProps> = ({
     };
 
     return (
-        <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', perspective: '600px' }}>
+        <div className={styles['dice-set-container']}>
             {finalSymbols.map((symbol, index) => (
                 <AnimatedDice
                     key={index}
