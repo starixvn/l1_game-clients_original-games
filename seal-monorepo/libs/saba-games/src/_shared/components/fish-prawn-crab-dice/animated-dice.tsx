@@ -10,6 +10,7 @@ interface AnimatedDiceProps {
     animationDuration?: number;
     onAnimationComplete?: () => void;
     delayStart?: number;
+    finalRollDelay?: number;
 }
 
 const AnimatedDice: React.FC<AnimatedDiceProps> = ({
@@ -17,7 +18,8 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
     size = Size.large,
     animationDuration = 3000,
     onAnimationComplete,
-    delayStart = 0
+    delayStart = 0,
+    finalRollDelay = 0
 }) => {
     // Current displayed symbol
     const [currentSymbol, setCurrentSymbol] = useState<FishPrawnCrabSymbol>(FishPrawnCrabSymbol.EMPTY);
@@ -57,7 +59,7 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
         // - 4 first rolls with 0.1s between them
         // - 2 next rolls with 0.2s between them
         // - Next roll with 0.3s delay
-        // - Last roll with 0.4s delay
+        // - Last roll with 0.4s delay + finalRollDelay
         const rollTimes = [
             0,           // First roll immediately
             100,         // +0.1s
@@ -67,11 +69,11 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
             600,         // +0.2s
             800,         // +0.2s
             1100,        // +0.3s
-            1500         // +0.4s (final reveal)
+            1500 + finalRollDelay  // +0.4s (final reveal) + finalRollDelay
         ];
 
-        // Total animation duration
-        const totalDuration = animationDuration;
+        // Total animation duration adjusted for finalRollDelay
+        const totalDuration = animationDuration + finalRollDelay;
 
         // Keep track of which main roll we're currently in
         let currentRollIndex = 0;
@@ -230,7 +232,7 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
         return () => {
             clearTimers();
         };
-    }, [finalSymbol, animationDuration, delayStart]); // Added delayStart as a dependency
+    }, [finalSymbol, animationDuration, delayStart, finalRollDelay]); // Added finalRollDelay as a dependency
 
     return (
         <div className={styles['dice-container']}>
@@ -257,6 +259,7 @@ interface AnimatedDiceSetProps {
     animationDuration?: number;
     onAllAnimationsComplete?: () => void;
     staggerDelay?: number;
+    finalRollSequenceDelay?: number;
 }
 
 export const AnimatedDiceSet: React.FC<AnimatedDiceSetProps> = ({
@@ -264,7 +267,8 @@ export const AnimatedDiceSet: React.FC<AnimatedDiceSetProps> = ({
     size = Size.large,
     animationDuration = 3000,
     onAllAnimationsComplete,
-    staggerDelay = 100
+    staggerDelay = 100,
+    finalRollSequenceDelay = 200
 }) => {
     const [completedAnimations, setCompletedAnimations] = useState(0);
 
@@ -288,6 +292,7 @@ export const AnimatedDiceSet: React.FC<AnimatedDiceSetProps> = ({
                     animationDuration={animationDuration}
                     onAnimationComplete={handleAnimationComplete}
                     delayStart={index * staggerDelay}
+                    finalRollDelay={index * finalRollSequenceDelay}
                 />
             ))}
         </div>
