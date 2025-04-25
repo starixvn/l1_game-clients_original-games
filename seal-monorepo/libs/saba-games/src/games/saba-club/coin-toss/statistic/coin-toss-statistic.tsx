@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './statistic.module.scss';
+import styles from './coin-toss-statistic.module.scss';
 // import { CoinTossScoreboard } from '../scoreboard';
 // import { CoinTossResultHistory } from '../result-history';
 

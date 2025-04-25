@@ -80,12 +80,12 @@ export default class CoinTossBetOptions extends BetOptions {
         const t = (key) => gc.Translator.translate(key, { languageId: gc.Translator.getCurrentLanguageId() });
 
         return (
-            <div className={Styles['bet-options-wrapper']}>
-                <div className={Styles['bet-options-container']}>
+            <div className={styles['bet-options-wrapper']}>
+                <div className={styles['bet-options-container']}>
                     {coinChoices.map((choice) => {
                         const odd = odds?.[CoinTossOddsType.single] || 0;
                         return (
-                            <div className={`${Styles['bets-bg']}`} key={choice}>
+                            <div className={`${styles['bets-bg']}`} key={choice}>
                                 {this.renderBetOptions(
                                     choice,
                                     odd,

@@ -1,7 +1,7 @@
 import React from 'react';
 import * as gc from '@sg/sg-game-client';
 import { observer } from '@sg/sg-observer';
-import styles from './round-history.module.scss';
+import styles from './coin-toss-round-history.module.scss';
 import { CoinTossChoices } from '../type';
 import { setting } from '../game-settings';
 
