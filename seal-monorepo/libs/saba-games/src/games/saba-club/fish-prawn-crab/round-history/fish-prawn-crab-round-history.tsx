@@ -26,7 +26,6 @@ const emptyDefaultRoundItem = {
 } as gc.RoundHistories.RoundHistory;
 
 export interface IFishPrawnCrabRoundHistoryProps extends IPropsObserver {
-    language: string;
 }
 
 export interface IFishPrawnCrabRoundHistoryState extends IStateObserver {
@@ -62,14 +61,10 @@ export default class FishPrawnCrabRoundHistory extends ObserverComponent<IFishPr
         this.setState({ roundState, hasBlink });
     }
 
-
     @render(gc.Settlements.SettlementStore, (store) => store.isFinishedPlayAnimation)
     finishPlayAnimation(isFinishedPlayAnimation: boolean) {
-        const now = new Date();
-        const timeWithMs = `${now.toISOString().split('.')[0]}.${now.getMilliseconds().toString().padStart(3, '0')}`;
         isFinishedPlayAnimation && this.setState({ rounds: [emptyDefaultRoundItem, ...this.state.fullRoundHistory.slice(0, MAX_DISPLAYED_ROUNDS)] });
     }
-
 
     componentDidUpdate(prevProps: Readonly<IFishPrawnCrabRoundHistoryProps>, prevState: Readonly<IFishPrawnCrabRoundHistoryState>, snapshot?: any): void {
         if (this.state.roundState !== prevState.roundState) {
@@ -108,7 +103,6 @@ export default class FishPrawnCrabRoundHistory extends ObserverComponent<IFishPr
                                 showArrow={index < MAX_DISPLAYED_ROUNDS}
                             />
                     ))}
-
                 </div>
             </div>
         );
