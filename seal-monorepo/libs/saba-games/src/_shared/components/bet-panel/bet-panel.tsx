@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
     BACCARAT_GAME_NAMESPACE,
+    COLOR_GAME_NAMESPACE,
     FISH_PRAWN_CRAB_GAME_NAMESPACE,
     SABA_GAMES,
     SE_DIE_GAME_NAMESPACE,
@@ -29,8 +30,10 @@ import { IPropsObserver, IStateObserver, ObserverComponent } from '../observer-c
 import './bet-panel.scss';
 import { localStorageKeys, StorageManager } from '../../utils/storage-manager';
 import { choiceToSymbolMap } from '../../../games/saba-club/fish-prawn-crab/fish-prawn-crab-utils';
+import { choiceToSymbolMap as colorGameChoiceToSymbolMap } from '../../../games/saba-club/color-game/color-game-utils';
 import { Size } from '../../constants';
 import FishPrawnCrabDice from '../fish-prawn-crab-dice';
+import ColorGameDice from '../color-game-dice';
 
 const WARNING_CLOSE_DELAY = 60000;
 
@@ -41,6 +44,7 @@ const GAME_ICON_MAPPING = {
     [UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE]: 'bigsmall-icon',
     [BACCARAT_GAME_NAMESPACE]: 'baccarat-icon',
     [FISH_PRAWN_CRAB_GAME_NAMESPACE]: 'fish-prawn-crab-icon',
+    [COLOR_GAME_NAMESPACE]: 'color-game-icon',
 } as const;
 
 export interface IBetPanel extends IStateObserver {
@@ -381,6 +385,13 @@ const BetPanel: React.FC<{
         );
     };
 
+    const renderColorGameDice = () => {
+        const symbol = colorGameChoiceToSymbolMap[betChoice];
+        return (
+            <ColorGameDice symbol={symbol} size={Size.small} />
+        );
+    };
+
     const renderGameElements = (gameName: string) => {
         switch (gameName) {
             case SE_DIE_GAME_NAMESPACE:
@@ -390,6 +401,8 @@ const BetPanel: React.FC<{
                 return renderDices();
             case FISH_PRAWN_CRAB_GAME_NAMESPACE:
                 return renderFishPrawnCrabDice();
+            case COLOR_GAME_NAMESPACE:
+                return renderColorGameDice();
             default:
                 return null;
         }

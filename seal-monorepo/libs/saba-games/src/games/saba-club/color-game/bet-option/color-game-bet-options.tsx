@@ -51,7 +51,7 @@ export default class ColorGameBetOptions extends BetOptions {
                 onBet={this.props.onBet}
             >
                 <div className={`${Styles['container-bets']} ${Styles['padding-bet']}`}>
-                    <ColorGameDice symbol={choiceToSymbolMap[betChoice]} size={Size.medium} />
+                    <ColorGameDice symbol={choiceToSymbolMap[betChoice]} size={Size.small} />
                     <OddsComponent value={odd} fractional={false} isBoostedChoice={isBoostedChoice} />
                 </div>
             </ColorGameBettingBlock>
