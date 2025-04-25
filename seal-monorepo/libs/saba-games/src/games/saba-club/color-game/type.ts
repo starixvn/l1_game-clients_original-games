@@ -37,15 +37,19 @@ export type ColorGameSettlementResult = {
     [key in ColorGameSymbolType]?: boolean;
 };
 
-// Map choices to their display icons/patterns
-export const ChoiceColorGameIconMapper: { [key: string]: ColorGameSymbol } = {
-    [ColorGameChoices.yellow]: ColorGameSymbol.YELLOW,
-    [ColorGameChoices.red]: ColorGameSymbol.RED,
-    [ColorGameChoices.pink]: ColorGameSymbol.PINK,
-    [ColorGameChoices.white]: ColorGameSymbol.WHITE,
-    [ColorGameChoices.blue]: ColorGameSymbol.BLUE,
-    [ColorGameChoices.green]: ColorGameSymbol.GREEN
-};
+export type BetChoices = {
+    [key in ColorGameChoices]?: number
+}
+
+export interface ColorGameDice {
+    index: number;
+    symbol: ColorGameSymbol;
+}
+
+export interface ColorGameDiceRolled {
+    dice: ColorGameDice[];
+    isFinishedRolling: boolean;
+}
 
 export interface ColorGameBet {
     symbol: ColorGameSymbolType;

@@ -6,10 +6,11 @@ import OddsComponent from '../../../../_shared/components/bet-option/odd-compone
 import OwnBet from '../../../../_shared/components/bet-option/own-bet';
 import TotalBet from '../../../../_shared/components/bet-option/total-bet';
 import Styles from '../color-game.module.scss';
-import { bottomChoices, ChoiceColorGameIconMapper, topChoices } from '../type';
+import { bottomChoices, topChoices } from '../type';
 import { Size } from '../../../../_shared/constants';
 import ColorGameDice from '../../../../_shared/components/color-game-dice';
 import ColorGameBettingBlock from './component/color-game-betting-block';
+import { choiceToSymbolMap } from '../color-game-utils';
 
 const symbols: ColorGameSymbolType[] = ['yellow', 'red', 'pink', 'white', 'blue', 'green'];
 
@@ -50,7 +51,7 @@ export default class ColorGameBetOptions extends BetOptions {
                 onBet={this.props.onBet}
             >
                 <div className={`${Styles['container-bets']} ${Styles['padding-bet']}`}>
-                    <ColorGameDice symbol={ChoiceColorGameIconMapper[betChoice]} size={Size.medium} />
+                    <ColorGameDice symbol={choiceToSymbolMap[betChoice]} size={Size.medium} />
                     <OddsComponent value={odd} fractional={false} isBoostedChoice={isBoostedChoice} />
                 </div>
             </ColorGameBettingBlock>

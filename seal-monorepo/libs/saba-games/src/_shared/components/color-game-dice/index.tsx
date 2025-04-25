@@ -63,7 +63,6 @@ const ColorGameDice: React.FC<IColorGameDiceProps> = ({
     size = Size.large
 }) => {
     const diceImageUrl = diceImages[symbol];
-
     return (
         <img
             className={styles[`dice-${size}`]}

@@ -8,7 +8,6 @@ import EmptyDiceRow from "./empty-dice-row";
 import { MAX_DISPLAYED_ROUNDS } from "../constants/color-game-constants";
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
 import { blinkRoundItem, emptyRoundItem } from "../constants";
-import { animationStateTransmitter } from '../transmitters/animation-state.transmitter';
 
 const blinkDefaultRoundItem = {
     roundId: -1,
@@ -26,30 +25,21 @@ const emptyDefaultRoundItem = {
     date: new Date().toISOString(),
 } as gc.RoundHistories.RoundHistory;
 
-
-export interface IColorGameRoundHistoryProps extends IPropsObserver {
-    language: string;
-}
-
 export interface IColorGameRoundHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
     roundState: string;
-    isFinishedShowResult: boolean;
     hasBlink: boolean;
-    isAnimationComplete: boolean;
     fullRoundHistory: gc.RoundHistories.RoundHistory[];
 }
 
-export default class ColorGameRoundHistory extends ObserverComponent<IColorGameRoundHistoryProps, IColorGameRoundHistoryState> {
-    constructor(props: IColorGameRoundHistoryProps) {
+export default class ColorGameRoundHistory extends ObserverComponent<IPropsObserver, IColorGameRoundHistoryState> {
+    constructor(props: IPropsObserver) {
         super(props);
         this.state = {
             dispose: null,
             rounds: [],
             roundState: '',
-            isFinishedShowResult: false,
             hasBlink: false,
-            isAnimationComplete: false,
             fullRoundHistory: [],
         };
     }
@@ -57,13 +47,8 @@ export default class ColorGameRoundHistory extends ObserverComponent<IColorGameR
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
         this.setState({ fullRoundHistory: rounds });
-        if (rounds.length > 0) {
+        if (this.state.rounds.length === 0) {
             this.setState({ rounds: [emptyDefaultRoundItem, ...rounds.slice(0, MAX_DISPLAYED_ROUNDS)] });
-        }
-        else {
-            // setTimeout(() => {
-            //     this.setState({ rounds: [emptyDefaultRoundItem, ...rounds.slice(0, MAX_DISPLAYED_ROUNDS)] });
-            // }, 1000);
         }
     }
 
@@ -73,27 +58,12 @@ export default class ColorGameRoundHistory extends ObserverComponent<IColorGameR
         this.setState({ roundState, hasBlink });
     }
 
-    @render(gc.Settlements.SettlementStore, (store) => store.isFinishedShowResult)
-    finishShowResult(isFinishedShowResult: boolean) {
-        this.setState({ isFinishedShowResult });
+    @render(gc.Settlements.SettlementStore, (store) => store.isFinishedPlayAnimation)
+    finishPlayAnimation(isFinishedPlayAnimation: boolean) {
+        isFinishedPlayAnimation && this.setState({ rounds: [emptyDefaultRoundItem, ...this.state.fullRoundHistory.slice(0, MAX_DISPLAYED_ROUNDS)] });
     }
 
-    private handleAnimationComplete = (isComplete: boolean) => {
-        // this.setState({ isAnimationComplete: isComplete });
-        this.setState({ rounds: [emptyDefaultRoundItem, ...this.state.fullRoundHistory.slice(0, MAX_DISPLAYED_ROUNDS)] });
-    };
-
-    componentDidMount() {
-        super.componentDidMount?.();
-        animationStateTransmitter.onAnimationComplete(this.handleAnimationComplete);
-    }
-
-    componentWillUnmount() {
-        super.componentWillUnmount?.();
-        animationStateTransmitter.removeAnimationCompleteListener(this.handleAnimationComplete);
-    }
-
-    componentDidUpdate(prevProps: Readonly<IColorGameRoundHistoryProps>, prevState: Readonly<IColorGameRoundHistoryState>, snapshot?: any): void {
+    componentDidUpdate(prevProps: Readonly<IPropsObserver>, prevState: Readonly<IColorGameRoundHistoryState>, snapshot?: any): void {
         if (this.state.roundState !== prevState.roundState) {
             const hasBlink = this.state.roundState === ROUND_STATE.LOCKING_BET || this.state.roundState === ROUND_STATE.SHOW_ANIMATION_RESULT;
             this.setState({ hasBlink });
@@ -102,14 +72,10 @@ export default class ColorGameRoundHistory extends ObserverComponent<IColorGameR
                 this.setState({ rounds: [blinkDefaultRoundItem, ...this.state.fullRoundHistory.slice(0, MAX_DISPLAYED_ROUNDS)] });
             }
         }
-
-        // if (this.state.isAnimationComplete && this.state.isAnimationComplete !== prevState.isAnimationComplete) {
-        //     this.setState({ rounds: [emptyDefaultRoundItem, ...this.state.fullRoundHistory.slice(0, MAX_DISPLAYED_ROUNDS)] });
-        // }
     }
 
     render(): React.ReactElement {
-        const { rounds, isFinishedShowResult, hasBlink } = this.state;
+        const { rounds, hasBlink } = this.state;
         if (!rounds || rounds.length === 0) {
             return <React.Fragment />;
         }
@@ -124,7 +90,7 @@ export default class ColorGameRoundHistory extends ObserverComponent<IColorGameR
                         roundHistory.roundId === blinkDefaultRoundItem.roundId ?
                             <EmptyDiceRow
                                 key={MAX_DISPLAYED_ROUNDS}
-                                isFinishedShowResult={isFinishedShowResult}
+                                isFinishedShowResult={false}
                                 blinking={hasBlink}
                             />
                             :
@@ -134,7 +100,6 @@ export default class ColorGameRoundHistory extends ObserverComponent<IColorGameR
                                 showArrow={index < MAX_DISPLAYED_ROUNDS}
                             />
                     ))}
-                    {/* {showEmptyDiceRow && <EmptyDiceRow isFinishedShowResult={isFinishedShowResult} blinking={hasBlink} />} */}
                 </div>
             </div>
         );

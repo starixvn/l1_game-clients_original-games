@@ -1,5 +1,6 @@
 import * as gc from "@sg/sg-game-client";
 import { ColorGameChoices, ColorGameSettlementResult } from "../type";
+import { createEmptySettlementResult } from "../color-game-utils";
 
 export interface IWinningResult extends ColorGameSettlementResult {
     winner: ColorGameChoices;
@@ -7,15 +8,7 @@ export interface IWinningResult extends ColorGameSettlementResult {
 
 export class SettlementService {
     public static getSettlementResult(settlementResult: gc.GameServiceMessage.TSettlementResult): IWinningResult {
-        const result = {
-            winner: ColorGameChoices.yellow,
-            [ColorGameChoices.yellow]: false,
-            [ColorGameChoices.red]: false,
-            [ColorGameChoices.pink]: false,
-            [ColorGameChoices.white]: false,
-            [ColorGameChoices.blue]: false,
-            [ColorGameChoices.green]: false
-        };
+        const result = createEmptySettlementResult();
 
         if (settlementResult && typeof settlementResult === "object") {
             const data = settlementResult as Record<string, unknown>;

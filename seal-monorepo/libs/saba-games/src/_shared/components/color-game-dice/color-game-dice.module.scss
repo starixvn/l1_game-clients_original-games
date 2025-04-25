@@ -2,21 +2,18 @@
   width: 48px;
   height: 48px;
   border-radius: 8px;
-  // box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.4);
 }
 
 .dice-medium {
   width: 36px;
   height: 36px;
   border-radius: 6px;
-  // box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
 }
 
 .dice-small {
   width: 28px;
   height: 28px;
   border-radius: 4px;
-  // box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.4);
 }
 
 @keyframes shake {
@@ -33,20 +30,34 @@
   100% { transform: translate(0, 0) rotate(0deg); }
 }
 
-.shaking {
-  animation: shake 0.5s infinite;
+@keyframes roll {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(360deg) rotateY(720deg); }
 }
 
-.animated-dice-container {
+@keyframes rollSlow {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(180deg) rotateY(360deg); }
+}
+
+.dice-container {
+  perspective: 300px;
   display: inline-block;
-  transition: transform 0.2s ease;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.dice-rolling {
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease-out;
 }
 
-.fade-in {
-  animation: fadeIn 0.8s ease-in forwards;
+.dice-rolling-fast {
+  animation: roll 0.3s linear;
+}
+
+.dice-rolling-medium {
+  animation: roll 0.5s linear;
+}
+
+.dice-rolling-slow {
+  animation: rollSlow 0.7s ease-out;
 } 

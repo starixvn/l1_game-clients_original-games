@@ -25,7 +25,7 @@ export const ResultRow: React.FC<IResultRowProps> = ({
             </td>
             <td className={styles['result-cell']}>
                 {roundHistory.settlementResult && (
-                    settlementService.getWinningTextList(roundHistory.settlementResult)
+                    settlementService.getWinningTextListByResult(roundHistory.result).join(', ')
                 )}
             </td>
         </tr>

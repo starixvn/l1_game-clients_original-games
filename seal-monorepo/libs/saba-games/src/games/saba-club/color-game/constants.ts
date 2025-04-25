@@ -1,9 +1,9 @@
 import { ColorGameSymbol } from 'libs/saba-games/src/_shared/components/color-game-dice';
-import { resultMapper } from './color-game-utils';
+import { oddMapper, resultMapper } from './color-game-utils';
 
 export const constants = {
     resultMapper,
-    oddMapper: { 1: "single", 2: "double", 3: "triple" },
+    oddMapper
 };
 
 export const MockRoundHistoryItem = {
