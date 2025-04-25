@@ -1,11 +1,10 @@
 import { CoinTossSymbolType, CoinTossOddsType, coinChoices } from '../type';
-import styles from './fish-prawn-crab-bet-options.module.scss';
+import styles from './coin-toss-bet-options.module.scss';
 import * as gc from '@sg/sg-game-client';
 import BetOptions, { IBetOptionsState } from '../../../../_shared/components/bet-option';
 import OddsComponent from '../../../../_shared/components/bet-option/odd-component';
 import OwnBet from '../../../../_shared/components/bet-option/own-bet';
 import TotalBet from '../../../../_shared/components/bet-option/total-bet';
-import Styles from '../fish-prawn-crab.module.scss';
 import { ChoiceCoinTossIconMapper } from '../type';
 import Coin from '../../../../_shared/components/coin';
 // import CoinTossBettingBlock from './component/coin-toss-betting-block';

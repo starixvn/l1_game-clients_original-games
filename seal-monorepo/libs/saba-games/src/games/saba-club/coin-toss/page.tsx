@@ -7,7 +7,7 @@ import type { GameBaseProps } from '../../../_shared/components/game-base/type';
 import { GameBettingOptionsContext } from '../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
 import { FunctionUtils } from '../../../_shared/utils/funtion-utils';
 import CoinTossBetOptions from './bet-option/coin-toss-bet-options';
-import styles from './fish-prawn-crab.module.scss';
+import styles from './coin-toss.module.scss';
 import { containerOptions, setting } from './game-settings';
 import { CoinTossSettlementResult } from './settlement-result';
 
