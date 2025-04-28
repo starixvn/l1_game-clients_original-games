@@ -286,18 +286,20 @@
     },
     "ColorGame": {
         "game_vendor": "SABA.games",
-        "game_name": "色票",
-        "game_tab_name": "色票",
-        "bet_choices_type": "象征",
-        "choices_type": "象征 - 双倍: {odds_double} 三倍: {odds_triple}",
+        "game_name": "Color Game",
+        "game_tab_name": "Color Game",
+        "bet_choices_type": "Symbol",
+        "choices_type_double": "Double: {odds_double}",
+        "choices_type_triple": "Triple: {odds_triple}",
         "glossary_yellow": "黄",
         "glossary_red": "红",
         "glossary_pink": "粉",
         "glossary_white": "白",
         "glossary_blue": "蓝",
         "glossary_green": "绿",
-        "single": "单",
-        "double": "双倍",
-        "triple": "三倍"
+        "single": "Single",
+        "double": "Double",
+        "triple": "Triple",
+        "symbol": "Symbol"
     }
 }

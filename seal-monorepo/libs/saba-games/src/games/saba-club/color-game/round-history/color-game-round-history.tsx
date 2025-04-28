@@ -47,20 +47,13 @@ export default class ColorGameRoundHistory extends ObserverComponent<IPropsObser
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
         this.setState({ fullRoundHistory: rounds });
-        if (this.state.rounds.length === 0) {
-            this.setState({ rounds: [emptyDefaultRoundItem, ...rounds.slice(0, MAX_DISPLAYED_ROUNDS)] });
-        }
+        this.setState({ rounds: [emptyDefaultRoundItem, ...rounds.slice(0, MAX_DISPLAYED_ROUNDS)] });
     }
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
     renderCountDownTimerState(roundState: string) {
         const hasBlink = roundState === ROUND_STATE.LOCKING_BET || roundState === ROUND_STATE.SHOW_ANIMATION_RESULT;
         this.setState({ roundState, hasBlink });
-    }
-
-    @render(gc.Settlements.SettlementStore, (store) => store.isFinishedPlayAnimation)
-    finishPlayAnimation(isFinishedPlayAnimation: boolean) {
-        isFinishedPlayAnimation && this.setState({ rounds: [emptyDefaultRoundItem, ...this.state.fullRoundHistory.slice(0, MAX_DISPLAYED_ROUNDS)] });
     }
 
     componentDidUpdate(prevProps: Readonly<IPropsObserver>, prevState: Readonly<IColorGameRoundHistoryState>, snapshot?: any): void {

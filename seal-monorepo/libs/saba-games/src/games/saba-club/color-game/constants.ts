@@ -1,10 +1,12 @@
-import { ColorGameSymbol } from 'libs/saba-games/src/_shared/components/color-game-dice';
+import { ColorGameSymbol } from '../../../_shared/components/color-game-dice';
 import { oddMapper, resultMapper } from './color-game-utils';
 
 export const constants = {
     resultMapper,
     oddMapper
 };
+
+export const ANIMATION_DURATION_MS = 3000;
 
 export const MockRoundHistoryItem = {
     "roundId": 2786845,

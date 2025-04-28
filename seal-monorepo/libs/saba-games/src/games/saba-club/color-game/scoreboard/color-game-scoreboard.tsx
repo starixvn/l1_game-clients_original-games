@@ -11,7 +11,6 @@ import { getScoreboardTitle, shouldShowBlinkingDice } from './utils/scoreboard-u
 export interface IColorGameResultHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
     roundState: string;
-    fullRoundHistory: gc.RoundHistories.RoundHistory[];
 }
 
 interface ScoreBoardProps extends IPropsObserver {
@@ -29,7 +28,6 @@ export default class ColorGameScoreBoard extends ObserverComponent<ScoreBoardPro
             rounds: [],
             roundState: '',
             dispose: null,
-            fullRoundHistory: [],
         };
     }
 
@@ -45,17 +43,9 @@ export default class ColorGameScoreBoard extends ObserverComponent<ScoreBoardPro
         }
     };
 
-    @render(gc.Settlements.SettlementStore, (store) => store.isFinishedPlayAnimation)
-    finishPlayAnimation(isFinishedPlayAnimation: boolean) {
-        isFinishedPlayAnimation && this.setState({ rounds: [...this.state.fullRoundHistory] });
-    }
-
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
-        this.setState({ fullRoundHistory: rounds });
-        if (this.state.rounds.length === 0) {
-            this.setState({ rounds });
-        }
+        this.setState({ rounds });
     }
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)

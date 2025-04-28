@@ -285,18 +285,20 @@
     },
     "ColorGame": {
         "game_vendor": "SABA.games",
-        "game_name": "Warna",
-        "game_tab_name": "Warna",
-        "bet_choices_type": "Simbol",
-        "choices_type": "Simbol - Dobel: {odds_double} Tripel: {odds_triple}",
-        "glossary_yellow": "Kuning",
-        "glossary_red": "Merah",
-        "glossary_pink": "Merah Muda",
-        "glossary_white": "Putih",
-        "glossary_blue": "Biru",
-        "glossary_green": "Hijau",
+        "game_name": "Color Game",
+        "game_tab_name": "Color Game",
+        "bet_choices_type": "Symbol",
+        "choices_type_double": "Dobel: {odds_double}",
+        "choices_type_triple": "Tripel: {odds_triple}",
+        "glossary_yellow": "Yellow",
+        "glossary_red": "Red",
+        "glossary_pink": "Pink",
+        "glossary_white": "White",
+        "glossary_blue": "Blue",
+        "glossary_green": "Green",
         "single": "Single",
-        "double": "Dobel",
-        "triple": "Tripel"
+        "double": "Double",
+        "triple": "Triple",
+        "symbol": "Symbol"
     }
 }

@@ -13,10 +13,7 @@ export interface IColorGameResultHistoryProps extends IPropsObserver {
 
 export interface IColorGameResultHistoryState extends IStateObserver {
     rounds: gc.RoundHistories.RoundHistory[];
-    fullRoundHistory: gc.RoundHistories.RoundHistory[];
 }
-
-const numberOfResult = 100;
 
 export class ColorGameResultHistory extends ObserverComponent<IColorGameResultHistoryProps, IColorGameResultHistoryState> {
     private settlementService: ISettlementResultService;
@@ -27,24 +24,15 @@ export class ColorGameResultHistory extends ObserverComponent<IColorGameResultHi
         this.state = {
             dispose: null,
             rounds: [],
-            fullRoundHistory: [],
         };
 
         this.settlementService = props.settlementService || new SettlementResultService();
         this.translationService = props.translationService || new TranslationService();
     }
 
-    @render(gc.Settlements.SettlementStore, (store) => store.isFinishedPlayAnimation)
-    finishPlayAnimation(isFinishedPlayAnimation: boolean) {
-        isFinishedPlayAnimation && this.setState({ rounds: [...this.state.fullRoundHistory] });
-    }
-
     @render(gc.RoundHistories.RoundHistoryStore, (store) => store.histories)
     renderRoundHistory(rounds: gc.RoundHistories.RoundHistory[]) {
-        this.setState({ fullRoundHistory: rounds });
-        if (this.state.rounds.length === 0) {
-            this.setState({ rounds });
-        }
+        this.setState({ rounds });
     }
 
     render() {
@@ -77,4 +65,4 @@ export class ColorGameResultHistory extends ObserverComponent<IColorGameResultHi
             </div>
         );
     }
-} 
+}

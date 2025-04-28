@@ -23,8 +23,8 @@ export const EmptyDiceRow: React.FC<IEmptyDiceRowProps> = ({
                     key={`empty-dice-container-${index}`}
                     className={`${styles.diceContainer} 
                         ${isFinishedShowResult ? styles.animated : ''} 
-                        ${blinking ? styles.blinking : ''}`}
-                    style={{ animationDelay: `${index * 0.2}s` }}
+                        ${blinking ? styles.blinking : ''} 
+                        ${styles[`animationDelay-${index}`]}`}
                 >
                     <ColorGameDice
                         key={`empty-dice-${index}`}

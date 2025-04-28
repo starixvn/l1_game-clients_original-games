@@ -10,9 +10,10 @@ import Styles from "./color-game-animations.module.scss";
 import { gameStateService } from "./services/game-state.service";
 import ColorGameDice, { ColorGameSymbol } from "../../../../_shared/components/color-game-dice";
 import { Size } from "../../../../_shared/constants";
-import { convertValueToSymbol, symbolToStringMap } from "../color-game-utils";
+import { convertValueToSymbol } from "../color-game-utils";
 import { AnimatedDiceSet } from '../../../../_shared/components/color-game-dice/animated-dice';
 import { ResultDisplay } from "./result-display";
+import { ANIMATION_DURATION_MS } from "../constants";
 
 const DEFAULT_RESULT = {};
 
@@ -24,7 +25,6 @@ export interface IColorGameSettlementResultState extends IStateObserver {
     settlementResult: gc.GameServiceMessage.TSettlementResult;
     winningSymbols: string[];
     isResultUpdated: boolean;
-    isAnimationComplete: boolean;
 }
 
 export default class ColorGameSettlementResult extends ObserverComponent<IPropsObserver, IColorGameSettlementResultState> {
@@ -39,18 +39,12 @@ export default class ColorGameSettlementResult extends ObserverComponent<IPropsO
             settlementResult: {},
             winningSymbols: [],
             isResultUpdated: false,
-            isAnimationComplete: false,
         };
     }
 
-    @handle(Settlements.SettlementUIHandlers.FinishedShowResult, (handler) => handler.handleFinishedShowResult())
+    @handle(Settlements.SettlementUIHandlers.FinishedShowResult)
     protected handleFinishedShowResult() {
-        // Placeholder for handling finished show result
-    }
-
-    @handle(Settlements.SettlementUIHandlers.FinishedPlayAnimation, (handler) => handler.handle())
-    protected handleFinishedPlayAnimation() {
-        // Placeholder for handling finished animation
+        this.setState({ isFinishShowResult: true });
     }
 
     @render(RoundTimeStore, (store) => store.roundState)
@@ -62,8 +56,7 @@ export default class ColorGameSettlementResult extends ObserverComponent<IPropsO
                 settlementResult: {},
                 winningSymbols: [],
                 isResultUpdated: false,
-                isAnimationResult: false,
-                isAnimationComplete: false
+                isAnimationResult: false
             });
         }
 
@@ -74,8 +67,7 @@ export default class ColorGameSettlementResult extends ObserverComponent<IPropsO
         if (roundState === ROUND_STATE.SHOW_ANIMATION_RESULT) {
             this.setState({
                 roundState,
-                isAnimationResult: true,
-                isAnimationComplete: false
+                isAnimationResult: true
             });
         }
 
@@ -154,48 +146,34 @@ export default class ColorGameSettlementResult extends ObserverComponent<IPropsO
     }
 
     renderWinnerDisplay = () => {
-        const { settlementResult, result, isAnimationComplete } = this.state;
+        const { settlementResult, result } = this.state;
 
         if (!settlementResult || Object.keys(settlementResult).length === 0 && result) {
             return null;
         }
 
-        return this.state.isAnimationComplete ? <ResultDisplay
+        return this.state.isFinishShowResult ? <ResultDisplay
             result={result}
             language={this.props.language}
         /> : null;
     };
 
-    isWinningSymbol = (symbol: string | number): boolean => {
-        if (typeof symbol === 'string' && this.state.winningSymbols.includes(symbol)) {
-            return true;
-        }
-
-        const stringSymbol = symbolToStringMap[symbol as number];
-        return stringSymbol && this.state.winningSymbols.includes(stringSymbol);
-    };
-
     renderIcons = (result: gc.GameServiceMessage.TResult) => {
-        const { isAnimationResult, isAnimationComplete } = this.state;
+        const { isAnimationResult } = this.state;
 
         const resultSymbols = Object.entries(result).map(([key, value]) => {
             return convertValueToSymbol(value);
         });
 
         const handleAnimationComplete = () => {
-            this.setState({ isAnimationComplete: true });
-            this.handleFinishedShowResult();
-
-            setTimeout(() => {
-                this.handleFinishedPlayAnimation();
-            }, 500);
+            this.setState({ isFinishShowResult: true });
         };
 
-        const animationDuration = 3000;
+        const animationDuration = ANIMATION_DURATION_MS;
         const staggerDelay = 150;
 
         if (!isAnimationResult) {
-            this.setState({ isAnimationComplete: true });
+            this.setState({ isFinishShowResult: true });
         }
 
         return (
@@ -212,9 +190,8 @@ export default class ColorGameSettlementResult extends ObserverComponent<IPropsO
                     ) : (
                         Object.entries(result).map(([key, value], index) => {
                             const symbol = convertValueToSymbol(value);
-                            const isWinning = this.isWinningSymbol(symbol);
                             return (
-                                <div key={index} className={`${Styles['result-item']} ${isWinning ? Styles['winning-symbol'] : ''}`}>
+                                <div key={index} className={Styles['result-item']}>
                                     <ColorGameDice
                                         symbol={symbol}
                                         size={Size.large}

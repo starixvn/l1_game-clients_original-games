@@ -24,16 +24,6 @@ export const convertValueToSymbol = (value: number): ColorGameSymbol => {
     }
 };
 
-// Map ColorGameSymbol enum values to string values
-export const symbolToStringMap = {
-    [ColorGameSymbol.YELLOW]: 'yellow',
-    [ColorGameSymbol.RED]: 'red',
-    [ColorGameSymbol.PINK]: 'pink',
-    [ColorGameSymbol.WHITE]: 'white',
-    [ColorGameSymbol.BLUE]: 'blue',
-    [ColorGameSymbol.GREEN]: 'green',
-}
-
 // Map choices to their display icons/patterns
 export const choiceToSymbolMap: Record<ColorGameChoices, ColorGameSymbol> = {
     [ColorGameChoices.yellow]: ColorGameSymbol.YELLOW,

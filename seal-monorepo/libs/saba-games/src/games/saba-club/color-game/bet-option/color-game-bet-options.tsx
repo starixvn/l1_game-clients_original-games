@@ -1,48 +1,21 @@
-import { ColorGameSymbolType, ColorGameOddsType } from '../type';
-import styles from './color-game-bet-options.module.scss';
+import { ColorGameOddsType } from '../type';
 import * as gc from '@sg/sg-game-client';
 import BetOptions, { IBetOptionsState } from '../../../../_shared/components/bet-option';
 import OddsComponent from '../../../../_shared/components/bet-option/odd-component';
-import OwnBet from '../../../../_shared/components/bet-option/own-bet';
-import TotalBet from '../../../../_shared/components/bet-option/total-bet';
 import Styles from '../color-game.module.scss';
 import { bottomChoices, topChoices } from '../type';
 import { Size } from '../../../../_shared/constants';
 import ColorGameDice from '../../../../_shared/components/color-game-dice';
-import ColorGameBettingBlock from './component/color-game-betting-block';
 import { choiceToSymbolMap } from '../color-game-utils';
-
-const symbols: ColorGameSymbolType[] = ['yellow', 'red', 'pink', 'white', 'blue', 'green'];
-
-export function BetOption() {
-    return (
-        <div className={styles.betOption}>
-            <div className={styles.title}>Place Your Bets</div>
-            <div className={styles.symbolsGrid}>
-                {symbols.map((symbol) => (
-                    <div key={symbol} className={styles.symbolCard}>
-                        <div className={styles.symbolIcon}>{symbol}</div>
-                        <div className={styles.betInput}>
-                            <input type="number" placeholder="0" min="0" />
-                        </div>
-                    </div>
-                ))}
-            </div>
-            <div className={styles.actions}>
-                <button className={styles.clearButton}>Clear</button>
-                <button className={styles.confirmButton}>Confirm</button>
-            </div>
-        </div>
-    );
-}
+import BettingBlock from '../../../../_shared/components/bet-option/betting-block';
 
 export default class ColorGameBetOptions extends BetOptions {
 
-    renderBetOptions(betChoice: string, odd: number, fractional: boolean, name: string = '', isBoostedChoice: boolean = false) {
+    renderBetOptions(betChoice: string, odd: number, fractional: boolean, isBoostedChoice: boolean = false) {
         const { settlementResult } = this.state;
         
         return (
-            <ColorGameBettingBlock
+            <BettingBlock
                 odd={odd}
                 betChoice={betChoice}
                 gameName={this.props.gameName}
@@ -54,16 +27,8 @@ export default class ColorGameBetOptions extends BetOptions {
                     <ColorGameDice symbol={choiceToSymbolMap[betChoice]} size={Size.small} />
                     <OddsComponent value={odd} fractional={false} isBoostedChoice={isBoostedChoice} />
                 </div>
-            </ColorGameBettingBlock>
+            </BettingBlock>
         );
-    }
-
-    renderTotalBet(choice: string) {
-        return <TotalBet value={this.state?.totalBets?.[choice]} choice={choice} />;
-    }
-
-    renderOwnBet(choice: string) {
-        return <OwnBet value={this.state?.ownBets?.[choice]} choice={choice} />;
     }
 
     isBoostedChoice = (choice: string, boostedChoices: string[] | null) => {
@@ -92,7 +57,6 @@ export default class ColorGameBetOptions extends BetOptions {
                                     choice,
                                     odd,
                                     fractional,
-                                    '',
                                     this.isBoostedChoice(choice, boostedChoices)
                                 )}
                             </div>
@@ -106,7 +70,6 @@ export default class ColorGameBetOptions extends BetOptions {
                                     choice,
                                     odd,
                                     fractional,
-                                    '',
                                     this.isBoostedChoice(choice, boostedChoices)
                                 )}
                             </div>

@@ -63,3 +63,8 @@
   @extend %icon;
   background-image: url('../../../../assets/game-icons/fish-prawn-crab.png');
 }
+
+.color-game-icon {
+  @extend %icon;
+  background-image: url('../../../../assets/game-icons/color-game.png');
+}

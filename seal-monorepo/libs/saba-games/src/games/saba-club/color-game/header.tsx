@@ -37,8 +37,11 @@ export class ColorGameHeader extends ObserverComponent<IColorGameHeaderProps, IC
         const doubleOdds = odds?.[ColorGameOddsType.double]?.toFixed(2) || '-';
         const tripleOdds = odds?.[ColorGameOddsType.triple]?.toFixed(2) || '-';
         const gameName = gc.Translator.translate('ColorGame.game_name');
-        const gameType = gc.Translator.translate('ColorGame.choices_type')
-            .replace('{odds_double}', doubleOdds)
+
+        const gameTypeDouble = gc.Translator.translate('ColorGame.choices_type_double')
+            .replace('{odds_double}', doubleOdds);
+
+        const gameTypeTriple = gc.Translator.translate('ColorGame.choices_type_triple')
             .replace('{odds_triple}', tripleOdds);
 
         return (
@@ -59,7 +62,18 @@ export class ColorGameHeader extends ObserverComponent<IColorGameHeaderProps, IC
 
                 {isExpanded && (
                     <div className={styles['game-option-container']}>
-                        <span className={styles['game-option']}>{gameType}</span>
+                        <div >
+                            {gc.Translator.translate('ColorGame.symbol')}
+                        </div>
+                        <div >
+                            -
+                        </div>
+                        <div className="odds-info-item">
+                            {gameTypeDouble}
+                        </div>
+                        <div className="odds-info-item">
+                            {gameTypeTriple}
+                        </div>
                     </div>
                 )}
             </div>

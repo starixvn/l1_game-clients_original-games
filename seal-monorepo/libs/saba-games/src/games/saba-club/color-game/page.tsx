@@ -10,6 +10,7 @@ import ColorGameBetOptions from './bet-option/color-game-bet-options';
 import styles from './color-game.module.scss';
 import { containerOptions, setting } from './game-settings';
 import ColorGameSettlementResult from './settlement-result';
+import { ANIMATION_DURATION_MS } from './constants';
 
 const ColorGameStatistic = React.lazy(() => import('./statistic/color-game-statistic'));
 const ColorGameRoundHistory = React.lazy(() => import('./round-history/color-game-round-history'));
@@ -19,7 +20,6 @@ interface IColorGamePageState extends IGatewayGameBaseState {
     roundState: string;
     showBetPanel: boolean;
     gameId: number;
-    isFinishedPlayAnimation: boolean;
 }
 
 interface IColorGamePageProps extends GameBaseProps {
@@ -43,8 +43,7 @@ export default class ColorGamePage extends GatewayGameBase<IColorGamePageProps, 
         }
         this.state = {
             ...this.state,
-            gameId: setting.id,
-            isFinishedPlayAnimation: false,
+            gameId: setting.id
         };
     }
 
@@ -84,15 +83,6 @@ export default class ColorGamePage extends GatewayGameBase<IColorGamePageProps, 
         );
     }
 
-    @render(gc.Settlements.SettlementStore, (store) => store.isFinishedPlayAnimation)
-    finishPlayAnimation(isFinishedPlayAnimation: boolean) {
-        this.setState({ isFinishedPlayAnimation });
-    }
-
-    override renderAnimationBalance() {
-        return this.state.isFinishedPlayAnimation ? super.renderAnimationBalance() : <></>;
-    }
-
     renderResultBlock() {
         return <ColorGameSettlementResult namespace={this.props.namespace} language={this.props.language} />;
     }
@@ -114,7 +104,7 @@ export default class ColorGamePage extends GatewayGameBase<IColorGamePageProps, 
             return;
         }
 
-        await FunctionUtils.delay(2000);
+        await FunctionUtils.delay(ANIMATION_DURATION_MS);
         this.finishShowResult();
     }
 } 

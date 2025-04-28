@@ -289,7 +289,8 @@
         "game_name": "Color Game",
         "game_tab_name": "Color Game",
         "bet_choices_type": "Symbol",
-        "choices_type": "Symbol - Double: {odds_double} Triple: {odds_triple}",
+        "choices_type_double": "Double: {odds_double}",
+        "choices_type_triple": "Triple: {odds_triple}",
         "glossary_yellow": "Yellow",
         "glossary_red": "Red",
         "glossary_pink": "Pink",
@@ -298,6 +299,7 @@
         "glossary_green": "Green",
         "single": "Single",
         "double": "Double",
-        "triple": "Triple"
+        "triple": "Triple",
+        "symbol": "Symbol"
     }
 }

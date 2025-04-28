@@ -19,6 +19,7 @@
   pointer-events: none;
 }
 
+
 @keyframes shake {
   0% { transform: translate(0, 0) rotate(0deg); }
   10% { transform: translate(-1px, -1px) rotate(-1deg); }
@@ -63,4 +64,39 @@
 
 .dice-rolling-slow {
   animation: rollSlow 0.7s ease-out;
+}
+
+.animated-dice-wrapper {
+  display: inline-block;
+}
+
+.animated-dice-wrapper-shaking {
+  animation-name: shake;
+  animation-timing-function: linear;
+  animation-direction: alternate;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+}
+
+.shake-frequency-0-2 {
+  animation-duration: 0.2s;
+}
+
+.shake-frequency-0-4 {
+  animation-duration: 0.4s;
+}
+
+.shake-frequency-0-7 {
+  animation-duration: 0.7s;
+}
+
+.no-animation {
+  animation: none;
+}
+
+.dice-set-container {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  perspective: 600px;
 } 
