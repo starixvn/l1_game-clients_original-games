@@ -11,10 +11,9 @@ import Coin from '../../../../_shared/components/coin';
 import CoinTossBettingBlock from './component/coin-toss-betting-block';
 
 export default class CoinTossBetOptions extends BetOptions {
-
     renderBetOptions(betChoice: string, odd: number, fractional: boolean, name: string = '', isBoostedChoice: boolean = false) {
         const { settlementResult } = this.state;
-        
+
         return (
             <CoinTossBettingBlock
                 odd={odd}
@@ -25,8 +24,9 @@ export default class CoinTossBetOptions extends BetOptions {
                 onBet={this.props.onBet}
             >
                 <div className={`${styles['container-bets']} ${coinTossStyles['padding-bet']}`}>
-                    <div className={styles['main-option']}>
+                    <div className={coinTossStyles['bet-option']}>
                         <Coin coinType={ChoiceCoinTossIconMapper[betChoice]} />
+                        <div className={coinTossStyles['bet-choice-text']}>{name}</div>
                     </div>
                     <OddsComponent value={odd} fractional={false} isBoostedChoice={isBoostedChoice} />
                 </div>
@@ -67,7 +67,7 @@ export default class CoinTossBetOptions extends BetOptions {
                             headChoice,
                             odds?.[CoinTossOddsType.head] || 0,
                             fractional,
-                            '',
+                            t(headChoice),
                             this.isBoostedChoice(headChoice, boostedChoices)
                         )}
                     </div>
@@ -76,7 +76,7 @@ export default class CoinTossBetOptions extends BetOptions {
                             tailChoice,
                             odds?.[CoinTossOddsType.tail] || 0,
                             fractional,
-                            '',
+                            t(tailChoice),
                             this.isBoostedChoice(tailChoice, boostedChoices)
                         )}
                     </div>

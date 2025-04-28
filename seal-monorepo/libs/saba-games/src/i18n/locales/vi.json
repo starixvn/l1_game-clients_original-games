@@ -302,5 +302,15 @@
         "double": "Đôi",
         "triple": "Bộ Ba",
         "symbol": "Màu cụ thể"
-    }
+    },
+    "CoinToss": {
+        "game_vendor": "CoinToss",
+        "game_name": "Coin Toss",
+        "game_tab_name": "Coin Toss",
+        "choices_type": "Heads/Tail",
+        "glossary_head": "Heads",
+        "glossary_tail": "Tails",
+        "heads": "Heads",
+        "tails": "Tails"
+    } 
 }

@@ -68,3 +68,8 @@
   @extend %icon;
   background-image: url('../../../../assets/game-icons/color-game.png');
 }
+
+.coin-toss-icon {
+  @extend %icon;
+  background-image: url('../../../../assets/game-icons/coin-toss.png');
+}
