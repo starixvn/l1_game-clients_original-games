@@ -107,4 +107,9 @@
         @extend %game-icon-base;
         background-image: url("../../../assets/game-icons/color-game.png");
     }
+
+    .coin-toss-icon {
+        @extend %game-icon-base;
+        background-image: url("../../../assets/game-icons/coin-toss.png");
+    }
 }

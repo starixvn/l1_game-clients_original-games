@@ -307,10 +307,10 @@
         "game_vendor": "CoinToss",
         "game_name": "Coin Toss",
         "game_tab_name": "Coin Toss",
-        "choices_type": "Heads/Tail",
+        "choices_type": "Heads/Tails",
         "glossary_head": "Heads",
         "glossary_tail": "Tails",
-        "heads": "Heads",
-        "tails": "Tails"
+        "head": "Heads",
+        "tail": "Tails"
     }
 }

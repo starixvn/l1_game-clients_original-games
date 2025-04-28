@@ -35,6 +35,8 @@ import { choiceToSymbolMap as colorGameChoiceToSymbolMap } from '../../../games/
 import { Size } from '../../constants';
 import FishPrawnCrabDice from '../fish-prawn-crab-dice';
 import ColorGameDice from '../color-game-dice';
+import { SyncMemberSiteBalance } from '../../utils/sync-member-site-balance';
+import Coin from '../coin'
 
 const WARNING_CLOSE_DELAY = 60000;
 
@@ -401,6 +403,12 @@ const BetPanel: React.FC<{
         );
     };
 
+    const renderCoin = () => {
+        return (
+            <Coin coinType={betChoice} size={Size.small}/>
+        )
+    }
+    
     const renderGameElements = (gameName: string) => {
         switch (gameName) {
             case SE_DIE_GAME_NAMESPACE:
@@ -412,6 +420,8 @@ const BetPanel: React.FC<{
                 return renderFishPrawnCrabDice();
             case COLOR_GAME_NAMESPACE:
                 return renderColorGameDice();
+            case COIN_TOSS_GAME_NAMESPACE:
+                return renderCoin();
             default:
                 return null;
         }

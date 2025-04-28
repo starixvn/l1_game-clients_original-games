@@ -1,6 +1,8 @@
 import emptyImage from "../../../assets/coin/empty.png"
 import headImage from "../../../assets/coin/head.png"
 import tailImage from "../../../assets/coin/tail.png"
+import { CoinTossChoices } from "../../../games/saba-club/coin-toss/type"
+import { Size } from "../../../_shared/constants";
 import styles from "./coin.module.scss"
 
 export enum CoinSymbol {
@@ -9,20 +11,21 @@ export enum CoinSymbol {
   TAIL = 1,
 }
 
-const coinImages: Record<number, string> = {
-  [CoinSymbol.EMPTY]: emptyImage,
-  [CoinSymbol.HEAD]: headImage,
-  [CoinSymbol.TAIL]: tailImage,
+const coinImages: Record<string, string> = {
+  [CoinTossChoices.empty]: emptyImage,
+  [CoinTossChoices.head]: headImage,
+  [CoinTossChoices.tail]: tailImage,
 }
 
 interface ICoinProps {
-  coinType: number;
+  coinType: string;
+  size?: typeof Size.large | typeof Size.medium | typeof Size.small;
 }
 
-const Coin: React.FC<ICoinProps> = ({ coinType }) => {
+const Coin: React.FC<ICoinProps> = ({ coinType, size = Size.medium }) => {
   const coinImageUrl = coinImages[coinType];
 
-  return <img className={styles.container} src={coinImageUrl} alt={`coin-${coinType}`} />
+  return <img className={styles[`coin-${size}`]} src={coinImageUrl} alt={`coin-${coinType}`} />
 }
 
 export default Coin;
