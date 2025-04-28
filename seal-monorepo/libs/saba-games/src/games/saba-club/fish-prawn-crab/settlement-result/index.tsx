@@ -13,6 +13,7 @@ import { Size } from "../../../../_shared/constants";
 import { convertValueToSymbol, symbolToStringMap } from "../fish-prawn-crab-utils";
 import { AnimatedDiceSet } from '../../../../_shared/components/fish-prawn-crab-dice/animated-dice';
 import { ResultDisplay } from "./result-display";
+import { ANIMATION_DURATION_MS } from "../constants";
 
 const DEFAULT_RESULT = {};
 
@@ -182,7 +183,7 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
             // }, 500);
         };
 
-        const animationDuration = 3000;
+        const animationDuration = ANIMATION_DURATION_MS;
         const staggerDelay = 150;
 
         if (!isAnimationResult) {

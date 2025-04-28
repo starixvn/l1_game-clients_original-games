@@ -6,6 +6,8 @@ export const constants = {
     oddMapper
 };
 
+export const ANIMATION_DURATION_MS = 3000;
+
 export const MockRoundHistoryItem = {
     "roundId": 2786845,
     "result": {
