@@ -3,7 +3,9 @@
         "id": 2,
         "gameName": "SeDie",
         "name": "SeDie",
-        "namespaces": ["SeDie"],
+        "namespaces": [
+            "SeDie"
+        ],
         "isVisible": true,
         "durations": {
             "wholeRound": 39,
@@ -26,7 +28,9 @@
         "id": 3,
         "gameName": "FishPrawnCrab",
         "name": "FishPrawnCrab",
-        "namespaces": ["FishPrawnCrab"],
+        "namespaces": [
+            "FishPrawnCrab"
+        ],
         "isVisible": true,
         "durations": {
             "wholeRound": 41,
@@ -50,7 +54,9 @@
         "id": 10,
         "gameName": "Baccarat",
         "name": "Baccarat",
-        "namespaces": ["Baccarat"],
+        "namespaces": [
+            "Baccarat"
+        ],
         "isVisible": true,
         "durations": {
             "wholeRound": 46,
@@ -75,7 +81,9 @@
         "id": 22,
         "gameName": "VipSeDie",
         "name": "VipSeDie",
-        "namespaces": ["VipSeDie"],
+        "namespaces": [
+            "VipSeDie"
+        ],
         "isVisible": true,
         "durations": {
             "wholeRound": 39,
@@ -98,7 +106,9 @@
         "id": 55,
         "gameName": "UnbalancedBigSmall4",
         "name": "UnbalancedBigSmall4",
-        "namespaces": ["UnbalancedBigSmall4"],
+        "namespaces": [
+            "UnbalancedBigSmall4"
+        ],
         "isVisible": true,
         "durations": {
             "wholeRound": 40,
@@ -111,8 +121,8 @@
         "totalTurns": 1,
         "numberOfRoundHistory": 100,
         "websocket": {
-            "proxyPath": "",
-            "route": "livepagegateway"
+            "proxyPath": "unbalancedbigsmall",
+            "route": "unbalancedbigsmall"
         },
         "mainObserverNamespace": "UnbalancedBigSmall4",
         "order": 3,
