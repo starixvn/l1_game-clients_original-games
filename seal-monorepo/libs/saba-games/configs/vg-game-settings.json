@@ -29,21 +29,16 @@
         "gameName": "FishPrawnCrab",
         "name": "FishPrawnCrab",
         "namespaces": [
-            "fishprawncrab"
+            "FishPrawnCrab"
         ],
         "isVisible": true,
-        "supportMD5": false,
-        "socketInfo": {
-            "namespace": "fishprawncrab",
-            "path": "fishprawncrab"
-        },
         "durations": {
             "wholeRound": 41,
-            "placingBets": 30,
             "lockingBet": 5,
-            "showResult": 8,
-            "resultAnimation": 2,
-            "beforeStartRound": 2
+            "placingBet": 30,
+            "generatingResult": 1,
+            "showingResult": 8,
+            "startRound": 2
         },
         "numberOfRoundHistory": 100,
         "websocket": {
@@ -51,7 +46,7 @@
             "route": "livepagegateway"
         },
         "serviceName": "fish-prawn-crab",
-        "mainObserverNamespace": "fishprawncrab",
+        "mainObserverNamespace": "FishPrawnCrab",
         "order": 5,
         "isSocketGateway": true
     },
