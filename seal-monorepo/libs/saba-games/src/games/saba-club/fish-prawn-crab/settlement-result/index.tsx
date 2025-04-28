@@ -176,10 +176,10 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
         const handleAnimationComplete = () => {
             this.setState({ isFinishShowResult: true });
 
-            setTimeout(() => {
-                this.handleFinishedShowResult();
-                // this.handleFinishedPlayAnimation();
-            }, 500);
+            // setTimeout(() => {
+            //     this.handleFinishedShowResult();
+            //     // this.handleFinishedPlayAnimation();
+            // }, 500);
         };
 
         const animationDuration = 3000;

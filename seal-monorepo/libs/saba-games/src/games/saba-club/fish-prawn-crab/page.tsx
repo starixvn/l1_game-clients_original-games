@@ -5,11 +5,11 @@ import GatewayGameBase, { IGatewayGameBaseState } from '../../../_shared/compone
 import { configGameContainer } from '../../../_shared/components/game-base/startup';
 import type { GameBaseProps } from '../../../_shared/components/game-base/type';
 import { GameBettingOptionsContext } from '../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
+import { FunctionUtils } from '../../../_shared/utils/funtion-utils';
 import FishPrawnCrabBetOptions from './bet-option/fish-prawn-crab-bet-options';
 import styles from './fish-prawn-crab.module.scss';
 import { containerOptions, setting } from './game-settings';
 import FishPrawnCrabSettlementResult from './settlement-result';
-import { Settlements } from '@sg/sg-game-client';
 
 const FishPrawnCrabStatistic = React.lazy(() => import('./statistic/fish-prawn-crab-statistic'));
 const FishPrawnCrabRoundHistory = React.lazy(() => import('./round-history/fish-prawn-crab-round-history'));
@@ -42,7 +42,7 @@ export default class FishPrawnCrabPage extends GatewayGameBase<IFishPrawnCrabPag
         }
         this.state = {
             ...this.state,
-            gameId: setting.id,
+            gameId: setting.id
         };
     }
 
@@ -82,10 +82,7 @@ export default class FishPrawnCrabPage extends GatewayGameBase<IFishPrawnCrabPag
         );
     }
 
-    @render(gc.Settlements.SettlementStore, (store) => store.isFinishedShowResult)
-    finishPlayAnimation(isFinishedShowResult: boolean) {
-        this.setState((prevState) => ({ ...prevState, isFinishedShowResult }));
-    }
+
 
     renderResultBlock() {
         return <FishPrawnCrabSettlementResult namespace={this.props.namespace} language={this.props.language} />;
@@ -99,27 +96,16 @@ export default class FishPrawnCrabPage extends GatewayGameBase<IFishPrawnCrabPag
         );
     }
 
-
-    @render(Settlements.SettlementStore, (store) => store.currentFinish, {
-        fireImmediately: false,
-    })
-    renderCurrentFinish(currentFinish: gc.GameServiceMessage.Finish) {
-        if (!currentFinish) {
-            return;
-        }
-        const { result, settlementResult } = currentFinish;
-
-        if (!this.isValidResult(result, settlementResult)) {
-            return;
-        }
-        this.setState({ isFinishShowResult: false });
-    }
-
     async showResult(
         hasAnimation: boolean,
         result?: gc.GameServiceMessage.TResult,
         settlementResult?: gc.GameServiceMessage.TSettlementResult,
     ) {
-        return;
+        if (!this.isValidResult(result, settlementResult)) {
+            return;
+        }
+
+        await FunctionUtils.delay(3000);
+        this.finishShowResult();
     }
 } 
