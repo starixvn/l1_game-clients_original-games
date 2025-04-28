@@ -84,6 +84,16 @@
     width: 100%;
 }
 
+.bets-bg {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+}
+
 .container-bets {
     display: flex;
     align-items: center;
