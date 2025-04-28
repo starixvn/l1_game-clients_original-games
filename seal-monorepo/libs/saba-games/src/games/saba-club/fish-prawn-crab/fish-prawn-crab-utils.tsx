@@ -24,16 +24,6 @@ export const convertValueToSymbol = (value: number): FishPrawnCrabSymbol => {
     }
 };
 
-// Map FishPrawnCrabSymbol enum values to string values
-export const symbolToStringMap = {
-    [FishPrawnCrabSymbol.STAG]: 'stag',
-    [FishPrawnCrabSymbol.GOURD]: 'gourd',
-    [FishPrawnCrabSymbol.ROOSTER]: 'rooster',
-    [FishPrawnCrabSymbol.FISH]: 'fish',
-    [FishPrawnCrabSymbol.CRAB]: 'crab',
-    [FishPrawnCrabSymbol.PRAWN]: 'prawn',
-};
-
 // Map choices to their display icons/patterns
 export const choiceToSymbolMap: Record<FishPrawnCrabChoices, FishPrawnCrabSymbol> = {
     [FishPrawnCrabChoices.fish]: FishPrawnCrabSymbol.FISH,

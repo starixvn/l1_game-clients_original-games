@@ -10,7 +10,7 @@ import Styles from "./fish-prawn-crab-animations.module.scss";
 import { gameStateService } from "./services/game-state.service";
 import FishPrawnCrabDice, { FishPrawnCrabSymbol } from "../../../../_shared/components/fish-prawn-crab-dice";
 import { Size } from "../../../../_shared/constants";
-import { convertValueToSymbol, symbolToStringMap } from "../fish-prawn-crab-utils";
+import { convertValueToSymbol } from "../fish-prawn-crab-utils";
 import { AnimatedDiceSet } from '../../../../_shared/components/fish-prawn-crab-dice/animated-dice';
 import { ResultDisplay } from "./result-display";
 import { ANIMATION_DURATION_MS } from "../constants";
@@ -158,15 +158,6 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
         /> : null;
     };
 
-    isWinningSymbol = (symbol: string | number): boolean => {
-        if (typeof symbol === 'string' && this.state.winningSymbols.includes(symbol)) {
-            return true;
-        }
-
-        const stringSymbol = symbolToStringMap[symbol as number];
-        return stringSymbol && this.state.winningSymbols.includes(stringSymbol);
-    };
-
     renderIcons = (result: gc.GameServiceMessage.TResult) => {
         const { isAnimationResult } = this.state;
 
@@ -176,11 +167,6 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
 
         const handleAnimationComplete = () => {
             this.setState({ isFinishShowResult: true });
-
-            // setTimeout(() => {
-            //     this.handleFinishedShowResult();
-            //     // this.handleFinishedPlayAnimation();
-            // }, 500);
         };
 
         const animationDuration = ANIMATION_DURATION_MS;
@@ -204,9 +190,8 @@ export default class FishPrawnCrabSettlementResult extends ObserverComponent<IPr
                     ) : (
                         Object.entries(result).map(([key, value], index) => {
                             const symbol = convertValueToSymbol(value);
-                            const isWinning = this.isWinningSymbol(symbol);
                             return (
-                                <div key={index} className={`${Styles['result-item']} ${isWinning ? Styles['winning-symbol'] : ''}`}>
+                                <div key={index} className={Styles['result-item']}>
                                     <FishPrawnCrabDice
                                         symbol={symbol}
                                         size={Size.large}
