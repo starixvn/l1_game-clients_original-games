@@ -60,7 +60,7 @@
         width: auto;
         border-left: 1px solid var(--c-av-theme-border-1);
         background: transparent;
-        padding: 0 4px;
+        padding: 4px;
     }
 
     .animation-balance {
@@ -82,17 +82,6 @@
 
 .bet {
     width: 100%;
-}
-
-.bets-bg {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding:0 4px;
-    transition: all 0.3s ease;
-
-    &:hover {
-        background: rgba(255, 255, 255, 0.2);
-    }
 }
 
 .container-bets {

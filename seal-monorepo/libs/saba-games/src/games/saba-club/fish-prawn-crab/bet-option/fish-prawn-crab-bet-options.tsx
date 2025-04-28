@@ -86,30 +86,24 @@ export default class FishPrawnCrabBetOptions extends BetOptions {
                 <div className={Styles['bet-options-container']}>
                     {topChoices.map((choice) => {
                         const odd = odds?.[FishPrawnOddsType.single] || 0;
-                        return (
-                            <div className={`${Styles['bets-bg']}`} key={choice}>
-                                {this.renderBetOptions(
-                                    choice,
-                                    odd,
-                                    fractional,
-                                    '',
-                                    this.isBoostedChoice(choice, boostedChoices)
-                                )}
-                            </div>
+                        return (this.renderBetOptions(
+                            choice,
+                            odd,
+                            fractional,
+                            '',
+                            this.isBoostedChoice(choice, boostedChoices)
+                        )
                         );
                     })}
                     {bottomChoices.map((choice) => {
                         const odd = odds?.[FishPrawnOddsType.single] || 0;
-                        return (
-                            <div className={`${Styles['bets-bg']}`} key={choice}>
-                                {this.renderBetOptions(
-                                    choice,
-                                    odd,
-                                    fractional,
-                                    '',
-                                    this.isBoostedChoice(choice, boostedChoices)
-                                )}
-                            </div>
+                        return (this.renderBetOptions(
+                            choice,
+                            odd,
+                            fractional,
+                            '',
+                            this.isBoostedChoice(choice, boostedChoices)
+                        )
                         );
                     })}
                 </div>
