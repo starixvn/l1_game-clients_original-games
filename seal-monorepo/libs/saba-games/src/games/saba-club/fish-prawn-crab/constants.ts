@@ -1,4 +1,4 @@
-import { FishPrawnCrabSymbol } from 'libs/saba-games/src/_shared/components/fish-prawn-crab-dice';
+import { FishPrawnCrabSymbol } from '../../../_shared/components/fish-prawn-crab-dice';
 import { resultMapper, oddMapper } from './fish-prawn-crab-utils';
 
 export const constants = {
