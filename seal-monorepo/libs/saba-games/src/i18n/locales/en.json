@@ -271,8 +271,8 @@
         "game_vendor": "SABA.games",
         "game_name": "Fish Prawn Crab",
         "game_tab_name": "Fish Prawn Crab",
-        "bet_choices_type": "Symbol",
-        "choices_type": "Symbol - Double: {odds_double} Triple: {odds_triple}",
+        "choices_type_double": "Double: {odds_double}",
+        "choices_type_triple": "Triple: {odds_triple}",
         "glossary_fish": "Fish",
         "glossary_prawn": "Prawn",
         "glossary_crab": "Crab",
@@ -281,6 +281,7 @@
         "glossary_rooster": "Rooster",
         "single": "Single",
         "double": "Double",
-        "triple": "Triple"
+        "triple": "Triple",
+        "symbol": "Symbol"
     }
 }

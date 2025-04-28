@@ -83,7 +83,6 @@ export default class FishPrawnCrabPage extends GatewayGameBase<IFishPrawnCrabPag
     }
 
 
-
     renderResultBlock() {
         return <FishPrawnCrabSettlementResult namespace={this.props.namespace} language={this.props.language} />;
     }

@@ -37,9 +37,18 @@ export class FishPrawnCrabHeader extends ObserverComponent<IFishPrawnCrabHeaderP
         const doubleOdds = odds?.[FishPrawnOddsType.double]?.toFixed(2) || '-';
         const tripleOdds = odds?.[FishPrawnOddsType.triple]?.toFixed(2) || '-';
         const gameName = gc.Translator.translate('FishPrawnCrab.game_name');
-        const gameType = gc.Translator.translate('FishPrawnCrab.choices_type')
-            .replace('{odds_double}', doubleOdds)
+
+        const gameTypeDouble = gc.Translator.translate('FishPrawnCrab.choices_type_double')
+            .replace('{odds_double}', doubleOdds);
+
+        const gameTypeTriple = gc.Translator.translate('FishPrawnCrab.choices_type_triple')
             .replace('{odds_triple}', tripleOdds);
+
+        // const gameType = gc.Translator.translate('FishPrawnCrab.choices_type')
+        // .replace('{odds_double}', doubleOdds)
+        // .replace('{odds_triple}', tripleOdds);
+
+        const gameType = `${gc.Translator.translate('FishPrawnCrab.')}${gameTypeDouble} ${gameTypeTriple}`;
 
         return (
             <div className={styles['game-title']} onClick={handleToggle}>
@@ -59,7 +68,18 @@ export class FishPrawnCrabHeader extends ObserverComponent<IFishPrawnCrabHeaderP
 
                 {isExpanded && (
                     <div className={styles['game-option-container']}>
-                        <span className={styles['game-option']}>{gameType}</span>
+                        <div >
+                            {gc.Translator.translate('FishPrawnCrab.symbol')}
+                        </div>
+                        <div >
+                            -
+                        </div>
+                        <div className="odds-info-item">
+                            {gameTypeDouble}
+                        </div>
+                        <div className="odds-info-item">
+                            {gameTypeTriple}
+                        </div>
                     </div>
                 )}
             </div>

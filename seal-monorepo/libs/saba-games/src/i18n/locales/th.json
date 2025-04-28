@@ -271,8 +271,8 @@
         "game_vendor": "SABA.games",
         "game_name": "น้ำเต้าปูปลา",
         "game_tab_name": "น้ำเต้าปูปลา",
-        "bet_choices_type": "เครื่องหมาย",
-        "choices_type": "เครื่องหมาย - สองเท่า: {odds_double} สามเท่า: {odds_triple}",
+        "choices_type_double": "สองเท่า: {odds_double}",
+        "choices_type_triple": "สามเท่า: {odds_triple}",
         "glossary_fish": "ปลา",
         "glossary_prawn": "กุ้ง",
         "glossary_crab": "ปู",
@@ -281,6 +281,7 @@
         "glossary_rooster": "ไก่ชน",
         "single": "เดี่ยว",
         "double": "สองเท่า",
-        "triple": "สามเท่า"
+        "triple": "สามเท่า",
+        "symbol": "เครื่องหมาย"
     }
 }

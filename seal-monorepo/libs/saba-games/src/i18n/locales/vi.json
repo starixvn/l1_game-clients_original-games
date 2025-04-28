@@ -271,8 +271,8 @@
         "game_vendor": "SABA.games",
         "game_name": "Bầu Cua",
         "game_tab_name": "Bầu Cua",
-        "bet_choices_type": "Biểu Tượng",
-        "choices_type": "Biểu Tượng - Đôi: {odds_double} Bộ Ba: {odds_triple}",
+        "choices_type_double": "Đôi: {odds_double}",
+        "choices_type_triple": "Bộ Ba: {odds_triple}",
         "glossary_fish": "Cá",
         "glossary_prawn": "Tôm",
         "glossary_crab": "Cua",
@@ -281,6 +281,7 @@
         "glossary_rooster": "Gà",
         "single": "Đơn",
         "double": "Đôi",
-        "triple": "Bộ Ba"
+        "triple": "Bộ Ba",
+        "symbol": "Biểu Tượng"
     }
 }
