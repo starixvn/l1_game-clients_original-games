@@ -197,7 +197,8 @@ const BetPanel: React.FC<{
         const newMin = Math.max(minBet, stakeLevelMinBet);
 
         let newMax = 0;
-        if (Object.keys(maxBetPerChoices).length <= 0 && namespace === UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE) {
+        if (Object.keys(maxBetPerChoices).length <= 0 &&
+            (namespace === UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE || namespace === COIN_TOSS_GAME_NAMESPACE)) {
             newMax = Math.min(maxBet, stakeLevel.maxBet);
         } else {
             newMax = Math.min(betChoiceMax, maxBet, stakeLevel.maxBet);
@@ -405,10 +406,10 @@ const BetPanel: React.FC<{
 
     const renderCoin = () => {
         return (
-            <Coin coinType={betChoice} size={Size.small}/>
+            <Coin coinType={betChoice} size={Size.small} />
         )
     }
-    
+
     const renderGameElements = (gameName: string) => {
         switch (gameName) {
             case SE_DIE_GAME_NAMESPACE:
