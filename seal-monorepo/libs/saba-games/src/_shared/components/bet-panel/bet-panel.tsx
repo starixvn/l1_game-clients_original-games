@@ -408,7 +408,7 @@ const BetPanel: React.FC<{
         return <></>;
     }
 
-    // TODO: 街上memberSite時，className不用style，直接接上memberSite class
+    // TODO: 接上memberSite時，className不用style，直接接上memberSite class
     return (
         <div className="c-quick-bet c-quick-bet--bottom-left">
             <div className="c-quick-bet__btn"></div>
