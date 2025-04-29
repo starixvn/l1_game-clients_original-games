@@ -30,6 +30,7 @@ function getSharedContainer(siteConfigs: gc.Configs.SiteConfigs) {
             gc.ConnectSite.FEATURE_NAME,
             gc.ChipSetting.FEATURE_NAME,
             gc.GatewayConnection.FEATURE_NAME,
+            gc.RoundBasePF.FEATURE_NAME,
             Lobby.FEATURE_NAME,
         ],
         features: [...gc.defaultFeatures, Lobby],

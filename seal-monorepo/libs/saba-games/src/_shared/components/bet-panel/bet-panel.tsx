@@ -22,7 +22,7 @@ import {
     useGameBettingOptionsContext,
     useGameBettingZoneContext,
 } from '../../react-contexts/game-betting-zone-context/game-betting-zone-context';
-import { checkValidAmount, parseInputValue, WarnMsgType } from '../../utils/betting-util';
+import { checkValidAmount, parseInputValue, WarnMsgType, calculateMinMaxAmount } from '../../utils/betting-util';
 import { getChoicesType } from '../../utils/choice-type';
 import BettingChips from '../betting-chips';
 import Dice from '../dice';
@@ -58,6 +58,7 @@ export interface IBetPanel extends IStateObserver {
     minBet: number;
     maxBet: number;
     maxBetPerChoices: gc.GameServiceMessage.MaxBetPerChoices;
+    clientSeed: string;
 }
 
 export interface ILatestBetRecord {
@@ -77,6 +78,7 @@ class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends O
             minBet: 0,
             maxBet: 0,
             maxBetPerChoices: {},
+            clientSeed: '',
         } as S;
     }
 
@@ -115,12 +117,18 @@ class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends O
     }
 
     @handle(gc.Bet.BetHandler)
-    handleBet(amount: number, betChoice: string) {
-        return { amount, betChoice };
+    handleBet(amount: number, betChoice: string, clientSeed: string) {
+        return { amount, betChoice, clientSeed };
+    }
+
+    @render(gc.RoundBasePF.ProvablyFairStore, (store) => store.clientSeed)
+    handleClientSeed(clientSeed: string) {
+        console.log('clientSeed', clientSeed);
+        this.setState({ clientSeed } as IBetPanel);
     }
 
     render() {
-        const { clientRoundId, currency, minBet, maxBet, maxBetPerChoices, stakeLevel } = this.state as S;
+        const { clientRoundId, currency, minBet, maxBet, maxBetPerChoices, stakeLevel, clientSeed } = this.state as S;
 
         return (
             <BetPanel
@@ -132,6 +140,7 @@ class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends O
                 maxBetPerChoices={maxBetPerChoices}
                 stakeLevel={stakeLevel}
                 handleBet={this.handleBet.bind(this)}
+                clientSeed={clientSeed}
             ></BetPanel>
         );
     }
@@ -145,8 +154,9 @@ const BetPanel: React.FC<{
     maxBet: number;
     maxBetPerChoices: gc.GameServiceMessage.MaxBetPerChoices;
     stakeLevel: gc.Player.IStakeLevel;
-    handleBet: (amount: number, betChoice: string) => void;
-}> = ({ namespace, clientRoundId, currency, minBet, maxBet, maxBetPerChoices, stakeLevel, handleBet }) => {
+    clientSeed: string;
+    handleBet: (amount: number, betChoice: string, clientSeed: string) => void;
+}> = ({ namespace, clientRoundId, currency, minBet, maxBet, maxBetPerChoices, stakeLevel, handleBet, clientSeed }) => {
     const { panelId, setPanelId, setShow } = useGameBettingOptionsContext();
     const { gameName, betChoice, odd = 0 } = useGameBettingZoneContext();
     const { siteId } = useAppContext();
@@ -194,15 +204,16 @@ const BetPanel: React.FC<{
 
     useEffect(() => {
         if (!betChoice) return;
-        const newMin = Math.max(minBet, stakeLevelMinBet);
-
-        let newMax = 0;
-        if (Object.keys(maxBetPerChoices).length <= 0 &&
-            (namespace === UNBALANCED_BIG_SMALL_4_GAME_NAMESPACE || namespace === COIN_TOSS_GAME_NAMESPACE)) {
-            newMax = Math.min(maxBet, stakeLevel.maxBet);
-        } else {
-            newMax = Math.min(betChoiceMax, maxBet, stakeLevel.maxBet);
-        }
+        // calculate min and max using helper
+        const { min: newMin, max: newMax } = calculateMinMaxAmount(
+            minBet,
+            stakeLevelMinBet,
+            maxBet,
+            stakeLevel.maxBet,
+            betChoiceMax,
+            maxBetPerChoices,
+            namespace
+        );
 
         setMin(newMin);
         setMax(newMax);
@@ -212,7 +223,7 @@ const BetPanel: React.FC<{
             if (prev > newMax) return newMax;
             return prev;
         });
-    }, [betChoice, minBet, maxBet, stakeLevelMinBet, betChoiceMax, stakeLevel.maxBet]);
+    }, [betChoice, minBet, maxBet, stakeLevelMinBet, betChoiceMax, stakeLevel.maxBet, maxBetPerChoices, namespace]);
 
     const setWarningWithTimeout = (message: string) => {
         if (warningTimeoutRef.current) {
@@ -286,7 +297,7 @@ const BetPanel: React.FC<{
         }
 
         if (betChoice) {
-            handleBet?.(validatedAmount, betChoice);
+            handleBet?.(validatedAmount, betChoice, clientSeed);
             onHide?.();
             updateLatestBetToStorage(namespace, clientRoundId);
         }
