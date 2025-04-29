@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ColorGameSymbol, diceValueToSymbol } from './index';
-import FishPrawnCrabDice from './index';
+import ColorGameDice from './index';
 import { Size } from "../../constants";
-import styles from './fish-prawn-crab-dice.module.scss';
+import styles from './color-game-dice.module.scss';
 
 interface AnimatedDiceProps {
     finalSymbol: ColorGameSymbol;
@@ -250,7 +250,7 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
             <div
                 className={`${styles['dice-rolling']} ${rollSpeed} ${styles['animated-dice-wrapper']} ${isAnimating ? styles['animated-dice-wrapper-shaking'] : ''} ${getShakeFrequencyClass()}`}
             >
-                <FishPrawnCrabDice
+                <ColorGameDice
                     symbol={currentSymbol}
                     size={size}
                 />
