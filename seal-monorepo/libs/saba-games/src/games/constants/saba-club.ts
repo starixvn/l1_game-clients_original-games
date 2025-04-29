@@ -16,3 +16,12 @@ export const BACCARAT_CHOICES = {
     BANKER_PAIR: 'bankerPair',
 };
 
+export const FISH_PRAWN_CRAB_CHOICES = {
+    FISH: 'fish',
+    PRAWN: 'prawn',
+    CRAB: 'crab',
+    STAG: 'stag',
+    GOURD: 'gourd',
+    ROOSTER: 'rooster',
+};
+

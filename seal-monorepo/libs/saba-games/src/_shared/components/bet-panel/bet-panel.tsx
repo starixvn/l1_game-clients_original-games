@@ -14,7 +14,7 @@ import {
     VIVA88_SITE_ID,
 } from '../../../../constant/app';
 import { useAppContext } from '../../../appProvider';
-import { BACCARAT_CHOICES, SE_DIE_CHOICES } from '../../../games/constants/saba-club';
+import { BACCARAT_CHOICES, FISH_PRAWN_CRAB_CHOICES, SE_DIE_CHOICES } from '../../../games/constants/saba-club';
 import { ChoiceSeDieIconMapper, SeDieChoices } from '../../../games/saba-club/sedie/type';
 import {
     useGameBettingOptionsContext,
@@ -418,7 +418,9 @@ const BetPanel: React.FC<{
                     ['sg-bet-panel__left-dec-100']:
                         SE_DIE_CHOICES.RED2 === betChoice ||
                         BACCARAT_CHOICES.PLAYER_PAIR === betChoice ||
-                        BACCARAT_CHOICES.BANKER_PAIR === betChoice,
+                        BACCARAT_CHOICES.BANKER_PAIR === betChoice ||
+                        FISH_PRAWN_CRAB_CHOICES.PRAWN === betChoice ||
+                        FISH_PRAWN_CRAB_CHOICES.ROOSTER === betChoice,
                 })}
             >
                 <div className="c-betslip">
