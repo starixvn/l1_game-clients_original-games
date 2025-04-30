@@ -1,7 +1,6 @@
 import emptyImage from "../../../assets/coin/empty.png"
 import headImage from "../../../assets/coin/head.png"
 import tailImage from "../../../assets/coin/tail.png"
-import { CoinTossChoices } from "../../../games/saba-club/coin-toss/type"
 import { Size } from "../../../_shared/constants";
 import styles from "./coin.module.scss"
 
@@ -12,9 +11,9 @@ export enum CoinSymbol {
 }
 
 const coinImages: Record<string, string> = {
-  [CoinTossChoices.empty]: emptyImage,
-  [CoinTossChoices.head]: headImage,
-  [CoinTossChoices.tail]: tailImage,
+  [CoinSymbol.EMPTY]: emptyImage,
+  [CoinSymbol.HEAD]: headImage,
+  [CoinSymbol.TAIL]: tailImage,
 }
 
 interface ICoinProps {

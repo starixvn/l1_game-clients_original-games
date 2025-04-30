@@ -1,5 +1,4 @@
 export enum CoinTossChoices {
-    empty = 'empty',
     head = 'head',
     tail = 'tail'
 }

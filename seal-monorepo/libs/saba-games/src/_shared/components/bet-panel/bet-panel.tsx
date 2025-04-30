@@ -37,6 +37,7 @@ import FishPrawnCrabDice from '../fish-prawn-crab-dice';
 import ColorGameDice from '../color-game-dice';
 import { SyncMemberSiteBalance } from '../../utils/sync-member-site-balance';
 import Coin from '../coin'
+import { choiceToSymbolMap as coinTossChoiceToSymbolMap } from '../../../games/saba-club/coin-toss/coin-toss-utils';
 
 const WARNING_CLOSE_DELAY = 60000;
 
@@ -416,8 +417,9 @@ const BetPanel: React.FC<{
     };
 
     const renderCoin = () => {
+        const coinType = coinTossChoiceToSymbolMap[betChoice];
         return (
-            <Coin coinType={betChoice} size={Size.small} />
+            <Coin coinType={coinType} size={Size.small} />
         )
     }
 

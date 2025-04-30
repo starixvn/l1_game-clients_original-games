@@ -8,6 +8,7 @@ import OwnBet from '../../../../_shared/components/bet-option/own-bet';
 import TotalBet from '../../../../_shared/components/bet-option/total-bet';
 import Coin from '../../../../_shared/components/coin';
 import BettingBlock from '../../../../_shared/components/bet-option/betting-block';
+import { choiceToSymbolMap } from '../coin-toss-utils';
 
 export default class CoinTossBetOptions extends BetOptions {
     renderBetOptions(betChoice: string, odd: number, fractional: boolean, name: string = '', isBoostedChoice: boolean = false) {
@@ -24,7 +25,7 @@ export default class CoinTossBetOptions extends BetOptions {
             >
                 <div className={`${styles['container-bets']} ${coinTossStyles['padding-bet']}`}>
                     <div className={coinTossStyles['bet-option']}>
-                        <Coin coinType={betChoice} />
+                        <Coin coinType={choiceToSymbolMap[betChoice]} />
                         <div className={coinTossStyles['bet-choice-text']}>{name}</div>
                     </div>
                     <OddsComponent value={odd} fractional={false} isBoostedChoice={isBoostedChoice} />
