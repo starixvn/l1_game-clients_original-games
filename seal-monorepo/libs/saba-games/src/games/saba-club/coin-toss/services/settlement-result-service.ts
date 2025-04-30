@@ -44,27 +44,27 @@ export class SettlementResultService implements ISettlementResultService {
         return winningSymbols;
     }
 
+    //TODO: 更新 winning text
     getWinningTextListByResult(result: gc.GameServiceMessage.TResult): string[] {
         if (!result || typeof result !== 'object' || Object.keys(result).length === 0) return [];
 
-        const diceResult = result as Record<string, number>;
+        const coinResult = result as Record<string, boolean>;
 
-        const diceValues = [
-            diceResult.dice1,
-            diceResult.dice2,
-            diceResult.dice3
+        const coinValues = [
+            coinResult.head,
+            coinResult.tail
         ];
 
-        return diceValues
-            .map(value => this.diceValueToSymbolName(value))
+        return coinValues
+            .map(value => this.coinValueToSymbolName(value))
             .filter(Boolean)
             .map(choice => gc.Translator.translate(`CoinToss.glossary_${choice}`));
     }
 
-    private diceValueToSymbolName(value: number): CoinTossChoices | null {
+    private coinValueToSymbolName(value: boolean): CoinTossChoices | null {
         switch (value) {
-            case 0: return CoinTossChoices.head;
-            case 1: return CoinTossChoices.tail;
+            case true: return CoinTossChoices.head;
+            case false: return CoinTossChoices.tail;
             default: return null;
         }
     }
