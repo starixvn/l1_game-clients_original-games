@@ -17,4 +17,4 @@ export const emptyRoundItem = {
 
 export { choiceToSymbolMap };
 
-export const MAX_DISPLAYED_ROUNDS = 3; 
+export const MAX_DISPLAYED_ROUNDS = 10; 
