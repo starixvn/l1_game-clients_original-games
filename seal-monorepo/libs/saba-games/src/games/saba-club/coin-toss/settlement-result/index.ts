@@ -1,1 +1,0 @@
-export { default as CoinTossSettlementResult } from './coin-toss-settlement-result';

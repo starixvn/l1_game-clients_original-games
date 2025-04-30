@@ -9,7 +9,7 @@ import { FunctionUtils } from '../../../_shared/utils/funtion-utils';
 import CoinTossBetOptions from './bet-option/coin-toss-bet-options';
 import styles from './coin-toss.module.scss';
 import { containerOptions, setting } from './game-settings';
-import { CoinTossSettlementResult } from './settlement-result';
+import  CoinTossSettlementResult  from './settlement-result';
 
 const CoinTossStatistic = React.lazy(() => import('./statistic/coin-toss-statistic'));
 const CoinTossRoundHistory = React.lazy(() => import('./round-history/coin-toss-round-history'));
@@ -83,8 +83,7 @@ export default class CoinTossPage extends GatewayGameBase<ICoinTossPageProps, IC
     }
 
     renderResultBlock() {
-        return <></>
-        // return <CoinTossSettlementResult namespace={this.props.namespace} language={this.props.language} />;
+        return <CoinTossSettlementResult namespace={this.props.namespace} language={this.props.language} />;
     }
 
     renderStatistic() {

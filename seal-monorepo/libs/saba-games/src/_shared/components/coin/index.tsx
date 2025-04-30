@@ -10,14 +10,14 @@ export enum CoinSymbol {
   TAIL = 1,
 }
 
-const coinImages: Record<string, string> = {
+const coinImages: Record<CoinSymbol, string> = {
   [CoinSymbol.EMPTY]: emptyImage,
   [CoinSymbol.HEAD]: headImage,
   [CoinSymbol.TAIL]: tailImage,
 }
 
 interface ICoinProps {
-  coinType: string;
+  coinType: CoinSymbol;
   size?: typeof Size.large | typeof Size.medium | typeof Size.small;
 }
 
