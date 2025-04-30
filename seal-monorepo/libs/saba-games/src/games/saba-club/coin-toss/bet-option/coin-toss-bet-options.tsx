@@ -7,15 +7,14 @@ import OddsComponent from '../../../../_shared/components/bet-option/odd-compone
 import OwnBet from '../../../../_shared/components/bet-option/own-bet';
 import TotalBet from '../../../../_shared/components/bet-option/total-bet';
 import Coin from '../../../../_shared/components/coin';
-
-import CoinTossBettingBlock from './component/coin-toss-betting-block';
+import BettingBlock from '../../../../_shared/components/bet-option/betting-block';
 
 export default class CoinTossBetOptions extends BetOptions {
     renderBetOptions(betChoice: string, odd: number, fractional: boolean, name: string = '', isBoostedChoice: boolean = false) {
         const { settlementResult } = this.state;
 
         return (
-            <CoinTossBettingBlock
+            <BettingBlock
                 odd={odd}
                 betChoice={betChoice}
                 gameName={this.props.gameName}
@@ -30,7 +29,7 @@ export default class CoinTossBetOptions extends BetOptions {
                     </div>
                     <OddsComponent value={odd} fractional={false} isBoostedChoice={isBoostedChoice} />
                 </div>
-            </CoinTossBettingBlock>
+            </BettingBlock>
         );
     }
 
