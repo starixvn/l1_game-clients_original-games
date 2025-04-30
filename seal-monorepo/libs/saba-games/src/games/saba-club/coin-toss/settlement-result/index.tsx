@@ -11,6 +11,10 @@ import { gameStateService } from "./services/game-state.service";
 import { convertValueToSymbol } from "../coin-toss-utils";
 import { ResultDisplay } from "./result-display";
 import { ANIMATION_DURATION_MS } from "../constants/coin-toss-constants";
+import { Size } from "../../../../_shared/constants";
+import Coin, { CoinSymbol } from "../../../../_shared/components/coin";
+import AnimatedCoin from "../../../../_shared/components/coin/animated-coin";
+import ThreeDCoin from "../../../../_shared/components/coin/3d-coin";
 
 const DEFAULT_RESULT = {};
 
@@ -167,20 +171,22 @@ export default class CoinTossSettlementResult extends ObserverComponent<IPropsOb
         };
 
         const animationDuration = ANIMATION_DURATION_MS;
-        const staggerDelay = 150;
 
         if (!isAnimationResult) {
             this.setState({ isFinishShowResult: true });
         }
 
+
         return (
             <div className={`${Styles['container-bets']} ${isAnimationResult ? Styles['has-animation'] : ''}`}>
                 <div className={Styles['result-container']}>
-                    {/* {isAnimationResult ? (
-                        // TODO: 待補 動畫
+                    {isAnimationResult ? (
+                        <AnimatedCoin />
                     ) : (
-                        // 靜態結果
-                    )} */}
+                        <div className={Styles['result-item']}>
+                            <Coin coinType={CoinSymbol.HEAD} size={Size.large} />
+                        </div>
+                    )}
                 </div>
                 {this.renderWinnerDisplay()}
             </div>
@@ -191,7 +197,11 @@ export default class CoinTossSettlementResult extends ObserverComponent<IPropsOb
         return (
             <div className={Styles['container-bets']}>
                 <div className={Styles['result-container']}>
-                    {/* TODO: 待補 左側遊戲結果 */}
+                    <AnimatedCoin />
+                    {/* <Coin
+                        coinType={CoinSymbol.EMPTY}
+                        size={Size.large}
+                    /> */}
                 </div>
             </div>
         );
