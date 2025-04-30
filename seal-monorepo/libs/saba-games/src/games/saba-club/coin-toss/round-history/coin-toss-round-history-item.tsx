@@ -3,6 +3,8 @@ import React from "react";
 import Coin, { CoinSymbol } from "../../../../_shared/components/coin";
 import { Size } from "../../../../_shared/constants";
 import styles from "./coin-toss-round-history.module.scss";
+import { CoinTossRoundHistoryTooltip } from "./tooltip";
+import { CoinTossChoices } from "../type";
 
 interface ICoinTossRoundHistoryItemProps {
     roundHistory: gc.RoundHistories.RoundHistory;
@@ -18,6 +20,7 @@ export const CoinTossRoundHistoryItem: React.FC<ICoinTossRoundHistoryItemProps> 
     }
 
     const coinType = roundHistory.result["head"] ? CoinSymbol.HEAD : CoinSymbol.TAIL;
+    const winner = roundHistory.result["head"] ? CoinTossChoices.head : CoinTossChoices.tail;
     return (
         <div key={roundHistory.roundId} className={styles["history-item"]}>
             <Coin
@@ -25,6 +28,10 @@ export const CoinTossRoundHistoryItem: React.FC<ICoinTossRoundHistoryItemProps> 
                 size={Size.medium}
             />
             {showArrow && <span className={styles["arrow"]}></span>}
+            <CoinTossRoundHistoryTooltip
+                roundId={roundHistory.roundId}
+                winner={winner}
+            />
         </div>
     );
 };

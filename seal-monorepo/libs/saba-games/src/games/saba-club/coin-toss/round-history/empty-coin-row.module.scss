@@ -13,10 +13,6 @@
   animation: blink 1s ease-in-out infinite alternate;
 }
 
-.animationDelay {
-  animation-delay: 0s;
-}
-
 @keyframes popIn {
   0% {
     transform: scale(0);

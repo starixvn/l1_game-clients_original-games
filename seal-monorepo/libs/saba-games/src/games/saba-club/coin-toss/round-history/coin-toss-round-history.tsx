@@ -17,7 +17,7 @@ const blinkDefaultRoundItem = {
 } as gc.RoundHistories.RoundHistory;
 
 const emptyDefaultRoundItem = {
-    roundId: -2,
+    roundId: -1,
     result: emptyRoundItem,
     createdAt: new Date().toISOString(),
     settlementResult: {},

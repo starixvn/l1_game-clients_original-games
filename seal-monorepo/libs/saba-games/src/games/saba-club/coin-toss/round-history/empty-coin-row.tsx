@@ -20,8 +20,7 @@ export const EmptyCoinRow: React.FC<IEmptyDiceRowProps> = ({
             key={"empty-coin-container"}
             className={`${styles.diceContainer} 
                         ${isFinishedShowResult ? styles.animated : ''} 
-                        ${blinking ? styles.blinking : ''} 
-                        ${styles.animationDelay}`}
+                        ${blinking ? styles.blinking : ''} `}
         >
             <Coin
                 data-testid={"empty-coin"}

@@ -17,6 +17,11 @@
         align-items: center;
         gap: 5px;
         position: relative;
+
+        &:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
     }
 
     .arrow {
