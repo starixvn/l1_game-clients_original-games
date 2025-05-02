@@ -7,57 +7,93 @@ import styles from "./animated-coin.module.scss"
 import { CoinSymbol } from '.';
 
 interface ICoinProps {
-  size?: typeof Size.large | typeof Size.medium | typeof Size.small;
-  onFlipEnd?: (symbol: CoinSymbol) => void;
-  result?: CoinSymbol;
+      size?: typeof Size.large | typeof Size.medium | typeof Size.small;
+      onFlipEnd?: (symbol: CoinSymbol) => void;
+      result?: CoinSymbol;
 }
 
-const AnimatedCoin: React.FC<ICoinProps> = ({ 
-  size = Size.medium,
-  onFlipEnd,
-  result = CoinSymbol.HEAD
+const AnimatedCoin: React.FC<ICoinProps> = ({
+      size = Size.medium,
+      onFlipEnd,
+      result = CoinSymbol.HEAD
 }) => {
-  const [isFlipping, setIsFlipping] = useState(true);
+      const [isFlipping, setIsFlipping] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsFlipping(false);
-      if (onFlipEnd) {
-        onFlipEnd(result);
-      }
-    }, 1500);
+      useEffect(() => {
+            // const timer = setTimeout(() => {
+            //       setIsFlipping(false);
+            //       if (onFlipEnd) {
+            //             onFlipEnd(result);
+            //       }
+            // }, 1500);
 
-    return () => clearTimeout(timer);
-  }, [onFlipEnd, result]);
+            // return () => clearTimeout(timer);
+      }, [onFlipEnd, result]);
 
-  const flipClass = result === CoinSymbol.HEAD ? 'flipping-head' : 'flipping-tail';
+      const flipClass = result === CoinSymbol.HEAD ? 'flipping-head' : 'flipping-tail';
 
-  return (
-    <div className={styles['coin-container']}>
-      <div 
-        className={`${styles.coin} ${styles[size]} ${isFlipping ? styles[flipClass] : ''}`}
-      >
-        {/* 正面 */}
-        <div 
-          className={`${styles['coin-face']} ${styles.front}`}
-          style={{ backgroundImage: `url(${headImage})` }}
-        />
-        
-        {/* 背面 */}
-        <div 
-          className={`${styles['coin-face']} ${styles.back}`}
-          style={{ backgroundImage: `url(${tailImage})` }}
-        />
+      return (
+            <div className={styles['coin']}>
+                  <div className={styles['front']}></div>
+                  <div className={styles['back']}></div>
+                  <div className={styles['side']}>
+                        <div className={styles['spoke']}></div>
+                        <div className={styles['spoke']}></div>
+                        <div className={styles['spoke']}></div>
+                        <div className={styles['spoke']}></div>
+                        <div className={styles['spoke']}></div>
+                        <div className={styles['spoke']}></div>
+                        <div className={styles['spoke']}></div>
+                        <div className={styles['spoke']}></div>
+                        <div className={styles['spoke']}></div>
+                        <div className={styles['spoke']}></div>
+                        <div className={styles['spoke']}></div>
+                        <div className={styles['spoke']}></div>
+                        <div className={styles['spoke']}></div>
+                        <div className={styles['spoke']}></div>
+                        <div className={styles['spoke']}></div>
+                  </div>
+            </div>
+      )
+      return (
+            <>
+                  <div className={styles['edge-container']}>
+                        <div className={styles['coin-edge']}>
+                              {Array(50).fill(1).map((item, key) => <div key={key} />)}
+                        </div>
+                  </div>
+                  <div className={styles.coin}>
+                        <div className={styles['coin__front']} />
+                        <div className={styles['coin__back']} />
+                  </div>
+            </>
 
-        {/* 硬幣邊緣 */}
-        <div className={styles['coin-edge']}>
-          {[...Array(36)].map((_, index) => (
-            <div key={index} className={styles['coin-edge-segment']} />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
+      )
+      return (
+            <div className={styles['coin-container']}>
+                  <div
+                        className={`${styles.coin} ${styles[size]} ${isFlipping ? styles[flipClass] : ''}`}
+                  >
+                        {/* 正面 */}
+                        <div
+                              className={`${styles['coin-face']} ${styles.front}`}
+                              style={{ backgroundImage: `url(${headImage})` }}
+                        />
+
+                        {/* 背面 */}
+                        <div
+                              className={`${styles['coin-face']} ${styles.back}`}
+                              style={{ backgroundImage: `url(${tailImage})` }}
+                        />
+
+
+                  </div>
+                  {/* 硬幣邊緣 */}
+                  <div className={styles['coin-edge']}>
+                        {Array(36).fill(1).map((_, key) => <div key={key} />)}
+                  </div>
+            </div>
+      );
 }
 
 export default AnimatedCoin;

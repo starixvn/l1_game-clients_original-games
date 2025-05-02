@@ -14,7 +14,6 @@ import { ANIMATION_DURATION_MS } from "../constants/coin-toss-constants";
 import { Size } from "../../../../_shared/constants";
 import Coin, { CoinSymbol } from "../../../../_shared/components/coin";
 import AnimatedCoin from "../../../../_shared/components/coin/animated-coin";
-import ThreeDCoin from "../../../../_shared/components/coin/3d-coin";
 
 const DEFAULT_RESULT = {};
 

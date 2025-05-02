@@ -1,109 +1,123 @@
-@keyframes coinFlipHead {
-    0% {
-        transform: rotateY(0);
-    }
-    100% {
-        transform: rotateY(360deg);
-    }
-}
+@use "sass:math";
 
-@keyframes coinFlipTail {
-    0% {
-        transform: rotateY(0);
-    }
-    100% {
-        transform: rotateY(360deg);
-    }
-}
+$coin-diameter: 120px;
+$coin-thickness: 10px;
+$coin-color: #F4B30D;
+$coin-front: "../../../assets/coin/head.png";
+$coin-back: "../../../assets/coin/tail.png";
 
-.coin-container {
-    perspective: 1000px;
-    display: inline-block;
-}
+$coin_diam: 120px;
+$coin_depth: 10px;
+$spin_speed: 2s;
+$facets: 32;
+$spokes: math.div($facets, 2);
+$deg: math.sin(math.div(math.$pi, $facets));
+$facet_length: $coin_diam * $deg;
 
 .coin {
-    position: relative;
-    transform-style: preserve-3d;
-    cursor: pointer;
+      height: $coin_diam;
+      width: $coin_diam;
+      position: relative;
+      transform-style: preserve-3d;
+      transform-origin: 50%;
+      animation: spin $spin_speed infinite;
+      animation-timing-function: linear;
 
-    &.large {
-        width: 120px;
-        height: 120px;
-    }
+      // Faces --------------------
+      .front,
+      .back {
+            position: absolute;
+            height: $coin_diam;
+            width: $coin_diam;
+            border-radius: 50%;
+            background-size: cover;
+      }
 
-    &.medium {
-        width: 36px;
-        height: 36px;
-    }
+      .front {
+            transform: translateZ(math.div($coin_depth, 2));
+            background-image: url($coin-front);
+      }
 
-    &.small {
-        width: 24px;
-        height: 24px;
-    }
+      .back {
+            transform: translateZ(math.div(-$coin_depth, 2)) rotateY(180deg);
+            background-image: url($coin-back);
+      }
 
-    &.flipping-head, &.flipping-tail {
-        animation: coinFlipHead 2s linear infinite;
-    }
+      // The Side -----------------
+      .side {
+            transform: translateX($coin_diam * 0.45);
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+
+            .spoke {
+                  height: $coin_diam;
+                  width: $coin_depth;
+                  position: absolute;
+                  transform-style: preserve-3d;
+                  backface-visibility: hidden;
+
+                  &:before,
+                  &:after {
+                        content: '';
+                        display: block;
+                        height: $facet_length;
+                        width: $coin_depth;
+                        position: absolute;
+                        transform: rotateX(math.div((180deg - math.div(360deg, $facets)), 2));
+                        background: $coin-color;
+                        background-size: 100% math.div($facets * $facet_length, 144);
+                  }
+
+                  &:before {
+                        transform-origin: top center;
+                  }
+
+                  &:after {
+                        bottom: 0;
+                        transform-origin: center bottom;
+                  }
+            }
+
+            @for $i from 1 through $spokes {
+                  .spoke:nth-child(#{$i}) {
+                        transform: rotateY(90deg) rotateX(math.div(180deg * $i, $spokes));
+                  }
+            }
+      }
+
+      &.skeleton {
+            .front,
+            .back {
+                  display: none;
+            }
+
+            .side,
+            .spoke,
+            .spoke:before,
+            .spoke:after {
+                  backface-visibility: visible;
+            }
+
+            .spoke {
+                  background: rgba(#aaa, 0.1);
+
+                  &:before {
+                        background: rgba(#faa, 0.2);
+                  }
+
+                  &:after {
+                        background: rgba(#ccf, 0.2);
+                  }
+            }
+      }
 }
 
-.coin-face {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    border-radius: 50%;
-    backface-visibility: hidden;
-    background-size: cover;
-    background-position: center;
-}
-
-.front {
-    transform: translateZ(6px);
-}
-
-.back {
-    transform: rotateY(180deg) translateZ(6px);
-}
-
-// 添加硬幣邊緣效果
-.coin::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 50%;
-    background: linear-gradient(90deg, #ffd700, #ffa500, #ffd700);
-    transform: translateZ(0);
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-}
-
-// 添加邊緣細節
-.coin::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 50%;
-    border: 2px solid rgba(0, 0, 0, 0.2);
-    transform: translateZ(0);
-    pointer-events: none;
-}
-
-// 添加光澤效果
-.coin-face::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 50%;
-    background: linear-gradient(45deg, 
-        rgba(255,255,255,0.2) 0%,
-        rgba(255,255,255,0) 50%,
-        rgba(0,0,0,0.1) 100%);
-    pointer-events: none;
+// Animation
+@keyframes spin {
+      from {
+            transform: rotateY(0deg);
+      }
+      to {
+            transform: rotateY(360deg);
+      }
 }
