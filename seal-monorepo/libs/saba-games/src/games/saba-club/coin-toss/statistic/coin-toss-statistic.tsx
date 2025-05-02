@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './coin-toss-statistic.module.scss';
 import { CoinTossScoreBoard } from '../scoreboard';
-// import { CoinTossResultHistory } from '../result-history';
+import { CoinTossResultHistory } from '../result-history';
 
 interface Props {
     namespace: string;
@@ -17,10 +17,10 @@ export default function CoinTossStatistic({ namespace, gameName, language }: Pro
                 gameName={gameName}
                 language={language}
             />
-            {/* <CoinTossResultHistory
+            <CoinTossResultHistory
                 namespace={namespace}
                 language={language}
-            /> */}
+            />
         </div>
     );
 }
