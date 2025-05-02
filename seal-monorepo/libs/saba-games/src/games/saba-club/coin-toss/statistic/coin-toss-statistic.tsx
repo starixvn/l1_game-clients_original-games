@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './coin-toss-statistic.module.scss';
-// import { CoinTossScoreboard } from '../scoreboard';
+import { CoinTossScoreBoard } from '../scoreboard';
 // import { CoinTossResultHistory } from '../result-history';
 
 interface Props {
@@ -12,13 +12,12 @@ interface Props {
 export default function CoinTossStatistic({ namespace, gameName, language }: Props) {
     return (
         <div className={styles.statistic}>
-            {/* TODO: 待補 */}
-            {/* <CoinTossScoreboard
+            <CoinTossScoreBoard
                 namespace={namespace}
                 gameName={gameName}
                 language={language}
             />
-            <CoinTossResultHistory
+            {/* <CoinTossResultHistory
                 namespace={namespace}
                 language={language}
             /> */}

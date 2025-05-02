@@ -12,6 +12,7 @@ export type CoinTossResult = {
 export type CoinTossSettlementResult = {
     [key in CoinTossSymbolType]?: boolean;
 };
+
 export interface CoinTossBet {
     symbol: CoinTossSymbolType;
     amount: number;
@@ -25,3 +26,9 @@ export interface CoinTossRound {
     result?: CoinTossResult;
     bets?: CoinTossBet[];
 } 
+
+export interface CoinTossRoundHistory {
+    roundId: number;
+    settlementResult: CoinTossSettlementResult;
+    result: CoinTossResult;
+}

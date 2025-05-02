@@ -1,7 +1,8 @@
 import React from "react";
-import Coin, { CoinSymbol } from "../../../../_shared/components/coin";
+import { CoinSymbol } from "../../../../_shared/components/coin";
 import { Size } from "../../../../_shared/constants";
 import styles from "./empty-coin-row.module.scss";
+import CoinHistory from "libs/saba-games/src/_shared/components/coin-history";
 
 interface IEmptyDiceRowProps {
     count?: number;
@@ -22,10 +23,9 @@ export const EmptyCoinRow: React.FC<IEmptyDiceRowProps> = ({
                         ${isFinishedShowResult ? styles.animated : ''} 
                         ${blinking ? styles.blinking : ''} `}
         >
-            <Coin
+            <CoinHistory
                 data-testid={"empty-coin"}
                 coinType={CoinSymbol.EMPTY}
-                size={size}
             />
         </div>
     );
