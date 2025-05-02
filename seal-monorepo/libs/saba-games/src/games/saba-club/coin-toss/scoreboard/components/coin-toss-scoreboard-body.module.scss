@@ -4,13 +4,8 @@ $font-size: 15px;
 $border-color: #ebe4e4;
 $text-light: #fff;
 $text-dark: #000;
-$dot-big-gradient: linear-gradient(180deg, hsla(0, 0%, 45%, 1) 0%, hsla(0, 0%, 18%, 1) 100%);
-$dot-small-gradient: linear-gradient(180deg, hsla(0, 0%, 100%, 1) 0%, hsla(0, 0%, 51%, 1) 100%);
 $dot-blink-color: #8b8686;
 $dot-blink-text: rgb(211, 202, 202);
-
-$small-bg: linear-gradient(180deg, hsla(0, 0%, 100%, 1) 0%, hsla(0, 0%, 45%, 1) 100%);
-$big-bg: linear-gradient(180deg, hsla(0, 0%, 48%, 1) 0%, hsla(0, 0%, 23%, 1) 100%);
 
 // Mixins
 @mixin flex-center {
@@ -47,48 +42,8 @@ $big-bg: linear-gradient(180deg, hsla(0, 0%, 48%, 1) 0%, hsla(0, 0%, 23%, 1) 100
 
 // Dot variants
 .dot-blink,
-.dot-big,
-.dot-small,
 .dot-empty {
     @include dot-base;
-}
-
-.dot-big {
-    background: $dot-big-gradient;
-    border: none;
-    color: $text-light;
-    position: relative;
-
-    &::before {
-        content: "";
-        position: absolute;
-        top: 1px;
-        left: 1px;
-        bottom: 1px;
-        right: 1px;
-        border-radius: 100%;
-        z-index: -1;
-        background: $big-bg;
-    }
-}
-
-.dot-small {
-    background: $dot-small-gradient;
-    border: none;
-    color: $text-dark;
-    position: relative;
-
-    &::before {
-        content: "";
-        position: absolute;
-        top: 1px;
-        left: 1px;
-        bottom: 1px;
-        right: 1px;
-        border-radius: 100%;
-        z-index: -1;
-        background: $small-bg;
-    }
 }
 
 .dot-blink {
