@@ -1,7 +1,7 @@
 import * as gc from "@sg/sg-game-client";
 import React from "react";
-import Coin, { CoinSymbol } from "../../../../_shared/components/coin";
-import { Size } from "../../../../_shared/constants";
+import CoinHistory from "../../../../_shared/components/coin-history"
+import { CoinSymbol } from "../../../../_shared/components/coin";
 import styles from "./coin-toss-round-history.module.scss";
 import { CoinTossRoundHistoryTooltip } from "./tooltip";
 import { CoinTossChoices } from "../type";
@@ -23,9 +23,8 @@ export const CoinTossRoundHistoryItem: React.FC<ICoinTossRoundHistoryItemProps> 
     const winner = roundHistory.result["head"] ? CoinTossChoices.head : CoinTossChoices.tail;
     return (
         <div key={roundHistory.roundId} className={styles["history-item"]}>
-            <Coin
+            <CoinHistory
                 coinType={coinType}
-                size={Size.medium}
             />
             {showArrow && <span className={styles["arrow"]}></span>}
             <CoinTossRoundHistoryTooltip
