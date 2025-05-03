@@ -180,7 +180,7 @@ export default class CoinTossSettlementResult extends ObserverComponent<IPropsOb
             <div className={`${Styles['container-bets']} ${isAnimationResult ? Styles['has-animation'] : ''}`}>
                 <div className={Styles['result-container']}>
                     {isAnimationResult ? (
-                        <AnimatedCoin />
+                        <AnimatedCoin result={CoinSymbol.TAIL} />
                     ) : (
                         <div className={Styles['result-item']}>
                             <Coin coinType={CoinSymbol.HEAD} size={Size.large} />
@@ -196,7 +196,7 @@ export default class CoinTossSettlementResult extends ObserverComponent<IPropsOb
         return (
             <div className={Styles['container-bets']}>
                 <div className={Styles['result-container']}>
-                    <AnimatedCoin />
+                    <AnimatedCoin result={CoinSymbol.TAIL} />
                     {/* <Coin
                         coinType={CoinSymbol.EMPTY}
                         size={Size.large}
