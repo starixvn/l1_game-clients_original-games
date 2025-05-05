@@ -6,13 +6,13 @@ import { CoinSymbol } from '.';
 interface ICoinProps {
       size?: typeof Size.large | typeof Size.medium | typeof Size.small;
       onFlipEnd?: (symbol: CoinSymbol) => void;
-      result?: CoinSymbol;
+      result: CoinSymbol;
 }
 
 const AnimatedCoin: React.FC<ICoinProps> = ({
       size = Size.large,
       onFlipEnd,
-      result = CoinSymbol.HEAD
+      result
 }) => {
       const [showAnimation, setShowAnimation] = useState(false);
 

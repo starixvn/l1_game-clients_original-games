@@ -5,10 +5,10 @@ import { ROUND_STATE, RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds
 import { SettlementStore } from "@sg/sg-game-client/dist/game/settlements";
 import { render, handle } from "@sg/sg-observer";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
-import { CoinTossResult } from "../type";
+import { CoinTossResult, CoinTossChoices } from "../type";
 import Styles from "./coin-toss-animations.module.scss";
 import { gameStateService } from "./services/game-state.service";
-import { convertValueToSymbol } from "../coin-toss-utils";
+import { choiceToSymbolMap } from "../coin-toss-utils";
 import { ResultDisplay } from "./result-display";
 import { ANIMATION_DURATION_MS } from "../constants/coin-toss-constants";
 import { Size } from "../../../../_shared/constants";
@@ -161,9 +161,13 @@ export default class CoinTossSettlementResult extends ObserverComponent<IPropsOb
     renderIcons = (result: gc.GameServiceMessage.TResult) => {
         const { isAnimationResult } = this.state;
 
-        const resultSymbols = Object.entries(result).map(([key, value]) => {
-            return convertValueToSymbol(value);
+        const resultChoice = Object.entries(result).find(([key, value]) => {
+            return value;
         });
+
+        const resultChoiceKey = resultChoice?.[0];
+
+        const resultSymbol = choiceToSymbolMap[resultChoiceKey as CoinTossChoices];
 
         const handleAnimationComplete = () => {
             this.setState({ isFinishShowResult: true });
@@ -175,15 +179,17 @@ export default class CoinTossSettlementResult extends ObserverComponent<IPropsOb
             this.setState({ isFinishShowResult: true });
         }
 
+        const { winningSymbols } = this.state;
 
         return (
             <div className={`${Styles['container-bets']} ${isAnimationResult ? Styles['has-animation'] : ''}`}>
                 <div className={Styles['result-container']}>
                     {isAnimationResult ? (
-                        <AnimatedCoin result={CoinSymbol.TAIL} />
+                        <AnimatedCoin result={resultSymbol} />
                     ) : (
                         <div className={Styles['result-item']}>
-                            <Coin coinType={CoinSymbol.HEAD} size={Size.large} />
+                            Coin {resultSymbol}
+                            {/* <Coin coinType={coinType} size={Size.large} /> */}
                         </div>
                     )}
                 </div>
