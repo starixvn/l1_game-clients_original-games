@@ -16,7 +16,7 @@ export const ResultRow: React.FC<IResultRowProps> = ({
     return (
         <tr>
             <td className={styles['round-cell']}>
-                {`Round ${roundHistory.roundId}`}
+                {gc.Translator.translate('Common.result_no')} {roundHistory.roundId}
             </td>
             <td className={styles['symbols-cell']}>
                 {roundHistory.result && roundHistory.settlementResult && (
