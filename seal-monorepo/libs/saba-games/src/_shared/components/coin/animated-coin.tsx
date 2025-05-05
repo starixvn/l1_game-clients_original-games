@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Size } from "../../../_shared/constants";
 import styles from "./animated-coin.module.scss"
 import { CoinSymbol } from '.';
+import { ANIMATION_DURATION_MS } from 'libs/saba-games/src/games/saba-club/coin-toss/constants/coin-toss-constants';
 
 interface ICoinProps {
       size?: typeof Size.large | typeof Size.medium | typeof Size.small;
@@ -17,19 +18,14 @@ const AnimatedCoin: React.FC<ICoinProps> = ({
       const [showAnimation, setShowAnimation] = useState(false);
 
       useEffect(() => {
-            setShowAnimation(false);
-            const startTimer = setTimeout(() => {
-                  setShowAnimation(true);
-            }, 50);
-
+            setShowAnimation(true)
             const endTimer = setTimeout(() => {
                   if (onFlipEnd) {
                         onFlipEnd(result);
                   }
-            }, 2050);
+            }, ANIMATION_DURATION_MS);
 
             return () => {
-                  clearTimeout(startTimer);
                   clearTimeout(endTimer);
             };
       }, [onFlipEnd, result]);

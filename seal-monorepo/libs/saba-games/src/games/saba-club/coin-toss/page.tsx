@@ -10,6 +10,7 @@ import CoinTossBetOptions from './bet-option/coin-toss-bet-options';
 import styles from './coin-toss.module.scss';
 import { containerOptions, setting } from './game-settings';
 import  CoinTossSettlementResult  from './settlement-result';
+import { ANIMATION_DURATION_MS } from './constants/coin-toss-constants';
 
 const CoinTossStatistic = React.lazy(() => import('./statistic/coin-toss-statistic'));
 const CoinTossRoundHistory = React.lazy(() => import('./round-history/coin-toss-round-history'));
@@ -103,7 +104,8 @@ export default class CoinTossPage extends GatewayGameBase<ICoinTossPageProps, IC
             return;
         }
 
-        await FunctionUtils.delay(2000);
+        // 1s delay after coin animation
+        await FunctionUtils.delay(ANIMATION_DURATION_MS + 1000);
         this.finishShowResult();
     }
 } 

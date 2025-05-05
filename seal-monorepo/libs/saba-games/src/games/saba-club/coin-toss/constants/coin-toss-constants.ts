@@ -2,7 +2,7 @@ import { CoinSymbol } from "../../../../_shared/components/coin";
 import { choiceToSymbolMap } from "../coin-toss-utils";
 
 // choiceToSymbol map moved to coin-toss-utils.tsx as choiceToSymbolMap
-export const ANIMATION_DURATION_MS = 3000;
+export const ANIMATION_DURATION_MS = 2000;
 
 export const blinkRoundItem = {
     "dice1": CoinSymbol.HEAD,

@@ -10,7 +10,6 @@ import Styles from "./coin-toss-animations.module.scss";
 import { gameStateService } from "./services/game-state.service";
 import { choiceToSymbolMap } from "../coin-toss-utils";
 import { ResultDisplay } from "./result-display";
-import { ANIMATION_DURATION_MS } from "../constants/coin-toss-constants";
 import { Size } from "../../../../_shared/constants";
 import Coin, { CoinSymbol } from "../../../../_shared/components/coin";
 import AnimatedCoin from "../../../../_shared/components/coin/animated-coin";
@@ -169,17 +168,9 @@ export default class CoinTossSettlementResult extends ObserverComponent<IPropsOb
 
         const resultSymbol = choiceToSymbolMap[resultChoiceKey as CoinTossChoices];
 
-        const handleAnimationComplete = () => {
-            this.setState({ isFinishShowResult: true });
-        };
-
-        const animationDuration = ANIMATION_DURATION_MS;
-
         if (!isAnimationResult) {
             this.setState({ isFinishShowResult: true });
         }
-
-        const { winningSymbols } = this.state;
 
         return (
             <div className={`${Styles['container-bets']} ${isAnimationResult ? Styles['has-animation'] : ''}`}>
@@ -188,8 +179,7 @@ export default class CoinTossSettlementResult extends ObserverComponent<IPropsOb
                         <AnimatedCoin result={resultSymbol} />
                     ) : (
                         <div className={Styles['result-item']}>
-                            Coin {resultSymbol}
-                            {/* <Coin coinType={coinType} size={Size.large} /> */}
+                            <Coin coinType={resultSymbol} size={Size.large} />
                         </div>
                     )}
                 </div>
@@ -200,7 +190,7 @@ export default class CoinTossSettlementResult extends ObserverComponent<IPropsOb
 
     renderNoResultIcons = (): JSX.Element => {
         return (
-            <div className={Styles['container-bets']}>
+            <div className={`${Styles['container-bets']} ${Styles['pop-in-animation']}`}>
                 <div className={Styles['result-container']}>
                     <Coin
                         coinType={CoinSymbol.EMPTY}
