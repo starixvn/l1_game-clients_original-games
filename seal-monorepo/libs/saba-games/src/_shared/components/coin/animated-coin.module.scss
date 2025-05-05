@@ -8,7 +8,7 @@ $coin-back: "../../../assets/coin/tail.png";
 // Sizes
 $sizes: (
   large: (
-    size: 120px,
+    size: 64px,
     depth: 10px
   ),
   medium: (
@@ -21,18 +21,15 @@ $sizes: (
   )
 );
 
-// Animation
 $spin-speed: 2.5s;
 $facets: 32;
 $spokes: math.div($facets, 2);
 $deg: math.sin(math.div(3.14159, $facets));
-$medium-size: map-get(map-get($sizes, medium), size);
-$facet_length: $medium-size * $deg;
 
-// Mixins
 @mixin size-variant($variant) {
   $size: map-get(map-get($sizes, $variant), size);
   $depth: map-get(map-get($sizes, $variant), depth);
+  $facet_length: ($size - 6) * $deg;
 
   height: $size;
   width: $size;
@@ -54,7 +51,17 @@ $facet_length: $medium-size * $deg;
     &:before,
     &:after {
       width: $depth;
+      height: $facet_length;
+      background-size: 100% math.div($facets * $facet_length, 144);
     }
+  }
+
+  .front {
+    transform: translateZ(math.div($depth, 2));
+  }
+
+  .back {
+    transform: translateZ(math.div(-$depth, 2)) rotateY(180deg);
   }
 }
 
@@ -80,7 +87,6 @@ $facet_length: $medium-size * $deg;
   &.medium { @include size-variant(medium); }
   &.small { @include size-variant(small); }
 
-  // Faces
   .front,
   .back {
     position: absolute;
@@ -89,18 +95,13 @@ $facet_length: $medium-size * $deg;
   }
 
   .front {
-    $medium-depth: map-get(map-get($sizes, medium), depth);
-    transform: translateZ(math.div($medium-depth, 2));
     background-image: url($coin-front);
   }
 
   .back {
-    $medium-depth: map-get(map-get($sizes, medium), depth);
-    transform: translateZ(math.div(-$medium-depth, 2)) rotateY(180deg);
     background-image: url($coin-back);
   }
 
-  // Side
   .side {
     transform-style: preserve-3d;
     backface-visibility: hidden;
@@ -116,10 +117,8 @@ $facet_length: $medium-size * $deg;
         content: '';
         display: block;
         position: absolute;
-        height: $facet_length;
         transform: rotateX(math.div((180deg - math.div(360deg, $facets)), 2));
         background: $coin-color;
-        background-size: 100% math.div($facets * $facet_length, 144);
       }
 
       &:before {
@@ -139,7 +138,6 @@ $facet_length: $medium-size * $deg;
     }
   }
 
-  // Skeleton variant
   &.skeleton {
     .front,
     .back {
@@ -152,22 +150,9 @@ $facet_length: $medium-size * $deg;
     .spoke:after {
       backface-visibility: visible;
     }
-
-    .spoke {
-      background: rgba(#aaa, 0.1);
-
-      &:before {
-        background: rgba(#faa, 0.2);
-      }
-
-      &:after {
-        background: rgba(#ccf, 0.2);
-      }
-    }
   }
 }
 
-// Animations
 @keyframes flip-to-head {
   0% { 
     transform: rotateY(0deg);

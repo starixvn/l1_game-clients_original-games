@@ -10,26 +10,23 @@ interface ICoinProps {
 }
 
 const AnimatedCoin: React.FC<ICoinProps> = ({
-      size = Size.medium,
+      size = Size.large,
       onFlipEnd,
       result = CoinSymbol.HEAD
 }) => {
-      const [isFlipping, setIsFlipping] = useState(true);
       const [showAnimation, setShowAnimation] = useState(false);
 
       useEffect(() => {
-            // 確保硬幣從正面開始
             setShowAnimation(false);
             const startTimer = setTimeout(() => {
                   setShowAnimation(true);
             }, 50);
 
             const endTimer = setTimeout(() => {
-                  setIsFlipping(false);
                   if (onFlipEnd) {
                         onFlipEnd(result);
                   }
-            }, 2050); // 比動畫時間稍長一點，確保動畫完成
+            }, 2050);
 
             return () => {
                   clearTimeout(startTimer);
