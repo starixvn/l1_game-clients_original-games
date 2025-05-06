@@ -1,20 +1,21 @@
 import React from "react";
-import ColorGameDice, { ColorGameSymbol } from "../../../../_shared/components/color-game-dice";
-import { Size } from "../../../../_shared/constants";
+import { Size } from "../../constants";
 import styles from "./empty-dice-row.module.scss";
 
-interface IEmptyDiceRowProps {
+export interface EmptyDiceRowProps {
     count?: number;
     size?: typeof Size[keyof typeof Size];
     isFinishedShowResult?: boolean;
     blinking?: boolean;
+    renderDice: (props: { index: number; size: typeof Size[keyof typeof Size] }) => React.ReactNode;
 }
 
-export const EmptyDiceRow: React.FC<IEmptyDiceRowProps> = ({
+export const EmptyDiceRow: React.FC<EmptyDiceRowProps> = ({
     count = 3,
     size = Size.medium,
     isFinishedShowResult = false,
-    blinking = false
+    blinking = false,
+    renderDice
 }) => {
     return (
         <>
@@ -26,16 +27,11 @@ export const EmptyDiceRow: React.FC<IEmptyDiceRowProps> = ({
                         ${blinking ? styles.blinking : ''} 
                         ${styles[`animationDelay-${index}`]}`}
                 >
-                    <ColorGameDice
-                        key={`empty-dice-${index}`}
-                        data-testid={`empty-dice-${index}`}
-                        symbol={ColorGameSymbol.RESULT}
-                        size={size}
-                    />
+                    {renderDice({ index, size })}
                 </div>
             ))}
         </>
     );
 };
 
-export default EmptyDiceRow;
+export default EmptyDiceRow; 

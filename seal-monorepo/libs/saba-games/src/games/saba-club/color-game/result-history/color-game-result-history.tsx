@@ -2,7 +2,8 @@ import * as gc from '@sg/sg-game-client';
 import { render } from '@sg/sg-observer';
 import { IPropsObserver, IStateObserver, ObserverComponent } from '../../../../_shared/components/observer-component/observer-component';
 import { ISettlementResultService, SettlementResultService, ITranslationService, TranslationService } from '../services';
-import { ResultRow } from './components';
+import { GenericResultRow } from '../../../../_shared/components/generic-result-row';
+import ColorGameDice from '../../../../_shared/components/color-game-dice';
 import styles from './color-game-result-history.module.scss';
 
 export interface IColorGameResultHistoryProps extends IPropsObserver {
@@ -52,10 +53,11 @@ export class ColorGameResultHistory extends ObserverComponent<IColorGameResultHi
                         <table className={styles['result-table']}>
                             <tbody>
                                 {roundHistories.map((roundHistory, index) => (
-                                    <ResultRow
+                                    <GenericResultRow
                                         key={index}
                                         roundHistory={roundHistory}
                                         settlementService={this.settlementService}
+                                        DiceComponent={ColorGameDice}
                                     />
                                 ))}
                             </tbody>

@@ -1,18 +1,26 @@
 import React from 'react';
 import * as gc from '@sg/sg-game-client';
-import styles from '../color-game-result-history.module.scss';
-import { DiceDisplay } from './dice-display';
-import { ISettlementResultService } from '../../services/settlement-result-service';
+import { GenericDiceDisplay } from '../generic-dice-display';
 
-interface IResultRowProps {
+import styles from './generic-result-row.module.scss';
+import { Size } from '../../constants';
+
+interface GenericResultRowProps<T> {
     roundHistory: gc.RoundHistories.RoundHistory;
-    settlementService: ISettlementResultService;
+    settlementService: {
+        getWinningTextListByResult: (result: gc.RoundHistories.RoundHistory['result']) => string[];
+    };
+    DiceComponent: React.ComponentType<{
+        symbol: T;
+        size?: typeof Size.large | typeof Size.medium | typeof Size.small;
+    }>;
 }
 
-export const ResultRow: React.FC<IResultRowProps> = ({
+export function GenericResultRow<T>({
     roundHistory,
-    settlementService
-}) => {
+    settlementService,
+    DiceComponent
+}: GenericResultRowProps<T>) {
     return (
         <tr>
             <td className={styles['round-cell']}>
@@ -20,7 +28,7 @@ export const ResultRow: React.FC<IResultRowProps> = ({
             </td>
             <td className={styles['symbols-cell']}>
                 {roundHistory.result && roundHistory.settlementResult && (
-                    <DiceDisplay result={roundHistory.result} />
+                    <GenericDiceDisplay result={roundHistory.result} DiceComponent={DiceComponent} />
                 )}
             </td>
             <td className={styles['result-cell']}>
@@ -30,4 +38,4 @@ export const ResultRow: React.FC<IResultRowProps> = ({
             </td>
         </tr>
     );
-}; 
+} 

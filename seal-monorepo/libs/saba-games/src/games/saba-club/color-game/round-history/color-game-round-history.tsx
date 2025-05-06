@@ -3,26 +3,32 @@ import { render } from "@sg/sg-observer";
 import React from "react";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
 import styles from "./color-game-round-history.module.scss";
-import ColorGameRoundHistoryItem from "./color-game-round-history-item";
-import EmptyDiceRow from "./empty-dice-row";
+import { RoundHistoryItem } from "../../../../_shared/components/round-history-item/round-history-item";
+import { EmptyDiceRow } from "../../../../_shared/components/empty-dice-row/empty-dice-row";
 import { MAX_DISPLAYED_ROUNDS } from "../constants/color-game-constants";
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
-import { blinkRoundItem, emptyRoundItem } from "../constants";
+import { ColorGameSymbol } from "../../../../_shared/components/color-game-dice";
+import ColorGameDice from "../../../../_shared/components/color-game-dice";
+import { Size } from "../../../../_shared/constants";
 
 const blinkDefaultRoundItem = {
     roundId: -1,
-    result: blinkRoundItem,
-    createdAt: new Date().toISOString(),
-    settlementResult: {},
-    date: new Date().toISOString(),
+    result: {
+        dice1: ColorGameSymbol.EMPTY,
+        dice2: ColorGameSymbol.EMPTY,
+        dice3: ColorGameSymbol.EMPTY
+    },
+    settlementResult: {}
 } as gc.RoundHistories.RoundHistory;
 
 const emptyDefaultRoundItem = {
     roundId: -2,
-    result: emptyRoundItem,
-    createdAt: new Date().toISOString(),
-    settlementResult: {},
-    date: new Date().toISOString(),
+    result: {
+        dice1: ColorGameSymbol.EMPTY,
+        dice2: ColorGameSymbol.EMPTY,
+        dice3: ColorGameSymbol.EMPTY
+    },
+    settlementResult: {}
 } as gc.RoundHistories.RoundHistory;
 
 export interface IColorGameRoundHistoryState extends IStateObserver {
@@ -85,12 +91,25 @@ export default class ColorGameRoundHistory extends ObserverComponent<IPropsObser
                                 key={MAX_DISPLAYED_ROUNDS}
                                 isFinishedShowResult={false}
                                 blinking={hasBlink}
+                                renderDice={({ index, size }) => (
+                                    <ColorGameDice
+                                        symbol={ColorGameSymbol.EMPTY}
+                                        size={size}
+                                    />
+                                )}
                             />
                             :
-                            <ColorGameRoundHistoryItem
+                            <RoundHistoryItem<ColorGameSymbol>
                                 key={roundHistory.roundId}
                                 roundHistory={roundHistory}
                                 showArrow={index < MAX_DISPLAYED_ROUNDS}
+                                styles={styles}
+                                renderDice={({ symbol, size }) => (
+                                    <ColorGameDice
+                                        symbol={symbol}
+                                        size={size}
+                                    />
+                                )}
                             />
                     ))}
                 </div>

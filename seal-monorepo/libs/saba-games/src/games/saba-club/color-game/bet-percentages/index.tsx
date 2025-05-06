@@ -1,7 +1,5 @@
 // Re-export components
-export { default as ColorGameBetPercentages } from './color-game-bet-percentages';
-export { default as BetPercentageItem } from './bet-percentage-item';
-
+export { default as ColorGameBetStatistic } from './color-game-bet-statistic';
 // Re-export utility functions
 export { calculateBetStatistics, countResult } from './utils';
 

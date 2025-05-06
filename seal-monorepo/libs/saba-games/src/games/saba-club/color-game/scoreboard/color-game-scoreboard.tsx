@@ -4,7 +4,7 @@ import styles from './color-game-scoreboard.module.scss';
 import { createRef, RefObject } from 'react';
 import { IPropsObserver, IStateObserver, ObserverComponent } from '../../../../_shared/components/observer-component/observer-component';
 import ScrollElement from '../../../../_shared/components/scroll-element';
-import { ColorGameBetPercentages } from '../bet-percentages';
+import { ColorGameBetStatistic } from '../bet-percentages';
 import { ResultHistory } from './components';
 import { getScoreboardTitle, shouldShowBlinkingDice } from './utils/scoreboard-utils';
 
@@ -67,7 +67,7 @@ export default class ColorGameScoreBoard extends ObserverComponent<ScoreBoardPro
         return (
             <div className={styles['scoreboard']}>
                 <div className={styles['scoreboard-title']}>{scoreboardTitle}</div>
-                <ColorGameBetPercentages
+                <ColorGameBetStatistic
                     gameName={gameName}
                     rounds={rounds}
                     language={language}
