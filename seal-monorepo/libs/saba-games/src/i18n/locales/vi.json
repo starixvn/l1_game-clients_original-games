@@ -304,14 +304,13 @@
         "symbol": "Màu cụ thể"
     },
     "CoinToss": {
-        "game_vendor": "CoinToss",
-        "game_name": "Coin Toss",
-        "game_tab_name": "Coin Toss",
-        "choices_type": "Heads/Tails",
-        "glossary_head": "Heads",
-        "glossary_tail": "Tails",
-        "head": "Heads",
-        "tail": "Tails"
+        "game_name": "Tung Đồng Xu",
+        "game_tab_name": "Tung Đồng Xu",
+        "choices_type": "Ngửa/Sấp",
+        "glossary_head": "Ngửa",
+        "glossary_tail": "Sấp",
+        "head": "Ngửa",
+        "tail": "Sấp"
     }
     
 }

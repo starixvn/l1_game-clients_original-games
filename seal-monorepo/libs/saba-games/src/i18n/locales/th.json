@@ -304,13 +304,12 @@
         "symbol": "เฉพาะสี"
     },
     "CoinToss": {
-        "game_vendor": "CoinToss",
-        "game_name": "Coin Toss",
-        "game_tab_name": "Coin Toss",
-        "choices_type": "Heads/Tails",
-        "glossary_head": "Heads",
-        "glossary_tail": "Tails",
-        "head": "Heads",
-        "tail": "Tails"
+        "game_name": "โยนเหรียญ",
+        "game_tab_name": "โยนเหรียญ",
+        "choices_type": "หัว/ก้อย",
+        "glossary_head": "หัว",
+        "glossary_tail": "ก้อย",
+        "head": "หัว",
+        "tail": "ก้อย"
     }
 }

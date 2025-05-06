@@ -303,13 +303,12 @@
         "symbol": "Warna Tertentu"
     },
     "CoinToss": {
-        "game_vendor": "CoinToss",
-        "game_name": "Coin Toss",
-        "game_tab_name": "Coin Toss",
+        "game_name": "Lempar Koin",
+        "game_tab_name": "Lempar Koin",
         "choices_type": "Heads/Tails",
-        "glossary_head": "Heads",
-        "glossary_tail": "Tails",
-        "head": "Heads",
-        "tail": "Tails"
+        "glossary_head": "Kepala",
+        "glossary_tail": "Ekor",
+        "head": "Kepala",
+        "tail": "Ekor"
     }
 }

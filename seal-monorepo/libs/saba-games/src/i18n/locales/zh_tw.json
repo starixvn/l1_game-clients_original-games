@@ -304,13 +304,12 @@
         "symbol": "特定顏色"
     },
     "CoinToss": {
-        "game_vendor": "CoinToss",
-        "game_name": "Coin Toss",
-        "game_tab_name": "Coin Toss",
-        "choices_type": "Heads/Tails",
-        "glossary_head": "Heads",
-        "glossary_tail": "Tails",
-        "head": "Heads",
-        "tail": "Tails"
+        "game_name": "抛硬幣",
+        "game_tab_name": "抛硬幣",
+        "choices_type": "正面/反面",
+        "glossary_head": "正面",
+        "glossary_tail": "反面",
+        "head": "正面",
+        "tail": "反面"
     }
 }

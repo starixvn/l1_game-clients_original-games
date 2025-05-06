@@ -304,7 +304,6 @@
         "symbol": "Specific Color"
     },
     "CoinToss": {
-        "game_vendor": "CoinToss",
         "game_name": "Coin Toss",
         "game_tab_name": "Coin Toss",
         "choices_type": "Heads/Tails",
