@@ -1,3 +1,23 @@
+$icon_width: 48px;
+$icon_height: 48px;
+
+
+$speed_per_grid: 0.2s;
+
+// reel 1 start 7 格
+// reel 2 start 13 格
+// reel 1 loop 12 格
+$reel1_start_spin_duration: $speed_per_grid * 7;
+$reel2_start_spin_duration: $speed_per_grid * 13;
+$loop_spin_duration: $speed_per_grid * 12;
+$stop_spin_duration: 0.5s;
+
+// 位置相關變數
+$reel1_start_position: -5 * $icon_height;
+$reel2_start_position: -11 * $icon_height;
+$reel_end_position: 2 * $icon_height;
+$reel_loop_start_position: -10 * $icon_height;
+
 .dice-large {
   width: 48px;
   height: 48px;
@@ -19,79 +39,98 @@
   pointer-events: none;
 }
 
-
-@keyframes shake {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  10% { transform: translate(-1px, -1px) rotate(-1deg); }
-  20% { transform: translate(1px, -1px) rotate(1deg); }
-  30% { transform: translate(-1px, 1px) rotate(0deg); }
-  40% { transform: translate(1px, 1px) rotate(1deg); }
-  50% { transform: translate(-1px, -1px) rotate(-1deg); }
-  60% { transform: translate(1px, -1px) rotate(0deg); }
-  70% { transform: translate(-1px, 1px) rotate(-1deg); }
-  80% { transform: translate(-1px, -1px) rotate(1deg); }
-  90% { transform: translate(1px, -1px) rotate(0deg); }
-  100% { transform: translate(0, 0) rotate(0deg); }
-}
-
-@keyframes roll {
-  0% { transform: rotateX(0deg) rotateY(0deg); }
-  100% { transform: rotateX(360deg) rotateY(720deg); }
-}
-
-@keyframes rollSlow {
-  0% { transform: rotateX(0deg) rotateY(0deg); }
-  100% { transform: rotateX(180deg) rotateY(360deg); }
-}
-
 .dice-container {
   perspective: 300px;
-  display: inline-block;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  height: $icon_height;
+
+  &-large {
+    height: $icon_height;
+  }
+
+  &-medium {
+    height: 36px;
+  }
+
+  &-small {
+    height: 28px;
+  }
 }
 
-.dice-rolling {
-  transform-style: preserve-3d;
-  transition: transform 0.1s ease-out;
+.slot-container {
+  position: relative;
+  width: $icon_width;
+  height: 100%;
+  overflow: hidden;
 }
 
-.dice-rolling-fast {
-  animation: roll 0.3s linear;
+.reel-1,
+.reel-2 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.dice-rolling-medium {
-  animation: roll 0.5s linear;
+//初始位置
+.reel-1 {
+  top: $reel1_start_position;
 }
 
-.dice-rolling-slow {
-  animation: rollSlow 0.7s ease-out;
+.reel-2 {
+  top: $reel2_start_position;
 }
 
-.animated-dice-wrapper {
-  display: inline-block;
+// 開始旋轉
+@keyframes slotSpin-start-1 {
+  0% {
+    top: $reel1_start_position;
+  }
+  100% {
+    top: $reel_end_position;
+  }
 }
 
-.animated-dice-wrapper-shaking {
-  animation-name: shake;
-  animation-timing-function: linear;
-  animation-direction: alternate;
-  animation-fill-mode: both;
-  animation-iteration-count: infinite;
+@keyframes slotSpin-start-2 {
+  0% {
+    top: $reel2_start_position;
+  }
+  100% {
+    top: $reel_end_position;
+  }
 }
 
-.shake-frequency-0-2 {
-  animation-duration: 0.2s;
+@keyframes slotSpin-loop {
+  0% {
+    top: $reel_loop_start_position;
+  }
+  100% {
+    top: $reel_end_position;
+  }
 }
 
-.shake-frequency-0-4 {
-  animation-duration: 0.4s;
+.slot-rolling-1-start {
+  animation: slotSpin-start-1 $reel1_start_spin_duration linear;
 }
 
-.shake-frequency-0-7 {
-  animation-duration: 0.7s;
+.slot-rolling-2-start {
+  animation: slotSpin-start-2 $reel2_start_spin_duration linear;
 }
 
-.no-animation {
-  animation: none;
+.slot-rolling-1-loop,
+.slot-rolling-2-loop {
+  animation: slotSpin-loop $loop_spin_duration linear infinite;
+}
+
+.slot-rolling-1-stop,
+.slot-rolling-2-stop {
+  animation: none !important;
 }
 
 .dice-set-container {
@@ -99,4 +138,4 @@
   gap: 10px;
   justify-content: center;
   perspective: 600px;
-} 
+}
