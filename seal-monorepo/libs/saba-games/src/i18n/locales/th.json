@@ -271,6 +271,7 @@
         "game_vendor": "SABA.games",
         "game_name": "น้ำเต้าปูปลา",
         "game_tab_name": "น้ำเต้าปูปลา",
+        "bet_choices_type": "เครื่องหมาย",
         "choices_type_double": "สองเท่า: {odds_double}",
         "choices_type_triple": "สามเท่า: {odds_triple}",
         "glossary_fish": "ปลา",

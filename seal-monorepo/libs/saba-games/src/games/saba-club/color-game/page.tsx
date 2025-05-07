@@ -11,9 +11,9 @@ import styles from './color-game.module.scss';
 import { containerOptions, setting } from './game-settings';
 import ColorGameSettlementResult from './settlement-result';
 import { ANIMATION_DURATION_MS } from './constants';
+import ColorGameRoundHistory from './round-history/color-game-round-history';
 
 const ColorGameStatistic = React.lazy(() => import('./statistic/color-game-statistic'));
-const ColorGameRoundHistory = React.lazy(() => import('./round-history/color-game-round-history'));
 
 interface IColorGamePageState extends IGatewayGameBaseState {
     activePanelId: any;
