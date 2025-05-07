@@ -176,7 +176,7 @@ export default class ColorGameSettlementResult extends ObserverComponent<IPropsO
         }
 
         return (
-            <div className={`${Styles['container-bets']} ${isAnimationResult ? Styles['has-animation'] : ''}`}>
+            <div className={Styles['container-bets']}>
                 <div className={Styles['result-container']}>
                     {isAnimationResult ? (
                         <AnimatedDiceSet
@@ -205,7 +205,7 @@ export default class ColorGameSettlementResult extends ObserverComponent<IPropsO
 
     renderNoResultIcons = (): JSX.Element => {
         return (
-            <div className={Styles['container-bets']}>
+            <div className={Styles['container-bets-empty']}>
                 <div className={Styles['result-container']}>
                     <div className={Styles['dice-empty']}>
                         <ColorGameDice symbol={ColorGameSymbol.EMPTY} size={Size.large} />
