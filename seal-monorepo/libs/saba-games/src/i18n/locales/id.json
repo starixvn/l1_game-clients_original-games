@@ -288,7 +288,7 @@
         "game_vendor": "SABA.games",
         "game_name": "Color Game",
         "game_tab_name": "Color Game",
-        "bet_choices_type": "Symbol",
+        "bet_choices_type": "Warna Tertentu",
         "choices_type_double": "Dobel: {odds_double}",
         "choices_type_triple": "Tripel: {odds_triple}",
         "glossary_yellow": "Yellow",
@@ -297,7 +297,7 @@
         "glossary_white": "White",
         "glossary_blue": "Blue",
         "glossary_green": "Green",
-        "single": "Single",
+        "single": "Warna Tertentu",
         "double": "Double",
         "triple": "Triple",
         "symbol": "Symbol"

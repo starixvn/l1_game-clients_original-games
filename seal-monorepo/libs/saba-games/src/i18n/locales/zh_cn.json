@@ -289,7 +289,7 @@
         "game_vendor": "SABA.games",
         "game_name": "Color Game",
         "game_tab_name": "Color Game",
-        "bet_choices_type": "Symbol",
+        "bet_choices_type": "特定颜色",
         "choices_type_double": "Double: {odds_double}",
         "choices_type_triple": "Triple: {odds_triple}",
         "glossary_yellow": "黄",
@@ -298,9 +298,9 @@
         "glossary_white": "白",
         "glossary_blue": "蓝",
         "glossary_green": "绿",
-        "single": "Single",
-        "double": "Double",
-        "triple": "Triple",
-        "symbol": "Symbol"
+        "single": "特定颜色",
+        "double": "双倍",
+        "triple": "三倍",
+        "symbol": "象征"
     }
 }

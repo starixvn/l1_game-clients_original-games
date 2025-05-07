@@ -289,18 +289,18 @@
         "game_vendor": "SABA.games",
         "game_name": "Color Game",
         "game_tab_name": "Color Game",
-        "bet_choices_type": "Symbol",
-        "choices_type_double": "Double: {odds_double}",
-        "choices_type_triple": "Triple: {odds_triple}",
+        "bet_choices_type": "สีเฉพาะ",
+        "choices_type_double": "สองเท่า: {odds_double}",
+        "choices_type_triple": "สามเท่า: {odds_triple}",
         "glossary_yellow": "เหี้ยว",
         "glossary_red": "สีแดง",
         "glossary_pink": "สีชมพู",
         "glossary_white": "สีขาว",
         "glossary_blue": "สีน้ำเงิน",
         "glossary_green": "สีเขียว",
-        "single": "Single",
-        "double": "Double",
-        "triple": "Triple",
-        "symbol": "Symbol"
+        "single": "สีเฉพาะ",
+        "double": "สองเท่า",
+        "triple": "สามเท่า",
+        "symbol": "เครื่องหมาย"
     }
 }

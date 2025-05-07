@@ -4,10 +4,11 @@
     display: flex;
     align-items: center;
     gap: 14px;
-    border-radius: 4px;
+    border-radius: 5px 5px 0 0;
     justify-content: center;
     background: #2D4976;
     padding: 4px;
+
     @media (min-width: 1400px) {
         gap: 24px;
     }
@@ -29,4 +30,4 @@
 
 .count {
     margin-left: 4px;
-} 
+}

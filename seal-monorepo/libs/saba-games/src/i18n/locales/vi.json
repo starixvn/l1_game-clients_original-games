@@ -289,18 +289,18 @@
         "game_vendor": "SABA.games",
         "game_name": "Color Game",
         "game_tab_name": "Color Game",
-        "bet_choices_type": "Symbol",
-        "choices_type_double": "Double: {odds_double}",
-        "choices_type_triple": "Triple: {odds_triple}",
+        "bet_choices_type": "Màu cụ thể",
+        "choices_type_double": "Đôi: {odds_double}",
+        "choices_type_triple": "Bộ Ba: {odds_triple}",
         "glossary_yellow": "Vàng",
         "glossary_red": "Đỏ",
         "glossary_pink": "Hồng",
         "glossary_white": "Trắng",
         "glossary_blue": "Xanh",
         "glossary_green": "Xanh Lá",
-        "single": "Single",
-        "double": "Double",
-        "triple": "Triple",
-        "symbol": "Symbol"
+        "single": "Màu cụ thể",
+        "double": "Đôi",
+        "triple": "Bộ Ba",
+        "symbol": "Biểu Tượng"
     }
 }

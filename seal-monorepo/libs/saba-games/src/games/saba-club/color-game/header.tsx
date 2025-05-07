@@ -63,7 +63,7 @@ export class ColorGameHeader extends ObserverComponent<IColorGameHeaderProps, IC
                 {isExpanded && (
                     <div className={styles['game-option-container']}>
                         <div >
-                            {gc.Translator.translate('ColorGame.symbol')}
+                            {gc.Translator.translate('ColorGame.bet_choices_type')}
                         </div>
                         <div >
                             -
