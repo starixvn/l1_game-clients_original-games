@@ -18,13 +18,15 @@ export enum FishPrawnCrabChoices {
 export const topChoices = [
     FishPrawnCrabChoices.stag,
     FishPrawnCrabChoices.gourd,
-    FishPrawnCrabChoices.prawn
+    FishPrawnCrabChoices.rooster
+
 ];
 
 export const bottomChoices = [
     FishPrawnCrabChoices.fish,
     FishPrawnCrabChoices.crab,
-    FishPrawnCrabChoices.rooster
+    FishPrawnCrabChoices.prawn
+
 ];
 
 export type FishPrawnCrabSymbolType = keyof typeof FishPrawnCrabChoices;
