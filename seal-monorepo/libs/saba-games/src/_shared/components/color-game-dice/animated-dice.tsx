@@ -1,103 +1,90 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ColorGameSymbol } from './index';
 import ColorGameDice from './index';
-import { Size } from "../../constants";
 import styles from './color-game-dice.module.scss';
+import { Size } from '../../constants';
 
 const DICE_SYMBOLS_LIST = [
-    ColorGameSymbol.RED,
-    ColorGameSymbol.GREEN,
-    ColorGameSymbol.BLUE,
     ColorGameSymbol.YELLOW,
+    ColorGameSymbol.RED,
+    ColorGameSymbol.PINK,
     ColorGameSymbol.WHITE,
-    ColorGameSymbol.PINK
+    ColorGameSymbol.BLUE,
+    ColorGameSymbol.GREEN,
 ];
 
-
 interface AnimatedDiceProps {
-    finalSymbol: ColorGameSymbol[];
+    finalSymbol: ColorGameSymbol;
     onAnimationComplete?: () => void;
     delayStart?: number;
+    totalDuration?: number;
 }
 
 const AnimatedDice: React.FC<AnimatedDiceProps> = ({
     finalSymbol,
     onAnimationComplete,
     delayStart = 0,
+    totalDuration = 2500
 }) => {
-    const [isStartAnimation, setIsStartAnimation] = useState(false);
-    const [reel1Animation, setReel1Animation] = useState<string>('start');
-    const [reel2Animation, setReel2Animation] = useState<string>('start');
-    const reel1Ref = useRef<HTMLDivElement>(null);
-    const reel2Ref = useRef<HTMLDivElement>(null);
+    const carouselRef = useRef<HTMLDivElement>(null);
+    const [currentData, setCurrentData] = useState(1);
+    const [isAnimating, setIsAnimating] = useState(false);
+    const interval = 50;
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsStartAnimation(true);
+        const delayTimer = setTimeout(() => {
+            setIsAnimating(true);
         }, delayStart);
 
-        return () => clearTimeout(timer);
+        return () => clearTimeout(delayTimer);
     }, [delayStart]);
 
     useEffect(() => {
-        const reel1 = reel1Ref.current;
-        if (reel1) {
-            const handleAnimationEnd = (e: AnimationEvent) => {
-                if (reel1Animation === 'start') {
-                    setReel1Animation('loop');
+        if (isAnimating) {
+            let increment = 0;
+            const totalSteps = totalDuration / interval;
+
+            const timer = setInterval(() => {
+                increment++;
+
+                const newAngle = increment * -60;
+                const newState = (increment % 6) + 1;
+
+                if (carouselRef.current) {
+                    carouselRef.current.style.transform = `rotateX(${newAngle}deg)`;
+                    setCurrentData(newState);
+
+                    if (increment >= totalSteps) {
+                        const current = (increment % 6) + 1;
+                        const diff = (finalSymbol + 1 - current + 6) % 6;
+                        increment += diff;
+
+                        carouselRef.current.style.transform = `rotateX(${increment * -60}deg)`;
+                        setCurrentData((increment % 6) + 1);
+                        if (onAnimationComplete) {
+                            onAnimationComplete();
+                        }
+                        clearInterval(timer);
+                    }
                 }
-            };
+            }, interval);
 
-            reel1.addEventListener('animationend', handleAnimationEnd);
-            return () => {
-                reel1.removeEventListener('animationend', handleAnimationEnd);
-            };
+            return () => clearInterval(timer);
         }
-    }, []);
-
-    useEffect(() => {
-        const reel2 = reel2Ref.current;
-        if (reel2) {
-            const handleAnimationEnd = (e: AnimationEvent) => {
-                if (reel2Animation === 'start') {
-                    setReel2Animation('loop');
-                }
-            };
-
-            reel2.addEventListener('animationend', handleAnimationEnd);
-            return () => {
-                reel2.removeEventListener('animationend', handleAnimationEnd);
-            };
-        }
-    }, []);
+    }, [finalSymbol, totalDuration, interval, isAnimating]);
 
     return (
-        <div className={styles['dice-container']}>
-            <div className={styles['slot-container']}>
-                <div
-                    ref={reel1Ref}
-                    className={`${styles['reel-1']} ${isStartAnimation ? styles[`slot-rolling-1-${reel1Animation}`] : ''}`}
-                >
-                    {DICE_SYMBOLS_LIST.map((symbol, index) => (
-                        <ColorGameDice
-                            key={`reel1-${index}`}
-                            symbol={symbol}
-                            size={Size.large}
-                        />
-                    ))}
-                </div>
-                <div
-                    ref={reel2Ref}
-                    className={`${styles['reel-2']} ${isStartAnimation ? styles[`slot-rolling-2-${reel2Animation}`] : ''}`}
-                >
-                    {DICE_SYMBOLS_LIST.map((symbol, index) => (
-                        <ColorGameDice
-                            key={`reel2-${index}`}
-                            symbol={symbol}
-                            size={Size.large}
-                        />
-                    ))}
-                </div>
+        <div className={styles['carousel-wrapper']}>
+            <div
+                className={styles['carousel']}
+                data-currentData={currentData}
+                ref={carouselRef}
+            >
+                {DICE_SYMBOLS_LIST.map((symbol, index) => (
+                    <figure key={index}>
+                        <ColorGameDice symbol={symbol} size={Size.large} />
+                    </figure>
+                ))}
             </div>
         </div>
     );
@@ -131,7 +118,7 @@ export const AnimatedDiceSet: React.FC<AnimatedDiceSetProps> = ({
             {finalSymbols.map((symbol, index) => (
                 <AnimatedDice
                     key={index}
-                    finalSymbol={[symbol]}
+                    finalSymbol={symbol}
                     onAnimationComplete={handleAnimationComplete}
                     delayStart={index * staggerDelay}
                 />

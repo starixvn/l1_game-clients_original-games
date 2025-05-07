@@ -165,13 +165,10 @@ export default class ColorGameSettlementResult extends ObserverComponent<IPropsO
             return convertValueToSymbol(value);
         });
 
-        console.log(resultSymbols);
-
         const handleAnimationComplete = () => {
             this.setState({ isFinishShowResult: true });
         };
 
-        const animationDuration = ANIMATION_DURATION_MS;
         const staggerDelay = 150;
 
         if (!isAnimationResult) {
@@ -207,13 +204,6 @@ export default class ColorGameSettlementResult extends ObserverComponent<IPropsO
     };
 
     renderNoResultIcons = (): JSX.Element => {
-        return (
-                        <AnimatedDiceSet
-                            finalSymbols={[5, 4, 4]}
-                            onAllAnimationsComplete={()=>{}}
-                            staggerDelay={150}
-                        />
-        )
         return (
             <div className={Styles['container-bets']}>
                 <div className={Styles['result-container']}>
