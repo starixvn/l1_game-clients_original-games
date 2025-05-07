@@ -3,6 +3,8 @@ import './_shared/utils/string-helper';
 import { loadI18n } from './i18n';
 import Lobby from './lobby/lobby';
 import { AppProvider, useAppContext } from './appProvider';
+import { SyncMemberSiteBalance } from './_shared/utils/sync-member-site-balance';
+import { useEffect } from 'react';
 
 interface AppProps extends AppContentProps {
     appEnv: string;
@@ -16,6 +18,10 @@ interface AppContentProps {
     renewToken?: Function;
 }
 
+const callbackAfterWinning = () => {
+    console.log('callbackAfterWinning');
+}
+
 const App = ({ appEnv, token, language, siteId, renewToken }: AppProps) => {
     return (
         <AppProvider appEnv={appEnv} language={language} siteId={siteId}>
@@ -26,6 +32,10 @@ const App = ({ appEnv, token, language, siteId, renewToken }: AppProps) => {
 
 const AppContent = ({ token, renewToken }: AppContentProps) => {
     const { language } = useAppContext();
+
+    useEffect(() => {
+        SyncMemberSiteBalance.getInstance().setSyncBalanceCallback(callbackAfterWinning);
+    }, []);
 
     loadI18n(language);
     return (
