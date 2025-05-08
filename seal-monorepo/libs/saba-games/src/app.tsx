@@ -11,31 +11,31 @@ interface AppProps extends AppContentProps {
     siteId: string;
     language: string;
     renewToken?: Function;
+    updateBalanceCallback?: void;
 }
 
 interface AppContentProps {
     token: string;
     renewToken?: Function;
+    updateBalanceCallback?: void;
 }
 
-const callbackAfterWinning = () => {
-    console.log('callbackAfterWinning');
-}
-
-const App = ({ appEnv, token, language, siteId, renewToken }: AppProps) => {
+const App = ({ appEnv, token, language, siteId, renewToken, updateBalanceCallback }: AppProps) => {
     return (
         <AppProvider appEnv={appEnv} language={language} siteId={siteId}>
-            <AppContent token={token} renewToken={renewToken} />
+            <AppContent token={token} renewToken={renewToken} updateBalanceCallback={updateBalanceCallback} />
         </AppProvider>
     );
 };
 
-const AppContent = ({ token, renewToken }: AppContentProps) => {
+const AppContent = ({ token, renewToken, updateBalanceCallback }: AppContentProps) => {
     const { language } = useAppContext();
 
     useEffect(() => {
-        SyncMemberSiteBalance.getInstance().setSyncBalanceCallback(callbackAfterWinning);
-    }, []);
+        if (updateBalanceCallback) {
+            SyncMemberSiteBalance.getInstance().setSyncBalanceCallback(updateBalanceCallback);
+        }
+    }, [updateBalanceCallback]);
 
     loadI18n(language);
     return (
