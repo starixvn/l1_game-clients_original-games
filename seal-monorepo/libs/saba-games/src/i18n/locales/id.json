@@ -291,15 +291,15 @@
         "bet_choices_type": "Warna Tertentu",
         "choices_type_double": "Dobel: {odds_double}",
         "choices_type_triple": "Tripel: {odds_triple}",
-        "glossary_yellow": "Yellow",
-        "glossary_red": "Red",
-        "glossary_pink": "Pink",
-        "glossary_white": "White",
-        "glossary_blue": "Blue",
-        "glossary_green": "Green",
+        "glossary_yellow": "Kuning",
+        "glossary_red": "Merah",
+        "glossary_pink": "Merah Muda",
+        "glossary_white": "Putih",
+        "glossary_blue": "Biru",
+        "glossary_green": "Hijau",
         "single": "Warna Tertentu",
-        "double": "Double",
-        "triple": "Triple",
-        "symbol": "Symbol"
+        "double": "Dobel",
+        "triple": "Tripel",
+        "symbol": "Simbol"
     }
 }
