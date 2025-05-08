@@ -1,6 +1,3 @@
-$icon_width: 48px;
-$icon_height: 48px;
-
 .dice-large {
   width: 48px;
   height: 48px;
@@ -22,87 +19,84 @@ $icon_height: 48px;
   pointer-events: none;
 }
 
+
+@keyframes shake {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  10% { transform: translate(-1px, -1px) rotate(-1deg); }
+  20% { transform: translate(1px, -1px) rotate(1deg); }
+  30% { transform: translate(-1px, 1px) rotate(0deg); }
+  40% { transform: translate(1px, 1px) rotate(1deg); }
+  50% { transform: translate(-1px, -1px) rotate(-1deg); }
+  60% { transform: translate(1px, -1px) rotate(0deg); }
+  70% { transform: translate(-1px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, -1px) rotate(0deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+@keyframes roll {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(360deg) rotateY(720deg); }
+}
+
+@keyframes rollSlow {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(180deg) rotateY(360deg); }
+}
+
 .dice-container {
   perspective: 300px;
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  height: $icon_height;
-
-  &-large {
-    height: $icon_height;
-  }
-
-  &-medium {
-    height: 36px;
-  }
-
-  &-small {
-    height: 28px;
-  }
+  display: inline-block;
 }
 
-.dice-set-container {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-  perspective: 600px;
-  width: 100%;
-  height: 100%;
-}
-
-.carousel-wrapper {
-  position: relative;
-  width: $icon_width;
-  height: $icon_height;
-  perspective: 1100px;
-  overflow: hidden;
-}
-
-.carousel {
-  width: 100%;
-  height: 100%;
-  position: relative;
+.dice-rolling {
   transform-style: preserve-3d;
-  will-change: transform;
-  transition: transform 0.3s ease-out;
+  transition: transform 0.1s ease-out;
+}
 
-  figure {
-    display: block;
-    position: absolute;
-    width: $icon_width;
-    height: $icon_height;
-    margin: 0;
-    opacity: 0.9;
-    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    backface-visibility: hidden;
-    will-change: transform, opacity;
-    overflow: hidden;
+.dice-rolling-fast {
+  animation: roll 0.3s linear;
+}
 
-    &:nth-of-type(1) { transform: rotateX(0deg) translateZ(48px); }
-    &:nth-of-type(2) { transform: rotateX(60deg) translateZ(48px); }
-    &:nth-of-type(3) { transform: rotateX(120deg) translateZ(48px); }
-    &:nth-of-type(4) { transform: rotateX(180deg) translateZ(48px); }
-    &:nth-of-type(5) { transform: rotateX(240deg) translateZ(48px); }
-    &:nth-of-type(6) { transform: rotateX(300deg) translateZ(48px); }
-  }
+.dice-rolling-medium {
+  animation: roll 0.5s linear;
+}
 
-  &[data-currentData="1"] figure:nth-of-type(1),
-  &[data-currentData="2"] figure:nth-of-type(2),
-  &[data-currentData="3"] figure:nth-of-type(3),
-  &[data-currentData="4"] figure:nth-of-type(4),
-  &[data-currentData="5"] figure:nth-of-type(5),
-  &[data-currentData="6"] figure:nth-of-type(6) {
-    opacity: 1;
-  }
+.dice-rolling-slow {
+  animation: rollSlow 0.7s ease-out;
+}
+
+.animated-dice-wrapper {
+  display: inline-block;
+}
+
+.animated-dice-wrapper-shaking {
+  animation-name: shake;
+  animation-timing-function: linear;
+  animation-direction: alternate;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+}
+
+.shake-frequency-0-2 {
+  animation-duration: 0.2s;
+}
+
+.shake-frequency-0-4 {
+  animation-duration: 0.4s;
+}
+
+.shake-frequency-0-7 {
+  animation-duration: 0.7s;
+}
+
+.no-animation {
+  animation: none;
 }
 
 .dice-set-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  perspective: 600px;
+} 

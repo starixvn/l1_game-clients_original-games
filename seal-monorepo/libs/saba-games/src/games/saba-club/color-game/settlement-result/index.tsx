@@ -169,6 +169,7 @@ export default class ColorGameSettlementResult extends ObserverComponent<IPropsO
             this.setState({ isFinishShowResult: true });
         };
 
+        const animationDuration = ANIMATION_DURATION_MS;
         const staggerDelay = 150;
 
         if (!isAnimationResult) {
@@ -176,11 +177,13 @@ export default class ColorGameSettlementResult extends ObserverComponent<IPropsO
         }
 
         return (
-            <div className={Styles['container-bets']}>
+            <div className={`${Styles['container-bets']} ${isAnimationResult ? Styles['has-animation'] : ''}`}>
                 <div className={Styles['result-container']}>
                     {isAnimationResult ? (
                         <AnimatedDiceSet
                             finalSymbols={resultSymbols}
+                            size={Size.large}
+                            animationDuration={animationDuration}
                             onAllAnimationsComplete={handleAnimationComplete}
                             staggerDelay={staggerDelay}
                         />
