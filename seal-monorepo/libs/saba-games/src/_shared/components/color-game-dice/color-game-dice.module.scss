@@ -83,12 +83,12 @@ $icon_height: 48px;
     will-change: transform, opacity;
     overflow: hidden;
 
-    &:nth-of-type(1) { transform: rotateX(0deg) translateZ(40px); }
-    &:nth-of-type(2) { transform: rotateX(60deg) translateZ(40px); }
-    &:nth-of-type(3) { transform: rotateX(120deg) translateZ(40px); }
-    &:nth-of-type(4) { transform: rotateX(180deg) translateZ(40px); }
-    &:nth-of-type(5) { transform: rotateX(240deg) translateZ(40px); }
-    &:nth-of-type(6) { transform: rotateX(300deg) translateZ(40px); }
+    &:nth-of-type(1) { transform: rotateX(0deg) translateZ(48px); }
+    &:nth-of-type(2) { transform: rotateX(60deg) translateZ(48px); }
+    &:nth-of-type(3) { transform: rotateX(120deg) translateZ(48px); }
+    &:nth-of-type(4) { transform: rotateX(180deg) translateZ(48px); }
+    &:nth-of-type(5) { transform: rotateX(240deg) translateZ(48px); }
+    &:nth-of-type(6) { transform: rotateX(300deg) translateZ(48px); }
   }
 
   &[data-currentData="1"] figure:nth-of-type(1),
