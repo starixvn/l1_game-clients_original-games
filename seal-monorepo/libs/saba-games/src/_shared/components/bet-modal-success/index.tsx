@@ -5,6 +5,7 @@ import style from './Success.module.scss';
 
 const BetModalSuccess = ({ totalStake }) => {
     useEffect(() => {
+        console.log('')
         console.log('BetModalSuccess executeSyncBalance: ', totalStake);
         SyncMemberSiteBalance.getInstance().executeSyncBalance(totalStake);
     }, [totalStake]);
