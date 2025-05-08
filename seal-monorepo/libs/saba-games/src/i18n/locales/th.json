@@ -289,7 +289,7 @@
         "game_vendor": "SABA.games",
         "game_name": "เกมสี",
         "game_tab_name": "เกมสี",
-        "bet_choices_type": "สีเฉพาะ",
+        "bet_choices_type": "เฉพาะสี",
         "choices_type_double": "สองเท่า: {odds_double}",
         "choices_type_triple": "สามเท่า: {odds_triple}",
         "glossary_yellow": "สีเหลือง",
@@ -298,9 +298,9 @@
         "glossary_white": "สีขาว",
         "glossary_blue": "น้ำเงิน",
         "glossary_green": "สีเขียว",
-        "single": "สีเฉพาะ",
+        "single": "เฉพาะสี",
         "double": "สองเท่า",
         "triple": "สามเท่า",
-        "symbol": "เครื่องหมาย"
+        "symbol": "เฉพาะสี"
     }
 }

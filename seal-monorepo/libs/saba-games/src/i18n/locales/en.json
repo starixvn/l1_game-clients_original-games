@@ -298,9 +298,9 @@
         "glossary_white": "White",
         "glossary_blue": "Blue",
         "glossary_green": "Green",
-        "single": "Single",
+        "single": "Specific Color",
         "double": "Double",
         "triple": "Triple",
-        "symbol": "Symbol"
+        "symbol": "Specific Color"
     }
 }
