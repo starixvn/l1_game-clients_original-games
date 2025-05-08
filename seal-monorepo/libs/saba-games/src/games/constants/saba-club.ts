@@ -25,3 +25,11 @@ export const FISH_PRAWN_CRAB_CHOICES = {
     ROOSTER: 'rooster',
 };
 
+export const COLOR_GAME_CHOICES = {
+    RED: 'red',
+    WHITE: 'white',
+    GREEN: 'green',
+    BLUE: 'blue',
+    YELLOW: 'yellow',
+    PINK: 'pink',
+};

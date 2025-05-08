@@ -28,7 +28,7 @@ const ColorGameBetStatistic: React.FC<BetPercentagesProps> = ({
             betCounts={betCounts}
             translator={translator}
             styles={{
-                container: Styles['fpc-percentages'],
+                container: Styles['color-game-percentages'],
                 item: Styles['percentage-item'],
                 count: Styles.count
             }}

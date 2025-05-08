@@ -15,7 +15,7 @@ import {
     VIVA88_SITE_ID,
 } from '../../../../constant/app';
 import { useAppContext } from '../../../appProvider';
-import { BACCARAT_CHOICES, FISH_PRAWN_CRAB_CHOICES, SE_DIE_CHOICES } from '../../../games/constants/saba-club';
+import { BACCARAT_CHOICES, FISH_PRAWN_CRAB_CHOICES, SE_DIE_CHOICES, COLOR_GAME_CHOICES } from '../../../games/constants/saba-club';
 import { ChoiceSeDieIconMapper, SeDieChoices } from '../../../games/saba-club/sedie/type';
 import {
     useGameBettingOptionsContext,
@@ -163,8 +163,15 @@ const BetPanel: React.FC<{
     const vendorName = siteId === VIVA88_SITE_ID ? SABA_GAMES : VGAMING;
     const panelRef = useRef<HTMLDivElement>(null);
 
-
-
+    const isSpecialChoice = [
+        SE_DIE_CHOICES.RED2,
+        BACCARAT_CHOICES.PLAYER_PAIR,
+        BACCARAT_CHOICES.BANKER_PAIR,
+        FISH_PRAWN_CRAB_CHOICES.PRAWN,
+        FISH_PRAWN_CRAB_CHOICES.ROOSTER,
+        COLOR_GAME_CHOICES.PINK,
+        COLOR_GAME_CHOICES.GREEN
+    ].includes(betChoice);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -428,12 +435,7 @@ const BetPanel: React.FC<{
             <div
                 ref={panelRef}
                 className={classNames('c-quick-bet__panel', {
-                    ['sg-bet-panel__left-dec-100']:
-                        SE_DIE_CHOICES.RED2 === betChoice ||
-                        BACCARAT_CHOICES.PLAYER_PAIR === betChoice ||
-                        BACCARAT_CHOICES.BANKER_PAIR === betChoice ||
-                        FISH_PRAWN_CRAB_CHOICES.PRAWN === betChoice ||
-                        FISH_PRAWN_CRAB_CHOICES.ROOSTER === betChoice,
+                    ['sg-bet-panel__left-dec-100']: isSpecialChoice,
                 })}
             >
                 <div className="c-betslip">
