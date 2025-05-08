@@ -287,8 +287,8 @@
     },
     "ColorGame": {
         "game_vendor": "SABA.games",
-        "game_name": "Color Game",
-        "game_tab_name": "Color Game",
+        "game_name": "เกมสี",
+        "game_tab_name": "เกมสี",
         "bet_choices_type": "สีเฉพาะ",
         "choices_type_double": "สองเท่า: {odds_double}",
         "choices_type_triple": "สามเท่า: {odds_triple}",

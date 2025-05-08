@@ -286,8 +286,8 @@
     },
     "ColorGame": {
         "game_vendor": "SABA.games",
-        "game_name": "Color Game",
-        "game_tab_name": "Color Game",
+        "game_name": "Permainan Warna",
+        "game_tab_name": "Permainan Warna",
         "bet_choices_type": "Warna Tertentu",
         "choices_type_double": "Dobel: {odds_double}",
         "choices_type_triple": "Tripel: {odds_triple}",

@@ -8,10 +8,10 @@ export enum ColorGameOddsType {
 
 export enum ColorGameChoices {
     yellow = 'yellow',
-    red = 'red',
-    pink = 'pink',
     white = 'white',
+    pink = 'pink',
     blue = 'blue',
+    red = 'red',
     green = 'green'
 }
 
