@@ -28,13 +28,15 @@ const Preview = () => {
     return (
         token && (
             <PreviewProvider>
-                <PreviewContext token={token} renewToken={handleGetToken} />
+                <PreviewContext token={token} renewToken={handleGetToken} updateBalanceCallback={() => {
+                    console.log('updateBalanceCallback');
+                }} />
             </PreviewProvider>
         )
     );
 };
 
-const PreviewContext = ({ token, renewToken }) => {
+const PreviewContext = ({ token, renewToken, updateBalanceCallback }) => {
     const { theme, isDarkMode, language } = usePreviewContext();
 
     const appEnv = '';
@@ -51,7 +53,7 @@ const PreviewContext = ({ token, renewToken }) => {
     return (
         <div data-platform={platform} data-version={process.env.TAG_VERSION} className={'seal-vg-sg-index'}>
             <ProviderSetDropDown />
-            <App appEnv={appEnv} token={token} language={language} siteId={siteId} renewToken={renewToken} />
+            <App appEnv={appEnv} token={token} language={language} siteId={siteId} renewToken={renewToken} updateBalanceCallback={updateBalanceCallback} />
         </div>
     );
 };

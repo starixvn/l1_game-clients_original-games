@@ -11,13 +11,13 @@ interface AppProps extends AppContentProps {
     siteId: string;
     language: string;
     renewToken?: Function;
-    updateBalanceCallback?: void;
+    updateBalanceCallback?: void | null;
 }
 
 interface AppContentProps {
     token: string;
     renewToken?: Function;
-    updateBalanceCallback?: void;
+    updateBalanceCallback?: void | null;
 }
 
 const App = ({ appEnv, token, language, siteId, renewToken, updateBalanceCallback }: AppProps) => {
