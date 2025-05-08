@@ -24,12 +24,12 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
     finalSymbol,
     onAnimationComplete,
     delayStart = 0,
-    totalDuration = 2500
+    totalDuration = 2200
 }) => {
     const carouselRef = useRef<HTMLDivElement>(null);
     const [currentData, setCurrentData] = useState(1);
     const [isAnimating, setIsAnimating] = useState(false);
-    const interval = 50;
+    const interval = 100;
 
     useEffect(() => {
         const delayTimer = setTimeout(() => {
