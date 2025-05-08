@@ -2,16 +2,15 @@ import * as gc from "@sg/sg-game-client";
 import { WinnerDisplay } from "../../../../_shared/components/winner-display/winner-display";
 import Styles from "./coin-toss-animations.module.scss";
 import { CoinTossResult } from "../type";
+
 interface ResultDisplayProps {
     result: gc.GameServiceMessage.TResult;
     language?: string;
-    className?: string;
 }
 
 export const ResultDisplay: React.FC<ResultDisplayProps> = ({
     result,
-    language,
-    className
+    language
 }) => {
     const t = (key) => gc.Translator.t(key, { lng: language || '' });
 
@@ -21,5 +20,5 @@ export const ResultDisplay: React.FC<ResultDisplayProps> = ({
     const { head } = result as CoinTossResult;
     
     const resultText = head ? t('CoinToss.head') : t('CoinToss.tail');
-    return <WinnerDisplay resultText={resultText} className={className || Styles['coin-toss-result']} />;
+    return <WinnerDisplay resultText={resultText} className={Styles['coin-toss-result']} />;
 }; 
