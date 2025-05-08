@@ -253,6 +253,7 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
                 <ColorGameDice
                     symbol={currentSymbol}
                     size={size}
+                    isWooden={true}
                 />
             </div>
         </div>
@@ -262,7 +263,7 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
 // Component for a set of animated dice
 interface AnimatedDiceSetProps {
     finalSymbols: ColorGameSymbol[];
-    size?: typeof Size.large | typeof Size.medium | typeof Size.small;
+    size?: typeof Size.large | typeof Size.medium | typeof Size.small | typeof Size.xLarge;
     animationDuration?: number;
     onAllAnimationsComplete?: () => void;
     staggerDelay?: number;

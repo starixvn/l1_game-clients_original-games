@@ -1,6 +1,13 @@
 $icon_width: 48px;
 $icon_height: 48px;
 
+.dice-x-large {
+  width: 54px;
+  height: 54px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
 .dice-large {
   width: 48px;
   height: 48px;

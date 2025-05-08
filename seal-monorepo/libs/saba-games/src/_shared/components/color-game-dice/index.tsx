@@ -9,6 +9,14 @@ import blueImage from "../../../assets/color-game/blue.png";
 import greenImage from "../../../assets/color-game/green.png";
 import emptyImage from "../../../assets/color-game/empty.png";
 import resultImage from "../../../assets/color-game/result.png";
+import woodenYellowImage from "../../../assets/color-game/wooden-yellow.png";
+import woodenRedImage from "../../../assets/color-game/wooden-red.png";
+import woodenPinkImage from "../../../assets/color-game/wooden-pink.png";
+import woodenWhiteImage from "../../../assets/color-game/wooden-white.png";
+import woodenBlueImage from "../../../assets/color-game/wooden-blue.png";
+import woodenGreenImage from "../../../assets/color-game/wooden-green.png";
+import woodenEmptyImage from "../../../assets/color-game/wooden-empty.png";
+
 import styles from "./color-game-dice.module.scss";
 
 export enum ColorGameSymbol {
@@ -33,6 +41,18 @@ const diceImages: Record<number, string> = {
     [ColorGameSymbol.RESULT]: resultImage,
 };
 
+const woodenDiceImages: Record<number, string> = {
+    [ColorGameSymbol.EMPTY]: woodenEmptyImage,
+    [ColorGameSymbol.YELLOW]: woodenYellowImage,
+    [ColorGameSymbol.RED]: woodenRedImage,
+    [ColorGameSymbol.PINK]: woodenPinkImage,
+    [ColorGameSymbol.WHITE]: woodenWhiteImage,
+    [ColorGameSymbol.BLUE]: woodenBlueImage,
+    [ColorGameSymbol.GREEN]: woodenGreenImage,
+    [ColorGameSymbol.RESULT]: resultImage,
+};
+
+
 // Function to convert dice value (1-6) to symbol based on game rules
 export const diceValueToSymbol = (value: number): ColorGameSymbol => {
     switch (value) {
@@ -55,14 +75,19 @@ export const diceValueToSymbol = (value: number): ColorGameSymbol => {
 
 interface IColorGameDiceProps {
     symbol: ColorGameSymbol;
-    size?: typeof Size.large | typeof Size.medium | typeof Size.small;
+    size?: typeof Size.large | typeof Size.medium | typeof Size.small | typeof Size.xLarge;
+    isWooden?: boolean;
 }
 
 const ColorGameDice: React.FC<IColorGameDiceProps> = ({
     symbol,
-    size = Size.large
+    size = Size.large,
+    isWooden = false
 }) => {
-    const diceImageUrl = diceImages[symbol];
+    const diceImageUrl = isWooden ? woodenDiceImages[symbol] : diceImages[symbol];
+    if (isWooden) {
+        console.log({ size })
+    }
     return (
         <img
             className={styles[`dice-${size}`]}
