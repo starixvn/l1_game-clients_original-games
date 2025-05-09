@@ -86,7 +86,7 @@ const ColorGameDice: React.FC<IColorGameDiceProps> = ({
 }) => {
     const diceImageUrl = isWooden ? woodenDiceImages[symbol] : diceImages[symbol];
     if (isWooden) {
-        console.log({ size })
+        // console.log({ size })
     }
     return (
         <img

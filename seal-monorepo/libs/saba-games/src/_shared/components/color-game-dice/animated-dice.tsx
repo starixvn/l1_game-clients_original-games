@@ -43,21 +43,24 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
     };
 
     const startAnimation = () => {
+        console.log('Starting animation with final symbol:', finalSymbol);
         clearTimers();
         setIsAnimating(true);
 
         // Define roll timings
         const rollTimes = [
-            0,           // First roll immediately
-            100,         // +0.1s
-            200,         // +0.1s
-            300,         // +0.1s
-            400,         // +0.1s
-            600,         // +0.2s
-            800,         // +0.2s
-            1100,        // +0.3s
-            1500 + finalRollDelay  // +0.4s (final reveal) + finalRollDelay
+            0,            // First roll immediately
+            1200,         // +1.2s
+            3000,         // +1.8s
+            4800,         // +1.8s
+            7200,         // +2.4s
+            9600,         // +2.4s
+            12000,        // +2.4s
+            14400,        // +2.4s
+            17400         // +3s (final reveal)
         ];
+
+        console.log('Animation timings:', rollTimes);
 
         const totalDuration = animationDuration + finalRollDelay;
 
@@ -65,21 +68,60 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
         rollTimes.forEach((time, index) => {
             if (index < rollTimes.length - 1) {
                 const timer = setTimeout(() => {
-                    setCurrentSymbol(getRandomSymbol());
+                    console.log(`Step ${index + 1}: Starting at ${time}ms`);
 
-                    // Apply different rotation speeds based on the phase
-                    if (index < 4) {
-                        setRotationClass(styles['rotate-fast']);
-                    } else if (index < 6) {
-                        setRotationClass(styles['rotate-medium']);
+                    // Only change symbol during the first 6 rotations
+                    if (index < 6) {
+                        const randomSymbol = getRandomSymbol();
+                        console.log(`Step ${index + 1}: Setting random symbol:`, randomSymbol);
+                        setCurrentSymbol(randomSymbol);
                     } else {
-                        setRotationClass(styles['rotate-slow']);
+                        console.log(`Step ${index + 1}: Setting final symbol:`, finalSymbol);
+                        setCurrentSymbol(finalSymbol);
                     }
 
+                    // Apply different rotation speeds based on the phase
+                    let rotationType = '';
+                    if (index === 0) {
+                        rotationType = 'rotate-fast'; // 8 rotations
+                    } else if (index === 1) {
+                        rotationType = 'rotate-medium'; // 7 rotations
+                    } else if (index === 2) {
+                        rotationType = 'rotate-slow'; // 6 rotations
+                    } else if (index === 3) {
+                        rotationType = 'rotate-final'; // 5 rotations
+                    } else if (index === 4) {
+                        rotationType = 'rotate-slow'; // 4 rotations
+                    } else if (index === 5) {
+                        rotationType = 'rotate-medium'; // 2 rotations
+                    } else if (index === 6) {
+                        rotationType = 'rotate-slow'; // 1 rotation
+                    }
+                    console.log(`Step ${index + 1}: Applying rotation:`, rotationType);
+                    setRotationClass(styles[rotationType]);
+
                     // Clear rotation class after animation
-                    const animDuration = index < 4 ? 300 : index < 6 ? 500 : 700;
+                    const animDuration = index === 0 ? 1200 :
+                        index === 1 ? 1800 :
+                            index === 2 ? 2400 :
+                                index === 3 ? 3000 :
+                                    index === 4 ? 2400 :
+                                        index === 5 ? 1800 :
+                                            index === 6 ? 2400 : 0;
+
+                    console.log(`Step ${index + 1}: Animation duration:`, animDuration);
+
                     const clearTimer = setTimeout(() => {
+                        console.log(`Step ${index + 1}: Clearing rotation class`);
                         setRotationClass('');
+                        // Complete animation after last rotation
+                        if (index === rollTimes.length - 2) {
+                            console.log('Animation complete');
+                            setIsAnimating(false);
+                            if (onAnimationComplete) {
+                                onAnimationComplete();
+                            }
+                        }
                     }, animDuration);
                     rollTimersRef.current.push(clearTimer);
                 }, time);
@@ -88,25 +130,9 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
             }
         });
 
-        // Final reveal
-        const finalRevealTimer = setTimeout(() => {
-            setCurrentSymbol(finalSymbol);
-            setIsAnimating(false);
-            setRotationClass(styles['rotate-final']);
-
-            const clearTimer = setTimeout(() => {
-                setRotationClass('');
-                if (onAnimationComplete) {
-                    onAnimationComplete();
-                }
-            }, 700);
-            rollTimersRef.current.push(clearTimer);
-        }, rollTimes[rollTimes.length - 1]);
-
-        rollTimersRef.current.push(finalRevealTimer);
-
         // Backup timeout
         animationTimerRef.current = setTimeout(() => {
+            console.log('Backup timeout triggered');
             clearTimers();
             setCurrentSymbol(finalSymbol);
             setIsAnimating(false);
@@ -118,7 +144,15 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
     };
 
     useEffect(() => {
+        console.log('Effect triggered with:', {
+            finalSymbol,
+            animationDuration,
+            delayStart,
+            finalRollDelay
+        });
+
         if (delayStart > 0) {
+            console.log('Starting with delay:', delayStart);
             const delayTimer = setTimeout(() => {
                 startAnimation();
             }, delayStart);
@@ -129,6 +163,7 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
         }
 
         return () => {
+            console.log('Cleaning up timers');
             clearTimers();
         };
     }, [finalSymbol, animationDuration, delayStart, finalRollDelay]);
@@ -190,7 +225,7 @@ export const AnimatedDiceSet: React.FC<AnimatedDiceSetProps> = ({
     };
 
     return (
-        <div className={styles['dice-set-container']}>
+        <div className={styles['dice-set-container']} style={{ gap: '50px' }}>
             {finalSymbols.map((symbol, index) => (
                 <AnimatedDice
                     key={index}

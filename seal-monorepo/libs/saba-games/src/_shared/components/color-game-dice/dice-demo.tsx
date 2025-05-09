@@ -89,7 +89,7 @@ const DiceDemo: React.FC = () => {
                                 animationDuration={animationDuration}
                             />
                         </div>
-                        <div className={styles.diceDemo}>
+                        {/* <div className={styles.diceDemo}>
                             <h3>Large</h3>
                             <AnimatedDice
                                 finalSymbol={finalSymbol}
@@ -115,7 +115,7 @@ const DiceDemo: React.FC = () => {
                                 onAnimationComplete={handleAnimationComplete}
                                 animationDuration={animationDuration}
                             />
-                        </div>
+                        </div> */}
                     </div>
                     <button
                         className={styles.rollButton}
@@ -131,7 +131,7 @@ const DiceDemo: React.FC = () => {
                     <div className={styles.diceSetDemo}>
                         <AnimatedDiceSet
                             finalSymbols={finalSymbols}
-                            size={Size.large}
+                            size={Size.xLarge}
                             onAllAnimationsComplete={handleAnimationComplete}
                             staggerDelay={staggerDelay}
                             finalRollSequenceDelay={finalRollDelay}
@@ -162,7 +162,7 @@ const DiceDemo: React.FC = () => {
                                 <div className={styles.manualDice}>
                                     <AnimatedDice
                                         finalSymbol={manualSymbols[manualSymbols.length - 1] || ColorGameSymbol.EMPTY}
-                                        size={Size.large}
+                                        size={Size.xLarge}
                                         animationDuration={500}
                                     />
                                 </div>
