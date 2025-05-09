@@ -52,8 +52,64 @@
 }
 
 .dice-container {
-  perspective: 300px;
+  perspective: 1000px;
   display: inline-block;
+  width: 48px;
+  height: 48px;
+}
+
+.dice-3d {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease-out;
+}
+
+.dice-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes rotateFast {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(360deg) rotateY(720deg); }
+}
+
+@keyframes rotateMedium {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(270deg) rotateY(540deg); }
+}
+
+@keyframes rotateSlow {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(180deg) rotateY(360deg); }
+}
+
+@keyframes rotateFinal {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(90deg) rotateY(180deg); }
+}
+
+.rotate-fast {
+  animation: rotateFast 0.3s linear;
+}
+
+.rotate-medium {
+  animation: rotateMedium 0.5s linear;
+}
+
+.rotate-slow {
+  animation: rotateSlow 0.7s ease-out;
+}
+
+.rotate-final {
+  animation: rotateFinal 0.7s ease-out;
 }
 
 .dice-rolling {
@@ -105,5 +161,5 @@
   display: flex;
   gap: 10px;
   justify-content: center;
-  perspective: 600px;
+  perspective: 1000px;
 } 
