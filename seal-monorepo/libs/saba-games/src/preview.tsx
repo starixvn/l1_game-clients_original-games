@@ -5,6 +5,8 @@ import App from './app';
 import { PreviewProvider, usePreviewContext } from './previewProvider';
 import ProviderSetDropDown from './_shared/components/provider-set-dropdown';
 import { requestSSO } from './_shared/utils/sso-helper';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import DiceDemo from './_shared/components/color-game-dice/dice-demo';
 
 const Preview = () => {
     const [token, setToken] = useState('');
@@ -28,9 +30,11 @@ const Preview = () => {
     return (
         token && (
             <PreviewProvider>
-                <PreviewContext token={token} renewToken={handleGetToken} updateBalanceCallback={() => {
-                    console.log('updateBalanceCallback');
-                }} />
+                <Router>
+                    <PreviewContext token={token} renewToken={handleGetToken} updateBalanceCallback={() => {
+                        console.log('updateBalanceCallback');
+                    }} />
+                </Router>
             </PreviewProvider>
         )
     );
@@ -53,7 +57,19 @@ const PreviewContext = ({ token, renewToken, updateBalanceCallback }) => {
     return (
         <div data-platform={platform} data-version={process.env.TAG_VERSION} className={'seal-vg-sg-index'}>
             <ProviderSetDropDown />
-            <App appEnv={appEnv} token={token} language={language} siteId={siteId} renewToken={renewToken} updateBalanceCallback={updateBalanceCallback} />
+            <Routes>
+                <Route path="/color-games-demo" element={<DiceDemo />} />
+                <Route path="*" element={
+                    <App
+                        appEnv={appEnv}
+                        token={token}
+                        language={language}
+                        siteId={siteId}
+                        renewToken={renewToken}
+                        updateBalanceCallback={updateBalanceCallback}
+                    />
+                } />
+            </Routes>
         </div>
     );
 };
