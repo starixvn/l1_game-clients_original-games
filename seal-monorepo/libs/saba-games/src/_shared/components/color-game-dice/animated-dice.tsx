@@ -1,8 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { ColorGameSymbol, diceValueToSymbol } from './index';
 import ColorGameDice from './index';
 import { Size } from "../../constants";
 import styles from './color-game-dice.module.scss';
+
+interface DiceFaceProps {
+    transform: string;
+    symbol: ColorGameSymbol;
+    size: typeof Size.large | typeof Size.medium | typeof Size.small;
+}
+
+const DiceFace: React.FC<DiceFaceProps> = ({ transform, symbol, size }) => (
+    <div className={styles['dice-face']} style={{ transform }}>
+        <ColorGameDice symbol={symbol} size={size} isWooden={true} />
+    </div>
+);
 
 interface AnimatedDiceProps {
     finalSymbol: ColorGameSymbol;
@@ -13,6 +25,16 @@ interface AnimatedDiceProps {
     finalRollDelay?: number;
 }
 
+const ANIMATION_PHASES = [
+    { rotation: 'rotate-fast', duration: 1200, rotations: 8 },
+    { rotation: 'rotate-medium', duration: 1800, rotations: 7 },
+    { rotation: 'rotate-slow', duration: 2400, rotations: 6 },
+    { rotation: 'rotate-final', duration: 3000, rotations: 5 },
+    { rotation: 'rotate-slow', duration: 2400, rotations: 4 },
+    { rotation: 'rotate-medium', duration: 1800, rotations: 2 },
+    { rotation: 'rotate-slow', duration: 2400, rotations: 1 },
+];
+
 const AnimatedDice: React.FC<AnimatedDiceProps> = ({
     finalSymbol,
     size = Size.large,
@@ -21,8 +43,8 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
     delayStart = 0,
     finalRollDelay = 0
 }) => {
-    const [currentSymbol, setCurrentSymbol] = useState<ColorGameSymbol>(ColorGameSymbol.EMPTY);
     const [isAnimating, setIsAnimating] = useState<boolean>(false);
+    const [currentSymbol, setCurrentSymbol] = useState<ColorGameSymbol>(ColorGameSymbol.EMPTY);
     const [rotationClass, setRotationClass] = useState<string>('');
     const animationTimerRef = useRef<NodeJS.Timeout | null>(null);
     const rollTimersRef = useRef<NodeJS.Timeout[]>([]);
@@ -70,16 +92,6 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
                 const timer = setTimeout(() => {
                     console.log(`Step ${index + 1}: Starting at ${time}ms`);
 
-                    // Only change symbol during the first 6 rotations
-                    if (index < 6) {
-                        const randomSymbol = getRandomSymbol();
-                        console.log(`Step ${index + 1}: Setting random symbol:`, randomSymbol);
-                        setCurrentSymbol(randomSymbol);
-                    } else {
-                        console.log(`Step ${index + 1}: Setting final symbol:`, finalSymbol);
-                        setCurrentSymbol(finalSymbol);
-                    }
-
                     // Apply different rotation speeds based on the phase
                     let rotationType = '';
                     if (index === 0) {
@@ -111,6 +123,12 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
 
                     console.log(`Step ${index + 1}: Animation duration:`, animDuration);
 
+                    const setFinalSymbol = setTimeout(() => {
+                        console.log(`set final symbol as ${finalSymbol}`);
+                        setCurrentSymbol(finalSymbol);
+                    }, animDuration / 10)
+                    rollTimersRef.current.push(setFinalSymbol);
+
                     const clearTimer = setTimeout(() => {
                         console.log(`Step ${index + 1}: Clearing rotation class`);
                         setRotationClass('');
@@ -134,7 +152,6 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
         animationTimerRef.current = setTimeout(() => {
             console.log('Backup timeout triggered');
             clearTimers();
-            setCurrentSymbol(finalSymbol);
             setIsAnimating(false);
             setRotationClass('');
             if (onAnimationComplete) {
@@ -168,27 +185,26 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
         };
     }, [finalSymbol, animationDuration, delayStart, finalRollDelay]);
 
+    const diceFaces = [
+        { transform: 'translateZ(24px)' },
+        { transform: 'rotateY(180deg) translateZ(24px)' },
+        { transform: 'rotateY(90deg) translateZ(24px)' },
+        { transform: 'rotateY(-90deg) translateZ(24px)' },
+        { transform: 'rotateX(90deg) translateZ(24px)' },
+        { transform: 'rotateX(-90deg) translateZ(24px)' },
+    ];
+
     return (
         <div className={styles['dice-container']}>
             <div className={`${styles['dice-3d']} ${rotationClass}`}>
-                <div className={styles['dice-face']} style={{ transform: 'translateZ(24px)' }}>
-                    <ColorGameDice symbol={currentSymbol} size={size} isWooden={true} />
-                </div>
-                <div className={styles['dice-face']} style={{ transform: 'rotateY(180deg) translateZ(24px)' }}>
-                    <ColorGameDice symbol={getRandomSymbol()} size={size} isWooden={true} />
-                </div>
-                <div className={styles['dice-face']} style={{ transform: 'rotateY(90deg) translateZ(24px)' }}>
-                    <ColorGameDice symbol={getRandomSymbol()} size={size} isWooden={true} />
-                </div>
-                <div className={styles['dice-face']} style={{ transform: 'rotateY(-90deg) translateZ(24px)' }}>
-                    <ColorGameDice symbol={getRandomSymbol()} size={size} isWooden={true} />
-                </div>
-                <div className={styles['dice-face']} style={{ transform: 'rotateX(90deg) translateZ(24px)' }}>
-                    <ColorGameDice symbol={getRandomSymbol()} size={size} isWooden={true} />
-                </div>
-                <div className={styles['dice-face']} style={{ transform: 'rotateX(-90deg) translateZ(24px)' }}>
-                    <ColorGameDice symbol={getRandomSymbol()} size={size} isWooden={true} />
-                </div>
+                {diceFaces.map((face, index) => (
+                    <DiceFace
+                        key={index}
+                        transform={face.transform}
+                        symbol={index === 0 ? currentSymbol : getRandomSymbol()}
+                        size={size}
+                    />
+                ))}
             </div>
         </div>
     );
