@@ -34,6 +34,7 @@ import { choiceToSymbolMap as colorGameChoiceToSymbolMap } from '../../../games/
 import { Size } from '../../constants';
 import FishPrawnCrabDice from '../fish-prawn-crab-dice';
 import ColorGameDice from '../color-game-dice';
+import { SyncMemberSiteBalance } from '../../utils/sync-member-site-balance';
 
 const WARNING_CLOSE_DELAY = 60000;
 
@@ -284,6 +285,7 @@ const BetPanel: React.FC<{
             handleBet?.(validatedAmount, betChoice);
             onHide?.();
             updateLatestBetToStorage(namespace, clientRoundId);
+            SyncMemberSiteBalance.getInstance().executeSyncBalance();
         }
     };
 
