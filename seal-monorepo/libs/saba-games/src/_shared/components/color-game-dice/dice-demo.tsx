@@ -84,7 +84,7 @@ const DiceDemo: React.FC = () => {
                             <h3>X-Large</h3>
                             <AnimatedDice
                                 finalSymbol={finalSymbol}
-                                size={Size.xLarge}
+                                size={Size.large}
                                 onAnimationComplete={handleAnimationComplete}
                                 animationDuration={animationDuration}
                             />
@@ -131,7 +131,7 @@ const DiceDemo: React.FC = () => {
                     <div className={styles.diceSetDemo}>
                         <AnimatedDiceSet
                             finalSymbols={finalSymbols}
-                            size={Size.xLarge}
+                            size={Size.large}
                             onAllAnimationsComplete={handleAnimationComplete}
                             staggerDelay={staggerDelay}
                             finalRollSequenceDelay={finalRollDelay}
@@ -162,7 +162,7 @@ const DiceDemo: React.FC = () => {
                                 <div className={styles.manualDice}>
                                     <AnimatedDice
                                         finalSymbol={manualSymbols[manualSymbols.length - 1] || ColorGameSymbol.EMPTY}
-                                        size={Size.xLarge}
+                                        size={Size.large}
                                         animationDuration={500}
                                     />
                                 </div>

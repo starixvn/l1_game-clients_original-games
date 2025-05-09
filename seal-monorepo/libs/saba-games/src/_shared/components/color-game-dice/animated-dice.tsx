@@ -186,12 +186,12 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
     }, [finalSymbol, animationDuration, delayStart, finalRollDelay]);
 
     const diceFaces = [
-        { transform: 'translateZ(17px)' },
-        { transform: 'rotateY(180deg) translateZ(17px)' },
-        { transform: 'rotateY(90deg) translateZ(17px)' },
-        { transform: 'rotateY(-90deg) translateZ(17px)' },
-        { transform: 'rotateX(90deg) translateZ(17px)' },
-        { transform: 'rotateX(-90deg) translateZ(17px)' },
+        { transform: 'translateZ(24px)' },
+        { transform: 'rotateY(180deg) translateZ(24px)' },
+        { transform: 'rotateY(90deg) translateZ(24px)' },
+        { transform: 'rotateY(-90deg) translateZ(24px)' },
+        { transform: 'rotateX(90deg) translateZ(24px)' },
+        { transform: 'rotateX(-90deg) translateZ(24px)' },
     ];
 
     return (
