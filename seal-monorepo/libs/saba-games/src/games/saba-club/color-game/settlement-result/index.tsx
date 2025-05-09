@@ -182,7 +182,7 @@ export default class ColorGameSettlementResult extends ObserverComponent<IPropsO
                     {isAnimationResult ? (
                         <AnimatedDiceSet
                             finalSymbols={resultSymbols}
-                            size={Size.xLarge}
+                            size={Size.large}
                             animationDuration={animationDuration}
                             onAllAnimationsComplete={handleAnimationComplete}
                             staggerDelay={staggerDelay}
@@ -194,7 +194,7 @@ export default class ColorGameSettlementResult extends ObserverComponent<IPropsO
                                 <div key={index} className={Styles['result-item']}>
                                     <ColorGameDice
                                         symbol={symbol}
-                                        size={Size.xLarge}
+                                        size={Size.large}
                                         isWooden={true}
                                     />
                                 </div>
@@ -212,13 +212,13 @@ export default class ColorGameSettlementResult extends ObserverComponent<IPropsO
             <div className={Styles['container-bets']}>
                 <div className={Styles['result-container']}>
                     <div className={Styles['dice-empty']}>
-                        <ColorGameDice symbol={ColorGameSymbol.EMPTY} size={Size.xLarge} isWooden={true} />
+                        <ColorGameDice symbol={ColorGameSymbol.EMPTY} size={Size.large} isWooden={true} />
                     </div>
                     <div className={Styles['dice-empty']}>
-                        <ColorGameDice symbol={ColorGameSymbol.EMPTY} size={Size.xLarge} isWooden={true} />
+                        <ColorGameDice symbol={ColorGameSymbol.EMPTY} size={Size.large} isWooden={true} />
                     </div>
                     <div className={Styles['dice-empty']}>
-                        <ColorGameDice symbol={ColorGameSymbol.EMPTY} size={Size.xLarge} isWooden={true} />
+                        <ColorGameDice symbol={ColorGameSymbol.EMPTY} size={Size.large} isWooden={true} />
                     </div>
                 </div>
             </div>

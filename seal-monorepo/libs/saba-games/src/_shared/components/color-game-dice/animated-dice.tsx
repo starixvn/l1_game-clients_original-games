@@ -186,12 +186,12 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
     }, [finalSymbol, animationDuration, delayStart, finalRollDelay]);
 
     const diceFaces = [
-        { transform: 'translateZ(24px)' },
-        { transform: 'rotateY(180deg) translateZ(24px)' },
-        { transform: 'rotateY(90deg) translateZ(24px)' },
-        { transform: 'rotateY(-90deg) translateZ(24px)' },
-        { transform: 'rotateX(90deg) translateZ(24px)' },
-        { transform: 'rotateX(-90deg) translateZ(24px)' },
+        { transform: 'translateZ(17px)' },
+        { transform: 'rotateY(180deg) translateZ(17px)' },
+        { transform: 'rotateY(90deg) translateZ(17px)' },
+        { transform: 'rotateY(-90deg) translateZ(17px)' },
+        { transform: 'rotateX(90deg) translateZ(17px)' },
+        { transform: 'rotateX(-90deg) translateZ(17px)' },
     ];
 
     return (
@@ -241,7 +241,7 @@ export const AnimatedDiceSet: React.FC<AnimatedDiceSetProps> = ({
     };
 
     return (
-        <div className={styles['dice-set-container']} style={{ gap: '50px' }}>
+        <div className={styles['dice-set-container']}>
             {finalSymbols.map((symbol, index) => (
                 <AnimatedDice
                     key={index}
