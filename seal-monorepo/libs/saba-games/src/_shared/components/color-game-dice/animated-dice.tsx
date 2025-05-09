@@ -11,7 +11,7 @@ interface DiceFaceProps {
 }
 
 const DiceFace: React.FC<DiceFaceProps> = ({ transform, symbol, size }) => (
-    <div className={styles['dice-face']} style={{ transform }}>
+    <div className={`${styles['dice-face']}`} style={{ transform }}>
         <ColorGameDice symbol={symbol} size={size} isWooden={true} />
     </div>
 );
@@ -24,16 +24,6 @@ interface AnimatedDiceProps {
     delayStart?: number;
     finalRollDelay?: number;
 }
-
-const ANIMATION_PHASES = [
-    { rotation: 'rotate-fast', duration: 2400, rotations: 8 },
-    { rotation: 'rotate-medium', duration: 3600, rotations: 7 },
-    { rotation: 'rotate-slow', duration: 4800, rotations: 6 },
-    { rotation: 'rotate-final', duration: 6000, rotations: 5 },
-    { rotation: 'rotate-slow', duration: 4800, rotations: 4 },
-    { rotation: 'rotate-medium', duration: 3600, rotations: 2 },
-    { rotation: 'rotate-slow', duration: 4800, rotations: 1 },
-];
 
 const AnimatedDice: React.FC<AnimatedDiceProps> = ({
     finalSymbol,
@@ -186,12 +176,12 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
     }, [finalSymbol, animationDuration, delayStart, finalRollDelay]);
 
     const diceFaces = [
-        { transform: 'translateZ(21px)' },
-        { transform: 'rotateY(180deg) translateZ(21px)' },
-        { transform: 'rotateY(90deg) translateZ(21px)' },
-        { transform: 'rotateY(-90deg) translateZ(21px)' },
-        { transform: 'rotateX(90deg) translateZ(21px)' },
-        { transform: 'rotateX(-90deg) translateZ(21px)' },
+        { transform: 'translateZ(23px)' },
+        { transform: 'rotateY(180deg) translateZ(23px)' },
+        { transform: 'rotateY(90deg) translateZ(23px)' },
+        { transform: 'rotateY(-90deg) translateZ(23px)' },
+        { transform: 'rotateX(90deg) translateZ(23px)' },
+        { transform: 'rotateX(-90deg) translateZ(23px)' },
     ];
 
     return (
