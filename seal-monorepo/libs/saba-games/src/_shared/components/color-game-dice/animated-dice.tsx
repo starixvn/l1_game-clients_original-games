@@ -26,13 +26,13 @@ interface AnimatedDiceProps {
 }
 
 const ANIMATION_PHASES = [
-    { rotation: 'rotate-fast', duration: 1200, rotations: 8 },
-    { rotation: 'rotate-medium', duration: 1800, rotations: 7 },
-    { rotation: 'rotate-slow', duration: 2400, rotations: 6 },
-    { rotation: 'rotate-final', duration: 3000, rotations: 5 },
-    { rotation: 'rotate-slow', duration: 2400, rotations: 4 },
-    { rotation: 'rotate-medium', duration: 1800, rotations: 2 },
-    { rotation: 'rotate-slow', duration: 2400, rotations: 1 },
+    { rotation: 'rotate-fast', duration: 2400, rotations: 8 },
+    { rotation: 'rotate-medium', duration: 3600, rotations: 7 },
+    { rotation: 'rotate-slow', duration: 4800, rotations: 6 },
+    { rotation: 'rotate-final', duration: 6000, rotations: 5 },
+    { rotation: 'rotate-slow', duration: 4800, rotations: 4 },
+    { rotation: 'rotate-medium', duration: 3600, rotations: 2 },
+    { rotation: 'rotate-slow', duration: 4800, rotations: 1 },
 ];
 
 const AnimatedDice: React.FC<AnimatedDiceProps> = ({
@@ -69,17 +69,17 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
         clearTimers();
         setIsAnimating(true);
 
-        // Define roll timings
+        // Define roll timings (doubled)
         const rollTimes = [
             0,            // First roll immediately
-            1200,         // +1.2s
-            3000,         // +1.8s
-            4800,         // +1.8s
-            7200,         // +2.4s
-            9600,         // +2.4s
-            12000,        // +2.4s
-            14400,        // +2.4s
-            17400         // +3s (final reveal)
+            2400,         // +2.4s
+            6000,         // +3.6s
+            10800,        // +4.8s
+            16800,        // +6s
+            21600,        // +4.8s
+            26400,        // +4.8s
+            30000,        // +3.6s
+            36000         // +6s (final reveal)
         ];
 
         console.log('Animation timings:', rollTimes);
@@ -113,13 +113,13 @@ const AnimatedDice: React.FC<AnimatedDiceProps> = ({
                     setRotationClass(styles[rotationType]);
 
                     // Clear rotation class after animation
-                    const animDuration = index === 0 ? 1200 :
-                        index === 1 ? 1800 :
-                            index === 2 ? 2400 :
-                                index === 3 ? 3000 :
-                                    index === 4 ? 2400 :
-                                        index === 5 ? 1800 :
-                                            index === 6 ? 2400 : 0;
+                    const animDuration = index === 0 ? 2400 :
+                        index === 1 ? 3600 :
+                            index === 2 ? 4800 :
+                                index === 3 ? 6000 :
+                                    index === 4 ? 4800 :
+                                        index === 5 ? 3600 :
+                                            index === 6 ? 4800 : 0;
 
                     console.log(`Step ${index + 1}: Animation duration:`, animDuration);
 
