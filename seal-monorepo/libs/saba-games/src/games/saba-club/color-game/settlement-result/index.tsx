@@ -183,7 +183,6 @@ export default class ColorGameSettlementResult extends ObserverComponent<IPropsO
                         <AnimatedDiceSet
                             finalSymbols={resultSymbols}
                             size={Size.large}
-                            animationDuration={animationDuration}
                             onAllAnimationsComplete={handleAnimationComplete}
                             staggerDelay={staggerDelay}
                         />

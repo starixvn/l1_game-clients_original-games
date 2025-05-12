@@ -6,7 +6,7 @@ import styles from './dice-demo.module.scss';
 
 const DiceDemo: React.FC = () => {
     const [isRolling, setIsRolling] = useState(false);
-    const [finalSymbol, setFinalSymbol] = useState<ColorGameSymbol>(ColorGameSymbol.EMPTY);
+    const [finalSymbol, setFinalSymbol] = useState<ColorGameSymbol>(ColorGameSymbol.BLUE);
     const [finalSymbols, setFinalSymbols] = useState<ColorGameSymbol[]>([]);
     const [isManualMode, setIsManualMode] = useState(false);
     const [currentStep, setCurrentStep] = useState(0);
@@ -86,7 +86,6 @@ const DiceDemo: React.FC = () => {
                                 finalSymbol={finalSymbol}
                                 size={Size.large}
                                 onAnimationComplete={handleAnimationComplete}
-                                animationDuration={animationDuration}
                             />
                         </div>
                         {/* <div className={styles.diceDemo}>
@@ -135,7 +134,6 @@ const DiceDemo: React.FC = () => {
                             onAllAnimationsComplete={handleAnimationComplete}
                             staggerDelay={staggerDelay}
                             finalRollSequenceDelay={finalRollDelay}
-                            animationDuration={animationDuration}
                         />
                     </div>
                     <button
@@ -163,7 +161,6 @@ const DiceDemo: React.FC = () => {
                                     <AnimatedDice
                                         finalSymbol={manualSymbols[manualSymbols.length - 1] || ColorGameSymbol.EMPTY}
                                         size={Size.large}
-                                        animationDuration={500}
                                     />
                                 </div>
                                 <div className={styles.manualButtons}>
