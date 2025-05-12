@@ -19,6 +19,7 @@ import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds/round-time-stor
 import WarningDialog from '../notices/warning-dialog';
 import { RoundStore } from '@sg/sg-game-client/dist/game/rounds';
 import classNames from 'classnames';
+import { SyncMemberSiteBalance } from '../../utils/sync-member-site-balance';
 
 export interface IGameBaseState {
     isConnected: boolean;
@@ -94,6 +95,13 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     @handle(gc.Connection.ConnectionHandlers.InGameHandler)
     inGame() {
         return this.props.namespace;
+    }
+
+    @render(gc.Bet.BetStore, (store) => store.validBet)
+    setIsValidBet(validBet: gc.Bet.IValidBet) {
+        if (validBet?.value) {
+            SyncMemberSiteBalance.getInstance().executeSyncBalance();
+        }
     }
 
     renderNotice(): JSX.Element {
