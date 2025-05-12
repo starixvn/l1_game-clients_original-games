@@ -287,8 +287,8 @@
     },
     "ColorGame": {
         "game_vendor": "SABA.games",
-        "game_name": "XÍ NGẦU LỤC SẮC",
-        "game_tab_name": "XÍ NGẦU LỤC SẮC",
+        "game_name": "Xí Ngầu Lục Sắc",
+        "game_tab_name": "Xí Ngầu Lục Sắc",
         "bet_choices_type": "Màu cụ thể",
         "choices_type_double": "Đôi: {odds_double}",
         "choices_type_triple": "Bộ Ba: {odds_triple}",
