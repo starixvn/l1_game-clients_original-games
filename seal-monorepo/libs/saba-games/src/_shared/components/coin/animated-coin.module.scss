@@ -51,7 +51,7 @@ $deg: math.sin(math.div(3.14159, $facets));
     &:before,
     &:after {
       width: $depth;
-      height: $facet_length;
+      height: $facet_length * 1.2;
       background-size: 100% math.div($facets * $facet_length, 144);
     }
   }
