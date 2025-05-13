@@ -35,7 +35,6 @@ import { choiceToSymbolMap as colorGameChoiceToSymbolMap } from '../../../games/
 import { Size } from '../../constants';
 import FishPrawnCrabDice from '../fish-prawn-crab-dice';
 import ColorGameDice from '../color-game-dice';
-import { SyncMemberSiteBalance } from '../../utils/sync-member-site-balance';
 import Coin from '../coin'
 import { choiceToSymbolMap as coinTossChoiceToSymbolMap } from '../../../games/saba-club/coin-toss/coin-toss-utils';
 
