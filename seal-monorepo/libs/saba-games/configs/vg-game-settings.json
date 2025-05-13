@@ -133,7 +133,9 @@
         "gameName": "ColorGame",
         "name": "ColorGame",
         "serviceName": "color-game",
-        "namespaces": ["ColorGame"],
+        "namespaces": [
+            "ColorGame"
+        ],
         "isVisible": true,
         "durations": {
             "wholeRound": 40,
@@ -141,7 +143,7 @@
             "placingBet": 30,
             "generatingResult": 1,
             "showingResult": 2,
-            "startRound": 0
+            "startRound": 2
         },
         "numberOfRoundHistory": 100,
         "websocket": {

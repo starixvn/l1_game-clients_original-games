@@ -54,15 +54,6 @@ export default class ColorGamePage extends GatewayGameBase<IColorGamePageProps, 
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
     handleRoundStateChange(roundState: string) {
         this.setState({ roundState });
-        if (roundState === ROUND_STATE.PLACING_BET) {
-            this.setState({
-                statusSettlement: {
-                    win: false,
-                    bet: 0,
-                    winningByChoices: {}
-                }
-            });
-        }
     }
 
     renderRoundHistory() {
