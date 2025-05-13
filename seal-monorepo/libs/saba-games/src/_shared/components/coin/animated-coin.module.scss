@@ -159,7 +159,7 @@ $deg: math.sin(math.div(3.14159, $facets));
     animation-timing-function: cubic-bezier(0.1, 0.5, 0.1, 1);
   }
   100% { 
-    transform: rotateY(720deg);
+    transform: rotateY(1080deg);
     animation-timing-function: cubic-bezier(0.1, 0.5, 0.1, 1);
   }
 }
@@ -170,7 +170,7 @@ $deg: math.sin(math.div(3.14159, $facets));
     animation-timing-function: cubic-bezier(0.1, 0.5, 0.1, 1);
   }
   100% { 
-    transform: rotateY(900deg);
+    transform: rotateY(1260deg);
     animation-timing-function: cubic-bezier(0.1, 0.5, 0.1, 1);
   }
 }
