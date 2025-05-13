@@ -4,8 +4,8 @@ import { GameNames } from "../../../../../_shared/constants";
 import { CoinTossResult } from "../../type";
 import Styles from "./coin-toss-scoreboard-body.module.scss";
 import classNames from 'classnames';
-import CoinHistory from "libs/saba-games/src/_shared/components/coin-history";
-import { CoinSymbol } from "libs/saba-games/src/_shared/components/coin";
+import CoinHistory from "../../../../../_shared/components/coin-history";
+import { CoinSymbol } from "../../../../../_shared/components/coin";
 
 type Props = {
     gameName: string;

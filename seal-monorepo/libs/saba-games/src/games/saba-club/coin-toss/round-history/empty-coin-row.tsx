@@ -2,7 +2,7 @@ import React from "react";
 import { CoinSymbol } from "../../../../_shared/components/coin";
 import { Size } from "../../../../_shared/constants";
 import styles from "./empty-coin-row.module.scss";
-import CoinHistory from "libs/saba-games/src/_shared/components/coin-history";
+import CoinHistory from "../../../../_shared/components/coin-history";
 
 interface IEmptyDiceRowProps {
     count?: number;

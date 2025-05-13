@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Size } from "../../../_shared/constants";
 import styles from "./animated-coin.module.scss"
 import { CoinSymbol } from '.';
-import { ANIMATION_DURATION_MS } from 'libs/saba-games/src/games/saba-club/coin-toss/constants/coin-toss-constants';
+import { ANIMATION_DURATION_MS } from '../../../games/saba-club/coin-toss/constants/coin-toss-constants';
 
 interface ICoinProps {
       size?: typeof Size.large | typeof Size.medium | typeof Size.small;
