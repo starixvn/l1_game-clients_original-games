@@ -5,6 +5,7 @@ import { CoinSymbol } from "../../../../_shared/components/coin";
 import styles from "./coin-toss-round-history.module.scss";
 import { CoinTossRoundHistoryTooltip } from "./tooltip";
 import { CoinTossChoices } from "../type";
+import { Size } from "../../../../_shared/constants";
 
 interface ICoinTossRoundHistoryItemProps {
     roundHistory: gc.RoundHistories.RoundHistory;
@@ -25,6 +26,7 @@ export const CoinTossRoundHistoryItem: React.FC<ICoinTossRoundHistoryItemProps> 
         <div key={roundHistory.roundId} className={styles["history-item"]}>
             <CoinHistory
                 coinType={coinType}
+                size={Size.medium}
             />
             {showArrow && <span className={styles["arrow"]}></span>}
             <CoinTossRoundHistoryTooltip

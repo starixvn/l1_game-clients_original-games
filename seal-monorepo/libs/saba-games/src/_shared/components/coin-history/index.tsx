@@ -1,23 +1,36 @@
-import emptyImage from "../../../assets/coin-history/empty.png"
-import headImage from "../../../assets/coin-history/head.png"
-import tailImage from "../../../assets/coin-history/tail.png"
+import classNames from "classnames";
 import { CoinSymbol } from "../coin"
-import styles from "./coin.module.scss"
-
-const coinImages: Record<CoinSymbol, string> = {
-  [CoinSymbol.EMPTY]: emptyImage,
-  [CoinSymbol.HEAD]: headImage,
-  [CoinSymbol.TAIL]: tailImage,
-}
+import Styles from "./coin.module.scss"
+import { Size } from "../../../_shared/constants";
 
 interface ICoinProps {
   coinType: CoinSymbol;
+  size?: string;
 }
 
-const CoinHistory: React.FC<ICoinProps> = ({ coinType }) => {
-  const coinImageUrl = coinImages[coinType];
+const StylesTypeMap = {
+  [CoinSymbol.HEAD]: Styles[`dot-head`],
+  [CoinSymbol.TAIL]: Styles[`dot-tail`],
+  [CoinSymbol.EMPTY]: Styles[`dot-next`],
+}
 
-  return <img className={styles[`coin-container`]} src={coinImageUrl} alt={`coin-${coinType}`} />
+const CoinHistory: React.FC<ICoinProps> = ({ coinType, size = Size.small }) => {
+  const classNameStyle = StylesTypeMap[coinType];
+  
+  const value = coinType === CoinSymbol.EMPTY ? '?' : '';
+
+  return (
+    <div
+        className={classNames(
+            Styles.dot,
+            Styles[`dot-${size}`],
+            classNameStyle,
+        )}
+        data-testid='round-dot'
+    >
+      { value }
+    </div>
+  )
 }
 
 export default CoinHistory;

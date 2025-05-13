@@ -26,6 +26,7 @@ export const EmptyCoinRow: React.FC<IEmptyDiceRowProps> = ({
             <CoinHistory
                 data-testid={"empty-coin"}
                 coinType={CoinSymbol.EMPTY}
+                size={size}
             />
         </div>
     );
