@@ -233,13 +233,6 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     renderCountDownTimerState(roundState: string) {
         if (roundState === ROUND_STATE.PLACING_BET) {
             this.setState({ isShowNextRoundMessage: false });
-            this.setState({
-                statusSettlement: {
-                    win: false,
-                    bet: 0,
-                    winningByChoices: {}
-                }
-            });
         }
 
         if (roundState === ROUND_STATE.LOCKING_BET || roundState === ROUND_STATE.SHOW_RESULT) {

@@ -12,6 +12,7 @@ import { containerOptions, setting } from './game-settings';
 import ColorGameSettlementResult from './settlement-result';
 import { ANIMATION_DURATION_MS } from './constants';
 import ColorGameRoundHistory from './round-history/color-game-round-history';
+import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
 
 const ColorGameStatistic = React.lazy(() => import('./statistic/color-game-statistic'));
 
@@ -53,6 +54,15 @@ export default class ColorGamePage extends GatewayGameBase<IColorGamePageProps, 
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
     handleRoundStateChange(roundState: string) {
         this.setState({ roundState });
+        if (roundState === ROUND_STATE.PLACING_BET) {
+            this.setState({
+                statusSettlement: {
+                    win: false,
+                    bet: 0,
+                    winningByChoices: {}
+                }
+            });
+        }
     }
 
     renderRoundHistory() {
