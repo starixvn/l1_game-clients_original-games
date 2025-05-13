@@ -5,7 +5,6 @@ import style from './balance.module.scss';
 
 const AnimationBalance = ({ winBet }) => {
     useEffect(() => {
-        console.log('AnimationBalance executeSyncBalance: ', winBet);
         SyncMemberSiteBalance.getInstance().executeSyncBalance(undefined, winBet);
     }, [winBet]);
 

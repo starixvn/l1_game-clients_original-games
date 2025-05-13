@@ -22,7 +22,6 @@ export class SyncMemberSiteBalance {
     }
 
     public executeSyncBalance(totalStake?: number, winBet?: number): void {
-        console.log('executeSyncBalance', this.syncBalanceCallback, { totalStake, winBet });
         if (this.syncBalanceCallback) {
             this.syncBalanceCallback(totalStake, winBet);
         }

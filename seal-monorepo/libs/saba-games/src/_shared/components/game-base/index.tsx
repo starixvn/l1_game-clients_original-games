@@ -161,7 +161,6 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         fireImmediately: false,
     })
     assignStatus(settlementStatus: any) {
-        console.log('assignStatus settlementStatus', settlementStatus);
         this.setState({ statusSettlement: settlementStatus });
     }
 
@@ -341,8 +340,6 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     protected renderAnimationBalance() {
         const { statusSettlement, isFinishShowResult } = this.state;
 
-
-        console.log('statusSettlement', statusSettlement);
 
         if (!statusSettlement || !statusSettlement.win) {
             return <></>;
