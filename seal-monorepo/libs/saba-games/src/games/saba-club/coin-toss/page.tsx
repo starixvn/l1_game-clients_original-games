@@ -105,7 +105,7 @@ export default class CoinTossPage extends GatewayGameBase<ICoinTossPageProps, IC
         }
 
         // 1s delay after coin animation
-        await FunctionUtils.delay(ANIMATION_DURATION_MS + 1000);
+        await FunctionUtils.delay(ANIMATION_DURATION_MS);
         this.finishShowResult();
     }
 } 

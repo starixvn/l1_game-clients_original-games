@@ -305,7 +305,7 @@
     "CoinToss": {
         "game_name": "Lempar Koin",
         "game_tab_name": "Lempar Koin",
-        "choices_type": "Heads/Tails",
+        "choices_type": "Kepala/Ekor",
         "glossary_head": "Kepala",
         "glossary_tail": "Ekor",
         "head": "Kepala",

@@ -16,6 +16,8 @@ import AnimatedCoin from "../../../../_shared/components/coin/animated-coin";
 
 const DEFAULT_RESULT = {};
 
+const POP_UP_ANIMATION_DURATION = 0.3;
+
 export interface ICoinTossSettlementResultState extends IStateObserver {
     result: gc.GameServiceMessage.TResult;
     roundState: string;
