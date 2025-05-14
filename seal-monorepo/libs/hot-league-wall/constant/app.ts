@@ -2,12 +2,10 @@ export const SABA_GAMES = 'SABA.games';
 export const VGAMING = 'Vgaming';
 
 
-export const SE_DIE_GAME_ID = 2;
-export const VIP_SE_DIE_GAME_ID = 22;
+export const COIN_TOSS_GAME_ID = 80;
 
-export const SE_DIE_GAME_NAMESPACE = 'SeDie';
-export const VIP_SE_DIE_GAME_NAMESPACE = 'VipSeDie';
 
+export const COIN_TOSS_GAME_NAMESPACE = 'CoinToss';
 
 // SiteId
 // nova Vgaming , viva (SabaGames/SabaClub)

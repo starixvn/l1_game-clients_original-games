@@ -4,34 +4,31 @@ import { handle, render } from '@sg/sg-observer';
 import classNames from 'classnames';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
+    COIN_TOSS_GAME_NAMESPACE,
     SABA_GAMES,
-    SE_DIE_GAME_NAMESPACE,
     VGAMING,
-    VIP_SE_DIE_GAME_NAMESPACE,
     VIVA88_SITE_ID,
 } from '../../../../constant/app';
 import { useAppContext } from '../../../appProvider';
-import { SE_DIE_CHOICES } from '../../../games/constants/saba-club';
-import { ChoiceSeDieIconMapper, SeDieChoices } from '../../../games/saba-club/sedie/type';
 import {
     useGameBettingOptionsContext,
     useGameBettingZoneContext,
 } from '../../react-contexts/game-betting-zone-context/game-betting-zone-context';
-import { checkValidAmount, parseInputValue, WarnMsgType } from '../../utils/betting-util';
+import { checkValidAmount, parseInputValue, WarnMsgType, calculateMinMaxAmount } from '../../utils/betting-util';
 import { getChoicesType } from '../../utils/choice-type';
 import BettingChips from '../betting-chips';
-import Dice from '../dice';
-import { RoundDot } from '../dot';
 import { IPropsObserver, IStateObserver, ObserverComponent } from '../observer-component/observer-component';
 import './bet-panel.scss';
 import { localStorageKeys, StorageManager } from '../../utils/storage-manager';
+import { Size } from '../../constants';
+import Coin from '../coin'
+import { choiceToSymbolMap as coinTossChoiceToSymbolMap } from '../../../games/saba-club/coin-toss/coin-toss-utils';
 
 const WARNING_CLOSE_DELAY = 60000;
 
 // Game icon mapping constant
 const GAME_ICON_MAPPING = {
-    [SE_DIE_GAME_NAMESPACE]: 'sedie-icon',
-    [VIP_SE_DIE_GAME_NAMESPACE]: 'vip-sedie-icon',
+    [COIN_TOSS_GAME_NAMESPACE]: 'coin-toss-icon',
 } as const;
 
 export interface IBetPanel extends IStateObserver {
@@ -41,6 +38,7 @@ export interface IBetPanel extends IStateObserver {
     minBet: number;
     maxBet: number;
     maxBetPerChoices: gc.GameServiceMessage.MaxBetPerChoices;
+    clientSeed: string;
 }
 
 export interface ILatestBetRecord {
@@ -60,6 +58,7 @@ class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends O
             minBet: 0,
             maxBet: 0,
             maxBetPerChoices: {},
+            clientSeed: '',
         } as S;
     }
 
@@ -98,12 +97,18 @@ class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends O
     }
 
     @handle(gc.Bet.BetHandler)
-    handleBet(amount: number, betChoice: string) {
-        return { amount, betChoice };
+    handleBet(amount: number, betChoice: string, clientSeed: string) {
+        return { amount, betChoice, clientSeed };
+    }
+
+    @render(gc.RoundBasePF.ProvablyFairStore, (store) => store.clientSeed)
+    handleClientSeed(clientSeed: string) {
+        console.log('clientSeed', clientSeed);
+        this.setState({ clientSeed } as IBetPanel);
     }
 
     render() {
-        const { clientRoundId, currency, minBet, maxBet, maxBetPerChoices, stakeLevel } = this.state as S;
+        const { clientRoundId, currency, minBet, maxBet, maxBetPerChoices, stakeLevel, clientSeed } = this.state as S;
 
         return (
             <BetPanel
@@ -115,6 +120,7 @@ class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends O
                 maxBetPerChoices={maxBetPerChoices}
                 stakeLevel={stakeLevel}
                 handleBet={this.handleBet.bind(this)}
+                clientSeed={clientSeed}
             ></BetPanel>
         );
     }
@@ -128,8 +134,9 @@ const BetPanel: React.FC<{
     maxBet: number;
     maxBetPerChoices: gc.GameServiceMessage.MaxBetPerChoices;
     stakeLevel: gc.Player.IStakeLevel;
-    handleBet: (amount: number, betChoice: string) => void;
-}> = ({ namespace, clientRoundId, currency, minBet, maxBet, maxBetPerChoices, stakeLevel, handleBet }) => {
+    clientSeed: string;
+    handleBet: (amount: number, betChoice: string, clientSeed: string) => void;
+}> = ({ namespace, clientRoundId, currency, minBet, maxBet, maxBetPerChoices, stakeLevel, handleBet, clientSeed }) => {
     const { panelId, setPanelId, setShow } = useGameBettingOptionsContext();
     const { gameName, betChoice, odd = 0 } = useGameBettingZoneContext();
     const { siteId } = useAppContext();
@@ -150,9 +157,6 @@ const BetPanel: React.FC<{
     const vendorName = siteId === VIVA88_SITE_ID ? SABA_GAMES : VGAMING;
     const panelRef = useRef<HTMLDivElement>(null);
 
-
-
-
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (panelRef.current && !panelRef.current.contains(event.target as Node)) {
@@ -170,10 +174,16 @@ const BetPanel: React.FC<{
 
     useEffect(() => {
         if (!betChoice) return;
-        const newMin = Math.max(minBet, stakeLevelMinBet);
-
-        let newMax = 0;
-        newMax = Math.min(betChoiceMax, maxBet, stakeLevel.maxBet);
+        // calculate min and max using helper
+        const { min: newMin, max: newMax } = calculateMinMaxAmount(
+            minBet,
+            stakeLevelMinBet,
+            maxBet,
+            stakeLevel.maxBet,
+            betChoiceMax,
+            maxBetPerChoices,
+            namespace
+        );
 
         setMin(newMin);
         setMax(newMax);
@@ -183,7 +193,7 @@ const BetPanel: React.FC<{
             if (prev > newMax) return newMax;
             return prev;
         });
-    }, [betChoice, minBet, maxBet, stakeLevelMinBet, betChoiceMax, stakeLevel.maxBet]);
+    }, [betChoice, minBet, maxBet, stakeLevelMinBet, betChoiceMax, stakeLevel.maxBet, maxBetPerChoices, namespace]);
 
     const setWarningWithTimeout = (message: string) => {
         if (warningTimeoutRef.current) {
@@ -257,7 +267,7 @@ const BetPanel: React.FC<{
         }
 
         if (betChoice) {
-            handleBet?.(validatedAmount, betChoice);
+            handleBet?.(validatedAmount, betChoice, clientSeed);
             onHide?.();
             updateLatestBetToStorage(namespace, clientRoundId);
         }
@@ -337,34 +347,17 @@ const BetPanel: React.FC<{
         );
     };
 
-    const renderDots = () => {
-        const hasDots: boolean = betChoice ? Object.keys(ChoiceSeDieIconMapper).includes(betChoice) : false;
-        const dots = hasDots ? ChoiceSeDieIconMapper[betChoice as string] : [false, false, false, false];
-        return dots.map((isRed, index) => (
-            <RoundDot
-                key={index}
-                highlight={!hasDots}
-                choice={isRed ? SeDieChoices.odd : SeDieChoices.even}
-                size="small"
-                value={hasDots ? '' : '?'}
-            />
-        ));
-    };
-
-    const renderDices = () => {
+    const renderCoin = () => {
+        const coinType = coinTossChoiceToSymbolMap[betChoice];
         return (
-            <>
-                <Dice diceNumber={0} size="small" />
-                <Dice diceNumber={0} size="small" />
-                <Dice diceNumber={0} size="small" />
-            </>
-        );
-    };
+            <Coin coinType={coinType} size={Size.small} />
+        )
+    }
 
     const renderGameElements = (gameName: string) => {
         switch (gameName) {
-            case SE_DIE_GAME_NAMESPACE:
-                return renderDots();
+            case COIN_TOSS_GAME_NAMESPACE:
+                return renderCoin();
             default:
                 return null;
         }
@@ -383,15 +376,14 @@ const BetPanel: React.FC<{
         return <></>;
     }
 
-    // TODO: 街上memberSite時，className不用style，直接接上memberSite class
+    // TODO: 接上memberSite時，className不用style，直接接上memberSite class
     return (
         <div className="c-quick-bet c-quick-bet--bottom-left">
             <div className="c-quick-bet__btn"></div>
             <div
                 ref={panelRef}
                 className={classNames('c-quick-bet__panel', {
-                    ['sg-bet-panel__left-dec-100']:
-                        SE_DIE_CHOICES.RED2 === betChoice
+                    ['sg-bet-panel__left-dec-100']: false,
                 })}
             >
                 <div className="c-betslip">

@@ -226,33 +226,6 @@
     "BigSmall": {
         "game_name": "Tài Xỉu"
     },
-    "SicBall": {
-        "game_name": "Sic Ball",
-        "beadboard_big": "T",
-        "beadboard_small": "X",
-        "betoption_1": "1",
-        "betoption_2": "2",
-        "betoption_3": "3",
-        "betoption_4": "4",
-        "betoption_5": "5",
-        "betoption_6": "6",
-        "glossary_big": "Tài",
-        "glossary_small": "Xỉu",
-        "odds_double": "Đôi",
-        "odds_single": "Đơn",
-        "odds_triple": "Bộ Ba"
-    },
-    "LuckyNext1": {
-        "game_name": "Lucky Next",
-        "beadboard_even": "C",
-        "beadboard_odd": "L",
-        "beadboard_over": "T",
-        "beadboard_under": "X",
-        "glossary_even": "Chẵn",
-        "glossary_odd": "Lẻ",
-        "glossary_over": "Tài",
-        "glossary_under": "Xỉu"
-    },
     "SabaNumber": {
         "message_draw_maxbet": "Tổng tiền cược tối đa ở phiên này là %{maxBet}",
         "message_max_payout": "Tiền cược vượt quá giới hạn thanh toán.",
@@ -293,5 +266,15 @@
         "glossary_small": "Xỉu",
         "beadboard_big": "T",
         "beadboard_small": "X"
+    },
+    "CoinToss": {
+        "game_name": "Tung Đồng Xu",
+        "game_tab_name": "Tung Đồng Xu",
+        "choices_type": "Ngửa/Sấp",
+        "glossary_head": "Ngửa",
+        "glossary_tail": "Sấp",
+        "head": "Ngửa",
+        "tail": "Sấp"
     }
+    
 }

@@ -1,27 +1,28 @@
 {
-    "2": {
-        "id": 2,
-        "gameName": "SeDie",
-        "name": "SeDie",
+"80": {
+        "id": 80,
+        "gameName": "CoinToss",
+        "name": "CoinToss",
+        "serviceName": "coin-toss",
         "namespaces": [
-            "SeDie"
+            "CoinToss"
         ],
         "isVisible": true,
         "durations": {
-            "wholeRound": 39,
-            "lockingBet": 5,
-            "placingBet": 30,
+            "wholeRound": 29,
+            "lockingBet": 3,
+            "placingBet": 20,
             "generatingResult": 1,
-            "showingResult": 6,
-            "startRound": 2
+            "showingResult": 3,
+            "startRound": 3
         },
         "numberOfRoundHistory": 100,
         "websocket": {
             "proxyPath": "",
             "route": "livepagegateway"
         },
-        "mainObserverNamespace": "SeDie",
-        "order": 4,
+        "mainObserverNamespace": "CoinToss",
+        "order": 1,
         "isSocketGateway": true
     }
 }

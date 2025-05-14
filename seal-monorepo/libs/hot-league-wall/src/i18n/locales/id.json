@@ -226,33 +226,6 @@
     "BigSmall": {
         "game_name": "Big Small"
     },
-    "SicBall": {
-        "game_name": "Sic Ball",
-        "beadboard_big": "B",
-        "beadboard_small": "K",
-        "betoption_1": "1",
-        "betoption_2": "2",
-        "betoption_3": "3",
-        "betoption_4": "4",
-        "betoption_5": "5",
-        "betoption_6": "6",
-        "glossary_big": "Besar",
-        "glossary_small": "Kecil",
-        "odds_double": "Ganda",
-        "odds_single": "Tunggal",
-        "odds_triple": "Tiga kali lipat"
-    },
-    "LuckyNext1": {
-        "game_name": "Lucky Next",
-        "beadboard_even": "GE",
-        "beadboard_odd": "GA",
-        "beadboard_over": "B",
-        "beadboard_under": "K",
-        "glossary_even": "Genap",
-        "glossary_odd": "Ganjil",
-        "glossary_over": "Besar",
-        "glossary_under": "Kecil"
-    },
     "SabaNumber": {
         "message_draw_maxbet": "Total taruhan maksimal pada undian ini adalah %{maxBet}",
         "message_max_payout": "Taruhan anda telah melebihi Pembayaran Maks",
@@ -292,5 +265,14 @@
         "glossary_small": "Kecil",
         "beadboard_big": "B",
         "beadboard_small": "K"
+    },
+    "CoinToss": {
+        "game_name": "Lempar Koin",
+        "game_tab_name": "Lempar Koin",
+        "choices_type": "Kepala/Ekor",
+        "glossary_head": "Kepala",
+        "glossary_tail": "Ekor",
+        "head": "Kepala",
+        "tail": "Ekor"
     }
 }
