@@ -13,7 +13,7 @@ import Warning from '../notices/warning';
 import StatisticButton from '../statistic-button/statistic-button';
 import Styles from './game-base.module.scss';
 import { GameBaseProps } from './type';
-import RoundId from '../round-id';
+import { RoundId } from '../round-id';
 import CountDownTimer from '../count-down-timer';
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds/round-time-store';
 import WarningDialog from '../notices/warning-dialog';
@@ -115,7 +115,8 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     renderRoundIdSection() {
-        return <RoundId namespace={this.props.namespace} language={this.props.language} />;
+        const { roundId, roundState } = this.state;
+        return <RoundId clientRoundId={roundId} roundState={roundState} />;
     }
 
     renderCountDownTimer() {
