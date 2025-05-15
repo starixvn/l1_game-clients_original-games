@@ -145,10 +145,6 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         return <>Statistic</>;
     }
 
-    renderHeader() {
-        return <></>;
-    }
-
     setPanelId = (id: string) => {
         this.setState({ activePanelId: id });
     };
@@ -292,7 +288,6 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
             this.renderDisconnect()
         ) : (
             <>
-                {this.renderHeader()}
                 <div className={`${Styles['block-wrapper']} ${this.overrideClasses?.blockWrapper}`}>
                     <div className={`${Styles['info']} ${this.overrideClasses?.info}`}>
                         {this.renderRoundIdSection()}
@@ -317,7 +312,6 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
                 </div>
 
                 <div className={Styles['history-block']}>
-                    <div className={Styles['previous-round']}>{this.renderRoundHistory()}</div>
                     <div className={Styles['statistic-btn']}>
                         <StatisticButton isOpenStatistic={this.state.isOpenStatistic} handleToggle={this.toggleStatistic} />
                     </div>

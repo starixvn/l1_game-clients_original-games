@@ -75,18 +75,6 @@
         z-index: 9999;
         display: flex;
         justify-content: center;
-
-        // &.game-10 {
-        //     width: 438px;
-
-        //     @media screen and (min-width: 1160px) {
-        //         width: 331px;
-        //     }
-        // }
-
-        // &.game-55 {
-        //     width: 36%;
-        // }
     }
 }
 
@@ -181,10 +169,6 @@
     background-color: var(--c-av-match-live-bg);
     border-top: 1px solid var(--c-av-theme-border-1);
     position: relative;
-}
-
-.history-block > .previous-round {
-    flex: 7;
 }
 
 .history-block > .statistic-btn {

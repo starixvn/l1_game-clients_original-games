@@ -78,36 +78,6 @@
         margin-right: 4px;
     }
 
-    .sedie-icon {
-        @extend %game-icon-base;
-        background-image: url("../../../assets/game-icons/sedie.png");
-    }
-
-    .vip-sedie-icon {
-        @extend %game-icon-base;
-        background-image: url("../../../assets/game-icons/vip-sedie.png");
-    }
-
-    .bigsmall-icon {
-        @extend %game-icon-base;
-        background-image: url("../../../assets/game-icons/big-small.png");
-    }
-
-    .baccarat-icon {
-        @extend %game-icon-base;
-        background-image: url("../../../assets/game-icons/game-icon-10.png");
-    }
-
-    .fish-prawn-crab-icon {
-        @extend %game-icon-base;
-        background-image: url("../../../assets/game-icons/fish-prawn-crab.png");
-    }
-
-    .color-game-icon {
-        @extend %game-icon-base;
-        background-image: url("../../../assets/game-icons/color-game.png");
-    }
-
     .coin-toss-icon {
         @extend %game-icon-base;
         background-image: url("../../../assets/game-icons/coin-toss.png");

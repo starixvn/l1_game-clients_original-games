@@ -5,14 +5,12 @@ import { configSharedContainer, sharedContainer } from '../_shared/components/ga
 import { LobbyStore } from '../_shared/states/lobby';
 import * as lobbyUtils from './utils';
 import styles from './lobby.module.scss';
-import { DropdownType, LeagueTabDropdown } from '../_shared/components/all-tab-components/league-tab-dropdown';
 import { AppContextConsumer } from '../appProvider';
 import Loading from '../_shared/components/loading';
-import { GameMatchTab } from '../_shared/components/all-tab-components/game-match-tab';
 import { IOfferGame, ILobbyState } from './type';
-import { GameListTab } from '../_shared/components/all-tab-components/game-list-tab';
 import SessionTimeout from '../_shared/components/timeout';
 import { reaction, autorun } from 'mobx';
+import { gamePageMap } from '../_shared/utils/component-util';
 
 // Direct access to monitor MainPlayerStore changes
 (function patchMainPlayerStore() {
@@ -396,7 +394,6 @@ class LobbyComponent extends React.PureComponent<any, ILobbyState> {
                         console.log('[LobbyComponent-Debug] EMERGENCY: Setting filtered games directly:', filteredOfferGames);
 
                         // Create a local copy of variables before setting state
-                        const localOfferGames = filteredOfferGames;
                         const localSelectedGameId = filteredOfferGames[0].gameId;
 
                         // Proper setState call instead of direct mutation
@@ -408,25 +405,21 @@ class LobbyComponent extends React.PureComponent<any, ILobbyState> {
                         });
 
                         console.log('[LobbyComponent-Debug] EMERGENCY: Using local variables for rendering');
-
+                        const gameMapInfo = gamePageMap[localSelectedGameId];
+                        const namespace = gameMapInfo?.namespace;
+                        const GamePageComponent = gameMapInfo?.component || null;
                         // Return emergency render with the directly fetched games
                         return (
                             <>
-                                <LeagueTabDropdown
-                                    dropdownType={DropdownType.LEAGUE}
-                                    leagueToogle={leagueToogle}
-                                    updateLeagueToogle={this.updateLeagueToogle}
-                                />
-                                <GameListTab
-                                    offerGames={localOfferGames}
-                                    selectedGameId={localSelectedGameId}
-                                    onTabClick={this.handleTabClick}
-                                />
-                                <GameMatchTab
-                                    gameId={localSelectedGameId}
-                                    className={styles['lobby-tabs']}
-                                    leagueToogle={leagueToogle}
-                                />
+                                <div className='c-match c-in-play'>
+                                    <AppContextConsumer>
+                                        {({ language }) =>
+                                            GamePageComponent && (
+                                                <GamePageComponent namespace={namespace} language={language} />
+                                            )
+                                        }
+                                    </AppContextConsumer>
+                                </div>
                             </>
                         );
                     }
@@ -463,14 +456,21 @@ class LobbyComponent extends React.PureComponent<any, ILobbyState> {
             const selectedGame = offerGames.find((game) => game.gameId === selectedGameId) || offerGames[0];
             console.log('[LobbyComponent] Selected game for rendering:', selectedGame);
 
+            const gameMapInfo = gamePageMap[selectedGame.gameId];
+            const namespace = gameMapInfo?.namespace;
+            const GamePageComponent = gameMapInfo?.component || null;
+
             return (
                 <>
-                    <GameListTab
-                        offerGames={offerGames}
-                        selectedGameId={selectedGameId}
-                        onTabClick={this.handleTabClick}
-                    />
-                    <GameMatchTab gameId={selectedGame.gameId} className={styles['lobby-tabs']} leagueToogle={leagueToogle} />
+                    <div className='c-match c-in-play'>
+                        <AppContextConsumer>
+                            {({ language }) =>
+                                GamePageComponent && (
+                                    <GamePageComponent namespace={namespace} language={language} />
+                                )
+                            }
+                        </AppContextConsumer>
+                    </div>
                 </>
             );
         };
@@ -481,11 +481,6 @@ class LobbyComponent extends React.PureComponent<any, ILobbyState> {
 
         return (
             <>
-                <LeagueTabDropdown
-                    dropdownType={DropdownType.LEAGUE}
-                    leagueToogle={leagueToogle}
-                    updateLeagueToogle={this.updateLeagueToogle}
-                />
                 {content}
             </>
         );
