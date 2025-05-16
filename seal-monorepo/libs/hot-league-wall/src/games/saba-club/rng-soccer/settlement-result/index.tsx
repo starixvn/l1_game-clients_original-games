@@ -7,8 +7,8 @@ import { render, handle, observer } from "@sg/sg-observer";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
 import { RNGSoccerResult, RNGSoccerChoices } from "../type";
 import Styles from "./rng-soccer-animations.module.scss";
-import { ResultDisplay } from "./result-display";
 import { Size } from "../../../../_shared/constants";
+import { ResultDisplay } from "./result-display";
 
 const DEFAULT_RESULT = {};
 
@@ -104,12 +104,7 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
                 <div className={Styles['result-container']}>
                     {hasResult && (
                         <div className={`${Styles['result-item']} ${isAnimationResult ? Styles['pop-in-animation'] : ''}`}>
-                            <ResultDisplay
-                                result={result}
-                                winningSymbols={winningSymbols}
-                                namespace={this.props.namespace}
-                                language={this.props.language}
-                            />
+
                         </div>
                     )}
                 </div>

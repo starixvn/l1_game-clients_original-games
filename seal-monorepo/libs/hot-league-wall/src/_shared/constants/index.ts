@@ -6,7 +6,8 @@ export const GameIds = {
 };
 
 export const GameNames = {
-    CoinToss: "CoinToss"
+    CoinToss: "CoinToss",
+    RNGSoccer: "RNGSoccer"
 };
 
 export const Size = {

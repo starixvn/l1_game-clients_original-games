@@ -1,5 +1,4 @@
-import React from 'react';
-import { observer } from '@sg/sg-observer';
+
 import { RNGSoccerRoundHistory } from '../type';
 
 interface RNGSoccerRoundHistoryProps {
@@ -7,7 +6,6 @@ interface RNGSoccerRoundHistoryProps {
     language: string;
 }
 
-@observer
 export default function RNGSoccerRoundHistory({ namespace, language }: RNGSoccerRoundHistoryProps) {
     return (
         <div className="round-history">

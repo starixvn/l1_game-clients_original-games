@@ -65,7 +65,7 @@ export const getEnvironmentConfig = ({ appEnv, siteId }) => {
 // getGameSetting(gameId, { siteId, appEnv })
 export const appSettings = getEnvironmentConfig({
     appEnv: APP_ENV.LOCAL,
-    siteId: VIVA88_SITE_ID
+    siteId: NOVA88_SITE_ID
 });
 console.log('[appSettings] Initialized with:', { appEnv: APP_ENV.LOCAL, siteId: VIVA88_SITE_ID });
 

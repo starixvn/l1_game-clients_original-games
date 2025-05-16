@@ -65,7 +65,7 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
     renderRoundHistory() {
         return (
             <Suspense>
-                <RNGSoccerRoundHistory namespace={this.props.namespace} language={this.props.language} />
+                {/* <RNGSoccerRoundHistory namespace={this.props.namespace} language={this.props.language} /> */}
             </Suspense>
         );
     }
@@ -102,7 +102,7 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
     renderStatistic() {
         return (
             <Suspense>
-                <RNGSoccerStatistic namespace={this.props.namespace} language={this.props.language} />
+                {/* <RNGSoccerStatistic namespace={this.props.namespace} language={this.props.language} /> */}
             </Suspense>
         );
     }
