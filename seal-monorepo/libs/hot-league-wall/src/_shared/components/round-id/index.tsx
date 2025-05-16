@@ -1,4 +1,3 @@
-import * as gc from '@sg/sg-game-client';
 import Styles from './round-id.module.scss';
 
 export interface IRoundIdProps {
@@ -12,7 +11,7 @@ export const RoundId = (props: IRoundIdProps) => {
 
     return(
             showRoundId && <div className={Styles['round-id']}>
-                {gc.Translator.translate('Common.result_no')} {clientRoundId}
+                #{clientRoundId}
             </div>
     )
 }
