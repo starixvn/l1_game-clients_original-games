@@ -17,7 +17,6 @@ interface RNGSoccerBetOptionsProps {
     onBet: (symbol: string, amount: number) => void;
 }
 
-@observer
 export default class RNGSoccerBetOptions extends BetOptions {
     renderBetOptions(betChoice: string, odd: number, fractional: boolean, name: string = '', isBoostedChoice: boolean = false) {
         const { settlementResult } = this.state;

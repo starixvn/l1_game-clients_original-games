@@ -189,84 +189,6 @@
         "sucbet": "Bet Success",
         "turn_off_notification": "Turn off this notification"
     },
-    "SeDie": {
-        "game_vendor": "SABA.games",
-        "game_name": "Se Die",
-        "choices_type1": "Odd/Even",
-        "choices_type2": "Red/White",
-        "glossary_even": "Even",
-        "glossary_odd": "Odd",
-        "glossary_red4": "4 Red",
-        "glossary_red3": "3 Red",
-        "glossary_red2": "2 Red",
-        "glossary_white4": "4 White",
-        "glossary_white3": "1 Red",
-        "beadboard_even": "E",
-        "beadboard_odd": "O",
-        "odd_win": "ODD WINS",
-        "even_win": "EVEN WINS"
-    },
-    "VipSeDie": {
-        "game_vendor": "SABA.games",
-        "game_name": "VIP Se Die",
-        "choices_type1": "Odd/Even",
-        "choices_type2": "Red/White",
-        "glossary_even": "Even",
-        "glossary_odd": "Odd",
-        "glossary_red4": "4 Red",
-        "glossary_red3": "3 Red",
-        "glossary_red2": "2 Red",
-        "glossary_white4": "4 White",
-        "glossary_white3": "1 Red",
-        "beadboard_even": "E",
-        "beadboard_odd": "O",
-        "odd_win": "ODD WINS",
-        "even_win": "EVEN WINS"
-    },
-    "BigSmall": {
-        "game_vendor": "SABA.games",
-        "game_name": "Big Small"
-    },
-    "SabaNumber": {
-        "message_draw_maxbet": "Max total stake on this draw is %{maxBet} ",
-        "message_max_payout": "Your bet(s) have exceeded the Max Payout.",
-        "message_placebet_next_draw": "Please wait for the next draw."
-    },
-    "Baccarat": {
-        "game_tab_name": "Baccarat",
-        "banker_win": "Banker Wins",
-        "game_icon_name": "Baccarat",
-        "game_name": "Baccarat",
-        "glossary_banker": "Banker",
-        "glossary_banker_pair": "B.Pair",
-        "glossary_big": "Big",
-        "glossary_player": "Player",
-        "glossary_playerPair": "P.Pair",
-        "glossary_bankerPair": "B.Pair",
-        "glossary_small": "Small",
-        "glossary_tie": "Tie",
-        "player_win": "Player Wins",
-        "short_banker": "B",
-        "short_player": "P",
-        "short_tie": "T",
-        "tie_win": "TIE",
-        "glossary_B": "Banker",
-        "glossary_P": "Player",
-        "banker_player": "Player/Banker",
-        "banker_player_pair": "Pair"
-    },
-    "UnbalancedBigSmall4": {
-        "game_vendor": "SABA.games",
-        "game_name": "Monte Carlo Big Small",
-        "game_tab_name": "Big Small",
-        "choices_type": "Big/Small",
-        "big": "Big",
-        "small": "Small",
-        "glossary_big": "Big",
-        "glossary_small": "Small",
-        "beadboard_big": "B",
-        "beadboard_small": "S"
-    },
     "CoinToss": {
         "game_name": "Coin Toss",
         "game_tab_name": "Coin Toss",
@@ -275,5 +197,12 @@
         "glossary_tail": "Tails",
         "head": "Heads",
         "tail": "Tails"
+    },
+    "RNGSoccer": {
+        "game_name": "RNGSoccer",
+        "game_tab_name": "RNGSoccer",
+        "home": "Home",
+        "away": "Away",
+        "draw": "Draw"
     }
 }

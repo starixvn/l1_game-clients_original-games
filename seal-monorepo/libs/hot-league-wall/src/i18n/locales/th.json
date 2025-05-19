@@ -189,84 +189,6 @@
         "sucbet": "การเดิมพันสำเร็จ",
         "turn_off_notification": "ปิดการแจ้งเตือนนี้"
     },
-    "SeDie": {
-        "game_vendor": "SABA.games",
-        "game_name": "Se Die",
-        "choices_type1": "คี่/คู่",
-        "choices_type2": "แดง/ขาว",
-        "glossary_even": "คู่",
-        "glossary_odd": "คี่",
-        "glossary_red4": "4 แดง",
-        "glossary_red3": "3 แดง",
-        "glossary_red2": "2 แดง",
-        "glossary_white4": "4 ขาว",
-        "glossary_white3": "1 แดง",
-        "beadboard_even": "คู่",
-        "beadboard_odd": "คี่",
-        "odd_win": "คี่ชนะ",
-        "even_win": "คู่ชนะ"
-    },
-    "VipSeDie": {
-        "game_vendor": "SABA.games",
-        "game_name": "VIP Se Die",
-        "choices_type1": "คี่/คู่",
-        "choices_type2": "แดง/ขาว",
-        "glossary_even": "คู่",
-        "glossary_odd": "คี่",
-        "glossary_red4": "4 แดง",
-        "glossary_red3": "3 แดง",
-        "glossary_red2": "2 แดง",
-        "glossary_white4": "4 ขาว",
-        "glossary_white3": "1 แดง",
-        "beadboard_even": "คู่",
-        "beadboard_odd": "คี่",
-        "odd_win": "คี่ชนะ",
-        "even_win": "คู่ชนะ"
-    },
-    "BigSmall": {
-        "game_name": "Big Small"
-    },
-    "SabaNumber": {
-        "message_draw_maxbet": "เงินเดิมพันรวมสูงสุดในการจับรางวัลนี้คือ %{maxBet}",
-        "message_max_payout": "เดิมพันของคุณเกินการจ่ายเงินสูงสุด",
-        "message_placebet_next_draw": "กรุณารอการจับรางวัลครั้งต่อไป"
-    },
-    "Baccarat": {
-        "game_tab_name": "บาคาร่า",
-        "banker_win": "แบงค์เกอร์ชนะ",
-        "game_icon_name": "บาคาร่า",
-        "game_name": "บาคาร่า",
-        "glossary_banker": "เจ้ามือ",
-        "glossary_banker_pair": "คู่เจ้ามือ",
-        "glossary_playerPair": "คู่เจ้ามือ",
-        "glossary_big": "ใหญ่",
-        "glossary_player": "ผู้เล่น",
-        "glossary_player_pair": "คู่ผู้เล่น",
-        "glossary_bankerPair": "เจ้ามือคู่",
-        "glossary_small": "เล็ก",
-        "glossary_tie": "เสมอ",
-        "player_win": "ผู้เล่นชนะ",
-        "short_banker": "B",
-        "short_player": "P",
-        "short_tie": "T",
-        "tie_win": "เสมอ",
-        "glossary_B": "เจ้ามือ",
-        "glossary_P": "ผู้เล่น",
-        "banker_player": "ผู้เล่น/เจ้ามือ",
-        "banker_player_pair": "คู่"
-    },
-    "UnbalancedBigSmall4": {
-        "game_vendor": "SABA.games",
-        "game_name": "มอนติคาร์โล ใหญ่-เล็ก",
-        "game_tab_name": "ใหญ่/เล็ก",
-        "choices_type": "ใหญ่/เล็ก",
-        "big": "ใหญ่",
-        "small": "เล็ก",
-        "glossary_big": "ใหญ่",
-        "glossary_small": "เล็ก",
-        "beadboard_big": "B",
-        "beadboard_small": "S"
-    },
     "CoinToss": {
         "game_name": "โยนเหรียญ",
         "game_tab_name": "โยนเหรียญ",
@@ -275,5 +197,12 @@
         "glossary_tail": "ก้อย",
         "head": "หัว",
         "tail": "ก้อย"
+    },
+    "RNGSoccer": {
+        "game_name": "RNGSoccer",
+        "game_tab_name": "RNGSoccer",
+        "home": "Home",
+        "away": "Away",
+        "draw": "Draw"
     }
 }

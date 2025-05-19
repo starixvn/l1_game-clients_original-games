@@ -189,84 +189,6 @@
         "sucbet": "投注成功",
         "turn_off_notification": "不再顯示這則訊息"
     },
-    "SeDie": {
-        "game_vendor": "SABA.games",
-        "game_name": "色碟",
-        "choices_type1": "單/雙",
-        "choices_type2": "紅/白",
-        "glossary_even": "雙",
-        "glossary_odd": "單",
-        "glossary_red4": "4 紅",
-        "glossary_red3": "3 紅",
-        "glossary_red2": "2 紅",
-        "glossary_white4": "4 白",
-        "glossary_white3": "1 紅",
-        "beadboard_even": "雙",
-        "beadboard_odd": "單",
-        "odd_win": "單贏",
-        "even_win": "雙贏"
-    },
-    "VipSeDie": {
-        "game_vendor": "SABA.games",
-        "game_name": "VIP 色碟",
-        "choices_type1": "單/雙",
-        "choices_type2": "紅/白",
-        "glossary_even": "雙",
-        "glossary_odd": "單",
-        "glossary_red4": "4 紅",
-        "glossary_red3": "3 紅",
-        "glossary_red2": "2 紅",
-        "glossary_white4": "4 白",
-        "glossary_white3": "1 紅",
-        "beadboard_even": "雙",
-        "beadboard_odd": "單",
-        "odd_win": "單贏",
-        "even_win": "雙贏"
-    },
-    "BigSmall": {
-        "game_name": "Big Small"
-    },
-    "SabaNumber": {
-        "message_draw_maxbet": "本次抽到的最大總投注額為 %{maxBet}",
-        "message_max_payout": "您的賭注已超過最大賠償額。",
-        "message_placebet_next_draw": "請等待下一次抽取。"
-    },
-    "Baccarat": {
-        "game_tab_name": "百家樂",
-        "banker_win": "莊家贏",
-        "game_icon_name": "百家樂",
-        "game_name": "百家樂",
-        "glossary_banker": "莊家",
-        "glossary_banker_pair": "莊家一對",
-        "glossary_big": "大",
-        "glossary_player": "閒家",
-        "glossary_player_pair": "閒家一對",
-        "glossary_playerPair": "閒對子",
-        "glossary_bankerPair": "莊對子",
-        "glossary_small": "小",
-        "glossary_tie": "和",
-        "player_win": "閒家贏",
-        "short_banker": "莊",
-        "short_player": "閒",
-        "short_tie": "和",
-        "tie_win": "和",
-        "glossary_B": "莊家",
-        "glossary_P": "閒家",
-        "banker_player": "閒家/莊家",
-        "banker_player_pair": "一對"
-    },
-    "UnbalancedBigSmall4": {
-        "game_vendor": "SABA.games",
-        "game_name": "蒙特卡羅大小",
-        "game_tab_name": "大小",
-        "choices_type": "大/小",
-        "big": "大",
-        "small": "小",
-        "glossary_big": "大",
-        "glossary_small": "小",
-        "beadboard_big": "大",
-        "beadboard_small": "小"
-    },
     "CoinToss": {
         "game_name": "抛硬幣",
         "game_tab_name": "抛硬幣",
@@ -275,5 +197,12 @@
         "glossary_tail": "反面",
         "head": "正面",
         "tail": "反面"
+    },
+    "RNGSoccer": {
+        "game_name": "RNGSoccer",
+        "game_tab_name": "RNGSoccer",
+        "home": "Home",
+        "away": "Away",
+        "draw": "Draw"
     }
 }

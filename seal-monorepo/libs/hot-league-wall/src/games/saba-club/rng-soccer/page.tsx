@@ -13,8 +13,6 @@ import { ANIMATION_DURATION_MS } from './constants/rng-soccer-constants';
 import RNGSoccerBetOptions from './bet-option/rng-soccer-bet-options';
 import { RNGSoccerResult, RNGSoccerSettlementResult as RNGSoccerSettlementResultType } from './type';
 
-const RNGSoccerStatistic = React.lazy(() => import('./statistic/rng-soccer-statistic'));
-const RNGSoccerRoundHistory = React.lazy(() => import('./round-history/rng-soccer-round-history'));
 
 interface IRNGSoccerPageState extends IGatewayGameBaseState {
     activePanelId: any;
@@ -48,10 +46,10 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
     }
 
     toggleHeader = () => {
-        this.setState({
-            ...this.state,
-            isHeaderExpanded: !this.state.isHeaderExpanded
-        });
+        // this.setState({
+        //     ...this.state,
+        //     isHeaderExpanded: !this.state.isHeaderExpanded
+        // });
     }
 
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handleGateway())
@@ -82,7 +80,7 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
             >
                 <RNGSoccerBetOptions
                     gameName={setting.gameName}
-                    namespace={this.props.namespace}
+                    namespace={setting.mainObserverNamespace}
                     language={this.props.language}
                     onBet={this.handleBetOption}
                 />

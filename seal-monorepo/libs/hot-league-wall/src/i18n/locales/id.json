@@ -189,83 +189,6 @@
         "sucbet": "Taruhan Sukses",
         "turn_off_notification": "Nonaktifkan pemberitahuan ini"
     },
-    "SeDie": {
-        "game_vendor": "SABA.games",
-        "game_name": "Se Die",
-        "choices_type1": "Ganjil/Genap",
-        "choices_type2": "Merah/Putih",
-        "glossary_even": "Genap",
-        "glossary_odd": "Ganjil",
-        "glossary_red4": "4 Merah",
-        "glossary_red3": "3 Merah",
-        "glossary_red2": "2 Merah",
-        "glossary_white4": "4 Putih",
-        "glossary_white3": "1 Merah",
-        "beadboard_even": "GE",
-        "beadboard_odd": "GA",
-        "odd_win": "GANJIL MENANG",
-        "even_win": "GENAP MENANG"
-    },
-    "VipSeDie": {
-        "game_vendor": "SABA.games",
-        "game_name": "Vip Se Die",
-        "choices_type1": "Ganjil/Genap",
-        "choices_type2": "Merah/Putih",
-        "glossary_even": "Genap",
-        "glossary_odd": "Ganjil",
-        "glossary_red4": "4 Merah",
-        "glossary_red3": "3 Merah",
-        "glossary_red2": "2 Merah",
-        "glossary_white4": "4 Putih",
-        "glossary_white3": "1 Merah",
-        "beadboard_even": "GE",
-        "beadboard_odd": "GA",
-        "odd_win": "GANJIL MENANG",
-        "even_win": "GENAP MENANG"
-    },
-    "BigSmall": {
-        "game_name": "Big Small"
-    },
-    "SabaNumber": {
-        "message_draw_maxbet": "Total taruhan maksimal pada undian ini adalah %{maxBet}",
-        "message_max_payout": "Taruhan anda telah melebihi Pembayaran Maks",
-        "message_placebet_next_draw": "Mohon tunggu pengundian selanjutnya."
-    },
-    "Baccarat": {
-        "game_tab_name": "Bakarat",
-        "banker_win": "Bankir menang",
-        "game_icon_name": "Bakarat",
-        "game_name": "Bakarat",
-        "glossary_banker": "Banker",
-        "glossary_banker_pair": "B.Pair",
-        "glossary_big": "Besar",
-        "glossary_player": "Player",
-        "glossary_playerPair": "P.Pair",
-        "glossary_bankerPair": "B.Pair",
-        "glossary_small": "Kecil",
-        "glossary_tie": "Seri",
-        "player_win": "Pemain menang",
-        "short_banker": "B",
-        "short_player": "P",
-        "short_tie": "S",
-        "tie_win": "TIE",
-        "glossary_B": "Banker",
-        "glossary_P": "Player",
-        "banker_player": "Player/Banker",
-        "banker_player_pair": "Pair"
-    },
-    "UnbalancedBigSmall4": {
-        "game_vendor": "SABA.games",
-        "game_name": "Monte Carlo Besar Kecil",
-        "game_tab_name": "Besar Kecil",
-        "choices_type": "Besar/Kecil",
-        "big": "Besar",
-        "small": "Kecil",
-        "glossary_big": "Besar",
-        "glossary_small": "Kecil",
-        "beadboard_big": "B",
-        "beadboard_small": "K"
-    },
     "CoinToss": {
         "game_name": "Lempar Koin",
         "game_tab_name": "Lempar Koin",
@@ -274,5 +197,12 @@
         "glossary_tail": "Ekor",
         "head": "Kepala",
         "tail": "Ekor"
+    },
+    "RNGSoccer": {
+        "game_name": "RNGSoccer",
+        "game_tab_name": "RNGSoccer",
+        "home": "Home",
+        "away": "Away",
+        "draw": "Draw"
     }
 }

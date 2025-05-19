@@ -189,84 +189,6 @@
         "sucbet": "Cược Thành Công",
         "turn_off_notification": "Tắt thông báo này"
     },
-    "SeDie": {
-        "game_vendor": "SABA.games",
-        "game_name": "Xóc Đĩa",
-        "choices_type1": "Lẻ/Chẵn",
-        "choices_type2": "Đỏ/Trắng",
-        "glossary_even": "Chẵn",
-        "glossary_odd": "Lẻ",
-        "glossary_red4": "4 Đỏ",
-        "glossary_red3": "3 Đỏ",
-        "glossary_red2": "2 Đỏ",
-        "glossary_white4": "4 Trắng",
-        "glossary_white3": "1 Đỏ",
-        "beadboard_even": "C",
-        "beadboard_odd": "L",
-        "odd_win": "LẺ THẮNG",
-        "even_win": "CHẴN THẮNG"
-    },
-    "VipSeDie": {
-        "game_vendor": "SABA.games",
-        "game_name": "Xóc Đĩa VIP",
-        "choices_type1": "Lẻ/Chẵn",
-        "choices_type2": "Đỏ/Trắng",
-        "glossary_even": "Chẵn",
-        "glossary_odd": "Lẻ",
-        "glossary_red4": "4 Đỏ",
-        "glossary_red3": "3 Đỏ",
-        "glossary_red2": "2 Đỏ",
-        "glossary_white4": "4 Trắng",
-        "glossary_white3": "1 Đỏ",
-        "beadboard_even": "C",
-        "beadboard_odd": "L",
-        "odd_win": "LẺ THẮNG",
-        "even_win": "CHẴN THẮNG"
-    },
-    "BigSmall": {
-        "game_name": "Tài Xỉu"
-    },
-    "SabaNumber": {
-        "message_draw_maxbet": "Tổng tiền cược tối đa ở phiên này là %{maxBet}",
-        "message_max_payout": "Tiền cược vượt quá giới hạn thanh toán.",
-        "message_placebet_next_draw": "Vui lòng đặt cược ở phiên sau."
-    },
-    "Baccarat": {
-        "game_tab_name": "Cào Baccarat",
-        "banker_win": "Nhà Cái Thắng",
-        "game_icon_name": "Cào Baccarat",
-        "game_name": "Cào Baccarat",
-        "glossary_banker": "Nhà Cái",
-        "glossary_banker_pair": "Cái Đôi",
-        "glossary_big": "Tài",
-        "glossary_player": "Nhà Con",
-        "glossary_player_pair": "Con Đôi",
-        "glossary_playerPair": "Con Đôi",
-        "glossary_bankerPair": "Cái Đôi",
-        "glossary_small": "Xỉu",
-        "glossary_tie": "Hòa",
-        "player_win": "Nhà Con Thắng",
-        "short_banker": "B",
-        "short_player": "P",
-        "short_tie": "T",
-        "tie_win": "HÒA",
-        "glossary_B": "Nhà Con",
-        "glossary_P": "Nhà Cái",
-        "banker_player": "Nhà Con/Nhà Cái",
-        "banker_player_pair": "Đôi"
-    },
-    "UnbalancedBigSmall4": {
-        "game_vendor": "SABA.games",
-        "game_name": "Tài Xỉu Monte Carlo",
-        "game_tab_name": "Tài Xỉu",
-        "choices_type": "Tài/Xỉu",
-        "big": "Tài",
-        "small": "Xỉu",
-        "glossary_big": "Tài",
-        "glossary_small": "Xỉu",
-        "beadboard_big": "T",
-        "beadboard_small": "X"
-    },
     "CoinToss": {
         "game_name": "Tung Đồng Xu",
         "game_tab_name": "Tung Đồng Xu",
@@ -275,6 +197,12 @@
         "glossary_tail": "Sấp",
         "head": "Ngửa",
         "tail": "Sấp"
+    },
+    "RNGSoccer": {
+        "game_name": "RNGSoccer",
+        "game_tab_name": "RNGSoccer",
+        "home": "Home",
+        "away": "Away",
+        "draw": "Draw"
     }
-    
 }

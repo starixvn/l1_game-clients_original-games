@@ -25,7 +25,6 @@ export interface IRNGSoccerSettlementResultState extends IStateObserver {
     dispose: () => void;
 }
 
-@observer
 export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsObserver, IRNGSoccerSettlementResultState> {
     private roundTimeStore: RoundTimeStore;
     private roundHistoryStore: RoundHistoryStore;

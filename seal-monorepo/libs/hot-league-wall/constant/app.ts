@@ -3,10 +3,11 @@ export const VGAMING = 'Vgaming';
 
 
 export const COIN_TOSS_GAME_ID = 80;
+export const RNGSoccer_GAME_ID = 118;
 
 
 export const COIN_TOSS_GAME_NAMESPACE = 'CoinToss';
-
+export const RNGSoccer_GAME_NAMESPACE = 'RNGSoccer';
 // SiteId
 // nova Vgaming , viva (SabaGames/SabaClub)
 export const NOVA88_SITE_ID = '4120';
