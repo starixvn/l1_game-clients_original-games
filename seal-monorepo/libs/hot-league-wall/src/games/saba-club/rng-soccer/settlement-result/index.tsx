@@ -7,8 +7,7 @@ import { render, handle, observer } from "@sg/sg-observer";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../../../../_shared/components/observer-component/observer-component";
 import { RNGSoccerResult, RNGSoccerChoices } from "../type";
 import Styles from "./rng-soccer-animations.module.scss";
-import { Size } from "../../../../_shared/constants";
-import { ResultDisplay } from "./result-display";
+
 
 const DEFAULT_RESULT = {};
 

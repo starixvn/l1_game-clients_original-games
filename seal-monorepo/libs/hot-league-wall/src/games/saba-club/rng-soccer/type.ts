@@ -6,13 +6,24 @@ export enum RNGSoccerChoices {
 
 export type RNGSoccerSymbolType = keyof typeof RNGSoccerChoices;
 
-export type RNGSoccerResult = {
-    [key in RNGSoccerSymbolType]?: boolean;
-};
+export interface RNGSoccerResult {
+    homeScore: number;
+    awayScore: number;
+    homeCard: {
+        card: number;
+        type: number;
+    };
+    awayCard: {
+        card: number;
+        type: number;
+    };
+}
 
-export type RNGSoccerSettlementResult = {
-    [key in RNGSoccerSymbolType]?: boolean;
-};
+export interface RNGSoccerSettlementResult {
+    result: RNGSoccerResult;
+    roundId: number;
+    roundState: string;
+}
 
 export interface RNGSoccerBet {
     symbol: RNGSoccerSymbolType;

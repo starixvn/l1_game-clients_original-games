@@ -8,7 +8,6 @@ import { GameBettingOptionsContext } from '../../../_shared/react-contexts/game-
 import { FunctionUtils } from '../../../_shared/utils/funtion-utils';
 import styles from './rng-soccer.module.scss';
 import { containerOptions, setting } from './game-settings';
-import RNGSoccerSettlementResult from './settlement-result';
 import { ANIMATION_DURATION_MS } from './constants/rng-soccer-constants';
 import RNGSoccerBetOptions from './bet-option/rng-soccer-bet-options';
 import { RNGSoccerResult, RNGSoccerSettlementResult as RNGSoccerSettlementResultType } from './type';
@@ -22,6 +21,7 @@ import bgGame from '../../../assets/rng-soccer/bg-game.webp';
 import RNGSoccerCountDownTimer from './components/rng-soccer-countdown-timer';
 import { RngSoccerRoundId } from './components/rng-soccer-round-id';
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds/round-time-store';
+import RNGSoccerSettlementResult from './settlement-result/rng-soccer-settlement-result';
 
 interface IRNGSoccerPageState extends IGatewayGameBaseState {
     activePanelId: any;
@@ -83,9 +83,17 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handleGateway())
     closeConnect() { }
 
-    async showResult(hasAnimation: boolean, result?: RNGSoccerResult, settlementResult?: RNGSoccerSettlementResultType): Promise<void> {
-        // Implement show result logic
-        return Promise.resolve();
+    async showResult(hasAnimation: boolean,
+        result?: gc.GameServiceMessage.TResult,
+        settlementResult?: gc.GameServiceMessage.TSettlementResult,
+    ) {
+        if (!result) return;
+
+        // Update the previous winning bet based on the settlement result
+        if (settlementResult && this.state.roundState == ROUND_STATE.LOCKING_BET) {
+            // const winningBet = Object.entries(settlementResult).find(([_, value]) => Number(value) > 0)?.[0] as IBaccaratBet['type'];
+            // this.setState({ previousWinningBet: winningBet });
+        }
     }
 
     renderRoundHistory() {
@@ -118,10 +126,12 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
 
     renderSettlementResult() {
         return (
-            <RNGSoccerSettlementResult
-                namespace={this.props.namespace}
-                language={this.props.language}
-            />
+            <Suspense>
+                <RNGSoccerSettlementResult
+                    namespace={setting.mainObserverNamespace}
+                    language={this.props.language}
+                />
+            </Suspense>
         );
     }
 
