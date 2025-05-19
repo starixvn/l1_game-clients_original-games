@@ -9,102 +9,63 @@ class GameStateService {
         this.currentRoundState = roundState;
     }
 
-    handleSettlement(finish: gc.GameServiceMessage.Finish): RNGSoccerResult | undefined {
-        if (!finish || finish.result === undefined) {
-            return undefined;
+    handleSettlement(currentFinish: any): RNGSoccerResult | null {
+        if (!currentFinish || !currentFinish.result) {
+            return null;
         }
 
         try {
-            // The finish.result contains our JSON data as a string or object
-            const finishData = typeof finish.result === 'string'
-                ? JSON.parse(finish.result)
-                : finish.result;
-
-            // Check if we have the expected structure
-            if (!finishData.finish || !finishData.finish.result || !finishData.finish.settlementResult) {
-                return undefined;
-            }
-
-            // Map the new card format to the expected format
+            // Map the incoming data structure to our expected RNGSoccerResult format
             const result: RNGSoccerResult = {
-                homeScore: 0,
-                awayScore: 0,
+                // Set scores based on settlement result
+                homeScore: currentFinish.settlementResult?.home ? 1 : 0,
+                awayScore: currentFinish.settlementResult?.away ? 1 : 0,
+
+                // Map card values from the incoming format
                 homeCard: {
-                    card: finishData.finish.result.home.rank,
-                    type: finishData.finish.result.home.suit
+                    card: currentFinish.result.home.rank || 0,  // Card value (1-13)
+                    type: currentFinish.result.home.suit % 2    // Even suits (0,2) are black, odd suits (1,3) are red
                 },
+
                 awayCard: {
-                    card: finishData.finish.result.away.rank,
-                    type: finishData.finish.result.away.suit
+                    card: currentFinish.result.away.rank || 0,
+                    type: currentFinish.result.away.suit % 2
                 }
             };
 
-            // Calculate scores based on the settlement result
-            if (finishData.finish.settlementResult.home) {
-                result.homeScore = 1;
-                result.awayScore = 0;
-            } else if (finishData.finish.settlementResult.away) {
-                result.homeScore = 0;
-                result.awayScore = 1;
-            } else if (finishData.finish.settlementResult.draw) {
-                result.homeScore = 0;
-                result.awayScore = 0;
-            }
-
-            return this.validateResult(result) ? result : undefined;
+            return result;
         } catch (error) {
-            console.error('Error parsing settlement result:', error);
-            return undefined;
+            // Handle any mapping errors
+            return null;
         }
     }
 
-    handleGameHistory(history: gc.RoundHistories.IFirstJoinGameHistory): RNGSoccerResult | undefined {
+    handleGameHistory(history: gc.RoundHistories.IFirstJoinGameHistory): RNGSoccerResult | null {
         if (!history || !history.roundHistory || !history.roundHistory.result) {
-            return undefined;
+            return null;
         }
 
         try {
-            // Parse the history result which might contain the same finish data structure
+            // Parse the history result
             const historyData = typeof history.roundHistory.result === 'string'
                 ? JSON.parse(history.roundHistory.result)
                 : history.roundHistory.result;
 
-            // Check if we have the finish format structure
-            if (historyData.finish && historyData.finish.result && historyData.finish.settlementResult) {
-                // Map the new card format to the expected format
-                const result: RNGSoccerResult = {
-                    homeScore: 0,
-                    awayScore: 0,
-                    homeCard: {
-                        card: historyData.finish.result.home.rank,
-                        type: historyData.finish.result.home.suit
-                    },
-                    awayCard: {
-                        card: historyData.finish.result.away.rank,
-                        type: historyData.finish.result.away.suit
-                    }
-                };
-
-                // Calculate scores based on the settlement result
-                if (historyData.finish.settlementResult.home) {
-                    result.homeScore = 1;
-                    result.awayScore = 0;
-                } else if (historyData.finish.settlementResult.away) {
-                    result.homeScore = 0;
-                    result.awayScore = 1;
-                } else if (historyData.finish.settlementResult.draw) {
-                    result.homeScore = 0;
-                    result.awayScore = 0;
-                }
-
-                return this.validateResult(result) ? result : undefined;
-            } else {
-                // Fall back to the old format if needed
-                return this.validateResult(historyData) ? historyData : undefined;
+            // Check if we have the new format directly in the result
+            if (historyData.result && historyData.settlementResult) {
+                return this.handleSettlement(historyData);
             }
+
+            // Check if the data is wrapped inside a finish property
+            else if (historyData.finish && historyData.finish.result && historyData.finish.settlementResult) {
+                return this.handleSettlement(historyData.finish);
+            }
+
+            // Default fallback for legacy format
+            return null;
         } catch (error) {
-            console.error('Error parsing game history result:', error);
-            return undefined;
+            // Handle any parsing errors
+            return null;
         }
     }
 

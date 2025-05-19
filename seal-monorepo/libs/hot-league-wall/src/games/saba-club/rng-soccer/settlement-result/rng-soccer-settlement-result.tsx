@@ -261,7 +261,10 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
     })
     private handleCurrentFinish(currentFinish: gc.GameServiceMessage.Finish): void {
         try {
+            // Get the result from the game state service
             const result = gameStateService.handleSettlement(currentFinish);
+
+            // Only update state if we have a valid result
             if (result && gameStateService.validateResult(result)) {
                 // Update team data based on the cards
                 const teamData = this.updateTeamData(result);
@@ -280,6 +283,11 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
                 setTimeout(() => {
                     this.setState({ isAnimationResult: false });
                 }, 500); // Animation duration in ms
+            } else {
+                // If we don't have a valid result, ensure we're not showing loading
+                this.setState({
+                    isLoading: false
+                });
             }
         } catch (error) {
             this.setState({ error: error as Error });
@@ -295,7 +303,10 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
         }
 
         try {
+            // Get the result from the game state service
             const result = gameStateService.handleGameHistory(firstJoinGameHistory);
+
+            // Only update state if we have a valid result
             if (result && gameStateService.validateResult(result)) {
                 // Update team data based on the cards
                 const teamData = this.updateTeamData(result);
@@ -306,6 +317,11 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
                     isLoading: false,
                     isFinish: true,
                     isFinishShowResult: true
+                });
+            } else {
+                // If we don't have a valid result, ensure we're not showing loading
+                this.setState({
+                    isLoading: false
                 });
             }
         } catch (error) {
