@@ -31,9 +31,7 @@ const Preview = () => {
         token && (
             <PreviewProvider>
                 <Router>
-                    <PreviewContext token={token} renewToken={handleGetToken} updateBalanceCallback={() => {
-                        console.log('updateBalanceCallback');
-                    }} />
+                    <PreviewContext token={token} renewToken={handleGetToken} updateBalanceCallback={() => { }} />
                 </Router>
             </PreviewProvider>
         )

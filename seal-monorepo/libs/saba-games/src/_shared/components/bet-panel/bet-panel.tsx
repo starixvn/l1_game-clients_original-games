@@ -123,7 +123,6 @@ class BetPanelComponent<P extends IPropsObserver, S extends IBetPanel> extends O
 
     @render(gc.RoundBasePF.ProvablyFairStore, (store) => store.clientSeed)
     handleClientSeed(clientSeed: string) {
-        console.log('clientSeed', clientSeed);
         this.setState({ clientSeed } as IBetPanel);
     }
 

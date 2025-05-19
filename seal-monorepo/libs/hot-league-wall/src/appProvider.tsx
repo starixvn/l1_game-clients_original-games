@@ -38,7 +38,6 @@ export const AppProvider: React.FC<AppProviderProps> = ({
     siteId
 }: AppProviderProps) => {
     const contextValue: AppContextType = { appEnv, language, siteId };
-    console.log('[AppProvider] contextValue:', contextValue);
 
     return (
         <AppContextProvider value={contextValue}>

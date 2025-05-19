@@ -96,7 +96,6 @@ const getTeamPrimaryColor = (abbreviation: string): string => {
 const getCardImage = (card: number, type: number): string => {
     // Default to card back if card is 0 or invalid
     if (card <= 0 || card > 13) {
-        console.warn(`Invalid card value: ${card}, defaulting to card back`);
         return cardBack;
     }
 
@@ -127,10 +126,9 @@ const getCardImage = (card: number, type: number): string => {
             return safeType === 1 ? cardImages[card][1] : cardImages[card][0];
         }
     } catch (e) {
-        console.error(`Error getting card image for card ${card}, type ${type}:`, e);
+        // Error getting card image
     }
 
-    console.warn(`Falling back to card front for card: ${card}, type: ${type}`);
     return cardFrontImg;
 };
 
@@ -264,13 +262,9 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
     private handleCurrentFinish(currentFinish: gc.GameServiceMessage.Finish): void {
         try {
             const result = gameStateService.handleSettlement(currentFinish);
-            console.log('Current finish result:', result);
             if (result && gameStateService.validateResult(result)) {
                 // Update team data based on the cards
                 const teamData = this.updateTeamData(result);
-                console.log('Team data updated:', teamData);
-                console.log('Home card:', result.homeCard);
-                console.log('Away card:', result.awayCard);
 
                 // Show cards with animation
                 this.setState({
@@ -288,7 +282,6 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
                 }, 500); // Animation duration in ms
             }
         } catch (error) {
-            console.error('Error in handleCurrentFinish:', error);
             this.setState({ error: error as Error });
         }
     }
@@ -296,7 +289,6 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
     @render(RoundHistoryStore, (store) => store.firstJoinGameHistory)
     private handleJoinGameAndShowResult(firstJoinGameHistory: gc.RoundHistories.IFirstJoinGameHistory): void {
         const { roundState } = this.state;
-        console.log('Join game history:', firstJoinGameHistory);
 
         if (roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET) {
             return;
@@ -304,13 +296,9 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
 
         try {
             const result = gameStateService.handleGameHistory(firstJoinGameHistory);
-            console.log('Join game result:', result);
             if (result && gameStateService.validateResult(result)) {
                 // Update team data based on the cards
                 const teamData = this.updateTeamData(result);
-                console.log('Team data updated on join:', teamData);
-                console.log('Join game home card:', result.homeCard);
-                console.log('Join game away card:', result.awayCard);
 
                 this.setState({
                     result,
@@ -321,7 +309,6 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
                 });
             }
         } catch (error) {
-            console.error('Error in handleJoinGameAndShowResult:', error);
             this.setState({ error: error as Error });
         }
     }
@@ -362,12 +349,6 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
         if (!result || !isFinish || isHideAllCards ||
             roundState === ROUND_STATE.PLACING_BET ||
             roundState === ROUND_STATE.LOCKING_BET) {
-            console.log(`Showing card back for ${isHome ? 'home' : 'away'} due to conditions:`, {
-                noResult: !result,
-                notFinished: !isFinish,
-                hideCards: isHideAllCards,
-                roundState
-            });
             return (
                 <div className={styles['card-section']}>
                     <img src={cardBack} alt="card" />
@@ -380,7 +361,6 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
 
         // Validate card data
         if (!cardData || typeof cardData.card !== 'number' || typeof cardData.type !== 'number') {
-            console.error(`Invalid ${isHome ? 'home' : 'away'} card data:`, cardData);
             return (
                 <div className={styles['card-section']}>
                     <img src={cardBack} alt="card" />
@@ -388,9 +368,7 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
             );
         }
 
-        console.log(`Rendering ${isHome ? 'home' : 'away'} card:`, cardData);
         const cardImage = getCardImage(cardData.card, cardData.type);
-        console.log(`Card image for ${isHome ? 'home' : 'away'}:`, cardImage);
 
         return (
             <div className={styles['card-section']}>
