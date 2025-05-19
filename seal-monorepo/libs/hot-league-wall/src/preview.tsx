@@ -5,6 +5,8 @@ import App from './app';
 import { PreviewProvider, usePreviewContext } from './previewProvider';
 import ProviderSetDropDown from './_shared/components/provider-set-dropdown';
 import { requestSSO } from './_shared/utils/sso-helper';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import RngSoccerDemo from './pages/demos/rng-soccer/rng-soccer-demo';
 
 const Preview = () => {
     const [token, setToken] = useState('');
@@ -28,7 +30,9 @@ const Preview = () => {
     return (
         token && (
             <PreviewProvider>
-                <PreviewContext token={token} renewToken={handleGetToken} />
+                <Router>
+                    <PreviewContext token={token} renewToken={handleGetToken} />
+                </Router>
             </PreviewProvider>
         )
     );
@@ -51,7 +55,18 @@ const PreviewContext = ({ token, renewToken }) => {
     return (
         <div data-platform={platform} data-version={process.env.TAG_VERSION} className={'seal-vg-sg-index'}>
             <ProviderSetDropDown />
-            <App appEnv={appEnv} token={token} language={language} siteId={siteId} renewToken={renewToken} />
+            <Routes>
+                <Route path="/rng-soccer-demo" element={<RngSoccerDemo />} />
+                <Route path="*" element={
+                    <App
+                        appEnv={appEnv}
+                        token={token}
+                        language={language}
+                        siteId={siteId}
+                        renewToken={renewToken}
+                    />
+                } />
+            </Routes>
         </div>
     );
 };
