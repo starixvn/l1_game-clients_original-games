@@ -4,7 +4,6 @@ import { handle, render } from '@sg/sg-observer';
 import classNames from 'classnames';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
-    COIN_TOSS_GAME_NAMESPACE,
     SABA_GAMES,
     VGAMING,
     VIVA88_SITE_ID,
@@ -20,15 +19,12 @@ import BettingChips from '../betting-chips';
 import { IPropsObserver, IStateObserver, ObserverComponent } from '../observer-component/observer-component';
 import './bet-panel.scss';
 import { localStorageKeys, StorageManager } from '../../utils/storage-manager';
-import { Size } from '../../constants';
-import Coin from '../coin'
-import { choiceToSymbolMap as coinTossChoiceToSymbolMap } from '../../../games/saba-club/coin-toss/coin-toss-utils';
 
 const WARNING_CLOSE_DELAY = 60000;
 
 // Game icon mapping constant
 const GAME_ICON_MAPPING = {
-    [COIN_TOSS_GAME_NAMESPACE]: 'coin-toss-icon',
+
 } as const;
 
 export interface IBetPanel extends IStateObserver {
@@ -347,17 +343,9 @@ const BetPanel: React.FC<{
         );
     };
 
-    const renderCoin = () => {
-        const coinType = coinTossChoiceToSymbolMap[betChoice];
-        return (
-            <Coin coinType={coinType} size={Size.small} />
-        )
-    }
 
     const renderGameElements = (gameName: string) => {
         switch (gameName) {
-            case COIN_TOSS_GAME_NAMESPACE:
-                return renderCoin();
             default:
                 return null;
         }

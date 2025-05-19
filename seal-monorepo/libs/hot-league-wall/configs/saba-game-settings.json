@@ -24,31 +24,5 @@
         "mainObserverNamespace": "RNGSoccer",
         "order": 1,
         "isSocketGateway": true
-    },
-    "80": {
-        "id": 80,
-        "gameName": "CoinToss",
-        "name": "CoinToss",
-        "serviceName": "coin-toss",
-        "namespaces": [
-            "CoinToss"
-        ],
-        "isVisible": true,
-        "durations": {
-            "wholeRound": 29,
-            "lockingBet": 3,
-            "placingBet": 20,
-            "generatingResult": 1,
-            "showingResult": 3,
-            "startRound": 3
-        },
-        "numberOfRoundHistory": 100,
-        "websocket": {
-            "proxyPath": "",
-            "route": "livepagegateway"
-        },
-        "mainObserverNamespace": "CoinToss",
-        "order": 2,
-        "isSocketGateway": true
     }
 }

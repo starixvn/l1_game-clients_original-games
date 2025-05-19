@@ -78,8 +78,4 @@
         margin-right: 4px;
     }
 
-    .coin-toss-icon {
-        @extend %game-icon-base;
-        background-image: url("../../../assets/game-icons/coin-toss.png");
-    }
 }
