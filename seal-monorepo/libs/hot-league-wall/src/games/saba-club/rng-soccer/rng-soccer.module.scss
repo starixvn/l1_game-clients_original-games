@@ -41,7 +41,7 @@
 .wrapper-sport-top {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
 
     .game-name {
         display: flex;
@@ -71,6 +71,16 @@
 
     .score-board-img {
         cursor: pointer;
+    }
+
+    .timmer {
+        position: static;
+        transform: none;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 10px;
     }
 }
 

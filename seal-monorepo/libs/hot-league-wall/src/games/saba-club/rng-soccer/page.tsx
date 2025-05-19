@@ -156,6 +156,14 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
                         roundState={this.state.roundState}
                     />
                 </div>
+                <RNGSoccerCountDownTimer
+                    namespace={setting.mainObserverNamespace}
+                    language={this.props.language}
+                    onComplete={() => {
+                        // Handle timer completion if needed
+                        this.setState({ isTimerActive: false });
+                    }}
+                />
                 <div className={styles['score-board-img']} onClick={this.togglePopup}>
                     <img src={bxhIcon} alt="bxh" />
                 </div>
@@ -177,26 +185,11 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
                         <div className={styles['card-section']}>
                             <img src={cardBack} alt="card" />
                         </div>
-                        <div className={styles['result-section']}>
-                            <div className={styles['result']}>
-                                <span>{this.state.homeScore}</span>
-                            </div>
-                            <div className={styles['result']}>
-                                <span>{this.state.awayScore}</span>
-                            </div>
-                        </div>
+                        {this.renderSettlementResult()}
                         <div className={styles['card-section']}>
                             <img src={cardBack} alt="card" />
                         </div>
                     </div>
-                    <RNGSoccerCountDownTimer
-                        namespace={setting.mainObserverNamespace}
-                        language={this.props.language}
-                        onComplete={() => {
-                            // Handle timer completion if needed
-                            this.setState({ isTimerActive: false });
-                        }}
-                    />
                 </div>
                 <div className={`${styles['sport-team']} ${styles['away-team']}`}>
                     <div className={styles['sport-team-img']}>

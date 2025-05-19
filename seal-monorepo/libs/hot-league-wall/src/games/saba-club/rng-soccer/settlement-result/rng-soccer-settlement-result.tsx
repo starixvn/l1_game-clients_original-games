@@ -138,7 +138,7 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
     }
 
     private renderContent(): JSX.Element {
-        const { isLoading, error } = this.state;
+        const { isLoading, error, result, isFinish, roundState } = this.state;
 
         if (error) {
             throw error;
@@ -146,10 +146,15 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
 
         if (isLoading) {
             return <Loading />;
-            // return <Loading message="Loading game results..." />;
         }
 
-        return <div className={Styles['settlement-container']}>{this.renderScoreDisplay()}</div>;
+        return (
+            <div className={Styles['settlement-container']}>
+                <div className={Styles['container-result']}>
+                    {this.renderScoreDisplay()}
+                </div>
+            </div>
+        );
     }
 
     render(): JSX.Element {
