@@ -19,6 +19,9 @@ import awayDefaultLogo from '../../../assets/rng-soccer/away-default-logo.svg';
 import cardBack from '../../../assets/rng-soccer/cards/card-back.svg';
 import closeIcon from '../../../assets/rng-soccer/close.svg';
 import bgGame from '../../../assets/rng-soccer/bg-game.webp';
+import RNGSoccerCountDownTimer from './components/rng-soccer-countdown-timer';
+import { RngSoccerRoundId } from './components/rng-soccer-round-id';
+import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds/round-time-store';
 
 interface IRNGSoccerPageState extends IGatewayGameBaseState {
     activePanelId: any;
@@ -30,6 +33,7 @@ interface IRNGSoccerPageState extends IGatewayGameBaseState {
     roundNumber: string;
     isTimerActive: boolean;
     isPopupVisible: boolean;
+    roundId: number;
 }
 
 @observer(setting.mainObserverNamespace)
@@ -49,7 +53,8 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
         awayScore: 0,
         roundNumber: '#37699',
         isTimerActive: true,
-        isPopupVisible: false
+        isPopupVisible: false,
+        roundId: 0
     };
 
     constructor(props: GameBaseProps) {
@@ -136,7 +141,10 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
                         RNG Soccer
                         <img src={liveIcon} alt="live" className={styles['live-icon']} />
                     </div>
-                    <div className={styles['game-name-round']}>{this.state.roundNumber}</div>
+                    <RngSoccerRoundId
+                        roundNumber={this.state.roundId}
+                        roundState={this.state.roundState}
+                    />
                 </div>
                 <div className={styles['score-board-img']} onClick={this.togglePopup}>
                     <img src={bxhIcon} alt="bxh" />
@@ -171,9 +179,14 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
                             <img src={cardBack} alt="card" />
                         </div>
                     </div>
-                    <div className={styles['timmer']}>
-                        {this.state.isTimerActive && <div className={styles['dots']}></div>}
-                    </div>
+                    <RNGSoccerCountDownTimer
+                        namespace={setting.mainObserverNamespace}
+                        language={this.props.language}
+                        onComplete={() => {
+                            // Handle timer completion if needed
+                            this.setState({ isTimerActive: false });
+                        }}
+                    />
                 </div>
                 <div className={`${styles['sport-team']} ${styles['away-team']}`}>
                     <div className={styles['sport-team-img']}>
@@ -215,6 +228,11 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
                 </div>
             </div>
         );
+    }
+
+    @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
+    renderRoundState(roundState: string) {
+        this.setState({ roundState });
     }
 
     render() {

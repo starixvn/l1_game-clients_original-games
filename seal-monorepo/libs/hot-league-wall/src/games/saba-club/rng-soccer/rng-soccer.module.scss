@@ -48,6 +48,11 @@
         align-items: flex-start;
         flex-direction: column;
 
+        .live-icon{
+            width: 16px;
+            height: 16px;
+        }
+        
         .game-name-text {
             font-size: 14px;
             font-weight: 700;
