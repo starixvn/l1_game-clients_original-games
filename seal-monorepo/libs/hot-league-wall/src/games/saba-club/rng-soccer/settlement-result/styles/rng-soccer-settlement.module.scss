@@ -1,26 +1,181 @@
+.wrapper-sport-middle {
+    display: grid;
+    grid-template-columns: 81px 1fr 81px;
+    align-items: flex-end;
+}
+
+.sport-team {
+    display: flex;
+    flex-direction: column;
+
+    &.home-team {
+        align-items: flex-start;
+    }
+
+    &.away-team {
+        align-items: flex-end;
+    }
+
+    &-img {
+        width: 32px;
+        height: 32px;
+        margin-bottom: 4px;
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+
+    &-name {
+        font-size: 13px;
+        font-weight: 700;
+        color: #fff;
+        text-transform: capitalize;
+    }
+}
+
+.sport-result {
+    position: relative;
+
+    .container-result {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .card-section {
+        width: 45px;
+        height: 65px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+    }
+
+    .result-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+    }
+}
+
+.timmer {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -60px);
+    display: flex;
+    align-items: center;
+
+    .count-down {
+        color: #01FF0B;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: normal;
+        text-transform: capitalize;
+    }
+}
+
+.dots {
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle closest-side, #01FF0B 90%, rgba(0, 0, 0, 0)) 0% 50%, 
+                radial-gradient(circle closest-side, #01FF0B 90%, rgba(0, 0, 0, 0)) 50% 50%, 
+                radial-gradient(circle closest-side, #01FF0B 90%, rgba(0, 0, 0, 0)) 100% 50%;
+    background-size: calc(100%/3) 13.4px;
+    background-repeat: no-repeat;
+    animation: dots-7ar3yq 1s infinite linear;
+}
+
+@keyframes dots-7ar3yq {
+    20% {
+        background-position: 0% 0%, 50% 50%, 100% 50%;
+    }
+
+    40% {
+        background-position: 0% 100%, 50% 0%, 100% 50%;
+    }
+
+    60% {
+        background-position: 0% 50%, 50% 100%, 100% 0%;
+    }
+
+    80% {
+        background-position: 0% 50%, 50% 50%, 100% 100%;
+    }
+}
+
 .settlement-container {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 100%;
-    padding: 20px;
-}
-
-.score-display {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.7);
-    padding: 20px;
-    border-radius: 10px;
 }
 
 .score {
-    font-size: 48px;
-    font-weight: bold;
-    color: #ffffff;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 7px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+    
+    span {
+        animation: scoreAppear 0.4s ease-out forwards;
+    }
+}
+
+@keyframes scoreAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.5) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.score-pop-in {
+    animation: scoreAppear 0.4s ease-out forwards;
+}
+
+/* Card animations */
+.card-flip {
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+}
+
+.card-flip-enter {
+    transform: rotateY(0deg);
+}
+
+.card-flip-enter-active {
+    transform: rotateY(180deg);
+}
+
+.card-flip-exit {
+    transform: rotateY(180deg);
+}
+
+.card-flip-exit-active {
+    transform: rotateY(0deg);
 }
 
 .loading-container {
@@ -77,5 +232,31 @@
     }
     100% {
         transform: rotate(360deg);
+    }
+}
+
+.result-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.result {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 7px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+    
+    span {
+        animation: scoreAppear 0.4s ease-out forwards;
     }
 } 

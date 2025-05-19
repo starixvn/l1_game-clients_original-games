@@ -124,17 +124,6 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
         );
     }
 
-    renderSettlementResult() {
-        return (
-            <Suspense>
-                <RNGSoccerSettlementResult
-                    namespace={setting.mainObserverNamespace}
-                    language={this.props.language}
-                />
-            </Suspense>
-        );
-    }
-
     renderStatistic() {
         return (
             <Suspense>
@@ -173,31 +162,12 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
 
     renderGameContent(): JSX.Element {
         return (
-            <div className={styles['wrapper-sport-middle']}>
-                <div className={`${styles['sport-team']} ${styles['home-team']}`}>
-                    <div className={styles['sport-team-img']}>
-                        <img src={homeDefaultLogo} alt="home-team" />
-                    </div>
-                    <div className={styles['sport-team-name']}>Man.city</div>
-                </div>
-                <div className={styles['sport-result']}>
-                    <div className={styles['container-result']}>
-                        <div className={styles['card-section']}>
-                            <img src={cardBack} alt="card" />
-                        </div>
-                        {this.renderSettlementResult()}
-                        <div className={styles['card-section']}>
-                            <img src={cardBack} alt="card" />
-                        </div>
-                    </div>
-                </div>
-                <div className={`${styles['sport-team']} ${styles['away-team']}`}>
-                    <div className={styles['sport-team-img']}>
-                        <img src={awayDefaultLogo} alt="away-team" />
-                    </div>
-                    <div className={styles['sport-team-name']}>Arsenal</div>
-                </div>
-            </div>
+            <Suspense>
+                <RNGSoccerSettlementResult
+                    namespace={setting.mainObserverNamespace}
+                    language={this.props.language}
+                />
+            </Suspense>
         );
     }
 
