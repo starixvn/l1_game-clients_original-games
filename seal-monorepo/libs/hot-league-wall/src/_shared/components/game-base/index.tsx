@@ -134,10 +134,6 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         return <></>;
     }
 
-    renderBettingBlock() {
-        return <></>;
-    }
-
     renderRoundHistory() {
         return <></>;
     }
@@ -273,6 +269,65 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         }, 3000);
     };
 
+    protected renderGameHeader(): JSX.Element {
+        return (
+            <div className={`${Styles['info']} ${this.overrideClasses?.info}`}>
+                {this.renderRoundIdSection()}
+                {this.renderCountDownTimer()}
+            </div>
+        );
+    }
+
+    protected renderGameContent(): JSX.Element {
+        return (
+            <div className={`${Styles['result']} ${this.overrideClasses?.result}`}>
+                {this.renderResultBlock()}
+            </div>
+        );
+    }
+
+    protected renderGameFooter(): JSX.Element {
+        return (
+            <div
+                className={classNames(
+                    Styles['bet-options'],
+                    {
+                        [Styles['disabled']]: !this.state.isAllowedBet,
+                    },
+                    this.overrideClasses?.betOptions,
+                )}
+            >
+                {this.renderBettingBlock()}
+                <ConfirmBet namespace={this.props.namespace} />
+                <div className={`${Styles['animation-balance']} ${Styles[`game-${this.state.gameId}`]}`}>
+                    {this.renderAnimationBalance()}
+                </div>
+            </div>
+        );
+    }
+
+    protected renderGamePopup(): JSX.Element {
+        return (
+            <div className={Styles['history-block']}>
+                <div className={Styles['statistic-btn']}>
+                    <StatisticButton isOpenStatistic={this.state.isOpenStatistic} handleToggle={this.toggleStatistic} />
+                </div>
+                {this.renderNotice()}
+                {this.renderWarning()}
+                {this.renderWaitingForNextRound()}
+                {this.state.isOpenStatistic && this.renderStatistic()}
+            </div>
+        );
+    }
+
+    protected togglePopup(): void {
+        // Default implementation does nothing
+    }
+
+    protected renderBettingBlock(): JSX.Element {
+        return <></>;
+    }
+
     getRenderTemplate() {
         const { isConnected, isConnectFailed, initialized: isGameConfigInitialized, showDisabledPopup, isAllowedBet } = this.state;
 
@@ -290,37 +345,11 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         ) : (
             <>
                 <div className={`${Styles['block-wrapper']} ${this.overrideClasses?.blockWrapper}`}>
-                    <div className={`${Styles['info']} ${this.overrideClasses?.info}`}>
-                        {this.renderRoundIdSection()}
-                        {this.renderCountDownTimer()}
-                    </div>
-                    <div className={`${Styles['result']} ${this.overrideClasses?.result}`}>{this.renderResultBlock()}</div>
-                    <div
-                        className={classNames(
-                            Styles['bet-options'],
-                            {
-                                [Styles['disabled']]: !isAllowedBet,
-                            },
-                            this.overrideClasses?.betOptions,
-                        )}
-                    >
-                        {this.renderBettingBlock()}
-                        <ConfirmBet namespace={this.props.namespace} />
-                        <div className={`${Styles['animation-balance']} ${Styles[`game-${this.state.gameId}`]}`}>
-                            {this.renderAnimationBalance()}
-                        </div>
-                    </div>
+                    {this.renderGameHeader()}
+                    {this.renderGameContent()}
+                    {this.renderGameFooter()}
                 </div>
-
-                <div className={Styles['history-block']}>
-                    <div className={Styles['statistic-btn']}>
-                        <StatisticButton isOpenStatistic={this.state.isOpenStatistic} handleToggle={this.toggleStatistic} />
-                    </div>
-                    {this.renderNotice()}
-                    {this.renderWarning()}
-                    {this.renderWaitingForNextRound()}
-                </div>
-                {this.state.isOpenStatistic && this.renderStatistic()}
+                {this.renderGamePopup()}
             </>
         );
     }
