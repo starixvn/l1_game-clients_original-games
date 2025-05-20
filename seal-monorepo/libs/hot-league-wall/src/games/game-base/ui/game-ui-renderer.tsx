@@ -36,13 +36,15 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
 
     renderRoundIdSection(state: S) {
         const { roundId, roundState } = state;
-        return <RoundId clientRoundId={roundId} roundState={roundState} />;
+        return <RoundId clientRoundId={roundId} roundState={roundState} useGameStyling={true} />;
     }
 
     renderCountDownTimer(props: P, setState: (state: Partial<S>) => void) {
         return (
             <CountDownTimer
                 namespace={props.namespace}
+                language={props.language}
+                useGameLayout={true}
                 onComplete={() => {
                     setState({ isAllowedBet: true } as Partial<S>);
                 }}
@@ -88,7 +90,7 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
     }
 
     // -------------------------------------------------------------------------
-    // New section-based rendering methods
+    // Section-based rendering methods
     // -------------------------------------------------------------------------
 
     /**

@@ -13,8 +13,8 @@ import RNGSoccerBetOptions from './bet-option/rng-soccer-bet-options';
 import liveIcon from '../../../assets/rng-soccer/live-icon.svg';
 import bxhIcon from '../../../assets/rng-soccer/bxh.svg';
 import bgGame from '../../../assets/rng-soccer/bg-game.webp';
-import RNGSoccerCountDownTimer from './components/rng-soccer-countdown-timer';
-import { RngSoccerRoundId } from './components/rng-soccer-round-id';
+import { RoundId } from '../../../_shared/components/round-id';
+import CountDownTimer from '../../../_shared/components/count-down-timer';
 import RNGSoccerSettlementResult from './settlement-result/rng-soccer-settlement-result';
 import RNGSoccerStatistic from './statistic/rng-soccer-statistic';
 
@@ -28,6 +28,7 @@ interface IRNGSoccerPageState extends IGatewayGameBaseState {
     isTimerActive: boolean;
     isHeaderExpanded: boolean;
     isBettingDisabled: boolean;
+    isPopupVisible: boolean;
 }
 
 @observer(setting.mainObserverNamespace)
@@ -39,8 +40,6 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
         footer: styles['wrapper-sport-bottom'],
         popup: styles['statistic-popup']
     };
-
-    private _bettingDisabled = false;
 
     constructor(props: GameBaseProps) {
         super(props);
@@ -63,13 +62,6 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
         } catch (error) {
             // Silent fail on initialization error
         }
-    }
-
-    // Using a private field instead of state to avoid TypeScript issues
-    disableBetting = () => {
-        this._bettingDisabled = true;
-        // Force a re-render
-        this.forceUpdate();
     }
 
     togglePopup = () => {
@@ -102,11 +94,6 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
     }
 
     renderBettingBlock() {
-        // Use a private field instead of state
-        if (this._bettingDisabled) {
-            return <div className={styles['betting-disabled']}>Betting is closed for this round</div>;
-        }
-
         return (
             <GameBettingOptionsContext.Provider
                 value={{
@@ -156,15 +143,21 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
                         RNG Soccer
                         <img src={liveIcon} alt="live" className={styles['live-icon']} />
                     </div>
-                    <RngSoccerRoundId
-                        roundNumber={this.state.roundId}
+                    <RoundId
+                        clientRoundId={this.state.roundId}
                         roundState={this.state.roundState}
+                        className={styles['game-name-round']}
+                        useGameStyling={true}
                     />
                 </div>
-                <RNGSoccerCountDownTimer
+                <CountDownTimer
                     namespace={setting.mainObserverNamespace}
                     language={this.props.language}
-                    onComplete={this.disableBetting}
+                    useGameLayout={true}
+                    onComplete={() => { }}
+                    customStyles={{
+                        wrapper: styles['timmer']
+                    }}
                 />
                 <div className={styles['score-board-img']} onClick={this.togglePopup}>
                     <img src={bxhIcon} alt="bxh" />
@@ -224,9 +217,4 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
         );
     }
 
-    // Implementation of the abstract renderNotice method
-    override renderNotice(): JSX.Element {
-        // You can customize the notice component or reuse the default one from uiRenderer
-        return super.renderNotice();
-    }
 } 

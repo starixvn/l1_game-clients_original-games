@@ -4,11 +4,19 @@ import { render } from "@sg/sg-observer";
 import classnames from "classnames";
 
 import Styles from "./count-down-timer.module.scss";
+import gameStyles from "./game-countdown-timer.module.scss";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../observer-component/observer-component";
 import Timer from "./timer";
 
 export interface ICountDownTimerProps extends IPropsObserver {
     onComplete?: () => void;
+    language?: string;
+    customStyles?: {
+        wrapper?: string;
+        timer?: string;
+        text?: string;
+    };
+    useGameLayout?: boolean;
 }
 
 export interface ICountDownTimerState extends IStateObserver {
@@ -26,12 +34,13 @@ export default class CountDownTimer extends ObserverComponent<ICountDownTimerPro
     private renderCountDownTimer(countdownTimer: number): void {
         this.setState({ countdownTimer });
     }
+
     @render(RoundTimeStore, (store) => store.roundState, { fireImmediately: false })
     private renderCountDownTimerState(roundState: string): void {
         this.setState({ roundState });
     }
 
-    private getTimerContentConfig(roundState: string) {
+    protected getTimerContentConfig(roundState: string) {
         const { PLACING_BET, LOCKING_BET, SHOW_ANIMATION_RESULT, SHOW_RESULT, STOP_GAME_LOOP } = ROUND_STATE;
         return {
             showTimer: [PLACING_BET].includes(roundState),
@@ -40,7 +49,7 @@ export default class CountDownTimer extends ObserverComponent<ICountDownTimerPro
         };
     }
 
-    private getTimerContent(countdownTimer: number, roundState: string) {
+    protected getTimerContent(countdownTimer: number, roundState: string) {
         const config = this.getTimerContentConfig(roundState);
 
         const shouldTriggerComplete = config.showTimer || config.showNoMoreBet || config.showResult;
@@ -55,22 +64,57 @@ export default class CountDownTimer extends ObserverComponent<ICountDownTimerPro
         return null;
     }
 
-
     render() {
         const { countdownTimer, roundState } = this.state;
+        const { customStyles, useGameLayout } = this.props;
         const isBettingRound = roundState === ROUND_STATE.PLACING_BET;
 
         if (roundState === ROUND_STATE.NONE || roundState === ROUND_STATE.STARTING_ROUND) {
             return <></>;
         }
 
+        // Determine content
+        const content = this.getTimerContent(countdownTimer, roundState);
+
+        // Use game layout if specified
+        if (useGameLayout) {
+            return (
+                <div className={classnames(gameStyles['game-countdown-wrapper'], customStyles?.wrapper)}>
+                    <div className={Styles['count-down']}>
+                        <div
+                            className={classnames(Styles['timer-wrapper'], {
+                                [Styles['placing-bet-state']]: roundState === ROUND_STATE.PLACING_BET,
+                                [Styles['no-more-bet-state']]: roundState !== ROUND_STATE.PLACING_BET,
+                            }, customStyles?.timer)}
+                        >
+                            {isBettingRound && (
+                                <div className={Styles['timer-badge']}>
+                                    <Timer className={Styles.clock} />
+                                </div>
+                            )}
+                            <div className={Styles['counting-text']}>
+                                <span
+                                    className={classnames({
+                                        [Styles['no-more-bet-state']]: !isBettingRound,
+                                    }, customStyles?.text)}
+                                >
+                                    {content}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // Standard layout
         return (
             <div className={Styles['count-down']}>
                 <div
                     className={classnames(Styles['timer-wrapper'], {
                         [Styles['placing-bet-state']]: roundState === ROUND_STATE.PLACING_BET,
                         [Styles['no-more-bet-state']]: roundState !== ROUND_STATE.PLACING_BET,
-                    })}
+                    }, customStyles?.timer)}
                 >
                     {isBettingRound && (
                         <div className={Styles['timer-badge']}>
@@ -81,9 +125,9 @@ export default class CountDownTimer extends ObserverComponent<ICountDownTimerPro
                         <span
                             className={classnames({
                                 [Styles['no-more-bet-state']]: !isBettingRound,
-                            })}
+                            }, customStyles?.text)}
                         >
-                            {this.getTimerContent(countdownTimer, roundState)}
+                            {content}
                         </span>
                     </div>
                 </div>
