@@ -33,10 +33,11 @@ interface IRNGSoccerPageState extends IGatewayGameBaseState {
 @observer(setting.mainObserverNamespace)
 export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSoccerPageState> {
     override overrideClasses = {
-        blockWrapper: styles['block-wrapper'],
-        betOptions: styles['bet-options-block'],
-        info: styles['info-block'],
-        result: styles['result-block'],
+        gameContainer: styles['sport-item'],
+        header: styles['wrapper-sport-top'],
+        content: styles['wrapper-sport-content'],
+        footer: styles['wrapper-sport-bottom'],
+        popup: styles['statistic-popup']
     };
 
     private _bettingDisabled = false;
@@ -145,7 +146,9 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
         );
     }
 
-    renderGameHeader(): JSX.Element {
+    // Section-based rendering methods
+
+    renderGameHeaderSection(): JSX.Element {
         return (
             <div className={styles['wrapper-sport-top']}>
                 <div className={styles['game-name']}>
@@ -170,7 +173,7 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
         );
     }
 
-    renderGameContent(): JSX.Element {
+    renderGameContentSection(): JSX.Element {
         return (
             <Suspense>
                 <RNGSoccerSettlementResult
@@ -181,7 +184,7 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
         );
     }
 
-    renderGameFooter(): JSX.Element {
+    renderGameFooterSection(): JSX.Element {
         return (
             <div className={styles['wrapper-sport-bottom']}>
                 {this.renderBettingBlock()}
@@ -189,7 +192,7 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
         );
     }
 
-    renderGamePopup(): JSX.Element {
+    renderGamePopupSection(): JSX.Element {
         return this.renderStatistic();
     }
 
@@ -213,10 +216,10 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
                     backgroundSize: 'cover'
                 }}
             >
-                {this.renderGameHeader()}
-                {this.renderGameContent()}
-                {this.renderGameFooter()}
-                {this.renderStatistic()}
+                {this.renderGameHeaderSection()}
+                {this.renderGameContentSection()}
+                {this.renderGameFooterSection()}
+                {this.renderGamePopupSection()}
             </div>
         );
     }

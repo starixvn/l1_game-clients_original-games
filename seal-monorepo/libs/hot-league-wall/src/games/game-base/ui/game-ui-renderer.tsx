@@ -5,7 +5,6 @@ import AnimationBalance from '../../../_shared/components/anim-balance';
 import { ConfirmBet } from '../../../_shared/components/bet-option/confirm-bet';
 import Notice from '../../../_shared/components/notices/notice';
 import Warning from '../../../_shared/components/notices/warning';
-import StatisticButton from '../../../_shared/components/statistic-button/statistic-button';
 import WarningDialog from '../../../_shared/components/notices/warning-dialog';
 import { RoundId } from '../../../_shared/components/round-id';
 import CountDownTimer from '../../../_shared/components/count-down-timer';
@@ -55,10 +54,6 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
         return <></>;
     }
 
-    renderRoundHistory(): JSX.Element {
-        return <></>;
-    }
-
     renderStatistic(): JSX.Element {
         return <>Statistic</>;
     }
@@ -93,71 +88,106 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
     }
 
     // -------------------------------------------------------------------------
-    // LAYOUT SECTIONS - Methods for rendering main UI structure
+    // New section-based rendering methods
     // -------------------------------------------------------------------------
 
-    renderGameHeader(props: P, state: S, setState: (state: Partial<S>) => void, overrideClasses?: any): JSX.Element {
+    /**
+     * Renders the game header section with customizable UI elements
+     * @param props Game properties
+     * @param state Game state
+     * @param setState Callback to update state
+     * @param overrideClasses Optional CSS class overrides
+     * @returns JSX.Element for the game header
+     */
+    renderGameHeaderSection(props: P, state: S, setState: (state: Partial<S>) => void, overrideClasses?: any): JSX.Element {
+        // Default implementation - can be overridden by game-specific classes
         return (
-            <div className={`${Styles['info']} ${overrideClasses?.info}`}>
-                {this.renderRoundIdSection(state)}
+            <div className={`${Styles['game-header']} ${overrideClasses?.header}`}>
+                <div className={Styles['game-name']}>
+                    {state.gameId && <div className={Styles['game-name-text']}>{state.gameId}</div>}
+                    {this.renderRoundIdSection(state)}
+                </div>
                 {this.renderCountDownTimer(props, setState)}
             </div>
         );
     }
 
-    renderGameContent(overrideClasses?: any): JSX.Element {
+    /**
+     * Renders the game content section with game-specific UI elements
+     * @param props Game properties
+     * @param state Game state
+     * @param overrideClasses Optional CSS class overrides
+     * @returns JSX.Element for the game content area
+     */
+    renderGameContentSection(props: P, state: S, overrideClasses?: any): JSX.Element {
+        // Default implementation - can be overridden by game-specific classes
         return (
-            <div className={`${Styles['result']} ${overrideClasses?.result}`}>
+            <div className={`${Styles['game-content']} ${overrideClasses?.content}`}>
                 {this.renderResultBlock()}
             </div>
         );
     }
 
-    renderGameFooter(props: P, state: S, overrideClasses?: any): JSX.Element {
+    /**
+     * Renders the game footer section with betting options and controls
+     * @param props Game properties
+     * @param state Game state
+     * @param overrideClasses Optional CSS class overrides
+     * @returns JSX.Element for the game footer
+     */
+    renderGameFooterSection(props: P, state: S, overrideClasses?: any): JSX.Element {
+        // Default implementation - can be overridden by game-specific classes
         return (
-            <div
-                className={classNames(
-                    Styles['bet-options'],
-                    {
-                        [Styles['disabled']]: !state.isAllowedBet,
-                    },
-                    overrideClasses?.betOptions,
-                )}
-            >
-                {this.renderBettingBlock()}
-                <ConfirmBet namespace={props.namespace} />
-                <div className={`${Styles['animation-balance']} ${Styles[`game-${state.gameId}`]}`}>
-                    {this.renderAnimationBalance(state)}
+            <div className={`${Styles['game-footer']} ${overrideClasses?.footer}`}>
+                <div
+                    className={classNames(
+                        Styles['bet-options'],
+                        {
+                            [Styles['disabled']]: !state.isAllowedBet,
+                        },
+                        overrideClasses?.betOptions,
+                    )}
+                >
+                    {this.renderBettingBlock()}
+                    <ConfirmBet namespace={props.namespace} />
+                    <div className={`${Styles['animation-balance']} ${Styles[`game-${state.gameId}`]}`}>
+                        {this.renderAnimationBalance(state)}
+                    </div>
                 </div>
             </div>
         );
     }
 
-    renderGamePopup(props: P, state: S, toggleStatistic: () => void): JSX.Element {
+    /**
+     * Renders the game statistics or popup content
+     * @param props Game properties
+     * @param state Game state
+     * @param toggleStatistic Function to toggle statistics visibility
+     * @param overrideClasses Optional CSS class overrides
+     * @returns JSX.Element for the game statistic or popup content
+     */
+    renderGamePopupSection(props: P, state: S, toggleStatistic: () => void, overrideClasses?: any): JSX.Element {
+        // Default implementation - can be overridden by game-specific classes
         return (
-            <div className={Styles['history-block']}>
-                <div className={Styles['statistic-btn']}>
-                    <StatisticButton isOpenStatistic={state.isOpenStatistic} handleToggle={toggleStatistic} />
-                </div>
+            <div className={`${Styles['game-popup']} ${overrideClasses?.popup}`}>
+                {this.renderStatistic()}
                 {this.renderNotice(props, state)}
                 {this.renderWarning(props)}
                 {this.renderWaitingForNextRound(state)}
-                {state.isOpenStatistic && this.renderStatistic()}
             </div>
         );
     }
 
     // Main layout template
     renderGameLayout(props: P, state: S, setStateCallback: (state: Partial<S>) => void, toggleStatistic: () => void, overrideClasses?: any): JSX.Element {
+        // Default implementation that can be overridden by game-specific implementations
         return (
-            <>
-                <div className={`${Styles['block-wrapper']} ${overrideClasses?.blockWrapper}`}>
-                    {this.renderGameHeader(props, state, setStateCallback, overrideClasses)}
-                    {this.renderGameContent(overrideClasses)}
-                    {this.renderGameFooter(props, state, overrideClasses)}
-                </div>
-                {this.renderGamePopup(props, state, toggleStatistic)}
-            </>
+            <div className={`${Styles['game-container']} ${overrideClasses?.gameContainer}`}>
+                {this.renderGameHeaderSection(props, state, setStateCallback, overrideClasses)}
+                {this.renderGameContentSection(props, state, overrideClasses)}
+                {this.renderGameFooterSection(props, state, overrideClasses)}
+                {this.renderGamePopupSection(props, state, toggleStatistic, overrideClasses)}
+            </div>
         );
     }
 }
