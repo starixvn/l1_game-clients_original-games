@@ -1,3 +1,10 @@
+// Import global variables
+@import '../../../../styles/variables';
+
+// Game-specific variables can be added below if needed
+// This file is maintained for backward compatibility
+// For new components, use the central styles directly
+
 // Colors
 $color-white: #fff;
 $color-light-gray: #A0A8C3;

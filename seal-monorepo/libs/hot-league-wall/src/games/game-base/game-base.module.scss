@@ -1,3 +1,7 @@
+// Import the unified styles from the game's styles index
+// This includes both centralized styles and backward compatibility
+@import './styles';
+
 @import './styles/variables';
 @import './styles/mixins';
 

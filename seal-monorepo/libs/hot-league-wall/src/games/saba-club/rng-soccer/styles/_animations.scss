@@ -1,5 +1,12 @@
 @import './variables';
 
+// Import global animations
+@import '../../../../styles/animations';
+
+// Game-specific animations can be added below if needed
+// This file is maintained for backward compatibility
+// For new components, use the central styles directly
+
 // Score animations
 @keyframes scoreAppear {
   from {

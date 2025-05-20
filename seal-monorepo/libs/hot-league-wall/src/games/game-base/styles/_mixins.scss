@@ -1,3 +1,10 @@
+// Import global mixins
+@import '../../../styles/mixins';
+
+// Game-specific mixins can be added below if needed
+// This file is maintained for backward compatibility
+// For new components, use the central styles directly
+
 @import './variables';
 
 // Flex layouts
