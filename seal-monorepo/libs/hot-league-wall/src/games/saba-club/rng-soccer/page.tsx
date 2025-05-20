@@ -1,26 +1,19 @@
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 import * as gc from '@sg/sg-game-client';
 import { handle, observer, render } from '@sg/sg-observer';
 import GatewayGameBase, { IGatewayGameBaseState } from '../../../_shared/components/game-base/gateway-gamebase';
 import { configGameContainer } from '../../../_shared/components/game-base/startup';
 import type { GameBaseProps } from '../../../_shared/components/game-base/type';
 import { GameBettingOptionsContext } from '../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
-import { FunctionUtils } from '../../../_shared/utils/funtion-utils';
 import styles from './rng-soccer.module.scss';
 import { containerOptions, setting } from './game-settings';
-import { ANIMATION_DURATION_MS } from './constants/rng-soccer-constants';
+import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds/round-time-store';
 import RNGSoccerBetOptions from './bet-option/rng-soccer-bet-options';
-import { RNGSoccerResult, RNGSoccerSettlementResult as RNGSoccerSettlementResultType } from './type';
 import liveIcon from '../../../assets/rng-soccer/live-icon.svg';
 import bxhIcon from '../../../assets/rng-soccer/bxh.svg';
-import homeDefaultLogo from '../../../assets/rng-soccer/home-default-logo.svg';
-import awayDefaultLogo from '../../../assets/rng-soccer/away-default-logo.svg';
-import cardBack from '../../../assets/rng-soccer/cards/card-back.svg';
-import closeIcon from '../../../assets/rng-soccer/close.svg';
 import bgGame from '../../../assets/rng-soccer/bg-game.webp';
 import RNGSoccerCountDownTimer from './components/rng-soccer-countdown-timer';
 import { RngSoccerRoundId } from './components/rng-soccer-round-id';
-import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds/round-time-store';
 import RNGSoccerSettlementResult from './settlement-result/rng-soccer-settlement-result';
 import RNGSoccerStatistic from './statistic/rng-soccer-statistic';
 
@@ -67,19 +60,19 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
         }
     }
 
-    toggleHeader = () => {
-        // this.setState({
-        //     ...this.state,
-        //     isHeaderExpanded: !this.state.isHeaderExpanded
-        // });
-    }
-
     togglePopup = () => {
         this.setState({
-            ...this.state,
             isPopupVisible: !this.state.isPopupVisible
         });
     }
+
+    setShowBetPanel = (show: boolean) => {
+        this.setState({ showBetPanel: show });
+    };
+
+    setPanelId = (id: string) => {
+        this.setState({ activePanelId: id });
+    };
 
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handleGateway())
     closeConnect() { }
@@ -92,17 +85,8 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
 
         // Update the previous winning bet based on the settlement result
         if (settlementResult && this.state.roundState == ROUND_STATE.LOCKING_BET) {
-            // const winningBet = Object.entries(settlementResult).find(([_, value]) => Number(value) > 0)?.[0] as IBaccaratBet['type'];
-            // this.setState({ previousWinningBet: winningBet });
+            // Calculate and update state as needed for game-specific logic
         }
-    }
-
-    renderRoundHistory() {
-        return (
-            <Suspense>
-                {/* <RNGSoccerRoundHistory namespace={this.props.namespace} language={this.props.language} /> */}
-            </Suspense>
-        );
     }
 
     renderBettingBlock() {
@@ -155,8 +139,7 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
                     namespace={setting.mainObserverNamespace}
                     language={this.props.language}
                     onComplete={() => {
-                        // Handle timer completion if needed
-                        this.setState({ isTimerActive: false });
+                        this.setState({ isAllowedBet: false });
                     }}
                 />
                 <div className={styles['score-board-img']} onClick={this.togglePopup}>
@@ -194,7 +177,7 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
         this.setState({ roundState });
     }
 
-    render() {
+    protected override getGameLayout(): JSX.Element {
         return (
             <div
                 className={styles['sport-item']}

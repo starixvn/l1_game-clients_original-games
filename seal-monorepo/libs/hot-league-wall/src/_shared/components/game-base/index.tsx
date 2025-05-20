@@ -21,25 +21,110 @@ import { RoundStore } from '@sg/sg-game-client/dist/game/rounds';
 import classNames from 'classnames';
 import { SyncMemberSiteBalance } from '../../utils/sync-member-site-balance';
 
-export interface IGameBaseState {
+// Breaking down the state into smaller interfaces for better organization
+export interface ConnectionState {
     isConnected: boolean;
     isConnectFailed: boolean;
     initialized: boolean;
+}
+
+export interface GameState {
+    gameId: number;
+    roundId: number;
+    roundState: string;
+    isAllowedBet: boolean;
+    isShowNextRoundMessage: boolean;
+}
+
+export interface UIState {
     showDisabledPopup: boolean;
     isOpenStatistic: boolean;
-    statusSettlement?: gc.GameServiceMessage.Status;
-    roundState: string;
-    isFinishShowResult: boolean;
-    gameId: number;
     activePanelId: any;
     showBetPanel: boolean;
-    isShowNextRoundMessage: boolean;
-    roundId: number;
-    isAllowedBet: boolean;
+    isPopupVisible?: boolean;
 }
+
+export interface SettlementState {
+    statusSettlement?: gc.GameServiceMessage.Status;
+    isFinishShowResult: boolean;
+}
+
+export interface IGameBaseState extends ConnectionState, GameState, UIState, SettlementState { }
+
 interface GameStyleOverrides {
     [key: string]: string;
 }
+
+// GameConnectionService - Responsible for connection-related functionalities
+export class GameConnectionService {
+    static createConnection(component: GameBase<any, any>) {
+        document.addEventListener('visibilitychange', component.onVisibilityChange);
+        component.connectToServiceGateway();
+    }
+
+    static terminateConnection(component: GameBase<any, any>) {
+        component.terminateConnection();
+    }
+
+    static handleReconnect(component: GameBase<any, any>) {
+        GameConnectionService.terminateConnection(component);
+        GameConnectionService.createConnection(component);
+        component.resetStateWhenReconnect();
+    }
+}
+
+// GameUIService - Responsible for UI-related functionalities
+export class GameUIService {
+    static resetBettingPanel(component: GameBase<any, any>) {
+        component.setState({
+            activePanelId: null,
+            showBetPanel: false,
+        });
+    }
+
+    static handleBetOption(component: GameBase<any, any>) {
+        GameUIService.resetBettingPanel(component);
+        component.setState({ isShowNextRoundMessage: true });
+        setTimeout(() => {
+            component.setState({ isShowNextRoundMessage: false });
+        }, 3000);
+    }
+
+    static toggleStatistic(component: GameBase<any, any>) {
+        component.setState({ isOpenStatistic: !component.state.isOpenStatistic });
+    }
+
+    static togglePopup(component: GameBase<any, any>) {
+        component.setState({
+            isPopupVisible: !component.state.isPopupVisible
+        });
+    }
+}
+
+// Rendering components - Split up responsibilities
+export const GameLoadingView: React.FC = () => (
+    <div className="col-md-1 mx-auto mt-5">
+        <Loading />
+    </div>
+);
+
+export const GameDisconnectView: React.FC<{ onReconnect: () => void }> = ({ onReconnect }) => {
+    const reconnectText = gc.Translator.translate('Common.reconnect');
+    return (
+        <div className={Styles['block-wrapper']}>
+            <div className={Styles['reconnect-btn-container']}>
+                <p className={Styles['reconnect-text']}>{gc.Translator.t('Common.connect_failed')}</p>
+                <button
+                    className={`${'c-btn'} ${'c-btn--bet'} ${Styles['reconnect-btn']}`}
+                    data-disabled={false}
+                    onClick={onReconnect}
+                >
+                    <span className="c-text">{reconnectText}</span>
+                </button>
+            </div>
+        </div>
+    );
+};
 
 abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> extends React.PureComponent<P, S> {
     protected overrideClasses?: GameStyleOverrides;
@@ -48,6 +133,9 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         super(props);
         this.state = {
             isConnectFailed: false,
+            isConnected: false,
+            initialized: false,
+            showDisabledPopup: false,
             isOpenStatistic: false,
             isFinishShowResult: false,
             activePanelId: null,
@@ -55,7 +143,12 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
             isShowNextRoundMessage: false,
             roundId: 0,
             isAllowedBet: false,
+            isPopupVisible: false,
+            gameId: 0,
+            roundState: '',
         } as S;
+
+        // Bind methods - using arrow functions for most methods to avoid binding
         this.toggleStatistic = this.toggleStatistic.bind(this);
     }
 
@@ -72,83 +165,44 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         this.closeConnect();
     }
 
+    // Abstract methods to be implemented by derived classes
     abstract closeConnect(): void;
-
     abstract joinGame(): void;
-
     abstract connectLiveGateway(): void;
-
     abstract processAuthorizationIfRoundMatches(roundId: number): void;
+    abstract showResult(
+        hasAnimation: boolean,
+        result?: gc.GameServiceMessage.TResult,
+        settlementResult?: gc.GameServiceMessage.TSettlementResult,
+    ): Promise<void>;
 
+    // Event handlers
     onVisibilityChange = () => { };
+
+    // Connection handlers
     @handle(gc.GatewayConnection.GatewayConnectionHandlers.ConnectHandler, (handler) => handler.handle())
     connectToServiceGateway() { }
 
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handle())
     terminateConnection() { }
 
-    @render(gc.Connection.ConnectionStore, (store) => store.isSignedIn)
-    handleConnected(isSignedIn: boolean) {
-        isSignedIn && this.inGame();
-    }
-
     @handle(gc.Connection.ConnectionHandlers.InGameHandler)
     inGame() {
         return this.props.namespace;
     }
 
+    @render(gc.Connection.ConnectionStore, (store) => store.isSignedIn)
+    handleConnected(isSignedIn: boolean) {
+        isSignedIn && this.inGame();
+    }
+
+    // Render handlers
     @render(gc.Bet.BetStore, (store) => store.validBet)
     setIsValidBet(validBet: gc.Bet.IValidBet) {
         if (validBet?.value) {
             SyncMemberSiteBalance.getInstance().executeSyncBalance();
         }
     }
-
-    renderNotice(): JSX.Element {
-        return (
-            <Notice namespace={this.props.namespace} isDisableGame={this.state.showDisabledPopup} language={this.props.language}></Notice>
-        );
-    }
-
-    renderWarning(): JSX.Element {
-        return <Warning namespace={this.props.namespace}></Warning>;
-    }
-
-    renderRoundIdSection() {
-        const { roundId, roundState } = this.state;
-        return <RoundId clientRoundId={roundId} roundState={roundState} />;
-    }
-
-    renderCountDownTimer() {
-        return (
-            <CountDownTimer
-                namespace={this.props.namespace}
-                onComplete={() => {
-                    this.setState({ isAllowedBet: true });
-                }}
-            />
-        );
-    }
-
-    renderResultBlock() {
-        return <></>;
-    }
-
-    renderRoundHistory() {
-        return <></>;
-    }
-
-    renderStatistic() {
-        return <>Statistic</>;
-    }
-
-    setPanelId = (id: string) => {
-        this.setState({ activePanelId: id });
-    };
-
-    setShowBetPanel = (show: boolean) => {
-        this.setState({ showBetPanel: show });
-    };
 
     @render(Settlements.SettlementStatusStore, (store) => store.settlementStatus, {
         fireImmediately: false,
@@ -175,16 +229,6 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         });
     }
 
-    abstract showResult(
-        hasAnimation: boolean,
-        result?: gc.GameServiceMessage.TResult,
-        settlementResult?: gc.GameServiceMessage.TSettlementResult,
-    ): Promise<void>;
-
-    isValidResult(result?: gc.GameServiceMessage.TResult, settlementResult?: gc.GameServiceMessage.TSettlementResult) {
-        return !!result && !!settlementResult;
-    }
-
     @handle(Settlements.SettlementUIHandlers.FinishedShowResult)
     finishShowResult() {
         this.setState({ isFinishShowResult: true });
@@ -198,7 +242,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         if (isConnectFailed === null) {
             return;
         }
-        this.setState({ isConnectFailed: isConnectFailed });
+        this.setState({ isConnectFailed });
     }
 
     @render(gc.Connection.ConnectionStore, (store) => store.isConnected)
@@ -231,6 +275,8 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         if (roundState === ROUND_STATE.LOCKING_BET || roundState === ROUND_STATE.SHOW_RESULT) {
             this.resetBettingPanel();
         }
+
+        this.setState({ roundState });
     }
 
     @render(RoundStore, (store) => store.clientRoundId)
@@ -239,19 +285,9 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         this.processAuthorizationIfRoundMatches(roundId);
     }
 
-    toggleStatistic() {
+    // UI methods - implement them directly in GameBase 
+    toggleStatistic = () => {
         this.setState({ isOpenStatistic: !this.state.isOpenStatistic });
-    }
-
-    renderWaitingForNextRound() {
-        if (!this.state.isShowNextRoundMessage) {
-            return <></>;
-        }
-        return (
-            <WarningDialog key={`warning-bet`}>
-                <div className={Styles['title-white']}>{gc.Translator.t('Common.message_placebet_next_round')}</div>
-            </WarningDialog>
-        );
     }
 
     resetBettingPanel = () => {
@@ -268,6 +304,71 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
             this.setState({ isShowNextRoundMessage: false });
         }, 3000);
     };
+
+    protected togglePopup(): void {
+        this.setState({
+            isPopupVisible: !this.state.isPopupVisible
+        });
+    }
+
+    // Helper methods
+    isValidResult(result?: gc.GameServiceMessage.TResult, settlementResult?: gc.GameServiceMessage.TSettlementResult) {
+        return !!result && !!settlementResult;
+    }
+
+    // UI Components - these should be implemented by derived classes or overridden if needed
+    renderNotice(): JSX.Element {
+        return (
+            <Notice
+                namespace={this.props.namespace}
+                isDisableGame={this.state.showDisabledPopup}
+                language={this.props.language}
+            />
+        );
+    }
+
+    renderWarning(): JSX.Element {
+        return <Warning namespace={this.props.namespace} />;
+    }
+
+    renderRoundIdSection() {
+        const { roundId, roundState } = this.state;
+        return <RoundId clientRoundId={roundId} roundState={roundState} />;
+    }
+
+    renderCountDownTimer() {
+        return (
+            <CountDownTimer
+                namespace={this.props.namespace}
+                onComplete={() => {
+                    this.setState({ isAllowedBet: true });
+                }}
+            />
+        );
+    }
+
+    renderResultBlock(): JSX.Element {
+        return <></>;
+    }
+
+    renderRoundHistory(): JSX.Element {
+        return <></>;
+    }
+
+    renderStatistic(): JSX.Element {
+        return <>Statistic</>;
+    }
+
+    renderWaitingForNextRound() {
+        if (!this.state.isShowNextRoundMessage) {
+            return <></>;
+        }
+        return (
+            <WarningDialog key={`warning-bet`}>
+                <div className={Styles['title-white']}>{gc.Translator.t('Common.message_placebet_next_round')}</div>
+            </WarningDialog>
+        );
+    }
 
     protected renderGameHeader(): JSX.Element {
         return (
@@ -320,43 +421,12 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         );
     }
 
-    protected togglePopup(): void {
-        // Default implementation does nothing
-    }
-
     protected renderBettingBlock(): JSX.Element {
         return <></>;
     }
 
-    getRenderTemplate() {
-        const { isConnected, isConnectFailed, initialized: isGameConfigInitialized, showDisabledPopup, isAllowedBet } = this.state;
-
-        if (isConnectFailed) {
-            return this.renderDisconnect();
-        }
-
-        const isFirstInit = !isGameConfigInitialized && !showDisabledPopup;
-        if (isFirstInit || showDisabledPopup) {
-            return showDisabledPopup ? this.renderNotice() : this.renderLoading();
-        }
-
-        return !isConnected ? (
-            this.renderDisconnect()
-        ) : (
-            <>
-                <div className={`${Styles['block-wrapper']} ${this.overrideClasses?.blockWrapper}`}>
-                    {this.renderGameHeader()}
-                    {this.renderGameContent()}
-                    {this.renderGameFooter()}
-                </div>
-                {this.renderGamePopup()}
-            </>
-        );
-    }
-
     protected renderAnimationBalance() {
         const { statusSettlement, isFinishShowResult } = this.state;
-
 
         if (!statusSettlement || !statusSettlement.win) {
             return <></>;
@@ -369,14 +439,64 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         return null;
     }
 
-    private renderLoading() {
+    /**
+     * Override this method to provide a completely custom game layout
+     * By default, it uses the standard layout template
+     */
+    protected getGameLayout(): JSX.Element | null {
+        return null;
+    }
+
+    // Main render methods
+    render() {
         return (
-            <div className="col-md-1 mx-auto mt-5">
-                <Loading />
-            </div>
+            <GameContainer>
+                <GameContextProvider value={{ ...this.props }}>{this.getRenderTemplate()}</GameContextProvider>
+            </GameContainer>
         );
     }
 
+    getRenderTemplate() {
+        const { isConnected, isConnectFailed, initialized: isGameConfigInitialized, showDisabledPopup } = this.state;
+
+        if (isConnectFailed) {
+            return <GameDisconnectView onReconnect={this.handleReconnect} />;
+        }
+
+        const isFirstInit = !isGameConfigInitialized && !showDisabledPopup;
+        if (isFirstInit || showDisabledPopup) {
+            return showDisabledPopup ? this.renderNotice() : <GameLoadingView />;
+        }
+
+        if (!isConnected) {
+            return <GameDisconnectView onReconnect={this.handleReconnect} />;
+        }
+
+        // Allow games to override the entire layout structure if needed
+        const customLayout = this.getGameLayout();
+        if (customLayout) {
+            return customLayout;
+        }
+
+        // Standard layout template
+        return (
+            <>
+                <div className={`${Styles['block-wrapper']} ${this.overrideClasses?.blockWrapper}`}>
+                    {this.renderGameHeader()}
+                    {this.renderGameContent()}
+                    {this.renderGameFooter()}
+                </div>
+                {this.renderGamePopup()}
+            </>
+        );
+    }
+
+    // Remove handleReconnect from here since it's in GameConnectionService already
+    handleReconnect = () => {
+        GameConnectionService.handleReconnect(this);
+    };
+
+    // Add back this method
     resetStateWhenReconnect() {
         this.setState({
             isOpenStatistic: false,
@@ -384,41 +504,10 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         this.resetBettingPanel();
     }
 
+    // Add back the createConnection method for completeness
     createConnection() {
         document.addEventListener('visibilitychange', this.onVisibilityChange);
         this.connectToServiceGateway();
-    }
-
-    handleReconnect = () => {
-        this.terminateConnection();
-        this.createConnection();
-        this.resetStateWhenReconnect();
-    };
-
-    private renderDisconnect() {
-        const reconnectText = gc.Translator.translate('Common.reconnect');
-        return (
-            <div className={`${Styles['block-wrapper']} ${this.props.overrideClasses}`}>
-                <div className={Styles['reconnect-btn-container']}>
-                    <p className={Styles['reconnect-text']}>{gc.Translator.t('Common.connect_failed')}</p>
-                    <button
-                        className={`${'c-btn'} ${'c-btn--bet'} ${Styles['reconnect-btn']}`}
-                        data-disabled={false}
-                        onClick={this.handleReconnect}
-                    >
-                        <span className="c-text">{reconnectText}</span>
-                    </button>
-                </div>
-            </div>
-        );
-    }
-
-    render() {
-        return (
-            <GameContainer>
-                <GameContextProvider value={{ ...this.props }}>{this.getRenderTemplate()}</GameContextProvider>
-            </GameContainer>
-        );
     }
 }
 
