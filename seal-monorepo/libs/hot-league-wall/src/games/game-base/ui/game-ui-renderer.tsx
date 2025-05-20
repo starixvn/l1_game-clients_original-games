@@ -65,6 +65,14 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
         return this.extensionOptions.classes?.[key as keyof UIExtensionOptions['classes']] || '';
     }
 
+    // Helper method to resolve JSX elements, handling null/undefined values
+    protected resolveCustomSection(
+        customSection: JSX.Element | null | undefined,
+        defaultRenderer: () => JSX.Element
+    ): JSX.Element {
+        return customSection || defaultRenderer();
+    }
+
     renderNotice(props: P, state: S): JSX.Element {
         return (
             <Notice
@@ -351,6 +359,20 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
         };
     }
 
+    renderGameBackground(customBackgroundImage?: string): React.CSSProperties {
+        const baseStyles = this.applyBaseStyles();
+
+        if (!customBackgroundImage) {
+            return baseStyles;
+        }
+
+        return {
+            ...baseStyles,
+            background: `url(${customBackgroundImage}) no-repeat center`,
+            backgroundSize: 'cover'
+        };
+    }
+
     renderGameLayout(
         props: P,
         state: S,
@@ -358,18 +380,12 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
         toggleStatistic: () => void,
         overrideClasses?: any,
         customBackgroundImage?: string,
-        customHeaderSection?: JSX.Element,
-        customContentSection?: JSX.Element,
-        customFooterSection?: JSX.Element,
-        customPopupSection?: JSX.Element
+        customHeaderSection?: JSX.Element | null,
+        customContentSection?: JSX.Element | null,
+        customFooterSection?: JSX.Element | null,
+        customPopupSection?: JSX.Element | null
     ): JSX.Element {
-        const containerStyle: React.CSSProperties = {
-            ...this.applyBaseStyles(),
-            ...(customBackgroundImage ? {
-                background: `url(${customBackgroundImage}) no-repeat center`,
-                backgroundSize: 'cover'
-            } : {})
-        };
+        const containerStyle = this.renderGameBackground(customBackgroundImage);
 
         const containerClass = classNames(
             Styles['game-container'],
@@ -382,10 +398,22 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
                 className={containerClass}
                 style={containerStyle}
             >
-                {customHeaderSection || this.renderGameHeaderSection(props, state, setStateCallback, overrideClasses)}
-                {customContentSection || this.renderGameContentSection(props, state, overrideClasses)}
-                {customFooterSection || this.renderGameFooterSection(props, state, overrideClasses)}
-                {customPopupSection || this.renderGamePopupSection(props, state, toggleStatistic, overrideClasses)}
+                {this.resolveCustomSection(
+                    customHeaderSection,
+                    () => this.renderGameHeaderSection(props, state, setStateCallback, overrideClasses)
+                )}
+                {this.resolveCustomSection(
+                    customContentSection,
+                    () => this.renderGameContentSection(props, state, overrideClasses)
+                )}
+                {this.resolveCustomSection(
+                    customFooterSection,
+                    () => this.renderGameFooterSection(props, state, overrideClasses)
+                )}
+                {this.resolveCustomSection(
+                    customPopupSection,
+                    () => this.renderGamePopupSection(props, state, toggleStatistic, overrideClasses)
+                )}
             </div>
         );
     }

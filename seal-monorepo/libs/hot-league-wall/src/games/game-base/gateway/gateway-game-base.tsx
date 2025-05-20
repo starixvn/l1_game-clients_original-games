@@ -5,16 +5,12 @@ import { StorageManager, localStorageKeys } from '../../../_shared/utils/storage
 import { ILatestBetRecord } from '../../../_shared/components/bet-panel/bet-panel';
 import AuthorizationHandler from '../../../_shared/handlers/authorization-handler';
 import GameBase from '../core/game-base.core';
-import GameUIRenderer from '../ui/game-ui-renderer';
+import GameUIRenderer, { UIExtensionOptions } from '../ui/game-ui-renderer';
 import GameSettlementHandler from '../game-logic/game-settlement-handler';
 import RoundHandler from '../game-logic/round-handler';
 import { IGatewayGameBaseState } from '../interfaces/gateway-types';
 import { GameBaseProps } from '../type';
 
-/**
- * GatewayGameBase - Implementation of GameBase for gateway games
- * Adds gateway-specific functionality like authorization and connection handling
- */
 class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> extends GameBase<P, S> {
     private authHandler: AuthorizationHandler;
     protected uiRenderer: GameUIRenderer<P, S>;
@@ -36,28 +32,33 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
             () => this.autoCreateNickname(),
         );
 
-        // Initialize handlers
         this.uiRenderer = new GameUIRenderer<P, S>();
         this.settlementHandler = new GameSettlementHandler<S>();
         this.roundHandler = new RoundHandler<S>();
     }
 
-    // -------------------------------------------------------------------------
-    // AUTHORIZATION HANDLING
-    // -------------------------------------------------------------------------
+    protected configureUIRenderer(): UIExtensionOptions {
+        return {};
+    }
 
+    protected initializeUIRenderer(): void {
+        const options = this.configureUIRenderer();
+        if (Object.keys(options).length > 0) {
+            this.uiRenderer.setExtensionOptions(options);
+        }
+    }
+
+    // AUTHORIZATION METHODS
     private isRoundIdMatching(currentRoundId: number): boolean {
         const betHistory = StorageManager.get(localStorageKeys.betHistory) as ILatestBetRecord[] | null;
         if (!betHistory || !Array.isArray(betHistory)) return false;
         const storedGame = betHistory.find((bet) => bet.namespace === this.props.namespace);
-        const isMatching = storedGame ? currentRoundId === storedGame.roundId : false;
-        return isMatching;
+        return storedGame ? currentRoundId === storedGame.roundId : false;
     }
 
     override processAuthorizationIfRoundMatches(roundId: number): void {
-        if (!this.isRoundIdMatching(roundId)) {
-            return;
-        }
+        if (!this.isRoundIdMatching(roundId)) return;
+
         this.authHandler = new AuthorizationHandler(
             this.state.isAuthorized,
             this.state.isSignedIn,
@@ -73,31 +74,20 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
     }
 
     @handle(gc.Auth.AuthHandlers.Authorize, (handler) => handler.handleAutoGenerateName())
-    protected autoCreateNickname(): void {
-        // Implementation left empty as in original
-    }
+    protected autoCreateNickname(): void { }
 
-    // -------------------------------------------------------------------------
-    // GATEWAY CONNECTION HANDLING
-    // -------------------------------------------------------------------------
-
+    // CONNECTION METHODS
     @render(gc.GatewayConnection.GatewayConnectionStore, (store) => store.isConnected)
     handleConnectLiveGatewayForGame(isConnected: boolean): void {
-        if (isConnected) {
-            this.connectLiveGateway();
-        }
+        if (isConnected) this.connectLiveGateway();
     }
 
     @handle(gc.Connection.ConnectionHandlers.ConnectHandler, (handler) => handler.handleGateway())
-    override connectLiveGateway(): void {
-        // Implementation left empty as in original
-    }
+    override connectLiveGateway(): void { }
 
     @render(gc.Connection.ConnectionStore, (store) => store.isConnected)
     handleJoinGame(isConnected: boolean): void {
-        if (isConnected) {
-            this.joinGame();
-        }
+        if (isConnected) this.joinGame();
     }
 
     @handle(gc.Connection.ConnectionHandlers.JoinGameHandler)
@@ -106,40 +96,27 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
     }
 
     @handle(gc.Connection.ConnectionHandlers.SignInHandler)
-    signIn(): void {
-        // Implementation left empty as in original
-    }
+    signIn(): void { }
 
     override handleConnected(signedIn: boolean): void {
-        signedIn && this.inGameLiveGateway();
+        if (signedIn) this.inGameLiveGateway();
     }
 
     @handle(gc.Connection.ConnectionHandlers.InGameHandler, (handler) => handler.handleGateway())
-    inGameLiveGateway(): void {
-        // Implementation left empty as in original
-    }
+    inGameLiveGateway(): void { }
 
-    // -------------------------------------------------------------------------
-    // IMPLEMENTATIONS OF ABSTRACT METHODS
-    // -------------------------------------------------------------------------
-
-    override closeConnect(): void {
-        // Implementation needed
-    }
+    // ABSTRACT METHOD IMPLEMENTATIONS
+    override closeConnect(): void { }
 
     override showResult(
         hasAnimation: boolean,
         result?: gc.GameServiceMessage.TResult,
         settlementResult?: gc.GameServiceMessage.TSettlementResult,
     ): Promise<void> {
-        // Basic implementation to satisfy abstract method
         return Promise.resolve();
     }
 
-    // -------------------------------------------------------------------------
-    // UI RENDERING
-    // -------------------------------------------------------------------------
-
+    // UI AND STATE HANDLING
     @render(gc.Bet.BetStore, (store) => store.validBet)
     setIsValidBet(validBet: gc.Bet.IValidBet): void {
         this.settlementHandler.setIsValidBet(validBet, (state) => this.setState(state as Pick<S, keyof S>));
@@ -170,14 +147,12 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
     }
 
     override renderGameLayout(): JSX.Element {
-        // Get custom sections if provided by subclasses
         const customHeaderSection = this.getGameHeaderSection();
         const customContentSection = this.getGameContentSection();
         const customFooterSection = this.getGameFooterSection();
         const customPopupSection = this.getGamePopupSection();
         const backgroundImage = this.getGameBackgroundImage();
 
-        // Use the UI renderer with custom sections or fallback to defaults
         return this.uiRenderer.renderGameLayout(
             this.props,
             this.state,
@@ -185,12 +160,12 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
             this.toggleStatistic,
             this.overrideClasses,
             backgroundImage || undefined,
-            customHeaderSection || undefined,
-            customContentSection || undefined,
-            customFooterSection || undefined,
-            customPopupSection || undefined
+            customHeaderSection,
+            customContentSection,
+            customFooterSection,
+            customPopupSection
         );
     }
 }
 
-export default GatewayGameBase; 
+export default GatewayGameBase;
