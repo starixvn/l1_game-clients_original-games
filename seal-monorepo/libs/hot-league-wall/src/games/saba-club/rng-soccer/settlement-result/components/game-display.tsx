@@ -7,7 +7,7 @@ import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
 import Loading from 'libs/hot-league-wall/src/_shared/components/loading';
 import type { RNGSoccerResult } from '../../type';
 import Card from 'libs/hot-league-wall/src/_shared/components/card';
-import cardBack from '../../../../../assets/rng-soccer/cards/card-back.svg';
+import cardBack from '../../../../../assets/cards/card-back.svg';
 import { CardScoreUtils } from '../utils/card-score-utils';
 
 interface GameDisplayProps {

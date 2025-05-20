@@ -4,7 +4,7 @@ import liveIcon from '../../../assets/rng-soccer/live-icon.svg';
 import bxhIcon from '../../../assets/rng-soccer/bxh.svg';
 import homeDefaultLogo from '../../../assets/rng-soccer/home-default-logo.svg';
 import awayDefaultLogo from '../../../assets/rng-soccer/away-default-logo.svg';
-import cardBack from '../../../assets/rng-soccer/cards/card-back.svg';
+import cardBack from '../../../assets/cards/card-back.svg';
 import closeIcon from '../../../assets/rng-soccer/close.svg';
 import bgGame from '../../../assets/rng-soccer/bg-game.webp';
 
