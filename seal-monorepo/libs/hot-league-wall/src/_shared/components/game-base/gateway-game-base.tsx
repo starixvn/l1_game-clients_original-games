@@ -1,10 +1,9 @@
 import * as gc from '@sg/sg-game-client';
 import { handle, render } from '@sg/sg-observer';
-import { RoundStore } from '@sg/sg-game-client/dist/game/rounds';
 import { StorageManager, localStorageKeys } from '../../utils/storage-manager';
 import { ILatestBetRecord } from '../bet-panel/bet-panel';
 import AuthorizationHandler from '../../handlers/authorization-handler';
-import { GameBase } from './';
+import { GameBase } from '.';
 import { IGatewayGameBaseState } from './interfaces/gateway-types';
 import { GameBaseProps } from './type';
 

@@ -7,7 +7,6 @@ import { Lobby } from '../../states';
 import AnimationBalance from '../anim-balance';
 import { ConfirmBet } from '../bet-option/confirm-bet';
 import GameContainer from '../game-container';
-import Loading from '../loading';
 import Notice from '../notices/notice';
 import Warning from '../notices/warning';
 import StatisticButton from '../statistic-button/statistic-button';
@@ -20,7 +19,7 @@ import WarningDialog from '../notices/warning-dialog';
 import { RoundStore } from '@sg/sg-game-client/dist/game/rounds';
 import classNames from 'classnames';
 import { SyncMemberSiteBalance } from '../../utils/sync-member-site-balance';
-import { GameConnectionService, GameUIService } from './services';
+import { GameConnectionService } from './services';
 import { GameDisconnectView, GameLoadingView } from './components';
 import { IGameBaseState, GameStyleOverrides } from './interfaces';
 
