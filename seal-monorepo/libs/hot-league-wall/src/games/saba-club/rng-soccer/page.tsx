@@ -119,13 +119,20 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
                     gameName={setting.gameName}
                     namespace={setting.mainObserverNamespace}
                     language={this.props.language}
-                    onBet={this.handleBetOption}
+                    onBet={() => {
+                        // Implement the bet option handler using round handler
+                        this.resetBettingPanel();
+                        this.setState({ isShowNextRoundMessage: true } as Pick<IRNGSoccerPageState, keyof IRNGSoccerPageState>);
+                        setTimeout(() => {
+                            this.setState({ isShowNextRoundMessage: false } as Pick<IRNGSoccerPageState, keyof IRNGSoccerPageState>);
+                        }, 3000);
+                    }}
                 />
             </GameBettingOptionsContext.Provider>
         );
     }
 
-    override renderStatistic() {
+    renderStatistic() {
         return (
             <Suspense>
                 <RNGSoccerStatistic
@@ -138,7 +145,7 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
         );
     }
 
-    override renderGameHeader(): JSX.Element {
+    renderGameHeader(): JSX.Element {
         return (
             <div className={styles['wrapper-sport-top']}>
                 <div className={styles['game-name']}>
@@ -163,7 +170,7 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
         );
     }
 
-    override renderGameContent(): JSX.Element {
+    renderGameContent(): JSX.Element {
         return (
             <Suspense>
                 <RNGSoccerSettlementResult
@@ -174,7 +181,7 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
         );
     }
 
-    override renderGameFooter(): JSX.Element {
+    renderGameFooter(): JSX.Element {
         return (
             <div className={styles['wrapper-sport-bottom']}>
                 {this.renderBettingBlock()}
@@ -182,7 +189,7 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
         );
     }
 
-    override renderGamePopup(): JSX.Element {
+    renderGamePopup(): JSX.Element {
         return this.renderStatistic();
     }
 
@@ -191,7 +198,8 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
         this.setState({ roundState } as any);
     }
 
-    protected override getGameLayout(): JSX.Element {
+    // Implementation for the abstract method in GameBase
+    override renderGameLayout(): JSX.Element {
         return (
             <div
                 className={styles['sport-item']}
@@ -206,5 +214,11 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
                 {this.renderStatistic()}
             </div>
         );
+    }
+
+    // Implementation of the abstract renderNotice method
+    override renderNotice(): JSX.Element {
+        // You can customize the notice component or reuse the default one from uiRenderer
+        return super.renderNotice();
     }
 } 
