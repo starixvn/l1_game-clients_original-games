@@ -2,7 +2,7 @@ import * as gc from '@sg/sg-game-client';
 import { handle, render } from '@sg/sg-observer';
 import React from 'react';
 import { GameContextProvider } from '../../../_shared/react-contexts/game-context/game-context';
-import GameContainer from '../../../_shared/components/game-container';
+import GameContainer from '../game-container';
 import { GameConnectionService } from '../services';
 import { GameDisconnectView, GameLoadingView } from '../components';
 import { IGameBaseState, GameStyleOverrides } from '../interfaces';
