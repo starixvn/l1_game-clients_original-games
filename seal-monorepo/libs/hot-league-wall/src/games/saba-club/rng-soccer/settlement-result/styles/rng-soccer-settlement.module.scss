@@ -1,12 +1,17 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+@import '../../styles/animations';
+
+// Sport layout
 .wrapper-sport-middle {
     display: grid;
     grid-template-columns: 81px 1fr 81px;
     align-items: flex-end;
 }
 
+// Team styling
 .sport-team {
-    display: flex;
-    flex-direction: column;
+    @include flex-column;
 
     &.home-team {
         align-items: flex-start;
@@ -17,9 +22,9 @@
     }
 
     &-img {
-        width: 32px;
-        height: 32px;
-        margin-bottom: 4px;
+        width: $team-img-size;
+        height: $team-img-size;
+        margin-bottom: $spacing-xs;
 
         img {
             max-width: 100%;
@@ -28,65 +33,44 @@
     }
 
     &-name {
-        font-size: 13px;
-        font-weight: 700;
-        color: #fff;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-bold;
+        color: $color-white;
         text-transform: capitalize;
     }
 }
 
+// Result styling
 .sport-result {
     position: relative;
 
     .container-result {
-        display: flex;
+        @include flex-center;
         align-items: flex-start;
-        justify-content: center;
-        gap: 10px;
+        gap: $spacing-md;
     }
 
     .card-section {
-        width: 45px;
-        height: 65px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        @include card-style;
         
         img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 4px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
     }
 }
 
+// Result section
 .result-section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
+    @include flex-center;
+    gap: $spacing-xs;
 }
 
-.score {
-    font-size: 16px;
-    font-weight: 700;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 28px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 7px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    overflow: hidden;
-    
-    span {
-        animation: scoreAppear 0.4s ease-out forwards;
-    }
+// Score styling
+.score, .result {
+    @include score-box;
 }
 
+// Timer styling
 .timmer {
     position: absolute;
     top: 50%;
@@ -96,15 +80,89 @@
     align-items: center;
 }
 
+// Loading dots
 .dots {
-    width: 12px;
-    height: 12px;
-    background: radial-gradient(circle closest-side, #01FF0B 90%, rgba(0, 0, 0, 0)) 0% 50%, 
-                radial-gradient(circle closest-side, #01FF0B 90%, rgba(0, 0, 0, 0)) 50% 50%, 
-                radial-gradient(circle closest-side, #01FF0B 90%, rgba(0, 0, 0, 0)) 100% 50%;
+    width: $dots-size;
+    height: $dots-size;
+    background: radial-gradient(circle closest-side, $color-green 90%, rgba(0, 0, 0, 0)) 0% 50%, 
+                radial-gradient(circle closest-side, $color-green 90%, rgba(0, 0, 0, 0)) 50% 50%, 
+                radial-gradient(circle closest-side, $color-green 90%, rgba(0, 0, 0, 0)) 100% 50%;
     background-size: calc(100%/3) 13.4px;
     background-repeat: no-repeat;
-    animation: dots-7ar3yq 1s infinite linear;
+    animation: dots-animation $animation-duration-very-slow infinite linear;
+}
+
+// Settlement container
+.settlement-container {
+    @include flex-center;
+    @include fullsize-container;
+}
+
+// Score animation
+.score-pop-in {
+    animation: scoreAppear $animation-duration-medium ease-out forwards;
+}
+
+/* Card animations */
+.card-flip {
+    transition: transform $animation-duration-slow;
+    transform-style: preserve-3d;
+
+    &-enter {
+        transform: rotateY(0deg);
+    }
+
+    &-enter-active {
+        transform: rotateY(180deg);
+    }
+
+    &-exit {
+        transform: rotateY(180deg);
+    }
+
+    &-exit-active {
+        transform: rotateY(0deg);
+    }
+}
+
+// Loading container
+.loading-container {
+    @include status-container;
+}
+
+// Loading spinner
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: $color-white;
+    animation: spin $animation-duration-very-slow linear infinite;
+    margin-bottom: $spacing-lg;
+}
+
+// Loading message
+.loading-message {
+    color: $color-white;
+    font-size: $font-size-md;
+    text-align: center;
+}
+
+// Error container
+.error-container {
+    @include status-container;
+    color: $color-white;
+    text-align: center;
+
+    h3 {
+        font-size: $font-size-lg;
+        margin-bottom: 12px;
+    }
+
+    p {
+        font-size: $font-size-md;
+        opacity: 0.8;
+    }
 }
 
 @keyframes dots-7ar3yq {
@@ -136,112 +194,11 @@
     }
 }
 
-.settlement-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-}
-
-.score-pop-in {
-    animation: scoreAppear 0.4s ease-out forwards;
-}
-
-/* Card animations */
-.card-flip {
-    transition: transform 0.5s;
-    transform-style: preserve-3d;
-}
-
-.card-flip-enter {
-    transform: rotateY(0deg);
-}
-
-.card-flip-enter-active {
-    transform: rotateY(180deg);
-}
-
-.card-flip-exit {
-    transform: rotateY(180deg);
-}
-
-.card-flip-exit-active {
-    transform: rotateY(0deg);
-}
-
-.loading-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-}
-
-.loading-spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    border-top-color: #ffffff;
-    animation: spin 1s linear infinite;
-    margin-bottom: 16px;
-}
-
-.loading-message {
-    color: #ffffff;
-    font-size: 16px;
-    text-align: center;
-}
-
-.error-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-    color: #ffffff;
-    text-align: center;
-
-    h3 {
-        font-size: 24px;
-        margin-bottom: 12px;
-    }
-
-    p {
-        font-size: 16px;
-        opacity: 0.8;
-    }
-}
-
 @keyframes spin {
     0% {
         transform: rotate(0deg);
     }
     100% {
         transform: rotate(360deg);
-    }
-}
-
-.result {
-    font-size: 16px;
-    font-weight: 700;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 28px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 7px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    overflow: hidden;
-    
-    span {
-        animation: scoreAppear 0.4s ease-out forwards;
     }
 } 

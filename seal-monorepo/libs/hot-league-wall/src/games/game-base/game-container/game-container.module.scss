@@ -1,19 +1,15 @@
+@import '../styles/variables';
+@import '../styles/mixins';
 
+// Main game container
 .game-container {
     position: relative;
-    z-index: 1;
+    z-index: $z-index-base;
     flex: 1 1 100%;
     max-width: 100%;
     height: auto;
     min-width: inherit;
-    margin-bottom: 0.6rem;
-
-    border-radius: 0.6rem;
-
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    margin-bottom: $spacing-sm;
+    border-radius: $border-radius-md;
+    @include no-select;
 }

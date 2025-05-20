@@ -1,113 +1,100 @@
+@import './styles/variables';
+@import './styles/mixins';
+
+// Main container
 .block-wrapper {
     display: flex;
     align-items: center;
-    background-color: var(--c-av-match-live-bg);
+    background-color: $color-bg-main;
 
-    .info,
-    .result {
-        padding: 12px;
+    // Info section
+    .info {
+        padding: $spacing-lg;
+        align-items: center;
+        gap: $spacing-xs;
+        @include responsive-width($info-width-default, $info-width-large);
     }
 
+    // Result section
     .result {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        @include flex-center;
+        padding: $spacing-lg;
         min-width: 12rem;
-        width: 17%;
+        @include responsive-width($result-width-default, $result-width-large);
         height: 100%;
 
-        @media screen and (min-width: 1102px) {
-            width: 20%;
-        }
-
+        // Result grid container
         .result-container {
-            display: grid;
-            grid-template-columns: repeat(4, 2.5rem);
-            grid-template-rows: 2.5rem;
-            grid-gap: 0.5rem;
+            @include grid-layout(repeat(4, $result-item-size), $result-item-size, $container-gap);
         }
     }
 
+    // Turn counter
     .turn-counter {
-        font-weight: bold;
-        font-size: 13px;
+        font-weight: $font-weight-bold;
+        font-size: $font-size-xs;
         position: absolute;
         left: 10rem;
     }
 
-    .info {
-        align-items: center;
-        gap: 0.4rem;
-        // min-width: 10rem;
-        width: 16%;
-
-        @media screen and (min-width: 1102px) {
-            width: 20%;
-        }
-    }
-
+    // Bet options section
     .bet-options {
-        min-width: 32rem;
-        width: 60%;
+        min-width: $bet-options-min-width;
+        width: $bet-options-width;
         position: relative;
 
+        // Disabled state
         &.disabled {
-            position: relative;
-            pointer-events: none;
-            cursor: not-allowed;
-            opacity: 0.6;
-            background-color: var(--c-av-match-live-bg);
+            @include disabled-state;
         }
     }
 
+    // Balance animation
     .animation-balance {
         position: absolute;
         width: 100%;
-        // width: 60%;
         right: 0;
         top: 40px;
-        z-index: 9999;
-        display: flex;
-        justify-content: center;
+        z-index: $z-index-overlay;
+        @include flex-center;
     }
 }
 
+// History section
 .history-block {
     position: relative;
-    display: flex;
-    justify-content: space-between;
-    background-color: var(--c-av-match-live-bg);
-    border-top: 1px solid var(--c-av-theme-border-1);
-    position: relative;
+    @include flex-row-between;
+    background-color: $color-bg-main;
+    border-top: 1px solid $color-border;
+
+    // Statistics button
+    & > .statistic-btn {
+        flex: 1;
+        width: 100%;
+        max-width: 15rem;
+        @include flex-center;
+    }
 }
 
-.history-block > .statistic-btn {
-    flex: 1;
-    width: 100%;
-    max-width: 15rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
+// Reconnect section
 .reconnect-btn-container {
     display: flex;
     align-items: center;
-    margin-left: 8px;
+    margin-left: $spacing-sm;
     width: 100%;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: $spacing-md;
+    margin-bottom: $spacing-md;
 }
 
 .reconnect-btn {
-    margin-left: 8px;
-    padding: 8px 28px;
+    margin-left: $spacing-sm;
+    padding: $spacing-sm $spacing-xl;
 }
 
 .reconnect-text {
     text-align: center;
-    font-size: 13px;
+    font-size: $font-size-xs;
     font-style: normal;
-    font-weight: 400;
+    font-weight: $font-weight-normal;
     line-height: 150%;
 }
