@@ -17,7 +17,7 @@ import { GameBaseProps } from '../type';
  */
 class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> extends GameBase<P, S> {
     private authHandler: AuthorizationHandler;
-    private uiRenderer: GameUIRenderer<P, S>;
+    protected uiRenderer: GameUIRenderer<P, S>;
     private settlementHandler: GameSettlementHandler<S>;
     private roundHandler: RoundHandler<S>;
 
@@ -155,17 +155,40 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
         );
     }
 
+    @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
+    renderRoundState(roundState: string): void {
+        this.setState({ roundState } as Pick<S, keyof S>);
+    }
+
+    @render(gc.Rounds.RoundStore, (store) => store.clientRoundId)
+    renderRoundId(clientRoundId: number): void {
+        this.setState({ roundId: clientRoundId } as Pick<S, keyof S>);
+    }
+
     override renderNotice(): JSX.Element {
         return this.uiRenderer.renderNotice(this.props, this.state);
     }
 
     override renderGameLayout(): JSX.Element {
+        // Get custom sections if provided by subclasses
+        const customHeaderSection = this.getGameHeaderSection();
+        const customContentSection = this.getGameContentSection();
+        const customFooterSection = this.getGameFooterSection();
+        const customPopupSection = this.getGamePopupSection();
+        const backgroundImage = this.getGameBackgroundImage();
+
+        // Use the UI renderer with custom sections or fallback to defaults
         return this.uiRenderer.renderGameLayout(
             this.props,
             this.state,
             (state) => this.setState(state as Pick<S, keyof S>),
             this.toggleStatistic,
-            this.overrideClasses
+            this.overrideClasses,
+            backgroundImage || undefined,
+            customHeaderSection || undefined,
+            customContentSection || undefined,
+            customFooterSection || undefined,
+            customPopupSection || undefined
         );
     }
 }

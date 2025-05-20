@@ -6,6 +6,104 @@
 @import './styles/mixins';
 
 // Main container
+.game-container {
+    width: 100%;
+    max-width: 344px;
+    min-height: 154px;
+    border-radius: $border-radius-md;
+    overflow: hidden;
+    padding: $spacing-xs;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+// Game header section
+.game-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .game-name {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .live-icon {
+            width: $spacing-lg;
+            height: $spacing-lg;
+        }
+        
+        .game-name-text {
+            font-size: $font-size-sm;
+            font-weight: $font-weight-bold;
+            color: $color-light-gray;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: $spacing-xs;
+        }
+
+        .game-name-round {
+            font-size: $font-size-xs;
+            font-weight: $font-weight-medium;
+            color: $color-light-gray;
+        }
+    }
+
+    .stats-icon {
+        cursor: pointer;
+    }
+
+    .timer {
+        position: static;
+        transform: none;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 $spacing-md;
+
+        .count-down {
+            color: $color-green;
+            font-size: $font-size-md;
+            font-weight: $font-weight-bold;
+            line-height: normal;
+            text-transform: capitalize;
+        }
+    }
+}
+
+// Game content section
+.game-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+// Game footer section
+.game-footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 $spacing-xs;
+}
+
+// Game popup section
+.game-popup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
 .block-wrapper {
     display: flex;
     align-items: center;

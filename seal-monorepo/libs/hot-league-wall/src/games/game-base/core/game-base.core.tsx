@@ -192,6 +192,27 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     // Required by UI renderer
     abstract renderNotice(): JSX.Element;
 
+    // Protected methods that subclasses can override to customize game sections
+    protected getGameHeaderSection(): JSX.Element | null {
+        return null;
+    }
+
+    protected getGameContentSection(): JSX.Element | null {
+        return null;
+    }
+
+    protected getGameFooterSection(): JSX.Element | null {
+        return null;
+    }
+
+    protected getGamePopupSection(): JSX.Element | null {
+        return null;
+    }
+
+    protected getGameBackgroundImage(): string | null {
+        return null;
+    }
+
     // UI state management
     resetBettingPanel = () => {
         this.setState({

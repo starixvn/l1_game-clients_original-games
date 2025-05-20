@@ -12,13 +12,58 @@ import Styles from '../game-base.module.scss';
 import { IGameBaseState } from '../interfaces';
 import { GameBaseProps } from '../type';
 
-/**
- * GameUIRenderer - Handles UI rendering functionality for GameBase
- */
+export interface UIExtensionOptions {
+    classes?: {
+        gameContainer?: string;
+        header?: string;
+        content?: string;
+        footer?: string;
+        betOptions?: string;
+        popup?: string;
+        resultBlock?: string;
+        statisticBlock?: string;
+        gameNameText?: string;
+        gameNameRound?: string;
+        liveIcon?: string;
+        timer?: string;
+        statsIcon?: string;
+    };
+    components?: {
+        customHeader?: (props: any, state: any) => JSX.Element;
+        customContent?: (props: any, state: any) => JSX.Element;
+        customFooter?: (props: any, state: any) => JSX.Element;
+        customPopup?: (props: any, state: any) => JSX.Element;
+        customBetting?: (props: any, state: any) => JSX.Element;
+        customResult?: (props: any, state: any) => JSX.Element;
+        customStatistic?: (props: any, state: any) => JSX.Element;
+    };
+    config?: {
+        enableHeaderSection?: boolean;
+        enableFooterSection?: boolean;
+        enableContentSection?: boolean;
+        enablePopupSection?: boolean;
+        disableDefaultStyles?: boolean;
+        gameName?: string;
+        liveIconUrl?: string;
+        statsIconUrl?: string;
+        onStatsIconClick?: () => void;
+    };
+}
+
 export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
-    // -------------------------------------------------------------------------
-    // UI COMPONENTS - Render methods for UI sections
-    // -------------------------------------------------------------------------
+    protected extensionOptions: UIExtensionOptions = {};
+
+    constructor(options?: UIExtensionOptions) {
+        this.extensionOptions = options || {};
+    }
+
+    setExtensionOptions(options: UIExtensionOptions): void {
+        this.extensionOptions = { ...this.extensionOptions, ...options };
+    }
+
+    getExtensionClass(key: string): string {
+        return this.extensionOptions.classes?.[key as keyof UIExtensionOptions['classes']] || '';
+    }
 
     renderNotice(props: P, state: S): JSX.Element {
         return (
@@ -52,11 +97,17 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
         );
     }
 
-    renderResultBlock(): JSX.Element {
+    renderResultBlock(props?: P, state?: S): JSX.Element {
+        if (this.extensionOptions.components?.customResult && props && state) {
+            return this.extensionOptions.components.customResult(props, state);
+        }
         return <></>;
     }
 
-    renderStatistic(): JSX.Element {
+    renderStatistic(props?: P, state?: S): JSX.Element {
+        if (this.extensionOptions.components?.customStatistic && props && state) {
+            return this.extensionOptions.components.customStatistic(props, state);
+        }
         return <>Statistic</>;
     }
 
@@ -71,7 +122,10 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
         );
     }
 
-    renderBettingBlock(): JSX.Element {
+    renderBettingBlock(props?: P, state?: S): JSX.Element {
+        if (this.extensionOptions.components?.customBetting && props && state) {
+            return this.extensionOptions.components.customBetting(props, state);
+        }
         return <></>;
     }
 
@@ -89,22 +143,27 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
         return null;
     }
 
-    // -------------------------------------------------------------------------
-    // Section-based rendering methods
-    // -------------------------------------------------------------------------
-
-    /**
-     * Renders the game header section with customizable UI elements
-     * @param props Game properties
-     * @param state Game state
-     * @param setState Callback to update state
-     * @param overrideClasses Optional CSS class overrides
-     * @returns JSX.Element for the game header
-     */
     renderGameHeaderSection(props: P, state: S, setState: (state: Partial<S>) => void, overrideClasses?: any): JSX.Element {
-        // Default implementation - can be overridden by game-specific classes
+        if (this.extensionOptions.components?.customHeader) {
+            return this.extensionOptions.components.customHeader(props, state);
+        }
+
+        if (this.extensionOptions.config?.enableHeaderSection === false) {
+            return <></>;
+        }
+
+        const headerClass = classNames(
+            Styles['game-header'],
+            this.getExtensionClass('header'),
+            overrideClasses?.header
+        );
+
+        if (this.extensionOptions.config?.liveIconUrl || this.extensionOptions.config?.statsIconUrl) {
+            return this.renderStandardGameHeader(props, state, setState, overrideClasses);
+        }
+
         return (
-            <div className={`${Styles['game-header']} ${overrideClasses?.header}`}>
+            <div className={headerClass}>
                 <div className={Styles['game-name']}>
                     {state.gameId && <div className={Styles['game-name-text']}>{state.gameId}</div>}
                     {this.renderRoundIdSection(state)}
@@ -114,43 +173,136 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
         );
     }
 
-    /**
-     * Renders the game content section with game-specific UI elements
-     * @param props Game properties
-     * @param state Game state
-     * @param overrideClasses Optional CSS class overrides
-     * @returns JSX.Element for the game content area
-     */
-    renderGameContentSection(props: P, state: S, overrideClasses?: any): JSX.Element {
-        // Default implementation - can be overridden by game-specific classes
+    renderStandardGameHeader(props: P, state: S, setState: (state: Partial<S>) => void, overrideClasses?: any): JSX.Element {
+        const headerClass = classNames(
+            Styles['game-header'],
+            this.getExtensionClass('header'),
+            overrideClasses?.header
+        );
+
+        const gameNameTextClass = classNames(
+            Styles['game-name-text'],
+            this.getExtensionClass('gameNameText')
+        );
+
+        const gameNameRoundClass = classNames(
+            Styles['game-name-round'],
+            this.getExtensionClass('gameNameRound')
+        );
+
+        const timerClass = classNames(
+            Styles['timer'],
+            this.getExtensionClass('timer')
+        );
+
+        const statsIconClass = classNames(
+            Styles['stats-icon'],
+            this.getExtensionClass('statsIcon')
+        );
+
+        const gameName = this.extensionOptions.config?.gameName || state.gameId;
+        const liveIconUrl = this.extensionOptions.config?.liveIconUrl;
+        const statsIconUrl = this.extensionOptions.config?.statsIconUrl;
+
+        const toggleStatistic = () => {
+            if (typeof this.extensionOptions.config?.onStatsIconClick === 'function') {
+                this.extensionOptions.config.onStatsIconClick();
+            }
+        };
+
         return (
-            <div className={`${Styles['game-content']} ${overrideClasses?.content}`}>
-                {this.renderResultBlock()}
+            <div className={headerClass}>
+                <div className={Styles['game-name']}>
+                    <div className={gameNameTextClass}>
+                        {gameName}
+                        {liveIconUrl && (
+                            <img
+                                src={liveIconUrl}
+                                alt="live"
+                                className={classNames(
+                                    Styles['live-icon'],
+                                    this.getExtensionClass('liveIcon')
+                                )}
+                            />
+                        )}
+                    </div>
+                    <RoundId
+                        clientRoundId={state.roundId}
+                        roundState={state.roundState}
+                        className={gameNameRoundClass}
+                        useGameStyling={true}
+                    />
+                </div>
+                <CountDownTimer
+                    namespace={props.namespace}
+                    language={props.language}
+                    useGameLayout={true}
+                    onComplete={() => {
+                        setState({ isAllowedBet: true } as Partial<S>);
+                    }}
+                    customStyles={{
+                        wrapper: timerClass
+                    }}
+                />
+                {statsIconUrl && (
+                    <div className={statsIconClass} onClick={toggleStatistic}>
+                        <img src={statsIconUrl} alt="statistics" />
+                    </div>
+                )}
             </div>
         );
     }
 
-    /**
-     * Renders the game footer section with betting options and controls
-     * @param props Game properties
-     * @param state Game state
-     * @param overrideClasses Optional CSS class overrides
-     * @returns JSX.Element for the game footer
-     */
-    renderGameFooterSection(props: P, state: S, overrideClasses?: any): JSX.Element {
-        // Default implementation - can be overridden by game-specific classes
+    renderGameContentSection(props: P, state: S, overrideClasses?: any): JSX.Element {
+        if (this.extensionOptions.components?.customContent) {
+            return this.extensionOptions.components.customContent(props, state);
+        }
+
+        if (this.extensionOptions.config?.enableContentSection === false) {
+            return <></>;
+        }
+
+        const contentClass = classNames(
+            Styles['game-content'],
+            this.getExtensionClass('content'),
+            overrideClasses?.content
+        );
+
         return (
-            <div className={`${Styles['game-footer']} ${overrideClasses?.footer}`}>
-                <div
-                    className={classNames(
-                        Styles['bet-options'],
-                        {
-                            [Styles['disabled']]: !state.isAllowedBet,
-                        },
-                        overrideClasses?.betOptions,
-                    )}
-                >
-                    {this.renderBettingBlock()}
+            <div className={contentClass}>
+                {this.renderResultBlock(props, state)}
+            </div>
+        );
+    }
+
+    renderGameFooterSection(props: P, state: S, overrideClasses?: any): JSX.Element {
+        if (this.extensionOptions.components?.customFooter) {
+            return this.extensionOptions.components.customFooter(props, state);
+        }
+
+        if (this.extensionOptions.config?.enableFooterSection === false) {
+            return <></>;
+        }
+
+        const footerClass = classNames(
+            Styles['game-footer'],
+            this.getExtensionClass('footer'),
+            overrideClasses?.footer
+        );
+
+        const betOptionsClass = classNames(
+            Styles['bet-options'],
+            {
+                [Styles['disabled']]: !state.isAllowedBet,
+            },
+            this.getExtensionClass('betOptions'),
+            overrideClasses?.betOptions
+        );
+
+        return (
+            <div className={footerClass}>
+                <div className={betOptionsClass}>
+                    {this.renderBettingBlock(props, state)}
                     <ConfirmBet namespace={props.namespace} />
                     <div className={`${Styles['animation-balance']} ${Styles[`game-${state.gameId}`]}`}>
                         {this.renderAnimationBalance(state)}
@@ -160,19 +312,24 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
         );
     }
 
-    /**
-     * Renders the game statistics or popup content
-     * @param props Game properties
-     * @param state Game state
-     * @param toggleStatistic Function to toggle statistics visibility
-     * @param overrideClasses Optional CSS class overrides
-     * @returns JSX.Element for the game statistic or popup content
-     */
     renderGamePopupSection(props: P, state: S, toggleStatistic: () => void, overrideClasses?: any): JSX.Element {
-        // Default implementation - can be overridden by game-specific classes
+        if (this.extensionOptions.components?.customPopup) {
+            return this.extensionOptions.components.customPopup(props, state);
+        }
+
+        if (this.extensionOptions.config?.enablePopupSection === false) {
+            return <></>;
+        }
+
+        const popupClass = classNames(
+            Styles['game-popup'],
+            this.getExtensionClass('popup'),
+            overrideClasses?.popup
+        );
+
         return (
-            <div className={`${Styles['game-popup']} ${overrideClasses?.popup}`}>
-                {this.renderStatistic()}
+            <div className={popupClass}>
+                {this.renderStatistic(props, state)}
                 {this.renderNotice(props, state)}
                 {this.renderWarning(props)}
                 {this.renderWaitingForNextRound(state)}
@@ -180,18 +337,58 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
         );
     }
 
-    // Main layout template
-    renderGameLayout(props: P, state: S, setStateCallback: (state: Partial<S>) => void, toggleStatistic: () => void, overrideClasses?: any): JSX.Element {
-        // Default implementation that can be overridden by game-specific implementations
+    applyBaseStyles(): React.CSSProperties {
+        if (this.extensionOptions.config?.disableDefaultStyles) {
+            return {};
+        }
+
+        return {
+            position: 'relative',
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column'
+        };
+    }
+
+    renderGameLayout(
+        props: P,
+        state: S,
+        setStateCallback: (state: Partial<S>) => void,
+        toggleStatistic: () => void,
+        overrideClasses?: any,
+        customBackgroundImage?: string,
+        customHeaderSection?: JSX.Element,
+        customContentSection?: JSX.Element,
+        customFooterSection?: JSX.Element,
+        customPopupSection?: JSX.Element
+    ): JSX.Element {
+        const containerStyle: React.CSSProperties = {
+            ...this.applyBaseStyles(),
+            ...(customBackgroundImage ? {
+                background: `url(${customBackgroundImage}) no-repeat center`,
+                backgroundSize: 'cover'
+            } : {})
+        };
+
+        const containerClass = classNames(
+            Styles['game-container'],
+            this.getExtensionClass('gameContainer'),
+            overrideClasses?.gameContainer
+        );
+
         return (
-            <div className={`${Styles['game-container']} ${overrideClasses?.gameContainer}`}>
-                {this.renderGameHeaderSection(props, state, setStateCallback, overrideClasses)}
-                {this.renderGameContentSection(props, state, overrideClasses)}
-                {this.renderGameFooterSection(props, state, overrideClasses)}
-                {this.renderGamePopupSection(props, state, toggleStatistic, overrideClasses)}
+            <div
+                className={containerClass}
+                style={containerStyle}
+            >
+                {customHeaderSection || this.renderGameHeaderSection(props, state, setStateCallback, overrideClasses)}
+                {customContentSection || this.renderGameContentSection(props, state, overrideClasses)}
+                {customFooterSection || this.renderGameFooterSection(props, state, overrideClasses)}
+                {customPopupSection || this.renderGamePopupSection(props, state, toggleStatistic, overrideClasses)}
             </div>
         );
     }
 }
 
-export default GameUIRenderer; 
+export default GameUIRenderer;
