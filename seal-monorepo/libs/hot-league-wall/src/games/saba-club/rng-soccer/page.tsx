@@ -22,6 +22,7 @@ import RNGSoccerCountDownTimer from './components/rng-soccer-countdown-timer';
 import { RngSoccerRoundId } from './components/rng-soccer-round-id';
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds/round-time-store';
 import RNGSoccerSettlementResult from './settlement-result/rng-soccer-settlement-result';
+import RNGSoccerStatistic from './statistic/rng-soccer-statistic';
 
 interface IRNGSoccerPageState extends IGatewayGameBaseState {
     activePanelId: any;
@@ -127,7 +128,12 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
     renderStatistic() {
         return (
             <Suspense>
-                {/* <RNGSoccerStatistic namespace={this.props.namespace} language={this.props.language} /> */}
+                <RNGSoccerStatistic
+                    namespace={this.props.namespace}
+                    language={this.props.language}
+                    isPopupVisible={this.state.isPopupVisible}
+                    togglePopup={this.togglePopup}
+                />
             </Suspense>
         );
     }
@@ -180,27 +186,7 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
     }
 
     renderGamePopup(): JSX.Element {
-        return (
-            <div className={`${styles['wrapper-popup']} ${this.state.isPopupVisible ? styles['active'] : ''}`}>
-                <div className={styles['history-block']}>
-                    <div className={styles['history-block-item']}>
-                        <span>Home</span>
-                        <span>43%</span>
-                    </div>
-                    <div className={styles['history-block-item']}>
-                        <span>Draw</span>
-                        <span>10%</span>
-                    </div>
-                    <div className={styles['history-block-item']}>
-                        <span>Away</span>
-                        <span>43%</span>
-                    </div>
-                </div>
-                <div className={styles['close-popup']} onClick={this.togglePopup}>
-                    <img src={closeIcon} alt="close" className={styles['close-icon']} />
-                </div>
-            </div>
-        );
+        return this.renderStatistic();
     }
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
@@ -220,7 +206,7 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
                 {this.renderGameHeader()}
                 {this.renderGameContent()}
                 {this.renderGameFooter()}
-                {this.renderGamePopup()}
+                {this.renderStatistic()}
             </div>
         );
     }
