@@ -1,7 +1,8 @@
 import { Suspense } from 'react';
 import * as gc from '@sg/sg-game-client';
 import { handle, observer, render } from '@sg/sg-observer';
-import GatewayGameBase, { IGatewayGameBaseState } from '../../../_shared/components/game-base/gateway-gamebase';
+import { GatewayGameBase } from '../../../_shared/components/game-base';
+import { IGatewayGameBaseState } from '../../../_shared/components/game-base/interfaces/gateway-types';
 import { configGameContainer } from '../../../_shared/components/game-base/startup';
 import type { GameBaseProps } from '../../../_shared/components/game-base/type';
 import { GameBettingOptionsContext } from '../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
@@ -17,17 +18,16 @@ import { RngSoccerRoundId } from './components/rng-soccer-round-id';
 import RNGSoccerSettlementResult from './settlement-result/rng-soccer-settlement-result';
 import RNGSoccerStatistic from './statistic/rng-soccer-statistic';
 
+/**
+ * Game-specific state interface that extends the gateway game base state
+ */
 interface IRNGSoccerPageState extends IGatewayGameBaseState {
-    activePanelId: any;
-    roundState: string;
-    showBetPanel: boolean;
-    gameId: number;
     homeScore: number;
     awayScore: number;
     roundNumber: string;
     isTimerActive: boolean;
-    isPopupVisible: boolean;
-    roundId: number;
+    isHeaderExpanded: boolean;
+    isBettingDisabled: boolean;
 }
 
 @observer(setting.mainObserverNamespace)
@@ -39,25 +39,36 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
         result: styles['result-block'],
     };
 
-    state = {
-        ...this.state,
-        gameId: setting.id,
-        isHeaderExpanded: true,
-        homeScore: 0,
-        awayScore: 0,
-        roundNumber: '#37699',
-        isTimerActive: true,
-        isPopupVisible: false,
-        roundId: 0
-    };
+    private _bettingDisabled = false;
 
     constructor(props: GameBaseProps) {
         super(props);
+
+        this.state = {
+            ...this.state,
+            gameId: setting.id,
+            isHeaderExpanded: true,
+            homeScore: 0,
+            awayScore: 0,
+            roundNumber: '#37699',
+            isTimerActive: true,
+            isPopupVisible: false,
+            roundId: 0,
+            isBettingDisabled: false
+        } as IRNGSoccerPageState;
+
         try {
             configGameContainer(setting.name, containerOptions);
         } catch (error) {
             // Silent fail on initialization error
         }
+    }
+
+    // Using a private field instead of state to avoid TypeScript issues
+    disableBetting = () => {
+        this._bettingDisabled = true;
+        // Force a re-render
+        this.forceUpdate();
     }
 
     togglePopup = () => {
@@ -75,12 +86,12 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
     };
 
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handleGateway())
-    closeConnect() { }
+    override closeConnect() { }
 
-    async showResult(hasAnimation: boolean,
+    override async showResult(hasAnimation: boolean,
         result?: gc.GameServiceMessage.TResult,
         settlementResult?: gc.GameServiceMessage.TSettlementResult,
-    ) {
+    ): Promise<void> {
         if (!result) return;
 
         // Update the previous winning bet based on the settlement result
@@ -90,6 +101,11 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
     }
 
     renderBettingBlock() {
+        // Use a private field instead of state
+        if (this._bettingDisabled) {
+            return <div className={styles['betting-disabled']}>Betting is closed for this round</div>;
+        }
+
         return (
             <GameBettingOptionsContext.Provider
                 value={{
@@ -109,20 +125,20 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
         );
     }
 
-    renderStatistic() {
+    override renderStatistic() {
         return (
             <Suspense>
                 <RNGSoccerStatistic
                     namespace={this.props.namespace}
                     language={this.props.language}
-                    isPopupVisible={this.state.isPopupVisible}
+                    isPopupVisible={this.state.isPopupVisible ?? false}
                     togglePopup={this.togglePopup}
                 />
             </Suspense>
         );
     }
 
-    renderGameHeader(): JSX.Element {
+    override renderGameHeader(): JSX.Element {
         return (
             <div className={styles['wrapper-sport-top']}>
                 <div className={styles['game-name']}>
@@ -138,9 +154,7 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
                 <RNGSoccerCountDownTimer
                     namespace={setting.mainObserverNamespace}
                     language={this.props.language}
-                    onComplete={() => {
-                        this.setState({ isAllowedBet: false });
-                    }}
+                    onComplete={this.disableBetting}
                 />
                 <div className={styles['score-board-img']} onClick={this.togglePopup}>
                     <img src={bxhIcon} alt="bxh" />
@@ -149,7 +163,7 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
         );
     }
 
-    renderGameContent(): JSX.Element {
+    override renderGameContent(): JSX.Element {
         return (
             <Suspense>
                 <RNGSoccerSettlementResult
@@ -160,7 +174,7 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
         );
     }
 
-    renderGameFooter(): JSX.Element {
+    override renderGameFooter(): JSX.Element {
         return (
             <div className={styles['wrapper-sport-bottom']}>
                 {this.renderBettingBlock()}
@@ -168,13 +182,13 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
         );
     }
 
-    renderGamePopup(): JSX.Element {
+    override renderGamePopup(): JSX.Element {
         return this.renderStatistic();
     }
 
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
     renderRoundState(roundState: string) {
-        this.setState({ roundState });
+        this.setState({ roundState } as any);
     }
 
     protected override getGameLayout(): JSX.Element {

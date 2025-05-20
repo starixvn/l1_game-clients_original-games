@@ -1,18 +1,14 @@
 import * as gc from '@sg/sg-game-client';
-import GameBase, { IGameBaseState } from '.';
-import { GameBaseProps } from './type';
 import { handle, render } from '@sg/sg-observer';
 import { RoundStore } from '@sg/sg-game-client/dist/game/rounds';
 import { StorageManager, localStorageKeys } from '../../utils/storage-manager';
 import { ILatestBetRecord } from '../bet-panel/bet-panel';
 import AuthorizationHandler from '../../handlers/authorization-handler';
+import { GameBase } from './';
+import { IGatewayGameBaseState } from './interfaces/gateway-types';
+import { GameBaseProps } from './type';
 
-export interface IGatewayGameBaseState extends IGameBaseState {
-    isAuthorized: boolean;
-    isSignedIn: boolean;
-}
-
-export default abstract class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> extends GameBase<P, S> {
+abstract class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> extends GameBase<P, S> {
     private authHandler: AuthorizationHandler;
 
     constructor(props: P) {
@@ -39,7 +35,7 @@ export default abstract class GatewayGameBase<P extends GameBaseProps, S extends
         return isMatching;
     }
 
-    processAuthorizationIfRoundMatches(roundId: number) {
+    override processAuthorizationIfRoundMatches(roundId: number): void {
         if (!this.isRoundIdMatching(roundId)) {
             return;
         }
@@ -53,46 +49,52 @@ export default abstract class GatewayGameBase<P extends GameBaseProps, S extends
     }
 
     @render(gc.Auth.AuthStore, (store) => store.isAuthorized)
-    protected handleAuthorized(isAuthorized: boolean) {
+    protected handleAuthorized(isAuthorized: boolean): void {
         this.setState({ isAuthorized });
     }
 
     @handle(gc.Auth.AuthHandlers.Authorize, (handler) => handler.handleAutoGenerateName())
-    protected autoCreateNickname() {
+    protected autoCreateNickname(): void {
+        // Implementation left empty as in original
     }
 
     @render(gc.GatewayConnection.GatewayConnectionStore, (store) => store.isConnected)
-    handleConnectLiveGatewayForGame(isConnected: boolean) {
+    handleConnectLiveGatewayForGame(isConnected: boolean): void {
         if (isConnected) {
             this.connectLiveGateway();
         }
     }
 
     @handle(gc.Connection.ConnectionHandlers.ConnectHandler, (handler) => handler.handleGateway())
-    connectLiveGateway() {
+    override connectLiveGateway(): void {
+        // Implementation left empty as in original
     }
 
     @render(gc.Connection.ConnectionStore, (store) => store.isConnected)
-    handleJoinGame(isConnected: boolean) {
+    handleJoinGame(isConnected: boolean): void {
         if (isConnected) {
             this.joinGame();
         }
     }
 
     @handle(gc.Connection.ConnectionHandlers.JoinGameHandler)
-    joinGame() {
+    override joinGame(): void {
         this.processAuthorizationIfRoundMatches(this.state.roundId);
     }
 
     @handle(gc.Connection.ConnectionHandlers.SignInHandler)
-    signIn() {
+    signIn(): void {
+        // Implementation left empty as in original
     }
 
-    override handleConnected(signedIn: boolean) {
+    override handleConnected(signedIn: boolean): void {
         signedIn && this.inGameLiveGateway();
     }
 
     @handle(gc.Connection.ConnectionHandlers.InGameHandler, (handler) => handler.handleGateway())
-    inGameLiveGateway() {
+    inGameLiveGateway(): void {
+        // Implementation left empty as in original
     }
 }
+
+export default GatewayGameBase;
