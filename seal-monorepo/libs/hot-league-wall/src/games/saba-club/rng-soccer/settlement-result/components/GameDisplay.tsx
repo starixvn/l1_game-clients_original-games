@@ -1,12 +1,13 @@
 import React from 'react';
 import styles from '../../rng-soccer.module.scss';
 import TeamCard from './TeamCard';
-import GameCard from './GameCard';
 import ScoreDisplay from './ScoreDisplay';
 import { TeamsData } from '../models/GameResult';
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
 import Loading from 'libs/hot-league-wall/src/_shared/components/loading';
 import type { RNGSoccerResult } from '../../type';
+import Card from 'libs/hot-league-wall/src/_shared/components/card';
+import cardBack from '../../../../../assets/rng-soccer/cards/card-back.svg';
 
 interface GameDisplayProps {
     result?: RNGSoccerResult;
@@ -58,12 +59,17 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
             <div className={styles['sport-result']}>
                 <div className={styles['container-result']}>
                     {/* Home card */}
-                    <GameCard
-                        cardData={result?.homeCard}
-                        isHomeCard={true}
-                        isHidden={shouldHideCards}
-                        isAnimating={isAnimationResult}
-                    />
+                    <div className={styles['card-section']}>
+                        {shouldHideCards || !result?.homeCard ? (
+                            <img src={cardBack} alt="card" />
+                        ) : (
+                            <Card
+                                result={result.homeCard}
+                                isAnimation={isAnimationResult}
+                                customClassName={`${isAnimationResult ? 'card-flip' : ''}`}
+                            />
+                        )}
+                    </div>
 
                     {/* Score display */}
                     <ScoreDisplay
@@ -74,12 +80,17 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
                     />
 
                     {/* Away card */}
-                    <GameCard
-                        cardData={result?.awayCard}
-                        isHomeCard={false}
-                        isHidden={shouldHideCards}
-                        isAnimating={isAnimationResult}
-                    />
+                    <div className={styles['card-section']}>
+                        {shouldHideCards || !result?.awayCard ? (
+                            <img src={cardBack} alt="card" />
+                        ) : (
+                            <Card
+                                result={result.awayCard}
+                                isAnimation={isAnimationResult}
+                                customClassName={`${isAnimationResult ? 'card-flip' : ''}`}
+                            />
+                        )}
+                    </div>
                 </div>
             </div>
 
