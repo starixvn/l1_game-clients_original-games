@@ -1,4 +1,4 @@
-import { CardScoreUtils } from '../../../../../../src/games/saba-club/rng-soccer/settlement-result/utils/CardScoreUtils';
+import { CardScoreUtils } from '../../../../../../src/games/saba-club/rng-soccer/settlement-result/utils/card-score-utils';
 import { ObjectResult } from '../../../../../../src/_shared/components/card/type';
 
 describe('CardScoreUtils', () => {

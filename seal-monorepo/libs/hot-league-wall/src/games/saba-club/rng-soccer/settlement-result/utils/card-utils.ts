@@ -27,7 +27,7 @@ import q from '../../../../../assets/rng-soccer/cards/Q.png';
 import qRed from '../../../../../assets/rng-soccer/cards/Q-red.png';
 import k from '../../../../../assets/rng-soccer/cards/K.png';
 import kRed from '../../../../../assets/rng-soccer/cards/K-red.png';
-import { TeamUtils } from './TeamUtils';
+import { TeamUtils } from './team-utils';
 
 /**
  * Utility class for card operations

@@ -1,14 +1,14 @@
 import React, { useMemo } from 'react';
 import styles from '../../rng-soccer.module.scss';
-import TeamCard from './TeamCard';
-import ScoreDisplay from './ScoreDisplay';
-import { TeamsData } from '../models/GameResult';
+import TeamCard from './team-card';
+import ScoreDisplay from './score-display';
+import { TeamsData } from '../models/game-result';
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
 import Loading from 'libs/hot-league-wall/src/_shared/components/loading';
 import type { RNGSoccerResult } from '../../type';
 import Card from 'libs/hot-league-wall/src/_shared/components/card';
 import cardBack from '../../../../../assets/rng-soccer/cards/card-back.svg';
-import { CardScoreUtils } from '../utils/CardScoreUtils';
+import { CardScoreUtils } from '../utils/card-score-utils';
 
 interface GameDisplayProps {
     result?: RNGSoccerResult;

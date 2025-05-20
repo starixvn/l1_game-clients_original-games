@@ -1,6 +1,6 @@
 import type { RNGSoccerResult } from '../../type';
-import { CardUtils } from '../utils/CardUtils';
-import { TeamUtils } from '../utils/TeamUtils';
+import { CardUtils } from '../utils/card-utils';
+import { TeamUtils } from '../utils/team-utils';
 import homeDefaultLogo from '../../../../../assets/rng-soccer/home-default-logo.svg';
 import awayDefaultLogo from '../../../../../assets/rng-soccer/away-default-logo.svg';
 

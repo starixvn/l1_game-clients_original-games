@@ -1,2 +1,2 @@
-export * from './CardUtils';
-export * from './TeamUtils'; 
+export * from './card-utils';
+export * from './team-utils'; 
