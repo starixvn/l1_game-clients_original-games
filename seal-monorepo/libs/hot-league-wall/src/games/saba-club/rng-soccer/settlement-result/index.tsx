@@ -10,30 +10,7 @@ import Styles from "./styles/rng-soccer-settlement.module.scss";
 import homeDefaultLogo from '../../../../assets/rng-soccer/home-default-logo.svg';
 import awayDefaultLogo from '../../../../assets/rng-soccer/away-default-logo.svg';
 import cardBack from '../../../../assets/rng-soccer/cards/card-back.svg';
-
-// Team mapping
-const TEAM_INFO: Record<string, { fullName: string, shortName: string, primaryColor: string, secondaryColor: string }> = {
-    "LIV": { fullName: "Liverpool", shortName: "Liverpool", primaryColor: "#C8102E", secondaryColor: "#00B2A9" },
-    "INT": { fullName: "Inter Milan", shortName: "Inter", primaryColor: "#0066B3", secondaryColor: "#000000" },
-    "BAR": { fullName: "Barcelona", shortName: "Barca", primaryColor: "#CD122D", secondaryColor: "#004D98" },
-    "PSG": { fullName: "Paris Saint-Germain", shortName: "PSG", primaryColor: "#004170", secondaryColor: "#DA291C" },
-    "ARS": { fullName: "Arsenal", shortName: "Arsenal", primaryColor: "#EF0107", secondaryColor: "#063672" },
-    "BAY": { fullName: "Bayern Munich", shortName: "Bayern", primaryColor: "#DC052D", secondaryColor: "#0066B2" },
-    "RMA": { fullName: "Real Madrid", shortName: "Real", primaryColor: "#FFFFFF", secondaryColor: "#00529F" },
-    "LEV": { fullName: "Bayer Leverkusen", shortName: "Leverkusen", primaryColor: "#E32221", secondaryColor: "#000000" },
-    "ATM": { fullName: "Atletico Madrid", shortName: "Atletico", primaryColor: "#CB3524", secondaryColor: "#172E62" },
-    "MCI": { fullName: "Manchester City", shortName: "Man.City", primaryColor: "#6CABDD", secondaryColor: "#1C2C5B" },
-    "ATA": { fullName: "Atalanta", shortName: "Atalanta", primaryColor: "#1E71B8", secondaryColor: "#000000" },
-    "NAP": { fullName: "Napoli", shortName: "Napoli", primaryColor: "#12A0D7", secondaryColor: "#003C8F" },
-    "ATH": { fullName: "Athletico Bilbao", shortName: "Bilbao", primaryColor: "#EF1420", secondaryColor: "#000000" },
-    "AVL": { fullName: "Aston Villa", shortName: "A.Villa", primaryColor: "#95BFE5", secondaryColor: "#7A003C" },
-    "BEN": { fullName: "Benfica", shortName: "Benfica", primaryColor: "#E73331", secondaryColor: "#FFFFFF" },
-    "SPO": { fullName: "Sporting", shortName: "Sporting", primaryColor: "#006335", secondaryColor: "#FFFFFF" },
-    "NFO": { fullName: "Nottingham Forest", shortName: "N.Forest", primaryColor: "#DD0000", secondaryColor: "#FFFFFF" },
-    "BOL": { fullName: "Bologna", shortName: "Bologna", primaryColor: "#1A2F48", secondaryColor: "#AB1F3A" },
-    "ROM": { fullName: "AS Roma", shortName: "Roma", primaryColor: "#A31D21", secondaryColor: "#FFD700" },
-    "JUV": { fullName: "Juventus", shortName: "Juventus", primaryColor: "#000000", secondaryColor: "#FFFFFF" }
-};
+import { TeamUtils } from './utils/team-utils';
 
 const DEFAULT_RESULT: RNGSoccerResult = {
     homeScore: 0,
@@ -81,14 +58,14 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
             winningSymbols: [],
             isResultUpdated: false,
             homeTeam: {
-                name: TEAM_INFO[defaultHomeTeam]?.shortName || defaultHomeTeam,
+                name: TeamUtils.getTeamFullName(defaultHomeTeam),
                 logo: homeDefaultLogo,
-                color: TEAM_INFO[defaultHomeTeam]?.primaryColor
+                color: TeamUtils.getTeamPrimaryColor(defaultHomeTeam)
             },
             awayTeam: {
-                name: TEAM_INFO[defaultAwayTeam]?.shortName || defaultAwayTeam,
+                name: TeamUtils.getTeamFullName(defaultAwayTeam),
                 logo: awayDefaultLogo,
-                color: TEAM_INFO[defaultAwayTeam]?.primaryColor
+                color: TeamUtils.getTeamPrimaryColor(defaultAwayTeam)
             },
             dispose: () => { }
         };

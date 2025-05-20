@@ -8,7 +8,7 @@ import Loading from 'libs/hot-league-wall/src/_shared/components/loading';
 import type { RNGSoccerResult } from '../../type';
 import Card from 'libs/hot-league-wall/src/_shared/components/card';
 import cardBack from '../../../../../assets/cards/card-back.svg';
-import { CardScoreUtils } from '../utils/card-score-utils';
+import { CardScoreUtils, SCORE_MAP } from '../utils/card-score-utils';
 
 interface GameDisplayProps {
     result?: RNGSoccerResult;
@@ -37,9 +37,16 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
         return <Loading />;
     }
 
-    // Calculate scores based on card ranks
-    const homeScore = useMemo(() => CardScoreUtils.calculateScore(result?.home), [result?.home]);
-    const awayScore = useMemo(() => CardScoreUtils.calculateScore(result?.away), [result?.away]);
+    // Calculate scores directly using SCORE_MAP for more efficient lookup
+    const homeScore = useMemo(() => {
+        if (!result?.home || result.home.rank === undefined) return 0;
+        return SCORE_MAP[result.home.rank] || 0;
+    }, [result?.home]);
+
+    const awayScore = useMemo(() => {
+        if (!result?.away || result.away.rank === undefined) return 0;
+        return SCORE_MAP[result.away.rank] || 0;
+    }, [result?.away]);
 
     // Calculate if we should hide cards or show default results
     const shouldHideCards = !isFinish || isHideAllCards ||
