@@ -77,9 +77,9 @@ const Card: React.FC<Props> = (props) => {
     const isDisplayMiniCard = isSmall;
 
     const getCardsDefault = () => {
-        const rankRed = result?.type > 1 ? '' : 'Red';
+        const rankRed = result?.suit > 1 ? '' : 'Red';
         const rankImageUrl = cardImages[`${convertRank(result?.card)}${rankRed}`];
-        const suitImageUrl = cardImages[`${suffixNameMapping[result?.type]}`];
+        const suitImageUrl = cardImages[`${suffixNameMapping[result?.suit]}`];
         return (
             <div className={Styles['card-front-box']}>
                 <img src={`${cardFront}#v1`} className={Styles['card-front']} alt="card-front" />
@@ -96,7 +96,7 @@ const Card: React.FC<Props> = (props) => {
     return (
         <div className={`${Styles[customClassName]} ${Styles['card']} `}>
             <div className={Styles['result']} data-testid="result-card">
-                {isDisplayMiniCard ? <MiniCard card={result.card} type={result.type} /> : getCardsDefault()}
+                {isDisplayMiniCard ? <MiniCard card={result.card} suit={result.suit} /> : getCardsDefault()}
             </div>
         </div>
     );

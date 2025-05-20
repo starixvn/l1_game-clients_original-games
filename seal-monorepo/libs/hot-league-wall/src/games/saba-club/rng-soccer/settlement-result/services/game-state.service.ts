@@ -22,14 +22,14 @@ class GameStateService {
                 awayScore: currentFinish.settlementResult?.away ? 1 : 0,
 
                 // Map card values from the incoming format
-                homeCard: {
+                home: {
                     card: currentFinish.result.home.rank || 0,  // Card value (1-13)
-                    type: currentFinish.result.home.suit % 2    // Even suits (0,2) are black, odd suits (1,3) are red
+                    suit: currentFinish.result.home.suit % 2    // Even suits (0,2) are black, odd suits (1,3) are red
                 },
 
-                awayCard: {
+                away: {
                     card: currentFinish.result.away.rank || 0,
-                    type: currentFinish.result.away.suit % 2
+                    suit: currentFinish.result.away.suit % 2
                 }
             };
 
@@ -74,8 +74,8 @@ class GameStateService {
             result !== undefined &&
             typeof result.homeScore === 'number' &&
             typeof result.awayScore === 'number' &&
-            result.homeCard !== undefined &&
-            result.awayCard !== undefined
+            result.home !== undefined &&
+            result.away !== undefined
         );
     }
 

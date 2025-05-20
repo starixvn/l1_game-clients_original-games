@@ -27,8 +27,8 @@ export interface TeamsData {
 export const DEFAULT_RESULT: RNGSoccerResult = {
     homeScore: 0,
     awayScore: 0,
-    homeCard: { card: 0, type: 0 },
-    awayCard: { card: 0, type: 1 },
+    home: { card: 0, suit: 0 },
+    away: { card: 0, suit: 1 },
 };
 
 /**
@@ -70,12 +70,12 @@ export class GameResult {
         result: RNGSoccerResult,
         currentTeamData?: TeamsData
     ): TeamsData {
-        if (!result || !result.homeCard || !result.awayCard) {
+        if (!result || !result.home || !result.away) {
             return currentTeamData || GameResult.getDefaultTeamData();
         }
 
-        const homeTeamAbbr = CardUtils.getTeamForCard(result.homeCard.card);
-        const awayTeamAbbr = CardUtils.getTeamForCard(result.awayCard.card);
+        const homeTeamAbbr = CardUtils.getTeamForCard(result.home.card);
+        const awayTeamAbbr = CardUtils.getTeamForCard(result.away.card);
 
         return {
             homeTeam: {

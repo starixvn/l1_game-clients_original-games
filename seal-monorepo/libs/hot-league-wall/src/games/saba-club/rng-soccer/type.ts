@@ -9,13 +9,13 @@ export type RNGSoccerSymbolType = keyof typeof RNGSoccerChoices;
 export interface RNGSoccerResult {
     homeScore: number;
     awayScore: number;
-    homeCard: {
+    home: {
         card: number;
-        type: number;
+        suit: number;
     };
-    awayCard: {
+    away: {
         card: number;
-        type: number;
+        suit: number;
     };
 }
 

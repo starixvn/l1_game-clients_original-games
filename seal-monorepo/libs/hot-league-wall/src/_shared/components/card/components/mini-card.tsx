@@ -5,22 +5,22 @@ import Styles from "../card.module.scss";
 
 interface MiniCardProps {
     card: number;
-    type: number;
+    suit: number;
 }
 
-export const MiniCard: React.FC<MiniCardProps> = ({ card, type }) => {
+export const MiniCard: React.FC<MiniCardProps> = ({ card, suit }) => {
     const getClassOnIOS = () => isIOS && isMobileOnly ? "number-ios" : "";
     const getClassCard10 = () => +convertRank(card) === 10 ? "card-number-10" : "";
 
     return (
         <>
             <div
-                className={`${Styles[colorNumberSuffix[type]]} ${Styles["card-number"]} ${Styles[getClassCard10()]} ${Styles[getClassOnIOS()]}`}
+                className={`${Styles[colorNumberSuffix[suit]]} ${Styles["card-number"]} ${Styles[getClassCard10()]} ${Styles[getClassOnIOS()]}`}
             >
                 {convertRank(card)}
             </div>
             <img
-                src={`../../../../../assets/cards/mini/mini-${suffixNameMapping[type]}.svg`}
+                src={`../../../../../assets/cards/mini/mini-${suffixNameMapping[suit]}.svg`}
                 className={Styles["card-suite-mini"]}
                 height={49.07}
                 width={34.5}

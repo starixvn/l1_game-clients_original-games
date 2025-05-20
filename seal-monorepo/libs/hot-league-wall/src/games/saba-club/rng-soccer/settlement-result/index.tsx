@@ -38,8 +38,8 @@ const TEAM_INFO: Record<string, { fullName: string, shortName: string, primaryCo
 const DEFAULT_RESULT: RNGSoccerResult = {
     homeScore: 0,
     awayScore: 0,
-    homeCard: { card: 0, type: 0 },
-    awayCard: { card: 0, type: 0 }
+    home: { card: 0, suit: 0 },
+    away: { card: 0, suit: 0 }
 };
 
 const POP_UP_ANIMATION_DURATION = 0.3;

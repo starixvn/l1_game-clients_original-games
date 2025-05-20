@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styles from '../../rng-soccer.module.scss';
 import TeamCard from './TeamCard';
 import ScoreDisplay from './ScoreDisplay';
@@ -20,6 +20,17 @@ interface GameDisplayProps {
 }
 
 /**
+ * Convert card rank to point value
+ * Ace = 1, 2-10 = face value, Jack = 11, Queen = 12, King = 13
+ */
+const getCardPointValue = (card?: number): number => {
+    if (!card && card !== 0) return 0;
+
+    // Convert card rank to point value (0 = Ace, 1-9 = 2-10, 10 = Jack, 11 = Queen, 12 = King)
+    return card === 0 ? 1 : card < 10 ? card + 1 : card + 2;
+};
+
+/**
  * Main game display component
  * Following the Open/Closed principle by using composition over inheritance
  */
@@ -35,6 +46,10 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
     if (isLoading) {
         return <Loading />;
     }
+
+    // Calculate scores based on card ranks
+    const homeScore = useMemo(() => getCardPointValue(result?.home?.card), [result?.home?.card]);
+    const awayScore = useMemo(() => getCardPointValue(result?.away?.card), [result?.away?.card]);
 
     // Calculate if we should hide cards or show default results
     const shouldHideCards = !isFinish || isHideAllCards ||
@@ -60,11 +75,11 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
                 <div className={styles['container-result']}>
                     {/* Home card */}
                     <div className={styles['card-section']}>
-                        {shouldHideCards || !result?.homeCard ? (
+                        {shouldHideCards || !result?.home ? (
                             <img src={cardBack} alt="card" />
                         ) : (
                             <Card
-                                result={result.homeCard}
+                                result={result.home}
                                 isAnimation={isAnimationResult}
                                 customClassName={`${isAnimationResult ? 'card-flip' : ''}`}
                             />
@@ -73,19 +88,19 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
 
                     {/* Score display */}
                     <ScoreDisplay
-                        homeScore={result?.homeScore || 0}
-                        awayScore={result?.awayScore || 0}
+                        homeScore={homeScore}
+                        awayScore={awayScore}
                         isAnimating={isAnimationResult}
                         showDefaultScore={showDefaultScores}
                     />
 
                     {/* Away card */}
                     <div className={styles['card-section']}>
-                        {shouldHideCards || !result?.awayCard ? (
+                        {shouldHideCards || !result?.away ? (
                             <img src={cardBack} alt="card" />
                         ) : (
                             <Card
-                                result={result.awayCard}
+                                result={result.away}
                                 isAnimation={isAnimationResult}
                                 customClassName={`${isAnimationResult ? 'card-flip' : ''}`}
                             />

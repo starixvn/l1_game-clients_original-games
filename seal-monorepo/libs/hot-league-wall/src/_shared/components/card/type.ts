@@ -8,5 +8,5 @@ export type Props = {
 
 export interface ObjectResult {
     card: number;
-    type: number;
+    suit: number;
 }
