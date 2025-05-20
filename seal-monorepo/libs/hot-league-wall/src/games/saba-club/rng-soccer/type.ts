@@ -10,11 +10,11 @@ export interface RNGSoccerResult {
     homeScore: number;
     awayScore: number;
     home: {
-        card: number;
+        rank: number;
         suit: number;
     };
     away: {
-        card: number;
+        rank: number;
         suit: number;
     };
 }

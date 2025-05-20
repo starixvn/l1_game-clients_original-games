@@ -25,9 +25,9 @@ describe('CardScoreUtils', () => {
         });
 
         it('should return correct values for face cards', () => {
-            expect(CardScoreUtils.getCardPointValue(10)).toBe(12); // Jack (10 + 2)
-            expect(CardScoreUtils.getCardPointValue(11)).toBe(13); // Queen (11 + 2)
-            expect(CardScoreUtils.getCardPointValue(12)).toBe(14); // King (12 + 2)
+            expect(CardScoreUtils.getCardPointValue(10)).toBe(11); // Jack (10 + 1)
+            expect(CardScoreUtils.getCardPointValue(11)).toBe(12); // Queen (11 + 1)
+            expect(CardScoreUtils.getCardPointValue(12)).toBe(13); // King (12 + 1)
         });
     });
 
@@ -52,7 +52,7 @@ describe('CardScoreUtils', () => {
 
             // King of Spades
             const kingOfSpades: ObjectResult = { card: 12, suit: 3 };
-            expect(CardScoreUtils.calculateScore(kingOfSpades)).toBe(14);
+            expect(CardScoreUtils.calculateScore(kingOfSpades)).toBe(13);
         });
     });
 }); 

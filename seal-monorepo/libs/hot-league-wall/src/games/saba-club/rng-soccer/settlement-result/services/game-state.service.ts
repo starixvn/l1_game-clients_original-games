@@ -23,12 +23,12 @@ class GameStateService {
 
                 // Map card values from the incoming format
                 home: {
-                    card: currentFinish.result.home.rank || 0,  // Card value (1-13)
+                    rank: currentFinish.result.home.rank || 0,  // Card value (1-13)
                     suit: currentFinish.result.home.suit % 2    // Even suits (0,2) are black, odd suits (1,3) are red
                 },
 
                 away: {
-                    card: currentFinish.result.away.rank || 0,
+                    rank: currentFinish.result.away.rank || 0,
                     suit: currentFinish.result.away.suit % 2
                 }
             };

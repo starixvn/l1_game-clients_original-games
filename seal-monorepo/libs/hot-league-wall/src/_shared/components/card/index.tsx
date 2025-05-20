@@ -78,7 +78,7 @@ const Card: React.FC<Props> = (props) => {
 
     const getCardsDefault = () => {
         const rankRed = result?.suit > 1 ? '' : 'Red';
-        const rankImageUrl = cardImages[`${convertRank(result?.card)}${rankRed}`];
+        const rankImageUrl = cardImages[`${convertRank(result?.rank)}${rankRed}`];
         const suitImageUrl = cardImages[`${suffixNameMapping[result?.suit]}`];
         return (
             <div className={Styles['card-front-box']}>
@@ -89,14 +89,14 @@ const Card: React.FC<Props> = (props) => {
         );
     };
 
-    if (result.card === EmptyCardIndex) {
+    if (result.rank === EmptyCardIndex) {
         return null;
     }
 
     return (
         <div className={`${Styles[customClassName]} ${Styles['card']} `}>
             <div className={Styles['result']} data-testid="result-card">
-                {isDisplayMiniCard ? <MiniCard card={result.card} suit={result.suit} /> : getCardsDefault()}
+                {isDisplayMiniCard ? <MiniCard card={result.rank} suit={result.suit} /> : getCardsDefault()}
             </div>
         </div>
     );

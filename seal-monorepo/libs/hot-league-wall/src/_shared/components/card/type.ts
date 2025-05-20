@@ -1,12 +1,12 @@
 export type Props = {
-    result: ObjectResult;
+    result: CardResult;
     isSmall?: boolean;
     isAnimation?: boolean;
     customClassName?: string;
     viewMode?: string;
 };
 
-export interface ObjectResult {
-    card: number;
+export interface CardResult {
+    rank: number;
     suit: number;
 }
