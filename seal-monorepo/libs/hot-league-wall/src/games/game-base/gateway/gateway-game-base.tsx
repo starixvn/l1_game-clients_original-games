@@ -1,9 +1,9 @@
 import * as gc from '@sg/sg-game-client';
 import { handle, render } from '@sg/sg-observer';
 import React from 'react';
-import { StorageManager, localStorageKeys } from '../../../utils/storage-manager';
-import { ILatestBetRecord } from '../../bet-panel/bet-panel';
-import AuthorizationHandler from '../../../handlers/authorization-handler';
+import { StorageManager, localStorageKeys } from '../../../_shared/utils/storage-manager';
+import { ILatestBetRecord } from '../../../_shared/components/bet-panel/bet-panel';
+import AuthorizationHandler from '../../../_shared/handlers/authorization-handler';
 import GameBase from '../core/game-base.core';
 import GameUIRenderer from '../ui/game-ui-renderer';
 import GameSettlementHandler from '../game-logic/game-settlement-handler';

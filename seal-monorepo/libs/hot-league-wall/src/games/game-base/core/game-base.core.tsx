@@ -1,10 +1,8 @@
 import * as gc from '@sg/sg-game-client';
-import { Settlements } from '@sg/sg-game-client';
 import { handle, render } from '@sg/sg-observer';
 import React from 'react';
-import { GameContextProvider } from '../../../react-contexts/game-context/game-context';
-import { Lobby } from '../../../states';
-import GameContainer from '../../game-container';
+import { GameContextProvider } from '../../../_shared/react-contexts/game-context/game-context';
+import GameContainer from '../../../_shared/components/game-container';
 import { GameConnectionService } from '../services';
 import { GameDisconnectView, GameLoadingView } from '../components';
 import { IGameBaseState, GameStyleOverrides } from '../interfaces';

@@ -3,7 +3,7 @@ import * as gc from "@sg/sg-game-client";
 import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
 import classnames from "classnames";
 import CountDownTimer, { ICountDownTimerProps, ICountDownTimerState } from "../../../../_shared/components/count-down-timer";
-import Styles from "../../../../_shared/components/game-base/game-base.module.scss";
+import Styles from "../../../../games/game-base/game-base.module.scss";
 import styles from "../rng-soccer.module.scss";
 import Timer from "../../../../_shared/components/count-down-timer/timer";
 

@@ -1,7 +1,7 @@
 import * as gc from '@sg/sg-game-client';
 import { Settlements } from '@sg/sg-game-client';
 import { handle, render } from '@sg/sg-observer';
-import { SyncMemberSiteBalance } from '../../../utils/sync-member-site-balance';
+import { SyncMemberSiteBalance } from '../../../_shared/utils/sync-member-site-balance';
 import { IGameBaseState } from '../interfaces';
 
 /**

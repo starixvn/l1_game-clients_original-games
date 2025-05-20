@@ -1,7 +1,7 @@
 import * as gc from '@sg/sg-game-client';
 import { handle, observer, render } from '@sg/sg-observer';
 import React from 'react';
-import { configSharedContainer, sharedContainer } from '../_shared/components/game-base/startup';
+import { configSharedContainer, sharedContainer } from '../games/game-base/startup';
 import { LobbyStore } from '../_shared/states/lobby';
 import * as lobbyUtils from './utils';
 import styles from './lobby.module.scss';

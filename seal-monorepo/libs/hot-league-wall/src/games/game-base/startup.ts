@@ -3,9 +3,9 @@ import * as Observer from '@sg/sg-observer';
 import * as mobx from 'mobx';
 import { reaction } from 'mobx';
 import 'reflect-metadata';
-import { getSiteConfig, appSettings } from '../../app-settings';
-import { Lobby } from '../../states';
-import { LobbyStore } from '../../states/lobby';
+import { getSiteConfig, appSettings } from '../../_shared/app-settings';
+import { Lobby } from '../../_shared/states';
+import { LobbyStore } from '../../_shared/states/lobby';
 interface Languages {
     [key: string]: any;
 }

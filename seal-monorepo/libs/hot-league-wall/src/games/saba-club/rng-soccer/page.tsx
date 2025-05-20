@@ -1,10 +1,10 @@
 import { Suspense } from 'react';
 import * as gc from '@sg/sg-game-client';
 import { handle, observer, render } from '@sg/sg-observer';
-import { GatewayGameBase } from '../../../_shared/components/game-base';
-import { IGatewayGameBaseState } from '../../../_shared/components/game-base/interfaces/gateway-types';
-import { configGameContainer } from '../../../_shared/components/game-base/startup';
-import type { GameBaseProps } from '../../../_shared/components/game-base/type';
+import { GatewayGameBase } from '../../../games/game-base';
+import { IGatewayGameBaseState } from '../../../games/game-base/interfaces/gateway-types';
+import { configGameContainer } from '../../../games/game-base/startup';
+import type { GameBaseProps } from '../../../games/game-base/type';
 import { GameBettingOptionsContext } from '../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
 import styles from './rng-soccer.module.scss';
 import { containerOptions, setting } from './game-settings';

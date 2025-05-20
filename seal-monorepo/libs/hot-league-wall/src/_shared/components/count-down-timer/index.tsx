@@ -3,7 +3,7 @@ import { ROUND_STATE, RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds
 import { render } from "@sg/sg-observer";
 import classnames from "classnames";
 
-import Styles from "../game-base/game-base.module.scss";
+import Styles from "./count-down-timer.module.scss";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../observer-component/observer-component";
 import Timer from "./timer";
 

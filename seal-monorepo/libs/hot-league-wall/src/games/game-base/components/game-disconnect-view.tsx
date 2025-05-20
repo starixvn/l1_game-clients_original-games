@@ -1,6 +1,6 @@
 import * as gc from '@sg/sg-game-client';
 import React from 'react';
-import Loading from '../../loading';
+import Loading from '../../../_shared/components/loading';
 import Styles from '../game-base.module.scss';
 
 // Rendering components for different game states
