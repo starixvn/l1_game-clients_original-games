@@ -59,12 +59,31 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
     }
+}
 
-    .result-section {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 4px;
+.result-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.score {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 7px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+    
+    span {
+        animation: scoreAppear 0.4s ease-out forwards;
     }
 }
 
@@ -75,14 +94,6 @@
     transform: translate(50%, -60px);
     display: flex;
     align-items: center;
-
-    .count-down {
-        color: #01FF0B;
-        font-size: 16px;
-        font-weight: 700;
-        line-height: normal;
-        text-transform: capitalize;
-    }
 }
 
 .dots {
@@ -114,33 +125,6 @@
     }
 }
 
-.settlement-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-}
-
-.score {
-    font-size: 16px;
-    font-weight: 700;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 28px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 7px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    overflow: hidden;
-    
-    span {
-        animation: scoreAppear 0.4s ease-out forwards;
-    }
-}
-
 @keyframes scoreAppear {
     from {
         opacity: 0;
@@ -150,6 +134,14 @@
         opacity: 1;
         transform: scale(1) translateY(0);
     }
+}
+
+.settlement-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 }
 
 .score-pop-in {
@@ -233,13 +225,6 @@
     100% {
         transform: rotate(360deg);
     }
-}
-
-.result-section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
 }
 
 .result {

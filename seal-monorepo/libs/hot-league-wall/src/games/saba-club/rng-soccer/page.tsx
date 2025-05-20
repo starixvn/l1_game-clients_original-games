@@ -198,6 +198,11 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
         this.setState({ roundState } as any);
     }
 
+    @render(gc.Rounds.RoundStore, (store) => store.clientRoundId)
+    renderRoundId(clientRoundId: number) {
+        this.setState({ roundId: clientRoundId } as any);
+    }
+
     // Implementation for the abstract method in GameBase
     override renderGameLayout(): JSX.Element {
         return (

@@ -45,7 +45,7 @@
     transform: scale(0);
     opacity: 0;
     transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-    margin: 0.5rem 0;
+    margin: 0.5rem;
     font-size: 1.25rem;
     font-weight: bold;
     text-transform: uppercase;
@@ -76,7 +76,6 @@
     margin-top: 1rem;
     color: white;
     animation: fadeIn 0.3s ease-in-out;
-    bottom: -20px;
 }
 
 .score-display {

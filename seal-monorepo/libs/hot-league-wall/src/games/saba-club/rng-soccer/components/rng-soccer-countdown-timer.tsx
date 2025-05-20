@@ -3,7 +3,7 @@ import * as gc from "@sg/sg-game-client";
 import { ROUND_STATE } from "@sg/sg-game-client/dist/game/rounds";
 import classnames from "classnames";
 import CountDownTimer, { ICountDownTimerProps, ICountDownTimerState } from "../../../../_shared/components/count-down-timer";
-import Styles from "../../../../games/game-base/game-base.module.scss";
+import CountDownStyles from "../../../../_shared/components/count-down-timer/count-down-timer.module.scss";
 import styles from "../rng-soccer.module.scss";
 import Timer from "../../../../_shared/components/count-down-timer/timer";
 
@@ -38,22 +38,22 @@ export default class RNGSoccerCountDownTimer extends CountDownTimer {
 
         return (
             <div className={styles['timmer']}>
-                <div className={Styles['count-down']}>
+                <div className={CountDownStyles['count-down']}>
                     <div
-                        className={classnames(Styles['timer-wrapper'], {
-                            [Styles['placing-bet-state']]: roundState === ROUND_STATE.PLACING_BET,
-                            [Styles['no-more-bet-state']]: roundState !== ROUND_STATE.PLACING_BET,
+                        className={classnames(CountDownStyles['timer-wrapper'], {
+                            [CountDownStyles['placing-bet-state']]: roundState === ROUND_STATE.PLACING_BET,
+                            [CountDownStyles['no-more-bet-state']]: roundState !== ROUND_STATE.PLACING_BET,
                         })}
                     >
                         {isBettingRound && (
-                            <div className={Styles['timer-badge']}>
-                                <Timer className={Styles.clock} />
+                            <div className={CountDownStyles['timer-badge']}>
+                                <Timer className={CountDownStyles.clock} />
                             </div>
                         )}
-                        <div className={Styles['counting-text']}>
+                        <div className={CountDownStyles['counting-text']}>
                             <span
                                 className={classnames({
-                                    [Styles['no-more-bet-state']]: !isBettingRound,
+                                    [CountDownStyles['no-more-bet-state']]: !isBettingRound,
                                 })}
                             >
                                 {content}
