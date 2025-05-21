@@ -15,7 +15,6 @@ export interface IGameRoundIdProps extends Omit<IRoundIdProps, 'clientRoundId' |
 export const GameRoundId: React.FC<IGameRoundIdProps> = ({ roundNumber, ...rest }) => (
     <RoundId
         clientRoundId={roundNumber}
-        useGameStyling={true}
         {...rest}
     />
 ); 

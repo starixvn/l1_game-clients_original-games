@@ -89,7 +89,7 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
 
     renderRoundIdSection(state: S) {
         const { roundId, roundState } = state;
-        return <RoundId clientRoundId={roundId} roundState={roundState} useGameStyling={true} />;
+        return <RoundId clientRoundId={roundId} roundState={roundState} />;
     }
 
     renderCountDownTimer(props: P, setState: (state: Partial<S>) => void) {
@@ -238,7 +238,6 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
                         clientRoundId={state.roundId}
                         roundState={state.roundState}
                         className={gameNameRoundClass}
-                        useGameStyling={true}
                     />
                 </div>
                 <CountDownTimer
