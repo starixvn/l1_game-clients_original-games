@@ -172,6 +172,18 @@ describe('GameUIService', () => {
             expect(mockComponent.setState).toHaveBeenCalledWith({ isPopupVisible: true });
         });
 
+
+        it('should toggle isPopupVisible from true to false', () => {
+            // Arrange
+            mockComponent.state.isPopupVisible = true;
+
+            // Act
+            GameUIService.togglePopup(mockComponent);
+
+            // Assert
+            expect(mockComponent.setState).toHaveBeenCalledWith({ isPopupVisible: false });
+        });
+
         it('should work when isPopupVisible is undefined', () => {
             // Arrange
             mockComponent.state.isPopupVisible = undefined;
@@ -184,15 +196,5 @@ describe('GameUIService', () => {
         });
 
 
-        it('should toggle isPopupVisible from true to false', () => {
-            // Arrange
-            mockComponent.state.isPopupVisible = true;
-
-            // Act
-            GameUIService.togglePopup(mockComponent);
-
-            // Assert
-            expect(mockComponent.setState).toHaveBeenCalledWith({ isPopupVisible: false });
-        });
     });
 }); 
