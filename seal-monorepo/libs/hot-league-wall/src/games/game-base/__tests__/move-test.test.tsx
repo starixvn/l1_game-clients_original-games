@@ -9,7 +9,7 @@ import {
     GameUIRenderer,
     GameSettlementHandler,
     RoundHandler
-} from '../';
+} from '..';
 
 // Import types from the new location
 import type { GameBaseProps } from '../type';

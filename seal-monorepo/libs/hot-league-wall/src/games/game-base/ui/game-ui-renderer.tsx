@@ -116,7 +116,7 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
         if (this.extensionOptions.components?.customStatistic && props && state) {
             return this.extensionOptions.components.customStatistic(props, state);
         }
-        return <>Statistic</>;
+        return <></>;
     }
 
     renderWaitingForNextRound(state: S) {
