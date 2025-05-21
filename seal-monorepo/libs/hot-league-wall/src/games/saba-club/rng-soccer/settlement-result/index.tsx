@@ -154,7 +154,7 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
                             <img src={cardBack} alt="card" />
                         </div>
                     </div>
-                    <div className={Styles['timmer']}>
+                    <div className={Styles['timer']}>
                         <div className={Styles['dots']}></div>
                     </div>
                 </div>

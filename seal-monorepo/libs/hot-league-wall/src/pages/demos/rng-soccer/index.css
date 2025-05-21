@@ -107,7 +107,7 @@
   animation: scoreAppear 0.4s ease-out forwards;
 }
 
-.timmer {
+.timer {
   position: absolute;
   top: 50%;
   right: 50%;
@@ -115,7 +115,7 @@
   display: flex;
   align-items: center;
 }
-.timmer .count-down {
+.timer .count-down {
   color: #01FF0B;
   font-size: 16px;
   font-weight: 700;

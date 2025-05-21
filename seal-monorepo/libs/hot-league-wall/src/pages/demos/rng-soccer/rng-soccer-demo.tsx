@@ -1,7 +1,7 @@
 import React from 'react';
 import './index.scss';
 import liveIcon from '../../../assets/rng-soccer/live-icon.svg';
-import bxhIcon from '../../../assets/rng-soccer/bxh.svg';
+import historyBtnIcon from '../../../assets/rng-soccer/history-btn.svg';
 import homeDefaultLogo from '../../../assets/rng-soccer/home-default-logo.svg';
 import awayDefaultLogo from '../../../assets/rng-soccer/away-default-logo.svg';
 import cardBack from '../../../assets/cards/card-back.svg';
@@ -26,7 +26,7 @@ const RngSoccerDemo: React.FC = () => {
                     <div className="game-name-round">#37699</div>
                 </div>
                 <div className="score-board-img">
-                    <img src={bxhIcon} alt="bxh" />
+                    <img src={historyBtnIcon} alt="bxh" />
                 </div>
             </div>
 
@@ -54,7 +54,7 @@ const RngSoccerDemo: React.FC = () => {
                             <img src={cardBack} alt="card" />
                         </div>
                     </div>
-                    <div className="timmer">
+                    <div className="timer">
                         <div className="dots"></div>
                     </div>
                 </div>

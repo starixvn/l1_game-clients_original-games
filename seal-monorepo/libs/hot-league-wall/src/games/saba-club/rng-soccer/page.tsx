@@ -12,7 +12,7 @@ import { containerOptions, setting } from './game-settings';
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds/round-time-store';
 import RNGSoccerBetOptions from './bet-option/rng-soccer-bet-options';
 import liveIcon from '../../../assets/rng-soccer/live-icon.svg';
-import bxhIcon from '../../../assets/rng-soccer/bxh.svg';
+import historyBtnIcon from '../../../assets/rng-soccer/history-btn.svg';
 import bgGame from '../../../assets/rng-soccer/bg-game.webp';
 import RNGSoccerSettlementResult from './settlement-result/rng-soccer-settlement-result';
 import RNGSoccerStatistic from './statistic/rng-soccer-statistic';
@@ -91,7 +91,7 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
                 gameNameText: styles['game-name-text'],
                 gameNameRound: styles['game-name-round'],
                 liveIcon: styles['live-icon'],
-                timer: styles['timmer'],
+                timer: styles['timer'],
                 statsIcon: styles['score-board-img']
             },
             components: {
@@ -103,7 +103,7 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
             config: {
                 gameName: "RNG Soccer",
                 liveIconUrl: liveIcon,
-                statsIconUrl: bxhIcon,
+                statsIconUrl: historyBtnIcon,
                 onStatsIconClick: this.togglePopup
             }
         };

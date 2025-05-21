@@ -35,7 +35,7 @@
             width: $spacing-lg;
             height: $spacing-lg;
         }
-        
+
         .game-name-text {
             font-size: $font-size-sm;
             font-weight: $font-weight-bold;
@@ -54,6 +54,8 @@
     }
 
     .stats-icon {
+        display: flex;
+        align-self: flex-start;
         cursor: pointer;
     }
 
@@ -170,7 +172,7 @@
     border-top: 1px solid $color-border;
 
     // Statistics button
-    & > .statistic-btn {
+    &>.statistic-btn {
         flex: 1;
         width: 100%;
         max-width: 15rem;
