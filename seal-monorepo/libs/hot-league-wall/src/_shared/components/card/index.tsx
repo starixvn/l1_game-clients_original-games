@@ -32,7 +32,6 @@ import cardQRed from "../../../assets/cards/Q-red.png";
 import cardQ from "../../../assets/cards/Q.png";
 import spade from "../../../assets/cards/spade.png";
 import Styles from "./card.module.scss";
-import { MiniCard } from "./components/mini-card";
 import { Props } from "./type";
 import { convertRank, suffixNameMapping } from "./utils/card-utils";
 
@@ -72,9 +71,8 @@ const cardImages: Record<string, string> = {
 };
 
 const Card: React.FC<Props> = (props) => {
-    const { result, isSmall, viewMode = '' } = props;
+    const { result, viewMode = '' } = props;
     const customClassName = props.customClassName ?? '';
-    const isDisplayMiniCard = isSmall;
 
     const getCardsDefault = () => {
         const rankRed = result?.suit > 1 ? '' : 'Red';
@@ -96,7 +94,7 @@ const Card: React.FC<Props> = (props) => {
     return (
         <div className={`${Styles[customClassName]} ${Styles['card']} `}>
             <div className={Styles['result']} data-testid="result-card">
-                {isDisplayMiniCard ? <MiniCard card={result.rank} suit={result.suit} /> : getCardsDefault()}
+                {getCardsDefault()}
             </div>
         </div>
     );
