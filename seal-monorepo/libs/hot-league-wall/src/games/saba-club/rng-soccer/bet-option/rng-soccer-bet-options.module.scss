@@ -12,19 +12,20 @@
 .bet-options-container {
     @include fullsize-container;
     @include flex-row-between;
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr;
     gap: $spacing-xs;
     flex-wrap: nowrap;
 }
 
 // Background for bet options
 .bets-bg {
-    width: 32%;
     min-width: 90px;
     border-radius: $border-radius-md;
     background-color: rgba(255, 255, 255, 0.05);
     @include transition-default;
     box-sizing: border-box;
-    
+
     &:hover {
         background-color: rgba(255, 255, 255, 0.1);
     }
@@ -32,11 +33,11 @@
 
 // Individual bet padding container
 .padding-bet {
+    @include flex-row-between;
+    @include fullsize-container;
     padding: 10px 8px;
     cursor: pointer;
     border-radius: $border-radius-sm;
-    @include flex-row-between;
-    @include fullsize-container;
     box-sizing: border-box;
 }
 
@@ -61,4 +62,4 @@
     text-overflow: ellipsis;
     margin-right: 6px;
     font-size: $font-size-xs;
-} 
+}

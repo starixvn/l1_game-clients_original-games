@@ -13,6 +13,12 @@ interface RNGSoccerBetOptionsProps {
     onBet: (symbol: string, amount: number) => void;
 }
 
+const betOptionsList = [
+    RNGSoccerChoices.home,
+    RNGSoccerChoices.draw,
+    RNGSoccerChoices.away
+]
+
 export default class RNGSoccerBetOptions extends BetOptions {
     renderBetOptions(betChoice: string, odd: number, name: string = '', isBoostedChoice: boolean = false) {
         const { settlementResult } = this.state;
@@ -47,37 +53,21 @@ export default class RNGSoccerBetOptions extends BetOptions {
         const boostedChoices = boostedOdds ? boostedOdds.boostedChoices : roundOdds?.boostedChoices;
         const t = (key) => gc.Translator.translate(key, { languageId: gc.Translator.getCurrentLanguageId() });
 
-        const homeChoice = RNGSoccerChoices.home;
-        const awayChoice = RNGSoccerChoices.away;
-        const drawChoice = RNGSoccerChoices.draw;
-
         return (
             <div className={rngSoccerStyles['bet-options-wrapper']}>
                 <div className={rngSoccerStyles['bet-options-container']}>
-                    <div className={rngSoccerStyles['bets-bg']} key={homeChoice}>
-                        {this.renderBetOptions(
-                            homeChoice,
-                            odds?.home || 0,
-                            t(`${this.props.namespace}.${homeChoice}`),
-                            this.isBoostedChoice(homeChoice, boostedChoices)
-                        )}
-                    </div>
-                    <div className={rngSoccerStyles['bets-bg']} key={drawChoice}>
-                        {this.renderBetOptions(
-                            drawChoice,
-                            odds?.draw || 0,
-                            t(`${this.props.namespace}.${drawChoice}`),
-                            this.isBoostedChoice(drawChoice, boostedChoices)
-                        )}
-                    </div>
-                    <div className={rngSoccerStyles['bets-bg']} key={awayChoice}>
-                        {this.renderBetOptions(
-                            awayChoice,
-                            odds?.away || 0,
-                            t(`${this.props.namespace}.${awayChoice}`),
-                            this.isBoostedChoice(awayChoice, boostedChoices)
-                        )}
-                    </div>
+                    {
+                        betOptionsList.map((choice) => (
+                            <div className={rngSoccerStyles['bets-bg']} key={choice}>
+                                {this.renderBetOptions(
+                                    choice,
+                                    odds?.[choice] || 0,
+                                    t(`${this.props.namespace}.${choice}`),
+                                    this.isBoostedChoice(choice, boostedChoices)
+                                )}
+                            </div>
+                        ))
+                    }
                 </div>
             </div>
         );
