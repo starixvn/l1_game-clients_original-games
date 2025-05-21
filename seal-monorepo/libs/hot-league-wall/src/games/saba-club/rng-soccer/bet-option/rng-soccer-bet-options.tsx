@@ -1,4 +1,3 @@
-import React from 'react';
 import { RNGSoccerChoices } from '../type';
 import styles from '../rng-soccer.module.scss';
 import rngSoccerStyles from './rng-soccer-bet-options.module.scss';

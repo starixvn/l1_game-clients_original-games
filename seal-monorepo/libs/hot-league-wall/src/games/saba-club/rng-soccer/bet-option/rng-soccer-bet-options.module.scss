@@ -12,8 +12,7 @@
 .bet-options-container {
     @include fullsize-container;
     @include flex-row-between;
-    gap: $spacing-sm;
-    padding: 14px 12px;
+    gap: $spacing-xs;
     flex-wrap: nowrap;
 }
 
@@ -49,6 +48,7 @@
     gap: $spacing-sm;
     font-weight: $font-weight-medium !important;
     font-size: $font-size-sm;
+    color: $color-white;
 }
 
 // Bet choice text styling
