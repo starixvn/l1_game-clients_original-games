@@ -1,12 +1,11 @@
-import * as gc from "@sg/sg-game-client";
 import { ROUND_STATE, RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds";
 import { render } from "@sg/sg-observer";
 import classnames from "classnames";
-
 import Styles from "./count-down-timer.module.scss";
 import gameStyles from "./game-countdown-timer.module.scss";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../observer-component/observer-component";
-import Timer from "./timer";
+import { formatSecondsToTime } from "../../utils/count-down-format";
+
 
 export interface ICountDownTimerProps extends IPropsObserver {
     onComplete?: () => void;
@@ -16,7 +15,6 @@ export interface ICountDownTimerProps extends IPropsObserver {
         timer?: string;
         text?: string;
     };
-    useGameLayout?: boolean;
 }
 
 export interface ICountDownTimerState extends IStateObserver {
@@ -57,78 +55,34 @@ export default class CountDownTimer extends ObserverComponent<ICountDownTimerPro
             this.props.onComplete?.();
         }
 
-        if (config.showTimer) return countdownTimer;
-        if (config.showNoMoreBet) return gc.Translator.t('Common.message_stop_bet');
-        if (config.showResult) return gc.Translator.t('Common.open_result');
-
-        return null;
+        if (config.showTimer || config.showNoMoreBet) {
+            return formatSecondsToTime(countdownTimer);
+        }
+        return "...";
     }
 
     render() {
         const { countdownTimer, roundState } = this.state;
-        const { customStyles, useGameLayout } = this.props;
-        const isBettingRound = roundState === ROUND_STATE.PLACING_BET;
-
-        if (roundState === ROUND_STATE.NONE || roundState === ROUND_STATE.STARTING_ROUND) {
-            return <></>;
-        }
+        const { customStyles } = this.props;
+        const isShowResult = roundState !== ROUND_STATE.PLACING_BET && roundState !== ROUND_STATE.LOCKING_BET;
 
         // Determine content
         const content = this.getTimerContent(countdownTimer, roundState);
 
         // Use game layout if specified
-        if (useGameLayout) {
-            return (
-                <div className={classnames(gameStyles['game-countdown-wrapper'], customStyles?.wrapper)}>
-                    <div className={Styles['count-down']}>
-                        <div
-                            className={classnames(Styles['timer-wrapper'], {
-                                [Styles['placing-bet-state']]: roundState === ROUND_STATE.PLACING_BET,
-                                [Styles['no-more-bet-state']]: roundState !== ROUND_STATE.PLACING_BET,
-                            }, customStyles?.timer)}
-                        >
-                            {isBettingRound && (
-                                <div className={Styles['timer-badge']}>
-                                    <Timer className={Styles.clock} />
-                                </div>
-                            )}
-                            <div className={Styles['counting-text']}>
-                                <span
-                                    className={classnames({
-                                        [Styles['no-more-bet-state']]: !isBettingRound,
-                                    }, customStyles?.text)}
-                                >
-                                    {content}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
-        }
-
-        // Standard layout
         return (
-            <div className={Styles['count-down']}>
-                <div
-                    className={classnames(Styles['timer-wrapper'], {
-                        [Styles['placing-bet-state']]: roundState === ROUND_STATE.PLACING_BET,
-                        [Styles['no-more-bet-state']]: roundState !== ROUND_STATE.PLACING_BET,
-                    }, customStyles?.timer)}
-                >
-                    {isBettingRound && (
-                        <div className={Styles['timer-badge']}>
-                            <Timer className={Styles.clock} />
-                        </div>
-                    )}
-                    <div className={Styles['counting-text']}>
-                        <span
-                            className={classnames({
-                                [Styles['no-more-bet-state']]: !isBettingRound,
-                            }, customStyles?.text)}
-                        >
+            <div className={classnames(gameStyles['game-countdown-wrapper'], customStyles?.wrapper)}>
+                <div className={Styles['count-down']}>
+                    <div
+                        className={classnames(Styles['timer-wrapper'], {
+                            [Styles['placing-bet-state']]: roundState === ROUND_STATE.PLACING_BET,
+                            [Styles['no-more-bet-state']]: roundState === ROUND_STATE.LOCKING_BET,
+                            [Styles['show-result-state']]: isShowResult,
+                        }, customStyles?.timer)}
+                    >
+                        <div className={Styles['counting-text']}>
                             {content}
-                        </span>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -60,14 +60,6 @@
     .score-board-img {
         cursor: pointer;
     }
-
-    .timer {
-        position: static;
-        transform: none;
-        flex: 1;
-        @include flex-center;
-        margin: 0 $spacing-md;
-    }
 }
 
 // Middle section styling

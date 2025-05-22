@@ -97,7 +97,6 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
             <CountDownTimer
                 namespace={props.namespace}
                 language={props.language}
-                useGameLayout={true}
                 onComplete={() => {
                     setState({ isAllowedBet: true } as Partial<S>);
                 }}
@@ -243,7 +242,6 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
                 <CountDownTimer
                     namespace={props.namespace}
                     language={props.language}
-                    useGameLayout={true}
                     onComplete={() => {
                         setState({ isAllowedBet: true } as Partial<S>);
                     }}

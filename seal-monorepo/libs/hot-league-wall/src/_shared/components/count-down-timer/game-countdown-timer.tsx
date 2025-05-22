@@ -13,7 +13,7 @@ export interface IGameCountDownTimerProps extends Omit<ICountDownTimerProps, 'us
  * Enhanced countdown timer with game-specific styling
  */
 const GameCountDownTimer: React.FC<IGameCountDownTimerProps> = (props) => (
-    <CountDownTimer {...props} useGameLayout={true} />
+    <CountDownTimer {...props} />
 );
 
 export default GameCountDownTimer; 
