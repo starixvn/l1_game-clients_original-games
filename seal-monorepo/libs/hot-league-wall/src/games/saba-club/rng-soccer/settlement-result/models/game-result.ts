@@ -1,8 +1,8 @@
 import type { RNGSoccerResult } from '../../type';
 import { CardUtils } from '../utils/card-utils';
 import { TeamUtils } from '../utils/team-utils';
-import homeDefaultLogo from '../../../../../assets/rng-soccer/home-default-logo.svg';
-import awayDefaultLogo from '../../../../../assets/rng-soccer/away-default-logo.svg';
+import homeDefaultLogo from '../../../../../assets/rng-soccer/team-icon/home-default-logo.svg';
+import awayDefaultLogo from '../../../../../assets/rng-soccer/team-icon/away-default-logo.svg';
 
 /**
  * Team data structure
@@ -49,13 +49,13 @@ export class GameResult {
         return {
             homeTeam: {
                 name: TeamUtils.getTeamFullName(homeTeamAbbr),
-                logo: homeDefaultLogo,
-                color: TeamUtils.getTeamPrimaryColor(homeTeamAbbr)
+                logo: TeamUtils.getTeamLogo(homeTeamAbbr) || homeDefaultLogo,
+                color: TeamUtils.getTeamDefaultColor()
             },
             awayTeam: {
                 name: TeamUtils.getTeamFullName(awayTeamAbbr),
-                logo: awayDefaultLogo,
-                color: TeamUtils.getTeamPrimaryColor(awayTeamAbbr)
+                logo: TeamUtils.getTeamLogo(awayTeamAbbr) || awayDefaultLogo,
+                color: TeamUtils.getTeamDefaultColor()
             }
         };
     }
@@ -80,13 +80,13 @@ export class GameResult {
         return {
             homeTeam: {
                 name: TeamUtils.getTeamFullName(homeTeamAbbr),
-                logo: homeDefaultLogo,
-                color: TeamUtils.getTeamPrimaryColor(homeTeamAbbr)
+                logo: TeamUtils.getTeamLogo(homeTeamAbbr) || homeDefaultLogo,
+                color: TeamUtils.getTeamDefaultColor()
             },
             awayTeam: {
                 name: TeamUtils.getTeamFullName(awayTeamAbbr),
-                logo: awayDefaultLogo,
-                color: TeamUtils.getTeamPrimaryColor(awayTeamAbbr)
+                logo: TeamUtils.getTeamLogo(awayTeamAbbr) || awayDefaultLogo,
+                color: TeamUtils.getTeamDefaultColor()
             }
         };
     }
