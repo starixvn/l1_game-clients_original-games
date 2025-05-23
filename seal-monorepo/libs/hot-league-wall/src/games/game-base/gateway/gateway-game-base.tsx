@@ -138,8 +138,8 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
     }
 
     @render(gc.Rounds.RoundStore, (store) => store.clientRoundId)
-    renderRoundId(clientRoundId: number): void {
-        this.setState({ roundId: clientRoundId } as Pick<S, keyof S>);
+    renderRoundId(roundId: number): void {
+        this.setState({ roundId: roundId } as Pick<S, keyof S>);
     }
 
     override renderNotice(): JSX.Element {
