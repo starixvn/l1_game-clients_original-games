@@ -32,6 +32,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
             isPopupVisible: false,
             gameId: 0,
             roundState: '',
+            settlementResultDuration: 3,
         } as S;
 
         this.toggleStatistic = this.toggleStatistic.bind(this);
@@ -72,6 +73,8 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     protected getGameLayout(): JSX.Element | null {
         return null;
     }
+
+
 
     // -------------------------------------------------------------------------
     // EVENT HANDLERS

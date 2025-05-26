@@ -13,6 +13,7 @@ export interface GameState {
     roundState: string;
     isAllowedBet: boolean;
     isShowNextRoundMessage: boolean;
+    settlementResultDuration: number;
 }
 
 export interface UIState {

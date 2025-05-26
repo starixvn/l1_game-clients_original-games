@@ -6,16 +6,16 @@ import { ILatestBetRecord } from '../../../_shared/components/bet-panel/bet-pane
 import AuthorizationHandler from '../../../_shared/handlers/authorization-handler';
 import GameBase from '../core/game-base.core';
 import GameUIRenderer, { UIExtensionOptions } from '../ui/game-ui-renderer';
-import GameSettlementHandler from '../game-logic/game-settlement-handler';
-import RoundHandler from '../game-logic/round-handler';
 import { IGatewayGameBaseState } from '../interfaces/gateway-types';
 import { GameBaseProps } from '../type';
+import { SyncMemberSiteBalance } from '../../../_shared/utils/sync-member-site-balance';
+import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds/round-time-store';
+import { Settlements } from '@sg/sg-game-client';
+import { FunctionUtils } from 'libs/hot-league-wall/src/_shared/utils/funtion-utils';
 
 class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> extends GameBase<P, S> {
     private authHandler: AuthorizationHandler;
     protected uiRenderer: GameUIRenderer<P, S>;
-    private settlementHandler: GameSettlementHandler<S>;
-    private roundHandler: RoundHandler<S>;
 
     constructor(props: P) {
         super(props);
@@ -33,8 +33,6 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
         );
 
         this.uiRenderer = new GameUIRenderer<P, S>();
-        this.settlementHandler = new GameSettlementHandler<S>();
-        this.roundHandler = new RoundHandler<S>();
     }
 
     protected configureUIRenderer(): UIExtensionOptions {
@@ -119,27 +117,79 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
     // UI AND STATE HANDLING
     @render(gc.Bet.BetStore, (store) => store.validBet)
     setIsValidBet(validBet: gc.Bet.IValidBet): void {
-        this.settlementHandler.setIsValidBet(validBet, (state) => this.setState(state as Pick<S, keyof S>));
+        if (validBet?.value) {
+            SyncMemberSiteBalance.getInstance().executeSyncBalance();
+        }
     }
 
+    @render(Settlements.SettlementStatusStore, (store) => store.settlementStatus, {
+        fireImmediately: false,
+    })
+    assignStatus(settlementStatus: any): void {
+        this.setState({ statusSettlement: settlementStatus } as Pick<S, keyof S>);
+    }
+
+    @render(Settlements.SettlementStore, (store) => store.currentFinish, {
+        fireImmediately: false,
+    })
+    async renderCurrentFinish(
+        currentFinish: gc.GameServiceMessage.Finish,
+    ) {
+        console.log('renderCurrentFinish', currentFinish);
+        if (!currentFinish) {
+            return;
+        }
+        const { result, settlementResult } = currentFinish;
+
+        if (!this.isValidResult(result, settlementResult)) {
+            return;
+        }
+        this.setState({ isFinishShowResult: false } as Pick<S, keyof S>);
+
+        console.log('this.state.generatingResultDuration', this.state.settlementResultDuration);
+        await FunctionUtils.delay(this.state.settlementResultDuration * 1000);
+        this.finishShowResult();
+        // this.showResult(true, result, settlementResult).then(() => {
+        //     this.finishShowResult();
+        // });
+    }
+
+    @handle(Settlements.SettlementUIHandlers.FinishedShowResult)
+    finishShowResult(): void {
+        console.log('finishShowResult');
+        this.setState({ isFinishShowResult: true } as Pick<S, keyof S>);
+    }
+
+    private isValidResult(result?: gc.GameServiceMessage.TResult, settlementResult?: gc.GameServiceMessage.TSettlementResult): boolean {
+        return !!result && !!settlementResult;
+    }
+
+    // Round Handler Logic
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
     renderCountDownTimerState(roundState: string): void {
-        this.roundHandler.renderCountDownTimerState(
-            roundState,
-            this.state,
-            (state) => this.setState(state as Pick<S, keyof S>),
-            this.resetBettingPanel
-        );
-    }
+        if (roundState === ROUND_STATE.PLACING_BET) {
+            this.setState({ isShowNextRoundMessage: false } as Pick<S, keyof S>);
+        }
 
-    @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
-    renderRoundState(roundState: string): void {
+        if (roundState === ROUND_STATE.LOCKING_BET || roundState === ROUND_STATE.SHOW_RESULT) {
+            this.resetBettingPanel();
+        }
+
         this.setState({ roundState } as Pick<S, keyof S>);
     }
 
     @render(gc.Rounds.RoundStore, (store) => store.clientRoundId)
-    renderRoundId(roundId: number): void {
-        this.setState({ roundId: roundId } as Pick<S, keyof S>);
+    handleRoundIdChange(roundId: number): void {
+        this.setState({ roundId } as Pick<S, keyof S>);
+        this.processAuthorizationIfRoundMatches(roundId);
+    }
+
+    handleBetOption(): void {
+        this.resetBettingPanel();
+        this.setState({ isShowNextRoundMessage: true } as Pick<S, keyof S>);
+        setTimeout(() => {
+            this.setState({ isShowNextRoundMessage: false } as Pick<S, keyof S>);
+        }, 3000);
     }
 
     override renderNotice(): JSX.Element {

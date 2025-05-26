@@ -9,6 +9,7 @@ export interface IRoundIdProps {
 }
 
 export const RoundId: React.FC<IRoundIdProps> = ({ clientRoundId, roundState, className }) => {
+    console.log('clientRoundId', clientRoundId);
     const isValidRoundNumber = clientRoundId && clientRoundId !== 0;
     const showRoundId = isValidRoundNumber && roundState;
 

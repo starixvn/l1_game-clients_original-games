@@ -54,6 +54,7 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
 
     @render(RoundTimeStore, (store) => store.isStartingRound)
     private handleStartNewRound(isStartingRound: boolean): void {
+        console.log('handleStartNewRound', isStartingRound);
         this.setState({ isHideAllCards: isStartingRound });
     }
 
@@ -79,6 +80,7 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
     })
     private handleCurrentFinish(currentFinish: gc.GameServiceMessage.Finish): void {
         try {
+            console.log('RNGSoccerSettlementResult handleCurrentFinish', currentFinish);
             // Get the result from the game state service
             const result = gameStateService.handleSettlement(currentFinish);
 

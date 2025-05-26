@@ -27,12 +27,15 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
     constructor(props: GameBaseProps) {
         super(props);
 
+        const { generatingResult, showingResult, startRound } = setting.durations;
+        const settlementResultDuration = (generatingResult ?? 0) + (showingResult ?? 0) + (startRound ?? 0);
         this.state = {
             ...this.state,
             gameId: setting.id,
             isTimerActive: true,
             isPopupVisible: false,
             roundId: 0,
+            settlementResultDuration,
         } as IRNGSoccerPageState;
 
         this.uiRenderer.setExtensionOptions(this.getUIExtensionOptions());
@@ -62,18 +65,6 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
     // Game lifecycle and event handlers
     @handle(gc.Connection.ConnectionHandlers.CloseConnectHandler, (handler) => handler.handleGateway())
     override closeConnect() { }
-
-    override async showResult(
-        hasAnimation: boolean,
-        result?: gc.GameServiceMessage.TResult,
-        settlementResult?: gc.GameServiceMessage.TSettlementResult,
-    ): Promise<void> {
-        if (!result) return;
-
-        if (settlementResult && this.state.roundState == ROUND_STATE.LOCKING_BET) {
-            // Process settlement result if needed
-        }
-    }
 
     override getGameBackgroundImage(): string {
         return bgGame;
