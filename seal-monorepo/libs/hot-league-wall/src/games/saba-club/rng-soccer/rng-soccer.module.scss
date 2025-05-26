@@ -22,7 +22,6 @@
     background: url('../../../assets/rng-soccer/bg-game.webp') no-repeat center;
     background-size: cover;
     border-radius: $border-radius-md;
-    overflow: hidden;
     padding: $spacing-xs;
     @include flex-column;
     justify-content: space-between;
