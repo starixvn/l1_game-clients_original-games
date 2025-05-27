@@ -201,8 +201,12 @@
     "RNGSoccer": {
         "game_name": "RNGSoccer",
         "game_tab_name": "RNGSoccer",
-        "home": "Home",
-        "away": "Away",
-        "draw": "Draw"
+        "choices_type": "Kandang/Seri/Tandang",
+        "glossary_home": "Kandang",
+        "glossary_away": "Tandang",
+        "glossary_draw": "Seri",
+        "home": "Kandang",
+        "away": "Tandang",
+        "draw": "Seri"
     }
 }

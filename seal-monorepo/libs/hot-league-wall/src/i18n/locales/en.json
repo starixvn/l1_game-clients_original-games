@@ -201,6 +201,10 @@
     "RNGSoccer": {
         "game_name": "RNGSoccer",
         "game_tab_name": "RNGSoccer",
+        "choices_type": "Home/Draw/Away",
+        "glossary_home": "Home",
+        "glossary_away": "Away",
+        "glossary_draw": "Draw",
         "home": "Home",
         "away": "Away",
         "draw": "Draw"

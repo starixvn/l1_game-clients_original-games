@@ -201,8 +201,12 @@
     "RNGSoccer": {
         "game_name": "RNGSoccer",
         "game_tab_name": "RNGSoccer",
-        "home": "Home",
-        "away": "Away",
-        "draw": "Draw"
+        "choices_type": "Đội Nhà/Hòa/Đội Khách",
+        "glossary_home": "Đội Nhà",
+        "glossary_away": "Đội Khách",
+        "glossary_draw": "Hòa",
+        "home": "Đội Nhà",
+        "away": "Đội Khách",
+        "draw": "Hòa"
     }
 }

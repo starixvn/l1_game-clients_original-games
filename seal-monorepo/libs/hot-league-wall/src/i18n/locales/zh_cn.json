@@ -201,8 +201,12 @@
     "RNGSoccer": {
         "game_name": "RNGSoccer",
         "game_tab_name": "RNGSoccer",
-        "home": "Home",
-        "away": "Away",
-        "draw": "Draw"
+        "choices_type": "主队/平/客队",
+        "glossary_home": "主队",
+        "glossary_away": "客队",
+        "glossary_draw": "平",
+        "home": "主队",
+        "away": "客队",
+        "draw": "平"
     }
 }
