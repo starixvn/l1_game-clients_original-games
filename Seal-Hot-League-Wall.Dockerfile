@@ -40,7 +40,7 @@ RUN mkdir -p /usr/share/nginx/html/assets && \
 # Expose the port Nginx is running on
 EXPOSE $PORT
 
-# # Configure healthcheck
+# Configure healthcheck
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
     CMD wget --no-verbose --tries=1 --spider http://localhost:${PORT}/ || exit 1
 
