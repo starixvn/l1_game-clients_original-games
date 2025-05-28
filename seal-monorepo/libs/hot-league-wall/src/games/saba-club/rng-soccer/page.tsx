@@ -88,7 +88,7 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
             components: {
                 customContent: () => this.renderCustomContent(),
                 customFooter: () => this.renderCustomFooter(),
-                customPopup: (props, state) => this.renderCustomPopup(state as IRNGSoccerPageState),
+                customHistory: (props, state) => this.renderCustomHistory(state as IRNGSoccerPageState),
                 customBetting: () => this.renderCustomBetting()
             },
             config: {
@@ -145,7 +145,7 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
         );
     }
 
-    renderCustomPopup(state: IRNGSoccerPageState): JSX.Element {
+    renderCustomHistory(state: IRNGSoccerPageState): JSX.Element {
         return (
             <Suspense fallback={<div>Loading...</div>}>
                 <RNGSoccerStatistic

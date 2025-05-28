@@ -32,7 +32,7 @@ export interface UIExtensionOptions {
         customHeader?: (props: any, state: any) => JSX.Element;
         customContent?: (props: any, state: any) => JSX.Element;
         customFooter?: (props: any, state: any) => JSX.Element;
-        customPopup?: (props: any, state: any) => JSX.Element;
+        customHistory?: (props: any, state: any) => JSX.Element;
         customBetting?: (props: any, state: any) => JSX.Element;
         customResult?: (props: any, state: any) => JSX.Element;
         customStatistic?: (props: any, state: any) => JSX.Element;
@@ -317,9 +317,9 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
         );
     }
 
-    renderGamePopupSection(props: P, state: S, toggleStatistic: () => void, overrideClasses?: any): JSX.Element {
-        if (this.extensionOptions.components?.customPopup) {
-            return this.extensionOptions.components.customPopup(props, state);
+    renderGameHistorySection(props: P, state: S, overrideClasses?: any): JSX.Element {
+        if (this.extensionOptions.components?.customHistory) {
+            return this.extensionOptions.components.customHistory(props, state);
         }
 
         if (this.extensionOptions.config?.enablePopupSection === false) {
@@ -335,9 +335,6 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
         return (
             <div className={popupClass}>
                 {this.renderStatistic(props, state)}
-                {this.renderNotice(props, state)}
-                {this.renderWarning(props)}
-                {this.renderWaitingForNextRound(state)}
             </div>
         );
     }
@@ -370,17 +367,29 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
         };
     }
 
+    renderGameMessages(
+        props: P,
+        state: S
+    ): JSX.Element {
+        return (
+            <div>
+                {this.renderNotice(props, state)}
+                {this.renderWarning(props)}
+                {this.renderWaitingForNextRound(state)}
+            </div>
+        );
+    }
+
     renderGameLayout(
         props: P,
         state: S,
         setStateCallback: (state: Partial<S>) => void,
-        toggleStatistic: () => void,
         overrideClasses?: any,
         customBackgroundImage?: string,
         customHeaderSection?: JSX.Element | null,
         customContentSection?: JSX.Element | null,
         customFooterSection?: JSX.Element | null,
-        customPopupSection?: JSX.Element | null
+        customHistorySection?: JSX.Element | null
     ): JSX.Element {
         const containerStyle = this.renderGameBackground(customBackgroundImage);
 
@@ -408,9 +417,10 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
                     () => this.renderGameFooterSection(props, state, overrideClasses)
                 )}
                 {this.resolveCustomSection(
-                    customPopupSection,
-                    () => this.renderGamePopupSection(props, state, toggleStatistic, overrideClasses)
+                    customHistorySection,
+                    () => this.renderGameHistorySection(props, state, overrideClasses)
                 )}
+                {this.renderGameMessages(props, state)}
             </div>
         );
     }

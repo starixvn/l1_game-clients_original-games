@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-// import Toast from 'react-bootstrap/Toast';
 
 import Styles from './warning.module.scss';
 

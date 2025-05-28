@@ -119,8 +119,8 @@ class TestableGameBase extends GameBase<TestGameProps, IGameBaseState> {
         return <div data-testid="game-footer">Footer</div>;
     }
 
-    protected getGamePopupSection(): JSX.Element {
-        return <div data-testid="game-popup">Popup</div>;
+    protected getGameHistorySection(): JSX.Element {
+        return <div data-testid="game-history">History</div>;
     }
 
     public testRender(state: Partial<IGameBaseState>) {

@@ -208,7 +208,7 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         return null;
     }
 
-    protected getGamePopupSection(): JSX.Element | null {
+    protected getGameHistorySection(): JSX.Element | null {
         return null;
     }
 

@@ -200,20 +200,19 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
         const customHeaderSection = this.getGameHeaderSection();
         const customContentSection = this.getGameContentSection();
         const customFooterSection = this.getGameFooterSection();
-        const customPopupSection = this.getGamePopupSection();
+        const customHistorySection = this.getGameHistorySection();
         const backgroundImage = this.getGameBackgroundImage();
 
         return this.uiRenderer.renderGameLayout(
             this.props,
             this.state,
             (state) => this.setState(state as Pick<S, keyof S>),
-            this.toggleStatistic,
             this.overrideClasses,
             backgroundImage || undefined,
             customHeaderSection,
             customContentSection,
             customFooterSection,
-            customPopupSection
+            customHistorySection
         );
     }
 }
