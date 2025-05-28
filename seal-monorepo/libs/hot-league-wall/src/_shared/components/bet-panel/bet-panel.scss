@@ -5,7 +5,7 @@
 
     .c-text-balls {
         display: flex;
-        gap:5px;
+        gap: 5px;
     }
 
     .c-quick-bet {
@@ -18,6 +18,7 @@
         font-family: "Segoe UI";
         min-width: 244px;
         max-width: unset;
+
         .c-ng-ball-small {
             width: 26px;
             height: 26px;
@@ -27,45 +28,56 @@
             }
         }
     }
+
     .c-betslip__content {
         .c-betting-scroller {
             height: 100%;
             display: block;
         }
-        .c-ticket__header  {
+
+        .c-ticket__header {
             font-size: 13px;
             line-height: 15px;
+
             .game-name {
                 font-weight: 700;
             }
+
             .bet-option {
                 font-weight: 600;
             }
         }
+
         .c-ticket__info {
             color: var(--ticket-info-text);
             margin-top: 10px !important;
         }
-        .c-betting-submit .c-btn--bet{
+
+        .c-betting-submit .c-btn--bet {
             background-color: #B6403A;
         }
-        
+
     }
+
     .sg-bet-panel {
         &__text-bold {
             font-weight: bold;
         }
+
         &__header-flex {
             display: flex;
             align-items: center;
         }
+
         &__game-icon {
             width: 24px;
             height: 24px;
         }
-        &__left-dec-100 {
-            left: -100px !important;
+
+        &__left-dec-130 {
+            left: -130px !important;
         }
+
         &__betting-msg {
             width: 100%;
         }
@@ -76,6 +88,11 @@
         background-repeat: no-repeat;
         background-size: contain;
         margin-right: 4px;
+    }
+
+    .rng-soccer-icon {
+        @extend %game-icon-base;
+        background-image: url("../../../assets/game-icons/rng-soccer.png");
     }
 
 }

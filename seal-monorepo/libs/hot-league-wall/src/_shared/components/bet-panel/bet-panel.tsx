@@ -4,11 +4,13 @@ import { handle, render } from '@sg/sg-observer';
 import classNames from 'classnames';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
+    RNGSoccer_GAME_NAMESPACE,
     SABA_GAMES,
     VGAMING,
     VIVA88_SITE_ID,
 } from '../../../../constant/app';
 import { useAppContext } from '../../../appProvider';
+import { RNG_SOCCER_CHOICES } from '../../../games/constants/saba-club';
 import {
     useGameBettingOptionsContext,
     useGameBettingZoneContext,
@@ -24,7 +26,7 @@ const WARNING_CLOSE_DELAY = 60000;
 
 // Game icon mapping constant
 const GAME_ICON_MAPPING = {
-
+    [RNGSoccer_GAME_NAMESPACE]: 'rng-soccer-icon',
 } as const;
 
 export interface IBetPanel extends IStateObserver {
@@ -151,6 +153,10 @@ const BetPanel: React.FC<{
     const payout = amount > 0 ? addCommas(amount * odd, 2, false) : '0.00';
     const vendorName = siteId === VIVA88_SITE_ID ? SABA_GAMES : VGAMING;
     const panelRef = useRef<HTMLDivElement>(null);
+
+    const isSpecialChoice = [
+        RNG_SOCCER_CHOICES.AWAY
+    ].includes(betChoice);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -367,7 +373,7 @@ const BetPanel: React.FC<{
             <div
                 ref={panelRef}
                 className={classNames('c-quick-bet__panel', {
-                    ['sg-bet-panel__left-dec-100']: false,
+                    ['sg-bet-panel__left-dec-130']: isSpecialChoice,
                 })}
             >
                 <div className="c-betslip">
