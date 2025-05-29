@@ -100,7 +100,13 @@
 .block-wrapper {
     display: flex;
     align-items: center;
-    background-color: $color-bg-main;
+    width: 100%;
+    height: 100%;
+    max-width: 344px;
+    min-height: 110px;
+    margin:  12px;
+    border-radius: $border-radius-md;
+    background-color: rgba(0, 6, 17, 0.9);
 
     // Info section
     .info {
@@ -174,15 +180,14 @@
 // Reconnect section
 .reconnect-btn-container {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    margin-left: $spacing-sm;
     width: 100%;
     margin-top: $spacing-md;
     margin-bottom: $spacing-md;
 }
 
 .reconnect-btn {
-    margin-left: $spacing-sm;
     padding: $spacing-sm $spacing-xl;
 }
 
@@ -192,4 +197,5 @@
     font-style: normal;
     font-weight: $font-weight-normal;
     line-height: 150%;
+    color: $color-white;
 }
