@@ -18,6 +18,8 @@ import BEN_ICON from '../../../../../assets/rng-soccer/team-icon/BEN.png';
 import SPO_ICON from '../../../../../assets/rng-soccer/team-icon/SPO.png';
 import NFO_ICON from '../../../../../assets/rng-soccer/team-icon/NFO.png';
 import BOL_ICON from '../../../../../assets/rng-soccer/team-icon/BOL.png';
+import homeDefaultLogo from '../../../../../assets/rng-soccer/team-icon/home-default-logo.svg';
+import awayDefaultLogo from '../../../../../assets/rng-soccer/team-icon/away-default-logo.svg';
 
 /**
  * Team information interface
@@ -39,6 +41,8 @@ export class TeamUtils {
      * Team mapping with team information
      */
     public static readonly TEAM_INFO: Record<string, TeamInfo> = {
+        "DEFAULT_HOME": { fullName: "Home Team", shortName: "DEFAULT_HOME", logo: homeDefaultLogo, primaryColor: "#FFFFFF", secondaryColor: "#FFFFFF" },
+        "DEFAULT_AWAY": { fullName: "Away Team", shortName: "DEFAULT_AWAY", logo: awayDefaultLogo, primaryColor: "#FFFFFF", secondaryColor: "#FFFFFF" },
         "LIV": { fullName: "Liverpool FC", shortName: "LIV", logo: LIV_ICON, primaryColor: "#C8102E", secondaryColor: "#00B2A9" },
         "INT": { fullName: "Inter Milan", shortName: "INT", logo: INT_ICON, primaryColor: "#0066B3", secondaryColor: "#000000" },
         "BAR": { fullName: "Barcelona", shortName: "BAR", logo: BAR_ICON, primaryColor: "#CD122D", secondaryColor: "#004D98" },

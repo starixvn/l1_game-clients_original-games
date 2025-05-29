@@ -1,8 +1,12 @@
 import type { RNGSoccerResult } from '../../type';
-import { CardUtils } from '../utils/card-utils';
 import { TeamUtils } from '../utils/team-utils';
 import homeDefaultLogo from '../../../../../assets/rng-soccer/team-icon/home-default-logo.svg';
 import awayDefaultLogo from '../../../../../assets/rng-soccer/team-icon/away-default-logo.svg';
+
+export interface MatchTeams {
+    home: string;
+    away: string;
+}
 
 /**
  * Team data structure
@@ -43,18 +47,18 @@ export class GameResult {
      * @returns Team data object
      */
     public static getDefaultTeamData(
-        homeTeamAbbr: string = "MCI",
-        awayTeamAbbr: string = "ARS"
+        homeTeamAbbr: string = "DEFAULT_HOME",
+        awayTeamAbbr: string = "DEFAULT_AWAY"
     ): TeamsData {
         return {
             homeTeam: {
                 name: TeamUtils.getTeamFullName(homeTeamAbbr),
-                logo: TeamUtils.getTeamLogo(homeTeamAbbr) || homeDefaultLogo,
+                logo: TeamUtils.getTeamLogo(homeTeamAbbr),
                 color: TeamUtils.getTeamDefaultColor()
             },
             awayTeam: {
                 name: TeamUtils.getTeamFullName(awayTeamAbbr),
-                logo: TeamUtils.getTeamLogo(awayTeamAbbr) || awayDefaultLogo,
+                logo: TeamUtils.getTeamLogo(awayTeamAbbr),
                 color: TeamUtils.getTeamDefaultColor()
             }
         };
@@ -67,25 +71,22 @@ export class GameResult {
      * @returns Updated team data
      */
     public static updateTeamData(
-        result: RNGSoccerResult,
+        match: MatchTeams,
         currentTeamData?: TeamsData
     ): TeamsData {
-        if (!result || !result.home || !result.away) {
+        if (!match || !match.home || !match.away) {
             return currentTeamData || GameResult.getDefaultTeamData();
         }
 
-        const homeTeamAbbr = CardUtils.getTeamForCard(result.home.rank);
-        const awayTeamAbbr = CardUtils.getTeamForCard(result.away.rank);
-
         return {
             homeTeam: {
-                name: TeamUtils.getTeamFullName(homeTeamAbbr),
-                logo: TeamUtils.getTeamLogo(homeTeamAbbr) || homeDefaultLogo,
+                name: TeamUtils.getTeamFullName(match.home),
+                logo: TeamUtils.getTeamLogo(match.home),
                 color: TeamUtils.getTeamDefaultColor()
             },
             awayTeam: {
-                name: TeamUtils.getTeamFullName(awayTeamAbbr),
-                logo: TeamUtils.getTeamLogo(awayTeamAbbr) || awayDefaultLogo,
+                name: TeamUtils.getTeamFullName(match.away),
+                logo: TeamUtils.getTeamLogo(match.away),
                 color: TeamUtils.getTeamDefaultColor()
             }
         };

@@ -58,6 +58,23 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
         this.setState({ isHideAllCards: isStartingRound });
     }
 
+    @render(gc.Rounds.RoundTimeStore, (store) => ({ teamData: store.teamData, roundState: store.roundState }))
+    renderTeamDataState(data: { teamData: any, roundState: string }) {
+        if (data.roundState === ROUND_STATE.STARTING_ROUND) {
+            this.setState({ teamData: GameResult.getDefaultTeamData() });
+            return;
+        }
+        if (data.roundState === ROUND_STATE.PLACING_BET) {
+            const { home, away } = data.teamData;
+            const teamData = GameResult.updateTeamData({
+                home: home,
+                away: away
+            });
+
+            this.setState({ teamData: teamData});
+        }
+    }
+
     @render(RoundTimeStore, (store) => store.roundState)
     private handleRoundState(roundState: string): void {
         try {
@@ -86,13 +103,9 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
 
             // Only update state if we have a valid result
             if (result && gameStateService.validateResult(result)) {
-                // Use GameResult utility to update team data
-                const teamData = GameResult.updateTeamData(result);
-
                 // Show cards with animation
                 this.setState({
                     result,
-                    teamData,
                     isAnimationResult: true,
                     isLoading: false,
                     isFinish: true,
@@ -128,12 +141,9 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
 
             // Only update state if we have a valid result
             if (result && gameStateService.validateResult(result)) {
-                // Use GameResult utility to update team data
-                const teamData = GameResult.updateTeamData(result);
 
                 this.setState({
                     result,
-                    teamData,
                     isLoading: false,
                     isFinish: true,
                     isFinishShowResult: true
