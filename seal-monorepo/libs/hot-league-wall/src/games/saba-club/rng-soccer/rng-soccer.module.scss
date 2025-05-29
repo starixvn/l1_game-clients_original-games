@@ -40,7 +40,7 @@
             width: $spacing-lg;
             height: $spacing-lg;
         }
-        
+
         .game-name-text {
             font-size: $font-size-sm;
             font-weight: $font-weight-bold;
@@ -65,7 +65,7 @@
 .wrapper-sport-middle {
     display: grid;
     grid-template-columns: 81px 1fr 81px;
-    align-items: center;
+    align-items: end;
 
     .sport-team {
         @include flex-column;
@@ -88,8 +88,17 @@
                 height: auto;
             }
         }
+    }
 
-        &-name {
+    .wrapper-team-name {
+        display: flex;
+        flex-direction: row;
+        grid-column: 1 / -1;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin: 2px 0;
+
+        .name {
             line-height: 100%;
             vertical-align: middle;
             font-size: $font-size-xs;
@@ -128,7 +137,7 @@
     position: absolute;
     top: 50%;
     right: 50%;
-    transform: translate(50%, -60px);
+    transform: translate(50%, -70px);
     display: flex;
     align-items: center;
 
@@ -146,8 +155,8 @@
     width: $dots-size;
     height: $dots-size;
     background: radial-gradient(circle closest-side, $color-green 90%, #0000) 0% 50%,
-                radial-gradient(circle closest-side, $color-green 90%, #0000) 50% 50%,
-                radial-gradient(circle closest-side, $color-green 90%, #0000) 100% 50%;
+        radial-gradient(circle closest-side, $color-green 90%, #0000) 50% 50%,
+        radial-gradient(circle closest-side, $color-green 90%, #0000) 100% 50%;
     background-size: calc(100%/3) 13.4px;
     background-repeat: no-repeat;
     animation: dots-animation $animation-duration-very-slow infinite linear;
@@ -220,7 +229,7 @@
         right: $spacing-sm;
         cursor: pointer;
         padding: $spacing-xs;
-        
+
         .close-icon {
             width: 20px;
             height: 20px;
@@ -238,4 +247,4 @@
 .container-bets {
     width: 100%;
     box-sizing: border-box;
-} 
+}

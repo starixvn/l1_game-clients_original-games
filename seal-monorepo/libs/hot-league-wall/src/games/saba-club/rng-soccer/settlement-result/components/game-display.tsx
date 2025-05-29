@@ -8,7 +8,7 @@ import Loading from 'libs/hot-league-wall/src/_shared/components/loading';
 import type { RNGSoccerResult } from '../../type';
 import Card from 'libs/hot-league-wall/src/_shared/components/card';
 import cardBack from '../../../../../assets/cards/card-back.svg';
-import { CardScoreUtils, SCORE_MAP } from '../utils/card-score-utils';
+import { SCORE_MAP } from '../utils/card-score-utils';
 
 interface GameDisplayProps {
     result?: RNGSoccerResult;
@@ -61,9 +61,7 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
         <div className={styles['wrapper-sport-middle']}>
             {/* Home Team */}
             <TeamCard
-                name={teamData.homeTeam.name}
                 logo={teamData.homeTeam.logo}
-                color={teamData.homeTeam.color}
                 isHomeTeam={true}
             />
 
@@ -108,11 +106,18 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
 
             {/* Away Team */}
             <TeamCard
-                name={teamData.awayTeam.name}
                 logo={teamData.awayTeam.logo}
-                color={teamData.awayTeam.color}
                 isHomeTeam={false}
             />
+
+            <div className={styles['wrapper-team-name']}>
+                <div className={styles['name']}>
+                    {teamData.homeTeam.name}
+                </div>
+                <div className={styles['name']}>
+                    {teamData.awayTeam.name}
+                </div>
+            </div>
         </div>
     );
 };
