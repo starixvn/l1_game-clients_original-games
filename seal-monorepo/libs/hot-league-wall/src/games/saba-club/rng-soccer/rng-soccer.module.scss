@@ -193,25 +193,12 @@
     }
 }
 
-// History section
-.history-block {
-    margin-top: $spacing-lg;
-    @include flex-center;
-    gap: 40px;
-
-    &-item {
-        color: $color-white;
-        font-size: $font-size-xs;
-        font-weight: $font-weight-bold;
-        text-transform: capitalize;
-    }
-}
-
 // Popup overlay
 .wrapper-popup {
     @include fullsize-overlay;
     background: $color-black-80;
     backdrop-filter: blur(4px);
+    border-radius: 6px;
     @include flex-column-center;
     opacity: 0;
     visibility: hidden;

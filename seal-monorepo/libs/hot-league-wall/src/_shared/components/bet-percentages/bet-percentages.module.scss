@@ -25,25 +25,14 @@ $spacing-large: 10px;
 
 // Main styles
 .scoreboard-percentage {
-  @include flex-center;
-  width: 100%;
-  text-align: center;
-  padding: $spacing-base;
-  border-radius: $border-radius $border-radius 0 0;
-  background: var(--scoreboard-header-bg);
-  color: var(--c-av-white);
-  gap: 1.5rem;
-
-  .left-percentage {
-    flex: 1;
-    text-align: right;
-    color: $text-color;
-    @include text-base;
-  }
-
-  .right-percentage {
-    flex: 1;
-    text-align: left;
-    @include text-base;
-  }
+    margin-top: $spacing-large;
+      @include flex-center;
+      gap: 40px;
+    
+      &-item {
+        color: $text-color;
+        font-size: $font-size-base;
+        font-weight: 700;
+        text-transform: capitalize;
+      }
 }

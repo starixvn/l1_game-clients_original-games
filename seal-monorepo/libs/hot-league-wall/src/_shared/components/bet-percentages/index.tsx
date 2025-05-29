@@ -1,41 +1,38 @@
 import { Translator } from '@sg/sg-game-client';
 import Styles from './bet-percentages.module.scss';
-// import { ScoreboardItemContent } from '../scoreboard/types';
+
 type Props = {
     gameName: any;
     settlements: any[];
-    scoreboardCharacter: any;
-    // scoreboardCharacter: ScoreboardItemContent;
+    scoreboardCharacter: {
+        [key: string]: string;
+    };
 };
 
 const BetPercentages: React.FunctionComponent<Props> = ({ gameName, settlements, scoreboardCharacter }) => {
-    const { positiveItemContent, negativeItemContent } = scoreboardCharacter;
     const translateBetOption = (option) => Translator.t(`${gameName}.glossary_${option}`);
+    
     const calPercentage = (settlements: any[]) => {
         const totalCount = settlements.length;
+        const percentages: { [key: string]: number } = {};
 
-        const leftCount = settlements.filter((entry) => entry[positiveItemContent]).length;
-        const rightCount = settlements.filter((entry) => entry[negativeItemContent]).length;
+        Object.keys(scoreboardCharacter).forEach((key) => {
+            const count = settlements.filter((entry) => entry[scoreboardCharacter[key]]).length;
+            percentages[key] = totalCount > 0 ? parseFloat(((count / totalCount) * 100).toFixed(2)) : 0;
+        });
 
-        const leftPercentage = totalCount > 0 ? parseFloat(((leftCount / totalCount) * 100).toFixed(2)) : 0;
-        const rightPercentage = totalCount > 0 ? parseFloat(((rightCount / totalCount) * 100).toFixed(2)) : 0;
-
-        return {
-            positiveItemContentPercentage: leftPercentage,
-            negativeItemContentPercentage: rightPercentage,
-        };
+        return percentages;
     };
 
-    const { positiveItemContentPercentage, negativeItemContentPercentage } = calPercentage(settlements);
+    const percentages = calPercentage(settlements);
 
     return (
         <div className={Styles['scoreboard-percentage']}>
-            <div className={Styles['left-percentage']}>{`${translateBetOption(
-                scoreboardCharacter.positiveItemContent,
-            )} ${positiveItemContentPercentage}%`}</div>
-            <div className={Styles['right-percentage']}>{`${translateBetOption(
-                scoreboardCharacter.negativeItemContent,
-            )} ${negativeItemContentPercentage}%`}</div>
+            {Object.entries(scoreboardCharacter).map(([key, value]) => (
+                <div key={key} className={Styles['scoreboard-percentage-item']}>
+                    {`${translateBetOption(value)} ${percentages[key]}%`}
+                </div>
+            ))}
         </div>
     );
 };
