@@ -25,6 +25,11 @@ export interface RNGSoccerSettlementResult {
     roundState: string;
 }
 
+export interface RNGSoccerSettlementItemResult {
+    home: boolean;
+    away: boolean;
+    draw: boolean;
+}
 export interface RNGSoccerBet {
     symbol: RNGSoccerSymbolType;
     amount: number;
@@ -41,6 +46,6 @@ export interface RNGSoccerRound {
 
 export interface RNGSoccerRoundHistory {
     roundId: number;
-    settlementResult: RNGSoccerSettlementResult;
+    settlementResult: RNGSoccerSettlementItemResult;
     result: RNGSoccerResult;
-} 
+}

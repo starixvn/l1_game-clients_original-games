@@ -211,15 +211,13 @@
     }
 
     .close-popup {
-        position: absolute;
-        top: $spacing-sm;
-        right: $spacing-sm;
         cursor: pointer;
         padding: $spacing-xs;
+        align-self: flex-end;
 
         .close-icon {
-            width: 20px;
-            height: 20px;
+            width: 13px;
+            height: 13px;
         }
     }
 }

@@ -25,7 +25,6 @@ $spacing-large: 10px;
 
 // Main styles
 .scoreboard-percentage {
-    margin-top: $spacing-large;
       @include flex-center;
       gap: 40px;
     
