@@ -47,46 +47,9 @@ class RNGSoccerBigRoadConverter extends Converter<RNGSoccerRoundHistory> {
         return RNGSoccerChoices.draw;
     }
 
-    group(items: RNGSoccerRoundHistory[]): RNGSoccerRoundHistory[][] {
-        const groups: RNGSoccerRoundHistory[][] = [];
-        let currentGroup: RNGSoccerRoundHistory[] = [];
-
-        for (const item of items) {
-            if (currentGroup.length === 0) {
-                currentGroup.push(item);
-            } else {
-                const currentWinner = this.getWinningChoice(currentGroup[0]);
-                const itemWinner = this.getWinningChoice(item);
-
-                if (currentWinner === itemWinner) {
-                    currentGroup.push(item);
-                } else {
-                    groups.push(currentGroup);
-                    currentGroup = [item];
-                }
-            }
-        }
-
-        if (currentGroup.length > 0) {
-            groups.push(currentGroup);
-        }
-
-        return groups;
-    }
-
     convert(group: RNGSoccerRoundHistory[]): boolean {
         if (group.length === 0) return false;
         return group[0].settlementResult?.home === true;
-    }
-
-    private getWinningChoice(item: RNGSoccerRoundHistory): string | null {
-        if (!item || !item.settlementResult) return null;
-
-        if (item.settlementResult.home) return RNGSoccerChoices.home;
-        if (item.settlementResult.draw) return RNGSoccerChoices.draw;
-        if (item.settlementResult.away) return RNGSoccerChoices.away;
-
-        return null;
     }
 }
 

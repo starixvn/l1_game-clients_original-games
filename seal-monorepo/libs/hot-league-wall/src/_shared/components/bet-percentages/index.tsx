@@ -18,7 +18,7 @@ const BetPercentages: React.FunctionComponent<Props> = ({ gameName, settlements,
 
         Object.keys(scoreboardCharacter).forEach((key) => {
             const count = settlements.filter((entry) => entry[scoreboardCharacter[key]]).length;
-            percentages[key] = totalCount > 0 ? parseFloat(((count / totalCount) * 100).toFixed(2)) : 0;
+            percentages[key] = totalCount > 0 ? parseFloat(((count / totalCount) * 100).toFixed(0)) : 0;
         });
 
         return percentages;
