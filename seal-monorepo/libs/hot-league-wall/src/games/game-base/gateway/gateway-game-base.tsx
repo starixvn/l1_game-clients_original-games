@@ -148,10 +148,10 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
 
         console.log('this.state.generatingResultDuration', this.state.settlementResultDuration);
         await FunctionUtils.delay(this.state.settlementResultDuration * 1000);
-        this.finishShowResult();
-        // this.showResult(true, result, settlementResult).then(() => {
-        //     this.finishShowResult();
-        // });
+
+        this.showResult(true, result, settlementResult).then(() => {
+            this.finishShowResult();
+        });
     }
 
     @handle(Settlements.SettlementUIHandlers.FinishedShowResult)

@@ -14,7 +14,7 @@
             "placingBet": 15,
             "generatingResult": 2,
             "showingResult": 1,
-            "startRound": 2
+            "startRound": 1
         },
         "numberOfRoundHistory": 100,
         "websocket": {

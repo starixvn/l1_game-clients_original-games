@@ -9,7 +9,6 @@ import { UIExtensionOptions } from '../../../games/game-base/ui/game-ui-renderer
 import { GameBettingOptionsContext } from '../../../_shared/react-contexts/game-betting-zone-context/game-betting-zone-context';
 import styles from './rng-soccer.module.scss';
 import { containerOptions, setting } from './game-settings';
-import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds/round-time-store';
 import RNGSoccerBetOptions from './bet-option/rng-soccer-bet-options';
 import liveIcon from '../../../assets/rng-soccer/live-icon.svg';
 import historyBtnIcon from '../../../assets/rng-soccer/history-btn.svg';

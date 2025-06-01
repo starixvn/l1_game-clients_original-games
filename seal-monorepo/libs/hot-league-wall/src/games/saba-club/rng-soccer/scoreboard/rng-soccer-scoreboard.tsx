@@ -91,7 +91,6 @@ export class RNGSoccerScoreboard extends ObserverComponent<Props, IBaccaratScore
         }
 
         const input = [...rounds]
-            .filter(round => round.settlementResult)
             .map((round) => ({
                 roundId: round.roundId,
                 settlementResult: {
@@ -102,7 +101,6 @@ export class RNGSoccerScoreboard extends ObserverComponent<Props, IBaccaratScore
                 result: round.result as unknown as RNGSoccerResult
             }))
             .reverse();
-
         this.bigRoad.initialize(input, isLockingBet);
         const rows = this.bigRoad.rows();
 
