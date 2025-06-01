@@ -118,6 +118,12 @@
 
             .card-section {
                 @include card-style;
+
+                &.winning-card {
+                    border: 2px solid transparent;
+                    border-radius: 6px;
+                    animation: flash-background $animation-duration-very-slow ease infinite;
+                }
             }
 
             .result-section {
@@ -126,6 +132,11 @@
 
                 .result {
                     @include score-box;
+
+                    &.higher-score {
+                        color: rgba(250, 195, 14, 1);
+                        border: 2px solid rgba(250, 195, 14, 1);
+                    }
                 }
             }
         }
@@ -232,4 +243,21 @@
 .container-bets {
     width: 100%;
     box-sizing: border-box;
+}
+
+@keyframes flash-background {
+    0% {
+        box-shadow: inset 0 0 20px #ffae00;
+        border-color: rgba(250, 195, 14, 1);;
+    }
+
+    50% {
+        box-shadow: none;
+        border-color: #e0e023;
+    }
+
+    100% {
+        box-shadow: inset 0 0 20px #ffae00;
+        border-color: rgba(250, 195, 14, 1);;
+    }
 }

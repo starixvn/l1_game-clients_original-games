@@ -69,7 +69,7 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
             <div className={styles['sport-result']}>
                 <div className={styles['container-result']}>
                     {/* Home card */}
-                    <div className={styles['card-section']}>
+                    <div className={`${styles['card-section']} ${!showDefaultScores && homeScore > awayScore ? styles['winning-card'] : ''}`}>
                         {shouldHideCards || !result?.home ? (
                             <img src={cardBack} alt="card" />
                         ) : (
@@ -90,7 +90,7 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
                     />
 
                     {/* Away card */}
-                    <div className={styles['card-section']}>
+                    <div className={`${styles['card-section']} ${!showDefaultScores && awayScore > homeScore ? styles['winning-card'] : ''}`}>
                         {shouldHideCards || !result?.away ? (
                             <img src={cardBack} alt="card" />
                         ) : (

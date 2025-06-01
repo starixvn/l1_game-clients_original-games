@@ -14,17 +14,22 @@ export const ScoreDisplay: React.FC<ScoreDisplayProps> = ({
     isAnimating = false,
     showDefaultScore = false
 }) => {
-    // Default scores for initial state
     const DEFAULT_HOME_SCORE = 0;
     const DEFAULT_AWAY_SCORE = 0;
 
+    const homeScoreValue = showDefaultScore ? DEFAULT_HOME_SCORE : homeScore;
+    const awayScoreValue = showDefaultScore ? DEFAULT_AWAY_SCORE : awayScore;
+    const isHomeHigher = homeScoreValue > awayScoreValue;
+    const isAwayHigher = awayScoreValue > homeScoreValue;
+    const shouldAnimate = isAnimating || showDefaultScore;
+
     return (
         <div className={styles['result-section']}>
-            <div className={`${styles['result']} ${isAnimating ? styles['score-pop-in'] : ''}`}>
-                <span>{showDefaultScore ? DEFAULT_HOME_SCORE : homeScore}</span>
+            <div className={`${styles['result']} ${shouldAnimate ? styles['score-pop-in'] : ''} ${isHomeHigher ? styles['higher-score'] : ''}`}>
+                <span>{homeScoreValue}</span>
             </div>
-            <div className={`${styles['result']} ${isAnimating ? styles['score-pop-in'] : ''}`}>
-                <span>{showDefaultScore ? DEFAULT_AWAY_SCORE : awayScore}</span>
+            <div className={`${styles['result']} ${shouldAnimate ? styles['score-pop-in'] : ''} ${isAwayHigher ? styles['higher-score'] : ''}`}>
+                <span>{awayScoreValue}</span>
             </div>
         </div>
     );
