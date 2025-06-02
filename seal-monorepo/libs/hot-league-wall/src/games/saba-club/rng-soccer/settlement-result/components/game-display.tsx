@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import styles from '../../rng-soccer.module.scss';
-import TeamCard from './team-card';
+import TeamCard, { TeamCardAnimation } from './team-card';
 import ScoreDisplay from './score-display';
 import { TeamsData } from '../models/game-result';
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
@@ -19,6 +19,18 @@ interface GameDisplayProps {
     isLoading: boolean;
     isHideAllCards: boolean;
 }
+
+const useTeamCardAnimation = (roundState: string) => {
+    return useMemo(() => {
+        if (roundState === ROUND_STATE.STARTING_ROUND) {
+            return TeamCardAnimation.POP_OUT;
+        }
+        if (roundState === ROUND_STATE.PLACING_BET || roundState === ROUND_STATE.LOCKING_BET) {
+            return TeamCardAnimation.POP_IN;
+        }
+        return TeamCardAnimation.NONE;
+    }, [roundState]);
+};
 
 /**
  * Main game display component
@@ -57,12 +69,15 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
         roundState === ROUND_STATE.PLACING_BET ||
         roundState === ROUND_STATE.LOCKING_BET;
 
+    const teamCardAnimation = useTeamCardAnimation(roundState);
+
     return (
         <div className={styles['wrapper-sport-middle']}>
             {/* Home Team */}
             <TeamCard
                 logo={teamData.homeTeam.logo}
                 isHomeTeam={true}
+                animation={teamCardAnimation}
             />
 
             {/* Game Result Display */}
@@ -108,6 +123,7 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
             <TeamCard
                 logo={teamData.awayTeam.logo}
                 isHomeTeam={false}
+                animation={teamCardAnimation}
             />
 
             <div className={styles['wrapper-team-name']}>

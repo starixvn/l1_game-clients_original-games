@@ -88,6 +88,14 @@
                 height: auto;
             }
         }
+
+        &.pop-in-animation {
+            animation: popIn $animation-duration-slow cubic-bezier(.53,-0.01,.33,1) forwards;
+        }
+
+        &.pop-out-animation {
+            animation: popOut $animation-duration-slow cubic-bezier(.53,-0.01,.33,1) forwards;
+        }
     }
 
     .wrapper-team-name {
