@@ -71,7 +71,7 @@ const cardImages: Record<string, string> = {
 };
 
 const Card: React.FC<Props> = (props) => {
-    const { result, viewMode = '' } = props;
+    const { result } = props;
     const customClassName = props.customClassName ?? '';
 
     const getCardsDefault = () => {
