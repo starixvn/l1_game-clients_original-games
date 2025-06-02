@@ -80,11 +80,22 @@
 
 // Game footer section
 .game-footer {
+    position: relative;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 $spacing-xs;
+
+    // Balance animation
+    .animation-balance {
+        position: absolute;
+        width: 100%;
+        top:-200%;
+        left: 50%;
+        transform: translate(-50%, -100%);
+        z-index: 2;
+        @include flex-center;
+    }
 }
 
 // Game popup section
@@ -104,7 +115,7 @@
     height: 100%;
     max-width: 344px;
     min-height: 110px;
-    margin:  12px;
+    margin: 12px;
     border-radius: $border-radius-md;
     background-color: rgba(0, 6, 17, 0.9);
 
@@ -148,16 +159,6 @@
         &.disabled {
             @include disabled-state;
         }
-    }
-
-    // Balance animation
-    .animation-balance {
-        position: absolute;
-        width: 100%;
-        right: 0;
-        top: 40px;
-        z-index: $z-index-overlay;
-        @include flex-center;
     }
 }
 

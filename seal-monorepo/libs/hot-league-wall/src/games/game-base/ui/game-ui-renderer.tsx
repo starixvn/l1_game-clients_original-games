@@ -281,10 +281,6 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
     }
 
     renderGameFooterSection(props: P, state: S, overrideClasses?: any): JSX.Element {
-        if (this.extensionOptions.components?.customFooter) {
-            return this.extensionOptions.components.customFooter(props, state);
-        }
-
         if (this.extensionOptions.config?.enableFooterSection === false) {
             return <></>;
         }
@@ -304,17 +300,18 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
             overrideClasses?.betOptions
         );
 
+        const customFooter = this.extensionOptions?.components?.customFooter?.(props, state);
         return (
             <div className={footerClass}>
                 <div className={betOptionsClass}>
-                    {this.renderBettingBlock(props, state)}
+                    {customFooter ? customFooter : this.renderBettingBlock(props, state)}
                     <ConfirmBet namespace={props.namespace} />
-                    <div className={`${Styles['animation-balance']} ${Styles[`game-${state.gameId}`]}`}>
-                        {this.renderAnimationBalance(state)}
-                    </div>
+                </div>
+                <div className={Styles['animation-balance']}>
+                    {this.renderAnimationBalance(state)}
                 </div>
             </div>
-        );
+        )
     }
 
     renderGameHistorySection(props: P, state: S, overrideClasses?: any): JSX.Element {
