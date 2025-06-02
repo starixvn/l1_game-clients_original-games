@@ -13,28 +13,43 @@ const scoreboardImages: Record<string, string> = {
     draw: drawDotImage,
 };
 
+const DrawDot: React.FC<{ count: number }> = ({ count }) => (
+    <>
+        {count >= 2 && <span className={styles['draw-count']}>{count}</span>}
+        <img className={styles['draw-image']} src={scoreboardImages.draw} alt="Draw" />
+    </>
+);
+
 const RNGSoccerBigRoadItem: React.FC<{
     item: BigRoadScoreboardPoint<RNGSoccerRoundHistory>;
 }> = ({ item }) => {
-    if (!item.data || item.data.length === 0) {
+    const { status, data, isBlink } = item;
+    
+    if (isBlink) {
+        return <div className={styles['dot-blink']}></div>;
+    }
+
+    if (status === undefined) {
+        return <div className={styles['dot-empty']}></div>;
+    }
+
+    if (!data || data.length === 0) {
         return null;
     }
 
-    const firstItem = item.data[0];
+    const firstItem = data[0];
     if (!firstItem || !firstItem.settlementResult) {
         return null;
     }
 
-    const { home, draw } = firstItem.settlementResult;
-    const imagePath = home ? scoreboardImages.home : draw ? scoreboardImages.draw : scoreboardImages.away;
+    const { draw } = firstItem.settlementResult;
+    const imagePath = status ? scoreboardImages.home : scoreboardImages.away;
+    const drawCount = draw ? data.length : data.length - 1;
 
     return (
         <div className={styles['dot-image']}>
-                <img
-                    src={imagePath}
-                    style={{ width: '16px', height: '16px' }}
-                alt="Natural"
-            />
+            <img src={imagePath}  style={{ width: '16px', height: '16px' }} />
+            {drawCount > 0 && <DrawDot count={drawCount} />}
         </div>
     );
 };

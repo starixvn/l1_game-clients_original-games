@@ -81,7 +81,6 @@
     height: var(--dot-size);
     display: flex;
     align-items: center;
-    justify-content: center;
     position: relative;
 
     img {
@@ -99,6 +98,38 @@
     border-radius: 50%;
     background: #8b8686;
     animation: blink 1.3s linear infinite;
+}
+
+.dot-empty {
+    width: var(--dot-size);
+    height: var(--dot-size);
+    border-radius: 50%;
+    background: transparent;
+}
+
+.draw-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ffd700;
+    color: #000;
+    font-size: 12px;
+    font-weight: bold;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.draw-image {
+    position: absolute;
+    transform: translate(-100%, -50%);
+    width: 5px;
+    height: 5px;
+    z-index: 1;
 }
 
 @keyframes blink {
