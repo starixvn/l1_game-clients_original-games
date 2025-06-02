@@ -58,7 +58,11 @@ export default class CountDownTimer extends ObserverComponent<ICountDownTimerPro
         if (config.showTimer || config.showNoMoreBet) {
             return formatSecondsToTime(countdownTimer);
         }
-        return "...";
+        return (
+            <div className={Styles['waiting-container']}>
+                <div className={Styles['dot-elastic']}></div>
+            </div>
+        );
     }
 
     render() {

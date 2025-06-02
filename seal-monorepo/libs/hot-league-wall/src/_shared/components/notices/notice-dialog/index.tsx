@@ -42,22 +42,9 @@ const NoticeDialog: React.FC<Props> = ({ title, children, onClose, type, showBtn
         <div ref={wrapperRef}>
             <div className={Styles['wrapper-dialog']}>
                 <div className={`${Styles['notice-container']} ${classType ? classType : ''} ${bgInfoClass ? bgInfoClass : ''} ${disabledGameClass ? disabledGameClass : ''}`}>
-                    <>
-                        {/* <div className={`justify-content-between ${bgInfoClass}`}>
-                        <strong className={Styles['d-title']}> {title}</strong>
-                    </div> */}
-                        <div className={Styles['notice-info']}>
-                            {children}
-                        </div>
-                        {/* {showBtnConfirmButton && (7
-
-                        <div className='text-center'>
-                            <div className='btn-warning' onClick={onClose}>
-                                OK
-                            </div>
-                        </div>
-                    )} */}
-                    </>
+                    <div className={Styles['notice-info']}>
+                        {children}
+                    </div>
                 </div>
             </div>
         </div>
