@@ -189,18 +189,9 @@
         "sucbet": "การเดิมพันสำเร็จ",
         "turn_off_notification": "ปิดการแจ้งเตือนนี้"
     },
-    "CoinToss": {
-        "game_name": "โยนเหรียญ",
-        "game_tab_name": "โยนเหรียญ",
-        "choices_type": "หัว/ก้อย",
-        "glossary_head": "หัว",
-        "glossary_tail": "ก้อย",
-        "head": "หัว",
-        "tail": "ก้อย"
-    },
     "RNGSoccer": {
-        "game_name": "RNGSoccer",
-        "game_tab_name": "RNGSoccer",
+        "game_name": "RNG Soccer",
+        "game_tab_name": "RNG Soccer",
         "choices_type": "ทีมเหย้า/เสมอ/ทีมเยือน",
         "glossary_home": "ทีมเหย้า",
         "glossary_away": "ทีมเยือน",

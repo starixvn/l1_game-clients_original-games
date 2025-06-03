@@ -189,18 +189,9 @@
         "sucbet": "Cược Thành Công",
         "turn_off_notification": "Tắt thông báo này"
     },
-    "CoinToss": {
-        "game_name": "Tung Đồng Xu",
-        "game_tab_name": "Tung Đồng Xu",
-        "choices_type": "Ngửa/Sấp",
-        "glossary_head": "Ngửa",
-        "glossary_tail": "Sấp",
-        "head": "Ngửa",
-        "tail": "Sấp"
-    },
     "RNGSoccer": {
-        "game_name": "RNGSoccer",
-        "game_tab_name": "RNGSoccer",
+        "game_name": "RNG Soccer",
+        "game_tab_name": "RNG Soccer",
         "choices_type": "Đội Nhà/Hòa/Đội Khách",
         "glossary_home": "Đội Nhà",
         "glossary_away": "Đội Khách",

@@ -189,18 +189,9 @@
         "sucbet": "投注成功",
         "turn_off_notification": "不再显示这则信息"
     },
-    "CoinToss": {
-        "game_name": "抛硬币",
-        "game_tab_name": "抛硬币",
-        "choices_type": "正面/反面",
-        "glossary_head": "正面",
-        "glossary_tail": "反面",
-        "head": "正面",
-        "tail": "反面"
-    },
     "RNGSoccer": {
-        "game_name": "RNGSoccer",
-        "game_tab_name": "RNGSoccer",
+        "game_name": "RNG Soccer",
+        "game_tab_name": "RNG Soccer",
         "choices_type": "主队/平/客队",
         "glossary_home": "主队",
         "glossary_away": "客队",

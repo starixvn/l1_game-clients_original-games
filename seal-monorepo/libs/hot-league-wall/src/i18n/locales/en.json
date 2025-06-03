@@ -189,18 +189,9 @@
         "sucbet": "Bet Success",
         "turn_off_notification": "Turn off this notification"
     },
-    "CoinToss": {
-        "game_name": "Coin Toss",
-        "game_tab_name": "Coin Toss",
-        "choices_type": "Heads/Tails",
-        "glossary_head": "Heads",
-        "glossary_tail": "Tails",
-        "head": "Heads",
-        "tail": "Tails"
-    },
     "RNGSoccer": {
-        "game_name": "RNGSoccer",
-        "game_tab_name": "RNGSoccer",
+        "game_name": "RNG Soccer",
+        "game_tab_name": "RNG Soccer",
         "choices_type": "Home/Draw/Away",
         "glossary_home": "Home",
         "glossary_away": "Away",
