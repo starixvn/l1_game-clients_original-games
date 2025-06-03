@@ -6,9 +6,9 @@ import { TeamsData } from '../models/game-result';
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
 import Loading from 'libs/hot-league-wall/src/_shared/components/loading';
 import type { RNGSoccerResult } from '../../type';
-import Card from 'libs/hot-league-wall/src/_shared/components/card';
-import cardBack from '../../../../../assets/cards/card-back.svg';
 import { SCORE_MAP } from '../utils/card-score-utils';
+import { FlipCard } from 'libs/hot-league-wall/src/_shared/components/card/flip-card/flip-card';
+import { CardResult } from 'libs/hot-league-wall/src/_shared/components/card/type';
 
 interface GameDisplayProps {
     result?: RNGSoccerResult;
@@ -48,19 +48,24 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
     if (isLoading) {
         return <Loading />;
     }
-
-    // Calculate scores directly using SCORE_MAP for more efficient lookup
-    const homeScore = useMemo(() => {
-        if (!result?.home || result.home.rank === undefined) return 0;
-        return SCORE_MAP[result.home.rank] || 0;
+    const homeCardData = useMemo(() => {
+        const card: CardResult = {
+            rank: result?.home?.rank ?? 0,
+            suit: result?.home?.suit ?? 0
+        };
+        const score = SCORE_MAP[card.rank] || 0;
+        return { card, score };
     }, [result?.home]);
 
-    const awayScore = useMemo(() => {
-        if (!result?.away || result.away.rank === undefined) return 0;
-        return SCORE_MAP[result.away.rank] || 0;
+    const awayCardData = useMemo(() => {
+        const card: CardResult = {
+            rank: result?.away?.rank ?? 0,
+            suit: result?.away?.suit ?? 0
+        };
+        const score = SCORE_MAP[card.rank] || 0;
+        return { card, score };
     }, [result?.away]);
 
-    // Calculate if we should hide cards or show default results
     const shouldHideCards = !isFinish || isHideAllCards ||
         roundState === ROUND_STATE.PLACING_BET ||
         roundState === ROUND_STATE.LOCKING_BET;
@@ -73,53 +78,43 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
 
     return (
         <div className={styles['wrapper-sport-middle']}>
-            {/* Home Team */}
             <TeamCard
                 logo={teamData.homeTeam.logo}
                 isHomeTeam={true}
                 animation={teamCardAnimation}
             />
 
-            {/* Game Result Display */}
             <div className={styles['sport-result']}>
                 <div className={styles['container-result']}>
                     {/* Home card */}
-                    <div className={`${styles['card-section']} ${!showDefaultScores && homeScore > awayScore ? styles['winning-card'] : ''}`}>
-                        {shouldHideCards || !result?.home ? (
-                            <img src={cardBack} alt="card" />
-                        ) : (
-                            <Card
-                                result={result.home}
-                                isAnimation={isAnimationResult}
-                                customClassName={`${isAnimationResult ? 'card-flip' : ''}`}
-                            />
-                        )}
+                    <div className={`${styles['card-section']} ${!showDefaultScores && homeCardData.score > awayCardData.score ? styles['winning-card'] : ''}`}>
+                        <FlipCard
+                            playResultAnimation={isAnimationResult}
+                            card={homeCardData.card}
+                            isShowResult={!shouldHideCards}
+                            onAnimationComplete={() => {
+                                console.log('Jim animation complete');
+                            }}
+                        />
                     </div>
-
-                    {/* Score display */}
                     <ScoreDisplay
-                        homeScore={homeScore}
-                        awayScore={awayScore}
+                        homeScore={homeCardData.score}
+                        awayScore={awayCardData.score}
                         isAnimating={isAnimationResult}
                         showDefaultScore={showDefaultScores}
                     />
-
-                    {/* Away card */}
-                    <div className={`${styles['card-section']} ${!showDefaultScores && awayScore > homeScore ? styles['winning-card'] : ''}`}>
-                        {shouldHideCards || !result?.away ? (
-                            <img src={cardBack} alt="card" />
-                        ) : (
-                            <Card
-                                result={result.away}
-                                isAnimation={isAnimationResult}
-                                customClassName={`${isAnimationResult ? 'card-flip' : ''}`}
-                            />
-                        )}
+                    <div className={`${styles['card-section']} ${!showDefaultScores && awayCardData.score > homeCardData.score ? styles['winning-card'] : ''}`}>
+                        <FlipCard
+                            playResultAnimation={isAnimationResult}
+                            card={awayCardData.card}
+                            isShowResult={!shouldHideCards}
+                            onAnimationComplete={() => {
+                                console.log('Jim animation complete');
+                            }}
+                        />
                     </div>
                 </div>
             </div>
-
-            {/* Away Team */}
             <TeamCard
                 logo={teamData.awayTeam.logo}
                 isHomeTeam={false}
