@@ -26,35 +26,12 @@
     @include flex-column;
     justify-content: space-between;
     position: relative;
+    gap: $spacing-xs;
 }
 
 // Top section styling
 .wrapper-sport-top {
     @include flex-row-between;
-
-    .game-name {
-        @include flex-column;
-        align-items: flex-start;
-
-        .live-icon {
-            width: $spacing-lg;
-            height: $spacing-lg;
-        }
-
-        .game-name-text {
-            font-size: $font-size-sm;
-            font-weight: $font-weight-bold;
-            color: $color-light-gray;
-            @include flex-center;
-            gap: $spacing-xs;
-        }
-
-        .game-name-round {
-            font-size: $font-size-xs;
-            font-weight: $font-weight-medium;
-            color: $color-light-gray;
-        }
-    }
 
     .score-board-img {
         cursor: pointer;

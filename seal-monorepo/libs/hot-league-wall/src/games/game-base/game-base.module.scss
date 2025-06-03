@@ -31,8 +31,8 @@
         align-items: flex-start;
 
         .live-icon {
-            width: $spacing-lg;
-            height: $spacing-lg;
+            width: 14px;
+            height: 14px;
         }
 
         .game-name-text {
@@ -40,7 +40,7 @@
             font-weight: $font-weight-bold;
             color: $color-light-gray;
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             justify-content: center;
             gap: $spacing-xs;
         }

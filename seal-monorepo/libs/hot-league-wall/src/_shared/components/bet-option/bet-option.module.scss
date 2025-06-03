@@ -1,7 +1,8 @@
 @import '../../../styles/variables';
 
 .odd {
-    font-weight: bold;
+    font-weight: $font-weight-bold;
+    font-size: $font-size-xs;
     color: $color-white;
     cursor: pointer;
 }

@@ -35,7 +35,7 @@
 .padding-bet {
     @include flex-row-between;
     @include fullsize-container;
-    padding: 10px 8px;
+    padding: 10px 6px;
     cursor: pointer;
     border-radius: $border-radius-md;
     box-sizing: border-box;
@@ -47,7 +47,7 @@
     align-items: center;
     justify-content: flex-start;
     gap: $spacing-sm;
-    font-weight: $font-weight-medium !important;
+    font-weight: $font-weight-bold !important;
     font-size: $font-size-sm;
     color: $color-white;
 }
@@ -58,8 +58,6 @@
     font-weight: 600;
     color: $color-white;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-right: 6px;
+    font-weight: $font-weight-bold !important;
     font-size: $font-size-xs;
 }
