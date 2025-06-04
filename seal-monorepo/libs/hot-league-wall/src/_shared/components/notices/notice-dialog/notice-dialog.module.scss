@@ -9,7 +9,7 @@
 }
 
 .notice-container {
-    background: linear-gradient(90deg, rgba(64, 105, 169, 0.00) 0%, rgba(35, 53, 174, 0.80) 37.18%, rgba(35, 53, 174, 0.80) 48.5%, rgba(48, 75, 186, 0.80) 59.98%, rgba(84, 136, 220, 0.00) 100%);
+    background: linear-gradient(90deg, rgba(0, 6, 17, 0) 0%, rgba(0, 6, 17, 0.9) 20%, rgba(0, 6, 17, 0.9) 48.5%, rgba(0, 6, 17, 0.9) 80%, rgba(0, 6, 17, 0) 100%);
     position: absolute;
     margin-left: auto;
     margin-right: auto;
@@ -19,33 +19,15 @@
     font-size: 14px;
     color: #fff;
     text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.30);
-    width: auto;
-    padding: 8px 50px;
+    width: 100%;
+    padding: 10px 24px;
     text-align: center;
     font-weight: 700;
     border: 2px solid transparent;
-    border-image: linear-gradient(90deg, rgba(255, 232, 158, 0.00) 0%, #FC0 49.61%, rgba(255, 232, 158, 0.00) 100%);
+    border-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 49.61%, rgba(255, 255, 255, 0) 100%);
     border-image-slice: 1;
     z-index: 2;
     display: inline-block;
-
-    .d-title {
-        color: #fff;
-    }
-
-    .d-border {
-        border-bottom: 1px solid black;
-    }
-
-    &.bg-info {
-        background-color: #3a3939;
-    }
-
-    &.bg-error {
-        border-image: linear-gradient(90deg, rgba(255, 232, 158, 0.00) 0%, #FF0900 49.61%, rgba(255, 232, 158, 0.00) 100%);
-        border-image-slice: 1;
-        background: linear-gradient(90deg, rgba(174, 35, 35, 0) 0%, rgba(174, 35, 35, 0.6) 15%, #AE2323 50.5%, rgba(174, 35, 35, 0.6) 85.5%, rgba(174, 35, 35, 0) 100%)
-    }
 
     &.disabled-game {
         position: unset;
