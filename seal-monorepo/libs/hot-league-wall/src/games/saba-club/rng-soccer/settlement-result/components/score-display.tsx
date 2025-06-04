@@ -26,10 +26,10 @@ export const ScoreDisplay: React.FC<ScoreDisplayProps> = ({
     return (
         <div className={styles['result-section']}>
             <div className={`${styles['result']} ${shouldAnimate ? styles['score-pop-in'] : ''} ${isHomeHigher ? styles['higher-score'] : ''}`}>
-                <span>{homeScoreValue}</span>
+                <span>{showDefaultScore? "" :homeScoreValue}</span>
             </div>
             <div className={`${styles['result']} ${shouldAnimate ? styles['score-pop-in'] : ''} ${isAwayHigher ? styles['higher-score'] : ''}`}>
-                <span>{awayScoreValue}</span>
+                <span>{showDefaultScore ? "" : awayScoreValue}</span>
             </div>
         </div>
     );

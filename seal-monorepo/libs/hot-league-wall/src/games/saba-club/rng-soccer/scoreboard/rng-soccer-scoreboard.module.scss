@@ -19,6 +19,7 @@
     background: var(--scoreboard-bg);
     box-sizing: border-box;
     min-width: 0;
+    gap: 2px;
 
     &-content {
         flex: 1;
