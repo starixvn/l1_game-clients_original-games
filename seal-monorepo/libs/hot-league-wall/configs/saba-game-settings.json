@@ -13,7 +13,7 @@
             "lockingBet": 3,
             "placingBet": 15,
             "generatingResult": 2,
-            "showingResult": 1,
+            "showingResult": 2,
             "startRound": 1
         },
         "numberOfRoundHistory": 100,

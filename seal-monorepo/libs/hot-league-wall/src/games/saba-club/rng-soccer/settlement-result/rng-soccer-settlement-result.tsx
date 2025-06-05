@@ -82,7 +82,7 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
                 this.setState({ isFinish: false });
             }
             gameStateService.handleRoundState(roundState);
-            this.setState({ roundState, isLoading: false, isFinishShowResult: false });
+            this.setState({ roundState, isLoading: false });
         } catch (error) {
             this.setState({ error: error as Error });
         }
@@ -162,6 +162,7 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
             roundState,
             isFinish,
             isAnimationResult,
+            isFinishShowResult,
             isLoading,
             error,
             isHideAllCards
@@ -180,6 +181,7 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
                         roundState={roundState}
                         isFinish={isFinish}
                         isAnimationResult={isAnimationResult}
+                        isFinishShowResult={isFinishShowResult}
                         isLoading={isLoading}
                         isHideAllCards={isHideAllCards}
                     />

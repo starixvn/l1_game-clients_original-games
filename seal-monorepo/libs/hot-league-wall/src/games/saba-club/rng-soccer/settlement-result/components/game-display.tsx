@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState, useEffect } from 'react';
+import React, { useMemo, useRef } from 'react';
 import styles from '../../rng-soccer.module.scss';
 import TeamCard, { TeamCardAnimation } from './team-card';
 import ScoreDisplay from './score-display';
@@ -16,6 +16,7 @@ interface GameDisplayProps {
     roundState: string;
     isFinish: boolean;
     isAnimationResult: boolean;
+    isFinishShowResult: boolean;
     isLoading: boolean;
     isHideAllCards: boolean;
 }
@@ -54,6 +55,7 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
     roundState,
     isFinish,
     isAnimationResult,
+    isFinishShowResult,
     isLoading,
     isHideAllCards
 }) => {
@@ -82,8 +84,7 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
         roundState === ROUND_STATE.PLACING_BET ||
         roundState === ROUND_STATE.LOCKING_BET;
 
-    const showDefaultScores = !isFinish || roundState !== ROUND_STATE.SHOW_RESULT;
-    const showWinningHighlight = roundState === ROUND_STATE.SHOW_RESULT;
+    const showDefaultScores = !isFinish || !isFinishShowResult;
 
     const teamCardAnimation = useTeamCardAnimation(roundState, teamData);
 
@@ -98,7 +99,7 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
             <div className={styles['sport-result']}>
                 <div className={styles['container-result']}>
                     {/* Home card */}
-                    <div className={`${styles['card-section']} ${showWinningHighlight && homeCardData.score > awayCardData.score ? styles['winning-card'] : ''}`}>
+                    <div className={`${styles['card-section']} ${isFinishShowResult && homeCardData.score > awayCardData.score ? styles['winning-card'] : ''}`}>
                         <FlipCard
                             playResultAnimation={isAnimationResult}
                             card={homeCardData.card}
@@ -108,10 +109,10 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
                     <ScoreDisplay
                         homeScore={homeCardData.score}
                         awayScore={awayCardData.score}
-                        showWinningHighlight={showWinningHighlight}
+                        showWinningHighlight={isFinishShowResult}
                         showDefaultScore={showDefaultScores}
                     />
-                    <div className={`${styles['card-section']} ${showWinningHighlight && awayCardData.score > homeCardData.score ? styles['winning-card'] : ''}`}>
+                    <div className={`${styles['card-section']} ${isFinishShowResult && awayCardData.score > homeCardData.score ? styles['winning-card'] : ''}`}>
                         <FlipCard
                             playResultAnimation={isAnimationResult}
                             card={awayCardData.card}

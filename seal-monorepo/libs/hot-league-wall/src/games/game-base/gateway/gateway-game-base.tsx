@@ -146,7 +146,6 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
         }
         this.setState({ isFinishShowResult: false } as Pick<S, keyof S>);
 
-        console.log('this.state.generatingResultDuration', this.state.settlementResultDuration);
         await FunctionUtils.delay(this.state.settlementResultDuration * 1000);
 
         this.showResult(true, result, settlementResult).then(() => {
