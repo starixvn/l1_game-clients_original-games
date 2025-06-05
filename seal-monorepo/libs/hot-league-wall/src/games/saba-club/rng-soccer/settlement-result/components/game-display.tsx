@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef, useState, useEffect } from 'react';
 import styles from '../../rng-soccer.module.scss';
 import TeamCard, { TeamCardAnimation } from './team-card';
 import ScoreDisplay from './score-display';
@@ -20,8 +20,20 @@ interface GameDisplayProps {
     isHideAllCards: boolean;
 }
 
-const useTeamCardAnimation = (roundState: string) => {
+const useTeamCardAnimation = (roundState: string, teamData: TeamsData) => {
+    const prevTeamDataRef = useRef<TeamsData | null>(null);
+    
     return useMemo(() => {
+        const isTeamChanged = prevTeamDataRef.current && (
+            prevTeamDataRef.current.homeTeam.name !== teamData.homeTeam.name ||
+            prevTeamDataRef.current.awayTeam.name !== teamData.awayTeam.name
+        );
+        prevTeamDataRef.current = teamData;
+
+        if (!isTeamChanged) {
+            return TeamCardAnimation.NONE;
+        }
+
         if (roundState === ROUND_STATE.STARTING_ROUND) {
             return TeamCardAnimation.POP_OUT;
         }
@@ -29,7 +41,7 @@ const useTeamCardAnimation = (roundState: string) => {
             return TeamCardAnimation.POP_IN;
         }
         return TeamCardAnimation.NONE;
-    }, [roundState]);
+    }, [roundState, teamData]);
 };
 
 /**
@@ -74,7 +86,7 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
         roundState === ROUND_STATE.PLACING_BET ||
         roundState === ROUND_STATE.LOCKING_BET;
 
-    const teamCardAnimation = useTeamCardAnimation(roundState);
+    const teamCardAnimation = useTeamCardAnimation(roundState, teamData);
 
     return (
         <div className={styles['wrapper-sport-middle']}>
@@ -92,9 +104,6 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
                             playResultAnimation={isAnimationResult}
                             card={homeCardData.card}
                             isShowResult={!shouldHideCards}
-                            onAnimationComplete={() => {
-                                console.log('Jim animation complete');
-                            }}
                         />
                     </div>
                     <ScoreDisplay

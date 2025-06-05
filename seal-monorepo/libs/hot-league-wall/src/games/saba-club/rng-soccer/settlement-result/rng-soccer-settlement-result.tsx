@@ -60,10 +60,6 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
 
     @render(gc.Rounds.RoundTimeStore, (store) => ({ teamData: store.teamData, roundState: store.roundState }))
     renderTeamDataState(data: { teamData: any, roundState: string }) {
-        if (data.roundState === ROUND_STATE.STARTING_ROUND) {
-            this.setState({ teamData: GameResult.getDefaultTeamData() });
-            return;
-        }
         if (data.roundState === ROUND_STATE.PLACING_BET) {
             const { home, away } = data.teamData;
             const teamData = GameResult.updateTeamData({
