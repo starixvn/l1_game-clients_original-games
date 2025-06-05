@@ -90,15 +90,12 @@ export default class Warning extends ObserverComponent<IPropsObserver, IWarningS
         return (
             <>
                 {warnings.map((warning, index) => (
-                    <WarningDialog key={`warning-${index}`} {...warning}>
-                        <div className={Styles['title-white']}>{warning?.message}</div>
-                    </WarningDialog>
+                    <WarningDialog key={`warning-${index}`} {...warning} message={warning?.message} />
+
                 ))}
 
                 {processingWarnings.map((processingWarning, index) => (
-                    <WarningDialog key={`processingWarning-${index}`} {...processingWarning}>
-                        <div className={Styles['title-white']}>{processingWarning?.message}</div>
-                    </WarningDialog>
+                    <WarningDialog key={`processingWarning-${index}`} {...processingWarning} message={processingWarning?.message} />
                 ))}
             </>
         );

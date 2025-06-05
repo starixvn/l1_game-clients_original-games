@@ -11,6 +11,7 @@ import CountDownTimer from '../../../_shared/components/count-down-timer';
 import Styles from '../game-base.module.scss';
 import { IGameBaseState } from '../interfaces';
 import { GameBaseProps } from '../type';
+import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
 
 export interface UIExtensionOptions {
     classes?: {
@@ -119,13 +120,23 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
     }
 
     renderWaitingForNextRound(state: S) {
-        if (!state.isShowNextRoundMessage) {
-            return <></>;
-        }
+        const getMessage = () => {
+            switch (state.roundState) {
+                case ROUND_STATE.PLACING_BET:
+                    return gc.Translator.t('Common.message_place_bets');
+                case ROUND_STATE.LOCKING_BET:
+                    return gc.Translator.t('Common.message_stop_bet');
+                default:
+                    return state.isShowNextRoundMessage 
+                        ? gc.Translator.t('Common.message_placebet_next_round')
+                        : null;
+            }
+        };
+
+        const message = getMessage();
+        if (!message) return null;
         return (
-            <WarningDialog key={`warning-bet`}>
-                <div className={Styles['title-white']}>{gc.Translator.t('Common.message_placebet_next_round')}</div>
-            </WarningDialog>
+            <WarningDialog key="warning-bet" message={message} duration={1000} />
         );
     }
 
@@ -369,7 +380,7 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
         state: S
     ): JSX.Element {
         return (
-            <div>
+            <div className={Styles['game-messages']}>
                 {this.renderNotice(props, state)}
                 {this.renderWarning(props)}
                 {this.renderWaitingForNextRound(state)}
