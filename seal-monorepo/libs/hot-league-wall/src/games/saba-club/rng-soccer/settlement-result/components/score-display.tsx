@@ -4,14 +4,14 @@ import styles from '../../rng-soccer.module.scss';
 interface ScoreDisplayProps {
     homeScore: number;
     awayScore: number;
-    isAnimating?: boolean;
+    showWinningHighlight?: boolean;
     showDefaultScore?: boolean;
 }
 
 export const ScoreDisplay: React.FC<ScoreDisplayProps> = ({
     homeScore = 0,
     awayScore = 0,
-    isAnimating = false,
+    showWinningHighlight = false,
     showDefaultScore = false
 }) => {
     const DEFAULT_HOME_SCORE = 0;
@@ -21,14 +21,13 @@ export const ScoreDisplay: React.FC<ScoreDisplayProps> = ({
     const awayScoreValue = showDefaultScore ? DEFAULT_AWAY_SCORE : awayScore;
     const isHomeHigher = homeScoreValue > awayScoreValue;
     const isAwayHigher = awayScoreValue > homeScoreValue;
-    const shouldAnimate = isAnimating || showDefaultScore;
 
     return (
         <div className={styles['result-section']}>
-            <div className={`${styles['result']} ${shouldAnimate ? styles['score-pop-in'] : ''} ${isHomeHigher ? styles['higher-score'] : ''}`}>
+            <div className={`${styles['result']} ${isHomeHigher && showWinningHighlight ? styles['higher-score'] : ''}`}>
                 <span>{showDefaultScore? "" :homeScoreValue}</span>
             </div>
-            <div className={`${styles['result']} ${shouldAnimate ? styles['score-pop-in'] : ''} ${isAwayHigher ? styles['higher-score'] : ''}`}>
+            <div className={`${styles['result']} ${isAwayHigher && showWinningHighlight ? styles['higher-score'] : ''}`}>
                 <span>{showDefaultScore ? "" : awayScoreValue}</span>
             </div>
         </div>

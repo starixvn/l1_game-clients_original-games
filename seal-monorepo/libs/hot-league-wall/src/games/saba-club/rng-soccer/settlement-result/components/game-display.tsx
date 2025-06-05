@@ -82,9 +82,8 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
         roundState === ROUND_STATE.PLACING_BET ||
         roundState === ROUND_STATE.LOCKING_BET;
 
-    const showDefaultScores = !isFinish ||
-        roundState === ROUND_STATE.PLACING_BET ||
-        roundState === ROUND_STATE.LOCKING_BET;
+    const showDefaultScores = !isFinish || roundState !== ROUND_STATE.SHOW_RESULT;
+    const showWinningHighlight = roundState === ROUND_STATE.SHOW_RESULT;
 
     const teamCardAnimation = useTeamCardAnimation(roundState, teamData);
 
@@ -99,7 +98,7 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
             <div className={styles['sport-result']}>
                 <div className={styles['container-result']}>
                     {/* Home card */}
-                    <div className={`${styles['card-section']} ${!showDefaultScores && homeCardData.score > awayCardData.score ? styles['winning-card'] : ''}`}>
+                    <div className={`${styles['card-section']} ${showWinningHighlight && homeCardData.score > awayCardData.score ? styles['winning-card'] : ''}`}>
                         <FlipCard
                             playResultAnimation={isAnimationResult}
                             card={homeCardData.card}
@@ -109,17 +108,14 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
                     <ScoreDisplay
                         homeScore={homeCardData.score}
                         awayScore={awayCardData.score}
-                        isAnimating={isAnimationResult}
+                        showWinningHighlight={showWinningHighlight}
                         showDefaultScore={showDefaultScores}
                     />
-                    <div className={`${styles['card-section']} ${!showDefaultScores && awayCardData.score > homeCardData.score ? styles['winning-card'] : ''}`}>
+                    <div className={`${styles['card-section']} ${showWinningHighlight && awayCardData.score > homeCardData.score ? styles['winning-card'] : ''}`}>
                         <FlipCard
                             playResultAnimation={isAnimationResult}
                             card={awayCardData.card}
                             isShowResult={!shouldHideCards}
-                            onAnimationComplete={() => {
-                                console.log('Jim animation complete');
-                            }}
                         />
                     </div>
                 </div>
