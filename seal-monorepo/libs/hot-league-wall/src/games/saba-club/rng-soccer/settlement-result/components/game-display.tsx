@@ -117,6 +117,7 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
                             playResultAnimation={isAnimationResult}
                             card={awayCardData.card}
                             isShowResult={!shouldHideCards}
+                            delayTime={1000}
                         />
                     </div>
                 </div>

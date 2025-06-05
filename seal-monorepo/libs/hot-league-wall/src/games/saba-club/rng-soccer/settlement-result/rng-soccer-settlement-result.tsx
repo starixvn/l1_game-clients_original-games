@@ -111,7 +111,7 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
                 // Optional: Add timer to trigger any card flip animations
                 setTimeout(() => {
                     this.setState({ isAnimationResult: false });
-                }, 500); // Animation duration in ms
+                }, 2000); // Animation duration in ms
             } else {
                 // If we don't have a valid result, ensure we're not showing loading
                 this.setState({
