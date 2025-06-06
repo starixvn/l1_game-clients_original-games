@@ -4,7 +4,7 @@ import { render } from '@sg/sg-observer';
 import { IPropsObserver, IStateObserver, ObserverComponent } from '../../../../_shared/components/observer-component/observer-component';
 import styles from './rng-soccer-scoreboard.module.scss';
 import { BigRoadScoreboard, Converter } from 'sc-scoreboards';
-import { RNGSoccerChoices, RNGSoccerResult, RNGSoccerRoundHistory } from '../type';
+import { RNGSoccerChoices, RNGSoccerSettlementItemResult } from '../type';
 import { BetPercentages } from '../../../../_shared/components/bet-percentages';
 import RNGSoccerBigRoad from './rng-soccer-big-road';
 
@@ -19,19 +19,15 @@ interface IBaccaratScoreboardState extends IStateObserver {
     isLockingBet: boolean;
 }
 
-class RNGSoccerBigRoadConverter extends Converter<RNGSoccerRoundHistory> {
-    static addBlinkNode(rounds: RNGSoccerRoundHistory[]) {
-        const lastRound = rounds.find((round) => round.settlementResult?.home || round.settlementResult?.draw || round.settlementResult?.away);
+class RNGSoccerBigRoadConverter extends Converter<RNGSoccerSettlementItemResult> {
+    static addBlinkNode(rounds: RNGSoccerSettlementItemResult[]) {
+        const lastRound = rounds.find((round) => round?.home || round?.draw || round?.away);
         if (!lastRound) return;
 
-        const blinkRound: RNGSoccerRoundHistory = {
-            roundId: lastRound.roundId,
-            settlementResult: {
-                home: lastRound.settlementResult?.home || false,
-                draw: lastRound.settlementResult?.draw || false,
-                away: lastRound.settlementResult?.away || false
-            },
-            result: lastRound.result
+        const blinkRound = {
+            home: lastRound?.home || false,
+            draw: lastRound?.draw || false,
+            away: lastRound?.away || false
         };
 
         rounds.unshift(blinkRound);
@@ -47,15 +43,14 @@ class RNGSoccerBigRoadConverter extends Converter<RNGSoccerRoundHistory> {
         return RNGSoccerChoices.draw;
     }
 
-    convert(group: RNGSoccerRoundHistory[]): boolean {
-        if (group.length === 0) return false;
-        return group[0].settlementResult?.home === true;
+    convert(group: RNGSoccerSettlementItemResult[]): boolean {
+        return group.filter((result) => (result as any)[this.positiveKey()]).length !== 0;
     }
 }
 
 export class RNGSoccerScoreboard extends ObserverComponent<Props, IBaccaratScoreboardState> {
     private readonly DEFAULT_MAX_ROWS = 6;
-    private readonly bigRoad: BigRoadScoreboard<RNGSoccerRoundHistory>;
+    private readonly bigRoad: BigRoadScoreboard<RNGSoccerSettlementItemResult>;
 
     constructor(props: Props) {
         super(props);
@@ -90,17 +85,7 @@ export class RNGSoccerScoreboard extends ObserverComponent<Props, IBaccaratScore
             return <div />;
         }
 
-        const input = [...rounds]
-            .map((round) => ({
-                roundId: round.roundId,
-                settlementResult: {
-                    home: round.settlementResult?.home || false,
-                    draw: round.settlementResult?.draw || false,
-                    away: round.settlementResult?.away || false
-                },
-                result: round.result as unknown as RNGSoccerResult
-            }))
-            .reverse();
+        const input = [...rounds].map((round) => round.settlementResult as unknown as RNGSoccerSettlementItemResult).reverse();
         this.bigRoad.initialize(input, isLockingBet);
         const rows = this.bigRoad.rows();
 
@@ -113,7 +98,7 @@ export class RNGSoccerScoreboard extends ObserverComponent<Props, IBaccaratScore
                         draw: RNGSoccerChoices.draw,
                         away: RNGSoccerChoices.away,
                     }}
-                    settlements={input.map(item => item.settlementResult)}
+                    settlements={input.map(item => item)}
                 />
 
                 <RNGSoccerBigRoad maxRows={maxRows} rows={rows} />

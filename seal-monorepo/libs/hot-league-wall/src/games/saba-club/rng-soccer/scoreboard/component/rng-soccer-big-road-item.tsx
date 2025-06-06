@@ -5,7 +5,7 @@ import homeDotImage from '../../../../../assets/rng-soccer/scoreboard/home.svg';
 import awayDotImage from '../../../../../assets/rng-soccer/scoreboard/away.svg';
 import drawDotImage from '../../../../../assets/rng-soccer/scoreboard/draw.svg';
 import { BigRoadScoreboardPoint } from 'sc-scoreboards';
-import { RNGSoccerRoundHistory } from '../../type';
+import { RNGSoccerSettlementItemResult } from '../../type';
 
 const scoreboardImages: Record<string, string> = {
     home: homeDotImage,
@@ -21,7 +21,7 @@ const DrawDot: React.FC<{ count: number }> = ({ count }) => (
 );
 
 const RNGSoccerBigRoadItem: React.FC<{
-    item: BigRoadScoreboardPoint<RNGSoccerRoundHistory>;
+    item: BigRoadScoreboardPoint<RNGSoccerSettlementItemResult>;
 }> = ({ item }) => {
     const { status, data, isBlink } = item;
     
@@ -38,11 +38,10 @@ const RNGSoccerBigRoadItem: React.FC<{
     }
 
     const firstItem = data[0];
-    if (!firstItem || !firstItem.settlementResult) {
+    if (!firstItem ) {
         return null;
     }
-
-    const { draw } = firstItem.settlementResult;
+    const { draw } = firstItem;
     const imagePath = status ? scoreboardImages.home : scoreboardImages.away;
     const drawCount = draw ? data.length : data.length - 1;
 

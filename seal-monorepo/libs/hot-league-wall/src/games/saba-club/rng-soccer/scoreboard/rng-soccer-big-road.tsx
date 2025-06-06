@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import styles from './rng-soccer-scoreboard.module.scss';
 import { BigRoadScoreboardPoint } from 'sc-scoreboards';
-import { RNGSoccerRoundHistory } from '../type';
+import { RNGSoccerSettlementItemResult } from '../type';
 import RNGSoccerBigRoadItem from './component/rng-soccer-big-road-item';
 import ScrollElement from '../../../../_shared/components/scroll-element';
 
 interface Props {
     maxRows: number;
-    rows: BigRoadScoreboardPoint<RNGSoccerRoundHistory>[][];
+    rows: BigRoadScoreboardPoint<RNGSoccerSettlementItemResult>[][];
 }
 
 const RNGSoccerBigRoad: React.FC<Props> = ({ maxRows, rows }) => {
@@ -34,22 +34,8 @@ const RNGSoccerBigRoad: React.FC<Props> = ({ maxRows, rows }) => {
                     zIndex: 2,
                 }}
             >
-                {rows.map((row, rowIndex) => {
-                    return row.map((item, colIndex) => {
-                        if (!item.data || item.data.length === 0) {
-                            return (
-                                <div
-                                    className={styles['dot-item']}
-                                    style={{
-                                        gridColumnStart: colIndex + 1,
-                                        gridRowStart: rowIndex + 1,
-                                    }}
-                                    key={`${rowIndex}_${colIndex}`}
-                                >
-                                    <div className={styles['dot-empty']}></div>
-                                </div>
-                            );
-                        }
+                {rows.map((row, rowIndex) =>
+                    row.map((item, colIndex) => {
                         return (
                             <div
                                 className={styles['dot-item']}
@@ -62,8 +48,8 @@ const RNGSoccerBigRoad: React.FC<Props> = ({ maxRows, rows }) => {
                                 <RNGSoccerBigRoadItem item={item} />
                             </div>
                         )
-                    })
-                })}
+                    }),
+                )}
             </div>
         </ScrollElement>
     );
