@@ -84,8 +84,7 @@ export const getSiteConfig = (gameId: number) => {
         mainObserverNamespace: gameSetting.mainObserverNamespace,
         subGuideDomain: '',
         subDirectory: appSettings.subDirectory,
-        userServicePath: appSettings.userServicePath,
-        appType: appSettings.appType,
+        userServicePath: appSettings.userServicePath
     };
 
     return config;
