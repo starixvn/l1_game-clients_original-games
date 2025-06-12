@@ -58,7 +58,7 @@ export default class RNGSoccerBetOptions extends BetOptions {
                 <div className={rngSoccerStyles['bet-options-container']}>
                     {
                         betOptionsList.map((choice) => (
-                            <div className={rngSoccerStyles['bets-bg']} key={choice}>
+                            <div className={rngSoccerStyles['bets-bg']} key={choice} data-choice={choice}>
                                 {this.renderBetOptions(
                                     choice,
                                     odds?.[choice] || 0,

@@ -22,12 +22,28 @@
 .bets-bg {
     min-width: 90px;
     border-radius: $border-radius-md;
-    background-color: rgba(255, 255, 255, 0.05);
     @include transition-default;
     box-sizing: border-box;
 
-    &:hover {
-        background-color: rgba(255, 255, 255, 0.1);
+    &[data-choice="home"] {
+        background-color: rgba(54, 118, 255, 0.4);
+        &:hover {
+            background-color: rgba(54, 118, 255, 0.6);
+        }
+    }
+
+    &[data-choice="draw"] {
+        background-color: rgba(35, 202, 25, 0.4);
+        &:hover {
+            background-color: rgba(35, 202, 25, 0.6);
+        }
+    }
+
+    &[data-choice="away"] {
+        background-color: rgba(255, 42, 42, 0.5);
+        &:hover {
+            background-color: rgba(255, 42, 42, 0.6);
+        }
     }
 }
 
