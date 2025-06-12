@@ -67,11 +67,11 @@
         }
 
         &.pop-in-animation {
-            animation: popIn $animation-duration-slow cubic-bezier(.53,-0.01,.33,1) forwards;
+            animation: popIn $animation-duration-slow cubic-bezier(.53, -0.01, .33, 1) forwards;
         }
 
         &.pop-out-animation {
-            animation: popOut $animation-duration-slow cubic-bezier(.53,-0.01,.33,1) forwards;
+            animation: popOut $animation-duration-slow cubic-bezier(.53, -0.01, .33, 1) forwards;
         }
     }
 
@@ -207,7 +207,8 @@
     background: $color-black-80;
     backdrop-filter: blur(4px);
     border-radius: 6px;
-    @include flex-column-center;
+    display: flex;
+    flex-direction: column;
     opacity: 0;
     visibility: hidden;
     transition: opacity $animation-duration-fast ease, visibility $animation-duration-fast ease;
@@ -220,12 +221,12 @@
 
     .close-popup {
         cursor: pointer;
-        padding: $spacing-xs;
+        padding: 0 $spacing-xs;
         align-self: flex-end;
 
         .close-icon {
-            width: 13px;
-            height: 13px;
+            width: 11px;
+            height: 11px;
         }
     }
 }

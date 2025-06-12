@@ -47,7 +47,7 @@ const RNGSoccerBigRoadItem: React.FC<{
 
     return (
         <div className={styles['dot-image']}>
-            <img src={imagePath}  style={{ width: '16px', height: '16px' }} />
+            <img src={imagePath}  style={{ width: '14px', height: '14px' }} />
             {drawCount > 0 && <DrawDot count={drawCount} />}
         </div>
     );
