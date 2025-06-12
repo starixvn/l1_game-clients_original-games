@@ -2,7 +2,6 @@ import { ROUND_STATE, RoundTimeStore } from "@sg/sg-game-client/dist/game/rounds
 import { render } from "@sg/sg-observer";
 import classnames from "classnames";
 import Styles from "./count-down-timer.module.scss";
-import gameStyles from "./game-countdown-timer.module.scss";
 import { IPropsObserver, IStateObserver, ObserverComponent } from "../observer-component/observer-component";
 import { formatSecondsToTime } from "../../utils/count-down-format";
 
@@ -39,11 +38,12 @@ export default class CountDownTimer extends ObserverComponent<ICountDownTimerPro
     }
 
     protected getTimerContentConfig(roundState: string) {
-        const { PLACING_BET, LOCKING_BET, SHOW_ANIMATION_RESULT, SHOW_RESULT, STOP_GAME_LOOP } = ROUND_STATE;
+        const { PLACING_BET, LOCKING_BET, SHOW_ANIMATION_RESULT, SHOW_RESULT, STOP_GAME_LOOP, STARTING_ROUND } = ROUND_STATE;
         return {
             showTimer: [PLACING_BET].includes(roundState),
             showNoMoreBet: [LOCKING_BET].includes(roundState),
             showResult: [SHOW_ANIMATION_RESULT, STOP_GAME_LOOP, SHOW_RESULT].includes(roundState),
+            startRound: [STARTING_ROUND].includes(roundState),
         };
     }
 
@@ -75,7 +75,7 @@ export default class CountDownTimer extends ObserverComponent<ICountDownTimerPro
 
         // Use game layout if specified
         return (
-            <div className={classnames(gameStyles['game-countdown-wrapper'], customStyles?.wrapper)}>
+            <div className={classnames(Styles['game-countdown-wrapper'], customStyles?.wrapper)}>
                 <div className={Styles['count-down']}>
                     <div
                         className={classnames(Styles['timer-wrapper'], {

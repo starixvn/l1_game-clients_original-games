@@ -24,11 +24,11 @@ $color-error: #FF0101;
 
             .dot-elastic {
                 width: 20px;
-                height: 5px;
+                height: 8.9px;
                 background: radial-gradient(circle closest-side, $color-success 90%, #0000) 0% 50%,
                     radial-gradient(circle closest-side, $color-success 90%, #0000) 50% 50%,
                     radial-gradient(circle closest-side, $color-success 90%, #0000) 100% 50%;
-                background-size: calc(100%/3) 4px;
+                background-size: calc(100%/3) 5px;
                 background-repeat: no-repeat;
                 animation: dots-loading 1s infinite linear;
             }
