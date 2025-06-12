@@ -87,7 +87,6 @@ export class ConfirmBet extends ObserverComponent<IPropsObserver, IConfirmBet> {
   }
 }
 
-// 接上memberSite時，className不用style，直接接上memberSite class
 const Overlay = ({ totalStake, betChoice, handleClose, namespace }) => {
   const addCommas = gc.FormatUtils.numberWithCommas;
   const totalStakeWithCommas = addCommas(totalStake);
@@ -97,65 +96,63 @@ const Overlay = ({ totalStake, betChoice, handleClose, namespace }) => {
   };
 
   return (
-    <div className="overlay">
-      <div id="popupPanel" className={`${styles['confirm-bet']} c-modal`}>
-        <div className={`${styles['heading']} c-modal__heading`}>
-          <i className="c-icon c-icon--info"></i>
-          <div className="c-text" title="INFORMATION">
-            {gc.Translator.t('Common.bet_info')}
-          </div>
+    <div id="popupPanel" className={`${styles['confirm-bet']} c-modal`}>
+      <div className={`${styles['heading']} c-modal__heading`}>
+        <i className="c-icon c-icon--info"></i>
+        <div className="c-text" title="INFORMATION">
+          {gc.Translator.t('Common.bet_info')}
         </div>
-        <div className="c-modal__container">
-          <div className="c-modal__content">
-            <div className="c-modal__section padding-top-10">
-              <div className={`c-text-group ${styles['bet-accepted']}`}>
+      </div>
+      <div className="c-modal__container">
+        <div className="c-modal__content">
+          <div className="c-modal__section padding-top-10">
+            <div className={`c-text-group ${styles['bet-accepted']}`}>
+              <span className="c-text-label">
+                {gc.Translator.t('Common.bet_accepted')} :{' '}
+                {gc.Translator.t(`${namespace}.glossary_${betChoice}`)}
+              </span>
+            </div>
+            <div className={`result-flex ${styles['betting-results']}`}>
+              <div className={styles['betting-row']}>
                 <span className="c-text-label">
-                  {gc.Translator.t('Common.bet_accepted')} :{' '}
-                  {gc.Translator.t(`${namespace}.glossary_${betChoice}`)}
+                  {gc.Translator.t('Common.total_bets')}
+                </span>
+                <span className="colon"> : </span>
+                <span className="c-text-value">&nbsp;1</span>
+              </div>
+
+              <div className={styles['betting-row']}>
+                <span className="c-text-label">
+                  {gc.Translator.t('Common.total_stake')}
+                </span>
+                <span className="colon"> : </span>
+                <span className="c-text-value">
+                  &nbsp;{totalStakeWithCommas}
                 </span>
               </div>
-              <div className={`result-flex ${styles['betting-results']}`}>
-                <div className={styles['betting-row']}>
-                  <span className="c-text-label">
-                    {gc.Translator.t('Common.total_bets')}
-                  </span>
-                  <span className="colon"> : </span>
-                  <span className="c-text-value">&nbsp;1</span>
-                </div>
-
-                <div className={styles['betting-row']}>
-                  <span className="c-text-label">
-                    {gc.Translator.t('Common.total_stake')}
-                  </span>
-                  <span className="colon"> : </span>
-                  <span className="c-text-value">
-                    &nbsp;{totalStakeWithCommas}
-                  </span>
-                </div>
-              </div>
-              <label
-                className={styles['noti-label']}
-              >
-                <input
-                  id="notification"
-                  className={styles['noti-input']}
-                  type="checkbox"
-                  onChange={handleCheckboxChange}
-                  defaultChecked={sessionStorage.getItem(NOTIF_KEY) === 'true'}
-                />
-                {gc.Translator.t('Common.turn_off_notification')}
-              </label>
             </div>
-            <div className="c-btn-group">
-              <div
-                tabIndex={0}
-                id="popup_confirm_button"
-                className={`c-btn c-btn--primary ${styles['confirm-btn']}`}
-                title="OK"
-                onClick={handleClose}
-              >
-                {gc.Translator.t('Common.ok')}
-              </div>
+            <label
+              className={styles['noti-label']}
+            >
+              <input
+                id="notification"
+                className={styles['noti-input']}
+                type="checkbox"
+                onChange={handleCheckboxChange}
+                defaultChecked={sessionStorage.getItem(NOTIF_KEY) === 'true'}
+              />
+              {gc.Translator.t('Common.turn_off_notification')}
+            </label>
+          </div>
+          <div className="c-btn-group">
+            <div
+              tabIndex={0}
+              id="popup_confirm_button"
+              className={`c-btn c-btn--primary ${styles['confirm-btn']}`}
+              title="OK"
+              onClick={handleClose}
+            >
+              {gc.Translator.t('Common.ok')}
             </div>
           </div>
         </div>
