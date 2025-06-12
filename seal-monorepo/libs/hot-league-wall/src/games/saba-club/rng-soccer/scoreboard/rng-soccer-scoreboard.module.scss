@@ -26,9 +26,9 @@
         overflow-x: auto;
         overflow-y: hidden;
         position: relative;
-        background: var(--scoreboard-content-bg);
+        background: #fff;
         scrollbar-width: thin;
-        scrollbar-color: var(--scroll-bar-track) var(--c-av-lv1-theme-bg-2);
+        scrollbar-color: hsla(0, 0%, 0%, .32) HSL(var(--c-av-primary-h), 40%, 95%);
         border-radius: 6px;
         width: 100%;
         min-width: 0;
@@ -65,8 +65,8 @@
 .dot-item {
     width: var(--cell-size);
     height: var(--cell-size);
-    border-right: 1px solid var(--c-av-theme-border-1);
-    border-bottom: 1px solid var(--c-av-theme-border-1);
+    border-right: 1px solid HSL(var(--c-av-primary-h), 40%, 95%);
+    border-bottom: 1px solid HSL(var(--c-av-primary-h), 40%, 95%);
     display: flex;
     align-items: center;
     justify-content: center;
