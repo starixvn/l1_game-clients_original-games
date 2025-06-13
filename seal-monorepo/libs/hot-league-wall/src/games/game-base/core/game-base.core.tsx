@@ -167,7 +167,10 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
         const { isConnected, isConnectFailed, initialized: isGameConfigInitialized, showDisabledPopup } = this.state;
 
         if (isConnectFailed) {
-            return <GameDisconnectView onReconnect={this.handleReconnect} />;
+            return <GameDisconnectView
+                onReconnect={this.handleReconnect} 
+                backgroundImage={this.getDisconnectViewBackground()}
+            />;
         }
 
         const isFirstInit = !isGameConfigInitialized && !showDisabledPopup;
@@ -213,6 +216,10 @@ abstract class GameBase<P extends GameBaseProps, S extends IGameBaseState> exten
     }
 
     protected getGameBackgroundImage(): string | null {
+        return null;
+    }
+
+    protected getDisconnectViewBackground(): string | null {
         return null;
     }
 

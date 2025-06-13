@@ -13,6 +13,7 @@ import RNGSoccerBetOptions from './bet-option/rng-soccer-bet-options';
 import liveIcon from '../../../assets/rng-soccer/live-icon.svg';
 import historyBtnIcon from '../../../assets/rng-soccer/history-btn.svg';
 import bgGame from '../../../assets/rng-soccer/bg-game.webp';
+import blurBgGame from '../../../assets/rng-soccer/blur-bg-game.png';
 import RNGSoccerSettlementResult from './settlement-result/rng-soccer-settlement-result';
 import RNGSoccerStatistic from './statistic/rng-soccer-statistic';
 
@@ -65,6 +66,10 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
 
     override getGameBackgroundImage(): string {
         return bgGame;
+    }
+
+    override getDisconnectViewBackground(): string {
+        return blurBgGame;
     }
 
     // UI configuration and rendering methods
