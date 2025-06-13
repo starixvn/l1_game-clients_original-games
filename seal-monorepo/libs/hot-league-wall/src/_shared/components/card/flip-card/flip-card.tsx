@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 import Card from "..";
 import CardBack from "../card-back";
@@ -10,22 +10,42 @@ interface FlipCardProps {
     isShowResult: boolean;
     playResultAnimation?: boolean;
     delayTime?: number;
+    onFlipComplete?: () => void;
 }
 
 export const FlipCard: React.FC<FlipCardProps> = ({
     card,
     isShowResult,
     playResultAnimation,
-    delayTime = 0
+    delayTime = 0,
+    onFlipComplete
 }) => {
     const [isFlipped, setIsFlipped] = useState(false);
     const [flipAnimationClass, setFlipAnimationClass] = useState('');
+    const cardRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const cardElement = cardRef.current;
+        if (!cardElement) return;
+
+        const handleTransitionEnd = (e: TransitionEvent) => {
+            if (e.propertyName === 'transform') {
+                onFlipComplete?.();
+            }
+        };
+
+        cardElement.addEventListener('transitionend', handleTransitionEnd);
+        return () => {
+            cardElement.removeEventListener('transitionend', handleTransitionEnd);
+        };
+    }, [onFlipComplete]);
 
     useEffect(() => {
         if (isFlipped && playResultAnimation) {
             setFlipAnimationClass(Styles['flip']);
         } else if (isFlipped) {
             setFlipAnimationClass(`${Styles['flip']} ${Styles['no-animation']}`);
+            onFlipComplete?.();
         } else {
             setFlipAnimationClass('');
         }
@@ -47,7 +67,7 @@ export const FlipCard: React.FC<FlipCardProps> = ({
     }, [isShowResult, card]);
 
     return (
-        <div className={`${Styles.card} ${flipAnimationClass}`}>
+        <div ref={cardRef} className={`${Styles.card} ${flipAnimationClass}`}>
             <div className={Styles['rotate-card']}>
                 <div className={Styles.cardFace}>
                     <div className={Styles['card-back']}>

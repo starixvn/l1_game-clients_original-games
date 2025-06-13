@@ -2,15 +2,15 @@ import React from 'react';
 import styles from '../../rng-soccer.module.scss';
 
 interface ScoreDisplayProps {
-    homeScore: number;
-    awayScore: number;
+    homeScore: number | string;
+    awayScore: number | string;
     showWinningHighlight?: boolean;
     showDefaultScore?: boolean;
 }
 
 export const ScoreDisplay: React.FC<ScoreDisplayProps> = ({
-    homeScore = 0,
-    awayScore = 0,
+    homeScore = "",
+    awayScore = "",
     showWinningHighlight = false,
     showDefaultScore = false
 }) => {

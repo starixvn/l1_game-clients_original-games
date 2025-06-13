@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styles from '../../rng-soccer.module.scss';
 import TeamCard, { TeamCardAnimation } from './team-card';
 import ScoreDisplay from './score-display';
@@ -59,9 +59,6 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
     isLoading,
     isHideAllCards
 }) => {
-    if (isLoading) {
-        return <Loading />;
-    }
     const homeCardData = useMemo(() => {
         const card: CardResult = {
             rank: result?.home?.rank ?? 0,
@@ -84,9 +81,23 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
         roundState === ROUND_STATE.PLACING_BET ||
         roundState === ROUND_STATE.LOCKING_BET;
 
-    const showDefaultScores = !isFinish || !isFinishShowResult;
+    const showDefaultScores = !isFinish;
 
     const teamCardAnimation = useTeamCardAnimation(roundState, teamData);
+
+    const [showHomeScore, setShowHomeScore] = useState(false);
+    const [showAwayScore, setShowAwayScore] = useState(false);
+
+    useEffect(() => {
+        if (roundState === ROUND_STATE.PLACING_BET) {
+            setShowHomeScore(false);
+            setShowAwayScore(false);
+        }
+    }, [roundState]);
+
+    if (isLoading) {
+        return <Loading />;
+    }
 
     return (
         <div className={styles['wrapper-sport-middle']}>
@@ -104,11 +115,14 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
                             playResultAnimation={isAnimationResult}
                             card={homeCardData.card}
                             isShowResult={!shouldHideCards}
+                            onFlipComplete={() => {
+                                setShowHomeScore(true);
+                            }}
                         />
                     </div>
                     <ScoreDisplay
-                        homeScore={homeCardData.score}
-                        awayScore={awayCardData.score}
+                        homeScore={showHomeScore ? homeCardData.score : ""}
+                        awayScore={showAwayScore ? awayCardData.score : ""}
                         showWinningHighlight={isFinishShowResult}
                         showDefaultScore={showDefaultScores}
                     />
@@ -118,6 +132,9 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
                             card={awayCardData.card}
                             isShowResult={!shouldHideCards}
                             delayTime={1000}
+                            onFlipComplete={() => {
+                                setShowAwayScore(true);
+                            }}
                         />
                     </div>
                 </div>
