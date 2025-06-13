@@ -77,11 +77,13 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
 
     renderNotice(props: P, state: S): JSX.Element {
         return (
-            <Notice
-                namespace={props.namespace}
-                isDisableGame={state.showDisabledPopup}
-                language={props.language}
-            />
+            <div className={`${Styles['disconnect-container']} ${Styles['has-background']}`}>
+                <Notice
+                    namespace={props.namespace}
+                    isDisableGame={state.showDisabledPopup}
+                    language={props.language}
+                />
+            </div>
         );
     }
 
