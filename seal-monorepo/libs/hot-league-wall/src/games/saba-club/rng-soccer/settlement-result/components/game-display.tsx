@@ -4,11 +4,11 @@ import TeamCard, { TeamCardAnimation } from './team-card';
 import ScoreDisplay from './score-display';
 import { TeamsData } from '../models/game-result';
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
-import Loading from 'libs/hot-league-wall/src/_shared/components/loading';
+import Loading from '../../../../../_shared/components/loading';
 import type { RNGSoccerResult } from '../../type';
 import { SCORE_MAP } from '../utils/card-score-utils';
-import { FlipCard } from 'libs/hot-league-wall/src/_shared/components/card/flip-card/flip-card';
-import { CardResult } from 'libs/hot-league-wall/src/_shared/components/card/type';
+import { FlipCard } from '../../../../../_shared/components/card/flip-card/flip-card';
+import { CardResult } from '../../../../../_shared/components/card/type';
 
 interface GameDisplayProps {
     result?: RNGSoccerResult;

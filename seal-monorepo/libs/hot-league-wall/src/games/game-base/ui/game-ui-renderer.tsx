@@ -12,6 +12,7 @@ import Styles from '../game-base.module.scss';
 import { IGameBaseState } from '../interfaces';
 import { GameBaseProps } from '../type';
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
+import StartRoundCountDownTimer from '../../../_shared/components/start-round-count-down-timer';
 
 export interface UIExtensionOptions {
     classes?: {
@@ -265,6 +266,10 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
                         <img src={statsIconUrl} alt="statistics" />
                     </div>
                 )}
+                <StartRoundCountDownTimer
+                    namespace={props.namespace}
+                    language={props.language}
+                />
             </div>
         );
     }

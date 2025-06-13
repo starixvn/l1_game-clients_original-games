@@ -11,7 +11,7 @@ import { GameBaseProps } from '../type';
 import { SyncMemberSiteBalance } from '../../../_shared/utils/sync-member-site-balance';
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds/round-time-store';
 import { Settlements } from '@sg/sg-game-client';
-import { FunctionUtils } from 'libs/hot-league-wall/src/_shared/utils/funtion-utils';
+import { FunctionUtils } from '../../../_shared/utils/funtion-utils';
 
 class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> extends GameBase<P, S> {
     private authHandler: AuthorizationHandler;
