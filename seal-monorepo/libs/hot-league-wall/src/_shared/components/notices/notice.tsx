@@ -3,6 +3,7 @@ import { render } from '@sg/sg-observer';
 import { IPropsObserver, IStateObserver, ObserverComponent } from '../observer-component/observer-component';
 import NoticeDialog from './notice-dialog';
 import { NoticeInfo } from '@sg/sg-game-client/dist/game/notices';
+import Styles from './notices.module.scss';
 
 export interface INoticeState extends IStateObserver {
     notice: gc.Notices.Notice;
@@ -111,9 +112,12 @@ export default class Notice extends ObserverComponent<INoticeProps, INoticeState
         }
 
         return (
-            <NoticeDialog {...notice} onClose={this.closeNotice} >
-                <div>{this.handleNoticeInfo()}</div>
-            </NoticeDialog>
+            <div className={`${Styles['disconnect-container']} ${Styles['has-background']}`}>
+                <NoticeDialog {...notice} onClose={this.closeNotice} >
+                    <div>{this.handleNoticeInfo()}</div>
+                </NoticeDialog>
+            </div>
+
         );
     }
 }

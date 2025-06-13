@@ -204,8 +204,7 @@
 // Popup overlay
 .wrapper-popup {
     @include fullsize-overlay;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(4px);
+    background: rgba(0, 0, 0, 0.6);
     border-radius: 6px;
     display: flex;
     flex-direction: column;

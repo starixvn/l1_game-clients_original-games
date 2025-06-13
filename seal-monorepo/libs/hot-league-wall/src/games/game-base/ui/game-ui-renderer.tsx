@@ -77,13 +77,11 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
 
     renderNotice(props: P, state: S): JSX.Element {
         return (
-            <div className={`${Styles['disconnect-container']} ${Styles['has-background']}`}>
-                <Notice
-                    namespace={props.namespace}
-                    isDisableGame={state.showDisabledPopup}
-                    language={props.language}
-                />
-            </div>
+            <Notice
+                namespace={props.namespace}
+                isDisableGame={state.showDisabledPopup}
+                language={props.language}
+            />
         );
     }
 
@@ -130,7 +128,7 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
                 case ROUND_STATE.LOCKING_BET:
                     return gc.Translator.t('Common.message_stop_bet');
                 default:
-                    return state.isShowNextRoundMessage 
+                    return state.isShowNextRoundMessage
                         ? gc.Translator.t('Common.message_placebet_next_round')
                         : null;
             }

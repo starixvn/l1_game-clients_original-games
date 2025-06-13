@@ -47,8 +47,8 @@
         }
 
         &:global(.soccer-big-road) {
-            --cell-size: 32px;
-            --dot-size: 26px;
+            --cell-size: 18px;
+            --dot-size: 18px;
         }
     }
 }
@@ -56,15 +56,15 @@
 .grid-container {
     display: grid;
     grid-auto-flow: column;
-    grid-template-rows: repeat(6, var(--cell-size));
-    grid-auto-columns: var(--cell-size);
+    grid-template-rows: repeat(6, 20px);
+    grid-auto-columns: 14px;
     gap: 0;
     min-width: 100%;
 }
 
 .dot-item {
-    width: var(--cell-size);
-    height: var(--cell-size);
+    width: 20px;
+    height: 20px;
     border-right: 1px solid HSL(var(--c-av-primary-h), 40%, 95%);
     border-bottom: 1px solid HSL(var(--c-av-primary-h), 40%, 95%);
     display: flex;
@@ -78,8 +78,8 @@
 }
 
 .dot-image {
-    width: var(--dot-size);
-    height: var(--dot-size);
+    width: 20px;
+    height: 20px;
     display: flex;
     align-items: center;
     position: relative;
@@ -94,16 +94,16 @@
 }
 
 .dot-blink {
-    width: var(--dot-size);
-    height: var(--dot-size);
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     background: #8b8686;
     animation: blink 1.3s linear infinite;
 }
 
 .dot-empty {
-    width: var(--dot-size);
-    height: var(--dot-size);
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     background: transparent;
 }
