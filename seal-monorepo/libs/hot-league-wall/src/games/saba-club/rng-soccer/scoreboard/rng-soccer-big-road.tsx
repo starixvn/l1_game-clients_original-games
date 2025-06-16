@@ -10,6 +10,38 @@ interface Props {
     rows: BigRoadScoreboardPoint<RNGSoccerSettlementItemResult>[][];
 }
 
+const DEFAULT_ITEM: RNGSoccerSettlementItemResult = {
+    home: false,
+    away: false,
+    draw: false
+};
+
+const createDefaultPoint = (x: number, y: number): BigRoadScoreboardPoint<RNGSoccerSettlementItemResult> => ({
+    status: undefined,
+    data: [DEFAULT_ITEM],
+    isBlink: false,
+    x,
+    y,
+    index: 0,
+    parentColumn: -1
+});
+
+const padRowToLength = (
+    row: BigRoadScoreboardPoint<RNGSoccerSettlementItemResult>[],
+    rowIndex: number,
+    targetLength: number = 16
+): BigRoadScoreboardPoint<RNGSoccerSettlementItemResult>[] => {
+    if (row.length >= targetLength) return row;
+    
+    return [
+        ...row,
+        ...Array.from(
+            { length: targetLength - row.length },
+            (_, i) => createDefaultPoint(row.length + i, rowIndex)
+        )
+    ];
+};
+
 const RNGSoccerBigRoad: React.FC<Props> = ({ maxRows, rows }) => {
     const scrollDivRef = useRef<HTMLDivElement>(null);
 
@@ -34,22 +66,21 @@ const RNGSoccerBigRoad: React.FC<Props> = ({ maxRows, rows }) => {
                     zIndex: 2,
                 }}
             >
-                {rows.map((row, rowIndex) =>
-                    row.map((item, colIndex) => {
-                        return (
-                            <div
-                                className={styles['dot-item']}
-                                style={{
-                                    gridColumnStart: colIndex + 1,
-                                    gridRowStart: rowIndex + 1,
-                                }}
-                                key={`${rowIndex}_${colIndex}`}
-                            >
-                                <RNGSoccerBigRoadItem item={item} />
-                            </div>
-                        )
-                    }),
-                )}
+                {rows.map((row, rowIndex) => {
+                    const paddedRow = padRowToLength(row, rowIndex);
+                    return paddedRow.map((item, colIndex) => (
+                        <div
+                            className={styles['dot-item']}
+                            style={{
+                                gridColumnStart: colIndex + 1,
+                                gridRowStart: rowIndex + 1,
+                            }}
+                            key={`${rowIndex}_${colIndex}`}
+                        >
+                            <RNGSoccerBigRoadItem item={item} />
+                        </div>
+                    ));
+                })}
             </div>
         </ScrollElement>
     );
