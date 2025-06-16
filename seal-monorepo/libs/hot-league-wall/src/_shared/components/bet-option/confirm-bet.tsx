@@ -96,7 +96,7 @@ const Overlay = ({ totalStake, betChoice, handleClose, namespace }) => {
   };
 
   return (
-    <div id="popupPanel" className={`${styles['confirm-bet']} c-modal`}>
+    <div id="popupPanel" className={`${styles['confirm-bet']}`}>
       <div className={`${styles['heading']} c-modal__heading`}>
         <i className="c-icon c-icon--info"></i>
         <div className="c-text" title="INFORMATION">
