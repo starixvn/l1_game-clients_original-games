@@ -9,6 +9,7 @@ export interface ConnectionState {
 
 export interface GameState {
     gameId: number;
+    clientRoundId: number;
     roundId: number;
     roundState: string;
     isAllowedBet: boolean;
