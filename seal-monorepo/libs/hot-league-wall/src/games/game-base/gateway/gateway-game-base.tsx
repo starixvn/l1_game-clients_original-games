@@ -167,7 +167,6 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
     @render(gc.Rounds.RoundTimeStore, (store) => store.roundState)
     renderCountDownTimerState(roundState: string): void {
         if (roundState === ROUND_STATE.PLACING_BET) {
-            this.setState({ roundId: this.state.clientRoundId } as Pick<S, keyof S>);
             this.setState({ isShowNextRoundMessage: false } as Pick<S, keyof S>);
         }
 
@@ -179,13 +178,11 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
     }
 
     @render(gc.Rounds.RoundStore, (store) => store.clientRoundId)
-    handleRoundIdChange(clientRoundId: number): void {   
-        if (this.state.roundState !== ROUND_STATE.SHOW_RESULT && this.state.roundState !== ROUND_STATE.NONE) {
-            this.setState({ roundId: clientRoundId } as Pick<S, keyof S>);
-        } else if (this.state.roundState !== ROUND_STATE.STOP_GAME_LOOP) {
-            this.setState({ clientRoundId: clientRoundId } as Pick<S, keyof S>);
+    handleRoundIdChange(roundId: number): void {
+        if (this.state.roundState !== ROUND_STATE.NONE) {
+            this.setState({ roundId } as Pick<S, keyof S>);
         }
-        this.processAuthorizationIfRoundMatches(clientRoundId);
+        this.processAuthorizationIfRoundMatches(roundId);
     }
 
     handleBetOption(): void {

@@ -23,6 +23,7 @@ interface IRNGSoccerSettlementResultState extends IStateObserver {
     error?: Error;
     isFinish: boolean;
     isFinishShowResult: boolean;
+    isHideAllCards: boolean;
     teamData: TeamsData;
 }
 
@@ -41,6 +42,7 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
             error: undefined,
             isFinish: false,
             isFinishShowResult: false,
+            isHideAllCards: false,
             teamData: GameResult.getDefaultTeamData()
         };
     }
@@ -48,6 +50,12 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
     @render(gc.Settlements.SettlementStore, (store) => store.isFinishedShowResult)
     finishShowResult(isFinishedShowResult: boolean) {
         this.setState({ isFinishShowResult: isFinishedShowResult });
+    }
+
+    @render(RoundTimeStore, (store) => store.isStartingRound)
+    private handleStartNewRound(isStartingRound: boolean): void {
+        console.log('handleStartNewRound', isStartingRound);
+        this.setState({ isHideAllCards: isStartingRound });
     }
 
     @render(gc.Rounds.RoundTimeStore, (store) => ({ teamData: store.teamData, roundState: store.roundState }))
@@ -67,6 +75,7 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
     private handleRoundState(roundState: string): void {
         try {
             if (
+                roundState === ROUND_STATE.STARTING_ROUND ||
                 roundState === ROUND_STATE.PLACING_BET ||
                 roundState === ROUND_STATE.LOCKING_BET
             ) {
@@ -96,6 +105,7 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
                     isAnimationResult: true,
                     isLoading: false,
                     isFinish: true,
+                    isHideAllCards: false
                 });
 
                 // Optional: Add timer to trigger any card flip animations
@@ -155,6 +165,7 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
             isFinishShowResult,
             isLoading,
             error,
+            isHideAllCards
         } = this.state;
 
         return (
@@ -172,6 +183,7 @@ export default class RNGSoccerSettlementResult extends ObserverComponent<IPropsO
                         isAnimationResult={isAnimationResult}
                         isFinishShowResult={isFinishShowResult}
                         isLoading={isLoading}
+                        isHideAllCards={isHideAllCards}
                     />
                 )}
             </ErrorBoundary>
