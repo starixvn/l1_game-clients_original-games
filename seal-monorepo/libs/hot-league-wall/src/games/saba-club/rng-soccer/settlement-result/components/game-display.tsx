@@ -88,6 +88,8 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
     const [showHomeScore, setShowHomeScore] = useState(false);
     const [showAwayScore, setShowAwayScore] = useState(false);
 
+    const showHighLight = roundState === ROUND_STATE.STARTING_ROUND || isFinishShowResult;
+
     useEffect(() => {
         if (roundState === ROUND_STATE.PLACING_BET) {
             setShowHomeScore(false);
@@ -110,30 +112,34 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
             <div className={styles['sport-result']}>
                 <div className={styles['container-result']}>
                     {/* Home card */}
-                    <div className={`${styles['card-section']} ${isFinishShowResult && homeCardData.score > awayCardData.score ? styles['winning-card'] : ''}`}>
+                    <div className={`${styles['card-section']} ${showHighLight && homeCardData.score > awayCardData.score ? styles['winning-card'] : ''}`}>
                         <FlipCard
                             playResultAnimation={isAnimationResult}
                             card={homeCardData.card}
                             isShowResult={!shouldHideCards}
                             onFlipComplete={() => {
-                                setShowHomeScore(true);
+                                if (!shouldHideCards) {
+                                    setShowHomeScore(true);
+                                }
                             }}
                         />
                     </div>
                     <ScoreDisplay
                         homeScore={showHomeScore ? homeCardData.score : ""}
                         awayScore={showAwayScore ? awayCardData.score : ""}
-                        showWinningHighlight={isFinishShowResult}
+                        showWinningHighlight={showHighLight}
                         showDefaultScore={showDefaultScores}
                     />
-                    <div className={`${styles['card-section']} ${isFinishShowResult && awayCardData.score > homeCardData.score ? styles['winning-card'] : ''}`}>
+                    <div className={`${styles['card-section']} ${showHighLight && awayCardData.score > homeCardData.score ? styles['winning-card'] : ''}`}>
                         <FlipCard
                             playResultAnimation={isAnimationResult}
                             card={awayCardData.card}
                             isShowResult={!shouldHideCards}
                             delayTime={1000}
                             onFlipComplete={() => {
-                                setShowAwayScore(true);
+                                if (!shouldHideCards) {
+                                    setShowAwayScore(true);
+                                }
                             }}
                         />
                     </div>
