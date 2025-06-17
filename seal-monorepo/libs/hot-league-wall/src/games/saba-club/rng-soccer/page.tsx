@@ -94,7 +94,7 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
                 customBetting: () => this.renderCustomBetting()
             },
             config: {
-                gameName: "RNG Soccer",
+                gameName: 'RNGSoccer',
                 liveIconUrl: liveIcon,
                 statsIconUrl: historyBtnIcon,
                 onStatsIconClick: this.togglePopup

@@ -190,8 +190,8 @@
         "turn_off_notification": "Nonaktifkan pemberitahuan ini"
     },
     "RNGSoccer": {
-        "game_name": "RNG Soccer",
-        "game_tab_name": "RNG Soccer",
+        "game_name": "Sepak Bola RNG",
+        "game_tab_name": "Sepak Bola RNG",
         "choices_type": "Kandang/Seri/Tandang",
         "glossary_home": "Kandang",
         "glossary_away": "Tandang",

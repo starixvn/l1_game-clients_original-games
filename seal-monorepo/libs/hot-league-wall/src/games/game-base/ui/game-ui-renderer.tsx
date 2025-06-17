@@ -219,7 +219,7 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
             this.getExtensionClass('statsIcon')
         );
 
-        const gameName = this.extensionOptions.config?.gameName || state.gameId;
+        const gameName = gc.Translator.translate(`${this.extensionOptions.config?.gameName}.game_name`) || state.gameId;
         const liveIconUrl = this.extensionOptions.config?.liveIconUrl;
         const statsIconUrl = this.extensionOptions.config?.statsIconUrl;
 

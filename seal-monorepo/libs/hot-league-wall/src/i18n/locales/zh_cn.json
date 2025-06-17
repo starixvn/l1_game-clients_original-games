@@ -190,8 +190,8 @@
         "turn_off_notification": "不再显示这则信息"
     },
     "RNGSoccer": {
-        "game_name": "RNG Soccer",
-        "game_tab_name": "RNG Soccer",
+        "game_name": "RNG足球",
+        "game_tab_name": "RNG足球",
         "choices_type": "主队/平/客队",
         "glossary_home": "主队",
         "glossary_away": "客队",

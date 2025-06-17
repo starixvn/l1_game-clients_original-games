@@ -190,8 +190,8 @@
         "turn_off_notification": "ปิดการแจ้งเตือนนี้"
     },
     "RNGSoccer": {
-        "game_name": "RNG Soccer",
-        "game_tab_name": "RNG Soccer",
+        "game_name": "ฟุตบอล RNG",
+        "game_tab_name": "ฟุตบอล RNG",
         "choices_type": "ทีมเหย้า/เสมอ/ทีมเยือน",
         "glossary_home": "ทีมเหย้า",
         "glossary_away": "ทีมเยือน",
