@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import classnames from 'classnames';
 import Styles from './round-id.module.scss';
+import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
 
 export interface IRoundIdProps {
     clientRoundId: number;
@@ -9,15 +10,20 @@ export interface IRoundIdProps {
 }
 
 export const RoundId: React.FC<IRoundIdProps> = ({ clientRoundId, roundState, className }) => {
-    console.log('clientRoundId', clientRoundId);
-    const isValidRoundNumber = clientRoundId && clientRoundId !== 0;
+    const [displayRoundId, setDisplayRoundId] = useState(clientRoundId);
+    useEffect(() => {
+        if (roundState !== ROUND_STATE.STARTING_ROUND) {
+            setDisplayRoundId(clientRoundId);
+        }
+    }, [clientRoundId, roundState]);
+    const isValidRoundNumber = displayRoundId && displayRoundId !== 0;
     const showRoundId = isValidRoundNumber && roundState;
 
     if (!showRoundId) return null;
 
     return (
-        <div className={classnames(Styles['round-id'], className)}>
-            #{clientRoundId}
+        <div data-testid="round-id" className={classnames(Styles['round-id'], className)}>
+            #{displayRoundId}
         </div>
     );
 }
