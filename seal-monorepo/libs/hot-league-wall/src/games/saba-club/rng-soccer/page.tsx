@@ -27,13 +27,14 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
     constructor(props: GameBaseProps) {
         super(props);
 
-        const { generatingResult, showingResult, startRound } = setting.durations;
+        const { placingBet } = setting.durations;
         this.state = {
             ...this.state,
             gameId: setting.id,
             isTimerActive: true,
             isPopupVisible: false,
             roundId: 0,
+            placingBetStartTime: placingBet,
         } as IRNGSoccerPageState;
 
         this.uiRenderer.setExtensionOptions(this.getUIExtensionOptions());

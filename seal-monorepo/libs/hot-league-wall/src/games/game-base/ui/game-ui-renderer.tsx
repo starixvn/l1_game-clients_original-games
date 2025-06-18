@@ -11,8 +11,8 @@ import CountDownTimer from '../../../_shared/components/count-down-timer';
 import Styles from '../game-base.module.scss';
 import { IGameBaseState } from '../interfaces';
 import { GameBaseProps } from '../type';
-import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
 import StartRoundCountDownTimer from '../../../_shared/components/start-round-count-down-timer';
+import { getMessage as getGameMessage } from '../game-logic/message-logic';
 
 export interface UIExtensionOptions {
     classes?: {
@@ -94,6 +94,7 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
         return <RoundId clientRoundId={roundId} roundState={roundState} />;
     }
 
+
     renderCountDownTimer(props: P, setState: (state: Partial<S>) => void) {
         return (
             <CountDownTimer
@@ -101,6 +102,9 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
                 language={props.language}
                 onComplete={() => {
                     setState({ isAllowedBet: true } as Partial<S>);
+                }}
+                onCountdownTimerChange={(countdownTimer: number) => {
+                    setState({ countdownTimer } as Partial<S>);
                 }}
             />
         );
@@ -121,20 +125,7 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
     }
 
     renderWaitingForNextRound(state: S) {
-        const getMessage = () => {
-            switch (state.roundState) {
-                case ROUND_STATE.PLACING_BET:
-                    return gc.Translator.t('Common.message_place_bets');
-                case ROUND_STATE.LOCKING_BET:
-                    return gc.Translator.t('Common.message_stop_bet');
-                default:
-                    return state.isShowNextRoundMessage
-                        ? gc.Translator.t('Common.message_placebet_next_round')
-                        : null;
-            }
-        };
-
-        const message = getMessage();
+        const message = getGameMessage(state, gc.Translator);
         if (!message) return null;
         return (
             <WarningDialog key="warning-bet" message={message} duration={1000} />
@@ -256,6 +247,9 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
                     language={props.language}
                     onComplete={() => {
                         setState({ isAllowedBet: true } as Partial<S>);
+                    }}
+                    onCountdownTimerChange={(countdownTimer: number) => {
+                        setState({ countdownTimer } as Partial<S>);
                     }}
                     customStyles={{
                         wrapper: timerClass

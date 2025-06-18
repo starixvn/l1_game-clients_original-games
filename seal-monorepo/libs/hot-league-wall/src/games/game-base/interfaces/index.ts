@@ -14,6 +14,8 @@ export interface GameState {
     isAllowedBet: boolean;
     isShowNextRoundMessage: boolean;
     settlementResultDuration: number;
+    countdownTimer: number;
+    placingBetStartTime: number;
 }
 
 export interface UIState {

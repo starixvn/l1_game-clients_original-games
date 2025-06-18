@@ -8,6 +8,7 @@ import { formatSecondsToTime } from "../../utils/count-down-format";
 
 export interface ICountDownTimerProps extends IPropsObserver {
     onComplete?: () => void;
+    onCountdownTimerChange?: (countdownTimer: number) => void;
     language?: string;
     customStyles?: {
         wrapper?: string;
@@ -30,6 +31,7 @@ export default class CountDownTimer extends ObserverComponent<ICountDownTimerPro
     @render(RoundTimeStore, (store) => store.countdownTimer)
     private renderCountDownTimer(countdownTimer: number): void {
         this.setState({ countdownTimer });
+        this.props.onCountdownTimerChange?.(countdownTimer);
     }
 
     @render(RoundTimeStore, (store) => store.roundState, { fireImmediately: false })
