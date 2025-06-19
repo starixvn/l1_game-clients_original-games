@@ -18,12 +18,11 @@ export const RoundId: React.FC<IRoundIdProps> = ({ clientRoundId, roundState, cl
     }, [clientRoundId, roundState]);
     const isValidRoundNumber = displayRoundId && displayRoundId !== 0;
     const showRoundId = isValidRoundNumber && roundState;
-
-    if (!showRoundId) return null;
+    const content = showRoundId ? `#${displayRoundId}` : '';
 
     return (
         <div data-testid="round-id" className={classnames(Styles['round-id'], className)}>
-            #{displayRoundId}
+            {content}
         </div>
     );
 }
