@@ -4,8 +4,9 @@
  * @returns 格式化後的時間字符串 (MM:SS)
  */
 export const formatSecondsToTime = (seconds: number): string => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
+    const validSeconds = Math.max(0, Math.floor(seconds));
+    const minutes = Math.floor(validSeconds / 60);
+    const remainingSeconds = validSeconds % 60;
     return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
 };
 
@@ -15,5 +16,6 @@ export const formatSecondsToTime = (seconds: number): string => {
  * @returns 格式化後的秒數字符串
  */
 export const formatSecondsOnly = (seconds: number): string => {
-    return seconds.toString().padStart(2, '0');
+    const validSeconds = Math.max(0, Math.floor(seconds));
+    return validSeconds.toString().padStart(2, '0');
 }; 
