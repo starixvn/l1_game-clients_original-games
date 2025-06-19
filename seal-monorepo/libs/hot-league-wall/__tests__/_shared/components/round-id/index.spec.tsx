@@ -16,14 +16,18 @@ describe('RoundId', () => {
         className: 'custom-class',
     };
 
-    it('renders null if showRoundId is false (no roundState)', () => {
+    it('renders empty content when showRoundId is false (no roundState)', () => {
         render(<RoundId clientRoundId={123} />);
-        expect(screen.queryByTestId('round-id')).toBeNull();
+        const element = screen.getByTestId('round-id');
+        expect(element).toBeInTheDocument();
+        expect(element).toHaveTextContent('');
     });
 
-    it('renders null if showRoundId is false (displayRoundId is 0)', () => {
+    it('renders empty content when showRoundId is false (displayRoundId is 0)', () => {
         render(<RoundId clientRoundId={0} roundState={ROUND_STATE.NONE} />);
-        expect(screen.queryByTestId('round-id')).toBeNull();
+        const element = screen.getByTestId('round-id');
+        expect(element).toBeInTheDocument();
+        expect(element).toHaveTextContent('');
     });
 
     it('renders the round id with classnames when valid', () => {
@@ -55,5 +59,19 @@ describe('RoundId', () => {
         // When changing from STARTING_ROUND to another state, displayRoundId should update
         rerender(<RoundId clientRoundId={222} roundState={ROUND_STATE.NONE} />);
         expect(screen.getByTestId('round-id')).toHaveTextContent('#222');
+    });
+
+    it('renders empty content when roundState is falsy', () => {
+        render(<RoundId clientRoundId={123} roundState={undefined} />);
+        const element = screen.getByTestId('round-id');
+        expect(element).toBeInTheDocument();
+        expect(element).toHaveTextContent('');
+    });
+
+    it('renders empty content when clientRoundId is 0', () => {
+        render(<RoundId clientRoundId={0} roundState={ROUND_STATE.PLACING_BET} />);
+        const element = screen.getByTestId('round-id');
+        expect(element).toBeInTheDocument();
+        expect(element).toHaveTextContent('');
     });
 }); 
