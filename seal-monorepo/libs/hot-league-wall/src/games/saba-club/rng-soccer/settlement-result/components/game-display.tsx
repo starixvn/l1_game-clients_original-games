@@ -18,7 +18,6 @@ interface GameDisplayProps {
     isAnimationResult: boolean;
     isFinishShowResult: boolean;
     isLoading: boolean;
-    isHideAllCards: boolean;
 }
 
 const useTeamCardAnimation = (roundState: string, teamData: TeamsData) => {
@@ -57,7 +56,6 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
     isAnimationResult,
     isFinishShowResult,
     isLoading,
-    isHideAllCards
 }) => {
     const homeCardData = useMemo(() => {
         const card: CardResult = {
@@ -77,7 +75,7 @@ export const GameDisplay: React.FC<GameDisplayProps> = ({
         return { card, score };
     }, [result?.away]);
 
-    const shouldHideCards = !isFinish || isHideAllCards ||
+    const shouldHideCards = !isFinish ||
         roundState === ROUND_STATE.PLACING_BET ||
         roundState === ROUND_STATE.LOCKING_BET;
 
