@@ -19,6 +19,7 @@ export function BetActions({
   const currentBalance = useAuthStore(state => state.wallet.balance)
   const decrementCurrentBalance = useAuthStore(state => state.decrementBalance)
   const [betValue, setBetValue] = useState(0)
+  const [isInputFocused, setIsInputFocused] = useState(false)
   const maxLinesQnt = 16
   const linesOptions: number[] = []
   for (let i = 8; i <= maxLinesQnt; i++) {
@@ -35,7 +36,6 @@ export function BetActions({
 
   function handleChangeLines(e: ChangeEvent<HTMLSelectElement>) {
     if (isLoading) return
-
     onChangeLines(Number(e.target.value) as LinesType)
   }
 
@@ -76,6 +76,9 @@ export function BetActions({
     await decrementCurrentBalance(betValue)
   }
 
+  const isBetDisabled = isLoading || inGameBallsCount >= 15 || betValue <= 0 || betValue > currentBalance
+  const betButtonText = isLoading ? 'Loading...' : inGameBallsCount >= 15 ? 'Max Balls' : betValue <= 0 ? 'Enter Bet' : betValue > currentBalance ? 'Insufficient' : 'Bet'
+
   return (
     <div className="plinko-bet-actions">
       <span className="balls-in-game">
@@ -101,24 +104,38 @@ export function BetActions({
                   min={0}
                   max={currentBalance}
                   onChange={handleChangeBetValue}
+                  onFocus={() => setIsInputFocused(true)}
+                  onBlur={() => setIsInputFocused(false)}
                   value={betValue}
                   className="bet-input"
+                  placeholder="0.00"
+                  disabled={isLoading}
+                  aria-label="Bet amount"
                 />
                 <button
                   onClick={handleHalfBet}
                   className="bet-button half"
+                  disabled={isLoading}
+                  aria-label="Half bet"
+                  title="Half bet"
                 >
                   ½
                 </button>
                 <button
                   onClick={handleDoubleBet}
                   className="bet-button double"
+                  disabled={isLoading}
+                  aria-label="Double bet"
+                  title="Double bet"
                 >
                   2x
                 </button>
                 <button
                   onClick={handleMaxBet}
                   className="bet-button max"
+                  disabled={isLoading}
+                  aria-label="Maximum bet"
+                  title="Maximum bet"
                 >
                   max
                 </button>
@@ -127,18 +144,20 @@ export function BetActions({
 
             <button
               onClick={handleRunBet}
-              disabled={isLoading}
+              disabled={isBetDisabled}
               className="bet-button-mobile"
+              aria-label={betButtonText}
             >
-              Bet
+              {betButtonText}
             </button>
           </div>
           <select
-            disabled={inGameBallsCount > 0}
+            disabled={inGameBallsCount > 0 || isLoading}
             onChange={handleChangeLines}
             defaultValue={16}
             className="lines-select"
             id="lines"
+            aria-label="Number of lines"
           >
             {linesOptions.map(line => (
               <option key={line} value={line}>
@@ -149,10 +168,11 @@ export function BetActions({
         </div>
         <button
           onClick={handleRunBet}
-          disabled={isLoading}
+          disabled={isBetDisabled}
           className="bet-button-desktop"
+          aria-label={betButtonText}
         >
-          Bet
+          {betButtonText}
         </button>
       </div>
     </div>

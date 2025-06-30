@@ -10,6 +10,12 @@
   --plinko-text: #F2F7FF;
   --plinko-purple: #C52BFF;
   --plinko-purple-dark: #8D27B3;
+  --plinko-accent: #FF6B35;
+  --plinko-success: #4CAF50;
+  --plinko-warning: #FF9800;
+  --plinko-error: #F44336;
+  --plinko-shadow: rgba(0, 0, 0, 0.3);
+  --plinko-glow: rgba(197, 43, 255, 0.3);
 }
 
 // Plinko page container
@@ -28,32 +34,50 @@
   flex-direction: column-reverse;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: 1.5rem;
+  padding: 1rem;
   
   @media (min-width: 768px) {
     flex-direction: row;
+    gap: 2rem;
+    padding: 2rem;
   }
 }
 
-// Bet actions section
+// Bet actions section - Enhanced
 .plinko-bet-actions {
   position: relative;
-  height: 50%;
+  height: auto;
   width: 100%;
+  max-width: 400px;
   flex: 1;
-  padding: 2rem 1rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, var(--plinko-primary) 0%, #2a4a5a 100%);
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px var(--plinko-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  @media (min-width: 768px) {
+    max-width: 450px;
+    padding: 2rem;
+  }
   
   .balls-in-game {
     position: absolute;
-    left: 1rem;
-    top: 0;
+    left: 1.5rem;
+    top: -0.5rem;
     margin: 0 auto;
     font-size: 0.75rem;
     font-weight: bold;
     color: var(--plinko-text);
+    background: linear-gradient(135deg, var(--plinko-purple) 0%, var(--plinko-purple-dark) 100%);
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px var(--plinko-glow);
     
     @media (min-width: 768px) {
-      font-size: 1rem;
+      font-size: 0.875rem;
+      padding: 0.375rem 1rem;
     }
   }
   
@@ -61,21 +85,24 @@
     display: flex;
     height: 100%;
     flex-direction: column;
-    gap: 1rem;
-    border-radius: 0.375rem;
-    background-color: var(--plinko-primary);
-    padding: 1rem;
+    gap: 1.5rem;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, rgba(33, 55, 67, 0.8) 0%, rgba(42, 74, 90, 0.8) 100%);
+    padding: 1.5rem;
     color: var(--plinko-text);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
     
     @media (min-width: 768px) {
       justify-content: space-between;
+      padding: 2rem;
     }
   }
   
   .bet-input-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1rem;
     
     @media (min-width: 768px) {
       flex-direction: column;
@@ -86,7 +113,7 @@
     display: flex;
     flex-direction: row;
     align-items: stretch;
-    gap: 0.25rem;
+    gap: 0.5rem;
     
     @media (min-width: 768px) {
       flex-direction: column;
@@ -108,70 +135,91 @@
     flex: 1;
     align-items: stretch;
     justify-content: space-between;
+    margin-bottom: 0.75rem;
   }
   
   .bet-amount-display {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, var(--plinko-purple-dark) 0%, var(--plinko-purple) 100%);
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px var(--plinko-glow);
   }
   
   .currency-icon {
     border-radius: 9999px;
-    background-color: var(--plinko-purple-dark);
-    padding: 0.125rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 0.25rem;
+    color: var(--plinko-text);
   }
   
   .bet-input-wrapper {
     display: flex;
     align-items: stretch;
     justify-content: center;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 16px var(--plinko-shadow);
+    border-radius: 0.5rem;
+    overflow: hidden;
   }
   
   .bet-input {
     width: 100%;
-    border-top-left-radius: 0.375rem;
-    border-bottom-left-radius: 0.375rem;
     border: 2px solid var(--plinko-secondary);
-    background-color: var(--plinko-background);
-    padding: 0.625rem 1rem;
+    background: linear-gradient(135deg, var(--plinko-background) 0%, #1a2f3a 100%);
+    padding: 0.75rem 1rem;
     font-weight: bold;
-    transition: colors 0.2s;
+    font-size: 1rem;
+    color: var(--plinko-text);
+    transition: all 0.3s ease;
     
     &::placeholder {
       font-weight: bold;
-      color: var(--plinko-text);
+      color: rgba(242, 247, 255, 0.6);
     }
     
     &:focus {
       border-color: var(--plinko-purple);
       outline: none;
+      box-shadow: 0 0 0 3px var(--plinko-glow);
+      background: linear-gradient(135deg, #1a2f3a 0%, var(--plinko-background) 100%);
     }
     
     @media (min-width: 768px) {
-      padding: 0.5rem;
+      padding: 0.875rem 1.25rem;
+      font-size: 1.125rem;
     }
   }
   
   .bet-button {
     position: relative;
     border: 2px solid transparent;
-    background-color: var(--plinko-secondary);
-    padding: 0.625rem 0.75rem;
-    transition: colors 0.2s;
+    background: linear-gradient(135deg, var(--plinko-secondary) 0%, #4a6b7a 100%);
+    padding: 0.75rem 1rem;
+    font-weight: bold;
+    color: var(--plinko-text);
+    transition: all 0.3s ease;
+    cursor: pointer;
     
     &:hover {
-      background-color: rgba(61, 85, 100, 0.8);
+      background: linear-gradient(135deg, #4a6b7a 0%, var(--plinko-secondary) 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px var(--plinko-shadow);
+    }
+    
+    &:active {
+      transform: translateY(0);
     }
     
     &:focus {
       border-color: var(--plinko-purple);
       outline: none;
+      box-shadow: 0 0 0 3px var(--plinko-glow);
     }
     
     @media (min-width: 768px) {
-      padding: 0.5rem;
+      padding: 0.875rem 1.25rem;
     }
     
     &.half {
@@ -181,9 +229,9 @@
         right: 0;
         top: calc(50% - 8px);
         height: 1rem;
-        width: 0;
+        width: 1px;
         border-radius: 0.5rem;
-        background-color: var(--plinko-background);
+        background-color: rgba(255, 255, 255, 0.3);
       }
     }
     
@@ -194,43 +242,55 @@
         right: 0;
         top: calc(50% - 8px);
         height: 1rem;
-        width: 0;
+        width: 1px;
         border-radius: 0.5rem;
-        background-color: var(--plinko-background);
+        background-color: rgba(255, 255, 255, 0.3);
       }
     }
     
     &.max {
-      border-top-right-radius: 0.375rem;
-      border-bottom-right-radius: 0.375rem;
-      padding: 0.5rem 0.75rem;
-      font-size: 0.75rem;
+      background: linear-gradient(135deg, var(--plinko-accent) 0%, #ff8c5a 100%);
+      font-size: 0.875rem;
+      
+      &:hover {
+        background: linear-gradient(135deg, #ff8c5a 0%, var(--plinko-accent) 100%);
+      }
     }
   }
   
   .bet-button-mobile {
     display: block;
-    border-radius: 0.375rem;
-    background-color: var(--plinko-purple);
-    padding: 0.5rem 0.5rem 1rem;
-    font-size: 0.875rem;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, var(--plinko-purple) 0%, var(--plinko-purple-dark) 100%);
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
     font-weight: bold;
     line-height: 1;
-    color: var(--plinko-background);
-    transition: colors 0.2s;
+    color: var(--plinko-text);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 16px var(--plinko-glow);
     
     &:hover {
-      background-color: var(--plinko-purple-dark);
+      background: linear-gradient(135deg, var(--plinko-purple-dark) 0%, var(--plinko-purple) 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px var(--plinko-glow);
+    }
+    
+    &:active {
+      transform: translateY(0);
     }
     
     &:focus {
       outline: none;
-      box-shadow: 0 0 0 1px var(--plinko-purple);
-      box-shadow-offset: 1px;
+      box-shadow: 0 0 0 3px var(--plinko-glow);
     }
     
     &:disabled {
-      background-color: #6b7280;
+      background: linear-gradient(135deg, #6b7280 0%, #9ca3af 100%);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
     }
     
     @media (min-width: 768px) {
@@ -240,51 +300,74 @@
   
   .lines-select {
     width: 100%;
-    border-radius: 0.375rem;
+    border-radius: 0.75rem;
     border: 2px solid var(--plinko-secondary);
-    background-color: var(--plinko-background);
-    padding: 0.5rem;
+    background: linear-gradient(135deg, var(--plinko-background) 0%, #1a2f3a 100%);
+    padding: 0.75rem 1rem;
     font-weight: bold;
-    transition: all 0.2s;
+    font-size: 1rem;
+    color: var(--plinko-text);
+    transition: all 0.3s ease;
+    cursor: pointer;
     
     &::placeholder {
       font-weight: bold;
-      color: var(--plinko-text);
+      color: rgba(242, 247, 255, 0.6);
     }
     
     &:focus {
       border-color: var(--plinko-purple);
       outline: none;
+      box-shadow: 0 0 0 3px var(--plinko-glow);
+      background: linear-gradient(135deg, #1a2f3a 0%, var(--plinko-background) 100%);
     }
     
     &:disabled {
       text-decoration: line-through;
-      opacity: 0.8;
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    option {
+      background-color: var(--plinko-background);
+      color: var(--plinko-text);
+      padding: 0.5rem;
     }
   }
   
   .bet-button-desktop {
     display: none;
-    border-radius: 0.375rem;
-    background-color: var(--plinko-purple);
-    padding: 1.5rem 1.5rem;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, var(--plinko-purple) 0%, var(--plinko-purple-dark) 100%);
+    padding: 1.25rem 2rem;
     font-weight: bold;
+    font-size: 1.125rem;
     line-height: 1;
-    color: var(--plinko-background);
-    transition: colors 0.2s;
+    color: var(--plinko-text);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 16px var(--plinko-glow);
     
     &:hover {
-      background-color: var(--plinko-purple-dark);
+      background: linear-gradient(135deg, var(--plinko-purple-dark) 0%, var(--plinko-purple) 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px var(--plinko-glow);
+    }
+    
+    &:active {
+      transform: translateY(0);
     }
     
     &:focus {
       outline: none;
-      box-shadow: 0 0 0 1px var(--plinko-purple);
-      box-shadow-offset: 1px;
+      box-shadow: 0 0 0 3px var(--plinko-glow);
     }
     
     &:disabled {
-      background-color: #6b7280;
+      background: linear-gradient(135deg, #6b7280 0%, #9ca3af 100%);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
     }
     
     @media (min-width: 768px) {
@@ -293,31 +376,50 @@
   }
 }
 
-// Multiplier history
+// Multiplier history - Enhanced
 .plinko-multiplier-history {
   position: absolute;
   right: 1rem;
   top: 10rem;
   display: flex;
-  width: 4rem;
+  width: 5rem;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.5rem;
   overflow: hidden;
-  border-radius: 0.375rem;
-  background-color: var(--plinko-background);
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, var(--plinko-background) 0%, #1a2f3a 100%);
+  padding: 0.75rem;
+  box-shadow: 0 4px 16px var(--plinko-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   
   @media (min-width: 768px) {
     top: 15rem;
+    width: 6rem;
+    padding: 1rem;
   }
   
   .multiplier-item {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--plinko-purple-dark);
-    padding: 0.25rem;
+    background: linear-gradient(135deg, var(--plinko-purple-dark) 0%, var(--plinko-purple) 100%);
+    padding: 0.5rem;
     font-weight: bold;
+    font-size: 0.875rem;
     color: var(--plinko-text);
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px var(--plinko-glow);
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px var(--plinko-glow);
+    }
+    
+    @media (min-width: 768px) {
+      font-size: 1rem;
+      padding: 0.75rem;
+    }
   }
 }
 
@@ -327,9 +429,16 @@
   flex: 1;
   align-items: center;
   justify-content: center;
+  min-height: 400px;
+  
+  @media (min-width: 768px) {
+    min-height: 500px;
+  }
 }
 
 // Plinko canvas container
 #plinko {
   // This will be styled by Matter.js
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 32px var(--plinko-shadow);
 } 
