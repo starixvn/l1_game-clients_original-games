@@ -17,7 +17,6 @@
         "operatorSecret": "VG@SC123",
         "operatorToken": "ONEworksVGCashToken"
     },
-    "defaultGameId": 118,
-    "userServicePath": "livepageuser",
-    "appType": 6
+    "defaultGameId": 2,
+    "userServicePath": "livepageuser"
 }

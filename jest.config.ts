@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'hot-league-wall',
+  displayName: 'app',
   testEnvironment: 'jsdom',
   transform: {
     '^.+\\.[tj]sx?$': ['babel-jest', {

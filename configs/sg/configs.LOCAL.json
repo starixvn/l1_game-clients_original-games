@@ -16,6 +16,7 @@
         "operatorId": "ONEworks1",
         "operatorSecret": "ONEworks1@20luminet&"
     },
-    "defaultGameId": 2,
-    "userServicePath": "livepageuser"
+    "defaultGameId": 118,
+    "userServicePath": "livepageuser",
+    "appType": 6
 }

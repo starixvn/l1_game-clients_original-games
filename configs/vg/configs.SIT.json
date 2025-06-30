@@ -11,6 +11,7 @@
     "env": "SIT",
     "enableMsgpackParserAllGames": true,
     "enableMsgpackParserOnNotification": true,
-    "defaultGameId": 2,
-    "userServicePath": "livepageuser"
+    "defaultGameId": 118,
+    "userServicePath": "livepageuser",
+    "appType": 6
 }

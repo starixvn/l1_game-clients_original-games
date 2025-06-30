@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds';
-import { RoundId } from 'libs/hot-league-wall/src/_shared/components/round-id';
-import { IRoundIdProps } from 'libs/hot-league-wall/src/_shared/components/round-id';
+import { RoundId } from 'src/_shared/components/round-id';
+import { IRoundIdProps } from 'src/_shared/components/round-id';
 
 // Mock the SCSS module
 jest.mock('../../../../../../src/_shared/components/round-id/round-id.module.scss', () => ({
