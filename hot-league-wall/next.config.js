@@ -45,6 +45,12 @@ const nextConfig = {
       use: ["@svgr/webpack"],
     });
 
+    // Handle audio files
+    config.module.rules.push({
+      test: /\.(wav|mp3|ogg|m4a)$/,
+      type: "asset/resource",
+    });
+
     return config;
   },
   env: {
