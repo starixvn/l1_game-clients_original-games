@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connection Management Simulator Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .demo-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .demo-section h2 {
+            color: #555;
+            margin-top: 0;
+        }
+        
+        .code-block {
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+        }
+        
+        .button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        
+        .button:hover {
+            background: #0056b3;
+        }
+        
+        .button.danger {
+            background: #dc3545;
+        }
+        
+        .button.danger:hover {
+            background: #c82333;
+        }
+        
+        .button.success {
+            background: #28a745;
+        }
+        
+        .button.success:hover {
+            background: #218838;
+        }
+        
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .metric-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #007bff;
+        }
+        
+        .metric-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .instructions {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .instructions h3 {
+            margin-top: 0;
+            color: #0066cc;
+        }
+        
+        .test-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔗 Connection Management Simulator Demo</h1>
+        
+        <div class="demo-section">
+            <h2>📋 Overview</h2>
+            <p>
+                This demo shows how to integrate and test the Connection Management Simulator in your application.
+                The simulator helps you test connection management features like load balancing, throttling, and fallback mechanisms.
+            </p>
+            
+            <div class="instructions">
+                <h3>🚀 Quick Start</h3>
+                <ol>
+                    <li>Open your browser's developer console (F12)</li>
+                    <li>Use the test buttons below to simulate different scenarios</li>
+                    <li>Monitor the connection metrics in real-time</li>
+                    <li>Check the console for detailed logs</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>📊 Connection Metrics</h2>
+            <div class="metrics">
+                <div class="metric-card">
+                    <h3>Active Connections</h3>
+                    <div class="metric-value" id="activeConnections">0</div>
+                </div>
+                <div class="metric-card">
+                    <h3>Connection Limit</h3>
+                    <div class="metric-value" id="connectionLimit">20</div>
+                </div>
+                <div class="metric-card">
+                    <h3>Queue Length</h3>
+                    <div class="metric-value" id="queueLength">0</div>
+                </div>
+                <div class="metric-card">
+                    <h3>Load Level</h3>
+                    <div class="metric-value" id="loadLevel">normal</div>
+                </div>
+                <div class="metric-card">
+                    <h3>Throttling</h3>
+                    <div class="metric-value" id="throttlingLevel">none</div>
+                </div>
+                <div class="metric-card">
+                    <h3>Polling Active</h3>
+                    <div class="metric-value" id="pollingActive">false</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>🧪 Quick Tests</h2>
+            <div class="test-controls">
+                <button class="button" onclick="runQuickLoadTest()">Load Test</button>
+                <button class="button" onclick="runConnectionLimitTest()">Connection Limit Test</button>
+                <button class="button" onclick="runThrottlingTest()">Throttling Test</button>
+                <button class="button success" onclick="runAllTests()">Run All Tests</button>
+                <button class="button danger" onclick="resetSimulator()">Reset All</button>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>🔧 Manual Controls</h2>
+            <div class="test-controls">
+                <label>Load Level:</label>
+                <select id="loadLevelSelect" onchange="setLoadLevel(this.value)">
+                    <option value="normal">Normal</option>
+                    <option value="high">High</option>
+                    <option value="extreme">Extreme</option>
+                </select>
+                
+                <label>Connection Limit:</label>
+                <input type="range" id="connectionLimitSlider" min="1" max="50" value="20" onchange="setConnectionLimit(this.value)">
+                <span id="connectionLimitValue">20</span>
+                
+                <label>Throttling:</label>
+                <select id="throttlingSelect" onchange="setThrottling(this.value)">
+                    <option value="none">None</option>
+                    <option value="moderate">Moderate</option>
+                    <option value="aggressive">Aggressive</option>
+                </select>
+            </div>
+            
+            <div class="test-controls">
+                <button class="button" onclick="togglePolling()">Toggle Polling</button>
+                <button class="button" onclick="togglePriorityQueuing()">Toggle Priority Queue</button>
+                <button class="button danger" onclick="forceDisconnect()">Force Disconnect</button>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>💻 Integration Code</h2>
+            <p>Here's how to integrate the simulator into your React application:</p>
+            
+            <div class="code-block">
+// 1. Import the simulator components
+import { 
+    ConnectionControlSimulatorWrapper,
+    useConnectionSimulator 
+} from './simulator';
+import { useSSOSimulator } from './_shared/components/sso-control-simulator';
+
+// 2. Use the hooks in your component
+const YourApp = () => {
+    const connectionSimulator = useConnectionSimulator();
+    const ssoSimulator = useSSOSimulator();
+    
+    return (
+        <ConnectionControlSimulatorWrapper showToggleButton={true}>
+            {/* Your existing app content */}
+            <YourExistingAppContent />
+        </ConnectionControlSimulatorWrapper>
+    );
+};
+            </div>
+            
+            <div class="code-block">
+// 3. Programmatic control
+const connectionSimulator = useConnectionSimulator();
+
+// Simulate high load
+connectionSimulator.simulateLoadLevel('high');
+
+// Set connection limit
+connectionSimulator.setConnectionLimit(10);
+
+// Enable throttling
+connectionSimulator.setThrottlingLevel('moderate');
+
+// Enable polling fallback
+connectionSimulator.enablePollingFallback(true);
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>📝 Console Commands</h2>
+            <p>You can also run these commands directly in the browser console:</p>
+            
+            <div class="code-block">
+// Get the simulator instance
+const simulator = window.connectionSimulator;
+
+// Quick tests
+window.ConnectionSimulatorTests.quickLoadTest(simulator);
+window.ConnectionSimulatorTests.connectionLimitTest(simulator);
+window.ConnectionSimulatorTests.throttlingTest(simulator);
+window.ConnectionSimulatorTests.runAllTests(simulator);
+
+// Manual control
+simulator.simulateLoadLevel('high');
+simulator.setConnectionLimit(5);
+simulator.setThrottlingLevel('aggressive');
+simulator.forceDisconnect();
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mock simulator for demo purposes
+        // In a real application, this would be the actual simulator instance
+        const mockSimulator = {
+            state: {
+                activeConnections: 0,
+                connectionLimit: 20,
+                connectionQueue: [],
+                loadLevel: 'normal',
+                throttlingLevel: 'none',
+                pollingFallbackActive: false,
+                inactivityTimeout: 300000
+            },
+            
+            simulateLoadLevel: (level) => {
+                mockSimulator.state.loadLevel = level;
+                updateMetrics();
+                console.log(`🔗 [SIMULATOR] Load level changed to: ${level}`);
+            },
+            
+            setConnectionLimit: (limit) => {
+                mockSimulator.state.connectionLimit = parseInt(limit);
+                updateMetrics();
+                console.log(`🔗 [SIMULATOR] Connection limit set to: ${limit}`);
+            },
+            
+            setThrottlingLevel: (level) => {
+                mockSimulator.state.throttlingLevel = level;
+                updateMetrics();
+                console.log(`🔗 [SIMULATOR] Throttling level set to: ${level}`);
+            },
+            
+            enablePollingFallback: (enabled) => {
+                mockSimulator.state.pollingFallbackActive = enabled;
+                updateMetrics();
+                console.log(`🔗 [SIMULATOR] Polling fallback ${enabled ? 'enabled' : 'disabled'}`);
+            },
+            
+            enablePriorityQueuing: (enabled) => {
+                console.log(`🔗 [SIMULATOR] Priority queuing ${enabled ? 'enabled' : 'disabled'}`);
+            },
+            
+            forceDisconnect: () => {
+                console.log(`🔗 [SIMULATOR] Force disconnect triggered`);
+            },
+            
+            resetAll: () => {
+                mockSimulator.state = {
+                    activeConnections: 0,
+                    connectionLimit: 20,
+                    connectionQueue: [],
+                    loadLevel: 'normal',
+                    throttlingLevel: 'none',
+                    pollingFallbackActive: false,
+                    inactivityTimeout: 300000
+                };
+                updateMetrics();
+                console.log(`🔗 [SIMULATOR] All settings reset to defaults`);
+            }
+        };
+
+        // Update metrics display
+        function updateMetrics() {
+            document.getElementById('activeConnections').textContent = mockSimulator.state.activeConnections;
+            document.getElementById('connectionLimit').textContent = mockSimulator.state.connectionLimit;
+            document.getElementById('queueLength').textContent = mockSimulator.state.connectionQueue.length;
+            document.getElementById('loadLevel').textContent = mockSimulator.state.loadLevel;
+            document.getElementById('throttlingLevel').textContent = mockSimulator.state.throttlingLevel;
+            document.getElementById('pollingActive').textContent = mockSimulator.state.pollingFallbackActive.toString();
+            
+            // Update sliders and selects
+            document.getElementById('connectionLimitSlider').value = mockSimulator.state.connectionLimit;
+            document.getElementById('connectionLimitValue').textContent = mockSimulator.state.connectionLimit;
+            document.getElementById('loadLevelSelect').value = mockSimulator.state.loadLevel;
+            document.getElementById('throttlingSelect').value = mockSimulator.state.throttlingLevel;
+        }
+
+        // Test functions
+        function runQuickLoadTest() {
+            console.log('🧪 [DEMO] Starting quick load test');
+            
+            mockSimulator.simulateLoadLevel('normal');
+            setTimeout(() => {
+                mockSimulator.simulateLoadLevel('high');
+            }, 3000);
+            setTimeout(() => {
+                mockSimulator.simulateLoadLevel('extreme');
+            }, 6000);
+            setTimeout(() => {
+                mockSimulator.simulateLoadLevel('normal');
+            }, 9000);
+        }
+
+        function runConnectionLimitTest() {
+            console.log('🧪 [DEMO] Starting connection limit test');
+            
+            mockSimulator.setConnectionLimit(5);
+            setTimeout(() => {
+                mockSimulator.setConnectionLimit(20);
+            }, 5000);
+        }
+
+        function runThrottlingTest() {
+            console.log('🧪 [DEMO] Starting throttling test');
+            
+            mockSimulator.setThrottlingLevel('none');
+            setTimeout(() => {
+                mockSimulator.setThrottlingLevel('moderate');
+            }, 3000);
+            setTimeout(() => {
+                mockSimulator.setThrottlingLevel('aggressive');
+            }, 6000);
+            setTimeout(() => {
+                mockSimulator.setThrottlingLevel('none');
+            }, 9000);
+        }
+
+        function runAllTests() {
+            console.log('🧪 [DEMO] Running all tests');
+            runQuickLoadTest();
+            setTimeout(runConnectionLimitTest, 10000);
+            setTimeout(runThrottlingTest, 15000);
+        }
+
+        function resetSimulator() {
+            mockSimulator.resetAll();
+        }
+
+        // Manual control functions
+        function setLoadLevel(level) {
+            mockSimulator.simulateLoadLevel(level);
+        }
+
+        function setConnectionLimit(limit) {
+            mockSimulator.setConnectionLimit(limit);
+        }
+
+        function setThrottling(level) {
+            mockSimulator.setThrottlingLevel(level);
+        }
+
+        function togglePolling() {
+            mockSimulator.enablePollingFallback(!mockSimulator.state.pollingFallbackActive);
+        }
+
+        function togglePriorityQueuing() {
+            mockSimulator.enablePriorityQueuing(true);
+        }
+
+        function forceDisconnect() {
+            mockSimulator.forceDisconnect();
+        }
+
+        // Initialize
+        updateMetrics();
+        
+        // Simulate some activity
+        setInterval(() => {
+            mockSimulator.state.activeConnections = Math.floor(Math.random() * mockSimulator.state.connectionLimit);
+            mockSimulator.state.connectionQueue = Array(Math.floor(Math.random() * 5));
+            updateMetrics();
+        }, 2000);
+
+        // Make simulator available globally for console testing
+        window.connectionSimulator = mockSimulator;
+        
+        console.log('🔗 [DEMO] Connection Management Simulator Demo loaded');
+        console.log('🔗 [DEMO] Use window.connectionSimulator to access the simulator');
+        console.log('🔗 [DEMO] Use the test buttons or run commands in the console');
+    </script>
+</body>
+</html> 

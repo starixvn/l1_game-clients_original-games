@@ -11,4 +11,8 @@ export interface IGatewayGameBaseState extends IGameBaseState {
     isAllowedBet: boolean;
     activePanelId: any;
     showBetPanel: boolean;
+
+    // Connection management properties
+    isInPollingMode: boolean;
+    connectionPriority: number;
 } 

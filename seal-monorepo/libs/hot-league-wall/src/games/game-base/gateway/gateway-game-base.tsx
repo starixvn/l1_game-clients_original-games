@@ -8,14 +8,150 @@ import GameBase from '../core/game-base.core';
 import GameUIRenderer, { UIExtensionOptions } from '../ui/game-ui-renderer';
 import { IGatewayGameBaseState } from '../interfaces/gateway-types';
 import { GameBaseProps } from '../type';
-import { SyncMemberSiteBalance } from '../../../_shared/utils/sync-member-site-balance';
+import { SyncMemberSiteBalance } from '../../../_shared/utils/callback-singleton/sync-member-site-balance';
 import { ROUND_STATE } from '@sg/sg-game-client/dist/game/rounds/round-time-store';
 import { Settlements } from '@sg/sg-game-client';
 import { FunctionUtils } from '../../../_shared/utils/funtion-utils';
 
+// Connection Management Configuration
+const CONNECTION_CONFIG = {
+    MAX_CONNECTIONS: 1000,
+    INACTIVITY_TIMEOUT: 5 * 60 * 1000, // 5 minutes
+    MAX_ATTEMPTS_PER_MINUTE: 3,
+    POLLING_INTERVAL: 5000, // 5 seconds
+    HEARTBEAT_INTERVAL: 30000, // 30 seconds
+    SERVICE_HEALTH_CHECK_INTERVAL: 60000, // 1 minute
+} as const;
+
+// Global connection management
+class ConnectionManager {
+    private static activeConnections = 0;
+    private static connectionAttempts = new Map<string, { count: number; lastReset: number }>();
+    private static serviceHealthStatus: 'healthy' | 'degraded' | 'overloaded' = 'healthy';
+    private static connectionQueue: Array<{ component: any; priority: number; timestamp: number }> = [];
+    private static isProcessingQueue = false;
+    private static healthCheckInterval?: NodeJS.Timeout;
+
+    static canEstablishConnection(): boolean {
+        return this.activeConnections < CONNECTION_CONFIG.MAX_CONNECTIONS;
+    }
+
+    static incrementConnection(): void {
+        this.activeConnections++;
+        console.log(`🔗 [ConnectionManager] Active connections: ${this.activeConnections}/${CONNECTION_CONFIG.MAX_CONNECTIONS}`);
+    }
+
+    static decrementConnection(): void {
+        this.activeConnections = Math.max(0, this.activeConnections - 1);
+        console.log(`🔗 [ConnectionManager] Active connections: ${this.activeConnections}/${CONNECTION_CONFIG.MAX_CONNECTIONS}`);
+    }
+
+    static canAttemptConnection(userId: string): boolean {
+        const now = Date.now();
+        const userAttempts = this.connectionAttempts.get(userId);
+
+        if (!userAttempts || now - userAttempts.lastReset > 60000) {
+            this.connectionAttempts.set(userId, { count: 1, lastReset: now });
+            return true;
+        }
+
+        if (userAttempts.count >= CONNECTION_CONFIG.MAX_ATTEMPTS_PER_MINUTE) {
+            return false;
+        }
+
+        userAttempts.count++;
+        return true;
+    }
+
+    static getServiceHealthStatus(): 'healthy' | 'degraded' | 'overloaded' {
+        return this.serviceHealthStatus;
+    }
+
+    static setServiceHealthStatus(status: 'healthy' | 'degraded' | 'overloaded'): void {
+        this.serviceHealthStatus = status;
+        console.log(`🔗 [ConnectionManager] Service health status: ${status}`);
+    }
+
+    static addToQueue(component: any, priority: number): void {
+        this.connectionQueue.push({
+            component,
+            priority,
+            timestamp: Date.now()
+        });
+
+        // Sort by priority (lower number = higher priority)
+        this.connectionQueue.sort((a, b) => a.priority - b.priority);
+
+        console.log(`🔗 [ConnectionManager] Added to queue. Queue length: ${this.connectionQueue.length}`);
+
+        if (!this.isProcessingQueue) {
+            this.processQueue();
+        }
+    }
+
+    private static processQueue(): void {
+        this.isProcessingQueue = true;
+
+        const processNext = () => {
+            if (this.connectionQueue.length === 0) {
+                this.isProcessingQueue = false;
+                return;
+            }
+
+            const next = this.connectionQueue.shift();
+            if (next && this.canEstablishConnection()) {
+                console.log(`🔗 [ConnectionManager] Processing queued connection with priority ${next.priority}`);
+                next.component.connectLiveGateway();
+            }
+
+            // Process next after delay to prevent overwhelming
+            setTimeout(processNext, 1000);
+        };
+
+        processNext();
+    }
+
+    static startHealthCheck(): void {
+        if (this.healthCheckInterval) {
+            clearInterval(this.healthCheckInterval);
+        }
+
+        this.healthCheckInterval = setInterval(() => {
+            this.checkServiceHealth();
+        }, CONNECTION_CONFIG.SERVICE_HEALTH_CHECK_INTERVAL);
+    }
+
+    private static async checkServiceHealth(): Promise<void> {
+        try {
+            // Check server load based on active connections
+            const connectionRatio = this.activeConnections / CONNECTION_CONFIG.MAX_CONNECTIONS;
+
+            if (connectionRatio > 0.9) {
+                this.setServiceHealthStatus('overloaded');
+            } else if (connectionRatio > 0.7) {
+                this.setServiceHealthStatus('degraded');
+            } else {
+                this.setServiceHealthStatus('healthy');
+            }
+        } catch (error) {
+            console.error('🔗 [ConnectionManager] Health check failed:', error);
+        }
+    }
+
+    static cleanup(): void {
+        if (this.healthCheckInterval) {
+            clearInterval(this.healthCheckInterval);
+        }
+    }
+}
+
 class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> extends GameBase<P, S> {
     private authHandler: AuthorizationHandler;
     protected uiRenderer: GameUIRenderer<P, S>;
+    private inactivityTimeout?: NodeJS.Timeout;
+    private heartbeatInterval?: NodeJS.Timeout;
+    private pollInterval?: NodeJS.Timeout;
+    private lastActivityTime: number = Date.now();
 
     constructor(props: P) {
         super(props);
@@ -23,6 +159,8 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
             ...this.state,
             isAuthorized: false,
             isSignedIn: false,
+            isInPollingMode: false,
+            connectionPriority: 3, // Default priority
         } as S;
 
         this.authHandler = new AuthorizationHandler(
@@ -33,17 +171,135 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
         );
 
         this.uiRenderer = new GameUIRenderer<P, S>();
+
+        // Start connection manager health check
+        ConnectionManager.startHealthCheck();
     }
 
-    protected configureUIRenderer(): UIExtensionOptions {
-        return {};
+    componentDidMount() {
+        super.componentDidMount();
+        this.startInactivityTimer();
+        this.startHeartbeat();
+        this.updateActivityTime();
     }
 
-    protected initializeUIRenderer(): void {
-        const options = this.configureUIRenderer();
-        if (Object.keys(options).length > 0) {
-            this.uiRenderer.setExtensionOptions(options);
+    componentWillUnmount() {
+        this.clearInactivityTimer();
+        this.clearHeartbeat();
+        this.clearPolling();
+        super.componentWillUnmount();
+    }
+
+    // CONNECTION MANAGEMENT METHODS
+    private startInactivityTimer(): void {
+        this.clearInactivityTimer();
+        this.inactivityTimeout = setTimeout(() => {
+            this.handleInactivityDisconnect();
+        }, CONNECTION_CONFIG.INACTIVITY_TIMEOUT);
+    }
+
+    private clearInactivityTimer(): void {
+        if (this.inactivityTimeout) {
+            clearTimeout(this.inactivityTimeout);
+            this.inactivityTimeout = undefined;
         }
+    }
+
+    private startHeartbeat(): void {
+        this.clearHeartbeat();
+        this.heartbeatInterval = setInterval(() => {
+            this.sendHeartbeat();
+        }, CONNECTION_CONFIG.HEARTBEAT_INTERVAL);
+    }
+
+    private clearHeartbeat(): void {
+        if (this.heartbeatInterval) {
+            clearInterval(this.heartbeatInterval);
+            this.heartbeatInterval = undefined;
+        }
+    }
+
+    private clearPolling(): void {
+        if (this.pollInterval) {
+            clearInterval(this.pollInterval);
+            this.pollInterval = undefined;
+        }
+    }
+
+    private updateActivityTime(): void {
+        this.lastActivityTime = Date.now();
+        this.resetInactivityTimer();
+    }
+
+    private resetInactivityTimer(): void {
+        this.startInactivityTimer();
+    }
+
+    private handleInactivityDisconnect(): void {
+        console.log('🔗 [GatewayGameBase] Disconnecting due to inactivity');
+        this.closeConnect();
+        this.setState({ isConnectFailed: true } as Pick<S, keyof S>);
+    }
+
+    private sendHeartbeat(): void {
+        // Send heartbeat to keep connection alive
+        try {
+            // This would typically send a ping message to the server
+            console.log('🔗 [GatewayGameBase] Sending heartbeat');
+        } catch (error) {
+            console.error('🔗 [GatewayGameBase] Heartbeat failed:', error);
+        }
+    }
+
+    private getConnectionPriority(): number {
+        // Higher priority for active users
+        if (this.state.showBetPanel) return 1; // Active betting
+        if (this.state.isOpenStatistic) return 2; // Viewing stats
+        return 3; // Idle users
+    }
+
+    private enablePollingMode(): void {
+        console.log('🔗 [GatewayGameBase] Enabling polling mode due to service overload');
+        this.setState({ isInPollingMode: true } as S);
+        this.startPollingForUpdates();
+    }
+
+    private startPollingForUpdates(): void {
+        this.clearPolling();
+        this.pollInterval = setInterval(() => {
+            this.fetchGameUpdates();
+        }, CONNECTION_CONFIG.POLLING_INTERVAL);
+    }
+
+    private async fetchGameUpdates(): Promise<void> {
+        try {
+            // HTTP request to get game state updates
+            const response = await fetch(`/api/game/${this.props.namespace}/updates`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                const updates = await response.json();
+                this.handleGameUpdates(updates);
+            }
+        } catch (error) {
+            console.error('🔗 [GatewayGameBase] Polling failed:', error);
+        }
+    }
+
+    private handleGameUpdates(updates: any): void {
+        // Handle game updates received via polling
+        console.log('🔗 [GatewayGameBase] Received game updates via polling:', updates);
+        // Implement update handling logic here
+    }
+
+    // Override activity tracking methods
+    protected onUserActivity(): void {
+        this.updateActivityTime();
+        this.setState({ connectionPriority: this.getConnectionPriority() } as S);
     }
 
     // AUTHORIZATION METHODS
@@ -77,11 +333,42 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
     // CONNECTION METHODS
     @render(gc.GatewayConnection.GatewayConnectionStore, (store) => store.isConnected)
     handleConnectLiveGatewayForGame(isConnected: boolean): void {
-        if (isConnected) this.connectLiveGateway();
+        const healthStatus = ConnectionManager.getServiceHealthStatus();
+
+        if (healthStatus === 'overloaded') {
+            this.enablePollingMode();
+            return;
+        }
+
+        if (isConnected) {
+            this.connectLiveGateway();
+        }
     }
 
-    @handle(gc.Connection.ConnectionHandlers.ConnectHandler, (handler) => handler.handleGateway())
-    override connectLiveGateway(): void { }
+    @handle(gc.Connection.ConnectionHandlers.ConnectHandler, (handler) => handler.handle())
+    override connectLiveGateway(): void {
+        const userId = this.props.namespace || 'anonymous';
+
+        // Check connection limits
+        if (!ConnectionManager.canEstablishConnection()) {
+            console.warn(`🔗 [GatewayGameBase] Connection limit reached for user: ${userId}`);
+            ConnectionManager.addToQueue(this, this.getConnectionPriority());
+            return;
+        }
+
+        // Check throttling
+        if (!ConnectionManager.canAttemptConnection(userId)) {
+            console.warn(`🔗 [GatewayGameBase] Connection attempts exceeded for user: ${userId}`);
+            this.setState({ isConnectFailed: true } as S);
+            return;
+        }
+
+        // Proceed with connection
+        ConnectionManager.incrementConnection();
+        console.log(`🔗 [GatewayGameBase] Establishing connection for user: ${userId}`);
+
+        // Connection logic will be handled by the specific game implementation
+    }
 
     @render(gc.Connection.ConnectionStore, (store) => store.isConnected)
     handleJoinGame(isConnected: boolean): void {
@@ -104,7 +391,11 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
     inGameLiveGateway(): void { }
 
     // ABSTRACT METHOD IMPLEMENTATIONS
-    override closeConnect(): void { }
+    override closeConnect(): void {
+        ConnectionManager.decrementConnection();
+        this.clearPolling();
+        this.setState({ isInPollingMode: false } as S);
+    }
 
     override showResult(
         hasAnimation: boolean,
@@ -119,6 +410,7 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
     setIsValidBet(validBet: gc.Bet.IValidBet): void {
         if (validBet?.value) {
             SyncMemberSiteBalance.getInstance().executeSyncBalance();
+            this.onUserActivity(); // Track betting activity
         }
     }
 
@@ -175,6 +467,7 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
         }
 
         this.setState({ roundState } as Pick<S, keyof S>);
+        this.onUserActivity(); // Track round state changes
     }
 
     @render(gc.Rounds.RoundStore, (store) => store.clientRoundId)
@@ -191,6 +484,7 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
         setTimeout(() => {
             this.setState({ isShowNextRoundMessage: false } as Pick<S, keyof S>);
         }, 3000);
+        this.onUserActivity(); // Track betting activity
     }
 
     override renderNotice(): JSX.Element {
@@ -217,5 +511,10 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
         );
     }
 }
+
+// Cleanup on page unload
+window.addEventListener('beforeunload', () => {
+    ConnectionManager.cleanup();
+});
 
 export default GatewayGameBase;
