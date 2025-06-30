@@ -6,6 +6,159 @@
 
 The Plinko game is a physics-based gambling game built with React, TypeScript, and Matter.js. Players drop balls that bounce off pins and land on multipliers to win prizes.
 
+## Canvas Implementation
+
+### Canvas Creation and Management
+
+The Plinko game uses **Matter.js** to create and manage a canvas element for physics rendering. Here's how the canvas is implemented:
+
+#### 1. Canvas Container
+
+```tsx
+// src/games/plinko/components/Game/components/GameBody/index.tsx
+export function PlinkoGameBody() {
+  return <div id='plinko' />;
+}
+```
+
+#### 2. Canvas Initialization
+
+```tsx
+// src/games/plinko/components/Game/index.tsx
+useEffect(() => {
+  engine.gravity.y = engineConfig.engineGravity;
+  const element = document.getElementById("plinko");
+  const render = Render.create({
+    element: element!, // Canvas is attached to this DOM element
+    bounds: {
+      max: { y: worldHeight, x: worldWidth },
+      min: { y: 0, x: 0 },
+    },
+    options: {
+      background: colors.background,
+      hasBounds: true,
+      width: worldWidth, // 390px
+      height: worldHeight, // 390px
+      wireframes: false,
+    },
+    engine,
+  });
+
+  const runner = Runner.create();
+  Runner.run(runner, engine);
+  Render.run(render);
+
+  return () => {
+    World.clear(engine.world, true);
+    Engine.clear(engine);
+    render.canvas.remove(); // Cleanup canvas on unmount
+    render.textures = {};
+  };
+}, [lines]);
+```
+
+#### 3. Canvas Properties
+
+- **Size**: 390x390 pixels (configurable in `worldConfig`)
+- **Background**: Theme-based background color
+- **Wireframes**: Disabled for better visual appearance
+- **Bounds**: Limited rendering area for performance
+- **Element**: Attached to `<div id="plinko">` container
+
+#### 4. Canvas Cleanup
+
+The canvas is properly cleaned up when the component unmounts:
+
+- Removes all physics bodies from the world
+- Clears the Matter.js engine
+- Removes the canvas element from DOM
+- Clears texture cache
+
+### Canvas Rendering Elements
+
+#### 1. Pins (Static Circles)
+
+```tsx
+const pin = Bodies.circle(pinX, pinY, pinsConfig.pinSize, {
+  label: `pin-${i}`,
+  render: {
+    fillStyle: "#F5DCFF", // Light purple color
+  },
+  isStatic: true,
+});
+```
+
+#### 2. Balls (Dynamic Circles)
+
+```tsx
+const ball = Bodies.circle(ballX, 20, ballConfig.ballSize, {
+  restitution: 1,
+  friction: 0.6,
+  label: `ball-${ballValue}`,
+  render: {
+    fillStyle: ballColor, // Purple or text color based on bet value
+  },
+  isStatic: false,
+});
+```
+
+#### 3. Multiplier Blocks (Static Rectangles with Sprites)
+
+```tsx
+const multiplierBody = Bodies.rectangle(
+  lastMultiplierX + 20,
+  worldWidth / lines + lines * pinsConfig.pinGap + pinsConfig.pinGap,
+  blockSize, // 20px
+  blockSize, // 20px
+  {
+    label: multiplier.label,
+    isStatic: true,
+    render: {
+      sprite: {
+        xScale: 1,
+        yScale: 1,
+        texture:
+          typeof multiplier.img === "string"
+            ? multiplier.img
+            : multiplier.img.src,
+      },
+    },
+  }
+);
+```
+
+#### 4. Invisible Walls and Floor
+
+```tsx
+// Invisible walls for ball containment
+const leftWall = Bodies.rectangle(/* ... */, {
+  render: { visible: false },
+  isStatic: true
+})
+
+const floor = Bodies.rectangle(/* ... */, {
+  render: { visible: false },
+  isStatic: true
+})
+```
+
+### Canvas Performance Optimizations
+
+1. **Static Bodies**: Pins, walls, and multiplier blocks are static (no physics calculations)
+2. **Limited Bounds**: Canvas rendering is bounded to game area
+3. **Ball Cleanup**: Balls are removed immediately after collision
+4. **Texture Management**: Proper texture cleanup on unmount
+5. **Collision Filtering**: Balls use collision groups to optimize detection
+
+### Canvas Integration with React
+
+The canvas is seamlessly integrated with React through:
+
+- **useEffect Hook**: Canvas lifecycle management
+- **DOM Element Reference**: Canvas attached to React-managed div
+- **State Synchronization**: Canvas updates when game state changes
+- **Cleanup**: Proper cleanup when component unmounts
+
 ## Architecture Overview
 
 ```
