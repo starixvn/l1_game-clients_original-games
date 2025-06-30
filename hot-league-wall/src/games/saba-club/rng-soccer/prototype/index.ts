@@ -1,5 +1,6 @@
 // Export all separated components
-export { RNGSoccerStateManager, IRNGSoccerPageState } from './rng-soccer-state-manager';
+export { RNGSoccerStateManager } from './rng-soccer-state-manager';
+export type { IRNGSoccerPageState } from './rng-soccer-state-manager';
 export { RNGSoccerUIConfig } from './rng-soccer-ui-config';
 export { RNGSoccerRenderers } from './rng-soccer-renderers';
 export { default as RNGSoccerOrchestrator } from './rng-soccer-orchestrator';

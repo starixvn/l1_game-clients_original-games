@@ -130,8 +130,10 @@ class LobbyComponent extends React.PureComponent<any, ILobbyState> {
                 this.resetConnectionSimulatorState();
 
                 // Dispatch event to notify connection simulator of successful SSO retry
-                window.dispatchEvent(new CustomEvent('sso-retry-success'));
-                console.log('🔄 [LOBBY] Dispatched SSO retry success event');
+                if (typeof window !== 'undefined') {
+                    window.dispatchEvent(new CustomEvent('sso-retry-success'));
+                    console.log('🔄 [LOBBY] Dispatched SSO retry success event');
+                }
             } catch (error) {
                 console.error('🔄 [LOBBY] Session reconnect failed:', error);
             }

@@ -4,8 +4,9 @@ import * as mobx from 'mobx';
 import { reaction } from 'mobx';
 import 'reflect-metadata';
 import { getSiteConfig, appSettings } from '../../_shared/app-settings';
-import { Lobby } from '../../_shared/states';
+import { FEATURE_NAME as LobbyFeatureName } from '../../_shared/states/lobby';
 import { LobbyStore } from '../../_shared/states/lobby';
+
 interface Languages {
     [key: string]: any;
 }
@@ -31,9 +32,9 @@ function getSharedContainer(siteConfigs: gc.Configs.SiteConfigs) {
             gc.ChipSetting.FEATURE_NAME,
             gc.GatewayConnection.FEATURE_NAME,
             gc.RoundBasePF.FEATURE_NAME,
-            Lobby.FEATURE_NAME,
+            LobbyFeatureName,
         ],
-        features: [...gc.defaultFeatures, Lobby],
+        features: [...gc.defaultFeatures],
     };
 
     return gc.getContainer(containerOptions);
@@ -42,7 +43,6 @@ function getSharedContainer(siteConfigs: gc.Configs.SiteConfigs) {
 export const sharedContainer = getSharedContainer(getSiteConfig(appSettings.defaultGameId));
 
 export function configSharedContainer() {
-    Observer.configure({ default: { mobx, container: gc.buildObserverContainer(sharedContainer) } });
     Observer.configure({ default: { mobx, container: gc.buildObserverContainer(sharedContainer) } });
     return sharedContainer;
 }

@@ -1,4 +1,4 @@
-:global(.seal-vg-sg-index) {
+.seal-vg-sg-index {
     --base-color: var(--c-av-black-opacity-2);
 
     color: var(--base-color);
@@ -6,7 +6,7 @@
 
 [data-theme^='dark'],
 [data-darkmode='true'] {
-    :global(.seal-vg-sg-index) {
+    .seal-vg-sg-index {
         --base-color: var(--c-av-white-opacity-2);
     }
-}
+} 

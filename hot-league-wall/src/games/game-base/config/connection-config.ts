@@ -51,7 +51,7 @@ export const CONNECTION_CONFIG = {
  * Environment-specific configuration overrides
  */
 export const getConnectionConfig = () => {
-    const env = process.env.NODE_ENV || 'development';
+    const env = (process.env.NODE_ENV || 'development') as 'development' | 'production' | 'staging' | 'test';
 
     switch (env) {
         case 'production':

@@ -1,3 +1,4 @@
+import React from 'react';
 import './styles/main.scss';
 import './_shared/utils/string-helper';
 import { loadI18n } from './i18n';
@@ -142,10 +143,14 @@ const AppContent = ({ updateBalanceCallback, onRequestSSOToken }: AppContentProp
 
     loadI18n(language);
 
+    // DEBUG: Add a visible message to confirm AppContent is rendering
+    const debugBanner = <div style={{ background: 'orange', color: 'black', padding: 8, fontWeight: 'bold' }}>DEBUG: AppContent is rendering</div>;
+
     // Show RNG Soccer prototype first, then main app after play button click
     if (!hasClickedPlay) {
         return (
             <div data-react="true" style={{ width: '100%' }}>
+                {debugBanner}
                 <RNGSoccerStaticPrototype onPlayButtonClick={handlePlayButtonClick} isLoading={isLoading} />
             </div>
         );
@@ -153,6 +158,7 @@ const AppContent = ({ updateBalanceCallback, onRequestSSOToken }: AppContentProp
 
     return (
         <div data-react="true" style={{ width: '100%' }}>
+            {debugBanner}
             {currentToken && <Lobby token={currentToken} language={language} onSSORetry={handleSessionReconnect} isReconnecting={isReconnecting} />}
         </div>
     );

@@ -16,15 +16,33 @@ interface SimulatorConfig {
 }
 
 /**
+ * Safe environment variable access
+ * Handles both Node.js and browser environments
+ */
+const getEnvVar = (key: string): string | undefined => {
+    // Check if process is available (Node.js environment)
+    if (typeof process !== 'undefined' && process.env) {
+        return process.env[key];
+    }
+
+    // Browser environment - check for global variables
+    if (typeof window !== 'undefined' && (window as any).__ENV__) {
+        return (window as any).__ENV__[key];
+    }
+
+    return undefined;
+};
+
+/**
  * Parse SIMULATOR_CONFIG environment variable
  * @returns parsed simulator configuration or null if invalid
  */
 const parseSimulatorConfig = (): SimulatorConfig | null => {
-    const configString = process.env.SIMULATOR_CONFIG;
+    const configString = getEnvVar('SIMULATOR_CONFIG');
 
     console.log('🔍 [SSO_CONTROLS_DEBUG] SIMULATOR_CONFIG raw value:', configString);
-    console.log('🔍 [SSO_CONTROLS_DEBUG] NODE_ENV:', process.env.NODE_ENV);
-    console.log('🔍 [SSO_CONTROLS_DEBUG] All env vars:', Object.keys(process.env).filter(key => key.includes('SIMULATOR') || key.includes('NODE_ENV')));
+    console.log('🔍 [SSO_CONTROLS_DEBUG] NODE_ENV:', getEnvVar('NODE_ENV'));
+    console.log('🔍 [SSO_CONTROLS_DEBUG] Environment type:', typeof process !== 'undefined' ? 'Node.js' : 'Browser');
 
     if (!configString) {
         console.log('🔍 [SSO_CONTROLS_DEBUG] No SIMULATOR_CONFIG found');
@@ -46,7 +64,7 @@ const parseSimulatorConfig = (): SimulatorConfig | null => {
  * @returns boolean indicating whether SSO controls should be shown
  */
 export const shouldShowSSOControls = (): boolean => {
-    const nodeEnv = process.env.NODE_ENV;
+    const nodeEnv = getEnvVar('NODE_ENV');
 
     console.log('🔍 [SSO_CONTROLS_DEBUG] Checking shouldShowSSOControls...');
     console.log('🔍 [SSO_CONTROLS_DEBUG] NODE_ENV:', nodeEnv);
@@ -93,11 +111,11 @@ export const getSSOControlsConfig = () => {
     return {
         showControls: shouldShowSSOControls(),
         simulatorConfig: config,
-        environmentVariable: process.env.SIMULATOR_CONFIG,
-        nodeEnv: process.env.NODE_ENV,
-        isDevelopment: process.env.NODE_ENV === 'development',
-        isProduction: process.env.NODE_ENV === 'production',
-        isTest: process.env.NODE_ENV === 'test'
+        environmentVariable: getEnvVar('SIMULATOR_CONFIG'),
+        nodeEnv: getEnvVar('NODE_ENV'),
+        isDevelopment: getEnvVar('NODE_ENV') === 'development',
+        isProduction: getEnvVar('NODE_ENV') === 'production',
+        isTest: getEnvVar('NODE_ENV') === 'test'
     };
 };
 
@@ -125,9 +143,9 @@ export const logSSOControlsConfig = () => {
  * Only use this if no SIMULATOR_CONFIG is provided
  */
 export const forceEnableSSOControls = (): boolean => {
-    if (process.env.NODE_ENV === 'development') {
+    if (getEnvVar('NODE_ENV') === 'development') {
         // Only force enable if no SIMULATOR_CONFIG is provided
-        if (!process.env.SIMULATOR_CONFIG) {
+        if (!getEnvVar('SIMULATOR_CONFIG')) {
             console.log('🟡 [SSO_CONTROLS] Force enabling SSO controls for development testing (no SIMULATOR_CONFIG provided)');
             return true;
         }

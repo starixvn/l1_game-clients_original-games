@@ -16,7 +16,9 @@ export const randomIntFromInterval = (min: number, max: number) => {
 export const randomPlayerId = randomIntFromInterval(1000000, 9999999);
 
 export const requestSSO = async (gameId = 0) => {
-    const searchParams = new URLSearchParams(window.location.search);
+    const searchParams = typeof window !== 'undefined'
+        ? new URLSearchParams(window.location.search)
+        : new URLSearchParams();
     const playerId = Number(searchParams.get('playerId')) || randomPlayerId;
     const currency = searchParams.get('currency');
 

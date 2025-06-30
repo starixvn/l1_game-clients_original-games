@@ -27,7 +27,7 @@ import awayDefaultLogo from '../../../../../assets/rng-soccer/team-icon/away-def
 export interface TeamInfo {
     fullName: string;
     shortName: string;
-    logo: string;
+    logo: any; // Changed from string to any to handle StaticImageData
     primaryColor: string;
     secondaryColor: string;
 }
@@ -93,6 +93,7 @@ export class TeamUtils {
     }
 
     public static getTeamLogo(abbreviation: string): string {
-        return TeamUtils.TEAM_INFO[abbreviation]?.logo;
+        const logo = TeamUtils.TEAM_INFO[abbreviation]?.logo;
+        return typeof logo === 'string' ? logo : (logo as any)?.src || '';
     }
 } 

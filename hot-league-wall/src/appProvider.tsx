@@ -1,3 +1,4 @@
+import React from 'react';
 import { ReactNode, createContext, useContext } from 'react';
 
 export interface AppContextType {

@@ -77,12 +77,12 @@ export default class RNGSoccerPage extends GatewayGameBase<GameBaseProps, IRNGSo
 
     override getGameBackgroundImage(): string {
         console.log('🔵 RNGSoccerPage: getGameBackgroundImage called, returning:', bgGame);
-        return bgGame;
+        return typeof bgGame === 'string' ? bgGame : (bgGame as any).src;
     }
 
     override getDisconnectViewBackground(): string {
         console.log('🔵 RNGSoccerPage: getDisconnectViewBackground called, returning:', blurBgGame);
-        return blurBgGame;
+        return typeof blurBgGame === 'string' ? blurBgGame : (blurBgGame as any).src;
     }
 
     // UI configuration and rendering methods

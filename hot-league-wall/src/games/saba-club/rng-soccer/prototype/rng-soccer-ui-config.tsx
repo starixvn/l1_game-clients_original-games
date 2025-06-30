@@ -29,11 +29,11 @@ export class RNGSoccerUIConfig {
 
     getGameBackgroundImage(): string {
         console.log('🔵 RNGSoccerUIConfig: getGameBackgroundImage called, returning:', bgGame);
-        return bgGame;
+        return typeof bgGame === 'string' ? bgGame : (bgGame as any).src;
     }
 
     getDisconnectViewBackground(): string {
         console.log('🔵 RNGSoccerUIConfig: getDisconnectViewBackground called, returning:', blurBgGame);
-        return blurBgGame;
+        return typeof blurBgGame === 'string' ? blurBgGame : (blurBgGame as any).src;
     }
 }

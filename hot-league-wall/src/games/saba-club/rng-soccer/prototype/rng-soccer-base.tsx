@@ -340,7 +340,7 @@ export const RNGSoccerBase: React.FC<RNGSoccerBaseProps> = ({
             {/* Blur background overlay with animation */}
             {showBlurBg && (
                 <div className={demoAnimationStyles['blur-bg-animated']}>
-                    <img src={blurBgGame} alt="Blurred background" />
+                    <img src={typeof blurBgGame === 'string' ? blurBgGame : (blurBgGame as any).src} alt="Blurred background" />
                 </div>
             )}
         </div>

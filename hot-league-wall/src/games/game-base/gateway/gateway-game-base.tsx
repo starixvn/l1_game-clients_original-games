@@ -180,14 +180,29 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
         super.componentDidMount();
         this.startInactivityTimer();
         this.startHeartbeat();
-        this.updateActivityTime();
+        this.authHandler.handleWaitForAuthorize();
+
+        // Add cleanup event listener only on client side
+        if (typeof window !== 'undefined') {
+            window.addEventListener('beforeunload', () => {
+                ConnectionManager.cleanup();
+            });
+        }
     }
 
     componentWillUnmount() {
+        super.componentWillUnmount();
         this.clearInactivityTimer();
         this.clearHeartbeat();
         this.clearPolling();
-        super.componentWillUnmount();
+        ConnectionManager.decrementConnection();
+
+        // Remove cleanup event listener
+        if (typeof window !== 'undefined') {
+            window.removeEventListener('beforeunload', () => {
+                ConnectionManager.cleanup();
+            });
+        }
     }
 
     // CONNECTION MANAGEMENT METHODS
@@ -511,10 +526,5 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
         );
     }
 }
-
-// Cleanup on page unload
-window.addEventListener('beforeunload', () => {
-    ConnectionManager.cleanup();
-});
 
 export default GatewayGameBase;

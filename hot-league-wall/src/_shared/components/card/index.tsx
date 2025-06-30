@@ -37,7 +37,7 @@ import { convertRank, suffixNameMapping } from "./utils/card-utils";
 
 export const EmptyCardIndex = -1;
 
-const cardImages: Record<string, string> = {
+const cardImages: Record<string, any> = {
     A: cardA,
     K: cardK,
     Q: cardQ,
@@ -78,11 +78,17 @@ const Card: React.FC<Props> = (props) => {
         const rankRed = result?.suit > 1 ? '' : 'Red';
         const rankImageUrl = cardImages[`${convertRank(result?.rank)}${rankRed}`];
         const suitImageUrl = cardImages[`${suffixNameMapping[result?.suit]}`];
+
+        // Handle both string and StaticImageData
+        const getImageSrc = (image: any) => {
+            return typeof image === 'string' ? image : image.src;
+        };
+
         return (
             <div className={Styles['card-front-box']}>
-                <img src={`${cardFront}#v1`} className={Styles['card-front']} alt="card-front" />
-                <img src={rankImageUrl} className={Styles['card-rank']} width="20" height="20" />
-                <img src={suitImageUrl} className={Styles['card-suit']} width="42" height="56" />
+                <img src={`${getImageSrc(cardFront)}#v1`} className={Styles['card-front']} alt="card-front" />
+                <img src={getImageSrc(rankImageUrl)} className={Styles['card-rank']} width="20" height="20" />
+                <img src={getImageSrc(suitImageUrl)} className={Styles['card-suit']} width="42" height="56" />
             </div>
         );
     };

@@ -48,8 +48,12 @@ export class LocalStorage implements IActionStorage {
 export class Memory implements IActionStorage {
     localMemory: any;
     constructor() {
-        window.localMemory = {};
-        this.localMemory = window.localMemory;
+        if (typeof window !== 'undefined') {
+            window.localMemory = {};
+            this.localMemory = window.localMemory;
+        } else {
+            this.localMemory = {};
+        }
     }
 
     remove(name: string) {

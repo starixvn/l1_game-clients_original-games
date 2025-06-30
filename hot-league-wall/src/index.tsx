@@ -1,8 +1,9 @@
+import React from 'react';
 import 'reflect-metadata';
 import * as gc from '@sg/sg-game-client';
 import { appSettings } from './_shared/app-settings';
 import { useEffect } from 'react';
-import './style.module.scss';
+import './style.scss';
 import App from './app';
 import { PLATFORM_TYPE_MAPPING, PLATFORM_TYPE_NUMBER } from '../constant/app';
 
