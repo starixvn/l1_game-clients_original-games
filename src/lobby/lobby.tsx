@@ -192,7 +192,7 @@ class LobbyComponent extends React.PureComponent<any, ILobbyState> {
                         isSSOFailure={true}
                         isLoading={this.props.isReconnecting}
                         language={context.language}
-                        backgroundImage={blurBgGame}
+                    // backgroundImage={blurBgGame}
                     />
                 );
             }
