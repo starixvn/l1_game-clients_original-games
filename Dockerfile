@@ -1,46 +1,87 @@
+# Use a specific version for better reproducibility
 FROM hub.lumigame.com/base/node:20.9.0-alpine-24h1.1 AS base
+
+# Install dependencies only when needed
 FROM base AS deps
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+RUN apk add --no-cache libc6-compat
+
 WORKDIR /app
 
-RUN apk add --no-cache libc6-compat
+# Set yarn cache folder
 ENV YARN_CACHE_FOLDER=/root/.yarn
 
-RUN --mount=type=cache,target=$YARN_CACHE_FOLDER \
-     yarn cache dir && yarn cache list
+# Install dependencies based on the preferred package manager
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+RUN \
+  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+  elif [ -f package-lock.json ]; then npm ci; \
+  elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i --frozen-lockfile; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
 
-COPY package.json yarn.lock ./
-RUN --mount=type=cache,target=$YARN_CACHE_FOLDER \
-     yarn install --frozen-lockfile --verbose
-
+# Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
-
 COPY --from=deps /app/node_modules ./node_modules
-COPY package.json yarn.lock tsconfig.json configs.json game-settings.json next.config.js ./
+
+# Copy configuration files first for better caching
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+COPY next.config.js ./
+COPY tsconfig*.json ./
+COPY configs.json game-settings.json ./
+
+# Copy source code
 COPY configs ./configs
 COPY public ./public
 COPY src ./src
 COPY pages ./pages
 
-RUN yarn build
+# Set environment variables for build
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production
 
-FROM hub.lumigame.com/base/node:20.9.0-alpine-24h1.1 AS runner
+# Build the application
+RUN \
+  if [ -f yarn.lock ]; then yarn build; \
+  elif [ -f package-lock.json ]; then npm run build; \
+  elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm build; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
+
+# Production image, copy all the files and run next
+FROM base AS runner
 WORKDIR /app
-ENV NODE_ENV production
 
-RUN addgroup --system --gid 1001 nodejs  \
-     && adduser --system --uid 1001 nextjs
+# Set environment variables
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
+# Create a non-root user
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+# Copy the public folder
 COPY --from=builder /app/public ./public
 
-RUN mkdir .next  \
-     && chown nextjs:nodejs .next
+# Set the correct permission for prerender cache
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
 
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+# Switch to non-root user
 USER nextjs
 
+# Expose port
 EXPOSE 5000
-ENV PORT 5000
-CMD HOSTNAME="0.0.0.0" node server.js
+
+# Set hostname for binding
+ENV PORT=5000
+ENV HOSTNAME="0.0.0.0"
+
+# Start the application
+CMD ["node", "server.js"]

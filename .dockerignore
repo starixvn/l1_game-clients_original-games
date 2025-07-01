@@ -1,39 +1,54 @@
 # Dependencies
 **/node_modules
-**/npm-debug.log
-**/yarn-debug.log
-**/yarn-error.log
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+**/pnpm-debug.log*
 
 # Build outputs
 **/dist
 **/build
 **/.next
 **/out
+**/.turbo
 
 # Version control
 .git
 .gitignore
+.gitattributes
 
 # IDE and editor files
 .idea
 .vscode
 *.swp
 *.swo
+*~
 
 # OS files
 .DS_Store
 Thumbs.db
+desktop.ini
 
 # Environment files
 .env
 .env.local
 .env.*.local
+.env.development
+.env.test
+.env.production
 
-# Test coverage
+# Test coverage and reports
 **/coverage
+**/.nyc_output
+**/junit.xml
+**/test-results
 
-# NX cache
+# Cache directories
 .nx/cache
+.parcel-cache
+.cache
+.eslintcache
+.stylelintcache
 
 # Large binary files and archives
 *.zip
@@ -41,11 +56,48 @@ Thumbs.db
 *.gz
 *.rar
 *.7z
+*.bz2
 
 # Logs
 logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
 # Temporary files
 tmp
-temp 
+temp
+.tmp
+.temp
+
+# Storybook
+.storybook-out
+storybook-static
+
+# Documentation
+README.md
+*.md
+docs/
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.circleci/
+.travis.yml
+
+# Husky
+.husky/
+
+# TypeScript
+*.tsbuildinfo
+
+# Docker
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# Local development
+.local 
