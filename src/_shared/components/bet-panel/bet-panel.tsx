@@ -19,7 +19,6 @@ import { checkValidAmount, parseInputValue, WarnMsgType, calculateMinMaxAmount }
 import { getChoicesType } from '../../utils/choice-type';
 import BettingChips from '../betting-chips';
 import { IPropsObserver, IStateObserver, ObserverComponent } from '../observer-component/observer-component';
-import './bet-panel.scss';
 import { localStorageKeys, StorageManager } from '../../utils/storage-manager';
 
 const WARNING_CLOSE_DELAY = 60000;

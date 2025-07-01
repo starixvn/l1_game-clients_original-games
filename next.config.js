@@ -10,6 +10,25 @@ const nextConfig = {
     includePaths: ["./src/styles", "./src"],
   },
   webpack: (config, { isServer }) => {
+    // Ensure reflect-metadata is loaded first in the main entry
+    if (typeof config.entry === "function") {
+      const originalEntry = config.entry;
+      config.entry = async () => {
+        const entries = await originalEntry();
+        if (
+          entries["main.js"] &&
+          !entries["main.js"].includes("reflect-metadata")
+        ) {
+          entries["main.js"].unshift("reflect-metadata");
+        }
+        return entries;
+      };
+    }
+    // Existing alias for reflect-metadata
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "reflect-metadata": require.resolve("reflect-metadata"),
+    };
     // Handle Node.js polyfills for client-side
     if (!isServer) {
       config.resolve.fallback = {
@@ -30,7 +49,6 @@ const nextConfig = {
         process: require.resolve("process/browser"),
         util: require.resolve("util"),
       };
-
       config.plugins.push(
         new (require("webpack").ProvidePlugin)({
           process: "process/browser",
@@ -38,19 +56,16 @@ const nextConfig = {
         })
       );
     }
-
     // Handle SVG files
     config.module.rules.push({
       test: /\.svg$/,
       use: ["@svgr/webpack"],
     });
-
     // Handle audio files
     config.module.rules.push({
       test: /\.(wav|mp3|ogg|m4a)$/,
       type: "asset/resource",
     });
-
     return config;
   },
   env: {

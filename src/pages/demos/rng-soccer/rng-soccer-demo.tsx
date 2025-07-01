@@ -1,5 +1,4 @@
 import React from 'react';
-import './index.scss';
 import liveIcon from '../../../assets/rng-soccer/live-icon.svg';
 import historyBtnIcon from '../../../assets/rng-soccer/history-btn.svg';
 import homeDefaultLogo from '../../../assets/rng-soccer/team-icon/home-default-logo.svg';

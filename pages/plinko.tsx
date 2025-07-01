@@ -5,10 +5,7 @@ import "../src/styles/plinko/plinko.scss";
 
 // Dynamically import the PlinkoGamePage with SSR disabled
 const PlinkoGamePage = dynamic(
-  () =>
-    import("../src/games/plinko").then((mod) => ({
-      default: mod.PlinkoGamePage,
-    })),
+  () => import("../src/games/plinko").then((mod) => mod.PlinkoGamePage),
   {
     ssr: false,
     loading: () => <div>Loading Plinko Game...</div>,

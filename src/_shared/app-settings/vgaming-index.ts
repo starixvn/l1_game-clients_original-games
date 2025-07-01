@@ -12,7 +12,9 @@ import VG_PROD_CONFIG from '../../../configs/vg/configs.PROD.json';
 // custom game settings (order)
 import SG_GAME_SETTINGS from '../../../configs/saba-game-settings.json';
 import VG_GAME_SETTINGS from '../../../configs/vg-game-settings.json';
-import { NOVA88_SITE_ID, VIVA88_SITE_ID } from '../../../constant/app';
+export const NOVA88_SITE_ID = "4120";
+export const VIVA88_SITE_ID = "4130";
+
 
 // LOCAL development
 export const reuqestSSO_APP_ENV = 'LOCAL';

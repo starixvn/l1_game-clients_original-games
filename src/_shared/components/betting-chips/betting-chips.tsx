@@ -1,6 +1,5 @@
 import React from 'react';
 import Chip from './chip';
-import './betting-chips.scss';
 
 interface BettingChipsProps {
     min: number;

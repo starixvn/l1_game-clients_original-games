@@ -72,4 +72,4 @@ export const DEPOSIT_STATUS = {
     NOLOGIN: 0, // 未登入
     INACTIVE: 1, // 未存款
     ACTIVE: 2, // 已存款
-};
+}; 
