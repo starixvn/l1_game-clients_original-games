@@ -85,6 +85,11 @@ export function BetActions({
         *balls in game {inGameBallsCount}/15
       </span>
 
+      {/* Demo balance indicator */}
+      <div className="demo-balance-indicator">
+        <span>💰 Demo Balance: ${currentBalance.toFixed(2)}</span>
+      </div>
+
       <div className="bet-container">
         <div className="bet-input-group">
           <div className="bet-input-row">

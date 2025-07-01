@@ -14,26 +14,16 @@ interface State {
   decrementBalance: (amount: number) => void
 }
 
-// Local storage key for balance
-const LOCAL_BALANCE_KEY = 'plinko_local_balance'
+// Hard-coded balance for demo purposes
+// This allows players to input bet amounts and play the game without authentication
+const HARD_CODED_BALANCE = 10000 // $10,000 starting balance
 
-function getLocalBalance(): number {
-  if (typeof window === 'undefined') {
-    return 1000 // Default starting balance for SSR
-  }
-  const stored = localStorage.getItem(LOCAL_BALANCE_KEY)
-  return stored ? parseFloat(stored) : 1000 // Default starting balance
-}
-
-function setLocalBalance(balance: number) {
-  if (typeof window === 'undefined') {
-    return // Don't try to access localStorage during SSR
-  }
-  localStorage.setItem(LOCAL_BALANCE_KEY, balance.toString())
+function getHardCodedBalance(): number {
+  return HARD_CODED_BALANCE
 }
 
 const walletInitialState: Wallet = {
-  balance: getLocalBalance() // Initialize with local balance
+  balance: getHardCodedBalance() // Initialize with hard-coded balance
 }
 
 export const useAuthStore = create<State>((setState, getState) => ({
@@ -47,7 +37,7 @@ export const useAuthStore = create<State>((setState, getState) => ({
           state.isWalletLoading = false
         })
       )
-      setLocalBalance(balance)
+      // Balance is hard-coded, no need to persist to localStorage
     } catch (error) {
       toast.error('An error occurred while updating the balance')
       console.error('setBalanceError', error)
@@ -70,7 +60,14 @@ export const useAuthStore = create<State>((setState, getState) => ({
       setState(state => ({ ...state, isWalletLoading: true }))
       const currentBalance = getState().wallet.balance
       const newBalance = Math.max(0, currentBalance - amount) // Prevent negative balance
-      getState().setBalance(newBalance)
+
+      // If balance reaches zero, reset to hard-coded balance for demo purposes
+      if (newBalance === 0) {
+        getState().setBalance(HARD_CODED_BALANCE)
+      } else {
+        getState().setBalance(newBalance)
+      }
+
       setState(state => ({ ...state, isWalletLoading: false }))
     } catch (error) {
       toast.error('An error occurred while updating the balance')
