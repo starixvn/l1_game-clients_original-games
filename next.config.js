@@ -6,6 +6,13 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  // SWC Configuration to replace Babel
+  compiler: {
+    // Enable decorators and class properties
+    decorators: {
+      legacy: true,
+    },
+  },
   sassOptions: {
     includePaths: ["./src/styles", "./src"],
   },
@@ -79,7 +86,7 @@ const nextConfig = {
   assetPrefix: process.env.NODE_ENV === "production" ? "" : "",
   trailingSlash: false,
   // Enable static export if needed
-  // output: 'export',
+  output: "standalone",
   // distDir: 'dist',
 };
 

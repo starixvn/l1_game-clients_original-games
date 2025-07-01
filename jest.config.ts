@@ -3,12 +3,22 @@ export default {
   displayName: 'app',
   testEnvironment: 'jsdom',
   transform: {
-    '^.+\\.[tj]sx?$': ['babel-jest', {
-      presets: [
-        ['@babel/preset-env', { targets: { node: 'current' } }],
-        ['@babel/preset-react', { runtime: 'automatic' }],
-        '@babel/preset-typescript'
-      ]
+    '^.+\\.[tj]sx?$': ['@swc/jest', {
+      jsc: {
+        parser: {
+          syntax: 'typescript',
+          tsx: true,
+          decorators: true,
+        },
+        transform: {
+          react: {
+            runtime: 'automatic',
+          },
+          legacyDecorator: true,
+          decoratorMetadata: true,
+        },
+        target: 'es2020',
+      },
     }],
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],

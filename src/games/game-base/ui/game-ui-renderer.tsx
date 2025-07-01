@@ -2,16 +2,13 @@ import * as gc from '@sg/sg-game-client';
 import React from 'react';
 import classNames from 'classnames';
 import AnimationBalance from '../../../_shared/components/anim-balance';
-import { ConfirmBet } from '../../../_shared/components/bet-option/confirm-bet';
 import Notice from '../../../_shared/components/notices/notice';
 import Warning from '../../../_shared/components/notices/warning';
 import WarningDialog from '../../../_shared/components/notices/warning-dialog';
 import { RoundId } from '../../../_shared/components/round-id';
-import CountDownTimer from '../../../_shared/components/count-down-timer';
 import Styles from '../game-base.module.scss';
 import { IGameBaseState } from '../interfaces';
 import { GameBaseProps } from '../type';
-import StartRoundCountDownTimer from '../../../_shared/components/start-round-count-down-timer';
 import { getMessage as getGameMessage } from '../game-logic/message-logic';
 
 export interface UIExtensionOptions {
@@ -106,18 +103,7 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
     renderCountDownTimer(props: P, setState: (state: Partial<S>) => void) {
         console.log('🔴 GameUIRenderer: renderCountDownTimer called');
         return (
-            <CountDownTimer
-                namespace={props.namespace}
-                language={props.language}
-                onComplete={() => {
-                    console.log('🔴 GameUIRenderer: CountDownTimer onComplete triggered');
-                    setState({ isAllowedBet: true } as Partial<S>);
-                }}
-                onCountdownTimerChange={(countdownTimer: number) => {
-                    console.log('🔴 GameUIRenderer: CountDownTimer onCountdownTimerChange:', countdownTimer);
-                    setState({ countdownTimer } as Partial<S>);
-                }}
-            />
+            <div className={Styles['timer']}></div>
         );
     }
 
@@ -261,28 +247,12 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
                         className={gameNameRoundClass}
                     />
                 </div>
-                <CountDownTimer
-                    namespace={props.namespace}
-                    language={props.language}
-                    onComplete={() => {
-                        setState({ isAllowedBet: true } as Partial<S>);
-                    }}
-                    onCountdownTimerChange={(countdownTimer: number) => {
-                        setState({ countdownTimer } as Partial<S>);
-                    }}
-                    customStyles={{
-                        wrapper: timerClass
-                    }}
-                />
+
                 {statsIconUrl && (
                     <div className={statsIconClass} onClick={toggleStatistic}>
                         <img src={statsIconUrl} alt="statistics" />
                     </div>
                 )}
-                <StartRoundCountDownTimer
-                    namespace={props.namespace}
-                    language={props.language}
-                />
             </div>
         );
     }
@@ -334,7 +304,6 @@ export class GameUIRenderer<P extends GameBaseProps, S extends IGameBaseState> {
             <div className={footerClass}>
                 <div className={betOptionsClass}>
                     {customFooter ? customFooter : this.renderBettingBlock(props, state)}
-                    <ConfirmBet namespace={props.namespace} />
                 </div>
                 <div className={Styles['animation-balance']}>
                     {this.renderAnimationBalance(state)}

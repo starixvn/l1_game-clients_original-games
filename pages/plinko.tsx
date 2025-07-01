@@ -1,7 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React from "react";
 import dynamic from "next/dynamic";
-import "../src/styles/plinko/plinko.scss";
 
 // Dynamically import the PlinkoGamePage with SSR disabled
 const PlinkoGamePage = dynamic(

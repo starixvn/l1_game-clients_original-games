@@ -2,7 +2,6 @@ import * as gc from '@sg/sg-game-client';
 import { handle, render } from '@sg/sg-observer';
 import React from 'react';
 import { StorageManager, localStorageKeys } from '../../../_shared/utils/storage-manager';
-import { ILatestBetRecord } from '../../../_shared/components/bet-panel/bet-panel';
 import AuthorizationHandler from '../../../_shared/handlers/authorization-handler';
 import GameBase from '../core/game-base.core';
 import GameUIRenderer, { UIExtensionOptions } from '../ui/game-ui-renderer';
@@ -319,7 +318,7 @@ class GatewayGameBase<P extends GameBaseProps, S extends IGatewayGameBaseState> 
 
     // AUTHORIZATION METHODS
     private isRoundIdMatching(currentRoundId: number): boolean {
-        const betHistory = StorageManager.get(localStorageKeys.betHistory) as ILatestBetRecord[] | null;
+        const betHistory = StorageManager.get(localStorageKeys.betHistory) as any[] | null;
         if (!betHistory || !Array.isArray(betHistory)) return false;
         const storedGame = betHistory.find((bet) => bet.namespace === this.props.namespace);
         return storedGame ? currentRoundId === storedGame.roundId : false;

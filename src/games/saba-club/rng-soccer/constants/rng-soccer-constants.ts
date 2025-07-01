@@ -1,1 +1,0 @@
-export const ANIMATION_DURATION_MS = 3000; 

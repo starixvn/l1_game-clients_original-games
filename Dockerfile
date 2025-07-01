@@ -20,7 +20,7 @@ COPY package.json yarn.lock tsconfig.json configs.json game-settings.json next.c
 COPY configs ./configs
 COPY public ./public
 COPY src ./src
-COPY constant ./constant
+COPY pages ./pages
 
 RUN yarn build
 
