@@ -200,13 +200,21 @@ export function Game() {
 
   const multipliersBodies: Body[] = []
 
-  let lastMultiplierX: number =
-    worldWidth / 2 - (pinsConfig.pinGap / 2) * lines - pinsConfig.pinGap
+  // Calculate the X positions for the last row of pins
+  const lastLinePins = pinsConfig.startPins + (lines - 1)
+  const lastLineWidth = lastLinePins * pinsConfig.pinGap
+  const lastRowPinXs = Array.from({ length: lastLinePins }, (_, i) =>
+    worldWidth / 2 - lastLineWidth / 2 + i * pinsConfig.pinGap + pinsConfig.pinGap / 2
+  )
 
-  multipliers.forEach(multiplier => {
-    const blockSize = 20 // height and width
+  // Use the same number of multipliers as pins in the last row
+  const multiplierGap = 8; // Add 8px gap between multiplier images
+  multipliers.slice(0, lastLinePins).forEach((multiplier, idx) => {
+    const blockSize = 32 // height and width, matches enlarged size
+    // Add gap to each multiplier's X position
+    const pinX = lastRowPinXs[idx] + (idx - (lastLinePins - 1) / 2) * multiplierGap;
     const multiplierBody = Bodies.rectangle(
-      lastMultiplierX + 20,
+      pinX,
       worldWidth / lines + lines * pinsConfig.pinGap + pinsConfig.pinGap,
       blockSize,
       blockSize,
@@ -215,14 +223,13 @@ export function Game() {
         isStatic: true,
         render: {
           sprite: {
-            xScale: 1,
-            yScale: 1,
+            xScale: 1.6, // Increased scale to make images larger
+            yScale: 1.6, // Increased scale to make images larger
             texture: typeof multiplier.img === 'string' ? multiplier.img : multiplier.img.src
           }
         }
       }
     )
-    lastMultiplierX = multiplierBody.position.x
     multipliersBodies.push(multiplierBody)
   })
 

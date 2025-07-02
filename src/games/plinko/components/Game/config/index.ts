@@ -1,12 +1,13 @@
 import { colors } from '../../../../../styles/plinko/colors'
+
 const pins = {
   startPins: 3,
-  pinSize: 2,
-  pinGap: 20
+  pinSize: 3.5,
+  pinGap: 28
 }
 
 const ball = {
-  ballSize: 5.7
+  ballSize: 7
 }
 
 const engine = {
@@ -14,8 +15,8 @@ const engine = {
 }
 
 const world = {
-  width: 390,
-  height: 390
+  width: 550,
+  height: 550
 }
 
 export const config = {
